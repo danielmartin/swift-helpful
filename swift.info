@@ -20158,16 +20158,24 @@ Index
 * #available:                            Checking API Availability.
                                                                (line  6)
 * @unknown:                              Branch Statements.    (line 20)
+* class:                                 Definition Syntax.    (line  6)
+* deinit:                                Deinitialization.     (line  6)
 * func:                                  Defining and Calling Functions.
                                                                (line  6)
 * if:                                    If.                   (line  6)
 * import:                                Modules and Source Files.
                                                                (line  9)
+* init:                                  Initializers.         (line  6)
 * let:                                   Constants and Variables.
+                                                               (line  6)
+* override:                              Overriding.           (line 11)
+* required:                              Required Initializers.
                                                                (line  6)
 * return:                                Function Parameters and Return Values.
                                                                (line  6)
+* struct:                                Definition Syntax.    (line  6)
 * switch:                                Switch.               (line  6)
+* throws:                                Error Handling 1.     (line 22)
 * var:                                   Constants and Variables.
                                                                (line 12)
 

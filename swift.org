@@ -2214,6 +2214,7 @@ appropriately.
   }
 #+END_SRC
 
+#+FINDEX: throws
 A function indicates that it can throw an error by including the
 =throws= keyword in its declaration. When you call a function that can
 throw an error, you prepend the =try= keyword to the expression.
@@ -8128,6 +8129,8 @@ Between Structures and Classes]]
 
 *** Definition Syntax
 
+#+FINDEX: class
+#+FINDEX: struct
 Structures and classes have a similar definition syntax. You introduce
 structures with the =struct= keyword and classes with the =class=
 keyword. Both place their entire definition within a pair of braces:
@@ -9878,6 +9881,7 @@ method, type method, instance property, type property, or subscript that
 it would otherwise inherit from a superclass. This is known as
 /overriding/.
 
+#+FINDEX: override
 To override a characteristic that would otherwise be inherited, you
 prefix your overriding definition with the =override= keyword. Doing so
 clarifies that you intend to provide an override and have not provided a
@@ -10112,6 +10116,7 @@ without calling any property observers.
 
 *** Initializers
 
+#+FINDEX: init
 /Initializers/ are called to create a new instance of a particular type.
 In its simplest form, an initializer is like an instance method with no
 parameters, written using the =init= keyword:
@@ -11541,6 +11546,7 @@ override =init?= with =init!= and vice versa. You can also delegate from
 
 ** Required Initializers
 
+#+FINDEX: required
 Write the =required= modifier before the definition of a class
 initializer to indicate that every subclass of the class must implement
 that initializer:
@@ -11668,6 +11674,7 @@ value is stored in =boardColors= and can be queried with the
 
 * Deinitialization
 
+#+FINDEX: deinit
 A /deinitializer/ is called immediately before a class instance is
 deallocated. You write deinitializers with the =deinit= keyword, similar
 to how initializers are written with the =init= keyword. Deinitializers
