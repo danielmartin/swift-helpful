@@ -20161,6 +20161,8 @@ Index
 * func:                                  Defining and Calling Functions.
                                                                (line  6)
 * if:                                    If.                   (line  6)
+* import:                                Modules and Source Files.
+                                                               (line  9)
 * let:                                   Constants and Variables.
                                                                (line  6)
 * return:                                Function Parameters and Return Values.
