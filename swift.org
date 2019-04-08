@@ -18648,8 +18648,6 @@ the same operand, the postfix operator is applied first.
 
 * Language Reference
 
-  skdjksjkdjks
-
  # - [[About the Language Reference][About the Language Reference]]
  # - [[#LexicalStructure.xhtml][Lexical Structure]]
  # - [[Types][Types]]
