@@ -1,7 +1,7 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
 @setfilename swift.info
-@settitle The Swift Programming Language (Swift 5)
+@settitle The Swift Programming Language Guide (Swift 5)
 @documentencoding UTF-8
 @documentlanguage en
 @syncodeindex vr cp
@@ -11,12 +11,12 @@
 
 @dircategory Emacs
 @direntry
-* Swift: (swift).       Documentation for the Swift programming language.
+* Swift: (swift).       Guide documentation for the Swift programming language.
 @end direntry
 
 @finalout
 @titlepage
-@title The Swift Programming Language (Swift 5)
+@title The Swift Programming Language Guide (Swift 5)
 @author Apple Inc.
 @end titlepage
 
@@ -24,7 +24,7 @@
 
 @ifnottex
 @node Top
-@top The Swift Programming Language (Swift 5)
+@top The Swift Programming Language Guide (Swift 5)
 @end ifnottex
 
 @menu
@@ -59,8 +59,6 @@
 * Memory Safety::
 * Access Control::
 * Advanced Operators::
-* Language Reference::
-* Copyright and Notices::
 * Index::
 
 @detailmenu
@@ -668,14 +666,6 @@ Operator Methods
 Custom Operators
 
 * Precedence for Custom Infix Operators::
-
-Language Reference
-
-* Statements::
-
-Statements
-
-* Branch Statements::
 
 @end detailmenu
 @end menu
@@ -20718,138 +20708,6 @@ Note
 You do not specify a precedence when defining a prefix or postfix
 operator. However, if you apply both a prefix and a postfix operator to
 the same operand, the postfix operator is applied first.
-
-@node Language Reference
-@chapter Language Reference
-
-skdjksjkdjks
-
-@menu
-* Statements::
-@end menu
-
-@node Statements
-@section Statements
-
-In Swift, there are three kinds of statements: simple statements,
-compiler control statements, and control flow statements. Simple
-statements are the most common and consist of either an expression or a
-declaration. Compiler control statements allow the program to change
-aspects of the compiler's behavior and include a conditional compilation
-block and a line control statement.
-
-@menu
-* Branch Statements::
-@end menu
-
-@node Branch Statements
-@subsection Branch Statements
-
-Branch statements allow the program to execute certain parts of code
-depending on the value of one or more conditions. The values of the
-conditions specified in a branch statement control how the program
-branches and, therefore, what block of code is executed. Swift has three
-branch statements: an @samp{if} statement, a @samp{guard} statement, and a
-@samp{switch} statement.
-
-@enumerate
-@item
-Switch Statement
-
-
-A @samp{switch} statement allows certain blocks of code to be executed
-depending on the value of a control expression.
-
-@enumerate
-@item
-Switching Over Future Enumeration Cases
-
-
-@findex @@unknown
-
-A @emph{nonfrozen enumeration} is a special kind of enumeration that may gain
-new enumeration cases in the future---even after you compile and ship an
-app. Switching over a nonfrozen enumeration requires extra
-consideration. When a library's authors mark an enumeration as
-nonfrozen, they reserve the right to add new enumeration cases, and any
-code that interacts with that enumeration @emph{must} be able to handle those
-future cases without being recompiled. Only the standard library, Swift
-overlays for Apple frameworks, and C and Objective-C code can declare
-nonfrozen enumerations. Enumerations you declare in Swift can't be
-nonfrozen.
-
-When switching over a nonfrozen enumeration value, you always need to
-include a default case, even if every case of the enumeration already
-has a corresponding switch case. You can apply the @samp{@@unknown} attribute
-to the default case, which indicates that the default case should match
-only enumeration cases that are added in the future. Swift produces a
-warning if the default case matches any enumeration case that is known
-at compiler time. This future warning informs you that the library
-author added a new case to the enumeration that doesn't have a
-corresponding switch case.
-
-The following example switches over all three existing cases of the
-standard library's
-@uref{https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation, @samp{Mirror.AncestorRepresentation}}
-[@uref{https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation}]
-enumeration. If you add additional cases in the future, the compiler
-generates a warning to indicate that you need to update the switch
-statement to take the new cases into account.
-
-@example
-let representation: Mirror.AncestorRepresentation = .generated
-switch representation @{
-case .customized:
-    print("Use the nearest ancestor's implementation.")
-case .generated:
-    print("Generate a default mirror for all ancestor classes.")
-case .suppressed:
-    print("Suppress the representation of all ancestor classes.")
-@@unknown default:
-    print("Use a representation that was unknown when this code was compiled.")
-@}
-// Prints "Generate a default mirror for all ancestor classes."
-@end example
-@end enumerate
-@end enumerate
-
-@node Copyright and Notices
-@chapter Copyright and Notices
-
-Apple Inc.
-
-Copyright © 2019 Apple Inc.
-
-@*
-
-This document is made available under a Creative Commons Attribution 4.0
-International (CC BY 4.0) License:
-@uref{https://creativecommons.org/licenses/by/4.0/}
-
-No licenses, express or implied, are granted with respect to any of the
-technology described in this document. Apple retains all intellectual
-property rights associated with the technology described in this
-document.
-
-Apple Inc.
-
-One Apple Park Way
-
-Cupertino, CA 95014
-
-408-996-1010
-
-Apple, the Apple logo, Bonjour, Cocoa, Logic, Mac, Numbers, Objective-C,
-OS X, Retina, Sand, Shake, and Xcode are trademarks of Apple Inc.,
-registered in the U.S. and other countries.
-
-Swift and tvOS are trademarks of Apple Inc.
-
-IOS is a trademark or registered trademark of Cisco in the U.S. and
-other countries and is used under license.
-
-Times is a registered trademark of Heidelberger Druckmaschinen AG,
-available from Linotype Library GmbH.
 
 @node Index
 @unnumbered Index
