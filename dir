@@ -16,3 +16,5 @@ File: dir,	Node: Top	This is the top of the INFO tree
 
 Emacs
 * Swift: (swift).               The Swift programming language.
+* Swift Reference: (swift-reference).
+                                The Swift programming language reference.

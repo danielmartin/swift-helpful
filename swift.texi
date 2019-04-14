@@ -11,7 +11,7 @@
 
 @dircategory Emacs
 @direntry
-* Swift: (swift).       Guide documentation for the Swift programming language.
+* Swift: (swift).       The Swift programming language.
 @end direntry
 
 @finalout
