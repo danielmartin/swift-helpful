@@ -9071,10 +9071,9 @@ and variables can store when they are equal to @samp{Barcode.upc} or
 
 You can then create new barcodes using either type:
 
-@enumerate
-@item
+@example
 var productBarcode = Barcode.upc(8, 85909, 51226, 3)
-@end enumerate
+@end example
 
 This example creates a new variable called @samp{productBarcode} and assigns
 it a value of @samp{Barcode.upc} with an associated tuple value of
@@ -9082,10 +9081,9 @@ it a value of @samp{Barcode.upc} with an associated tuple value of
 
 You can assign the same product a different type of barcode:
 
-@enumerate
-@item
+@example
 productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
-@end enumerate
+@end example
 
 At this point, the original @samp{Barcode.upc} and its integer values are
 replaced by the new @samp{Barcode.qrCode} and its string value. Constants and

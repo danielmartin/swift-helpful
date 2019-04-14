@@ -8699,7 +8699,7 @@ or ‘Barcode.qrCode’.
 
    You can then create new barcodes using either type:
 
-  1. var productBarcode = Barcode.upc(8, 85909, 51226, 3)
+     var productBarcode = Barcode.upc(8, 85909, 51226, 3)
 
    This example creates a new variable called ‘productBarcode’ and
 assigns it a value of ‘Barcode.upc’ with an associated tuple value of
@@ -8707,7 +8707,7 @@ assigns it a value of ‘Barcode.upc’ with an associated tuple value of
 
    You can assign the same product a different type of barcode:
 
-  1. productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
+     productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
 
    At this point, the original ‘Barcode.upc’ and its integer values are
 replaced by the new ‘Barcode.qrCode’ and its string value.  Constants

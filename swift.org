@@ -7792,7 +7792,9 @@ and variables can store when they are equal to =Barcode.upc= or
 
 You can then create new barcodes using either type:
 
-1. var productBarcode = Barcode.upc(8, 85909, 51226, 3)
+#+BEGIN_SRC swift
+  var productBarcode = Barcode.upc(8, 85909, 51226, 3)
+#+END_SRC
 
 This example creates a new variable called =productBarcode= and assigns
 it a value of =Barcode.upc= with an associated tuple value of
@@ -7800,7 +7802,9 @@ it a value of =Barcode.upc= with an associated tuple value of
 
 You can assign the same product a different type of barcode:
 
-1. productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
+#+BEGIN_SRC swift
+  productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
+#+END_SRC
 
 At this point, the original =Barcode.upc= and its integer values are
 replaced by the new =Barcode.qrCode= and its string value. Constants and
