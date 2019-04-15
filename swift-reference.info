@@ -36,9 +36,11 @@ Lexical Structure
 
 * Whitespace and Comments::
 * Identifiers::
+* Keywords and Punctuation::
+* Literals::
 * Operators::
 
-Identifiers
+Literals
 
 * Integer Literals::
 * Floating-Point Literals::
@@ -380,6 +382,8 @@ This behavior is referred to as _longest match_ or _maximal munch_.
 
 * Whitespace and Comments::
 * Identifiers::
+* Keywords and Punctuation::
+* Literals::
 * Operators::
 
 
@@ -443,7 +447,7 @@ multiline-comment-text _{opt}
 ‘*/’
 
 
-File: swift-reference.info,  Node: Identifiers,  Next: Operators,  Prev: Whitespace and Comments,  Up: Lexical Structure
+File: swift-reference.info,  Node: Identifiers,  Next: Keywords and Punctuation,  Prev: Whitespace and Comments,  Up: Lexical Structure
 
 3.2 Identifiers
 ===============
@@ -528,9 +532,13 @@ _{opt}
 
    implicit-parameter-name → ‘$’ decimal-digits
 
-   ** Keywords and Punctuation
+
+File: swift-reference.info,  Node: Keywords and Punctuation,  Next: Literals,  Prev: Identifiers,  Up: Lexical Structure
 
-   The following keywords are reserved and can’t be used as identifiers,
+3.3 Keywords and Punctuation
+============================
+
+The following keywords are reserved and can’t be used as identifiers,
 unless they’re escaped with backticks, as described above in *note
 Identifiers::.  Keywords other than ‘inout’, ‘var’, and ‘let’ can be
 used as parameter names in a function declaration or function call
@@ -575,10 +583,14 @@ custom operators: ‘(’, ‘)’, ‘{’, ‘}’, ‘[’, ‘]’, ‘.’,
 ‘@’, ‘#’, ‘&’ (as a prefix operator), ‘->’, ‘`’, ‘?’, and ‘!’ (as a
 postfix operator).
 
-   ** Literals
+
+File: swift-reference.info,  Node: Literals,  Next: Operators,  Prev: Keywords and Punctuation,  Up: Lexical Structure
 
-   A _literal_ is the source code representation of a value of a type,
-such as a number or string.
+3.4 Literals
+============
+
+A _literal_ is the source code representation of a value of a type, such
+as a number or string.
 
    The following are examples of literals:
 
@@ -637,9 +649,9 @@ declaration ‘let x: Int8 = 42’.
 * String Literals::
 
 
-File: swift-reference.info,  Node: Integer Literals,  Next: Floating-Point Literals,  Up: Identifiers
+File: swift-reference.info,  Node: Integer Literals,  Next: Floating-Point Literals,  Up: Literals
 
-3.2.1 Integer Literals
+3.4.1 Integer Literals
 ----------------------
 
 _Integer literals_ represent integer values of unspecified precision.
@@ -664,7 +676,7 @@ likewise ignored and don’t affect the base or value of the literal.
    Unless otherwise specified, the default inferred type of an integer
 literal is the Swift standard library type ‘Int’.  The Swift standard
 library also defines types for various sizes of signed and unsigned
-integers, as described in Integers (swift.org).
+integers, as described in *note Integers: (swift)Integers.
 
    Grammar of an integer literal
 
@@ -720,9 +732,9 @@ hexadecimal-literal-characters _{opt}
 hexadecimal-literal-characters _{opt}
 
 
-File: swift-reference.info,  Node: Floating-Point Literals,  Next: String Literals,  Prev: Integer Literals,  Up: Identifiers
+File: swift-reference.info,  Node: Floating-Point Literals,  Next: String Literals,  Prev: Integer Literals,  Up: Literals
 
-3.2.2 Floating-Point Literals
+3.4.2 Floating-Point Literals
 -----------------------------
 
 _Floating-point literals_ represent floating-point values of unspecified
@@ -789,9 +801,9 @@ hexadecimal-literal-characters _{opt}
    sign → ‘+’ | ‘-’
 
 
-File: swift-reference.info,  Node: String Literals,  Prev: Floating-Point Literals,  Up: Identifiers
+File: swift-reference.info,  Node: String Literals,  Prev: Floating-Point Literals,  Up: Literals
 
-3.2.3 String Literals
+3.4.3 String Literals
 ---------------------
 
 A string literal is a sequence of characters surrounded by quotation
@@ -913,8 +925,8 @@ have the same indentation requirements as regular multiline string
 literals.
 
    The default inferred type of a string literal is ‘String’.  For more
-information about the ‘String’ type, see Strings and Characters
-(swift.org) and ‘String’
+information about the ‘String’ type, see *note Strings and Characters:
+(swift)Strings and Characters. and ‘String’
 (https://developer.apple.com/documentation/swift/string)
 [<https://developer.apple.com/documentation/swift/string>].
 
@@ -998,15 +1010,16 @@ escape-sequence ‘"’ | escape-sequence ‘'’
    escaped-newline → escape-sequence whitespace _{opt} line-break
 
 
-File: swift-reference.info,  Node: Operators,  Prev: Identifiers,  Up: Lexical Structure
+File: swift-reference.info,  Node: Operators,  Prev: Literals,  Up: Lexical Structure
 
-3.3 Operators
+3.5 Operators
 =============
 
 The Swift standard library defines a number of operators for your use,
-many of which are discussed in Basic Operators (swift.org) and Advanced
-Operators (swift.org).  The present section describes which characters
-can be used to define custom operators.
+many of which are discussed in *note Basic Operators: (swift)Basic
+Operators. and *note Advanced Operators: (swift)Advanced Operators.  The
+present section describes which characters can be used to define custom
+operators.
 
    Custom operators can begin with one of the ASCII characters ‘/’, ‘=’,
 ‘-’, ‘+’, ‘!’, ‘*’, ‘%’, ‘<’, ‘>’, ‘&’, ‘|’, ‘^’, ‘?’, or ‘~’, or one of
@@ -1074,9 +1087,10 @@ to disambiguate between the closing ‘>’ characters in constructs like
 characters are not treated as a single token that may then be
 misinterpreted as a bit shift ‘>>’ operator.
 
-   To learn how to define new, custom operators, see Custom Operators
-(swift.org) and *note Operator Declaration::.  To learn how to overload
-existing operators, see Operator Methods (swift.org).
+   To learn how to define new, custom operators, see *note Custom
+Operators: (swift)Custom Operators. and *note Operator Declaration::.
+To learn how to overload existing operators, see *note Operator Methods:
+(swift)Operator Methods.
 
    Grammar of operators
 
@@ -1170,8 +1184,8 @@ languages—such as types that represent numbers, characters, and
 strings—are actually named types, defined and implemented in the Swift
 standard library using structures.  Because they’re named types, you can
 extend their behavior to suit the needs of your program, using an
-extension declaration, discussed in Extensions (swift.org) and *note
-Extension Declaration::.
+extension declaration, discussed in *note Extensions: (swift)Extensions.
+and *note Extension Declaration::.
 
    A _compound type_ is a type without a name, defined in the Swift
 language itself.  There are two compound types: function types and tuple
@@ -1304,8 +1318,8 @@ the function to return a single tuple containing multiple values.  You
 can also name the elements of a tuple type and use those names to refer
 to the values of the individual elements.  An element name consists of
 an identifier followed immediately by a colon (:).  For an example that
-demonstrates both of these features, see Functions with Multiple Return
-Values (swift.org).
+demonstrates both of these features, see *note Functions with Multiple
+Return Values: (swift)Functions with Multiple Return Values.
 
    When an element of a tuple type has a name, that name is part of the
 type.
@@ -1353,15 +1367,15 @@ can apply the ‘autoclosure’ attribute to implicitly create a closure at
 its call sites.  This provides a syntactically convenient way to defer
 the evaluation of an expression without needing to write an explicit
 closure when you call the function.  For an example of an autoclosure
-function type parameter, see Autoclosures (swift.org).
+function type parameter, see *note Autoclosures: (swift)Autoclosures.
 
    A function type can have a variadic parameter in its _parameter
 type_.  Syntactically, a variadic parameter consists of a base type name
 followed immediately by three dots (‘...’), as in ‘Int...’.  A variadic
 parameter is treated as an array that contains elements of the base type
 name.  For instance, the variadic parameter ‘Int...’ is treated as
-‘[Int]’.  For an example that uses a variadic parameter, see Variadic
-Parameters (swift.org).
+‘[Int]’.  For an example that uses a variadic parameter, see *note
+Variadic Parameters: (swift)Variadic Parameters.
 
    To specify an in-out parameter, prefix the parameter type with the
 ‘inout’ keyword.  You can’t mark a variadic parameter or a return type
@@ -1471,7 +1485,8 @@ of ‘takesTwoFunctions(first:second:)’.
 escaping, or temporarily convert one of the nonescaping function
 parameters to an escaping function by using the
 ‘withoutActuallyEscaping(_:do:)’ function.  For information about
-avoiding conflicting access to memory, see Memory Safety (swift.org).
+avoiding conflicting access to memory, see *note Memory Safety:
+(swift)Memory Safety.
 
    Grammar of a function type
 
@@ -1531,7 +1546,7 @@ on.  This means that in the example above, ‘array3D[0]’ refers to ‘[[1,
 refers to the value 4.
 
    For a detailed discussion of the Swift standard library ‘Array’ type,
-see Arrays (swift.org).
+see *note Arrays: (swift)Arrays.
 
    Grammar of an array type
 
@@ -1568,7 +1583,7 @@ subscript returns ‘nil’.
 library ‘Hashable’ protocol.
 
    For a detailed discussion of the Swift standard library ‘Dictionary’
-type, see Dictionaries (swift.org).
+type, see *note Dictionaries: (swift)Dictionaries.
 
    Grammar of a dictionary type
 
@@ -1613,7 +1628,7 @@ value is ‘nil’, no operation is performed and therefore no runtime error
 is produced.
 
    For more information and to see examples that show how to use
-optional types, see Optionals (swift.org).
+optional types, see *note Optionals: (swift)Optionals.
 
    Grammar of an optional type
 
@@ -1665,7 +1680,8 @@ implicitly unwrapped optional expression.  If the value is ‘nil’, no
 operation is performed and therefore no runtime error is produced.
 
    For more information about implicitly unwrapped optional types, see
-Implicitly Unwrapped Optionals (swift.org).
+*note Implicitly Unwrapped Optionals: (swift)Implicitly Unwrapped
+Optionals.
 
    Grammar of an implicitly unwrapped optional type
 
@@ -1807,7 +1823,7 @@ must appear first in the list of type identifiers, followed by any
 number of protocols the class must conform to.  If the class doesn’t
 inherit from another class, the list can begin with a protocol instead.
 For an extended discussion and several examples of class inheritance,
-see Inheritance (swift.org).
+see *note Inheritance: (swift)Inheritance.
 
    Other named types can only inherit from or conform to a list of
 protocols.  Protocol types can inherit from any number of other
@@ -1820,8 +1836,8 @@ those requirements.
 a list of protocols, or in the case of an enumeration that assigns raw
 values to its cases, a single, named type that specifies the type of
 those raw values.  For an example of an enumeration definition that uses
-a type inheritance clause to specify the type of its raw values, see Raw
-Values (swift.org).
+a type inheritance clause to specify the type of its raw values, see
+*note Raw Values: (swift)Raw Values.
 
    Grammar of a type inheritance clause
 
@@ -1907,8 +1923,9 @@ _Prefix expressions_ combine an optional prefix operator with an
 expression.  Prefix operators take one argument, the expression that
 follows them.
 
-   For information about the behavior of these operators, see Basic
-Operators (swift.org) and Advanced Operators (swift.org).
+   For information about the behavior of these operators, see *note
+Basic Operators: (swift)Basic Operators. and *note Advanced Operators:
+(swift)Advanced Operators.
 
    For information about the operators provided by the Swift standard
 library, see Operator Declarations
@@ -1977,7 +1994,7 @@ operator, unless the binary operator is the assignment operator or the
 ‘try’ expression is enclosed in parentheses.
 
    For more information and to see examples of how to use ‘try’, ‘try?’,
-and ‘try!’, see Error Handling (swift.org).
+and ‘try!’, see *note Error Handling: (swift)Error Handling.
 
    Grammar of a try expression
 
@@ -1995,8 +2012,9 @@ has the following form:
 
   1. left-hand argument operator right-hand argument
 
-   For information about the behavior of these operators, see Basic
-Operators (swift.org) and Advanced Operators (swift.org).
+   For information about the behavior of these operators, see *note
+Basic Operators: (swift)Basic Operators. and *note Advanced Operators:
+(swift)Advanced Operators.
 
    For information about the operators provided by the Swift standard
 library, see Operator Declarations
@@ -2068,8 +2086,8 @@ evaluates the first expression and returns its value.  Otherwise, it
 evaluates the second expression and returns its value.  The unused
 expression is not evaluated.
 
-   For an example that uses the ternary conditional operator, see
-Ternary Conditional Operator (swift.org).
+   For an example that uses the ternary conditional operator, see *note
+Ternary Conditional Operator: (swift)Ternary Conditional Operator.
 
    Grammar of a conditional operator
 
@@ -2136,7 +2154,7 @@ raised.  The behavior of ‘x as! T’ is the same as the behavior of ‘(x
 as? T)!’.
 
    For more information about type casting and to see examples that use
-the type-casting operators, see Type Casting (swift.org).
+the type-casting operators, see *note Type Casting: (swift)Type Casting.
 
    Grammar of a type-casting operator
 
@@ -2460,8 +2478,8 @@ surrounding context of the expression.  A closure expression is
 nonescaping if it is called immediately or passed as a nonescaping
 function argument.  Otherwise, the closure expression is escaping.
 
-   For more information about escaping closures, see Escaping Closures
-(swift.org).
+   For more information about escaping closures, see *note Escaping
+Closures: (swift)Escaping Closures.
 
   1. Capture Lists
 
@@ -2546,10 +2564,11 @@ function argument.  Otherwise, the closure expression is escaping.
        2. myFunction { [weak parent = self.parent] in
           print(parent!.title) }
 
-     For more information and examples of closure expressions, see
-     Closure Expressions (swift.org).  For more information and examples
-     of capture lists, see Resolving Strong Reference Cycles for
-     Closures (swift.org).
+     For more information and examples of closure expressions, see *note
+     Closure Expressions: (swift)Closure Expressions.  For more
+     information and examples of capture lists, see *note Resolving
+     Strong Reference Cycles for Closures: (swift)Resolving Strong
+     Reference Cycles for Closures.
 
      Grammar of a closure expression
 
@@ -2997,8 +3016,9 @@ _Postfix expressions_ are formed by applying a postfix operator or other
 postfix syntax to an expression.  Syntactically, every primary
 expression is also a postfix expression.
 
-   For information about the behavior of these operators, see Basic
-Operators (swift.org) and Advanced Operators (swift.org).
+   For information about the behavior of these operators, see *note
+Basic Operators: (swift)Basic Operators. and *note Advanced Operators:
+(swift)Advanced Operators.
 
    For information about the operators provided by the Swift standard
 library, see Operator Declarations
@@ -3528,7 +3548,7 @@ be executed zero or more times.
 
    The value of the _condition_ must be of type ‘Bool’ or a type bridged
 to ‘Bool’.  The condition can also be an optional binding declaration,
-as discussed in Optional Binding (swift.org).
+as discussed in *note Optional Binding: (swift)Optional Binding.
 
    Grammar of a while statement
 
@@ -3578,7 +3598,7 @@ statement are executed at least once.
 
    The value of the _condition_ must be of type ‘Bool’ or a type bridged
 to ‘Bool’.  The condition can also be an optional binding declaration,
-as discussed in Optional Binding (swift.org).
+as discussed in *note Optional Binding: (swift)Optional Binding.
 
    Grammar of a repeat-while statement
 
@@ -3654,8 +3674,8 @@ together in this way has the following form:
 
    The value of any condition in an ‘if’ statement must be of type
 ‘Bool’ or a type bridged to ‘Bool’.  The condition can also be an
-optional binding declaration, as discussed in Optional Binding
-(swift.org).
+optional binding declaration, as discussed in *note Optional Binding:
+(swift)Optional Binding.
 
    Grammar of an if statement
 
@@ -3682,8 +3702,8 @@ if one or more conditions aren’t met.
 
    The value of any condition in a ‘guard’ statement must be of type
 ‘Bool’ or a type bridged to ‘Bool’.  The condition can also be an
-optional binding declaration, as discussed in Optional Binding
-(swift.org).
+optional binding declaration, as discussed in *note Optional Binding:
+(swift)Optional Binding.
 
    Any constants or variables assigned a value from an optional binding
 declaration in a ‘guard’ statement condition can be used for the rest of
@@ -3745,8 +3765,8 @@ return type, see *note Functions that Never Return::.
      _control expression_ can even be matched to the value of a case in
      an enumeration and checked for inclusion in a specified range of
      values.  For examples of how to use these various types of values
-     in ‘switch’ statements, see Switch (swift.org) in Control Flow
-     (swift.org).
+     in ‘switch’ statements, see *note Switch: (swift)Switch. in *note
+     Control Flow: (swift)Control Flow.
 
      A ‘switch’ case can optionally contain a ‘where’ clause after each
      pattern.  A _where clause_ is introduced by the ‘where’ keyword
@@ -3910,7 +3930,8 @@ the statement label.  You can nest labeled statements, but the name of
 each statement label must be unique.
 
    For more information and to see examples of how to use statement
-labels, see Labeled Statements (swift.org) in Control Flow (swift.org).
+labels, see *note Labeled Statements: (swift)Labeled Statements. in
+*note Control Flow: (swift)Control Flow.
 
    Grammar of a labeled statement
 
@@ -3984,8 +4005,9 @@ unlabeled ‘break’ statement to break out of an ‘if’ statement.
    In both cases, program control is then transferred to the first line
 of code following the enclosing loop or ‘switch’ statement, if any.
 
-   For examples of how to use a ‘break’ statement, see Break (swift.org)
-and Labeled Statements (swift.org) in Control Flow (swift.org).
+   For examples of how to use a ‘break’ statement, see *note Break:
+(swift)Break. and *note Labeled Statements: (swift)Labeled Statements.
+in *note Control Flow: (swift)Control Flow.
 
    Grammar of a break statement
 
@@ -4021,9 +4043,9 @@ of the enclosing loop statement.
 after the ‘continue’ statement is executed, because the increment
 expression is evaluated after the execution of the loop’s body.
 
-   For examples of how to use a ‘continue’ statement, see Continue
-(swift.org) and Labeled Statements (swift.org) in Control Flow
-(swift.org).
+   For examples of how to use a ‘continue’ statement, see *note
+Continue: (swift)Continue. and *note Labeled Statements: (swift)Labeled
+Statements. in *note Control Flow: (swift)Control Flow.
 
    Grammar of a continue statement
 
@@ -4049,7 +4071,7 @@ case block whose pattern contains value binding patterns.
 
    For an example of how to use a ‘fallthrough’ statement in a ‘switch’
 statement, see *note Control Transfer Statements: Control Transfer
-Statements. in Control Flow (swift.org).
+Statements. in *note Control Flow: (swift)Control Flow.
 
    Grammar of a fallthrough statement
 
@@ -4118,9 +4140,10 @@ expression, as shown below.
    The value of the _expression_ must have a type that conforms to the
 ‘Error’ protocol.
 
-   For an example of how to use a ‘throw’ statement, see Propagating
-Errors Using Throwing Functions (swift.org) in Error Handling
-(swift.org).
+   For an example of how to use a ‘throw’ statement, see *note
+Propagating Errors Using Throwing Functions: (swift)Propagating Errors
+Using Throwing Functions. in *note Error Handling: (swift)Error
+Handling.
 
    Grammar of a throw statement
 
@@ -4212,7 +4235,7 @@ information about the patterns you can use in a ‘catch’ clause, see
 *note Patterns::.
 
    To see an example of how to use a ‘do’ statement with several ‘catch’
-clauses, see Handling Errors (swift.org).
+clauses, see *note Handling Errors: (swift)Handling Errors.
 
    Grammar of a do statement
 
@@ -4744,12 +4767,12 @@ declaration when the type of the _constant name_ can be inferred, as
 described in *note Type Inference::.
 
    To declare a constant type property, mark the declaration with the
-‘static’ declaration modifier.  Type properties are discussed in Type
-Properties (swift.org).
+‘static’ declaration modifier.  Type properties are discussed in *note
+Type Properties: (swift)Type Properties.
 
    For more information about constants and for guidance about when to
-use them, see Constants and Variables (swift.org) and Stored Properties
-(swift.org).
+use them, see *note Constants and Variables: (swift)Constants and
+Variables. and *note Stored Properties: (swift)Stored Properties.
 
    Grammar of a constant declaration
 
@@ -4786,7 +4809,7 @@ Protocol Property Declaration.
 
    You can override a property in a subclass by marking the subclass’s
 property declaration with the ‘override’ declaration modifier, as
-described in Overriding (swift.org).
+described in *note Overriding: (swift)Overriding.
 
 * Menu:
 
@@ -4855,22 +4878,22 @@ to as a _computed property_.
    The getter is used to read the value, and the setter is used to write
 the value.  The setter clause is optional, and when only a getter is
 needed, you can omit both clauses and simply return the requested value
-directly, as described in Read-Only Computed Properties (swift.org).
-But if you provide a setter clause, you must also provide a getter
-clause.
+directly, as described in *note Read-Only Computed Properties:
+(swift)Read-Only Computed Properties.  But if you provide a setter
+clause, you must also provide a getter clause.
 
    The _setter name_ and enclosing parentheses is optional.  If you
 provide a setter name, it is used as the name of the parameter to the
 setter.  If you do not provide a setter name, the default parameter name
-to the setter is ‘newValue’, as described in Shorthand Setter
-Declaration (swift.org).
+to the setter is ‘newValue’, as described in *note Shorthand Setter
+Declaration: (swift)Shorthand Setter Declaration.
 
    Unlike stored named values and stored variable properties, the value
 of a computed named value or a computed property is not stored in
 memory.
 
    For more information and to see examples of computed properties, see
-Computed Properties (swift.org).
+*note Computed Properties: (swift)Computed Properties.
 
 
 File: swift-reference.info,  Node: Stored Variable Observers and Property Observers,  Next: Type Variable Properties,  Prev: Computed Variables and Computed Properties,  Up: Variable Declaration
@@ -4902,7 +4925,8 @@ to as _property observers_.
    You can add property observers to any stored property.  You can also
 add property observers to any inherited property (whether stored or
 computed) by overriding the property within a subclass, as described in
-Overriding Property Observers (swift.org).
+*note Overriding Property Observers: (swift)Overriding Property
+Observers.
 
    The initializer _expression_ is optional in the context of a class or
 structure declaration, but required elsewhere.  The _type_ annotation is
@@ -4938,7 +4962,7 @@ Likewise, the ‘willSet’ clause is optional when you provide a ‘didSet’
 clause.
 
    For more information and to see an example of how to use property
-observers, see Property Observers (swift.org).
+observers, see *note Property Observers: (swift)Property Observers.
 
 
 File: swift-reference.info,  Node: Type Variable Properties,  Prev: Stored Variable Observers and Property Observers,  Up: Variable Declaration
@@ -4950,7 +4974,7 @@ To declare a type variable property, mark the declaration with the
 ‘static’ declaration modifier.  Classes may mark type computed
 properties with the ‘class’ declaration modifier instead to allow
 subclasses to override the superclass’s implementation.  Type properties
-are discussed in Type Properties (swift.org).
+are discussed in *note Type Properties: (swift)Type Properties.
 
    Note
 
@@ -5133,8 +5157,8 @@ guaranteed to never escape—such as an in-out parameter—or passed as a
 nonescaping function argument.  Otherwise, the nested function is an
 escaping function.
 
-   For a discussion of nested functions, see Nested Functions
-(swift.org).
+   For a discussion of nested functions, see *note Nested Functions:
+(swift)Nested Functions.
 
 * Menu:
 
@@ -5224,7 +5248,7 @@ violates Swift’s memory exclusivity guarantee.  For the same reason, you
 can’t pass the same value to multiple in-out parameters.
 
    For more information about memory safety and memory exclusivity, see
-Memory Safety (swift.org).
+*note Memory Safety: (swift)Memory Safety.
 
    A closure or nested function that captures an in-out parameter must
 be nonescaping.  If you need to capture an in-out parameter without
@@ -5273,7 +5297,8 @@ accessed within the body of the function.
 most one variadic parameter.  A variadic parameter is treated as an
 array that contains elements of the base type name.  For example, the
 variadic parameter ‘Int...’ is treated as ‘[Int]’.  For an example that
-uses a variadic parameter, see Variadic Parameters (swift.org).
+uses a variadic parameter, see *note Variadic Parameters:
+(swift)Variadic Parameters.
 
    A parameter with an equals sign (‘=’) and an expression after its
 type is understood to have a default value of the given expression.  The
@@ -5472,8 +5497,8 @@ an initializer assigns one of the enumeration cases to ‘self’.
    Like structures but unlike classes, enumerations are value types;
 instances of an enumeration are copied when assigned to variables or
 constants, or when passed as arguments to a function call.  For
-information about value types, see Structures and Enumerations Are Value
-Types (swift.org).
+information about value types, see *note Structures and Enumerations Are
+Value Types: (swift)Structures and Enumerations Are Value Types.
 
    You can extend the behavior of an enumeration type with an extension
 declaration, as discussed in *note Extension Declaration: Extension
@@ -5525,7 +5550,7 @@ an enumeration case and apply it later in your code.
   9. let evenInts: [Number] = [0, 2, 4, 6].map(f)
 
    For more information and to see examples of cases with associated
-value types, see Associated Values (swift.org).
+value types, see *note Associated Values: (swift)Associated Values.
 
   1. Enumerations with Indirection
 
@@ -5621,7 +5646,7 @@ as in ‘ExampleEnum.b.rawValue’.  You can also use a raw value to find a
 corresponding case, if there is one, by calling the enumeration’s
 failable initializer, as in ‘ExampleEnum(rawValue: 5)’, which returns an
 optional case.  For more information and to see examples of cases with
-raw-value types, see Raw Values (swift.org).
+raw-value types, see *note Raw Values: (swift)Raw Values.
 
 
 File: swift-reference.info,  Node: Accessing Enumeration Cases,  Prev: Enumerations with Cases of a Raw-Value Type,  Up: Enumeration Declaration
@@ -5632,14 +5657,15 @@ File: swift-reference.info,  Node: Accessing Enumeration Cases,  Prev: Enumerati
 To reference the case of an enumeration type, use dot (‘.’) syntax, as
 in ‘EnumerationType.enumerationCase’.  When the enumeration type can be
 inferred from context, you can omit it (the dot is still required), as
-described in Enumeration Syntax (swift.org) and *note Implicit Member
-Expression::.
+described in *note Enumeration Syntax: (swift)Enumeration Syntax. and
+*note Implicit Member Expression::.
 
    To check the values of enumeration cases, use a ‘switch’ statement,
-as shown in Matching Enumeration Values with a Switch Statement
-(swift.org).  The enumeration type is pattern-matched against the
-enumeration case patterns in the case blocks of the ‘switch’ statement,
-as described in *note Enumeration Case Pattern::.
+as shown in *note Matching Enumeration Values with a Switch Statement:
+(swift)Matching Enumeration Values with a Switch Statement.  The
+enumeration type is pattern-matched against the enumeration case
+patterns in the case blocks of the ‘switch’ statement, as described in
+*note Enumeration Case Pattern::.
 
    Grammar of an enumeration declaration
 
@@ -5718,8 +5744,8 @@ properties, instance methods, type methods, initializers, subscripts,
 type aliases, and even other structure, class, and enumeration
 declarations.  Structure declarations can’t contain deinitializer or
 protocol declarations.  For a discussion and several examples of
-structures that include various kinds of declarations, see Structures
-and Classes (swift.org).
+structures that include various kinds of declarations, see *note
+Structures and Classes: (swift)Structures and Classes.
 
    Structure types can adopt any number of protocols, but can’t inherit
 from classes, enumerations, or other structures.
@@ -5728,27 +5754,30 @@ from classes, enumerations, or other structures.
 structure:
 
    • Call one of the initializers declared within the structure, as
-     described in Initializers (swift.org).
+     described in *note Initializers: (swift)Initializers.
 
    • If no initializers are declared, call the structure’s memberwise
-     initializer, as described in Memberwise Initializers for Structure
-     Types (swift.org).
+     initializer, as described in *note Memberwise Initializers for
+     Structure Types: (swift)Memberwise Initializers for Structure
+     Types.
 
    • If no initializers are declared, and all properties of the
      structure declaration were given initial values, call the
-     structure’s default initializer, as described in Default
-     Initializers (swift.org).
+     structure’s default initializer, as described in *note Default
+     Initializers: (swift)Default Initializers.
 
    The process of initializing a structure’s declared properties is
-described in Initialization (swift.org).
+described in *note Initialization: (swift)Initialization.
 
    Properties of a structure instance can be accessed using dot (‘.’)
-syntax, as described in Accessing Properties (swift.org).
+syntax, as described in *note Accessing Properties: (swift)Accessing
+Properties.
 
    Structures are value types; instances of a structure are copied when
 assigned to variables or constants, or when passed as arguments to a
-function call.  For information about value types, see Structures and
-Enumerations Are Value Types (swift.org).
+function call.  For information about value types, see *note Structures
+and Enumerations Are Value Types: (swift)Structures and Enumerations Are
+Value Types.
 
    You can extend the behavior of a structure type with an extension
 declaration, as discussed in *note Extension Declaration: Extension
@@ -5789,7 +5818,8 @@ methods, type methods, initializers, a single deinitializer, subscripts,
 type aliases, and even other class, structure, and enumeration
 declarations.  Class declarations can’t contain protocol declarations.
 For a discussion and several examples of classes that include various
-kinds of declarations, see Structures and Classes (swift.org).
+kinds of declarations, see *note Structures and Classes:
+(swift)Structures and Classes.
 
    A class type can inherit from only one parent class, its
 _superclass_, but can adopt any number of protocols.  The _superclass_
@@ -5819,26 +5849,29 @@ with the ‘required’ declaration modifier.
    Although properties and methods declared in the _superclass_ are
 inherited by the current class, designated initializers declared in the
 _superclass_ are only inherited when the subclass meets the conditions
-described in Automatic Initializer Inheritance (swift.org).  Swift
-classes do not inherit from a universal base class.
+described in *note Automatic Initializer Inheritance: (swift)Automatic
+Initializer Inheritance.  Swift classes do not inherit from a universal
+base class.
 
    There are two ways to create an instance of a previously declared
 class:
 
    • Call one of the initializers declared within the class, as
-     described in Initializers (swift.org).
+     described in *note Initializers: (swift)Initializers.
 
    • If no initializers are declared, and all properties of the class
      declaration were given initial values, call the class’s default
-     initializer, as described in Default Initializers (swift.org).
+     initializer, as described in *note Default Initializers:
+     (swift)Default Initializers.
 
    Access properties of a class instance with dot (‘.’) syntax, as
-described in Accessing Properties (swift.org).
+described in *note Accessing Properties: (swift)Accessing Properties.
 
    Classes are reference types; instances of a class are referred to,
 rather than copied, when assigned to variables or constants, or when
 passed as arguments to a function call.  For information about reference
-types, see Structures and Enumerations Are Value Types (swift.org).
+types, see *note Structures and Enumerations Are Value Types:
+(swift)Structures and Enumerations Are Value Types.
 
    You can extend the behavior of a class type with an extension
 declaration, as discussed in *note Extension Declaration: Extension
@@ -5892,14 +5925,15 @@ discussed in detail below.
 a protocol type inherits from other protocols, the set of requirements
 from those other protocols are aggregated, and any type that inherits
 from the current protocol must conform to all those requirements.  For
-an example of how to use protocol inheritance, see Protocol Inheritance
-(swift.org).
+an example of how to use protocol inheritance, see *note Protocol
+Inheritance: (swift)Protocol Inheritance.
 
    Note
 
    You can also aggregate the conformance requirements of multiple
 protocols using protocol composition types, as described in *note
-Protocol Composition Type:: and Protocol Composition (swift.org).
+Protocol Composition Type:: and *note Protocol Composition:
+(swift)Protocol Composition.
 
    You can add protocol conformance to a previously declared type by
 adopting the protocol in an extension declaration of that type.  In the
@@ -5918,8 +5952,8 @@ result, only class types can adopt and conform to a protocol that
 contains optional member requirements.  For more information about how
 to use the ‘optional’ declaration modifier and for guidance about how to
 access optional protocol members—for example, when you’re not sure
-whether a conforming type implements them—see Optional Protocol
-Requirements (swift.org).
+whether a conforming type implements them—see *note Optional Protocol
+Requirements: (swift)Optional Protocol Requirements.
 
    To restrict the adoption of a protocol to class types only, include
 the ‘AnyObject’ protocol in the _inherited protocols_ list after the
@@ -5940,13 +5974,14 @@ requirement is implicitly applied to that protocol; there’s no need to
 mark the protocol with the ‘AnyObject’ requirement explicitly.
 
    Protocols are named types, and thus they can appear in all the same
-places in your code as other named types, as discussed in Protocols as
-Types (swift.org).  However, you can’t construct an instance of a
-protocol, because protocols do not actually provide the implementations
-for the requirements they specify.
+places in your code as other named types, as discussed in *note
+Protocols as Types: (swift)Protocols as Types.  However, you can’t
+construct an instance of a protocol, because protocols do not actually
+provide the implementations for the requirements they specify.
 
    You can use protocols to declare which methods a delegate of a class
-or structure should implement, as described in Delegation (swift.org).
+or structure should implement, as described in *note Delegation:
+(swift)Delegation.
 
    Grammar of a protocol declaration
 
@@ -6010,7 +6045,8 @@ However, that property declaration can’t be implemented as a constant
 property or a read-only computed property.  If a property declaration
 includes only the ‘get’ keyword, it can be implemented as any kind of
 property.  For examples of conforming types that implement the property
-requirements of a protocol, see Property Requirements (swift.org).
+requirements of a protocol, see *note Property Requirements:
+(swift)Property Requirements.
 
    See also *note Variable Declaration::.
 
@@ -6031,8 +6067,8 @@ declaration.  Protocol method declarations have the same form as
 function declarations, with two exceptions: They don’t include a
 function body, and you can’t provide any default parameter values as
 part of the function declaration.  For examples of conforming types that
-implement the method requirements of a protocol, see Method Requirements
-(swift.org).
+implement the method requirements of a protocol, see *note Method
+Requirements: (swift)Method Requirements.
 
    To declare a class or static method requirement in a protocol
 declaration, mark the method declaration with the ‘static’ declaration
@@ -6125,7 +6161,8 @@ a protocol’s declaration.  Associated types are similar to type
 parameters in generic parameter clauses, but they’re associated with
 ‘Self’ in the protocol in which they’re declared.  In that context,
 ‘Self’ refers to the eventual type that conforms to the protocol.  For
-more information and examples, see Associated Types (swift.org).
+more information and examples, see *note Associated Types:
+(swift)Associated Types.
 
    You use a generic ‘where’ clause in a protocol declaration to add
 constraints to an associated types inherited from another protocol,
@@ -6167,7 +6204,8 @@ are declared using the ‘init’ keyword and have two basic forms.
 initializers, but the rules and associated behavior for class
 initializers are different.  Unlike structures and enumerations, classes
 have two kinds of initializers: designated initializers and convenience
-initializers, as described in Initialization (swift.org).
+initializers, as described in *note Initialization:
+(swift)Initialization.
 
    The following form declares initializers for structures,
 enumerations, and designated initializers of classes:
@@ -6233,7 +6271,7 @@ errors.  And just like functions and methods, you use the ‘throws’ or
 appropriate behavior.
 
    To see examples of initializers in various type declarations, see
-Initialization (swift.org).
+*note Initialization: (swift)Initialization.
 
 * Menu:
 
@@ -6354,7 +6392,7 @@ inheritance chain have finished executing.
    Deinitializers are not called directly.
 
    For an example of how to use a deinitializer in a class declaration,
-see Deinitialization (swift.org).
+see *note Deinitialization: (swift)Deinitialization.
 
    Grammar of a deinitializer declaration
 
@@ -6382,7 +6420,8 @@ declarations.  Extension declarations can’t contain deinitializer or
 protocol declarations, stored properties, property observers, or other
 extension declarations.  Declarations in a protocol extension can’t be
 marked ‘final’.  For a discussion and several examples of extensions
-that include various kinds of declarations, see Extensions (swift.org).
+that include various kinds of declarations, see *note Extensions:
+(swift)Extensions.
 
    If the _type name_ is a class, structure, or enumeration type, the
 extension extends that type.  If the _type name_ is a protocol type, the
@@ -6681,7 +6720,7 @@ declaration, as described in *note Protocol Subscript Declaration:
 Protocol Subscript Declaration.
 
    For more information about subscripting and to see examples of
-subscript declarations, see Subscripts (swift.org).
+subscript declarations, see *note Subscripts: (swift)Subscripts.
 
    Grammar of a subscript declaration
 
@@ -6763,7 +6802,8 @@ is implemented as a static method on either the ‘Double’ or ‘Int’
 structure.  If you’re implementing a prefix or postfix operator, you
 must also mark that method declaration with the corresponding ‘prefix’
 or ‘postfix’ declaration modifier.  To see an example of how to create
-and implement a new operator, see Custom Operators (swift.org).
+and implement a new operator, see *note Custom Operators: (swift)Custom
+Operators.
 
    Grammar of an operator declaration
 
@@ -6910,14 +6950,15 @@ and the keyword that introduces the declaration.
      that the class can’t be subclassed.  It’s applied to a property,
      method, or subscript of a class to indicate that a class member
      can’t be overridden in any subclass.  For an example of how to use
-     the ‘final’ attribute, see Preventing Overrides (swift.org).
+     the ‘final’ attribute, see *note Preventing Overrides:
+     (swift)Preventing Overrides.
 
 ‘lazy’
      Apply this modifier to a stored variable property of a class or
      structure to indicate that the property’s initial value is
      calculated and stored at most once, when the property is first
      accessed.  For an example of how to use the ‘lazy’ modifier, see
-     Lazy Stored Properties (swift.org).
+     *note Lazy Stored Properties: (swift)Lazy Stored Properties.
 
 ‘optional’
      Apply this modifier to a protocol’s property, method, or subscript
@@ -6930,7 +6971,8 @@ and the keyword that introduces the declaration.
      requirements.  For more information about how to use the ‘optional’
      modifier and for guidance about how to access optional protocol
      members—for example, when you’re not sure whether a conforming type
-     implements them—see Optional Protocol Requirements (swift.org).
+     implements them—see *note Optional Protocol Requirements:
+     (swift)Optional Protocol Requirements.
 
 ‘required’
      Apply this modifier to a designated or convenience initializer of a
@@ -6946,7 +6988,8 @@ and the keyword that introduces the declaration.
      runtime error is raised.  Like a weak reference, the type of the
      property or value must be a class type; unlike a weak reference,
      the type is non-optional.  For an example and more information
-     about the ‘unowned’ modifier, see Unowned References (swift.org).
+     about the ‘unowned’ modifier, see *note Unowned References:
+     (swift)Unowned References.
 
 ‘unowned(safe)’
      An explicit spelling of ‘unowned’.
@@ -6960,8 +7003,8 @@ and the keyword that introduces the declaration.
      be, which is a memory-unsafe operation.  Like a weak reference, the
      type of the property or value must be a class type; unlike a weak
      reference, the type is non-optional.  For an example and more
-     information about the ‘unowned’ modifier, see Unowned References
-     (swift.org).
+     information about the ‘unowned’ modifier, see *note Unowned
+     References: (swift)Unowned References.
 
 ‘weak’
      Apply this modifier to a stored variable or stored variable
@@ -6970,7 +7013,7 @@ and the keyword that introduces the declaration.
      variable or property must be an optional class type.  If you access
      the variable or property after the object has been deallocated, its
      value is ‘nil’.  For an example and more information about the
-     ‘weak’ modifier, see Weak References (swift.org).
+     ‘weak’ modifier, see *note Weak References: (swift)Weak References.
 
 * Menu:
 
@@ -6985,7 +7028,8 @@ File: swift-reference.info,  Node: Access Control Levels,  Up: Declaration Modif
 Swift provides five levels of access control: open, public, internal,
 file private, and private.  You can mark a declaration with one of the
 access-level modifiers below to specify the declaration’s access level.
-Access control is discussed in detail in Access Control (swift.org).
+Access control is discussed in detail in *note Access Control:
+(swift)Access Control.
 
 ‘open’
      Apply this modifier to a declaration to indicate the declaration
@@ -7029,8 +7073,8 @@ argument, which consists of the ‘set’ keyword enclosed in parentheses
 (for example, ‘private(set)’).  Use this form of an access-level
 modifier when you want to specify an access level for the setter of a
 variable or subscript that’s less than or equal to the access level of
-the variable or subscript itself, as discussed in Getters and Setters
-(swift.org).
+the variable or subscript itself, as discussed in *note Getters and
+Setters: (swift)Getters and Setters.
 
    Grammar of a declaration modifier
 
@@ -7746,8 +7790,8 @@ automatically wrapping that expression in a closure with no arguments.
 You apply it to a parameter’s type in a method or function declaration,
 for a parameter whose type is a function type that takes no arguments
 and that returns a value of the type of the expression.  For an example
-of how to use the ‘autoclosure’ attribute, see Autoclosures (swift.org)
-and *note Function Type::.
+of how to use the ‘autoclosure’ attribute, see *note Autoclosures:
+(swift)Autoclosures. and *note Function Type::.
 
 
 File: swift-reference.info,  Node: convention,  Next: escaping,  Prev: autoclosure,  Up: Type Attributes
@@ -7793,8 +7837,8 @@ declaration to indicate that the parameter’s value can be stored for
 later execution.  This means that the value is allowed to outlive the
 lifetime of the call.  Function type parameters with the ‘escaping’ type
 attribute require explicit use of ‘self.’ for properties or methods.
-For an example of how to use the ‘escaping’ attribute, see Escaping
-Closures (swift.org).
+For an example of how to use the ‘escaping’ attribute, see *note
+Escaping Closures: (swift)Escaping Closures.
 
 
 File: swift-reference.info,  Node: Switch Case Attributes,  Prev: Type Attributes,  Up: Attributes
@@ -8042,7 +8086,8 @@ labels and in the case conditions of ‘if’, ‘while’, ‘guard’, and
 values, the corresponding enumeration case pattern must specify a tuple
 pattern that contains one element for each associated value.  For an
 example that uses a ‘switch’ statement to match enumeration cases
-containing associated values, see Associated Values (swift.org).
+containing associated values, see *note Associated Values:
+(swift)Associated Values.
 
    Grammar of an enumeration case pattern
 
@@ -8117,8 +8162,8 @@ the matched value is cast to the _pattern_ specified in the right-hand
 side of the ‘as’ pattern.
 
    For an example that uses a ‘switch’ statement to match values with
-‘is’ and ‘as’ patterns, see Type Casting for Any and AnyObject
-(swift.org).
+‘is’ and ‘as’ patterns, see *note Type Casting for Any and AnyObject:
+(swift)Type Casting for Any and AnyObject.
 
    Grammar of a type casting pattern
 
@@ -8190,7 +8235,8 @@ parameters act as placeholders that are replaced by actual concrete type
 arguments when an instance of a generic type is created or a generic
 function or initializer is called.
 
-   For an overview of generics in Swift, see Generics (swift.org).
+   For an overview of generics in Swift, see *note Generics:
+(swift)Generics.
 
 * Menu:
 
@@ -10062,168 +10108,170 @@ protocol-composition-type
 
 Tag Table:
 Node: Top235
-Node: Language Reference5234
-Node: About the Language Reference5747
-Node: How to Read the Grammar6601
-Node: Lexical Structure8443
-Node: Whitespace and Comments9286
-Node: Identifiers11364
-Node: Integer Literals19504
-Node: Floating-Point Literals22265
-Node: String Literals25247
-Node: Operators32774
-Node: Types38704
-Node: Type Annotation41126
-Node: Type Identifier41966
-Node: Tuple Type43444
-Node: Function Type44915
-Node: Restrictions for Nonescaping Closures49320
-Node: Array Type51943
-Node: Dictionary Type53657
-Node: Optional Type54983
-Node: Implicitly Unwrapped Optional Type56727
-Node: Protocol Composition Type59068
-Node: Metatype Type61152
-Node: Type Inheritance Clause63793
-Node: Type Inference65598
-Node: Expressions67340
-Node: Prefix Expressions68381
-Node: Try Operator69555
-Node: Binary Expressions71500
-Node: Assignment Operator73092
-Node: Type-Casting Operators74632
-Node: Primary Expressions77493
-Node: Literal Expression78818
-Node: Self Expression83402
-Node: Superclass Expression85058
-Node: Closure Expression86238
-Node: Implicit Member Expression93491
-Node: Parenthesized Expression94129
-Node: Tuple Expression94745
-Node: Wildcard Expression95986
-Node: Key-Path Expression96479
-Node: Selector Expression103415
-Node: Key-Path String Expression106040
-Node: Postfix Expressions108779
-Node: Function Call Expression110208
-Node: Initializer Expression112345
-Node: Explicit Member Expression113957
-Node: Postfix Self Expression116714
-Node: Subscript Expression117603
-Node: Forced-Value Expression118466
-Node: Optional-Chaining Expression119490
-Node: Statements122289
-Node: Loop Statements124258
-Node: For-In Statement125132
-Node: While Statement126552
-Node: Repeat-While Statement128042
-Node: Branch Statements129310
-Node: If Statement130184
-Node: Guard Statement132004
-Node: Labeled Statement142321
-Node: Control Transfer Statements143632
-Node: Break Statement144618
-Node: Continue Statement145948
-Node: Fallthrough Statement147447
-Node: Return Statement148631
-Node: Throw Statement150171
-Node: Defer Statement151206
-Node: Do Statement152709
-Node: Compiler Control Statements154645
-Node: Conditional Compilation Block155417
-Node: Line Control Statement162358
-Node: Compile-Time Diagnostic Statement163854
-Node: Availability Condition164969
-Node: Declarations167135
-Node: Top-Level Code169222
-Node: Code Blocks169889
-Node: Import Declaration170455
-Node: Constant Declaration171616
-Node: Variable Declaration174342
-Node: Stored Variables and Stored Variable Properties175557
-Node: Computed Variables and Computed Properties176952
-Node: Stored Variable Observers and Property Observers178834
-Node: Type Variable Properties182142
-Node: Type Alias Declaration184758
-Node: Function Declaration187504
-Node: Parameter Names189240
-Node: In-Out Parameters190770
-Node: Special Kinds of Parameters193430
-Node: Special Kinds of Methods194912
-Node: Throwing Functions and Methods195981
-Node: Rethrowing Functions and Methods197379
-Node: Functions that Never Return199171
-Node: Enumeration Declaration201337
-Node: Enumerations with Cases of Any Type203149
-Node: Enumerations with Cases of a Raw-Value Type206017
-Node: Accessing Enumeration Cases209470
-Node: Structure Declaration212146
-Node: Class Declaration214914
-Node: Protocol Declaration219079
-Node: Protocol Property Declaration224173
-Node: Protocol Method Declaration225856
-Node: Protocol Initializer Declaration227349
-Node: Protocol Subscript Declaration228821
-Node: Protocol Associated Type Declaration230052
-Node: Initializer Declaration231668
-Node: Failable Initializers235318
-Node: Deinitializer Declaration238797
-Node: Extension Declaration239995
-Node: Conditional Conformance242467
-Node: Protocol Conformance Must Not Be Redundant245786
-Node: Subscript Declaration250248
-Node: Operator Declaration253619
-Node: Precedence Group Declaration256998
-Node: Declaration Modifiers261701
-Node: Access Control Levels266313
-Node: Attributes269985
-Node: Declaration Attributes271058
-Node: available271657
-Node: discardableResult277184
-Node: dynamicCallable277536
-Node: dynamicMemberLookup281458
-Node: GKInspectable282933
-Node: inlinable283264
-Node: nonobjc284351
-Node: NSApplicationMain285590
-Node: NSCopying286180
-Node: NSManaged286779
-Node: objc287339
-Node: objcMembers290961
-Node: requires_stored_property_inits291836
-Node: testable292283
-Node: UIApplicationMain293033
-Node: usableFromInline293936
-Node: warn_unqualified_access295126
-Node: Declaration Attributes Used by Interface Builder296354
-Node: Type Attributes297321
-Node: autoclosure297595
-Node: convention298179
-Node: escaping299628
-Node: Switch Case Attributes300202
-Node: unknown300441
-Node: Patterns301494
-Node: Wildcard Pattern303735
-Node: Identifier Pattern304336
-Node: Value-Binding Pattern305149
-Node: Tuple Pattern306389
-Node: Enumeration Case Pattern308112
-Node: Optional Pattern309032
-Node: Type-Casting Patterns310382
-Node: Expression Pattern311782
-Node: Generic Parameters and Arguments313505
-Node: Generic Parameter Clause314294
-Node: Generic Where Clauses316357
-Node: Generic Argument Clause319473
-Node: Summary of the Grammar321884
-Node: Lexical Structure 1322333
-Node: Types 1331557
-Node: Expressions 1334199
-Node: Statements 1342842
-Node: Declarations 1350794
-Node: Attributes 1365201
-Node: Patterns 1366028
-Node: Generic Parameters and Arguments 1367564
+Node: Language Reference5273
+Node: About the Language Reference5786
+Node: How to Read the Grammar6640
+Node: Lexical Structure8482
+Node: Whitespace and Comments9367
+Node: Identifiers11445
+Node: Keywords and Punctuation14325
+Node: Literals17344
+Node: Integer Literals19878
+Node: Floating-Point Literals22647
+Node: String Literals25626
+Node: Operators33176
+Node: Types39181
+Node: Type Annotation41617
+Node: Type Identifier42457
+Node: Tuple Type43935
+Node: Function Type45446
+Node: Restrictions for Nonescaping Closures49888
+Node: Array Type52527
+Node: Dictionary Type54250
+Node: Optional Type55591
+Node: Implicitly Unwrapped Optional Type57347
+Node: Protocol Composition Type59721
+Node: Metatype Type61805
+Node: Type Inheritance Clause64446
+Node: Type Inference66278
+Node: Expressions68020
+Node: Prefix Expressions69061
+Node: Try Operator70275
+Node: Binary Expressions72237
+Node: Assignment Operator73869
+Node: Type-Casting Operators75440
+Node: Primary Expressions78316
+Node: Literal Expression79641
+Node: Self Expression84225
+Node: Superclass Expression85881
+Node: Closure Expression87061
+Node: Implicit Member Expression94410
+Node: Parenthesized Expression95048
+Node: Tuple Expression95664
+Node: Wildcard Expression96905
+Node: Key-Path Expression97398
+Node: Selector Expression104334
+Node: Key-Path String Expression106959
+Node: Postfix Expressions109698
+Node: Function Call Expression111167
+Node: Initializer Expression113304
+Node: Explicit Member Expression114916
+Node: Postfix Self Expression117673
+Node: Subscript Expression118562
+Node: Forced-Value Expression119425
+Node: Optional-Chaining Expression120449
+Node: Statements123248
+Node: Loop Statements125217
+Node: For-In Statement126091
+Node: While Statement127511
+Node: Repeat-While Statement129020
+Node: Branch Statements130307
+Node: If Statement131181
+Node: Guard Statement133020
+Node: Labeled Statement143381
+Node: Control Transfer Statements144729
+Node: Break Statement145715
+Node: Continue Statement147091
+Node: Fallthrough Statement148639
+Node: Return Statement149838
+Node: Throw Statement151378
+Node: Defer Statement152477
+Node: Do Statement153980
+Node: Compiler Control Statements155934
+Node: Conditional Compilation Block156706
+Node: Line Control Statement163647
+Node: Compile-Time Diagnostic Statement165143
+Node: Availability Condition166258
+Node: Declarations168424
+Node: Top-Level Code170511
+Node: Code Blocks171178
+Node: Import Declaration171744
+Node: Constant Declaration172905
+Node: Variable Declaration175696
+Node: Stored Variables and Stored Variable Properties176924
+Node: Computed Variables and Computed Properties178319
+Node: Stored Variable Observers and Property Observers180287
+Node: Type Variable Properties183648
+Node: Type Alias Declaration186282
+Node: Function Declaration189028
+Node: Parameter Names190783
+Node: In-Out Parameters192313
+Node: Special Kinds of Parameters194989
+Node: Special Kinds of Methods196493
+Node: Throwing Functions and Methods197562
+Node: Rethrowing Functions and Methods198960
+Node: Functions that Never Return200752
+Node: Enumeration Declaration202918
+Node: Enumerations with Cases of Any Type204776
+Node: Enumerations with Cases of a Raw-Value Type207664
+Node: Accessing Enumeration Cases211130
+Node: Structure Declaration213882
+Node: Class Declaration216850
+Node: Protocol Declaration221188
+Node: Protocol Property Declaration226395
+Node: Protocol Method Declaration228102
+Node: Protocol Initializer Declaration229617
+Node: Protocol Subscript Declaration231089
+Node: Protocol Associated Type Declaration232320
+Node: Initializer Declaration233955
+Node: Failable Initializers237639
+Node: Deinitializer Declaration241118
+Node: Extension Declaration242335
+Node: Conditional Conformance244820
+Node: Protocol Conformance Must Not Be Redundant248139
+Node: Subscript Declaration252601
+Node: Operator Declaration255985
+Node: Precedence Group Declaration259383
+Node: Declaration Modifiers264086
+Node: Access Control Levels268854
+Node: Attributes272565
+Node: Declaration Attributes273638
+Node: available274237
+Node: discardableResult279764
+Node: dynamicCallable280116
+Node: dynamicMemberLookup284038
+Node: GKInspectable285513
+Node: inlinable285844
+Node: nonobjc286931
+Node: NSApplicationMain288170
+Node: NSCopying288760
+Node: NSManaged289359
+Node: objc289919
+Node: objcMembers293541
+Node: requires_stored_property_inits294416
+Node: testable294863
+Node: UIApplicationMain295613
+Node: usableFromInline296516
+Node: warn_unqualified_access297706
+Node: Declaration Attributes Used by Interface Builder298934
+Node: Type Attributes299901
+Node: autoclosure300175
+Node: convention300775
+Node: escaping302224
+Node: Switch Case Attributes302818
+Node: unknown303057
+Node: Patterns304110
+Node: Wildcard Pattern306351
+Node: Identifier Pattern306952
+Node: Value-Binding Pattern307765
+Node: Tuple Pattern309005
+Node: Enumeration Case Pattern310728
+Node: Optional Pattern311668
+Node: Type-Casting Patterns313018
+Node: Expression Pattern314455
+Node: Generic Parameters and Arguments316178
+Node: Generic Parameter Clause316978
+Node: Generic Where Clauses319041
+Node: Generic Argument Clause322157
+Node: Summary of the Grammar324568
+Node: Lexical Structure 1325017
+Node: Types 1334241
+Node: Expressions 1336883
+Node: Statements 1345526
+Node: Declarations 1353478
+Node: Attributes 1367885
+Node: Patterns 1368712
+Node: Generic Parameters and Arguments 1370248
 
 End Tag Table
 

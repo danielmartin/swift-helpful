@@ -51,9 +51,11 @@ Lexical Structure
 
 * Whitespace and Comments::
 * Identifiers::
+* Keywords and Punctuation::
+* Literals::
 * Operators::
 
-Identifiers
+Literals
 
 * Integer Literals::
 * Floating-Point Literals::
@@ -417,6 +419,8 @@ This behavior is referred to as @emph{longest match} or @emph{maximal munch}.
 @menu
 * Whitespace and Comments::
 * Identifiers::
+* Keywords and Punctuation::
+* Literals::
 * Operators::
 @end menu
 
@@ -615,7 +619,8 @@ implicit-parameter-name
 → @samp{$}
 decimal-digits
 
-** Keywords and Punctuation
+@node Keywords and Punctuation
+@section Keywords and Punctuation
 
 The following keywords are reserved and can't be used as identifiers,
 unless they're escaped with backticks, as described above in
@@ -669,7 +674,8 @@ custom operators: @samp{(}, @samp{)}, @samp{@{}, @samp{@}}, @samp{[}, @samp{]}, 
 @samp{@@}, @samp{#}, @samp{&} (as a prefix operator), @samp{->}, @samp{`}, @samp{?}, and @samp{!} (as a
 postfix operator).
 
-** Literals
+@node Literals
+@section Literals
 
 A @emph{literal} is the source code representation of a value of a type, such
 as a number or string.
@@ -776,7 +782,7 @@ Unless otherwise specified, the default inferred type of an integer
 literal is the Swift standard library type @samp{Int}. The Swift standard
 library also defines types for various sizes of signed and unsigned
 integers, as described in
-@uref{swift.org, Integers}.
+@ref{Integers,Integers,,swift,}.
 
 Grammar of an integer literal
 
@@ -1135,7 +1141,7 @@ the same indentation requirements as regular multiline string literals.
 
 The default inferred type of a string literal is @samp{String}. For more
 information about the @samp{String} type, see
-@uref{swift.org, Strings and Characters}
+@ref{Strings and Characters,Strings and Characters,,swift,}
 and @uref{https://developer.apple.com/documentation/swift/string, @samp{String}}
 [@uref{https://developer.apple.com/documentation/swift/string}].
 
@@ -1303,8 +1309,8 @@ line-break
 
 The Swift standard library defines a number of operators for your use,
 many of which are discussed in
-@uref{swift.org, Basic Operators} and
-@uref{swift.org, Advanced Operators}. The
+@ref{Basic Operators,Basic Operators,,swift,} and
+@ref{Advanced Operators,Advanced Operators,,swift,}. The
 present section describes which characters can be used to define custom
 operators.
 
@@ -1381,10 +1387,10 @@ characters are not treated as a single token that may then be
 misinterpreted as a bit shift @samp{>>} operator.
 
 To learn how to define new, custom operators, see
-@uref{swift.org, Custom Operators} and
+@ref{Custom Operators,Custom Operators,,swift,} and
 @ref{Operator Declaration}. To learn how to
 overload existing operators, see
-@uref{swift.org, Operator Methods}.
+@ref{Operator Methods,Operator Methods,,swift,}.
 
 Grammar of operators
 
@@ -1520,7 +1526,7 @@ strings---are actually named types, defined and implemented in the Swift
 standard library using structures. Because they're named types, you can
 extend their behavior to suit the needs of your program, using an
 extension declaration, discussed in
-@uref{swift.org, Extensions} and
+@ref{Extensions,Extensions,,swift,} and
 @ref{Extension Declaration}.
 
 A @emph{compound type} is a type without a name, defined in the Swift
@@ -1676,8 +1682,8 @@ also name the elements of a tuple type and use those names to refer to
 the values of the individual elements. An element name consists of an
 identifier followed immediately by a colon (:). For an example that
 demonstrates both of these features, see
-@uref{swift.org, Functions with Multiple Return
-Values}.
+@ref{Functions with Multiple Return Values,Functions with Multiple Return
+Values,,swift,}.
 
 When an element of a tuple type has a name, that name is part of the
 type.
@@ -1746,7 +1752,7 @@ call sites. This provides a syntactically convenient way to defer the
 evaluation of an expression without needing to write an explicit closure
 when you call the function. For an example of an autoclosure function
 type parameter, see
-@uref{swift.org, Autoclosures}.
+@ref{Autoclosures,Autoclosures,,swift,}.
 
 A function type can have a variadic parameter in its @emph{parameter type}.
 Syntactically, a variadic parameter consists of a base type name
@@ -1754,7 +1760,7 @@ followed immediately by three dots (@samp{...}), as in @samp{Int...}. A variadic
 parameter is treated as an array that contains elements of the base type
 name. For instance, the variadic parameter @samp{Int...} is treated as
 @samp{[Int]}. For an example that uses a variadic parameter, see
-@uref{swift.org, Variadic Parameters}.
+@ref{Variadic Parameters,Variadic Parameters,,swift,}.
 
 To specify an in-out parameter, prefix the parameter type with the
 @samp{inout} keyword. You can't mark a variadic parameter or a return type
@@ -1894,7 +1900,7 @@ escaping, or temporarily convert one of the nonescaping function
 parameters to an escaping function by using the
 @samp{withoutActuallyEscaping(_:do:)} function. For information about
 avoiding conflicting access to memory, see
-@uref{swift.org, Memory Safety}.
+@ref{Memory Safety,Memory Safety,,swift,}.
 
 Grammar of a function type
 
@@ -1982,7 +1988,7 @@ means that in the example above, @samp{array3D[0]} refers to
 @samp{array3D[0][1][1]} refers to the value 4.
 
 For a detailed discussion of the Swift standard library @samp{Array} type,
-see @uref{swift.org, Arrays}.
+see @ref{Arrays,Arrays,,swift,}.
 
 Grammar of an array type
 
@@ -2025,7 +2031,7 @@ The key type of a dictionary must conform to the Swift standard library
 
 For a detailed discussion of the Swift standard library @samp{Dictionary}
 type, see
-@uref{swift.org, Dictionaries}.
+@ref{Dictionaries,Dictionaries,,swift,}.
 
 Grammar of a dictionary type
 
@@ -2076,7 +2082,7 @@ perform an operation on an optional expression. If the value is @samp{nil},
 no operation is performed and therefore no runtime error is produced.
 
 For more information and to see examples that show how to use optional
-types, see @uref{swift.org, Optionals}.
+types, see @ref{Optionals,Optionals,,swift,}.
 
 Grammar of an optional type
 
@@ -2136,8 +2142,8 @@ implicitly unwrapped optional expression. If the value is @samp{nil}, no
 operation is performed and therefore no runtime error is produced.
 
 For more information about implicitly unwrapped optional types, see
-@uref{swift.org, Implicitly Unwrapped
-Optionals}.
+@ref{Implicitly Unwrapped Optionals,Implicitly Unwrapped
+Optionals,,swift,}.
 
 Grammar of an implicitly unwrapped optional type
 
@@ -2323,7 +2329,7 @@ must appear first in the list of type identifiers, followed by any
 number of protocols the class must conform to. If the class doesn't
 inherit from another class, the list can begin with a protocol instead.
 For an extended discussion and several examples of class inheritance,
-see @uref{swift.org, Inheritance}.
+see @ref{Inheritance,Inheritance,,swift,}.
 
 Other named types can only inherit from or conform to a list of
 protocols. Protocol types can inherit from any number of other
@@ -2337,7 +2343,7 @@ list of protocols, or in the case of an enumeration that assigns raw
 values to its cases, a single, named type that specifies the type of
 those raw values. For an example of an enumeration definition that uses
 a type inheritance clause to specify the type of its raw values, see
-@uref{swift.org, Raw Values}.
+@ref{Raw Values,Raw Values,,swift,}.
 
 Grammar of a type inheritance clause
 
@@ -2437,8 +2443,8 @@ expression. Prefix operators take one argument, the expression that
 follows them.
 
 For information about the behavior of these operators, see
-@uref{swift.org, Basic Operators} and
-@uref{swift.org, Advanced Operators}.
+@ref{Basic Operators,Basic Operators,,swift,} and
+@ref{Advanced Operators,Advanced Operators,,swift,}.
 
 For information about the operators provided by the Swift standard
 library, see
@@ -2525,8 +2531,8 @@ operator, unless the binary operator is the assignment operator or the
 @samp{try} expression is enclosed in parentheses.
 
 For more information and to see examples of how to use @samp{try}, @samp{try?},
-and @samp{try!}, see @uref{swift.org, Error
-Handling}.
+and @samp{try!}, see @ref{Error Handling,Error
+Handling,,swift,}.
 
 Grammar of a try expression
 
@@ -2546,8 +2552,8 @@ left-hand argument operator right-hand argument
 @end enumerate
 
 For information about the behavior of these operators, see
-@uref{swift.org, Basic Operators} and
-@uref{swift.org, Advanced Operators}.
+@ref{Basic Operators,Basic Operators,,swift,} and
+@ref{Advanced Operators,Advanced Operators,,swift,}.
 
 For information about the operators provided by the Swift standard
 library, see
@@ -2642,8 +2648,8 @@ evaluates the second expression and returns its value. The unused
 expression is not evaluated.
 
 For an example that uses the ternary conditional operator, see
-@uref{swift.org, Ternary Conditional
-Operator}.
+@ref{Ternary Conditional Operator,Ternary Conditional
+Operator,,swift,}.
 
 Grammar of a conditional operator
 
@@ -2730,8 +2736,8 @@ raised. The behavior of @samp{x as! T} is the same as the behavior of
 @samp{(x as? T)!}.
 
 For more information about type casting and to see examples that use the
-type-casting operators, see @uref{swift.org, Type
-Casting}.
+type-casting operators, see @ref{Type Casting,Type
+Casting,,swift,}.
 
 Grammar of a type-casting operator
 
@@ -3217,7 +3223,7 @@ called immediately or passed as a nonescaping function argument.
 Otherwise, the closure expression is escaping.
 
 For more information about escaping closures, see
-@uref{swift.org, Escaping Closures}.
+@ref{Escaping Closures,Escaping Closures,,swift,}.
 
 @enumerate
 @item
@@ -3336,10 +3342,10 @@ myFunction @{ [weak parent = self.parent] in print(parent!.title) @}
 @end enumerate
 
 For more information and examples of closure expressions, see
-@uref{swift.org, Closure Expressions}. For more
+@ref{Closure Expressions,Closure Expressions,,swift,}. For more
 information and examples of capture lists, see
-@uref{swift.org, Resolving
-Strong Reference Cycles for Closures}.
+@ref{Resolving Strong Reference Cycles for Closures,Resolving
+Strong Reference Cycles for Closures,,swift,}.
 
 Grammar of a closure expression
 
@@ -4017,8 +4023,8 @@ postfix syntax to an expression. Syntactically, every primary expression
 is also a postfix expression.
 
 For information about the behavior of these operators, see
-@uref{swift.org, Basic Operators} and
-@uref{swift.org, Advanced Operators}.
+@ref{Basic Operators,Basic Operators,,swift,} and
+@ref{Advanced Operators,Advanced Operators,,swift,}.
 
 For information about the operators provided by the Swift standard
 library, see
@@ -4771,8 +4777,8 @@ be executed zero or more times.
 
 The value of the @emph{condition} must be of type @samp{Bool} or a type bridged to
 @samp{Bool}. The condition can also be an optional binding declaration, as
-discussed in @uref{swift.org, Optional
-Binding}.
+discussed in @ref{Optional Binding,Optional
+Binding,,swift,}.
 
 Grammar of a while statement
 
@@ -4849,8 +4855,8 @@ executed at least once.
 
 The value of the @emph{condition} must be of type @samp{Bool} or a type bridged to
 @samp{Bool}. The condition can also be an optional binding declaration, as
-discussed in @uref{swift.org, Optional
-Binding}.
+discussed in @ref{Optional Binding,Optional
+Binding,,swift,}.
 
 Grammar of a repeat-while statement
 
@@ -4949,7 +4955,7 @@ statements to execute if both conditions are false
 The value of any condition in an @samp{if} statement must be of type @samp{Bool}
 or a type bridged to @samp{Bool}. The condition can also be an optional
 binding declaration, as discussed in
-@uref{swift.org, Optional Binding}.
+@ref{Optional Binding,Optional Binding,,swift,}.
 
 Grammar of an if statement
 
@@ -4986,7 +4992,7 @@ statements
 The value of any condition in a @samp{guard} statement must be of type @samp{Bool}
 or a type bridged to @samp{Bool}. The condition can also be an optional
 binding declaration, as discussed in
-@uref{swift.org, Optional Binding}.
+@ref{Optional Binding,Optional Binding,,swift,}.
 
 Any constants or variables assigned a value from an optional binding
 declaration in a @samp{guard} statement condition can be used for the rest of
@@ -5074,8 +5080,8 @@ and optionals. The value of the @emph{control expression} can even be matched
 to the value of a case in an enumeration and checked for inclusion in a
 specified range of values. For examples of how to use these various
 types of values in @samp{switch} statements, see
-@uref{swift.org, Switch} in
-@uref{swift.org, Control Flow}.
+@ref{Switch,Switch,,swift,} in
+@ref{Control Flow,Control Flow,,swift,}.
 
 A @samp{switch} case can optionally contain a @samp{where} clause after each
 pattern. A @emph{where clause} is introduced by the @samp{where} keyword followed
@@ -5291,8 +5297,8 @@ statement label. You can nest labeled statements, but the name of each
 statement label must be unique.
 
 For more information and to see examples of how to use statement labels,
-see @uref{swift.org, Labeled Statements} in
-@uref{swift.org, Control Flow}.
+see @ref{Labeled Statements,Labeled Statements,,swift,} in
+@ref{Control Flow,Control Flow,,swift,}.
 
 Grammar of a labeled statement
 
@@ -5386,9 +5392,9 @@ In both cases, program control is then transferred to the first line of
 code following the enclosing loop or @samp{switch} statement, if any.
 
 For examples of how to use a @samp{break} statement, see
-@uref{swift.org, Break} and
-@uref{swift.org, Labeled Statements} in
-@uref{swift.org, Control Flow}.
+@ref{Break,Break,,swift,} and
+@ref{Labeled Statements,Labeled Statements,,swift,} in
+@ref{Control Flow,Control Flow,,swift,}.
 
 Grammar of a break statement
 
@@ -5428,9 +5434,9 @@ the @samp{continue} statement is executed, because the increment expression
 is evaluated after the execution of the loop's body.
 
 For examples of how to use a @samp{continue} statement, see
-@uref{swift.org, Continue} and
-@uref{swift.org, Labeled Statements} in
-@uref{swift.org, Control Flow}.
+@ref{Continue,Continue,,swift,} and
+@ref{Labeled Statements,Labeled Statements,,swift,} in
+@ref{Control Flow,Control Flow,,swift,}.
 
 Grammar of a continue statement
 
@@ -5456,8 +5462,8 @@ case block whose pattern contains value binding patterns.
 
 For an example of how to use a @samp{fallthrough} statement in a @samp{switch}
 statement, see @ref{Control Transfer Statements, , Control
-Transfer Statements} in @uref{swift.org, Control
-Flow}.
+Transfer Statements} in @ref{Control Flow,Control
+Flow,,swift,}.
 
 Grammar of a fallthrough statement
 
@@ -5531,9 +5537,9 @@ The value of the @emph{expression} must have a type that conforms to the
 @samp{Error} protocol.
 
 For an example of how to use a @samp{throw} statement, see
-@uref{swift.org, Propagating Errors Using
-Throwing Functions} in @uref{swift.org, Error
-Handling}.
+@ref{Propagating Errors Using Throwing Functions,Propagating Errors Using
+Throwing Functions,,swift,} in @ref{Error Handling,Error
+Handling,,swift,}.
 
 Grammar of a throw statement
 
@@ -5646,8 +5652,8 @@ the patterns you can use in a @samp{catch} clause, see
 @ref{Patterns}.
 
 To see an example of how to use a @samp{do} statement with several @samp{catch}
-clauses, see @uref{swift.org, Handling
-Errors}.
+clauses, see @ref{Handling Errors,Handling
+Errors,,swift,}.
 
 Grammar of a do statement
 
@@ -6384,12 +6390,12 @@ when the type of the @emph{constant name} can be inferred, as described in
 
 To declare a constant type property, mark the declaration with the
 @samp{static} declaration modifier. Type properties are discussed in
-@uref{swift.org, Type Properties}.
+@ref{Type Properties,Type Properties,,swift,}.
 
 For more information about constants and for guidance about when to use
-them, see @uref{swift.org, Constants and
-Variables} and @uref{swift.org, Stored
-Properties}.
+them, see @ref{Constants and Variables,Constants and
+Variables,,swift,} and @ref{Stored Properties,Stored
+Properties,,swift,}.
 
 Grammar of a constant declaration
 
@@ -6438,7 +6444,7 @@ Property Declaration}.
 
 You can override a property in a subclass by marking the subclass's
 property declaration with the @samp{override} declaration modifier, as
-described in @uref{swift.org, Overriding}.
+described in @ref{Overriding,Overriding,,swift,}.
 
 @menu
 * Stored Variables and Stored Variable Properties::
@@ -6514,22 +6520,22 @@ The getter is used to read the value, and the setter is used to write
 the value. The setter clause is optional, and when only a getter is
 needed, you can omit both clauses and simply return the requested value
 directly, as described in
-@uref{swift.org, Read-Only Computed
-Properties}. But if you provide a setter clause, you must also provide
+@ref{Read-Only Computed Properties,Read-Only Computed
+Properties,,swift,}. But if you provide a setter clause, you must also provide
 a getter clause.
 
 The @emph{setter name} and enclosing parentheses is optional. If you provide
 a setter name, it is used as the name of the parameter to the setter. If
 you do not provide a setter name, the default parameter name to the
 setter is @samp{newValue}, as described in
-@uref{swift.org, Shorthand Setter
-Declaration}.
+@ref{Shorthand Setter Declaration,Shorthand Setter
+Declaration,,swift,}.
 
 Unlike stored named values and stored variable properties, the value of
 a computed named value or a computed property is not stored in memory.
 
 For more information and to see examples of computed properties, see
-@uref{swift.org, Computed Properties}.
+@ref{Computed Properties,Computed Properties,,swift,}.
 
 @node Stored Variable Observers and Property Observers
 @subsection Stored Variable Observers and Property Observers
@@ -6568,8 +6574,8 @@ to as @emph{property observers}.
 You can add property observers to any stored property. You can also add
 property observers to any inherited property (whether stored or
 computed) by overriding the property within a subclass, as described in
-@uref{swift.org, Overriding Property
-Observers}.
+@ref{Overriding Property Observers,Overriding Property
+Observers,,swift,}.
 
 The initializer @emph{expression} is optional in the context of a class or
 structure declaration, but required elsewhere. The @emph{type} annotation is
@@ -6605,8 +6611,8 @@ Likewise, the @samp{willSet} clause is optional when you provide a @samp{didSet}
 clause.
 
 For more information and to see an example of how to use property
-observers, see @uref{swift.org, Property
-Observers}.
+observers, see @ref{Property Observers,Property
+Observers,,swift,}.
 
 @node Type Variable Properties
 @subsection Type Variable Properties
@@ -6615,7 +6621,7 @@ To declare a type variable property, mark the declaration with the
 @samp{static} declaration modifier. Classes may mark type computed properties
 with the @samp{class} declaration modifier instead to allow subclasses to
 override the superclass's implementation. Type properties are discussed
-in @uref{swift.org, Type Properties}.
+in @ref{Type Properties,Type Properties,,swift,}.
 
 Note
 
@@ -6912,7 +6918,7 @@ a nonescaping function argument. Otherwise, the nested function is an
 escaping function.
 
 For a discussion of nested functions, see
-@uref{swift.org, Nested Functions}.
+@ref{Nested Functions,Nested Functions,,swift,}.
 
 @menu
 * Parameter Names::
@@ -7015,7 +7021,7 @@ violates Swift's memory exclusivity guarantee. For the same reason, you
 can't pass the same value to multiple in-out parameters.
 
 For more information about memory safety and memory exclusivity, see
-@uref{swift.org, Memory Safety}.
+@ref{Memory Safety,Memory Safety,,swift,}.
 
 A closure or nested function that captures an in-out parameter must be
 nonescaping. If you need to capture an in-out parameter without mutating
@@ -7083,7 +7089,7 @@ most one variadic parameter. A variadic parameter is treated as an array
 that contains elements of the base type name. For example, the variadic
 parameter @samp{Int...} is treated as @samp{[Int]}. For an example that uses a
 variadic parameter, see
-@uref{swift.org, Variadic Parameters}.
+@ref{Variadic Parameters,Variadic Parameters,,swift,}.
 
 A parameter with an equals sign (@samp{=}) and an expression after its type
 is understood to have a default value of the given expression. The given
@@ -7347,8 +7353,8 @@ Like structures but unlike classes, enumerations are value types;
 instances of an enumeration are copied when assigned to variables or
 constants, or when passed as arguments to a function call. For
 information about value types, see
-@uref{swift.org, Structures and
-Enumerations Are Value Types}.
+@ref{Structures and Enumerations Are Value Types,Structures and
+Enumerations Are Value Types,,swift,}.
 
 You can extend the behavior of an enumeration type with an extension
 declaration, as discussed in @ref{Extension Declaration, , Extension
@@ -7413,8 +7419,8 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
 @end enumerate
 
 For more information and to see examples of cases with associated value
-types, see @uref{swift.org, Associated
-Values}.
+types, see @ref{Associated Values,Associated
+Values,,swift,}.
 
 @enumerate
 @item
@@ -7532,8 +7538,8 @@ in @samp{ExampleEnum.b.rawValue}. You can also use a raw value to find a
 corresponding case, if there is one, by calling the enumeration's
 failable initializer, as in @samp{ExampleEnum(rawValue: 5)}, which returns an
 optional case. For more information and to see examples of cases with
-raw-value types, see @uref{swift.org, Raw
-Values}.
+raw-value types, see @ref{Raw Values,Raw
+Values,,swift,}.
 
 @node Accessing Enumeration Cases
 @subsection Accessing Enumeration Cases
@@ -7541,12 +7547,12 @@ Values}.
 To reference the case of an enumeration type, use dot (@samp{.}) syntax, as
 in @samp{EnumerationType.enumerationCase}. When the enumeration type can be
 inferred from context, you can omit it (the dot is still required), as
-described in @uref{swift.org, Enumeration
-Syntax} and @ref{Implicit Member Expression}.
+described in @ref{Enumeration Syntax,Enumeration
+Syntax,,swift,} and @ref{Implicit Member Expression}.
 
 To check the values of enumeration cases, use a @samp{switch} statement, as
-shown in @uref{swift.org, Matching
-Enumeration Values with a Switch Statement}. The enumeration type is
+shown in @ref{Matching Enumeration Values with a Switch Statement,Matching
+Enumeration Values with a Switch Statement,,swift,}. The enumeration type is
 pattern-matched against the enumeration case patterns in the case blocks
 of the @samp{switch} statement, as described in
 @ref{Enumeration Case Pattern}.
@@ -7711,7 +7717,7 @@ type aliases, and even other structure, class, and enumeration
 declarations. Structure declarations can't contain deinitializer or
 protocol declarations. For a discussion and several examples of
 structures that include various kinds of declarations, see
-@uref{swift.org, Structures and Classes}.
+@ref{Structures and Classes,Structures and Classes,,swift,}.
 
 Structure types can adopt any number of protocols, but can't inherit
 from classes, enumerations, or other structures.
@@ -7723,34 +7729,34 @@ structure:
 @item
 Call one of the initializers declared within the structure, as
 described in
-@uref{swift.org, Initializers}.
+@ref{Initializers,Initializers,,swift,}.
 
 @item
 If no initializers are declared, call the structure's memberwise
 initializer, as described in
-@uref{swift.org, Memberwise Initializers
-for Structure Types}.
+@ref{Memberwise Initializers for Structure Types,Memberwise Initializers
+for Structure Types,,swift,}.
 
 @item
 If no initializers are declared, and all properties of the structure
 declaration were given initial values, call the structure's default
 initializer, as described in
-@uref{swift.org, Default Initializers}.
+@ref{Default Initializers,Default Initializers,,swift,}.
 @end itemize
 
 The process of initializing a structure's declared properties is
-described in @uref{swift.org, Initialization}.
+described in @ref{Initialization,Initialization,,swift,}.
 
 Properties of a structure instance can be accessed using dot (@samp{.})
 syntax, as described in
-@uref{swift.org, Accessing
-Properties}.
+@ref{Accessing Properties,Accessing
+Properties,,swift,}.
 
 Structures are value types; instances of a structure are copied when
 assigned to variables or constants, or when passed as arguments to a
 function call. For information about value types, see
-@uref{swift.org, Structures and
-Enumerations Are Value Types}.
+@ref{Structures and Enumerations Are Value Types,Structures and
+Enumerations Are Value Types,,swift,}.
 
 You can extend the behavior of a structure type with an extension
 declaration, as discussed in @ref{Extension Declaration, , Extension
@@ -7814,7 +7820,7 @@ type aliases, and even other class, structure, and enumeration
 declarations. Class declarations can't contain protocol declarations.
 For a discussion and several examples of classes that include various
 kinds of declarations, see
-@uref{swift.org, Structures and Classes}.
+@ref{Structures and Classes,Structures and Classes,,swift,}.
 
 A class type can inherit from only one parent class, its @emph{superclass},
 but can adopt any number of protocols. The @emph{superclass} appears first
@@ -7844,8 +7850,8 @@ with the @samp{required} declaration modifier.
 Although properties and methods declared in the @emph{superclass} are
 inherited by the current class, designated initializers declared in the
 @emph{superclass} are only inherited when the subclass meets the conditions
-described in @uref{swift.org, Automatic
-Initializer Inheritance}. Swift classes do not inherit from a universal
+described in @ref{Automatic Initializer Inheritance,Automatic
+Initializer Inheritance,,swift,}. Swift classes do not inherit from a universal
 base class.
 
 There are two ways to create an instance of a previously declared class:
@@ -7853,26 +7859,26 @@ There are two ways to create an instance of a previously declared class:
 @itemize
 @item
 Call one of the initializers declared within the class, as described
-in @uref{swift.org, Initializers}.
+in @ref{Initializers,Initializers,,swift,}.
 
 @item
 If no initializers are declared, and all properties of the class
 declaration were given initial values, call the class's default
 initializer, as described in
-@uref{swift.org, Default Initializers}.
+@ref{Default Initializers,Default Initializers,,swift,}.
 @end itemize
 
 Access properties of a class instance with dot (@samp{.}) syntax, as
 described in
-@uref{swift.org, Accessing
-Properties}.
+@ref{Accessing Properties,Accessing
+Properties,,swift,}.
 
 Classes are reference types; instances of a class are referred to,
 rather than copied, when assigned to variables or constants, or when
 passed as arguments to a function call. For information about reference
 types, see
-@uref{swift.org, Structures and
-Enumerations Are Value Types}.
+@ref{Structures and Enumerations Are Value Types,Structures and
+Enumerations Are Value Types,,swift,}.
 
 You can extend the behavior of a class type with an extension
 declaration, as discussed in @ref{Extension Declaration, , Extension
@@ -7959,14 +7965,14 @@ protocol type inherits from other protocols, the set of requirements
 from those other protocols are aggregated, and any type that inherits
 from the current protocol must conform to all those requirements. For an
 example of how to use protocol inheritance, see
-@uref{swift.org, Protocol Inheritance}.
+@ref{Protocol Inheritance,Protocol Inheritance,,swift,}.
 
 Note
 
 You can also aggregate the conformance requirements of multiple
 protocols using protocol composition types, as described in
 @ref{Protocol Composition Type} and
-@uref{swift.org, Protocol Composition}.
+@ref{Protocol Composition,Protocol Composition,,swift,}.
 
 You can add protocol conformance to a previously declared type by
 adopting the protocol in an extension declaration of that type. In the
@@ -7986,8 +7992,8 @@ contains optional member requirements. For more information about how to
 use the @samp{optional} declaration modifier and for guidance about how to
 access optional protocol members---for example, when you're not sure
 whether a conforming type implements them---see
-@uref{swift.org, Optional Protocol
-Requirements}.
+@ref{Optional Protocol Requirements,Optional Protocol
+Requirements,,swift,}.
 
 To restrict the adoption of a protocol to class types only, include the
 @samp{AnyObject} protocol in the @emph{inherited protocols} list after the colon.
@@ -8013,13 +8019,13 @@ mark the protocol with the @samp{AnyObject} requirement explicitly.
 
 Protocols are named types, and thus they can appear in all the same
 places in your code as other named types, as discussed in
-@uref{swift.org, Protocols as Types}. However,
+@ref{Protocols as Types,Protocols as Types,,swift,}. However,
 you can't construct an instance of a protocol, because protocols do not
 actually provide the implementations for the requirements they specify.
 
 You can use protocols to declare which methods a delegate of a class or
 structure should implement, as described in
-@uref{swift.org, Delegation}.
+@ref{Delegation,Delegation,,swift,}.
 
 Grammar of a protocol declaration
 
@@ -8114,7 +8120,7 @@ property or a read-only computed property. If a property declaration
 includes only the @samp{get} keyword, it can be implemented as any kind of
 property. For examples of conforming types that implement the property
 requirements of a protocol, see
-@uref{swift.org, Property Requirements}.
+@ref{Property Requirements,Property Requirements,,swift,}.
 
 See also @ref{Variable Declaration}.
 
@@ -8137,7 +8143,7 @@ declarations, with two exceptions: They don't include a function body,
 and you can't provide any default parameter values as part of the
 function declaration. For examples of conforming types that implement
 the method requirements of a protocol, see
-@uref{swift.org, Method Requirements}.
+@ref{Method Requirements,Method Requirements,,swift,}.
 
 To declare a class or static method requirement in a protocol
 declaration, mark the method declaration with the @samp{static} declaration
@@ -8247,7 +8253,7 @@ parameters in generic parameter clauses, but they're associated with
 @samp{Self} in the protocol in which they're declared. In that context,
 @samp{Self} refers to the eventual type that conforms to the protocol. For
 more information and examples, see
-@uref{swift.org, Associated Types}.
+@ref{Associated Types,Associated Types,,swift,}.
 
 You use a generic @samp{where} clause in a protocol declaration to add
 constraints to an associated types inherited from another protocol,
@@ -8308,7 +8314,7 @@ initializers, but the rules and associated behavior for class
 initializers are different. Unlike structures and enumerations, classes
 have two kinds of initializers: designated initializers and convenience
 initializers, as described in
-@uref{swift.org, Initialization}.
+@ref{Initialization,Initialization,,swift,}.
 
 The following form declares initializers for structures, enumerations,
 and designated initializers of classes:
@@ -8383,7 +8389,7 @@ errors. And just like functions and methods, you use the @samp{throws} or
 appropriate behavior.
 
 To see examples of initializers in various type declarations, see
-@uref{swift.org, Initialization}.
+@ref{Initialization,Initialization,,swift,}.
 
 @menu
 * Failable Initializers::
@@ -8547,7 +8553,7 @@ chain have finished executing.
 Deinitializers are not called directly.
 
 For an example of how to use a deinitializer in a class declaration, see
-@uref{swift.org, Deinitialization}.
+@ref{Deinitialization,Deinitialization,,swift,}.
 
 Grammar of a deinitializer declaration
 
@@ -8581,7 +8587,7 @@ protocol declarations, stored properties, property observers, or other
 extension declarations. Declarations in a protocol extension can't be
 marked @samp{final}. For a discussion and several examples of extensions that
 include various kinds of declarations, see
-@uref{swift.org, Extensions}.
+@ref{Extensions,Extensions,,swift,}.
 
 If the @emph{type name} is a class, structure, or enumeration type, the
 extension extends that type. If the @emph{type name} is a protocol type, the
@@ -9013,7 +9019,7 @@ declaration, as described in @ref{Protocol Subscript Declaration, , Protocol
 Subscript Declaration}.
 
 For more information about subscripting and to see examples of subscript
-declarations, see @uref{swift.org, Subscripts}.
+declarations, see @ref{Subscripts,Subscripts,,swift,}.
 
 Grammar of a subscript declaration
 
@@ -9125,7 +9131,7 @@ structure. If you're implementing a prefix or postfix operator, you must
 also mark that method declaration with the corresponding @samp{prefix} or
 @samp{postfix} declaration modifier. To see an example of how to create and
 implement a new operator, see
-@uref{swift.org, Custom Operators}.
+@ref{Custom Operators,Custom Operators,,swift,}.
 
 Grammar of an operator declaration
 
@@ -9323,15 +9329,15 @@ subscript member of a class. It's applied to a class to indicate that
 the class can't be subclassed. It's applied to a property, method, or
 subscript of a class to indicate that a class member can't be
 overridden in any subclass. For an example of how to use the @samp{final}
-attribute, see @uref{swift.org, Preventing
-Overrides}.
+attribute, see @ref{Preventing Overrides,Preventing
+Overrides,,swift,}.
 
 @item @samp{lazy}
 Apply this modifier to a stored variable property of a class
 or structure to indicate that the property's initial value is
 calculated and stored at most once, when the property is first
 accessed. For an example of how to use the @samp{lazy} modifier, see
-@uref{swift.org, Lazy Stored Properties}.
+@ref{Lazy Stored Properties,Lazy Stored Properties,,swift,}.
 
 @item @samp{optional}
 Apply this modifier to a protocol's property, method, or
@@ -9345,8 +9351,8 @@ requirements. For more information about how to use the @samp{optional}
 modifier and for guidance about how to access optional protocol
 members---for example, when you're not sure whether a conforming type
 implements them---see
-@uref{swift.org, Optional Protocol
-Requirements}.
+@ref{Optional Protocol Requirements,Optional Protocol
+Requirements,,swift,}.
 
 @item @samp{required}
 Apply this modifier to a designated or convenience
@@ -9363,8 +9369,8 @@ a runtime error is raised. Like a weak reference, the type of the
 property or value must be a class type; unlike a weak reference, the
 type is non-optional. For an example and more information about the
 @samp{unowned} modifier, see
-@uref{swift.org, Unowned
-References}.
+@ref{Unowned References,Unowned
+References,,swift,}.
 
 @item @samp{unowned(safe)}
 An explicit spelling of @samp{unowned}.
@@ -9379,8 +9385,8 @@ used to be, which is a memory-unsafe operation. Like a weak reference,
 the type of the property or value must be a class type; unlike a weak
 reference, the type is non-optional. For an example and more
 information about the @samp{unowned} modifier, see
-@uref{swift.org, Unowned
-References}.
+@ref{Unowned References,Unowned
+References,,swift,}.
 
 @item @samp{weak}
 Apply this modifier to a stored variable or stored variable
@@ -9389,8 +9395,8 @@ reference to the object stored as its value. The type of the variable
 or property must be an optional class type. If you access the variable
 or property after the object has been deallocated, its value is @samp{nil}.
 For an example and more information about the @samp{weak} modifier, see
-@uref{swift.org, Weak
-References}.
+@ref{Weak References,Weak
+References,,swift,}.
 @end table
 
 @menu
@@ -9404,7 +9410,7 @@ Swift provides five levels of access control: open, public, internal,
 file private, and private. You can mark a declaration with one of the
 access-level modifiers below to specify the declaration's access level.
 Access control is discussed in detail in
-@uref{swift.org, Access Control}.
+@ref{Access Control,Access Control,,swift,}.
 
 @table @asis
 @item @samp{open}
@@ -9451,7 +9457,7 @@ example, @samp{private(set)}). Use this form of an access-level modifier when
 you want to specify an access level for the setter of a variable or
 subscript that's less than or equal to the access level of the variable
 or subscript itself, as discussed in
-@uref{swift.org, Getters and Setters}.
+@ref{Getters and Setters,Getters and Setters,,swift,}.
 
 Grammar of a declaration modifier
 
@@ -10266,7 +10272,7 @@ You apply it to a parameter's type in a method or function declaration,
 for a parameter whose type is a function type that takes no arguments
 and that returns a value of the type of the expression. For an example
 of how to use the @samp{autoclosure} attribute, see
-@uref{swift.org, Autoclosures} and
+@ref{Autoclosures,Autoclosures,,swift,} and
 @ref{Function Type}.
 
 @node convention
@@ -10312,7 +10318,7 @@ later execution. This means that the value is allowed to outlive the
 lifetime of the call. Function type parameters with the @samp{escaping} type
 attribute require explicit use of @samp{self.} for properties or methods. For
 an example of how to use the @samp{escaping} attribute, see
-@uref{swift.org, Escaping Closures}.
+@ref{Escaping Closures,Escaping Closures,,swift,}.
 
 @node Switch Case Attributes
 @section Switch Case Attributes
@@ -10615,7 +10621,7 @@ values, the corresponding enumeration case pattern must specify a tuple
 pattern that contains one element for each associated value. For an
 example that uses a @samp{switch} statement to match enumeration cases
 containing associated values, see
-@uref{swift.org, Associated Values}.
+@ref{Associated Values,Associated Values,,swift,}.
 
 Grammar of an enumeration case pattern
 
@@ -10716,8 +10722,8 @@ the matched value is cast to the @emph{pattern} specified in the right-hand
 side of the @samp{as} pattern.
 
 For an example that uses a @samp{switch} statement to match values with @samp{is}
-and @samp{as} patterns, see @uref{swift.org, Type
-Casting for Any and AnyObject}.
+and @samp{as} patterns, see @ref{Type Casting for Any and AnyObject,Type
+Casting for Any and AnyObject,,swift,}.
 
 Grammar of a type casting pattern
 
@@ -10815,7 +10821,7 @@ arguments when an instance of a generic type is created or a generic
 function or initializer is called.
 
 For an overview of generics in Swift, see
-@uref{swift.org, Generics}.
+@ref{Generics,Generics,,swift,}.
 
 @menu
 * Generic Parameter Clause::

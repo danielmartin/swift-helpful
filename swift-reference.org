@@ -299,7 +299,7 @@
  → =$=
  decimal-digits
 
- ** Keywords and Punctuation
+** Keywords and Punctuation
 
  The following keywords are reserved and can't be used as identifiers,
  unless they're escaped with backticks, as described above in
@@ -345,7 +345,7 @@
  =@=, =#=, =&= (as a prefix operator), =->=, =`=, =?=, and =!= (as a
  postfix operator).
 
- ** Literals
+** Literals
 
  A /literal/ is the source code representation of a value of a type, such
  as a number or string.
@@ -431,7 +431,7 @@
  literal is the Swift standard library type =Int=. The Swift standard
  library also defines types for various sizes of signed and unsigned
  integers, as described in
- [[file:swift.org::*Integers][Integers]].
+ [[info:swift#Integers][Integers]].
 
  Grammar of an integer literal
 
@@ -738,7 +738,7 @@
 
  The default inferred type of a string literal is =String=. For more
  information about the =String= type, see
- [[file:swift.org::*Strings%20and%20Characters][Strings and Characters]]
+ [[info:swift#Strings%20and%20Characters][Strings and Characters]]
  and [[https://developer.apple.com/documentation/swift/string][=String=]]
  [https://developer.apple.com/documentation/swift/string].
 
@@ -895,13 +895,12 @@
  _{opt}
  line-break
 
-
 ** Operators
 
  The Swift standard library defines a number of operators for your use,
  many of which are discussed in
- [[file:swift.org::*Basic%20Operators][Basic Operators]] and
- [[file:swift.org::*Advanced%20Operators][Advanced Operators]]. The
+ [[info:swift#Basic%20Operators][Basic Operators]] and
+ [[info:swift#Advanced%20Operators][Advanced Operators]]. The
  present section describes which characters can be used to define custom
  operators.
 
@@ -972,10 +971,10 @@
  misinterpreted as a bit shift =>>= operator.
 
  To learn how to define new, custom operators, see
- [[file:swift.org::*Custom%20Operators][Custom Operators]] and
+ [[info:swift#Custom%20Operators][Custom Operators]] and
  [[Operator Declaration][Operator Declaration]]. To learn how to
  overload existing operators, see
- [[file:swift.org::*Operator%20Methods][Operator Methods]].
+ [[info:swift#Operator%20Methods][Operator Methods]].
 
  Grammar of operators
 
@@ -1110,7 +1109,7 @@
  standard library using structures. Because they're named types, you can
  extend their behavior to suit the needs of your program, using an
  extension declaration, discussed in
- [[file:swift.org::*Extensions][Extensions]] and
+ [[info:swift#Extensions][Extensions]] and
  [[Extension Declaration][Extension Declaration]].
 
  A /compound type/ is a type without a name, defined in the Swift
@@ -1240,7 +1239,7 @@
  the values of the individual elements. An element name consists of an
  identifier followed immediately by a colon (:). For an example that
  demonstrates both of these features, see
- [[file:swift.org::*Functions%20with%20Multiple%20Return%20Values][Functions with Multiple Return
+ [[info:swift#Functions%20with%20Multiple%20Return%20Values][Functions with Multiple Return
  Values]].
 
  When an element of a tuple type has a name, that name is part of the
@@ -1297,7 +1296,7 @@
  evaluation of an expression without needing to write an explicit closure
  when you call the function. For an example of an autoclosure function
  type parameter, see
- [[file:swift.org::*Autoclosures][Autoclosures]].
+ [[info:swift#Autoclosures][Autoclosures]].
 
  A function type can have a variadic parameter in its /parameter type/.
  Syntactically, a variadic parameter consists of a base type name
@@ -1305,7 +1304,7 @@
  parameter is treated as an array that contains elements of the base type
  name. For instance, the variadic parameter =Int...= is treated as
  =[Int]=. For an example that uses a variadic parameter, see
- [[file:swift.org::*Variadic%20Parameters][Variadic Parameters]].
+ [[info:swift#Variadic%20Parameters][Variadic Parameters]].
 
  To specify an in-out parameter, prefix the parameter type with the
  =inout= keyword. You can't mark a variadic parameter or a return type
@@ -1408,7 +1407,7 @@
  parameters to an escaping function by using the
  =withoutActuallyEscaping(_:do:)= function. For information about
  avoiding conflicting access to memory, see
- [[file:swift.org::*Memory%20Safety][Memory Safety]].
+ [[info:swift#Memory%20Safety][Memory Safety]].
 
  Grammar of a function type
 
@@ -1487,7 +1486,7 @@
  =array3D[0][1][1]= refers to the value 4.
 
  For a detailed discussion of the Swift standard library =Array= type,
- see [[file:swift.org::*Arrays][Arrays]].
+ see [[info:swift#Arrays][Arrays]].
 
  Grammar of an array type
 
@@ -1523,7 +1522,7 @@
 
  For a detailed discussion of the Swift standard library =Dictionary=
  type, see
- [[file:swift.org::*Dictionaries][Dictionaries]].
+ [[info:swift#Dictionaries][Dictionaries]].
 
  Grammar of a dictionary type
 
@@ -1566,7 +1565,7 @@
  no operation is performed and therefore no runtime error is produced.
 
  For more information and to see examples that show how to use optional
- types, see [[file:swift.org::*Optionals][Optionals]].
+ types, see [[info:swift#Optionals][Optionals]].
 
  Grammar of an optional type
 
@@ -1615,7 +1614,7 @@
  operation is performed and therefore no runtime error is produced.
 
  For more information about implicitly unwrapped optional types, see
- [[file:swift.org::*Implicitly%20Unwrapped%20Optionals][Implicitly Unwrapped
+ [[info:swift#Implicitly%20Unwrapped%20Optionals][Implicitly Unwrapped
  Optionals]].
 
  Grammar of an implicitly unwrapped optional type
@@ -1758,7 +1757,7 @@
  number of protocols the class must conform to. If the class doesn't
  inherit from another class, the list can begin with a protocol instead.
  For an extended discussion and several examples of class inheritance,
- see [[file:swift.org::*Inheritance][Inheritance]].
+ see [[info:swift#Inheritance][Inheritance]].
 
  Other named types can only inherit from or conform to a list of
  protocols. Protocol types can inherit from any number of other
@@ -1772,7 +1771,7 @@
  values to its cases, a single, named type that specifies the type of
  those raw values. For an example of an enumeration definition that uses
  a type inheritance clause to specify the type of its raw values, see
- [[file:swift.org::*Raw%20Values][Raw Values]].
+ [[info:swift#Raw%20Values][Raw Values]].
 
  Grammar of a type inheritance clause
 
@@ -1856,8 +1855,8 @@
  follows them.
 
  For information about the behavior of these operators, see
- [[file:swift.org::*Basic%20Operators][Basic Operators]] and
- [[file:swift.org::*Advanced%20Operators][Advanced Operators]].
+ [[info:swift#Basic%20Operators][Basic Operators]] and
+ [[info:swift#Advanced%20Operators][Advanced Operators]].
 
  For information about the operators provided by the Swift standard
  library, see
@@ -1926,7 +1925,7 @@
  =try= expression is enclosed in parentheses.
 
  For more information and to see examples of how to use =try=, =try?=,
- and =try!=, see [[file:swift.org::*Error%20Handling][Error
+ and =try!=, see [[info:swift#Error%20Handling][Error
  Handling]].
 
  Grammar of a try expression
@@ -1944,8 +1943,8 @@
  1. left-hand argument operator right-hand argument
 
  For information about the behavior of these operators, see
- [[file:swift.org::*Basic%20Operators][Basic Operators]] and
- [[file:swift.org::*Advanced%20Operators][Advanced Operators]].
+ [[info:swift#Basic%20Operators][Basic Operators]] and
+ [[info:swift#Advanced%20Operators][Advanced Operators]].
 
  For information about the operators provided by the Swift standard
  library, see
@@ -2025,7 +2024,7 @@
  expression is not evaluated.
 
  For an example that uses the ternary conditional operator, see
- [[file:swift.org::*Ternary%20Conditional%20Operator][Ternary Conditional
+ [[info:swift#Ternary%20Conditional%20Operator][Ternary Conditional
  Operator]].
 
  Grammar of a conditional operator
@@ -2093,7 +2092,7 @@
  =(x as? T)!=.
 
  For more information about type casting and to see examples that use the
- type-casting operators, see [[file:swift.org::*Type%20Casting][Type
+ type-casting operators, see [[info:swift#Type%20Casting][Type
  Casting]].
 
  Grammar of a type-casting operator
@@ -2470,7 +2469,7 @@
  Otherwise, the closure expression is escaping.
 
  For more information about escaping closures, see
- [[file:swift.org::*Escaping%20Closures][Escaping Closures]].
+ [[info:swift#Escaping%20Closures][Escaping Closures]].
 
 
 **** Capture Lists
@@ -2550,9 +2549,9 @@
  2. myFunction { [weak parent = self.parent] in print(parent!.title) }
 
  For more information and examples of closure expressions, see
- [[file:swift.org::*Closure%20Expressions][Closure Expressions]]. For more
+ [[info:swift#Closure%20Expressions][Closure Expressions]]. For more
  information and examples of capture lists, see
- [[file:swift.org::*Resolving%20Strong%20Reference%20Cycles%20for%20Closures][Resolving
+ [[info:swift#Resolving%20Strong%20Reference%20Cycles%20for%20Closures][Resolving
  Strong Reference Cycles for Closures]].
 
  Grammar of a closure expression
@@ -3058,8 +3057,8 @@
  is also a postfix expression.
 
  For information about the behavior of these operators, see
- [[file:swift.org::*Basic%20Operators][Basic Operators]] and
- [[file:swift.org::*Advanced%20Operators][Advanced Operators]].
+ [[info:swift#Basic%20Operators][Basic Operators]] and
+ [[info:swift#Advanced%20Operators][Advanced Operators]].
 
  For information about the operators provided by the Swift standard
  library, see
@@ -3636,7 +3635,7 @@ be executed zero or more times.
 
 The value of the /condition/ must be of type =Bool= or a type bridged to
 =Bool=. The condition can also be an optional binding declaration, as
-discussed in [[file:swift.org::*Optional%20Binding][Optional
+discussed in [[info:swift#Optional%20Binding][Optional
 Binding]].
 
 Grammar of a while statement
@@ -3697,7 +3696,7 @@ executed at least once.
 
 The value of the /condition/ must be of type =Bool= or a type bridged to
 =Bool=. The condition can also be an optional binding declaration, as
-discussed in [[file:swift.org::*Optional%20Binding][Optional
+discussed in [[info:swift#Optional%20Binding][Optional
 Binding]].
 
 Grammar of a repeat-while statement
@@ -3776,7 +3775,7 @@ this way has the following form:
 The value of any condition in an =if= statement must be of type =Bool=
 or a type bridged to =Bool=. The condition can also be an optional
 binding declaration, as discussed in
-[[file:swift.org::*Optional%20Binding][Optional Binding]].
+[[info:swift#Optional%20Binding][Optional Binding]].
 
 Grammar of an if statement
 
@@ -3806,7 +3805,7 @@ A =guard= statement has the following form:
 The value of any condition in a =guard= statement must be of type =Bool=
 or a type bridged to =Bool=. The condition can also be an optional
 binding declaration, as discussed in
-[[file:swift.org::*Optional%20Binding][Optional Binding]].
+[[info:swift#Optional%20Binding][Optional Binding]].
 
 Any constants or variables assigned a value from an optional binding
 declaration in a =guard= statement condition can be used for the rest of
@@ -3873,8 +3872,8 @@ and optionals. The value of the /control expression/ can even be matched
 to the value of a case in an enumeration and checked for inclusion in a
 specified range of values. For examples of how to use these various
 types of values in =switch= statements, see
-[[file:swift.org::*Switch][Switch]] in
-[[file:swift.org::*Control%20Flow][Control Flow]].
+[[info:swift#Switch][Switch]] in
+[[info:swift#Control%20Flow][Control Flow]].
 
 A =switch= case can optionally contain a =where= clause after each
 pattern. A /where clause/ is introduced by the =where= keyword followed
@@ -4081,8 +4080,8 @@ statement label. You can nest labeled statements, but the name of each
 statement label must be unique.
 
 For more information and to see examples of how to use statement labels,
-see [[file:swift.org::*Labeled%20Statements][Labeled Statements]] in
-[[file:swift.org::*Control%20Flow][Control Flow]].
+see [[info:swift#Labeled%20Statements][Labeled Statements]] in
+[[info:swift#Control%20Flow][Control Flow]].
 
 Grammar of a labeled statement
 
@@ -4164,9 +4163,9 @@ In both cases, program control is then transferred to the first line of
 code following the enclosing loop or =switch= statement, if any.
 
 For examples of how to use a =break= statement, see
-[[file:swift.org::*Break][Break]] and
-[[file:swift.org::*Labeled%20Statements][Labeled Statements]] in
-[[file:swift.org::*Control%20Flow][Control Flow]].
+[[info:swift#Break][Break]] and
+[[info:swift#Labeled%20Statements][Labeled Statements]] in
+[[info:swift#Control%20Flow][Control Flow]].
 
 Grammar of a break statement
 
@@ -4202,9 +4201,9 @@ the =continue= statement is executed, because the increment expression
 is evaluated after the execution of the loop's body.
 
 For examples of how to use a =continue= statement, see
-[[file:swift.org::*Continue][Continue]] and
-[[file:swift.org::*Labeled%20Statements][Labeled Statements]] in
-[[file:swift.org::*Control%20Flow][Control Flow]].
+[[info:swift#Continue][Continue]] and
+[[info:swift#Labeled%20Statements][Labeled Statements]] in
+[[info:swift#Control%20Flow][Control Flow]].
 
 Grammar of a continue statement
 
@@ -4230,7 +4229,7 @@ case block whose pattern contains value binding patterns.
 
 For an example of how to use a =fallthrough= statement in a =switch=
 statement, see [[Control Transfer Statements][Control
-Transfer Statements]] in [[file:swift.org::*Control%20Flow][Control
+Transfer Statements]] in [[info:swift#Control%20Flow][Control
 Flow]].
 
 Grammar of a fallthrough statement
@@ -4298,8 +4297,8 @@ The value of the /expression/ must have a type that conforms to the
 =Error= protocol.
 
 For an example of how to use a =throw= statement, see
-[[file:swift.org::*Propagating%20Errors%20Using%20Throwing%20Functions][Propagating Errors Using
-Throwing Functions]] in [[file:swift.org::*Error%20Handling][Error
+[[info:swift#Propagating%20Errors%20Using%20Throwing%20Functions][Propagating Errors Using
+Throwing Functions]] in [[info:swift#Error%20Handling][Error
 Handling]].
 
 Grammar of a throw statement
@@ -4387,7 +4386,7 @@ the patterns you can use in a =catch= clause, see
 [[Patterns][Patterns]].
 
 To see an example of how to use a =do= statement with several =catch=
-clauses, see [[file:swift.org::*Handling%20Errors][Handling
+clauses, see [[info:swift#Handling%20Errors][Handling
 Errors]].
 
 Grammar of a do statement
@@ -5012,11 +5011,11 @@ when the type of the /constant name/ can be inferred, as described in
 
 To declare a constant type property, mark the declaration with the
 =static= declaration modifier. Type properties are discussed in
-[[file:swift.org::*Type%20Properties][Type Properties]].
+[[info:swift#Type%20Properties][Type Properties]].
 
 For more information about constants and for guidance about when to use
-them, see [[file:swift.org::*Constants%20and%20Variables][Constants and
-Variables]] and [[file:swift.org::*Stored%20Properties][Stored
+them, see [[info:swift#Constants%20and%20Variables][Constants and
+Variables]] and [[info:swift#Stored%20Properties][Stored
 Properties]].
 
 Grammar of a constant declaration
@@ -5064,7 +5063,7 @@ Property Declaration]].
 
 You can override a property in a subclass by marking the subclass's
 property declaration with the =override= declaration modifier, as
-described in [[file:swift.org::*Overriding][Overriding]].
+described in [[info:swift#Overriding][Overriding]].
 
 
 *** Stored Variables and Stored Variable Properties
@@ -5120,7 +5119,7 @@ The getter is used to read the value, and the setter is used to write
 the value. The setter clause is optional, and when only a getter is
 needed, you can omit both clauses and simply return the requested value
 directly, as described in
-[[file:swift.org::*Read-Only%20Computed%20Properties][Read-Only Computed
+[[info:swift#Read-Only%20Computed%20Properties][Read-Only Computed
 Properties]]. But if you provide a setter clause, you must also provide
 a getter clause.
 
@@ -5128,14 +5127,14 @@ The /setter name/ and enclosing parentheses is optional. If you provide
 a setter name, it is used as the name of the parameter to the setter. If
 you do not provide a setter name, the default parameter name to the
 setter is =newValue=, as described in
-[[file:swift.org::*Shorthand%20Setter%20Declaration][Shorthand Setter
+[[info:swift#Shorthand%20Setter%20Declaration][Shorthand Setter
 Declaration]].
 
 Unlike stored named values and stored variable properties, the value of
 a computed named value or a computed property is not stored in memory.
 
 For more information and to see examples of computed properties, see
-[[file:swift.org::*Computed%20Properties][Computed Properties]].
+[[info:swift#Computed%20Properties][Computed Properties]].
 
 
 *** Stored Variable Observers and Property Observers
@@ -5164,7 +5163,7 @@ to as /property observers/.
 You can add property observers to any stored property. You can also add
 property observers to any inherited property (whether stored or
 computed) by overriding the property within a subclass, as described in
-[[file:swift.org::*Overriding%20Property%20Observers][Overriding Property
+[[info:swift#Overriding%20Property%20Observers][Overriding Property
 Observers]].
 
 The initializer /expression/ is optional in the context of a class or
@@ -5201,7 +5200,7 @@ Likewise, the =willSet= clause is optional when you provide a =didSet=
 clause.
 
 For more information and to see an example of how to use property
-observers, see [[file:swift.org::*Property%20Observers][Property
+observers, see [[info:swift#Property%20Observers][Property
 Observers]].
 
 
@@ -5211,7 +5210,7 @@ To declare a type variable property, mark the declaration with the
 =static= declaration modifier. Classes may mark type computed properties
 with the =class= declaration modifier instead to allow subclasses to
 override the superclass's implementation. Type properties are discussed
-in [[file:swift.org::*Type%20Properties][Type Properties]].
+in [[info:swift#Type%20Properties][Type Properties]].
 
 Note
 
@@ -5472,7 +5471,7 @@ a nonescaping function argument. Otherwise, the nested function is an
 escaping function.
 
 For a discussion of nested functions, see
-[[file:swift.org::*Nested%20Functions][Nested Functions]].
+[[info:swift#Nested%20Functions][Nested Functions]].
 
 
 *** Parameter Names
@@ -5545,7 +5544,7 @@ violates Swift's memory exclusivity guarantee. For the same reason, you
 can't pass the same value to multiple in-out parameters.
 
 For more information about memory safety and memory exclusivity, see
-[[file:swift.org::*Memory%20Safety][Memory Safety]].
+[[info:swift#Memory%20Safety][Memory Safety]].
 
 A closure or nested function that captures an in-out parameter must be
 nonescaping. If you need to capture an in-out parameter without mutating
@@ -5592,7 +5591,7 @@ most one variadic parameter. A variadic parameter is treated as an array
 that contains elements of the base type name. For example, the variadic
 parameter =Int...= is treated as =[Int]=. For an example that uses a
 variadic parameter, see
-[[file:swift.org::*Variadic%20Parameters][Variadic Parameters]].
+[[info:swift#Variadic%20Parameters][Variadic Parameters]].
 
 A parameter with an equals sign (===) and an expression after its type
 is understood to have a default value of the given expression. The given
@@ -5825,7 +5824,7 @@ Like structures but unlike classes, enumerations are value types;
 instances of an enumeration are copied when assigned to variables or
 constants, or when passed as arguments to a function call. For
 information about value types, see
-[[file:swift.org::*Structures%20and%20Enumerations%20Are%20Value%20Types][Structures and
+[[info:swift#Structures%20and%20Enumerations%20Are%20Value%20Types][Structures and
 Enumerations Are Value Types]].
 
 You can extend the behavior of an enumeration type with an extension
@@ -5868,7 +5867,7 @@ enumeration case and apply it later in your code.
 9. let evenInts: [Number] = [0, 2, 4, 6].map(f)
 
 For more information and to see examples of cases with associated value
-types, see [[file:swift.org::*Associated%20Values][Associated
+types, see [[info:swift#Associated%20Values][Associated
 Values]].
 
 
@@ -5962,7 +5961,7 @@ in =ExampleEnum.b.rawValue=. You can also use a raw value to find a
 corresponding case, if there is one, by calling the enumeration's
 failable initializer, as in =ExampleEnum(rawValue: 5)=, which returns an
 optional case. For more information and to see examples of cases with
-raw-value types, see [[file:swift.org::*Raw%20Values][Raw
+raw-value types, see [[info:swift#Raw%20Values][Raw
 Values]].
 
 
@@ -5971,11 +5970,11 @@ Values]].
 To reference the case of an enumeration type, use dot (=.=) syntax, as
 in =EnumerationType.enumerationCase=. When the enumeration type can be
 inferred from context, you can omit it (the dot is still required), as
-described in [[file:swift.org::*Enumeration%20Syntax][Enumeration
+described in [[info:swift#Enumeration%20Syntax][Enumeration
 Syntax]] and [[Implicit Member Expression][Implicit Member Expression]].
 
 To check the values of enumeration cases, use a =switch= statement, as
-shown in [[file:swift.org::*Matching%20Enumeration%20Values%20with%20a%20Switch%20Statement][Matching
+shown in [[info:swift#Matching%20Enumeration%20Values%20with%20a%20Switch%20Statement][Matching
 Enumeration Values with a Switch Statement]]. The enumeration type is
 pattern-matched against the enumeration case patterns in the case blocks
 of the =switch= statement, as described in
@@ -6120,7 +6119,7 @@ type aliases, and even other structure, class, and enumeration
 declarations. Structure declarations can't contain deinitializer or
 protocol declarations. For a discussion and several examples of
 structures that include various kinds of declarations, see
-[[file:swift.org::*Structures%20and%20Classes][Structures and Classes]].
+[[info:swift#Structures%20and%20Classes][Structures and Classes]].
 
 Structure types can adopt any number of protocols, but can't inherit
 from classes, enumerations, or other structures.
@@ -6130,30 +6129,30 @@ structure:
 
 - Call one of the initializers declared within the structure, as
   described in
-  [[file:swift.org::*Initializers][Initializers]].
+  [[info:swift#Initializers][Initializers]].
 
 - If no initializers are declared, call the structure's memberwise
   initializer, as described in
-  [[file:swift.org::*Memberwise%20Initializers%20for%20Structure%20Types][Memberwise Initializers
+  [[info:swift#Memberwise%20Initializers%20for%20Structure%20Types][Memberwise Initializers
   for Structure Types]].
 
 - If no initializers are declared, and all properties of the structure
   declaration were given initial values, call the structure's default
   initializer, as described in
-  [[file:swift.org::*Default%20Initializers][Default Initializers]].
+  [[info:swift#Default%20Initializers][Default Initializers]].
 
 The process of initializing a structure's declared properties is
-described in [[file:swift.org::*Initialization][Initialization]].
+described in [[info:swift#Initialization][Initialization]].
 
 Properties of a structure instance can be accessed using dot (=.=)
 syntax, as described in
-[[file:swift.org::*Accessing%20Properties][Accessing
+[[info:swift#Accessing%20Properties][Accessing
 Properties]].
 
 Structures are value types; instances of a structure are copied when
 assigned to variables or constants, or when passed as arguments to a
 function call. For information about value types, see
-[[file:swift.org::*Structures%20and%20Enumerations%20Are%20Value%20Types][Structures and
+[[info:swift#Structures%20and%20Enumerations%20Are%20Value%20Types][Structures and
 Enumerations Are Value Types]].
 
 You can extend the behavior of a structure type with an extension
@@ -6211,7 +6210,7 @@ type aliases, and even other class, structure, and enumeration
 declarations. Class declarations can't contain protocol declarations.
 For a discussion and several examples of classes that include various
 kinds of declarations, see
-[[file:swift.org::*Structures%20and%20Classes][Structures and Classes]].
+[[info:swift#Structures%20and%20Classes][Structures and Classes]].
 
 A class type can inherit from only one parent class, its /superclass/,
 but can adopt any number of protocols. The /superclass/ appears first
@@ -6241,30 +6240,30 @@ with the =required= declaration modifier.
 Although properties and methods declared in the /superclass/ are
 inherited by the current class, designated initializers declared in the
 /superclass/ are only inherited when the subclass meets the conditions
-described in [[file:swift.org::*Automatic%20Initializer%20Inheritance][Automatic
+described in [[info:swift#Automatic%20Initializer%20Inheritance][Automatic
 Initializer Inheritance]]. Swift classes do not inherit from a universal
 base class.
 
 There are two ways to create an instance of a previously declared class:
 
 - Call one of the initializers declared within the class, as described
-  in [[file:swift.org::*Initializers][Initializers]].
+  in [[info:swift#Initializers][Initializers]].
 
 - If no initializers are declared, and all properties of the class
   declaration were given initial values, call the class's default
   initializer, as described in
-  [[file:swift.org::*Default%20Initializers][Default Initializers]].
+  [[info:swift#Default%20Initializers][Default Initializers]].
 
 Access properties of a class instance with dot (=.=) syntax, as
 described in
-[[file:swift.org::*Accessing%20Properties][Accessing
+[[info:swift#Accessing%20Properties][Accessing
 Properties]].
 
 Classes are reference types; instances of a class are referred to,
 rather than copied, when assigned to variables or constants, or when
 passed as arguments to a function call. For information about reference
 types, see
-[[file:swift.org::*Structures%20and%20Enumerations%20Are%20Value%20Types][Structures and
+[[info:swift#Structures%20and%20Enumerations%20Are%20Value%20Types][Structures and
 Enumerations Are Value Types]].
 
 You can extend the behavior of a class type with an extension
@@ -6345,14 +6344,14 @@ protocol type inherits from other protocols, the set of requirements
 from those other protocols are aggregated, and any type that inherits
 from the current protocol must conform to all those requirements. For an
 example of how to use protocol inheritance, see
-[[file:swift.org::*Protocol%20Inheritance][Protocol Inheritance]].
+[[info:swift#Protocol%20Inheritance][Protocol Inheritance]].
 
 Note
 
 You can also aggregate the conformance requirements of multiple
 protocols using protocol composition types, as described in
 [[Protocol Composition Type][Protocol Composition Type]] and
-[[file:swift.org::*Protocol%20Composition][Protocol Composition]].
+[[info:swift#Protocol%20Composition][Protocol Composition]].
 
 You can add protocol conformance to a previously declared type by
 adopting the protocol in an extension declaration of that type. In the
@@ -6372,7 +6371,7 @@ contains optional member requirements. For more information about how to
 use the =optional= declaration modifier and for guidance about how to
 access optional protocol members---for example, when you're not sure
 whether a conforming type implements them---see
-[[file:swift.org::*Optional%20Protocol%20Requirements][Optional Protocol
+[[info:swift#Optional%20Protocol%20Requirements][Optional Protocol
 Requirements]].
 
 To restrict the adoption of a protocol to class types only, include the
@@ -6394,13 +6393,13 @@ mark the protocol with the =AnyObject= requirement explicitly.
 
 Protocols are named types, and thus they can appear in all the same
 places in your code as other named types, as discussed in
-[[file:swift.org::*Protocols%20as%20Types][Protocols as Types]]. However,
+[[info:swift#Protocols%20as%20Types][Protocols as Types]]. However,
 you can't construct an instance of a protocol, because protocols do not
 actually provide the implementations for the requirements they specify.
 
 You can use protocols to declare which methods a delegate of a class or
 structure should implement, as described in
-[[file:swift.org::*Delegation][Delegation]].
+[[info:swift#Delegation][Delegation]].
 
 Grammar of a protocol declaration
 
@@ -6482,7 +6481,7 @@ property or a read-only computed property. If a property declaration
 includes only the =get= keyword, it can be implemented as any kind of
 property. For examples of conforming types that implement the property
 requirements of a protocol, see
-[[file:swift.org::*Property%20Requirements][Property Requirements]].
+[[info:swift#Property%20Requirements][Property Requirements]].
 
 See also [[Variable Declaration][Variable Declaration]].
 
@@ -6505,7 +6504,7 @@ declarations, with two exceptions: They don't include a function body,
 and you can't provide any default parameter values as part of the
 function declaration. For examples of conforming types that implement
 the method requirements of a protocol, see
-[[file:swift.org::*Method%20Requirements][Method Requirements]].
+[[info:swift#Method%20Requirements][Method Requirements]].
 
 To declare a class or static method requirement in a protocol
 declaration, mark the method declaration with the =static= declaration
@@ -6612,7 +6611,7 @@ parameters in generic parameter clauses, but they're associated with
 =Self= in the protocol in which they're declared. In that context,
 =Self= refers to the eventual type that conforms to the protocol. For
 more information and examples, see
-[[file:swift.org::*Associated%20Types][Associated Types]].
+[[info:swift#Associated%20Types][Associated Types]].
 
 You use a generic =where= clause in a protocol declaration to add
 constraints to an associated types inherited from another protocol,
@@ -6660,7 +6659,7 @@ initializers, but the rules and associated behavior for class
 initializers are different. Unlike structures and enumerations, classes
 have two kinds of initializers: designated initializers and convenience
 initializers, as described in
-[[file:swift.org::*Initialization][Initialization]].
+[[info:swift#Initialization][Initialization]].
 
 The following form declares initializers for structures, enumerations,
 and designated initializers of classes:
@@ -6725,7 +6724,7 @@ errors. And just like functions and methods, you use the =throws= or
 appropriate behavior.
 
 To see examples of initializers in various type declarations, see
-[[file:swift.org::*Initialization][Initialization]].
+[[info:swift#Initialization][Initialization]].
 
 
 *** Failable Initializers
@@ -6860,7 +6859,7 @@ chain have finished executing.
 Deinitializers are not called directly.
 
 For an example of how to use a deinitializer in a class declaration, see
-[[file:swift.org::*Deinitialization][Deinitialization]].
+[[info:swift#Deinitialization][Deinitialization]].
 
 Grammar of a deinitializer declaration
 
@@ -6889,7 +6888,7 @@ protocol declarations, stored properties, property observers, or other
 extension declarations. Declarations in a protocol extension can't be
 marked =final=. For a discussion and several examples of extensions that
 include various kinds of declarations, see
-[[file:swift.org::*Extensions][Extensions]].
+[[info:swift#Extensions][Extensions]].
 
 If the /type name/ is a class, structure, or enumeration type, the
 extension extends that type. If the /type name/ is a protocol type, the
@@ -7187,7 +7186,7 @@ declaration, as described in [[Protocol Subscript Declaration][Protocol
 Subscript Declaration]].
 
 For more information about subscripting and to see examples of subscript
-declarations, see [[file:swift.org::*Subscripts][Subscripts]].
+declarations, see [[info:swift#Subscripts][Subscripts]].
 
 Grammar of a subscript declaration
 
@@ -7290,7 +7289,7 @@ structure. If you're implementing a prefix or postfix operator, you must
 also mark that method declaration with the corresponding =prefix= or
 =postfix= declaration modifier. To see an example of how to create and
 implement a new operator, see
-[[file:swift.org::*Custom%20Operators][Custom Operators]].
+[[info:swift#Custom%20Operators][Custom Operators]].
 
 Grammar of an operator declaration
 
@@ -7471,14 +7470,14 @@ and the keyword that introduces the declaration.
   the class can't be subclassed. It's applied to a property, method, or
   subscript of a class to indicate that a class member can't be
   overridden in any subclass. For an example of how to use the =final=
-  attribute, see [[file:swift.org::*Preventing%20Overrides][Preventing
+  attribute, see [[info:swift#Preventing%20Overrides][Preventing
   Overrides]].
 
 - =lazy= :: Apply this modifier to a stored variable property of a class
   or structure to indicate that the property's initial value is
   calculated and stored at most once, when the property is first
   accessed. For an example of how to use the =lazy= modifier, see
-  [[file:swift.org::*Lazy%20Stored%20Properties][Lazy Stored Properties]].
+  [[info:swift#Lazy%20Stored%20Properties][Lazy Stored Properties]].
 
 - =optional= :: Apply this modifier to a protocol's property, method, or
   subscript members to indicate that a conforming type isn't required to
@@ -7491,7 +7490,7 @@ and the keyword that introduces the declaration.
   modifier and for guidance about how to access optional protocol
   members---for example, when you're not sure whether a conforming type
   implements them---see
-  [[file:swift.org::*Optional%20Protocol%20Requirements][Optional Protocol
+  [[info:swift#Optional%20Protocol%20Requirements][Optional Protocol
   Requirements]].
 
 - =required= :: Apply this modifier to a designated or convenience
@@ -7507,7 +7506,7 @@ and the keyword that introduces the declaration.
   property or value must be a class type; unlike a weak reference, the
   type is non-optional. For an example and more information about the
   =unowned= modifier, see
-  [[file:swift.org::*Unowned%20References][Unowned
+  [[info:swift#Unowned%20References][Unowned
   References]].
 
 - =unowned(safe)= :: An explicit spelling of =unowned=.
@@ -7521,7 +7520,7 @@ and the keyword that introduces the declaration.
   the type of the property or value must be a class type; unlike a weak
   reference, the type is non-optional. For an example and more
   information about the =unowned= modifier, see
-  [[file:swift.org::*Unowned%20References][Unowned
+  [[info:swift#Unowned%20References][Unowned
   References]].
 
 - =weak= :: Apply this modifier to a stored variable or stored variable
@@ -7530,7 +7529,7 @@ and the keyword that introduces the declaration.
   or property must be an optional class type. If you access the variable
   or property after the object has been deallocated, its value is =nil=.
   For an example and more information about the =weak= modifier, see
-  [[file:swift.org::*Weak%20References][Weak
+  [[info:swift#Weak%20References][Weak
   References]].
 
 
@@ -7540,7 +7539,7 @@ Swift provides five levels of access control: open, public, internal,
 file private, and private. You can mark a declaration with one of the
 access-level modifiers below to specify the declaration's access level.
 Access control is discussed in detail in
-[[file:swift.org::*Access%20Control][Access Control]].
+[[info:swift#Access%20Control][Access Control]].
 
 - =open= :: Apply this modifier to a declaration to indicate the
   declaration can be accessed and subclassed by code in the same module
@@ -7580,7 +7579,7 @@ example, =private(set)=). Use this form of an access-level modifier when
 you want to specify an access level for the setter of a variable or
 subscript that's less than or equal to the access level of the variable
 or subscript itself, as discussed in
-[[file:swift.org::*Getters%20and%20Setters][Getters and Setters]].
+[[info:swift#Getters%20and%20Setters][Getters and Setters]].
 
 Grammar of a declaration modifier
 
@@ -8207,7 +8206,7 @@ You apply it to a parameter's type in a method or function declaration,
 for a parameter whose type is a function type that takes no arguments
 and that returns a value of the type of the expression. For an example
 of how to use the =autoclosure= attribute, see
-[[file:swift.org::*Autoclosures][Autoclosures]] and
+[[info:swift#Autoclosures][Autoclosures]] and
 [[Function Type][Function Type]].
 
 
@@ -8248,7 +8247,7 @@ later execution. This means that the value is allowed to outlive the
 lifetime of the call. Function type parameters with the =escaping= type
 attribute require explicit use of =self.= for properties or methods. For
 an example of how to use the =escaping= attribute, see
-[[file:swift.org::*Escaping%20Closures][Escaping Closures]].
+[[info:swift#Escaping%20Closures][Escaping Closures]].
 
 
 ** Switch Case Attributes
@@ -8504,7 +8503,7 @@ values, the corresponding enumeration case pattern must specify a tuple
 pattern that contains one element for each associated value. For an
 example that uses a =switch= statement to match enumeration cases
 containing associated values, see
-[[file:swift.org::*Associated%20Values][Associated Values]].
+[[info:swift#Associated%20Values][Associated Values]].
 
 Grammar of an enumeration case pattern
 
@@ -8579,7 +8578,7 @@ the matched value is cast to the /pattern/ specified in the right-hand
 side of the =as= pattern.
 
 For an example that uses a =switch= statement to match values with =is=
-and =as= patterns, see [[file:swift.org::*Type%20Casting%20for%20Any%20and%20AnyObject][Type
+and =as= patterns, see [[info:swift#Type%20Casting%20for%20Any%20and%20AnyObject][Type
 Casting for Any and AnyObject]].
 
 Grammar of a type casting pattern
@@ -8652,7 +8651,7 @@ arguments when an instance of a generic type is created or a generic
 function or initializer is called.
 
 For an overview of generics in Swift, see
-[[file:swift.org::*Generics][Generics]].
+[[info:swift#Generics][Generics]].
 
 
 ** Generic Parameter Clause
