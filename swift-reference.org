@@ -5514,6 +5514,8 @@ method calls.
 
 *** In-Out Parameters
 
+#+FINDEX: inout
+
 In-out parameters are passed as follows:
 
 1. When the function is called, the value of the argument is copied.
@@ -5802,6 +5804,8 @@ expression
 
 An /enumeration declaration/ introduces a named enumeration type into
 your program.
+
+#+FINDEX: enum
 
 Enumeration declarations have two basic forms and are declared using the
 =enum= keyword. The body of an enumeration declared using either form
@@ -6604,6 +6608,8 @@ getter-setter-keyword-block
 
 *** Protocol Associated Type Declaration
 
+#+FINDEX: associatedtype
+
 Protocols declare associated types using the =associatedtype= keyword.
 An associated type provides an alias for a type that is used as part of
 a protocol's declaration. Associated types are similar to type
@@ -6838,6 +6844,8 @@ code-block
 
 ** Deinitializer Declaration
 
+#+FINDEX: deinit
+
 A /deinitializer declaration/ declares a deinitializer for a class type.
 Deinitializers take no parameters and have the following form:
 
@@ -6870,6 +6878,8 @@ code-block
 
 
 ** Extension Declaration
+
+#+FINDEX: extension
 
 An /extension declaration/ allows you to extend the behavior of existing
 types. Extension declarations are declared using the =extension= keyword
@@ -7541,11 +7551,15 @@ access-level modifiers below to specify the declaration's access level.
 Access control is discussed in detail in
 [[info:swift#Access%20Control][Access Control]].
 
+#+FINDEX: open
+
 - =open= :: Apply this modifier to a declaration to indicate the
   declaration can be accessed and subclassed by code in the same module
   as the declaration. Declarations marked with the =open= access-level
   modifier can also be accessed and subclassed by code in a module that
   imports the module that contains that declaration.
+
+#+FINDEX: public
 
 - =public= :: Apply this modifier to a declaration to indicate the
   declaration can be accessed and subclassed by code in the same module
@@ -7553,14 +7567,20 @@ Access control is discussed in detail in
   modifier can also be accessed (but not subclassed) by code in a module
   that imports the module that contains that declaration.
 
+#+FINDEX: internal
+
 - =internal= :: Apply this modifier to a declaration to indicate the
   declaration can be accessed only by code in the same module as the
   declaration. By default, most declarations are implicitly marked with
   the =internal= access-level modifier.
 
+#+FINDEX: fileprivate
+
 - =fileprivate= :: Apply this modifier to a declaration to indicate the
   declaration can be accessed only by code in the same source file as
   the declaration.
+
+#+FINDEX: private
 
 - =private= :: Apply this modifier to a declaration to indicate the
   declaration can be accessed only by code within the declaration's
@@ -12040,3 +12060,7 @@ generic-argument-list
 
 generic-argument
 → type
+* Index
+:PROPERTIES:
+:INDEX:    cp
+:END:

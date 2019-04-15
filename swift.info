@@ -20013,17 +20013,32 @@ Index
 * #:                                     String Interpolation. (line 29)
 * #available:                            Checking API Availability.
                                                                (line  6)
-* class:                                 Definition Syntax.    (line  6)
+* associatedtype:                        Associated Types.     (line  6)
+* class:                                 Objects and Classes.  (line  6)
+* class <1>:                             Definition Syntax.    (line  6)
 * deinit:                                Deinitialization.     (line  6)
+* enum:                                  Enumerations and Structures.
+                                                               (line  6)
+* extension:                             Protocols and Extensions.
+                                                               (line 47)
+* fileprivate:                           Access Control Syntax.
+                                                               (line  6)
 * func:                                  Defining and Calling Functions.
                                                                (line  6)
 * if:                                    If.                   (line  6)
 * import:                                Modules and Source Files.
                                                                (line  9)
 * init:                                  Initializers.         (line  6)
+* inout:                                 In-Out Parameters.    (line 14)
+* internal:                              Access Control Syntax.
+                                                               (line  6)
 * let:                                   Constants and Variables.
                                                                (line  6)
 * override:                              Overriding.           (line 11)
+* private:                               Access Control Syntax.
+                                                               (line  6)
+* public:                                Access Control Syntax.
+                                                               (line  6)
 * required:                              Required Initializers.
                                                                (line  6)
 * return:                                Function Parameters and Return Values.

@@ -538,6 +538,8 @@ omit the parentheses entirely.
 
 ** Objects and Classes
 
+#+FINDEX: class
+
 Use =class= followed by the class's name to create a class. A property
 declaration in a class is written the same way as a constant or variable
 declaration, except that it is in the context of a class. Likewise,
@@ -729,6 +731,8 @@ value of the whole expression is an optional value.
 #+END_SRC
 
 ** Enumerations and Structures
+
+#+FINDEX: enum
 
 Use =enum= to create an enumeration. Like classes and all other named
 types, enumerations can have methods associated with them.
@@ -926,6 +930,8 @@ Notice the use of the =mutating= keyword in the declaration of
 =SimpleStructure= to mark a method that modifies the structure. The
 declaration of =SimpleClass= doesn't need any of its methods marked as
 mutating because methods on a class can always modify the class.
+
+#+FINDEX: extension
 
 Use =extension= to add functionality to an existing type, such as new
 methods and computed properties. You can use an extension to add
@@ -6564,6 +6570,8 @@ a compile-time error. This means that you can't change the value of a
 parameter by mistake. If you want a function to modify a parameter's
 value, and you want those changes to persist after the function call has
 ended, define that parameter as an /in-out parameter/ instead.
+
+#+FINDEX: inout
 
 You write an in-out parameter by placing the =inout= keyword right
 before a parameter's type. An in-out parameter has a value that is
@@ -15466,6 +15474,8 @@ used with any type that is =Equatable=, such as =Double= or =String=:
 
 ** Associated Types
 
+#+FINDEX: associatedtype
+
 When defining a protocol, it's sometimes useful to declare one or more
 associated types as part of the protocol's definition. An =associated
 type= gives a placeholder name to a type that is used as part of the
@@ -17415,6 +17425,11 @@ you mark the import declaration for a product module with the
 enabled.
 
 ** Access Control Syntax
+
+#+FINDEX: public
+#+FINDEX: internal
+#+FINDEX: fileprivate
+#+FINDEX: private
 
 Define the access level for an entity by placing one of the =open=,
 =public=, =internal=, =fileprivate=, or =private= modifiers before the

@@ -1235,6 +1235,8 @@ print(sortedNumbers)
 @node Objects and Classes
 @section Objects and Classes
 
+@findex class
+
 Use @samp{class} followed by the class's name to create a class. A property
 declaration in a class is written the same way as a constant or variable
 declaration, except that it is in the context of a class. Likewise,
@@ -1433,6 +1435,8 @@ let sideLength = optionalSquare?.sideLength
 @node Enumerations and Structures
 @section Enumerations and Structures
 
+@findex enum
+
 Use @samp{enum} to create an enumeration. Like classes and all other named
 types, enumerations can have methods associated with them.
 
@@ -1630,6 +1634,8 @@ Notice the use of the @samp{mutating} keyword in the declaration of
 @samp{SimpleStructure} to mark a method that modifies the structure. The
 declaration of @samp{SimpleClass} doesn't need any of its methods marked as
 mutating because methods on a class can always modify the class.
+
+@findex extension
 
 Use @samp{extension} to add functionality to an existing type, such as new
 methods and computed properties. You can use an extension to add
@@ -7766,6 +7772,8 @@ a compile-time error. This means that you can't change the value of a
 parameter by mistake. If you want a function to modify a parameter's
 value, and you want those changes to persist after the function call has
 ended, define that parameter as an @emph{in-out parameter} instead.
+
+@findex inout
 
 You write an in-out parameter by placing the @samp{inout} keyword right
 before a parameter's type. An in-out parameter has a value that is
@@ -17244,6 +17252,8 @@ let stringIndex = findIndex(of: "Andrea", in: ["Mike", "Malcolm", "Andrea"])
 @node Associated Types
 @section Associated Types
 
+@findex associatedtype
+
 When defining a protocol, it's sometimes useful to declare one or more
 associated types as part of the protocol's definition. An @samp{associated
 type} gives a placeholder name to a type that is used as part of the
@@ -19343,6 +19353,11 @@ enabled.
 
 @node Access Control Syntax
 @section Access Control Syntax
+
+@findex public
+@findex internal
+@findex fileprivate
+@findex private
 
 Define the access level for an entity by placing one of the @samp{open},
 @samp{public}, @samp{internal}, @samp{fileprivate}, or @samp{private} modifiers before the

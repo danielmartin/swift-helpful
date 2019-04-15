@@ -39,6 +39,7 @@
 * Patterns::
 * Generic Parameters and Arguments::
 * Summary of the Grammar::
+* Index::
 
 @detailmenu
 --- The Detailed Node Listing ---
@@ -6986,6 +6987,8 @@ greeting is not
 @node In-Out Parameters
 @subsection In-Out Parameters
 
+@findex inout
+
 In-out parameters are passed as follows:
 
 @enumerate
@@ -7331,6 +7334,8 @@ expression
 
 An @emph{enumeration declaration} introduces a named enumeration type into
 your program.
+
+@findex enum
 
 Enumeration declarations have two basic forms and are declared using the
 @samp{enum} keyword. The body of an enumeration declared using either form
@@ -8246,6 +8251,8 @@ getter-setter-keyword-block
 @node Protocol Associated Type Declaration
 @subsection Protocol Associated Type Declaration
 
+@findex associatedtype
+
 Protocols declare associated types using the @samp{associatedtype} keyword.
 An associated type provides an alias for a type that is used as part of
 a protocol's declaration. Associated types are similar to type
@@ -8527,6 +8534,8 @@ code-block
 @node Deinitializer Declaration
 @section Deinitializer Declaration
 
+@findex deinit
+
 A @emph{deinitializer declaration} declares a deinitializer for a class type.
 Deinitializers take no parameters and have the following form:
 
@@ -8564,6 +8573,8 @@ code-block
 
 @node Extension Declaration
 @section Extension Declaration
+
+@findex extension
 
 An @emph{extension declaration} allows you to extend the behavior of existing
 types. Extension declarations are declared using the @samp{extension} keyword
@@ -9412,6 +9423,8 @@ access-level modifiers below to specify the declaration's access level.
 Access control is discussed in detail in
 @ref{Access Control,Access Control,,swift,}.
 
+@findex open
+
 @table @asis
 @item @samp{open}
 Apply this modifier to a declaration to indicate the
@@ -9419,25 +9432,41 @@ declaration can be accessed and subclassed by code in the same module
 as the declaration. Declarations marked with the @samp{open} access-level
 modifier can also be accessed and subclassed by code in a module that
 imports the module that contains that declaration.
+@end table
 
+@findex public
+
+@table @asis
 @item @samp{public}
 Apply this modifier to a declaration to indicate the
 declaration can be accessed and subclassed by code in the same module
 as the declaration. Declarations marked with the @samp{public} access-level
 modifier can also be accessed (but not subclassed) by code in a module
 that imports the module that contains that declaration.
+@end table
 
+@findex internal
+
+@table @asis
 @item @samp{internal}
 Apply this modifier to a declaration to indicate the
 declaration can be accessed only by code in the same module as the
 declaration. By default, most declarations are implicitly marked with
 the @samp{internal} access-level modifier.
+@end table
 
+@findex fileprivate
+
+@table @asis
 @item @samp{fileprivate}
 Apply this modifier to a declaration to indicate the
 declaration can be accessed only by code in the same source file as
 the declaration.
+@end table
 
+@findex private
+
+@table @asis
 @item @samp{private}
 Apply this modifier to a declaration to indicate the
 declaration can be accessed only by code within the declaration's
@@ -14396,5 +14425,10 @@ generic-argument-list
 
 generic-argument
 → type
+
+@node Index
+@unnumbered Index
+
+@printindex cp
 
 @bye
