@@ -20014,6 +20014,7 @@ Index
                                                               (line  29)
 * #available:                            Checking API Availability.
                                                               (line   6)
+* @escaping:                             Escaping Closures.   (line   6)
 * _:                                     Functions and Closures.
                                                               (line  20)
 * _ <1>:                                 Switch.              (line 159)
@@ -20037,6 +20038,8 @@ Index
 * convenience:                           Designated Initializers and Convenience Initializers.
                                                               (line  21)
 * default:                               Switch.              (line  36)
+* defer:                                 Specifying Cleanup Actions.
+                                                              (line   6)
 * deinit:                                Deinitialization.    (line   6)
 * didSet:                                Property Observers.  (line  78)
 * do:                                    Handling Errors Using Do-Catch.

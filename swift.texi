@@ -8675,6 +8675,8 @@ closure, they both increment and return the same running total.
 @node Escaping Closures
 @section Escaping Closures
 
+@findex @@escaping
+
 A closure is said to @emph{escape} a function when the closure is passed as
 an argument to the function, but is called after the function returns.
 When you declare a function that takes a closure as one of its
@@ -14406,6 +14408,8 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 
 @node Specifying Cleanup Actions
 @section Specifying Cleanup Actions
+
+@findex defer
 
 You use a @samp{defer} statement to execute a set of statements just before
 code execution leaves the current block of code. This statement lets you

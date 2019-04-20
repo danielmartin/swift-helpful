@@ -7421,6 +7421,8 @@ closure, they both increment and return the same running total.
 
 ** Escaping Closures
 
+#+FINDEX: @@escaping
+
 A closure is said to /escape/ a function when the closure is passed as
 an argument to the function, but is called after the function returns.
 When you declare a function that takes a closure as one of its
@@ -12802,6 +12804,8 @@ appropriate to disable error propagation.
 #+END_SRC
 
 ** Specifying Cleanup Actions
+
+#+FINDEX: defer
 
 You use a =defer= statement to execute a set of statements just before
 code execution leaves the current block of code. This statement lets you
