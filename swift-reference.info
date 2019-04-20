@@ -10114,9 +10114,27 @@ Index
  [index ]
 * Menu:
 
+* #colorLiteral:                         Literal Expression.  (line  67)
+* #column:                               Literal Expression.  (line  10)
+* #dsohandle:                            Literal Expression.  (line  10)
+* #error:                                Compile-Time Diagnostic Statement.
+                                                              (line  10)
+* #file:                                 Literal Expression.  (line  10)
+* #function:                             Literal Expression.  (line  10)
+* #if:                                   Conditional Compilation Block.
+                                                              (line   9)
+* #imageLiteral:                         Literal Expression.  (line  67)
+* #line:                                 Literal Expression.  (line  10)
+* #selector:                             Selector Expression. (line  10)
+* #sourceLocation:                       Line Control Statement.
+                                                              (line  11)
+* #warning:                              Compile-Time Diagnostic Statement.
+                                                              (line  10)
 * @unknown:                              Guard Statement.     (line 132)
 * associatedtype:                        Protocol Associated Type Declaration.
                                                               (line   6)
+* associativity:                         Precedence Group Declaration.
+                                                              (line  47)
 * deinit:                                Deinitializer Declaration.
                                                               (line   6)
 * enum:                                  Enumeration Declaration.
@@ -10134,6 +10152,12 @@ Index
                                                               (line  37)
 * public:                                Access Control Levels.
                                                               (line  19)
+* rethrows:                              Rethrowing Functions and Methods.
+                                                              (line   6)
+* Self:                                  Protocol Associated Type Declaration.
+                                                              (line   6)
+* where:                                 Protocol Associated Type Declaration.
+                                                              (line  15)
 
 
 

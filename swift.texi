@@ -1101,6 +1101,8 @@ Experiment
 Remove the @samp{day} parameter. Add a parameter to include today's lunch
 special in the greeting.
 
+@findex _
+
 By default, functions use their parameter names as labels for their
 arguments. Write a custom argument label before the parameter name, or
 write @samp{_} to use no argument label.
@@ -1705,6 +1707,8 @@ func send(job: Int, toPrinter printerName: String) throws -> String @{
     return "Job sent"
 @}
 @end example
+
+@findex try
 
 There are several ways to handle errors. One way is to use @samp{do}-@samp{catch}.
 Inside the @samp{do} block, you mark code that can throw an error by writing
@@ -2561,6 +2565,8 @@ at the point that they're evaluated by the compiler.
 
 @node Type Aliases
 @section Type Aliases
+
+@findex typealias
 
 @emph{Type aliases} define an alternative name for an existing type. You
 define type aliases with the @samp{typealias} keyword.
@@ -6060,6 +6066,9 @@ case.
 @node For-In Loops
 @section For-In Loops
 
+@findex for
+@findex in
+
 You use the @samp{for}-@samp{in} loop to iterate over a sequence, such as items in
 an array, ranges of numbers, or characters in a string.
 
@@ -6217,6 +6226,8 @@ through the loop.
 @node While
 @subsection While
 
+@findex while
+
 A @samp{while} loop starts by evaluating a single condition. If the condition
 is @samp{true}, a set of statements is repeated until the condition becomes
 @samp{false}.
@@ -6338,6 +6349,8 @@ executed until a particular condition is satisfied.
 @node Repeat-While
 @subsection Repeat-While
 
+@findex repeat
+
 The other variation of the @samp{while} loop, known as the @samp{repeat}-@samp{while}
 loop, performs a single pass through the loop block first, @emph{before}
 considering the loop's condition. It then continues to repeat the loop
@@ -6448,6 +6461,8 @@ to 32 degrees Fahrenheit (the freezing point of water). If it is, a
 message is printed. Otherwise, no message is printed, and code execution
 continues after the @samp{if} statement's closing brace.
 
+@findex else
+
 The @samp{if} statement can provide an alternative set of statements, known
 as an @emph{else clause}, for situations when the @samp{if} condition is @samp{false}.
 These statements are indicated by the @samp{else} keyword.
@@ -6526,6 +6541,8 @@ default:
 @}
 @end example
 
+@findex case
+
 Every @samp{switch} statement consists of multiple possible @emph{cases}, each of
 which begins with the @samp{case} keyword. In addition to comparing against
 specific values, Swift provides several ways for each case to specify
@@ -6536,6 +6553,8 @@ Like the body of an @samp{if} statement, each @samp{case} is a separate branch o
 code execution. The @samp{switch} statement determines which branch should be
 selected. This procedure is known as @emph{switching} on the value that is
 being considered.
+
+@findex default
 
 Every @samp{switch} statement must be @emph{exhaustive}. That is, every possible
 value of the type being considered must be matched by one of the
@@ -6672,6 +6691,8 @@ transferred out of the @samp{switch} statement.
 @item
 Tuples
 
+
+@findex _
 
 You can use tuples to test multiple values in the same @samp{switch}
 statement. Each element of the tuple can be tested against a different
@@ -6889,6 +6910,8 @@ in @ref{Propagating Errors Using Throwing Functions}.
 @node Continue
 @subsection Continue
 
+@findex continue
+
 The @samp{continue} statement tells a loop to stop what it is doing and start
 again at the beginning of the next iteration through the loop. It says
 “I am done with the current loop iteration” without leaving the loop
@@ -6917,6 +6940,8 @@ and to jump straight to the start of the next iteration.
 
 @node Break
 @subsection Break
+
+@findex break
 
 The @samp{break} statement ends execution of an entire control flow statement
 immediately. The @samp{break} statement can be used inside a @samp{switch} or loop
@@ -7016,6 +7041,8 @@ end of every @samp{switch} case to prevent fallthrough. Avoiding default
 fallthrough means that Swift @samp{switch} statements are much more concise
 and predictable than their counterparts in C, and thus they avoid
 executing multiple @samp{switch} cases by mistake.
+
+@findex fallthrough
 
 If you need C-style fallthrough behavior, you can opt in to this
 behavior on a case-by-case basis with the @samp{fallthrough} keyword. The
@@ -7189,6 +7216,8 @@ helps make the game's logic clearer to read and understand.
 
 @node Early Exit
 @section Early Exit
+
+@findex guard
 
 A @samp{guard} statement, like an @samp{if} statement, executes statements
 depending on the Boolean value of an expression. You use a @samp{guard}
@@ -7688,6 +7717,8 @@ that is readable and clear in intent.
 
 @node Omitting Argument Labels
 @subsection Omitting Argument Labels
+
+@findex _
 
 If you don't want an argument label for a parameter, write an underscore
 (@samp{_}) instead of an explicit argument label for that parameter.
@@ -9269,6 +9300,8 @@ branch is executed instead.
 @node Recursive Enumerations
 @section Recursive Enumerations
 
+@findex indirect
+
 A @emph{recursive enumeration} is an enumeration that has another instance of
 the enumeration as the associated value for one or more of the
 enumeration cases. You indicate that an enumeration case is recursive by
@@ -9907,6 +9940,8 @@ change that instance's variable properties.
 @node Lazy Stored Properties
 @subsection Lazy Stored Properties
 
+@findex lazy
+
 A @emph{lazy stored property} is a property whose initial value is not
 calculated until the first time it is used. You indicate a lazy stored
 property by writing the @samp{lazy} modifier before its declaration.
@@ -10240,6 +10275,9 @@ stepCounter.totalSteps = 896
 // Added 536 steps
 @end example
 
+@findex didSet
+@findex willSet
+
 The @samp{StepCounter} class declares a @samp{totalSteps} property of type @samp{Int}.
 This is a stored property with @samp{willSet} and @samp{didSet} observers.
 
@@ -10343,6 +10381,9 @@ associated with a type as @emph{global} static variables. In Swift, however,
 type properties are written as part of the type's definition, within the
 type's outer curly braces, and each type property is explicitly scoped
 to the type it supports.
+
+@findex static
+@findex class
 
 You define type properties with the @samp{static} keyword. For computed type
 properties for class types, you can use the @samp{class} keyword instead to
@@ -10605,6 +10646,8 @@ methods are just functions that are associated with a type.
 
 @node The self Property
 @subsection The self Property
+
+@findex self
 
 Every instance of a type has an implicit property called @samp{self}, which
 is exactly equivalent to the instance itself. You use the @samp{self}
@@ -10913,6 +10956,8 @@ if player.tracker.advance(to: 6) @{
 
 @node Subscripts
 @chapter Subscripts
+
+@findex subscript
 
 Classes, structures, and enumerations can define @emph{subscripts}, which are
 shortcuts for accessing the member elements of a collection, list, or
@@ -11338,6 +11383,8 @@ implementation as part of your override. For example, you can refine the
 behavior of that existing implementation, or store a modified value in
 an existing inherited variable.
 
+@findex super
+
 Where this is appropriate, you access the superclass version of a
 method, property, or subscript by using the @samp{super} prefix:
 
@@ -11511,6 +11558,8 @@ print("AutomaticCar: \(automatic.description)")
 
 @node Preventing Overrides
 @section Preventing Overrides
+
+@findex final
 
 You can prevent a method, property, or subscript from being overridden
 by marking it as @emph{final}. Do this by writing the @samp{final} modifier before
@@ -12095,6 +12144,8 @@ cases, this requirement is satisfied by inheriting one or more
 designated initializers from a superclass, as described in
 @ref{Automatic Initializer Inheritance}
 below.
+
+@findex convenience
 
 @emph{Convenience initializers} are secondary, supporting initializers for a
 class. You can define a convenience initializer to call a designated
@@ -14199,6 +14250,9 @@ struct PurchasedSnack @{
 @node Handling Errors Using Do-Catch
 @subsection Handling Errors Using Do-Catch
 
+@findex do
+@findex catch
+
 You use a @samp{do}-@samp{catch} statement to handle errors by running a block of
 code. If an error is thrown by the code in the @samp{do} clause, it is
 matched against the @samp{catch} clauses to determine which one of them can
@@ -14491,6 +14545,8 @@ described below.
 @node Checking Type
 @section Checking Type
 
+@findex is
+
 Use the @emph{type check operator} (@samp{is}) to check whether an instance is of
 a certain subclass type. The type check operator returns @samp{true} if the
 instance is of that subclass type and @samp{false} if it is not.
@@ -14527,6 +14583,8 @@ many @samp{MediaItem} instances were found of each type.
 
 @node Downcasting
 @section Downcasting
+
+@findex as
 
 A constant or variable of a certain class type may actually refer to an
 instance of a subclass behind the scenes. Where you believe this is the
@@ -14612,6 +14670,9 @@ as an instance of the type to which it has been cast.
 
 @node Type Casting for Any and AnyObject
 @section Type Casting for Any and AnyObject
+
+@findex Any
+@findex AnyObject
 
 Swift provides two special types for working with nonspecific types:
 
@@ -14976,6 +15037,8 @@ computed property multiplies the value by @samp{1_000.00} to convert into a
 number expressed in meters. Similarly, there are 3.28084 feet in a
 meter, and so the @samp{ft} computed property divides the underlying @samp{Double}
 value by @samp{3.28084}, to convert it from feet to meters.
+
+@findex get
 
 These properties are read-only computed properties, and so they are
 expressed without the @samp{get} keyword, for brevity. Their return value is
@@ -17669,6 +17732,8 @@ correctly reports that all of the items in the two containers match.
 @node Extensions with a Generic Where Clause
 @section Extensions with a Generic Where Clause
 
+@findex where
+
 You can also use a generic @samp{where} clause as part of an extension. The
 example below extends the generic @samp{Stack} structure from the previous
 examples to add an @samp{isTop(_:)} method.
@@ -18144,6 +18209,8 @@ the same lifetime or a longer lifetime.
 @node Weak References
 @subsection Weak References
 
+@findex weak
+
 A @emph{weak reference} is a reference that does not keep a strong hold on
 the instance it refers to, and so does not stop ARC from disposing of
 the referenced instance. This behavior prevents the reference from
@@ -18245,6 +18312,8 @@ such a purpose.
 
 @node Unowned References
 @subsection Unowned References
+
+@findex unowned
 
 Like a weak reference, an @emph{unowned reference} does not keep a strong
 hold on the instance it refers to. Unlike a weak reference, however, an
@@ -19212,6 +19281,9 @@ code. These access levels are relative to the source file in which an
 entity is defined, and also relative to the module that source file
 belongs to.
 
+@findex open
+@findex public
+
 @itemize
 @item
 @emph{Open access} and @emph{public access} enable entities to be used within
@@ -19220,13 +19292,21 @@ from another module that imports the defining module. You typically
 use open or public access when specifying the public interface to a
 framework. The difference between open and public access is described
 below.
+@end itemize
 
+@findex internal
+
+@itemize
 @item
 @emph{Internal access} enables entities to be used within any source file
 from their defining module, but not in any source file outside of that
 module. You typically use internal access when defining an app's or a
 framework's internal structure.
+@end itemize
 
+@findex fileprivate
+
+@itemize
 @item
 @emph{File-private access} restricts the use of an entity to its own
 defining source file. Use file-private access to hide the
@@ -20444,6 +20524,9 @@ operator is a binary operator, this operator method takes two input
 parameters of type @samp{Vector2D} and returns a single output value, also of
 type @samp{Vector2D}.
 
+@findex left
+@findex right
+
 In this implementation, the input parameters are named @samp{left} and
 @samp{right} to represent the @samp{Vector2D} instances that will be on the left
 side and right side of the @samp{+} operator. The method returns a new
@@ -20638,6 +20721,10 @@ if twoThreeFour == anotherTwoThreeFour @{
 You can declare and implement your own @emph{custom operators} in addition to
 the standard operators provided by Swift. For a list of characters that
 can be used to define custom operators, see Operators.
+
+@findex prefix
+@findex infix
+@findex postfix
 
 New operators are declared at a global level using the @samp{operator}
 keyword, and are marked with the @samp{prefix}, @samp{infix} or @samp{postfix}

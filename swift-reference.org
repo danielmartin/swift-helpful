@@ -2175,6 +2175,12 @@
  string or a number), an array or dictionary literal, a playground
  literal, or one of the following special literals:
 
+#+FINDEX: #file
+#+FINDEX: #line
+#+FINDEX: #column
+#+FINDEX: #function
+#+FINDEX: #dsohandle
+
  | Literal        | Type                 | Value                                                             |
  |----------------+----------------------+-------------------------------------------------------------------|
  | =#file=        | =String=             | The name of the file in which it appears.                         |
@@ -2231,6 +2237,9 @@
  specified key and value types.
 
  1. var emptyDictionary: [String: Double] = [:]
+
+#+FINDEX: #colorLiteral
+#+FINDEX: #imageLiteral
 
  A /playground literal/ is used by Xcode to create an interactive
  representation of a color, file, or image within the program editor.
@@ -2910,6 +2919,8 @@
  A selector expression lets you access the selector used to refer to a
  method or to a property's getter or setter in Objective-C. It has the
  following form:
+
+#+FINDEX: #selector
 
  1. #selector(method name)
  2. #selector(getter: property name)
@@ -4435,6 +4446,8 @@ diagnostic-statement
 A conditional compilation block allows code to be conditionally compiled
 depending on the value of one or more compilation conditions.
 
+#+FINDEX: #if
+
 Every conditional compilation block begins with the =#if= compilation
 directive and ends with the =#endif= compilation directive. A simple
 conditional compilation block has the following form:
@@ -4674,6 +4687,8 @@ that can be different from the line number and filename of the source
 code being compiled. Use a line control statement to change the source
 code location used by Swift for diagnostic and debugging purposes.
 
+#+FINDEX: #sourceLocation
+
 A line control statement has the following forms:
 
 1. #sourceLocation(file: filename, line: line number)
@@ -4713,6 +4728,9 @@ static-string-literal
 A compile-time diagnostic statement causes the compiler to emit an error
 or a warning during compilation. A compile-time diagnostic statement has
 the following forms:
+
+#+FINDEX: #error
+#+FINDEX: #warning
 
 1. #error("error message")
 2. #warning("warning message")
@@ -5653,6 +5671,8 @@ method.
 
 
 *** Rethrowing Functions and Methods
+
+#+FINDEX: rethrows
 
 A function or method can be declared with the =rethrows= keyword to
 indicate that it throws an error only if one of its function parameters
@@ -6609,6 +6629,7 @@ getter-setter-keyword-block
 *** Protocol Associated Type Declaration
 
 #+FINDEX: associatedtype
+#+FINDEX: Self
 
 Protocols declare associated types using the =associatedtype= keyword.
 An associated type provides an alias for a type that is used as part of
@@ -6618,6 +6639,8 @@ parameters in generic parameter clauses, but they're associated with
 =Self= refers to the eventual type that conforms to the protocol. For
 more information and examples, see
 [[info:swift#Associated%20Types][Associated Types]].
+
+#+FINDEX: where
 
 You use a generic =where= clause in a protocol declaration to add
 constraints to an associated types inherited from another protocol,
@@ -7372,6 +7395,8 @@ groups provided by the Swift standard library, see
 [[https://developer.apple.com/documentation/swift/operator_declarations][Operator
 Declarations]]
 [https://developer.apple.com/documentation/swift/operator_declarations].
+
+#+FINDEX: associativity
 
 The /associativity/ of an operator specifies how a sequence of operators
 with the same precedence level are grouped together in the absence of

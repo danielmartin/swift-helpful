@@ -20010,44 +20010,106 @@ Index
  [index ]
 * Menu:
 
-* #:                                     String Interpolation. (line 29)
+* #:                                     String Interpolation.
+                                                              (line  29)
 * #available:                            Checking API Availability.
-                                                               (line  6)
-* associatedtype:                        Associated Types.     (line  6)
-* class:                                 Objects and Classes.  (line  6)
-* class <1>:                             Definition Syntax.    (line  6)
-* deinit:                                Deinitialization.     (line  6)
+                                                              (line   6)
+* _:                                     Functions and Closures.
+                                                              (line  20)
+* _ <1>:                                 Switch.              (line 159)
+* _ <2>:                                 Omitting Argument Labels.
+                                                              (line   6)
+* Any:                                   Type Casting for Any and AnyObject.
+                                                              (line   6)
+* AnyObject:                             Type Casting for Any and AnyObject.
+                                                              (line   6)
+* as:                                    Downcasting.         (line   6)
+* associatedtype:                        Associated Types.    (line   6)
+* break:                                 Break.               (line   6)
+* case:                                  Switch.              (line  25)
+* catch:                                 Handling Errors Using Do-Catch.
+                                                              (line   6)
+* class:                                 Objects and Classes. (line   6)
+* class <1>:                             Definition Syntax.   (line   6)
+* class <2>:                             Type Property Syntax.
+                                                              (line  12)
+* continue:                              Continue.            (line   6)
+* convenience:                           Designated Initializers and Convenience Initializers.
+                                                              (line  21)
+* default:                               Switch.              (line  36)
+* deinit:                                Deinitialization.    (line   6)
+* didSet:                                Property Observers.  (line  78)
+* do:                                    Handling Errors Using Do-Catch.
+                                                              (line   6)
+* else:                                  If.                  (line  20)
 * enum:                                  Enumerations and Structures.
-                                                               (line  6)
+                                                              (line   6)
 * extension:                             Protocols and Extensions.
-                                                               (line 47)
-* fileprivate:                           Access Control Syntax.
-                                                               (line  6)
+                                                              (line  47)
+* fallthrough:                           Fallthrough.         (line  15)
+* fileprivate:                           Access Levels.       (line  23)
+* fileprivate <1>:                       Access Control Syntax.
+                                                              (line   6)
+* final:                                 Preventing Overrides.
+                                                              (line   6)
+* for:                                   For-In Loops.        (line   6)
 * func:                                  Defining and Calling Functions.
-                                                               (line  6)
-* if:                                    If.                   (line  6)
+                                                              (line   6)
+* get:                                   Computed Properties 1.
+                                                              (line  42)
+* guard:                                 Early Exit.          (line   6)
+* if:                                    If.                  (line   6)
 * import:                                Modules and Source Files.
-                                                               (line  9)
-* init:                                  Initializers.         (line  6)
-* inout:                                 In-Out Parameters.    (line 14)
-* internal:                              Access Control Syntax.
-                                                               (line  6)
+                                                              (line   9)
+* in:                                    For-In Loops.        (line   6)
+* indirect:                              Recursive Enumerations.
+                                                              (line   6)
+* infix:                                 Custom Operators.    (line  10)
+* init:                                  Initializers.        (line   6)
+* inout:                                 In-Out Parameters.   (line  14)
+* internal:                              Access Levels.       (line  18)
+* internal <1>:                          Access Control Syntax.
+                                                              (line   6)
+* is:                                    Checking Type.       (line   6)
+* lazy:                                  Lazy Stored Properties.
+                                                              (line   6)
+* left:                                  Operator Methods 1.  (line  37)
 * let:                                   Constants and Variables.
-                                                               (line  6)
-* override:                              Overriding.           (line 11)
+                                                              (line   6)
+* open:                                  Access Levels.       (line  11)
+* override:                              Overriding.          (line  11)
+* postfix:                               Custom Operators.    (line  10)
+* prefix:                                Custom Operators.    (line  10)
 * private:                               Access Control Syntax.
-                                                               (line  6)
-* public:                                Access Control Syntax.
-                                                               (line  6)
+                                                              (line   6)
+* public:                                Access Levels.       (line  11)
+* public <1>:                            Access Control Syntax.
+                                                              (line   6)
+* repeat:                                Repeat-While.        (line   6)
 * required:                              Required Initializers.
-                                                               (line  6)
+                                                              (line   6)
 * return:                                Function Parameters and Return Values.
-                                                               (line  6)
-* struct:                                Definition Syntax.    (line  6)
-* switch:                                Switch.               (line  6)
-* throws:                                Error Handling 1.     (line 22)
+                                                              (line   6)
+* right:                                 Operator Methods 1.  (line  37)
+* self:                                  The self Property.   (line   6)
+* static:                                Type Property Syntax.
+                                                              (line  12)
+* struct:                                Definition Syntax.   (line   6)
+* subscript:                             Subscripts.          (line   6)
+* super:                                 Accessing Superclass Methods Properties and Subscripts.
+                                                              (line  12)
+* switch:                                Switch.              (line   6)
+* throws:                                Error Handling 1.    (line  22)
+* try:                                   Error Handling.      (line  26)
+* typealias:                             Type Aliases.        (line   6)
+* unowned:                               Unowned References.  (line   6)
 * var:                                   Constants and Variables.
-                                                               (line 12)
+                                                              (line  12)
+* weak:                                  Weak References.     (line   6)
+* where:                                 Extensions with a Generic Where Clause.
+                                                              (line   6)
+* while:                                 While.               (line   6)
+* willSet:                               Property Observers.  (line  78)
 
 
 

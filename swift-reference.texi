@@ -2834,6 +2834,12 @@ A @emph{literal expression} consists of either an ordinary literal (such as a
 string or a number), an array or dictionary literal, a playground
 literal, or one of the following special literals:
 
+@findex #file
+@findex #line
+@findex #column
+@findex #function
+@findex #dsohandle
+
 @multitable {aaaaaaaaaaaa} {aaaaaaaaaaaaaaaaaa} {aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}
 @headitem Literal
 @tab Type
@@ -2923,6 +2929,9 @@ specified key and value types.
 @item
 var emptyDictionary: [String: Double] = [:]
 @end enumerate
+
+@findex #colorLiteral
+@findex #imageLiteral
 
 A @emph{playground literal} is used by Xcode to create an interactive
 representation of a color, file, or image within the program editor.
@@ -3824,6 +3833,8 @@ function-call-argument-list
 A selector expression lets you access the selector used to refer to a
 method or to a property's getter or setter in Objective-C. It has the
 following form:
+
+@findex #selector
 
 @enumerate
 @item
@@ -5708,6 +5719,8 @@ diagnostic-statement
 A conditional compilation block allows code to be conditionally compiled
 depending on the value of one or more compilation conditions.
 
+@findex #if
+
 Every conditional compilation block begins with the @samp{#if} compilation
 directive and ends with the @samp{#endif} compilation directive. A simple
 conditional compilation block has the following form:
@@ -5987,6 +6000,8 @@ that can be different from the line number and filename of the source
 code being compiled. Use a line control statement to change the source
 code location used by Swift for diagnostic and debugging purposes.
 
+@findex #sourceLocation
+
 A line control statement has the following forms:
 
 @enumerate
@@ -6030,6 +6045,9 @@ static-string-literal
 A compile-time diagnostic statement causes the compiler to emit an error
 or a warning during compilation. A compile-time diagnostic statement has
 the following forms:
+
+@findex #error
+@findex #warning
 
 @enumerate
 @item
@@ -7164,6 +7182,8 @@ method.
 @node Rethrowing Functions and Methods
 @subsection Rethrowing Functions and Methods
 
+@findex rethrows
+
 A function or method can be declared with the @samp{rethrows} keyword to
 indicate that it throws an error only if one of its function parameters
 throws an error. These functions and methods are known as @emph{rethrowing
@@ -8252,6 +8272,7 @@ getter-setter-keyword-block
 @subsection Protocol Associated Type Declaration
 
 @findex associatedtype
+@findex Self
 
 Protocols declare associated types using the @samp{associatedtype} keyword.
 An associated type provides an alias for a type that is used as part of
@@ -8261,6 +8282,8 @@ parameters in generic parameter clauses, but they're associated with
 @samp{Self} refers to the eventual type that conforms to the protocol. For
 more information and examples, see
 @ref{Associated Types,Associated Types,,swift,}.
+
+@findex where
 
 You use a generic @samp{where} clause in a protocol declaration to add
 constraints to an associated types inherited from another protocol,
@@ -9227,6 +9250,8 @@ groups provided by the Swift standard library, see
 @uref{https://developer.apple.com/documentation/swift/operator_declarations, Operator
 Declarations}
 [@uref{https://developer.apple.com/documentation/swift/operator_declarations}].
+
+@findex associativity
 
 The @emph{associativity} of an operator specifies how a sequence of operators
 with the same precedence level are grouped together in the absence of

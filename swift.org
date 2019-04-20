@@ -405,6 +405,8 @@ Experiment
 Remove the =day= parameter. Add a parameter to include today's lunch
 special in the greeting.
 
+#+FINDEX: _
+
 By default, functions use their parameter names as labels for their
 arguments. Write a custom argument label before the parameter name, or
 write =_= to use no argument label.
@@ -1000,6 +1002,8 @@ error.
       return "Job sent"
   }
 #+END_SRC
+
+#+FINDEX: try
 
 There are several ways to handle errors. One way is to use =do=-=catch=.
 Inside the =do= block, you mark code that can throw an error by writing
@@ -1746,6 +1750,8 @@ have an explicit type in and of themselves. Their type is inferred only
 at the point that they're evaluated by the compiler.
 
 ** Type Aliases
+
+#+FINDEX: typealias
 
 /Type aliases/ define an alternative name for an existing type. You
 define type aliases with the =typealias= keyword.
@@ -4972,6 +4978,9 @@ case.
 
 ** For-In Loops
 
+#+FINDEX: for
+#+FINDEX: in
+
 You use the =for=-=in= loop to iterate over a sequence, such as items in
 an array, ranges of numbers, or characters in a string.
 
@@ -5118,6 +5127,8 @@ provides two kinds of =while= loops:
 
 *** While
 
+#+FINDEX: while
+
 A =while= loop starts by evaluating a single condition. If the condition
 is =true=, a set of statements is repeated until the condition becomes
 =false=.
@@ -5229,6 +5240,8 @@ executed until a particular condition is satisfied.
 
 *** Repeat-While
 
+#+FINDEX: repeat
+
 The other variation of the =while= loop, known as the =repeat=-=while=
 loop, performs a single pass through the loop block first, /before/
 considering the loop's condition. It then continues to repeat the loop
@@ -5332,6 +5345,8 @@ to 32 degrees Fahrenheit (the freezing point of water). If it is, a
 message is printed. Otherwise, no message is printed, and code execution
 continues after the =if= statement's closing brace.
 
+#+FINDEX: else
+
 The =if= statement can provide an alternative set of statements, known
 as an /else clause/, for situations when the =if= condition is =false=.
 These statements are indicated by the =else= keyword.
@@ -5409,6 +5424,8 @@ or more values of the same type.
   }
 #+END_SRC
 
+#+FINDEX: case
+
 Every =switch= statement consists of multiple possible /cases/, each of
 which begins with the =case= keyword. In addition to comparing against
 specific values, Swift provides several ways for each case to specify
@@ -5419,6 +5436,8 @@ Like the body of an =if= statement, each =case= is a separate branch of
 code execution. The =switch= statement determines which branch should be
 selected. This procedure is known as /switching/ on the value that is
 being considered.
+
+#+FINDEX: default
 
 Every =switch= statement must be /exhaustive/. That is, every possible
 value of the type being considered must be matched by one of the
@@ -5552,6 +5571,8 @@ Because the value of =approximateCount= falls between 12 and 100,
 transferred out of the =switch= statement.
 
 **** Tuples
+
+#+FINDEX: _
 
 You can use tuples to test multiple values in the same =switch=
 statement. Each element of the tuple can be tested against a different
@@ -5746,6 +5767,8 @@ in [[Propagating Errors Using Throwing Functions][Propagating Errors Using Throw
 
 *** Continue
 
+#+FINDEX: continue
+
 The =continue= statement tells a loop to stop what it is doing and start
 again at the beginning of the next iteration through the loop. It says
 “I am done with the current loop iteration” without leaving the loop
@@ -5773,6 +5796,8 @@ or a space, causing the current iteration of the loop to end immediately
 and to jump straight to the start of the next iteration.
 
 *** Break
+
+#+FINDEX: break
 
 The =break= statement ends execution of an entire control flow statement
 immediately. The =break= statement can be used inside a =switch= or loop
@@ -5865,6 +5890,8 @@ end of every =switch= case to prevent fallthrough. Avoiding default
 fallthrough means that Swift =switch= statements are much more concise
 and predictable than their counterparts in C, and thus they avoid
 executing multiple =switch= cases by mistake.
+
+#+FINDEX: fallthrough
 
 If you need C-style fallthrough behavior, you can opt in to this
 behavior on a case-by-case basis with the =fallthrough= keyword. The
@@ -6028,6 +6055,8 @@ consistent with the label's use alongside the =break= statement and
 helps make the game's logic clearer to read and understand.
 
 ** Early Exit
+
+#+FINDEX: guard
 
 A =guard= statement, like an =if= statement, executes statements
 depending on the Boolean value of an expression. You use a =guard=
@@ -6489,6 +6518,8 @@ expressive, sentence-like manner, while still providing a function body
 that is readable and clear in intent.
 
 *** Omitting Argument Labels
+
+#+FINDEX: _
 
 If you don't want an argument label for a parameter, write an underscore
 (=_=) instead of an explicit argument label for that parameter.
@@ -7991,6 +8022,8 @@ branch is executed instead.
 
 ** Recursive Enumerations
 
+#+FINDEX: indirect
+
 A /recursive enumeration/ is an enumeration that has another instance of
 the enumeration as the associated value for one or more of the
 enumeration cases. You indicate that an enumeration case is recursive by
@@ -8565,6 +8598,8 @@ change that instance's variable properties.
 
 *** Lazy Stored Properties
 
+#+FINDEX: lazy
+
 A /lazy stored property/ is a property whose initial value is not
 calculated until the first time it is used. You indicate a lazy stored
 property by writing the =lazy= modifier before its declaration.
@@ -8879,6 +8914,9 @@ a person's exercise during their daily routine.
   // Added 536 steps
 #+END_SRC
 
+#+FINDEX: didSet
+#+FINDEX: willSet
+
 The =StepCounter= class declares a =totalSteps= property of type =Int=.
 This is a stored property with =willSet= and =didSet= observers.
 
@@ -8974,6 +9012,9 @@ associated with a type as /global/ static variables. In Swift, however,
 type properties are written as part of the type's definition, within the
 type's outer curly braces, and each type property is explicitly scoped
 to the type it supports.
+
+#+FINDEX: static
+#+FINDEX: class
 
 You define type properties with the =static= keyword. For computed type
 properties for class types, you can use the =class= keyword instead to
@@ -9212,6 +9253,8 @@ Parameter Names]]. The same is true for method parameters, because
 methods are just functions that are associated with a type.
 
 *** The self Property
+
+#+FINDEX: self
 
 Every instance of a type has an implicit property called =self=, which
 is exactly equivalent to the instance itself. You use the =self=
@@ -9516,6 +9559,8 @@ player's current level fails:
 #+END_SRC
 
 * Subscripts
+
+#+FINDEX: subscript
 
 Classes, structures, and enumerations can define /subscripts/, which are
 shortcuts for accessing the member elements of a collection, list, or
@@ -9914,6 +9959,8 @@ implementation as part of your override. For example, you can refine the
 behavior of that existing implementation, or store a modified value in
 an existing inherited variable.
 
+#+FINDEX: super
+
 Where this is appropriate, you access the superclass version of a
 method, property, or subscript by using the =super= prefix:
 
@@ -10073,6 +10120,8 @@ integer, plus =1=. A speed of =35.0= produces a gear of =4=:
 #+END_SRC
 
 ** Preventing Overrides
+
+#+FINDEX: final
 
 You can prevent a method, property, or subscript from being overridden
 by marking it as /final/. Do this by writing the =final= modifier before
@@ -10606,6 +10655,8 @@ cases, this requirement is satisfied by inheriting one or more
 designated initializers from a superclass, as described in
 [[Automatic Initializer Inheritance][Automatic Initializer Inheritance]]
 below.
+
+#+FINDEX: convenience
 
 /Convenience initializers/ are secondary, supporting initializers for a
 class. You can define a convenience initializer to call a designated
@@ -12598,6 +12649,9 @@ propagating them to its caller.
 
 *** Handling Errors Using Do-Catch
 
+#+FINDEX: do
+#+FINDEX: catch
+
 You use a =do=-=catch= statement to handle errors by running a block of
 code. If an error is thrown by the code in the =do= clause, it is
 matched against the =catch= clauses to determine which one of them can
@@ -12877,6 +12931,8 @@ described below.
 
 ** Checking Type
 
+#+FINDEX: is
+
 Use the /type check operator/ (=is=) to check whether an instance is of
 a certain subclass type. The type check operator returns =true= if the
 instance is of that subclass type and =false= if it is not.
@@ -12912,6 +12968,8 @@ loop, the values of =movieCount= and =songCount= contain a count of how
 many =MediaItem= instances were found of each type.
 
 ** Downcasting
+
+#+FINDEX: as
 
 A constant or variable of a certain class type may actually refer to an
 instance of a subclass behind the scenes. Where you believe this is the
@@ -12996,6 +13054,9 @@ underlying instance remains the same; it is simply treated and accessed
 as an instance of the type to which it has been cast.
 
 ** Type Casting for Any and AnyObject
+
+#+FINDEX: Any
+#+FINDEX: AnyObject
 
 Swift provides two special types for working with nonspecific types:
 
@@ -13324,6 +13385,8 @@ computed property multiplies the value by =1_000.00= to convert into a
 number expressed in meters. Similarly, there are 3.28084 feet in a
 meter, and so the =ft= computed property divides the underlying =Double=
 value by =3.28084=, to convert it from feet to meters.
+
+#+FINDEX: get
 
 These properties are read-only computed properties, and so they are
 expressed without the =get= keyword, for brevity. Their return value is
@@ -15861,6 +15924,8 @@ correctly reports that all of the items in the two containers match.
 
 ** Extensions with a Generic Where Clause
 
+#+FINDEX: where
+
 You can also use a generic =where= clause as part of an extension. The
 example below extends the generic =Stack= structure from the previous
 examples to add an =isTop(_:)= method.
@@ -16308,6 +16373,8 @@ the same lifetime or a longer lifetime.
 
 *** Weak References
 
+#+FINDEX: weak
+
 A /weak reference/ is a reference that does not keep a strong hold on
 the instance it refers to, and so does not stop ARC from disposing of
 the referenced instance. This behavior prevents the reference from
@@ -16408,6 +16475,8 @@ last strong reference is removed, making weak references unsuitable for
 such a purpose.
 
 *** Unowned References
+
+#+FINDEX: unowned
 
 Like a weak reference, an /unowned reference/ does not keep a strong
 hold on the instance it refers to. Unlike a weak reference, however, an
@@ -17314,6 +17383,9 @@ code. These access levels are relative to the source file in which an
 entity is defined, and also relative to the module that source file
 belongs to.
 
+#+FINDEX: open
+#+FINDEX: public
+
 - /Open access/ and /public access/ enable entities to be used within
   any source file from their defining module, and also in a source file
   from another module that imports the defining module. You typically
@@ -17321,10 +17393,14 @@ belongs to.
   framework. The difference between open and public access is described
   below.
 
+#+FINDEX: internal
+
 - /Internal access/ enables entities to be used within any source file
   from their defining module, but not in any source file outside of that
   module. You typically use internal access when defining an app's or a
   framework's internal structure.
+
+#+FINDEX: fileprivate
 
 - /File-private access/ restricts the use of an entity to its own
   defining source file. Use file-private access to hide the
@@ -18408,6 +18484,9 @@ operator is a binary operator, this operator method takes two input
 parameters of type =Vector2D= and returns a single output value, also of
 type =Vector2D=.
 
+#+FINDEX: left
+#+FINDEX: right
+
 In this implementation, the input parameters are named =left= and
 =right= to represent the =Vector2D= instances that will be on the left
 side and right side of the =+= operator. The method returns a new
@@ -18587,6 +18666,10 @@ operators.
 You can declare and implement your own /custom operators/ in addition to
 the standard operators provided by Swift. For a list of characters that
 can be used to define custom operators, see Operators.
+
+#+FINDEX: prefix
+#+FINDEX: infix
+#+FINDEX: postfix
 
 New operators are declared at a global level using the =operator=
 keyword, and are marked with the =prefix=, =infix= or =postfix=
