@@ -35,7 +35,8 @@ If you want to use `info-lookup-symbol` in `swift-mode`, add the following code 
 (info-lookup-maybe-add-help
  :mode 'swift-mode
  :regexp "[#@_a-zA-Z][_a-zA-Z0-9]*"
- :doc-spec '(("(swift)Index" nil "['`‘]" "['’]")))
+ :doc-spec '(("(swift)Index" nil "['`‘]" "['’]")
+             ("(swift-reference)Index" nil "['`‘]" "['’]")))
 ```
 
 Visit a Swift file in `swift-mode`, place the point on a keyword and hit `C-h S` to see definitive discussion about that Swift keyword or concept.
