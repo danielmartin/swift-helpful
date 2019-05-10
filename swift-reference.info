@@ -10130,6 +10130,9 @@ Index
                                                               (line  11)
 * #warning:                              Compile-Time Diagnostic Statement.
                                                               (line  10)
+* @inlinable:                            inlinable.           (line   6)
+* @nonobjc:                              nonobjc.             (line   6)
+* @objc:                                 objc.                (line   6)
 * @unknown:                              Guard Statement.     (line 132)
 * associatedtype:                        Protocol Associated Type Declaration.
                                                               (line   6)

@@ -10034,6 +10034,8 @@ to the SpriteKit editor UI. Applying this attribute also implies the
 @node inlinable
 @subsection inlinable
 
+@findex @@inlinable
+
 Apply this attribute to a function, method, computed property,
 subscript, convenience initializer, or deinitializer declaration to
 expose that declaration's implementation as part of the module's public
@@ -10052,6 +10054,8 @@ inlinable, even though they can't be marked with this attribute.
 
 @node nonobjc
 @subsection nonobjc
+
+@findex @@nonobjc
 
 Apply this attribute to a method, property, subscript, or initializer
 declaration to suppress an implicit @samp{objc} attribute. The @samp{nonobjc}
@@ -10117,6 +10121,8 @@ Applying this attribute also implies the @samp{objc} attribute.
 
 @node objc
 @subsection objc
+
+@findex @@objc
 
 Apply this attribute to any declaration that can be represented in
 Objective-C---for example, nonnested classes, protocols, nongeneric

@@ -7983,6 +7983,8 @@ to the SpriteKit editor UI. Applying this attribute also implies the
 
 *** inlinable
 
+#+FINDEX: @@inlinable
+
 Apply this attribute to a function, method, computed property,
 subscript, convenience initializer, or deinitializer declaration to
 expose that declaration's implementation as part of the module's public
@@ -8001,6 +8003,8 @@ inlinable, even though they can't be marked with this attribute.
 
 
 *** nonobjc
+
+#+FINDEX: @@nonobjc
 
 Apply this attribute to a method, property, subscript, or initializer
 declaration to suppress an implicit =objc= attribute. The =nonobjc=
@@ -8062,6 +8066,8 @@ Applying this attribute also implies the =objc= attribute.
 
 
 *** objc
+
+#+FINDEX: @@objc
 
 Apply this attribute to any declaration that can be represented in
 Objective-C---for example, nonnested classes, protocols, nongeneric
