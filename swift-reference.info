@@ -10130,10 +10130,25 @@ Index
                                                               (line  11)
 * #warning:                              Compile-Time Diagnostic Statement.
                                                               (line  10)
+* @discardableResult:                    discardableResult.   (line   6)
+* @dynamicCallable:                      dynamicCallable.     (line   6)
+* @dynamicCallable <1>:                  NSManaged.           (line   6)
+* @dynamicMemberLookup:                  dynamicMemberLookup. (line   6)
+* @GKInspectable:                        GKInspectable.       (line   6)
 * @inlinable:                            inlinable.           (line   6)
 * @nonobjc:                              nonobjc.             (line   6)
+* @NSApplicationMain:                    NSApplicationMain.   (line   6)
+* @NSCopying:                            NSCopying.           (line   6)
 * @objc:                                 objc.                (line   6)
+* @objcMembers:                          objcMembers.         (line   6)
+* @requires_stored_property_inits:       requires_stored_property_inits.
+                                                              (line   6)
+* @testable:                             testable.            (line   6)
+* @UIApplicationMain:                    UIApplicationMain.   (line   6)
 * @unknown:                              Guard Statement.     (line 132)
+* @usableFromInline:                     usableFromInline.    (line   6)
+* @warn_unqualified_access:              warn_unqualified_access.
+                                                              (line   6)
 * associatedtype:                        Protocol Associated Type Declaration.
                                                               (line   6)
 * associativity:                         Precedence Group Declaration.

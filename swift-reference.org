@@ -7839,12 +7839,16 @@ Swift version availability and one or more platform availabilities.
 
 *** discardableResult
 
+#+FINDEX: @@discardableResult
+
 Apply this attribute to a function or method declaration to suppress the
 compiler warning when the function or method that returns a value is
 called without using its result.
 
 
 *** dynamicCallable
+
+#+FINDEX: @@dynamicCallable
 
 Apply this attribute to a class, structure, enumeration, or protocol to
 treat instances of the type as callable functions. The type must
@@ -7940,6 +7944,8 @@ example doesn't compile because there isn't an implementation of
 
 *** dynamicMemberLookup
 
+#+FINDEX: @@dynamicMemberLookup
+
 Apply this attribute to a class, structure, enumeration, or protocol to
 enable members to be looked up by name at runtime. The type must
 implement a =subscript(dynamicMemberLookup:)= subscript.
@@ -7975,6 +7981,8 @@ example:
 
 
 *** GKInspectable
+
+#+FINDEX: @@GKInspectable
 
 Apply this attribute to expose a custom GameplayKit component property
 to the SpriteKit editor UI. Applying this attribute also implies the
@@ -8031,6 +8039,8 @@ attribute.
 
 *** NSApplicationMain
 
+#+FINDEX: @@NSApplicationMain
+
 Apply this attribute to a class to indicate that it's the application
 delegate. Using this attribute is equivalent to calling the
 =NSApplicationMain(_:_:)= function.
@@ -8045,6 +8055,8 @@ follows:
 
 *** NSCopying
 
+#+FINDEX: @@NSCopying
+
 Apply this attribute to a stored variable property of a class. This
 attribute causes the property's setter to be synthesized with a /copy/
 of the property's value---returned by the =copyWithZone(_:)=
@@ -8056,6 +8068,8 @@ The =NSCopying= attribute behaves in a way similar to the Objective-C
 
 
 *** NSManaged
+
+#+FINDEX: @@dynamicCallable
 
 Apply this attribute to an instance method or stored variable property
 of a class that inherits from =NSManagedObject= to indicate that Core
@@ -8135,6 +8149,8 @@ the name of the property itself.
 
 *** objcMembers
 
+#+FINDEX: @@objcMembers
+
 Apply this attribute to a class declaration, to implicitly apply the
 =objc= attribute to all Objective-C compatible members of the class, its
 extensions, its subclasses, and all of the extensions of its subclasses.
@@ -8150,6 +8166,8 @@ and adversely affect performance.
 
 *** requires_stored_property_inits
 
+#+FINDEX: @@requires_stored_property_inits
+
 Apply this attribute to a class declaration to require all stored
 properties within the class to provide default values as part of their
 definitions. This attribute is inferred for any class that inherits from
@@ -8157,6 +8175,8 @@ definitions. This attribute is inferred for any class that inherits from
 
 
 *** testable
+
+#+FINDEX: @@testable
 
 Apply this attribute to an =import= declaration to import that module
 with changes to its access control that simplify testing the module's
@@ -8169,6 +8189,8 @@ The imported module must be compiled with testing enabled.
 
 
 *** UIApplicationMain
+
+#+FINDEX: @@UIApplicationMain
 
 Apply this attribute to a class to indicate that it's the application
 delegate. Using this attribute is equivalent to calling the
@@ -8185,6 +8207,8 @@ function. For example, if your app uses a custom subclass of
 
 
 *** usableFromInline
+
+#+FINDEX: @@usableFromInline
 
 Apply this attribute to a function, method, computed property,
 subscript, initializer, or deinitializer declaration to allow that
@@ -8207,6 +8231,8 @@ an error.
 
 
 *** warn_unqualified_access
+
+#+FINDEX: @@warn_unqualified_access
 
 Apply this attribute to a top-level function, instance method, or class
 or static method to trigger warnings when that function or method is

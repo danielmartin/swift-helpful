@@ -9822,12 +9822,16 @@ struct MyStruct @{
 @node discardableResult
 @subsection discardableResult
 
+@findex @@discardableResult
+
 Apply this attribute to a function or method declaration to suppress the
 compiler warning when the function or method that returns a value is
 called without using its result.
 
 @node dynamicCallable
 @subsection dynamicCallable
+
+@findex @@dynamicCallable
 
 Apply this attribute to a class, structure, enumeration, or protocol to
 treat instances of the type as callable functions. The type must
@@ -9970,6 +9974,8 @@ repeatLabels(a: "four") // Error
 @node dynamicMemberLookup
 @subsection dynamicMemberLookup
 
+@findex @@dynamicMemberLookup
+
 Apply this attribute to a class, structure, enumeration, or protocol to
 enable members to be looked up by name at runtime. The type must
 implement a @samp{subscript(dynamicMemberLookup:)} subscript.
@@ -10027,6 +10033,8 @@ print(dynamic == equivalent)
 @node GKInspectable
 @subsection GKInspectable
 
+@findex @@GKInspectable
+
 Apply this attribute to expose a custom GameplayKit component property
 to the SpriteKit editor UI. Applying this attribute also implies the
 @samp{objc} attribute.
@@ -10082,6 +10090,8 @@ attribute.
 @node NSApplicationMain
 @subsection NSApplicationMain
 
+@findex @@NSApplicationMain
+
 Apply this attribute to a class to indicate that it's the application
 delegate. Using this attribute is equivalent to calling the
 @samp{NSApplicationMain(_:_:)} function.
@@ -10100,6 +10110,8 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 @node NSCopying
 @subsection NSCopying
 
+@findex @@NSCopying
+
 Apply this attribute to a stored variable property of a class. This
 attribute causes the property's setter to be synthesized with a @emph{copy}
 of the property's value---returned by the @samp{copyWithZone(_:)}
@@ -10111,6 +10123,8 @@ The @samp{NSCopying} attribute behaves in a way similar to the Objective-C
 
 @node NSManaged
 @subsection NSManaged
+
+@findex @@dynamicCallable
 
 Apply this attribute to an instance method or stored variable property
 of a class that inherits from @samp{NSManagedObject} to indicate that Core
@@ -10204,6 +10218,8 @@ class ExampleClass: NSObject @{
 @node objcMembers
 @subsection objcMembers
 
+@findex @@objcMembers
+
 Apply this attribute to a class declaration, to implicitly apply the
 @samp{objc} attribute to all Objective-C compatible members of the class, its
 extensions, its subclasses, and all of the extensions of its subclasses.
@@ -10219,6 +10235,8 @@ and adversely affect performance.
 @node requires@math{_stored}@math{_property}@math{_inits}
 @subsection requires@math{_stored}@math{_property}@math{_inits}
 
+@findex @@requires_stored_property_inits
+
 Apply this attribute to a class declaration to require all stored
 properties within the class to provide default values as part of their
 definitions. This attribute is inferred for any class that inherits from
@@ -10226,6 +10244,8 @@ definitions. This attribute is inferred for any class that inherits from
 
 @node testable
 @subsection testable
+
+@findex @@testable
 
 Apply this attribute to an @samp{import} declaration to import that module
 with changes to its access control that simplify testing the module's
@@ -10238,6 +10258,8 @@ The imported module must be compiled with testing enabled.
 
 @node UIApplicationMain
 @subsection UIApplicationMain
+
+@findex @@UIApplicationMain
 
 Apply this attribute to a class to indicate that it's the application
 delegate. Using this attribute is equivalent to calling the
@@ -10254,6 +10276,8 @@ function. For example, if your app uses a custom subclass of
 
 @node usableFromInline
 @subsection usableFromInline
+
+@findex @@usableFromInline
 
 Apply this attribute to a function, method, computed property,
 subscript, initializer, or deinitializer declaration to allow that
@@ -10276,6 +10300,8 @@ an error.
 
 @node warn@math{_unqualified}@math{_access}
 @subsection warn@math{_unqualified}@math{_access}
+
+@findex @@warn_unqualified_access
 
 Apply this attribute to a top-level function, instance method, or class
 or static method to trigger warnings when that function or method is
