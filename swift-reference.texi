@@ -7131,6 +7131,8 @@ f(7) // Invalid, missing argument label
 @node Special Kinds of Methods
 @subsection Special Kinds of Methods
 
+@findex mutating
+
 Methods on an enumeration or a structure that modify @samp{self} must be
 marked with the @samp{mutating} declaration modifier.
 

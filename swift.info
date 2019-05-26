@@ -20079,6 +20079,8 @@ Index
 * left:                                  Operator Methods 1.  (line  37)
 * let:                                   Constants and Variables.
                                                               (line   6)
+* mutating:                              Protocols and Extensions.
+                                                              (line  42)
 * open:                                  Access Levels.       (line  11)
 * override:                              Overriding.          (line  11)
 * postfix:                               Custom Operators.    (line  10)

@@ -5626,6 +5626,8 @@ omitted when calling the function, the default value is used instead.
 
 *** Special Kinds of Methods
 
+#+FINDEX: mutating
+
 Methods on an enumeration or a structure that modify =self= must be
 marked with the =mutating= declaration modifier.
 

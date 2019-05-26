@@ -10164,6 +10164,8 @@ Index
 * inout:                                 In-Out Parameters.   (line   6)
 * internal:                              Access Control Levels.
                                                               (line  26)
+* mutating:                              Special Kinds of Methods.
+                                                              (line   6)
 * open:                                  Access Control Levels.
                                                               (line  12)
 * private:                               Access Control Levels.

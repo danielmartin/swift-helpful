@@ -928,6 +928,8 @@ Add another requirement to =ExampleProtocol=. What changes do you need
 to make to =SimpleClass= and =SimpleStructure= so that they still
 conform to the protocol?
 
+#+FINDEX: mutating
+
 Notice the use of the =mutating= keyword in the declaration of
 =SimpleStructure= to mark a method that modifies the structure. The
 declaration of =SimpleClass= doesn't need any of its methods marked as
