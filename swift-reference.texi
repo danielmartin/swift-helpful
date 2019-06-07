@@ -1,7 +1,7 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
 @setfilename swift-reference.info
-@settitle The Swift Programming Reference (Swift 5)
+@settitle The Swift Programming Reference (Swift 5.1)
 @documentencoding UTF-8
 @documentlanguage en
 @syncodeindex vr cp
@@ -16,7 +16,7 @@
 
 @finalout
 @titlepage
-@title The Swift Programming Reference (Swift 5)
+@title The Swift Programming Reference (Swift 5.1)
 @author Apple Inc.
 @end titlepage
 
@@ -24,7 +24,7 @@
 
 @ifnottex
 @node Top
-@top The Swift Programming Reference (Swift 5)
+@top The Swift Programming Reference (Swift 5.1)
 @end ifnottex
 
 @menu
@@ -1547,13 +1547,13 @@ and describes the type inference behavior of Swift.
 Grammar of a type
 
 type →
+function-type
+
+type →
 array-type
 
 type →
 dictionary-type
-
-type →
-function-type
 
 type →
 type-identifier
@@ -1569,6 +1569,9 @@ implicitly-unwrapped-optional-type
 
 type →
 protocol-composition-type
+
+type →
+opaque-type
 
 type →
 metatype-type
@@ -1626,7 +1629,7 @@ type
 @node Type Identifier
 @section Type Identifier
 
-A type identifier refers to either a named type or a type alias of a
+A @emph{type identifier} refers to either a named type or a type alias of a
 named or compound type.
 
 Most of the time, a type identifier directly refers to a named type with
@@ -1674,7 +1677,7 @@ identifier
 @node Tuple Type
 @section Tuple Type
 
-A tuple type is a comma-separated list of types, enclosed in
+A @emph{tuple type} is a comma-separated list of types, enclosed in
 parentheses.
 
 You can use a tuple type as the return type of a function to enable the
@@ -1734,7 +1737,7 @@ identifier
 @node Function Type
 @section Function Type
 
-A function type represents the type of a function, method, or closure
+A @emph{function type} represents the type of a function, method, or closure
 and consists of a parameter and return type separated by an arrow
 (@samp{->}):
 
@@ -2154,7 +2157,7 @@ implicitly-unwrapped-optional-type
 @node Protocol Composition Type
 @section Protocol Composition Type
 
-A protocol composition type defines a type that conforms to each
+A @emph{protocol composition} type defines a type that conforms to each
 protocol in a list of specified protocols, or a type that is a subclass
 of a given class and conforms to each protocol in a list of specified
 protocols. Protocol composition types may be used only when specifying a
@@ -2224,7 +2227,7 @@ protocol-composition-type
 @node Metatype Type
 @section Metatype Type
 
-A metatype type refers to the type of any type, including class types,
+A @emph{metatype type} refers to the type of any type, including class types,
 structure types, enumeration types, and protocol types.
 
 The metatype of a class, structure, or enumeration type is the name of
@@ -2319,7 +2322,7 @@ type @samp{.} @samp{Protocol}
 @node Type Inheritance Clause
 @section Type Inheritance Clause
 
-A type inheritance clause is used to specify which class a named type
+A @emph{type inheritance clause} is used to specify which class a named type
 inherits from and which protocols a named type conforms to. A type
 inheritance clause begins with a colon (@samp{:}), followed by a list of type
 identifiers.
@@ -2364,7 +2367,7 @@ type-inheritance-list
 @node Type Inference
 @section Type Inference
 
-Swift uses type inference extensively, allowing you to omit the type or
+Swift uses @emph{type inference} extensively, allowing you to omit the type or
 part of the type of many variables and expressions in your code. For
 example, instead of writing @samp{var x: Int = 0}, you can write @samp{var x = 0},
 omitting the type completely---the compiler correctly infers that @samp{x}
@@ -6408,7 +6411,10 @@ when the type of the @emph{constant name} can be inferred, as described in
 @ref{Type Inference}.
 
 To declare a constant type property, mark the declaration with the
-@samp{static} declaration modifier. Type properties are discussed in
+@samp{static} declaration modifier. A constant type property of a class is
+always implicitly final; you can't mark it with the @samp{class} or @samp{final}
+declaration modifier to allow or disallow overriding by subclasses. Type
+properties are discussed in
 @ref{Type Properties,Type Properties,,swift,}.
 
 For more information about constants and for guidance about when to use
@@ -6637,7 +6643,7 @@ Observers,,swift,}.
 @subsection Type Variable Properties
 
 To declare a type variable property, mark the declaration with the
-@samp{static} declaration modifier. Classes may mark type computed properties
+@samp{static} declaration modifier. Classes can mark type computed properties
 with the @samp{class} declaration modifier instead to allow subclasses to
 override the superclass's implementation. Type properties are discussed
 in @ref{Type Properties,Type Properties,,swift,}.
@@ -7146,7 +7152,7 @@ marked with the @samp{static} declaration modifier for enumerations and
 structures, or with either the @samp{static} or @samp{class} declaration modifier
 for classes. A class type method marked with the @samp{class} declaration
 modifier can be overridden by a subclass implementation; a class type
-method marked with @samp{static} can't be overridden.
+method marked with @samp{class final} or @samp{static} can't be overridden.
 
 @node Throwing Functions and Methods
 @subsection Throwing Functions and Methods
@@ -7553,7 +7559,7 @@ case cooperative, individual, competitive
 
 In the above example, the raw value of @samp{GamePlayMode.cooperative} is
 @samp{"cooperative"}, the raw value of @samp{GamePlayMode.individual} is
-@samp{"individual"},. and the raw value of @samp{GamePlayMode.competitive} is
+@samp{"individual"}, and the raw value of @samp{GamePlayMode.competitive} is
 @samp{"competitive"}.
 
 Enumerations that have cases of a raw-value type implicitly conform to
@@ -8174,11 +8180,13 @@ the method requirements of a protocol, see
 
 To declare a class or static method requirement in a protocol
 declaration, mark the method declaration with the @samp{static} declaration
-modifier. Classes that implement this method declare the method with the
-@samp{class} modifier. Structures that implement it must declare the method
-with the @samp{static} declaration modifier instead. If you're implementing
-the method in an extension, use the @samp{class} modifier if you're extending
-a class and the @samp{static} modifier if you're extending a structure.
+modifier. Structures and enumerations that conform to the protocol
+declare the method with the @samp{static} keyword, and classes that conform
+to the protocol declare the method with either the @samp{static} or @samp{class}
+keyword. Extensions that add protocol conformance to a structure,
+enumeration, or class use the same keyword as the type they extend uses.
+Extensions that provide a default implementation for a type method
+requirement use the @samp{static} keyword.
 
 See also @ref{Function Declaration}.
 
@@ -9035,8 +9043,8 @@ provide a setter clause, you must also provide a getter clause.
 The @emph{setter name} and enclosing parentheses are optional. If you provide
 a setter name, it is used as the name of the parameter to the setter. If
 you do not provide a setter name, the default parameter name to the
-setter is @samp{value}. The type of the @emph{setter name} must be the same as the
-@emph{return type}.
+setter is @samp{value}. The type of the parameter to the setter is the same
+as the @emph{return type}.
 
 You can overload a subscript declaration in the type in which it is
 declared, as long as the @emph{parameters} or the @emph{return type} differ from
@@ -9045,10 +9053,12 @@ declaration inherited from a superclass. When you do so, you must mark
 the overridden subscript declaration with the @samp{override} declaration
 modifier.
 
-By default, the parameters used in subscripting don't have argument
-labels, unlike functions, methods, and initializers. However, you can
-provide explicit argument labels using the same syntax that functions,
-methods, and initializers use.
+Subscript parameters follow the same rules as function parameters, with
+two exceptions. By default, the parameters used in subscripting don't
+have argument labels, unlike functions, methods, and initializers.
+However, you can provide explicit argument labels using the same syntax
+that functions, methods, and initializers use. In addition, subscripts
+can't have in-out parameters.
 
 You can also declare subscripts in the context of a protocol
 declaration, as described in @ref{Protocol Subscript Declaration, , Protocol
@@ -9350,6 +9360,13 @@ context-sensitive keyword between a declaration's attributes (if any)
 and the keyword that introduces the declaration.
 
 @table @asis
+@item @samp{class}
+Apply this modifier to a member of a class to indicate that
+the member is a member of the class itself, rather than a member of
+instances of the class. Members of a superclass that have this
+modifier and don't have the @samp{final} modifier can be overridden by
+subclasses.
+
 @item @samp{dynamic}
 Apply this modifier to any member of a class that can be
 represented by Objective-C. When you mark a member declaration with
@@ -9397,6 +9414,17 @@ Apply this modifier to a designated or convenience
 initializer of a class to indicate that every subclass must implement
 that initializer. The subclass's implementation of that initializer
 must also be marked with the @samp{required} modifier.
+
+@item @samp{static}
+Apply this modifier to a member of a structure, class,
+enumeration, or protocol to indicate that the member is a member of
+the type, rather than a member of instances of that type. In the scope
+of a class declaration, writing the @samp{static} modifier on a member
+declaration has the same effect as writing the @samp{class} and @samp{final}
+modifiers on that member declaration. However, constant type
+properties of a class are an exception: @samp{static} has its normal,
+nonclass meaning there because you can't write @samp{class} or @samp{final} on
+those declarations.
 
 @item @samp{unowned}
 Apply this modifier to a stored variable, constant, or
@@ -9875,13 +9903,13 @@ let dial = TelephoneExchange()
 @item
 dial(4, 1, 1)
 @item
-// Prints "Get Swift help on forums.swift.org".
+// Prints "Get Swift help on forums.swift.org"
 @item
 
 @item
 dial(8, 6, 7, 5, 3, 0, 9)
 @item
-// Prints "Unrecognized number".
+// Prints "Unrecognized number"
 @item
 
 @item
@@ -9984,12 +10012,29 @@ implement a @samp{subscript(dynamicMemberLookup:)} subscript.
 
 In an explicit member expression, if there isn't a corresponding
 declaration for the named member, the expression is understood as a call
-to the type's @samp{subscript(dynamicMemberLookup:)} subscript, passing a
-string literal that contains the member's name as the argument. The
-subscript's parameter type can be any type that conforms to the
-@samp{ExpressibleByStringLiteral} protocol, and its return type can be any
-type. In most cases, the subscript's parameter is a @samp{String} value. For
-example:
+to the type's @samp{subscript(dynamicMemberLookup:)} subscript, passing
+information about the member as the argument. The subscript can accept a
+parameter that's either a key path or a member name; if you implement
+both subscripts, the subscript that takes key path argument is used.
+
+An implementation of @samp{subscript(dynamicMemberLookup:)} can accept key
+paths using an argument of type
+@uref{https://developer.apple.com/documentation/swift/keypath, @samp{KeyPath}}
+[@uref{https://developer.apple.com/documentation/swift/keypath}],
+@uref{https://developer.apple.com/documentation/swift/writablekeypath, @samp{WritableKeyPath}}
+[@uref{https://developer.apple.com/documentation/swift/writablekeypath}], or
+@uref{https://developer.apple.com/documentation/swift/referencewritablekeypath, @samp{ReferenceWritableKeyPath}}
+[@uref{https://developer.apple.com/documentation/swift/referencewritablekeypath}].
+It can accept member names using an argument of a type that conforms to
+the
+@uref{https://developer.apple.com/documentation/swift/expressiblebystringliteral, @samp{ExpressibleByStringLiteral}}
+[@uref{https://developer.apple.com/documentation/swift/expressiblebystringliteral}]
+protocol---in most cases, @samp{String}. The subscript's return type can be
+any type.
+
+Dynamic member lookup by member name can be used to create a wrapper
+type around data that can't be type checked at compile time, such as
+when bridging data from other languages into Swift. For example:
 
 @enumerate
 @item
@@ -10172,8 +10217,9 @@ The declaration satisfies a requirement from a protocol that has the
 @samp{objc} attribute.
 
 @item
-The declaration has the @samp{IBAction}, @samp{IBOutlet}, @samp{IBDesignable},
-@samp{IBInspectable}, @samp{NSManaged}, or @samp{GKInspectable} attribute.
+The declaration has the @samp{IBAction}, @samp{IBSegueAction}, @samp{IBOutlet},
+@samp{IBDesignable}, @samp{IBInspectable}, @samp{NSManaged}, or @samp{GKInspectable}
+attribute.
 @end itemize
 
 If you apply the @samp{objc} attribute to an enumeration, each enumeration
@@ -10328,17 +10374,17 @@ confusion when attempting to use one or the other from within a
 
 Interface Builder attributes are declaration attributes used by
 Interface Builder to synchronize with Xcode. Swift provides the
-following Interface Builder attributes: @samp{IBAction}, @samp{IBOutlet},
-@samp{IBDesignable}, and @samp{IBInspectable}. These attributes are conceptually
-the same as their Objective-C counterparts.
+following Interface Builder attributes: @samp{IBAction}, @samp{IBSegueAction},
+ @samp{IBOutlet}, @samp{IBDesignable}, and @samp{IBInspectable}. These attributes are
+conceptually the same as their Objective-C counterparts.
 
 You apply the @samp{IBOutlet} and @samp{IBInspectable} attributes to property
-declarations of a class. You apply the @samp{IBAction} attribute to method
-declarations of a class and the @samp{IBDesignable} attribute to class
-declarations.
+declarations of a class. You apply the @samp{IBAction} and @samp{IBSegueAction}
+ attribute to method declarations of a class and the @samp{IBDesignable}
+attribute to class declarations.
 
-Applying the @samp{IBAction}, @samp{IBOutlet}, @samp{IBDesignable}, or @samp{IBInspectable}
-attribute also implies the @samp{objc} attribute.
+Applying the @samp{IBAction}, @samp{IBSegueAction}, @samp{IBOutlet}, @samp{IBDesignable}, or
+@samp{IBInspectable} attribute also implies the @samp{objc} attribute.
 
 @node Type Attributes
 @section Type Attributes
@@ -11820,13 +11866,13 @@ operator
 Grammar of a type
 
 type →
+function-type
+
+type →
 array-type
 
 type →
 dictionary-type
-
-type →
-function-type
 
 type →
 type-identifier
@@ -11844,11 +11890,15 @@ type →
 protocol-composition-type
 
 type →
+opaque-type
+
+type →
 metatype-type
 
-type → @samp{Any}
+type →
+self-type
 
-type → @samp{Self}
+type → @samp{Any}
 
 type → @samp{(}
 type @samp{)}
@@ -11983,6 +12033,11 @@ type-identifier
 @item
 @end multitable
 protocol-composition-type
+
+Grammar of an opaque type
+
+opaque-type →
+@samp{some} type
 
 Grammar of a metatype type
 

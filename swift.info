@@ -8,8 +8,8 @@ END-INFO-DIR-ENTRY
 
 File: swift.info,  Node: Top,  Next: Welcome to Swift,  Up: (dir)
 
-The Swift Programming Language Guide (Swift 5)
-**********************************************
+The Swift Programming Language Guide (Swift 5.1)
+************************************************
 
 * Menu:
 
@@ -40,6 +40,7 @@ The Swift Programming Language Guide (Swift 5)
 * Extensions::
 * Protocols::
 * Generics: Generics 1.
+* Opaque Types::
 * Automatic Reference Counting::
 * Memory Safety::
 * Access Control::
@@ -261,6 +262,7 @@ Function Parameters and Return Values
 * Functions With Multiple Parameters::
 * Functions Without Return Values::
 * Functions with Multiple Return Values::
+* Functions With an Implicit Return::
 
 Function Argument Labels and Parameter Names
 
@@ -343,6 +345,7 @@ Stored Properties
 Computed Properties
 
 * Shorthand Setter Declaration::
+* Shorthand Getter Declaration::
 * Read-Only Computed Properties::
 
 Type Properties
@@ -366,6 +369,7 @@ Subscripts
 * Subscript Syntax::
 * Subscript Usage::
 * Subscript Options::
+* Type Subscripts::
 
 Inheritance
 
@@ -543,6 +547,12 @@ Associated Types
 * Adding Constraints to an Associated Type::
 * Using a Protocol in Its Associated Type's Constraints::
 
+Opaque Types
+
+* The Problem That Opaque Types Solve::
+* Returning an Opaque Type::
+* Differences Between Opaque Types and Protocol Types::
+
 Automatic Reference Counting
 
 * How ARC Works::
@@ -719,13 +729,15 @@ File: swift.info,  Node: Version Compatibility,  Next: A Swift Tour,  Prev: Abou
 3 Version Compatibility
 ***********************
 
-This book describes Swift 5, the default version of Swift that’s
-included in Xcode 10.2.  You can use Xcode 10.2 to build targets that
-are written in either Swift 5, Swift 4.2, or Swift 4.
+This book describes Swift 5.1, the default version of Swift that’s
+included in Xcode 11.  You can use Xcode 11 to build targets that are
+written in either Swift 5.1, Swift 4.2, or Swift 4.
 
-   When you use Xcode 10.2 to build Swift 4 and Swift 4.2 code, most
-Swift 5 functionality is available.  That said, the following changes
-are available only to Swift 5 code:
+   When you use Xcode 11 to build Swift 4 and Swift 4.2 code, most Swift
+5.1 functionality is available.  That said, the following changes are
+available only to code that uses Swift 5.1 or later:
+
+   • Functions that return an opaque type require the Swift 5.1 runtime.
 
    • The ‘try?’ expression doesn’t introduce an extra level of
      optionality to expressions that already return optionals.
@@ -735,10 +747,10 @@ are available only to Swift 5 code:
      ‘UInt64(0xffff_ffff_ffff_ffff)’ evaluates to the correct value
      rather than overflowing.
 
-   A target written in Swift 5 can depend on a target that’s written in
-Swift 4.2 or Swift 4, and vice versa.  This means, if you have a large
-project that’s divided into multiple frameworks, you can migrate your
-code from Swift 4 to Swift 5 one framework at a time.
+   A target written in Swift 5.1 can depend on a target that’s written
+in Swift 4.2 or Swift 4, and vice versa.  This means, if you have a
+large project that’s divided into multiple frameworks, you can migrate
+your code from Swift 4 to Swift 5.1 one framework at a time.
 
 
 File: swift.info,  Node: A Swift Tour,  Next: Language Guide,  Prev: Version Compatibility,  Up: Top
@@ -2566,11 +2578,11 @@ Functions with Multiple Return Values.
 
    Note
 
-   Tuples are useful for temporary groups of related values.  They’re
-not suited to the creation of complex data structures.  If your data
-structure is likely to persist beyond a temporary scope, model it as a
-class or structure, rather than as a tuple.  For more information, see
-*note Structures and Classes::.
+   Tuples are useful for simple groups of related values.  They’re not
+suited to the creation of complex data structures.  If your data
+structure is likely to be more complex, model it as a class or
+structure, rather than as a tuple.  For more information, see *note
+Structures and Classes::.
 
 
 File: swift.info,  Node: Optionals,  Next: Error Handling 1,  Prev: Tuples,  Up: The Basics
@@ -5735,8 +5747,8 @@ constants or variables as part of the iteration:
      for (airportCode, airportName) in airports {
          print("\(airportCode): \(airportName)")
      }
-     // YYZ: Toronto Pearson
      // LHR: London Heathrow
+     // YYZ: Toronto Pearson
 
    For more about the ‘for’-‘in’ loop, see *note For-In Loops::.
 
@@ -5746,23 +5758,23 @@ or values by accessing its ‘keys’ and ‘values’ properties:
      for airportCode in airports.keys {
          print("Airport code: \(airportCode)")
      }
-     // Airport code: YYZ
      // Airport code: LHR
+     // Airport code: YYZ
 
      for airportName in airports.values {
          print("Airport name: \(airportName)")
      }
-     // Airport name: Toronto Pearson
      // Airport name: London Heathrow
+     // Airport name: Toronto Pearson
 
    If you need to use a dictionary’s keys or values with an API that
 takes an ‘Array’ instance, initialize a new array with the ‘keys’ or
 ‘values’ property:
 
      let airportCodes = [String](airports.keys)
-     // airportCodes is ["YYZ", "LHR"]
+     // airportCodes is ["LHR", "YYZ"]
      let airportNames = [String](airports.values)
-     // airportNames is ["Toronto Pearson", "London Heathrow"]
+     // airportNames is ["London Heathrow", "Toronto Pearson"]
 
    Swift’s ‘Dictionary’ type does not have a defined ordering.  To
 iterate over the keys or values of a dictionary in a specific order, use
@@ -5833,8 +5845,8 @@ values are decomposed into a constant called ‘legCount’.
      for (animalName, legCount) in numberOfLegs {
          print("\(animalName)s have \(legCount) legs")
      }
-     // ants have 6 legs
      // cats have 4 legs
+     // ants have 6 legs
      // spiders have 8 legs
 
    The contents of a ‘Dictionary’ are inherently unordered, and
@@ -7085,6 +7097,7 @@ and different parameter options.
 * Functions With Multiple Parameters::
 * Functions Without Return Values::
 * Functions with Multiple Return Values::
+* Functions With an Implicit Return::
 
 
 File: swift.info,  Node: Functions Without Parameters,  Next: Functions With Multiple Parameters,  Up: Function Parameters and Return Values
@@ -7193,7 +7206,7 @@ returning a value, and attempting to do so will result in a compile-time
 error.
 
 
-File: swift.info,  Node: Functions with Multiple Return Values,  Prev: Functions Without Return Values,  Up: Function Parameters and Return Values
+File: swift.info,  Node: Functions with Multiple Return Values,  Next: Functions With an Implicit Return,  Prev: Functions Without Return Values,  Up: Function Parameters and Return Values
 
 11.2.4 Functions with Multiple Return Values
 --------------------------------------------
@@ -7288,6 +7301,37 @@ already specified as part of the function’s return type.
               print("min is \(bounds.min) and max is \(bounds.max)")
           }
           // Prints "min is -6 and max is 109"
+
+
+File: swift.info,  Node: Functions With an Implicit Return,  Prev: Functions with Multiple Return Values,  Up: Function Parameters and Return Values
+
+11.2.5 Functions With an Implicit Return
+----------------------------------------
+
+If the entire body of the function is a single expression, the function
+implicitly returns that expression.  For example, both functions below
+have the same behavior:
+
+     func greeting(for person: String) -> String {
+         "Hello, " + person + "!"
+     }
+     print(greeting(for: "Dave"))
+     // Prints "Hello, Dave!"
+
+     func anotherGreeting(for person: String) -> String {
+         return "Hello, " + person + "!"
+     }
+     print(anotherGreeting(for: "Dave"))
+     // Prints "Hello, Dave!"
+
+   The entire definition of the ‘greeting(for:)’ function is the
+greeting message that it returns, which means it can use this shorter
+form.  The ‘anotherGreeting(for:)’ function returns the same greeting
+message, using the ‘return’ keyword like a longer function.  Any
+function that you write as just one ‘return’ line can omit the ‘return’.
+
+   As you’ll see in *note Shorthand Getter Declaration: Shorthand Getter
+Declaration, property getters can also use an implicit return.
 
 
 File: swift.info,  Node: Function Argument Labels and Parameter Names,  Next: Function Types,  Prev: Function Parameters and Return Values,  Up: Functions
@@ -9674,17 +9718,18 @@ stored ‘origin’ property, and moves the square to its new position.
 * Menu:
 
 * Shorthand Setter Declaration::
+* Shorthand Getter Declaration::
 * Read-Only Computed Properties::
 
 
-File: swift.info,  Node: Shorthand Setter Declaration,  Next: Read-Only Computed Properties,  Up: Computed Properties
+File: swift.info,  Node: Shorthand Setter Declaration,  Next: Shorthand Getter Declaration,  Up: Computed Properties
 
 15.2.1 Shorthand Setter Declaration
 -----------------------------------
 
-If a computed property’s setter does not define a name for the new value
+If a computed property’s setter doesn’t define a name for the new value
 to be set, a default name of ‘newValue’ is used.  Here’s an alternative
-version of the ‘Rect’ structure, which takes advantage of this shorthand
+version of the ‘Rect’ structure that takes advantage of this shorthand
 notation:
 
      struct AlternativeRect {
@@ -9704,9 +9749,39 @@ notation:
      }
 
 
-File: swift.info,  Node: Read-Only Computed Properties,  Prev: Shorthand Setter Declaration,  Up: Computed Properties
+File: swift.info,  Node: Shorthand Getter Declaration,  Next: Read-Only Computed Properties,  Prev: Shorthand Setter Declaration,  Up: Computed Properties
 
-15.2.2 Read-Only Computed Properties
+15.2.2 Shorthand Getter Declaration
+-----------------------------------
+
+If the entire body of a getter is a single expression, the getter
+implicitly returns that expression.  Here’s an another version of the
+‘Rect’ structure that takes advantage of this shorthand notation and the
+shorthand notation for setters:
+
+     struct CompactRect {
+         var origin = Point()
+         var size = Size()
+         var center: Point {
+             get {
+                 Point(x: origin.x + (size.width / 2),
+                       y: origin.y + (size.height / 2))
+             }
+             set {
+                 origin.x = newValue.x - (size.width / 2)
+                 origin.y = newValue.y - (size.height / 2)
+             }
+         }
+     }
+
+   Omitting the ‘return’ from a getter follows the same rules as
+omitting ‘return’ from a function, as described in *note Functions With
+an Implicit Return::.
+
+
+File: swift.info,  Node: Read-Only Computed Properties,  Prev: Shorthand Getter Declaration,  Up: Computed Properties
+
+15.2.3 Read-Only Computed Properties
 ------------------------------------
 
 A computed property with a getter but no setter is known as a _read-only
@@ -10331,12 +10406,12 @@ File: swift.info,  Node: Type Methods,  Prev: Instance Methods,  Up: Methods
 16.2 Type Methods
 =================
 
-Instance methods, as described above, are methods that are called on an
+Instance methods, as described above, are methods that you call on an
 instance of a particular type.  You can also define methods that are
 called on the type itself.  These kinds of methods are called _type
 methods_.  You indicate type methods by writing the ‘static’ keyword
-before the method’s ‘func’ keyword.  Classes may also use the ‘class’
-keyword to allow subclasses to override the superclass’s implementation
+before the method’s ‘func’ keyword.  Classes can use the ‘class’ keyword
+instead, to allow subclasses to override the superclass’s implementation
 of that method.
 
    Note
@@ -10503,6 +10578,7 @@ parameters to suit your custom type’s needs.
 * Subscript Syntax::
 * Subscript Usage::
 * Subscript Options::
+* Type Subscripts::
 
 
 File: swift.info,  Node: Subscript Syntax,  Next: Subscript Usage,  Up: Subscripts
@@ -10521,10 +10597,10 @@ setter in the same way as for computed properties:
 
      subscript(index: Int) -> Int {
          get {
-             // return an appropriate subscript value here
+             // Return an appropriate subscript value here.
          }
          set(newValue) {
-             // perform a suitable setting action here
+             // Perform a suitable setting action here.
          }
      }
 
@@ -10539,7 +10615,7 @@ declaration of a read-only subscript by removing the ‘get’ keyword and
 its braces:
 
      subscript(index: Int) -> Int {
-         // return an appropriate subscript value here
+         // Return an appropriate subscript value here.
      }
 
    Here’s an example of a read-only subscript implementation, which
@@ -10614,15 +10690,15 @@ key will have a value, and to give a way to delete a value for a key by
 assigning a ‘nil’ value for that key.
 
 
-File: swift.info,  Node: Subscript Options,  Prev: Subscript Usage,  Up: Subscripts
+File: swift.info,  Node: Subscript Options,  Next: Type Subscripts,  Prev: Subscript Usage,  Up: Subscripts
 
 17.3 Subscript Options
 ======================
 
 Subscripts can take any number of input parameters, and these input
 parameters can be of any type.  Subscripts can also return any type.
-Subscripts can use variadic parameters, but they can’t use in-out
-parameters or provide default parameter values.
+Subscripts can use variadic parameters and provide default parameter
+values, but they can’t use in-out parameters.
 
    A class or structure can provide as many subscript implementations as
 it needs, and the appropriate subscript to be used will be inferred
@@ -10703,7 +10779,31 @@ called ‘indexIsValid(row:column:)’, which checks whether the requested
 outside of the matrix bounds:
 
      let someValue = matrix[2, 2]
-     // this triggers an assert, because [2, 2] is outside of the matrix bounds
+     // This triggers an assert, because [2, 2] is outside of the matrix bounds.
+
+
+File: swift.info,  Node: Type Subscripts,  Prev: Subscript Options,  Up: Subscripts
+
+17.4 Type Subscripts
+====================
+
+Instance subscripts, as described above, are subscripts that you call on
+an instance of a particular type.  You can also define subscripts that
+are called on the type itself.  This kind of subscript is called a _type
+subscript_.  You indicate a type subscript by writing the ‘static’
+keyword before the ‘subscript’ keyword.  Classes can use the ‘class’
+keyword instead, to allow subclasses to override the superclass’s
+implementation of that subscript.  The example below shows how you
+define and call a type subscript:
+
+     enum Planet: Int {
+         case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
+         static subscript(n: Int) -> Planet {
+             return Planet(rawValue: n)!
+         }
+     }
+     let mars = Planet[4]
+     print(mars)
 
 
 File: swift.info,  Node: Inheritance,  Next: Initialization,  Prev: Subscripts,  Up: Top
@@ -11472,9 +11572,9 @@ File: swift.info,  Node: Memberwise Initializers for Structure Types 1,  Up: Def
 --------------------------------------------------
 
 Structure types automatically receive a _memberwise initializer_ if they
-do not define any of their own custom initializers.  Unlike a default
+don’t define any of their own custom initializers.  Unlike a default
 initializer, the structure receives a memberwise initializer even if it
-has stored properties that do not have default values.
+has stored properties that don’t have default values.
 
    The memberwise initializer is a shorthand way to initialize the
 member properties of new structure instances.  Initial values for the
@@ -11493,6 +11593,20 @@ instance:
          var width = 0.0, height = 0.0
      }
      let twoByTwo = Size(width: 2.0, height: 2.0)
+
+   When you call a memberwise initializer, you can omit values for any
+properties that have default values.  In the example above, the ‘Size’
+structure has a default value for both its ‘height’ and ‘width’
+properties.  You can omit either property or both properties, and the
+initializer uses the default value for anything you omit—for example:
+
+     let zeroByTwo = Size(height: 2.0)
+     print(zeroByTwo.width, zeroByTwo.height)
+     // Prints "0.0 2.0"
+
+     let zeroByZero = Size()
+     print(zeroByZero.width, zeroByZero.height)
+     // Prints "0.0 0.0"
 
 
 File: swift.info,  Node: Initializer Delegation for Value Types,  Next: Class Inheritance and Initialization,  Prev: Default Initializers,  Up: Initialization
@@ -11737,7 +11851,7 @@ initializer from the superclass, to satisfy rule 1 from above.
 
    These rules don’t affect how users of your classes _create_ instances
 of each class.  Any initializer in the diagram above can be used to
-create a fully-initialized instance of the class they belong to.  The
+create a fully initialized instance of the class they belong to.  The
 rules only affect how you write the implementation of the class’s
 initializers.
 
@@ -14808,7 +14922,7 @@ requirement:
      }
 
    The ‘FullyNamed’ protocol requires a conforming type to provide a
-fully-qualified name.  The protocol doesn’t specify anything else about
+fully qualified name.  The protocol doesn’t specify anything else about
 the nature of the conforming type—it only specifies that the type must
 be able to provide a full name for itself.  The protocol states that any
 ‘FullyNamed’ type must have a gettable instance property called
@@ -15079,11 +15193,13 @@ File: swift.info,  Node: Protocols as Types,  Next: Delegation,  Prev: Initializ
 =======================
 
 Protocols don’t actually implement any functionality themselves.
-Nonetheless, any protocol you create will become a fully-fledged type
-for use in your code.
+Nonetheless, you can use protocols as a fully fledged types in your
+code.  Using a protocol as a type is sometimes called an _existential
+type_, which comes from the phrase “there exists a type _T_ such that
+_T_ conforms to the protocol”.
 
-   Because it’s a type, you can use a protocol in many places where
-other types are allowed, including:
+   You can use a protocol in many places where other types are allowed,
+including:
 
    • As a parameter type or return type in a function, method, or
      initializer
@@ -15122,7 +15238,14 @@ generator from which to create dice roll values.
 Therefore, you can set it to an instance of _any_ type that adopts the
 ‘RandomNumberGenerator’ protocol.  Nothing else is required of the
 instance you assign to this property, except that the instance must
-adopt the ‘RandomNumberGenerator’ protocol.
+adopt the ‘RandomNumberGenerator’ protocol.  Because its type is
+‘RandomNumberGenerator’, code inside the ‘Dice’ class can only interact
+with ‘generator’ in ways that apply to all generators that conform to
+this protocol.  That means it can’t use any methods or properties that
+are defined by the underlying type of the generator.  However, you can
+downcast from a protocol type to an underlying type in the same way you
+can downcast from a superclass to a subclass, as discussed in *note
+Downcasting::.
 
    ‘Dice’ also has an initializer, to set up its initial state.  This
 initializer has a parameter called ‘generator’, which is also of type
@@ -15778,15 +15901,15 @@ File: swift.info,  Node: Optional Protocol Requirements,  Next: Protocol Extensi
 26.14 Optional Protocol Requirements
 ====================================
 
-You can define _optional requirements_ for protocols, These requirements
-don’t have to be implemented by types that conform to the protocol.
-Optional requirements are prefixed by the ‘optional’ modifier as part of
-the protocol’s definition.  Optional requirements are available so that
-you can write code that interoperates with Objective-C. Both the
-protocol and the optional requirement must be marked with the ‘@objc’
-attribute.  Note that ‘@objc’ protocols can be adopted only by classes
-that inherit from Objective-C classes or other ‘@objc’ classes.  They
-can’t be adopted by structures or enumerations.
+You can define _optional requirements_ for protocols.  These
+requirements don’t have to be implemented by types that conform to the
+protocol.  Optional requirements are prefixed by the ‘optional’ modifier
+as part of the protocol’s definition.  Optional requirements are
+available so that you can write code that interoperates with
+Objective-C. Both the protocol and the optional requirement must be
+marked with the ‘@objc’ attribute.  Note that ‘@objc’ protocols can be
+adopted only by classes that inherit from Objective-C classes or other
+‘@objc’ classes.  They can’t be adopted by structures or enumerations.
 
    When you use a method or property in an optional requirement, its
 type automatically becomes an optional.  For example, a method of type
@@ -16079,7 +16202,7 @@ or property, Swift uses the implementation corresponding to the most
 specialized constraints.
 
 
-File: swift.info,  Node: Generics 1,  Next: Automatic Reference Counting,  Prev: Protocols,  Up: Top
+File: swift.info,  Node: Generics 1,  Next: Opaque Types,  Prev: Protocols,  Up: Top
 
 27 Generics
 ***********
@@ -17187,9 +17310,387 @@ each given index.  This generic subscript is constrained as follows:
 ‘indices’ parameter is a sequence of integers.
 
 
-File: swift.info,  Node: Automatic Reference Counting,  Next: Memory Safety,  Prev: Generics 1,  Up: Top
+File: swift.info,  Node: Opaque Types,  Next: Automatic Reference Counting,  Prev: Generics 1,  Up: Top
 
-28 Automatic Reference Counting
+28 Opaque Types
+***************
+
+A function or method with an opaque return type hides its return value’s
+type information.  Instead of providing a concrete type as the
+function’s return type, the return value is described in terms of the
+protocols it supports.  Hiding type information is useful at boundaries
+between a module and code that calls into the module, because the
+underlying type of the return value can remain private.  Unlike
+returning a value whose type is a protocol type, opaque types preserve
+type identity—the compiler has access to the type information, but
+clients of the module don’t.
+
+* Menu:
+
+* The Problem That Opaque Types Solve::
+* Returning an Opaque Type::
+* Differences Between Opaque Types and Protocol Types::
+
+
+File: swift.info,  Node: The Problem That Opaque Types Solve,  Next: Returning an Opaque Type,  Up: Opaque Types
+
+28.1 The Problem That Opaque Types Solve
+========================================
+
+For example, suppose you’re writing a module that draws ASCII art
+shapes.  The basic characteristic of an ASCII art shape is a ‘draw()’
+function that returns the string representation of that shape, which you
+can use as the requirement for the ‘Shape’ protocol:
+
+     protocol Shape {
+         func draw() -> String
+     }
+
+     struct Triangle: Shape {
+         var size: Int
+         func draw() -> String {
+             var result = [String]()
+             for length in 1...size {
+                 result.append(String(repeating: "*", count: length))
+             }
+             return result.joined(separator: "\n")
+         }
+     }
+     let smallTriangle = Triangle(size: 3)
+     print(smallTriangle.draw())
+     // *
+     // **
+     // ***
+
+   You could use generics to implement operations like flipping a shape
+vertically, as shown in the code below.  However, there’s an important
+limitation to this approach: The flipped result exposes the exact
+generic types that were used to create it.
+
+     struct FlippedShape<T: Shape>: Shape {
+         var shape: T
+         func draw() -> String {
+             let lines = shape.draw().split(separator: "\n")
+             return lines.reversed().joined(separator: "\n")
+         }
+     }
+     let flippedTriangle = FlippedShape(shape: smallTriangle)
+     print(flippedTriangle.draw())
+     // ***
+     // **
+     // *
+
+   This approach to defining a ‘JoinedShape<T: Shape, U: Shape>’
+structure that joins two shapes together vertically, like the code below
+shows, results in types like ‘JoinedShape<FlippedShape<Triangle>,
+Triangle>’ from joining a flipped triangle with another triangle.
+
+     struct JoinedShape<T: Shape, U: Shape>: Shape {
+         var top: T
+         var bottom: U
+         func draw() -> String {
+             return top.draw() + "\n" + bottom.draw()
+         }
+     }
+     let joinedTriangles = JoinedShape(top: smallTriangle, bottom: flippedTriangle)
+     print(joinedTriangles.draw())
+     // *
+     // **
+     // ***
+     // ***
+     // **
+     // *
+
+   Exposing detailed information about the creation of a shape allows
+types that aren’t meant to be part of the ASCII art module’s public
+interface to leak out because of the need to state the full return type.
+The code inside the module could build up the same shape in a variety of
+ways, and other code outside the module that uses the shape shouldn’t
+have to account for the implementation details about the list of
+transformations.  Wrapper types like ‘JoinedShape’ and ‘FlippedShape’
+don’t matter to the module’s users, and they shouldn’t be visible.  The
+module’s public interface consists of operations like joining and
+flipping a shape, and those operations return another ‘Shape’ value.
+
+
+File: swift.info,  Node: Returning an Opaque Type,  Next: Differences Between Opaque Types and Protocol Types,  Prev: The Problem That Opaque Types Solve,  Up: Opaque Types
+
+28.2 Returning an Opaque Type
+=============================
+
+You can think of an opaque type like being the reverse of a generic
+type.  Generic types let the code that calls a function pick the type
+for that function’s parameters and return value in a way that’s
+abstracted away from the function implementation.  For example, the
+function in the following code returns a type that depends on its
+caller:
+
+     func max<T>(_ x: T, _ y: T) -> T where T: Comparable { ... }
+
+   The code that calls ‘max(_:_:)’ chooses the values for ‘x’ and ‘y’,
+and the type of those values determines the concrete type of ‘T’.  The
+calling code can use any type that conforms to the ‘Comparable’
+protocol.  The code inside the function is written in a general way so
+it can handle whatever type the caller provides.  The implementation of
+‘max(_:_:)’ uses only functionality that all ‘Comparable’ types share.
+
+   Those roles are reversed for a function with an opaque return type.
+An opaque type lets the function implementation pick the type for the
+value it returns in a way that’s abstracted away from the code that
+calls the function.  For example, the function in the following example
+returns a trapezoid without exposing the underlying type of that shape.
+
+     struct Square: Shape {
+         var size: Int
+         func draw() -> String {
+             let line = String(repeating: "*", count: size)
+             let result = Array<String>(repeating: line, count: size)
+             return result.joined(separator: "\n")
+         }
+     }
+
+     func makeTrapezoid() -> some Shape {
+         let top = Triangle(size: 2)
+         let middle = Square(size: 2)
+         let bottom = FlippedShape(shape: top)
+         let trapezoid = JoinedShape(top: top, bottom: JoinedShape(top: middle, bottom: bottom))
+         return trapezoid
+     }
+     let trapezoid = makeTrapezoid()
+     print(trapezoid.draw())
+     // *
+     // **
+     // **
+     // **
+     // **
+     // *
+
+   The ‘makeTrapezoid()’ function in this example declares its return
+type as ‘some Shape’; as a result, the function returns a value of some
+given type that conforms to the ‘Shape’ protocol, without specifying any
+particular concrete type.  Writing ‘makeTrapezoid()’ this way lets it
+express the fundamental aspect of its public interface—the value it
+returns is a shape—without making the specific types that the shape is
+made from a part of its public interface.  This implementation uses two
+triangles and a square, but the function could be rewritten to draw a
+trapezoid in a variety of other ways without changing its return type.
+
+   This example highlights the way that an opaque return type is like
+the reverse of a generic type.  The code inside ‘makeTrapezoid()’ can
+return any type it needs to, as long as that type conforms to the
+‘Shape’ protocol, like the calling code does for a generic function.
+The code that calls the function needs to be written in a general way,
+like the implementation of a generic function, so that it can work with
+any ‘Shape’ value that’s returned by ‘makeTrapezoid()’.
+
+   You can also combine opaque return types with generics.  The
+functions in the following code both return a value of some type that
+conforms to the ‘Shape’ protocol.
+
+     func flip<T: Shape>(_ shape: T) -> some Shape {
+         return FlippedShape(shape: shape)
+     }
+     func join<T: Shape, U: Shape>(_ top: T, _ bottom: U) -> some Shape {
+         JoinedShape(top: top, bottom: bottom)
+     }
+     let opaqueJoinedTriangles = join(smallTriangle, flip(smallTriangle))
+     print(opaqueJoinedTriangles.draw())
+     // *
+     // **
+     // ***
+     // ***
+     // **
+     // *
+
+   The value of ‘opaqueJoinedTriangles’ in this example is the same as
+‘joinedTriangles’ in the generics example in the *note The Problem That
+Opaque Types Solve:: section earlier in this chapter.  However, unlike
+the value in that example, ‘flip(_:)’ and ‘join(_:_:)’ wrap the
+underlying types that the generic shape operations return in an opaque
+return type, which prevents those types from being visible.  Both
+functions are generic because the types they rely on are generic, and
+the type parameters to the function pass along the type information
+needed by ‘FlippedShape’ and ‘JoinedShape’.
+
+   If a function with an opaque return type returns from multiple
+places, all of the possible return values must have the same type.  For
+a generic function, that return type can use the function’s generic type
+parameters, but it must still be a single type.  For example, here’s an
+_invalid_ version of the shape-flipping function that includes a special
+case for squares:
+
+     func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
+         if shape is Square {
+             return shape // Error: return types don't match
+         }
+         return FlippedShape(shape: shape) // Error: return types don't match
+     }
+
+   If you call this function with a ‘Square’, it returns a ‘Square’;
+otherwise, it returns a ‘FlippedShape’.  This violates the requirement
+to return values of only one type and makes ‘invalidFlip(_:)’ invalid
+code.  One way to fix ‘invalidFlip(_:)’ is to move the special case for
+squares into the implementation of ‘FlippedShape’, which lets this
+function always return a ‘FlippedShape’ value:
+
+     struct FlippedShape<T: Shape>: Shape {
+         var shape: T
+         func draw() -> String {
+             if shape is Square {
+                 return shape.draw()
+             }
+             let lines = shape.draw().split(separator: "\n")
+             return lines.reversed().joined(separator: "\n")
+         }
+     }
+
+   The requirement to always return a single type doesn’t prevent you
+from using generics in an opaque return type.  Here’s an example of a
+function that incorporates its type parameter into the underlying type
+of the value it returns:
+
+     func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
+         return Array<T>(repeating: shape, count: count)
+     }
+
+   In this case, the underlying type of the return value varies
+depending on ‘T’: Whatever shape is passed it, ‘repeat(shape:count:)’
+creates and returns an array of that shape.  Nevertheless, the return
+value always has the same underlying type of ‘[T]’, so it follows the
+requirement that functions with opaque return types must return values
+of only a single type.
+
+
+File: swift.info,  Node: Differences Between Opaque Types and Protocol Types,  Prev: Returning an Opaque Type,  Up: Opaque Types
+
+28.3 Differences Between Opaque Types and Protocol Types
+========================================================
+
+Returning an opaque type looks very similar to using a protocol type as
+the return type of a function, but these two kinds of return type differ
+in whether they preserve type identity.  An opaque type refers to one
+specific type, although the caller of the function isn’t able to see
+which type; a protocol type can refer to any type that conforms to the
+protocol.  Generally speaking, protocol types give you more flexibility
+about the underlying types of the values they store, and opaque types
+let you make stronger guarantees about those underlying types.
+
+   For example, here’s a version of ‘flip(_:)’ that returns a value of
+protocol type instead of using an opaque return type:
+
+     func protoFlip<T: Shape>(_ shape: T) -> Shape {
+         return FlippedShape(shape: shape)
+     }
+
+   This version of ‘protoFlip(_:)’ has the same body as ‘flip(_:)’, and
+it always returns a value of the same type.  Unlike ‘flip(_:)’, the
+value that ‘protoFlip(_:)’ returns isn’t required to always have the
+same type—it just has to conform to the ‘Shape’ protocol.  Put another
+way, ‘protoFlip(_:)’ makes a much looser API contract with its caller
+than ‘flip(_:)’ makes.  It reserves the flexibility to return values of
+multiple types:
+
+     func protoFlip<T: Shape>(_ shape: T) -> Shape {
+         if shape is Square {
+             return shape
+         }
+
+         return FlippedShape(shape: shape)
+     }
+
+   The revised version of the code returns an instance of ‘Square’ or an
+instance of ‘FlippedShape’, depending on what shape is passed in.  Two
+flipped shapes returned by this function might have completely different
+types.  Other valid versions of this function could return values of
+different types when flipping multiple instances of the same shape.  The
+less specific return type information from ‘protoFlip(_:)’ means that
+many operations that depend on type information aren’t available on the
+returned value.  For example, it’s not possible to write an ‘==’
+operator comparing results returned by this function.
+
+     let protoFlippedTriangle = protoFlip(smallTriangle)
+     let sameThing = protoFlip(smallTriangle)
+     protoFlippedTriangle == sameThing // Error
+
+   The error on the last line of the example occurs for several reasons.
+The immediate issue is that the ‘Shape’ doesn’t include an ‘==’ operator
+as part of its protocol requirements.  If you try adding one, the next
+issue you’ll encounter is that the ‘==’ operator needs to know the types
+of its left-hand and right-hand arguments.  This sort of operator
+usually takes arguments of type ‘Self’, matching whatever concrete type
+adopts the protocol, but adding a ‘Self’ requirement to the protocol
+doesn’t allow for the type erasure that happens when you use the
+protocol as a type.
+
+   Using a protocol type as the return type for a function gives you the
+flexibility to return any type that conforms to the protocol.  However,
+the cost of that flexibility is that some operations aren’t possible on
+the returned values.  The example shows how the ‘==’ operator isn’t
+available—it depends on specific type information that isn’t preserved
+by using a protocol type.
+
+   Another problem with this approach is that the shape transformations
+don’t nest.  The result of flipping a triangle is a value of type
+‘Shape’, and the ‘protoFlip(_:)’ function takes an argument of some type
+that conforms to the ‘Shape’ protocol.  However, a value of a protocol
+type doesn’t conform to that protocol; the value returned by
+‘protoFlip(_:)’ doesn’t conform to ‘Shape’.  This means code like
+‘protoFlip(protoFlip(smallTriange))’ that applies multiple
+transformations is invalid because the flipped shape isn’t a valid
+argument to ‘protoFlip(_:)’.
+
+   In contrast, opaque types preserve the identity of the underlying
+type.  Swift can infer associated types, which lets you use an opaque
+return value in places where a protocol type can’t be used as a return
+value.  For example, here’s a version of the ‘Container’ protocol from
+*note Generics:::
+
+     protocol Container {
+         associatedtype Item
+         var count: Int { get }
+         subscript(i: Int) -> Item { get }
+     }
+     extension Array: Container { }
+
+   You can’t use ‘Container’ as the return type of a function because
+that protocol has an associated type.  You also can’t use it as
+constraint a generic return type because there isn’t enough information
+outside the function body to infer what the generic type needs to be.
+
+     // Error: Protocol with associated types can't be used as a return type.
+     func makeProtocolContainer<T>(item: T) -> Container {
+         return [item]
+     }
+
+     // Error: Not enough information to infer C.
+     func makeProtocolContainer<T, C: Container>(item: T) -> C {
+         return [item]
+     }
+
+   Using the opaque type ‘some Container’ as a return type expresses the
+desired API contract—the function returns a container, but declines to
+specify the container’s type:
+
+     func makeOpaqueContainer<T>(item: T) -> some Container {
+         return [item]
+     }
+     let opaqueContainer = makeOpaqueContainer(item: 12)
+     let twelve = opaqueContainer[0]
+     print(type(of: twelve))
+     // Prints "Int"
+
+   The type of ‘twelve’ is inferred to be ‘Int’, which illustrates the
+fact that type inference works with opaque types.  In the implementation
+of ‘makeOpaqueContainer(item:)’, the underlying type of the opaque
+container is ‘[T]’.  In this case, ‘T’ is ‘Int’, so the return value is
+an array of integers and the ‘Item’ associated type is inferred to be
+‘Int’.  The subscript on ‘Container’ returns ‘Item’, which means that
+the type of ‘twelve’ is also inferred to be ‘Int’.
+
+
+File: swift.info,  Node: Automatic Reference Counting,  Next: Memory Safety,  Prev: Opaque Types,  Up: Top
+
+29 Automatic Reference Counting
 *******************************
 
 Swift uses _Automatic Reference Counting_ (ARC) to track and manage your
@@ -17223,7 +17724,7 @@ stored and passed by reference.
 
 File: swift.info,  Node: How ARC Works,  Next: ARC in Action,  Up: Automatic Reference Counting
 
-28.1 How ARC Works
+29.1 How ARC Works
 ==================
 
 Every time you create a new instance of a class, ARC allocates a chunk
@@ -17257,7 +17758,7 @@ remains.
 
 File: swift.info,  Node: ARC in Action,  Next: Strong Reference Cycles Between Class Instances,  Prev: How ARC Works,  Up: Automatic Reference Counting
 
-28.2 ARC in Action
+29.2 ARC in Action
 ==================
 
 Here’s an example of how Automatic Reference Counting works.  This
@@ -17332,7 +17833,7 @@ no longer using the ‘Person’ instance:
 
 File: swift.info,  Node: Strong Reference Cycles Between Class Instances,  Next: Resolving Strong Reference Cycles Between Class Instances,  Prev: ARC in Action,  Up: Automatic Reference Counting
 
-28.3 Strong Reference Cycles Between Class Instances
+29.3 Strong Reference Cycles Between Class Instances
 ====================================================
 
 In the examples above, ARC is able to track the number of references to
@@ -17442,7 +17943,7 @@ leak in your app.
 
 File: swift.info,  Node: Resolving Strong Reference Cycles Between Class Instances,  Next: Strong Reference Cycles for Closures,  Prev: Strong Reference Cycles Between Class Instances,  Up: Automatic Reference Counting
 
-28.4 Resolving Strong Reference Cycles Between Class Instances
+29.4 Resolving Strong Reference Cycles Between Class Instances
 ==============================================================
 
 Swift provides two ways to resolve strong reference cycles when you work
@@ -17470,7 +17971,7 @@ the same lifetime or a longer lifetime.
 
 File: swift.info,  Node: Weak References,  Next: Unowned References,  Up: Resolving Strong Reference Cycles Between Class Instances
 
-28.4.1 Weak References
+29.4.1 Weak References
 ----------------------
 
 A _weak reference_ is a reference that does not keep a strong hold on
@@ -17566,7 +18067,7 @@ unsuitable for such a purpose.
 
 File: swift.info,  Node: Unowned References,  Next: Unowned References and Implicitly Unwrapped Optional Properties,  Prev: Weak References,  Up: Resolving Strong Reference Cycles Between Class Instances
 
-28.4.2 Unowned References
+29.4.2 Unowned References
 -------------------------
 
 Like a weak reference, an _unowned reference_ does not keep a strong
@@ -17693,7 +18194,7 @@ is an unsafe operation.
 
 File: swift.info,  Node: Unowned References and Implicitly Unwrapped Optional Properties,  Prev: Unowned References,  Up: Resolving Strong Reference Cycles Between Class Instances
 
-28.4.3 Unowned References and Implicitly Unwrapped Optional Properties
+29.4.3 Unowned References and Implicitly Unwrapped Optional Properties
 ----------------------------------------------------------------------
 
 The examples for weak and unowned references above cover two of the more
@@ -17791,7 +18292,7 @@ a strong reference cycle.
 
 File: swift.info,  Node: Strong Reference Cycles for Closures,  Next: Resolving Strong Reference Cycles for Closures,  Prev: Resolving Strong Reference Cycles Between Class Instances,  Up: Automatic Reference Counting
 
-28.5 Strong Reference Cycles for Closures
+29.5 Strong Reference Cycles for Closures
 =========================================
 
 You saw above how a strong reference cycle can be created when two class
@@ -17942,7 +18443,7 @@ printed, which shows that the ‘HTMLElement’ instance is not deallocated.
 
 File: swift.info,  Node: Resolving Strong Reference Cycles for Closures,  Prev: Strong Reference Cycles for Closures,  Up: Automatic Reference Counting
 
-28.6 Resolving Strong Reference Cycles for Closures
+29.6 Resolving Strong Reference Cycles for Closures
 ===================================================
 
 You resolve a strong reference cycle between a closure and a class
@@ -17969,7 +18470,7 @@ you remember that it’s possible to capture ‘self’ by accident.
 
 File: swift.info,  Node: Defining a Capture List,  Next: Weak and Unowned References,  Up: Resolving Strong Reference Cycles for Closures
 
-28.6.1 Defining a Capture List
+29.6.1 Defining a Capture List
 ------------------------------
 
 Each item in a capture list is a pairing of the ‘weak’ or ‘unowned’
@@ -17999,7 +18500,7 @@ start of the closure, followed by the ‘in’ keyword:
 
 File: swift.info,  Node: Weak and Unowned References,  Prev: Defining a Capture List,  Up: Resolving Strong Reference Cycles for Closures
 
-28.6.2 Weak and Unowned References
+29.6.2 Weak and Unowned References
 ----------------------------------
 
 Define a capture in a closure as an unowned reference when the closure
@@ -18077,7 +18578,7 @@ below:
 
 File: swift.info,  Node: Memory Safety,  Next: Access Control,  Prev: Automatic Reference Counting,  Up: Top
 
-29 Memory Safety
+30 Memory Safety
 ****************
 
 By default, Swift prevents unsafe behavior from happening in your code.
@@ -18104,7 +18605,7 @@ you’ll get a compile-time or runtime error.
 
 File: swift.info,  Node: Understanding Conflicting Access to Memory,  Next: Conflicting Access to In-Out Parameters,  Up: Memory Safety
 
-29.1 Understanding Conflicting Access to Memory
+30.1 Understanding Conflicting Access to Memory
 ===============================================
 
 Access to memory happens in your code when you do things like set the
@@ -18165,7 +18666,7 @@ to help detect conflicting access across threads.
 
 File: swift.info,  Node: Characteristics of Memory Access,  Up: Understanding Conflicting Access to Memory
 
-29.1.1 Characteristics of Memory Access
+30.1.1 Characteristics of Memory Access
 ---------------------------------------
 
 There are three characteristics of memory access to consider in the
@@ -18216,7 +18717,7 @@ discussed in the sections below.
 
 File: swift.info,  Node: Conflicting Access to In-Out Parameters,  Next: Conflicting Access to self in Methods,  Prev: Understanding Conflicting Access to Memory,  Up: Memory Safety
 
-29.2 Conflicting Access to In-Out Parameters
+30.2 Conflicting Access to In-Out Parameters
 ============================================
 
 A function has long-term write access to all of its in-out parameters.
@@ -18298,7 +18799,7 @@ playerOneScore’ would result in the same conflict as
 
 File: swift.info,  Node: Conflicting Access to self in Methods,  Next: Conflicting Access to Properties,  Prev: Conflicting Access to In-Out Parameters,  Up: Memory Safety
 
-29.3 Conflicting Access to self in Methods
+30.3 Conflicting Access to self in Methods
 ==========================================
 
 A mutating method on a structure has write access to ‘self’ for the
@@ -18361,7 +18862,7 @@ a conflict.
 
 File: swift.info,  Node: Conflicting Access to Properties,  Prev: Conflicting Access to self in Methods,  Up: Memory Safety
 
-29.4 Conflicting Access to Properties
+30.4 Conflicting Access to Properties
 =====================================
 
 Types like structures, tuples, and enumerations are made up of
@@ -18434,7 +18935,7 @@ access.
 
 File: swift.info,  Node: Access Control,  Next: Advanced Operators,  Prev: Memory Safety,  Up: Top
 
-30 Access Control
+31 Access Control
 *****************
 
 _Access control_ restricts access to parts of your code from code in
@@ -18477,7 +18978,7 @@ to them (properties, types, functions, and so on) are referred to as
 
 File: swift.info,  Node: Modules and Source Files,  Next: Access Levels,  Up: Access Control
 
-30.1 Modules and Source Files
+31.1 Modules and Source Files
 =============================
 
 Swift’s access control model is based on the concept of modules and
@@ -18504,7 +19005,7 @@ so on.
 
 File: swift.info,  Node: Access Levels,  Next: Access Control Syntax,  Prev: Modules and Source Files,  Up: Access Control
 
-30.2 Access Levels
+31.2 Access Levels
 ==================
 
 Swift provides five different _access levels_ for entities within your
@@ -18571,7 +19072,7 @@ and that you’ve designed your class’s code accordingly.
 
 File: swift.info,  Node: Guiding Principle of Access Levels,  Next: Default Access Levels,  Up: Access Levels
 
-30.2.1 Guiding Principle of Access Levels
+31.2.1 Guiding Principle of Access Levels
 -----------------------------------------
 
 Access levels in Swift follow an overall guiding principle: /No entity
@@ -18595,7 +19096,7 @@ aspects of the language are covered in detail below.
 
 File: swift.info,  Node: Default Access Levels,  Next: Access Levels for Single-Target Apps,  Prev: Guiding Principle of Access Levels,  Up: Access Levels
 
-30.2.2 Default Access Levels
+31.2.2 Default Access Levels
 ----------------------------
 
 All entities in your code (with a few specific exceptions, as described
@@ -18606,7 +19107,7 @@ cases you don’t need to specify an explicit access level in your code.
 
 File: swift.info,  Node: Access Levels for Single-Target Apps,  Next: Access Levels for Frameworks,  Prev: Default Access Levels,  Up: Access Levels
 
-30.2.3 Access Levels for Single-Target Apps
+31.2.3 Access Levels for Single-Target Apps
 -------------------------------------------
 
 When you write a simple single-target app, the code in your app is
@@ -18620,7 +19121,7 @@ implementation details from other code within the app’s module.
 
 File: swift.info,  Node: Access Levels for Frameworks,  Next: Access Levels for Unit Test Targets,  Prev: Access Levels for Single-Target Apps,  Up: Access Levels
 
-30.2.4 Access Levels for Frameworks
+31.2.4 Access Levels for Frameworks
 -----------------------------------
 
 When you develop a framework, mark the public-facing interface to that
@@ -18640,7 +19141,7 @@ only if you want it to become part of your framework’s API.
 
 File: swift.info,  Node: Access Levels for Unit Test Targets,  Prev: Access Levels for Frameworks,  Up: Access Levels
 
-30.2.5 Access Levels for Unit Test Targets
+31.2.5 Access Levels for Unit Test Targets
 ------------------------------------------
 
 When you write an app with a unit test target, the code in your app
@@ -18654,7 +19155,7 @@ enabled.
 
 File: swift.info,  Node: Access Control Syntax,  Next: Custom Types,  Prev: Access Levels,  Up: Access Control
 
-30.3 Access Control Syntax
+31.3 Access Control Syntax
 ==========================
 
 Define the access level for an entity by placing one of the ‘open’,
@@ -18683,7 +19184,7 @@ internal:
 
 File: swift.info,  Node: Custom Types,  Next: Subclassing 1,  Prev: Access Control Syntax,  Up: Access Control
 
-30.4 Custom Types
+31.4 Custom Types
 =================
 
 If you want to specify an explicit access level for a custom type, do so
@@ -18749,7 +19250,7 @@ the internal workings of a type as public API by mistake.
 
 File: swift.info,  Node: Tuple Types,  Next: Function Types 1,  Up: Custom Types
 
-30.4.1 Tuple Types
+31.4.1 Tuple Types
 ------------------
 
 The access level for a tuple type is the most restrictive access level
@@ -18767,7 +19268,7 @@ can’t be specified explicitly.
 
 File: swift.info,  Node: Function Types 1,  Next: Enumeration Types,  Prev: Tuple Types,  Up: Custom Types
 
-30.4.2 Function Types
+31.4.2 Function Types
 ---------------------
 
 The access level for a function type is calculated as the most
@@ -18809,7 +19310,7 @@ return type.
 
 File: swift.info,  Node: Enumeration Types,  Next: Nested Types 2,  Prev: Function Types 1,  Up: Custom Types
 
-30.4.3 Enumeration Types
+31.4.3 Enumeration Types
 ------------------------
 
 The individual cases of an enumeration automatically receive the same
@@ -18838,7 +19339,7 @@ and ‘west’ therefore also have an access level of public:
 
 File: swift.info,  Node: Nested Types 2,  Prev: Enumeration Types,  Up: Custom Types
 
-30.4.4 Nested Types
+31.4.4 Nested Types
 -------------------
 
 Nested types defined within a private type have an automatic access
@@ -18851,7 +19352,7 @@ available, you must explicitly declare the nested type as public.
 
 File: swift.info,  Node: Subclassing 1,  Next: Constants Variables Properties and Subscripts,  Prev: Custom Types,  Up: Access Control
 
-30.5 Subclassing
+31.5 Subclassing
 ================
 
 You can subclass any class that can be accessed in the current access
@@ -18902,7 +19403,7 @@ call ‘super.someMethod()’.
 
 File: swift.info,  Node: Constants Variables Properties and Subscripts,  Next: Initializers 2,  Prev: Subclassing 1,  Up: Access Control
 
-30.6 Constants, Variables, Properties, and Subscripts
+31.6 Constants, Variables, Properties, and Subscripts
 =====================================================
 
 A constant, variable, or property can’t be more public than its type.
@@ -18923,7 +19424,7 @@ be marked as ‘private’:
 
 File: swift.info,  Node: Getters and Setters,  Up: Constants Variables Properties and Subscripts
 
-30.6.1 Getters and Setters
+31.6.1 Getters and Setters
 --------------------------
 
 Getters and setters for constants, variables, properties, and subscripts
@@ -19017,7 +19518,7 @@ public, and its property setter private, by combining the ‘public’ and
 
 File: swift.info,  Node: Initializers 2,  Next: Protocols 1,  Prev: Constants Variables Properties and Subscripts,  Up: Access Control
 
-30.7 Initializers
+31.7 Initializers
 =================
 
 Custom initializers can be assigned an access level less than or equal
@@ -19038,7 +19539,7 @@ level.
 
 File: swift.info,  Node: Default Initializers 1,  Next: Default Memberwise Initializers for Structure Types,  Up: Initializers 2
 
-30.7.1 Default Initializers
+31.7.1 Default Initializers
 ---------------------------
 
 As described in *note Default Initializers::, Swift automatically
@@ -19057,7 +19558,7 @@ definition.
 
 File: swift.info,  Node: Default Memberwise Initializers for Structure Types,  Prev: Default Initializers 1,  Up: Initializers 2
 
-30.7.2 Default Memberwise Initializers for Structure Types
+31.7.2 Default Memberwise Initializers for Structure Types
 ----------------------------------------------------------
 
 The default memberwise initializer for a structure type is considered
@@ -19074,7 +19575,7 @@ yourself as part of the type’s definition.
 
 File: swift.info,  Node: Protocols 1,  Next: Extensions 1,  Prev: Initializers 2,  Up: Access Control
 
-30.8 Protocols
+31.8 Protocols
 ==============
 
 If you want to assign an explicit access level to a protocol type, do so
@@ -19102,7 +19603,7 @@ definition implies an access level of internal for the type’s members.
 
 File: swift.info,  Node: Protocol Inheritance 1,  Next: Protocol Conformance,  Up: Protocols 1
 
-30.8.1 Protocol Inheritance
+31.8.1 Protocol Inheritance
 ---------------------------
 
 If you define a new protocol that inherits from an existing protocol,
@@ -19113,7 +19614,7 @@ an internal protocol, for example.
 
 File: swift.info,  Node: Protocol Conformance,  Prev: Protocol Inheritance 1,  Up: Protocols 1
 
-30.8.2 Protocol Conformance
+31.8.2 Protocol Conformance
 ---------------------------
 
 A type can conform to a protocol with a lower access level than the type
@@ -19142,7 +19643,7 @@ within the same program.
 
 File: swift.info,  Node: Extensions 1,  Next: Generics 2,  Prev: Protocols 1,  Up: Access Control
 
-30.9 Extensions
+31.9 Extensions
 ===============
 
 You can extend a class, structure, or enumeration in any access context
@@ -19173,7 +19674,7 @@ level for each protocol requirement implementation within the extension.
 
 File: swift.info,  Node: Private Members in Extensions,  Up: Extensions 1
 
-30.9.1 Private Members in Extensions
+31.9.1 Private Members in Extensions
 ------------------------------------
 
 Extensions that are in the same file as the class, structure, or
@@ -19213,7 +19714,7 @@ For example, given the following simple protocol:
 
 File: swift.info,  Node: Generics 2,  Next: Type Aliases 1,  Prev: Extensions 1,  Up: Access Control
 
-30.10 Generics
+31.10 Generics
 ==============
 
 The access level for a generic type or generic function is the minimum
@@ -19223,7 +19724,7 @@ access level of any type constraints on its type parameters.
 
 File: swift.info,  Node: Type Aliases 1,  Prev: Generics 2,  Up: Access Control
 
-30.11 Type Aliases
+31.11 Type Aliases
 ==================
 
 Any type aliases you define are treated as distinct types for the
@@ -19241,7 +19742,7 @@ satisfy protocol conformances.
 
 File: swift.info,  Node: Advanced Operators,  Next: Index,  Prev: Access Control,  Up: Top
 
-31 Advanced Operators
+32 Advanced Operators
 *********************
 
 In addition to the operators described in *note Basic Operators: Basic
@@ -19280,7 +19781,7 @@ the custom operators you define.
 
 File: swift.info,  Node: Bitwise Operators,  Next: Overflow Operators,  Up: Advanced Operators
 
-31.1 Bitwise Operators
+32.1 Bitwise Operators
 ======================
 
 _Bitwise operators_ enable you to manipulate the individual raw data
@@ -19304,7 +19805,7 @@ below.
 
 File: swift.info,  Node: Bitwise NOT Operator,  Next: Bitwise AND Operator,  Up: Bitwise Operators
 
-31.1.1 Bitwise NOT Operator
+32.1.1 Bitwise NOT Operator
 ---------------------------
 
 The _bitwise NOT operator_ (‘~’) inverts all bits in a number:
@@ -19330,7 +19831,7 @@ value of ‘240’.
 
 File: swift.info,  Node: Bitwise AND Operator,  Next: Bitwise OR Operator,  Prev: Bitwise NOT Operator,  Up: Bitwise Operators
 
-31.1.2 Bitwise AND Operator
+32.1.2 Bitwise AND Operator
 ---------------------------
 
 The _bitwise AND operator_ (‘&’) combines the bits of two numbers.  It
@@ -19349,7 +19850,7 @@ unsigned decimal value of ‘60’:
 
 File: swift.info,  Node: Bitwise OR Operator,  Next: Bitwise XOR Operator,  Prev: Bitwise AND Operator,  Up: Bitwise Operators
 
-31.1.3 Bitwise OR Operator
+32.1.3 Bitwise OR Operator
 --------------------------
 
 The _bitwise OR operator_ (‘|’) compares the bits of two numbers.  The
@@ -19367,7 +19868,7 @@ make the number ‘11111110’, which equals an unsigned decimal of ‘254’:
 
 File: swift.info,  Node: Bitwise XOR Operator,  Next: Bitwise Left and Right Shift Operators,  Prev: Bitwise OR Operator,  Up: Bitwise Operators
 
-31.1.4 Bitwise XOR Operator
+32.1.4 Bitwise XOR Operator
 ---------------------------
 
 The _bitwise XOR operator_, or “exclusive OR operator” (‘^’), compares
@@ -19388,7 +19889,7 @@ to ‘0’ in the output value:
 
 File: swift.info,  Node: Bitwise Left and Right Shift Operators,  Prev: Bitwise XOR Operator,  Up: Bitwise Operators
 
-31.1.5 Bitwise Left and Right Shift Operators
+32.1.5 Bitwise Left and Right Shift Operators
 ---------------------------------------------
 
 The _bitwise left shift operator_ (‘<<’) and _bitwise right shift
@@ -19530,7 +20031,7 @@ right by one position halves its value.
 
 File: swift.info,  Node: Overflow Operators,  Next: Precedence and Associativity,  Prev: Bitwise Operators,  Up: Advanced Operators
 
-31.2 Overflow Operators
+32.2 Overflow Operators
 =======================
 
 If you try to insert a number into an integer constant or variable that
@@ -19569,7 +20070,7 @@ calculations.  These operators all begin with an ampersand (‘&’):
 
 File: swift.info,  Node: Value Overflow,  Up: Overflow Operators
 
-31.2.1 Value Overflow
+32.2.1 Value Overflow
 ---------------------
 
 Numbers can overflow in both the positive and negative direction.
@@ -19630,7 +20131,7 @@ minimum value to the maximum.
 
 File: swift.info,  Node: Precedence and Associativity,  Next: Operator Methods 1,  Prev: Overflow Operators,  Up: Advanced Operators
 
-31.3 Precedence and Associativity
+32.3 Precedence and Associativity
 =================================
 
 Operator _precedence_ gives some operators higher priority than others;
@@ -19700,7 +20201,7 @@ intend when porting existing code to Swift.
 
 File: swift.info,  Node: Operator Methods 1,  Next: Custom Operators,  Prev: Precedence and Associativity,  Up: Advanced Operators
 
-31.4 Operator Methods
+32.4 Operator Methods
 =====================
 
 Classes and structures can provide their own implementations of existing
@@ -19762,7 +20263,7 @@ to make the vector ‘(5.0, 5.0)’, as illustrated below.
 
 File: swift.info,  Node: Prefix and Postfix Operators,  Next: Compound Assignment Operators 1,  Up: Operator Methods 1
 
-31.4.1 Prefix and Postfix Operators
+32.4.1 Prefix and Postfix Operators
 -----------------------------------
 
 The example shown above demonstrates a custom implementation of a binary
@@ -19799,7 +20300,7 @@ operation on both the ‘x’ and ‘y’ properties:
 
 File: swift.info,  Node: Compound Assignment Operators 1,  Next: Equivalence Operators,  Prev: Prefix and Postfix Operators,  Up: Operator Methods 1
 
-31.4.2 Compound Assignment Operators
+32.4.2 Compound Assignment Operators
 ------------------------------------
 
 _Compound assignment operators_ combine assignment (‘=’) with another
@@ -19838,7 +20339,7 @@ the ternary conditional operator (‘a ? b : c’) can’t be overloaded.
 
 File: swift.info,  Node: Equivalence Operators,  Prev: Compound Assignment Operators 1,  Up: Operator Methods 1
 
-31.4.3 Equivalence Operators
+32.4.3 Equivalence Operators
 ----------------------------
 
 By default, custom classes and structures don’t have an implementation
@@ -19912,7 +20413,7 @@ equivalence operators.
 
 File: swift.info,  Node: Custom Operators,  Prev: Operator Methods 1,  Up: Advanced Operators
 
-31.5 Custom Operators
+32.5 Custom Operators
 =====================
 
 You can declare and implement your own _custom operators_ in addition to
@@ -19953,7 +20454,7 @@ operator, you add a type method called ‘+++’ to ‘Vector2D’ as follows:
 
 File: swift.info,  Node: Precedence for Custom Infix Operators,  Up: Custom Operators
 
-31.5.1 Precedence for Custom Infix Operators
+32.5.1 Precedence for Custom Infix Operators
 --------------------------------------------
 
 Custom infix operators each belong to a precedence group.  A precedence
@@ -20120,386 +20621,393 @@ Index
 
 Tag Table:
 Node: Top191
-Node: Welcome to Swift13840
-Node: About Swift14059
-Node: Version Compatibility16241
-Node: A Swift Tour17392
-Node: Simple Values19028
-Node: Control Flow22363
-Node: Functions and Closures26992
-Node: Objects and Classes31474
-Node: Enumerations and Structures38085
-Node: Protocols and Extensions43565
-Node: Error Handling46556
-Node: Generics49888
-Node: Language Guide51565
-Node: The Basics52458
-Node: Constants and Variables55091
-Node: Declaring Constants and Variables55710
-Node: Type Annotations57100
-Node: Naming Constants and Variables59009
-Node: Printing Constants and Variables60779
-Node: Comments62428
-Node: Semicolons63731
-Node: Integers64173
-Node: Integer Bounds64853
-Node: Int65439
-Node: UInt66224
-Node: Floating-Point Numbers67071
-Node: Type Safety and Type Inference68083
-Node: Numeric Literals70870
-Node: Numeric Type Conversion72923
-Node: Integer Conversion73879
-Node: Integer and Floating-Point Conversion76411
-Node: Type Aliases77902
-Node: Booleans78826
-Node: Tuples80903
-Node: Optionals84354
-Node: nil86725
-Node: If Statements and Forced Unwrapping87890
-Node: Optional Binding89425
-Node: Implicitly Unwrapped Optionals92801
-Node: Error Handling 196328
-Node: Assertions and Preconditions99019
-Node: Debugging with Assertions101246
-Node: Enforcing Preconditions102978
-Node: Basic Operators105098
-Node: Terminology106828
-Node: Assignment Operator107741
-Node: Arithmetic Operators108813
-Node: Remainder Operator109778
-Node: Unary Minus Operator111491
-Node: Unary Plus Operator112055
-Node: Compound Assignment Operators112595
-Node: Comparison Operators113599
-Node: Ternary Conditional Operator117258
-Node: Nil-Coalescing Operator119197
-Node: Range Operators121559
-Node: Closed Range Operator121907
-Node: Half-Open Range Operator122707
-Node: One-Sided Ranges123989
-Node: Logical Operators125629
-Node: Logical NOT Operator126180
-Node: Logical AND Operator127187
-Node: Logical OR Operator128157
-Node: Combining Logical Operators129360
-Node: Explicit Parentheses130742
-Node: Strings and Characters131743
-Node: String Literals134023
-Node: Multiline String Literals134732
-Node: Special Characters in String Literals137323
-Node: Extended String Delimiters139117
-Node: Initializing an Empty String140427
-Node: String Mutability141240
-Node: Strings Are Value Types142138
-Node: Working with Characters143357
-Node: Concatenating Strings and Characters144408
-Node: String Interpolation146518
-Node: Unicode148661
-Node: Unicode Scalar Values149297
-Node: Extended Grapheme Clusters150092
-Node: Counting Characters152659
-Node: Accessing and Modifying a String155068
-Node: String Indices155436
-Node: Inserting and Removing157988
-Node: Substrings159407
-Node: Comparing Strings162209
-Node: String and Character Equality162591
-Node: Prefix and Suffix Equality165026
-Node: Unicode Representations of Strings167362
-Node: UTF-8 Representation169239
-Node: UTF-16 Representation170417
-Node: Unicode Scalar Representation171964
-Node: Collection Types173681
-Node: Mutability of Collections174727
-Node: Arrays175562
-Node: Array Type Shorthand Syntax176441
-Node: Creating an Empty Array176991
-Node: Creating an Array with a Default Value177973
-Node: Creating an Array by Adding Two Arrays Together178687
-Node: Creating an Array with an Array Literal179477
-Node: Accessing and Modifying an Array181659
-Node: Iterating Over an Array186318
-Node: Sets187512
-Node: Hash Values for Set Types188392
-Node: Set Type Syntax190247
-Node: Creating and Initializing an Empty Set190616
-Node: Creating a Set with an Array Literal191600
-Node: Accessing and Modifying a Set193470
-Node: Iterating Over a Set195267
-Node: Performing Set Operations196045
-Node: Fundamental Set Operations196513
-Node: Set Membership and Equality197759
-Node: Dictionaries199436
-Node: Dictionary Type Shorthand Syntax200662
-Node: Creating an Empty Dictionary201461
-Node: Creating a Dictionary with a Dictionary Literal202507
-Node: Accessing and Modifying a Dictionary205272
-Node: Iterating Over a Dictionary209299
-Node: Control Flow 1211048
-Node: For-In Loops212261
-Node: While Loops217432
-Node: While218064
-Node: Repeat-While222597
-Node: Conditional Statements225323
-Node: If226258
-Node: Switch228917
-Node: Control Transfer Statements242736
-Node: Continue243548
-Node: Break244602
-Node: Fallthrough248848
-Node: Labeled Statements251610
-Node: Early Exit256783
-Node: Checking API Availability259094
-Node: Functions261122
-Node: Defining and Calling Functions262426
-Node: Function Parameters and Return Values266095
-Node: Functions Without Parameters266762
-Node: Functions With Multiple Parameters267514
-Node: Functions Without Return Values268887
-Node: Functions with Multiple Return Values271059
-Node: Function Argument Labels and Parameter Names275346
-Node: Specifying Argument Labels276592
-Node: Omitting Argument Labels277631
-Node: Default Parameter Values278399
-Node: Variadic Parameters279678
-Node: In-Out Parameters281168
-Node: Function Types284348
-Node: Using Function Types285667
-Node: Function Types as Parameter Types287130
-Node: Function Types as Return Types288970
-Node: Nested Functions291371
-Node: Closures292761
-Node: Closure Expressions294493
-Node: The Sorted Method295710
-Node: Closure Expression Syntax298261
-Node: Inferring Type From Context300110
-Node: Implicit Returns from Single-Expression Closures301730
-Node: Shorthand Argument Names302592
-Node: Operator Methods303523
-Node: Trailing Closures304292
-Node: Capturing Values310375
-Node: Closures Are Reference Types315409
-Node: Escaping Closures316729
-Node: Autoclosures319031
-Node: Enumeration323900
-Node: Enumeration Syntax325812
-Node: Matching Enumeration Values with a Switch Statement327953
-Node: Iterating over Enumeration Cases329688
-Node: Associated Values331310
-Node: Raw Values335764
-Node: Implicitly Assigned Raw Values337370
-Node: Initializing from a Raw Value339081
-Node: Recursive Enumerations341199
-Node: Structures and Classes344235
-Node: Comparing Structures and Classes345480
-Node: Definition Syntax347657
-Node: Structure and Class Instances350079
-Node: Accessing Properties351212
-Node: Memberwise Initializers for Structure Types352444
-Node: Structures and Enumerations Are Value Types353162
-Node: Classes Are Reference Types357219
-Node: Identity Operators360234
-Node: Pointers361991
-Node: Properties362960
-Node: Stored Properties364075
-Node: Stored Properties of Constant Structure Instances365872
-Node: Lazy Stored Properties367092
-Node: Stored Properties and Instance Variables370823
-Node: Computed Properties371839
-Node: Shorthand Setter Declaration375168
-Node: Read-Only Computed Properties376096
-Node: Property Observers378006
-Node: Global and Local Variables382775
-Node: Type Properties384114
-Node: Type Property Syntax385788
-Node: Querying and Setting Type Properties387390
-Node: Methods392286
-Node: Instance Methods393189
-Node: The self Property395651
-Node: Modifying Value Types from Within Instance Methods397628
-Node: Assigning to self Within a Mutating Method399768
-Node: Type Methods401481
-Node: Subscripts408031
-Node: Subscript Syntax408973
-Node: Subscript Usage411594
-Node: Subscript Options413484
-Node: Inheritance417633
-Node: Defining a Base Class418804
-Node: Subclassing420744
-Node: Overriding423385
-Node: Accessing Superclass Methods Properties and Subscripts424607
-Node: Overriding Methods425906
-Node: Overriding Properties426790
-Node: Preventing Overrides432080
-Node: Initialization433012
-Node: Setting Initial Values for Stored Properties434370
-Node: Initializers435291
-Node: Default Property Values436440
-Node: Customizing Initialization437703
-Node: Initialization Parameters438337
-Node: Parameter Names and Argument Labels440145
-Node: Initializer Parameters Without Argument Labels442496
-Node: Optional Property Types443978
-Node: Assigning Constant Properties During Initialization445574
-Node: Default Initializers447043
-Node: Memberwise Initializers for Structure Types 1448675
-Node: Initializer Delegation for Value Types449869
-Node: Class Inheritance and Initialization455362
-Node: Designated Initializers and Convenience Initializers456301
-Node: Syntax for Designated and Convenience Initializers458062
-Node: Initializer Delegation for Class Types458790
-Node: Two-Phase Initialization461159
-Node: Initializer Inheritance and Overriding467154
-Node: Automatic Initializer Inheritance473224
-Node: Designated and Convenience Initializers in Action474733
-Node: Failable Initializers482953
-Node: Failable Initializers for Enumerations487474
-Node: Failable Initializers for Enumerations with Raw Values489338
-Node: Propagation of Initialization Failure490769
-Node: Overriding a Failable Initializer494036
-Node: The init! Failable Initializer497617
-Node: Required Initializers498538
-Node: Setting a Default Property Value with a Closure or Function499664
-Node: Deinitialization503569
-Node: How Deinitialization Works504041
-Node: Deinitializers in Action505753
-Node: Optional Chaining510701
-Node: Optional Chaining as an Alternative to Forced Unwrapping511824
-Node: Defining Model Classes for Optional Chaining516787
-Node: Accessing Properties Through Optional Chaining520806
-Node: Calling Methods Through Optional Chaining523227
-Node: Accessing Subscripts Through Optional Chaining525847
-Node: Accessing Subscripts of Optional Type528328
-Node: Linking Multiple Levels of Chaining529628
-Node: Chaining on Methods with Optional Return Values532811
-Node: Error Handling 2534634
-Node: Representing and Throwing Errors536238
-Node: Handling Errors537435
-Node: Propagating Errors Using Throwing Functions539208
-Node: Handling Errors Using Do-Catch543444
-Node: Converting Errors to Optional Values547386
-Node: Disabling Error Propagation548939
-Node: Specifying Cleanup Actions549863
-Node: Type Casting551822
-Node: Defining a Class Hierarchy for Type Casting552601
-Node: Checking Type555669
-Node: Downcasting557159
-Node: Type Casting for Any and AnyObject561273
-Node: Nested Types564931
-Node: Nested Types in Action565691
-Node: Referring to Nested Types570049
-Node: Extensions570637
-Node: Extension Syntax571937
-Node: Computed Properties 1573224
-Node: Initializers 1575709
-Node: Methods 1579094
-Node: Mutating Instance Methods580005
-Node: Subscripts 1580726
-Node: Nested Types 1581858
-Node: Protocols583913
-Node: Protocol Syntax585059
-Node: Property Requirements585931
-Node: Method Requirements589922
-Node: Mutating Method Requirements592525
-Node: Initializer Requirements595319
-Node: Class Implementations of Protocol Initializer Requirements595949
-Node: Failable Initializer Requirements597907
-Node: Protocols as Types598547
-Node: Delegation601727
-Node: Adding Protocol Conformance with an Extension609457
-Node: Conditionally Conforming to a Protocol611833
-Node: Declaring Protocol Adoption with an Extension613149
-Node: Collections of Protocol Types614299
-Node: Protocol Inheritance615554
-Node: Class-Only Protocols618934
-Node: Protocol Composition620003
-Node: Checking for Protocol Conformance623942
-Node: Optional Protocol Requirements627885
-Node: Protocol Extensions636000
-Node: Providing Default Implementations637515
-Node: Adding Constraints to Protocol Extensions638779
-Node: Generics 1640916
-Node: The Problem That Generics Solve642262
-Node: Generic Functions644730
-Node: Type Parameters647706
-Node: Naming Type Parameters648871
-Node: Generic Types649731
-Node: Extending a Generic Type654749
-Node: Type Constraints656647
-Node: Type Constraint Syntax658523
-Node: Type Constraints in Action659416
-Node: Associated Types663576
-Node: Associated Types in Action664342
-Node: Extending an Existing Type to Specify an Associated Type669799
-Node: Adding Constraints to an Associated Type671195
-Node: Using a Protocol in Its Associated Type's Constraints672091
-Node: Generic Where Clauses675007
-Node: Extensions with a Generic Where Clause680875
-Node: Associated Types with a Generic Where Clause684856
-Node: Generic Subscripts686357
-Node: Automatic Reference Counting687984
-Node: How ARC Works689555
-Node: ARC in Action691139
-Node: Strong Reference Cycles Between Class Instances694037
-Node: Resolving Strong Reference Cycles Between Class Instances698984
-Node: Weak References700292
-Node: Unowned References704110
-Node: Unowned References and Implicitly Unwrapped Optional Properties709606
-Node: Strong Reference Cycles for Closures714344
-Node: Resolving Strong Reference Cycles for Closures721208
-Node: Defining a Capture List722370
-Node: Weak and Unowned References723592
-Node: Memory Safety726483
-Node: Understanding Conflicting Access to Memory727613
-Node: Characteristics of Memory Access730560
-Node: Conflicting Access to In-Out Parameters732662
-Node: Conflicting Access to self in Methods736073
-Node: Conflicting Access to Properties738835
-Node: Access Control742204
-Node: Modules and Source Files743777
-Node: Access Levels744953
-Node: Guiding Principle of Access Levels747870
-Node: Default Access Levels748796
-Node: Access Levels for Single-Target Apps749302
-Node: Access Levels for Frameworks750029
-Node: Access Levels for Unit Test Targets750915
-Node: Access Control Syntax751548
-Node: Custom Types752651
-Node: Tuple Types755354
-Node: Function Types 1756015
-Node: Enumeration Types757906
-Node: Nested Types 2758956
-Node: Subclassing 1759505
-Node: Constants Variables Properties and Subscripts761457
-Node: Getters and Setters762202
-Node: Initializers 2766546
-Node: Default Initializers 1767297
-Node: Default Memberwise Initializers for Structure Types768180
-Node: Protocols 1768989
-Node: Protocol Inheritance 1770058
-Node: Protocol Conformance770465
-Node: Extensions 1771717
-Node: Private Members in Extensions773074
-Node: Generics 2774337
-Node: Type Aliases 1774672
-Node: Advanced Operators775287
-Node: Bitwise Operators776953
-Node: Bitwise NOT Operator777699
-Node: Bitwise AND Operator778820
-Node: Bitwise OR Operator779635
-Node: Bitwise XOR Operator780408
-Node: Bitwise Left and Right Shift Operators781380
-Node: Overflow Operators788471
-Node: Value Overflow789963
-Node: Precedence and Associativity792852
-Node: Operator Methods 1795630
-Node: Prefix and Postfix Operators798258
-Node: Compound Assignment Operators 1799883
-Node: Equivalence Operators801435
-Node: Custom Operators804571
-Node: Precedence for Custom Infix Operators806121
-Node: Index808452
+Node: Welcome to Swift14092
+Node: About Swift14311
+Node: Version Compatibility16493
+Node: A Swift Tour17745
+Node: Simple Values19381
+Node: Control Flow22716
+Node: Functions and Closures27345
+Node: Objects and Classes31827
+Node: Enumerations and Structures38438
+Node: Protocols and Extensions43918
+Node: Error Handling46909
+Node: Generics50241
+Node: Language Guide51918
+Node: The Basics52811
+Node: Constants and Variables55444
+Node: Declaring Constants and Variables56063
+Node: Type Annotations57453
+Node: Naming Constants and Variables59362
+Node: Printing Constants and Variables61132
+Node: Comments62781
+Node: Semicolons64084
+Node: Integers64526
+Node: Integer Bounds65206
+Node: Int65792
+Node: UInt66577
+Node: Floating-Point Numbers67424
+Node: Type Safety and Type Inference68436
+Node: Numeric Literals71223
+Node: Numeric Type Conversion73276
+Node: Integer Conversion74232
+Node: Integer and Floating-Point Conversion76764
+Node: Type Aliases78255
+Node: Booleans79179
+Node: Tuples81256
+Node: Optionals84687
+Node: nil87058
+Node: If Statements and Forced Unwrapping88223
+Node: Optional Binding89758
+Node: Implicitly Unwrapped Optionals93134
+Node: Error Handling 196661
+Node: Assertions and Preconditions99352
+Node: Debugging with Assertions101579
+Node: Enforcing Preconditions103311
+Node: Basic Operators105431
+Node: Terminology107161
+Node: Assignment Operator108074
+Node: Arithmetic Operators109146
+Node: Remainder Operator110111
+Node: Unary Minus Operator111824
+Node: Unary Plus Operator112388
+Node: Compound Assignment Operators112928
+Node: Comparison Operators113932
+Node: Ternary Conditional Operator117591
+Node: Nil-Coalescing Operator119530
+Node: Range Operators121892
+Node: Closed Range Operator122240
+Node: Half-Open Range Operator123040
+Node: One-Sided Ranges124322
+Node: Logical Operators125962
+Node: Logical NOT Operator126513
+Node: Logical AND Operator127520
+Node: Logical OR Operator128490
+Node: Combining Logical Operators129693
+Node: Explicit Parentheses131075
+Node: Strings and Characters132076
+Node: String Literals134356
+Node: Multiline String Literals135065
+Node: Special Characters in String Literals137656
+Node: Extended String Delimiters139450
+Node: Initializing an Empty String140760
+Node: String Mutability141573
+Node: Strings Are Value Types142471
+Node: Working with Characters143690
+Node: Concatenating Strings and Characters144741
+Node: String Interpolation146851
+Node: Unicode148994
+Node: Unicode Scalar Values149630
+Node: Extended Grapheme Clusters150425
+Node: Counting Characters152992
+Node: Accessing and Modifying a String155401
+Node: String Indices155769
+Node: Inserting and Removing158321
+Node: Substrings159740
+Node: Comparing Strings162542
+Node: String and Character Equality162924
+Node: Prefix and Suffix Equality165359
+Node: Unicode Representations of Strings167695
+Node: UTF-8 Representation169572
+Node: UTF-16 Representation170750
+Node: Unicode Scalar Representation172297
+Node: Collection Types174014
+Node: Mutability of Collections175060
+Node: Arrays175895
+Node: Array Type Shorthand Syntax176774
+Node: Creating an Empty Array177324
+Node: Creating an Array with a Default Value178306
+Node: Creating an Array by Adding Two Arrays Together179020
+Node: Creating an Array with an Array Literal179810
+Node: Accessing and Modifying an Array181992
+Node: Iterating Over an Array186651
+Node: Sets187845
+Node: Hash Values for Set Types188725
+Node: Set Type Syntax190580
+Node: Creating and Initializing an Empty Set190949
+Node: Creating a Set with an Array Literal191933
+Node: Accessing and Modifying a Set193803
+Node: Iterating Over a Set195600
+Node: Performing Set Operations196378
+Node: Fundamental Set Operations196846
+Node: Set Membership and Equality198092
+Node: Dictionaries199769
+Node: Dictionary Type Shorthand Syntax200995
+Node: Creating an Empty Dictionary201794
+Node: Creating a Dictionary with a Dictionary Literal202840
+Node: Accessing and Modifying a Dictionary205605
+Node: Iterating Over a Dictionary209632
+Node: Control Flow 1211381
+Node: For-In Loops212594
+Node: While Loops217765
+Node: While218397
+Node: Repeat-While222930
+Node: Conditional Statements225656
+Node: If226591
+Node: Switch229250
+Node: Control Transfer Statements243069
+Node: Continue243881
+Node: Break244935
+Node: Fallthrough249181
+Node: Labeled Statements251943
+Node: Early Exit257116
+Node: Checking API Availability259427
+Node: Functions261455
+Node: Defining and Calling Functions262759
+Node: Function Parameters and Return Values266428
+Node: Functions Without Parameters267133
+Node: Functions With Multiple Parameters267885
+Node: Functions Without Return Values269258
+Node: Functions with Multiple Return Values271430
+Node: Functions With an Implicit Return275759
+Node: Function Argument Labels and Parameter Names277000
+Node: Specifying Argument Labels278246
+Node: Omitting Argument Labels279285
+Node: Default Parameter Values280053
+Node: Variadic Parameters281332
+Node: In-Out Parameters282822
+Node: Function Types286002
+Node: Using Function Types287321
+Node: Function Types as Parameter Types288784
+Node: Function Types as Return Types290624
+Node: Nested Functions293025
+Node: Closures294415
+Node: Closure Expressions296147
+Node: The Sorted Method297364
+Node: Closure Expression Syntax299915
+Node: Inferring Type From Context301764
+Node: Implicit Returns from Single-Expression Closures303384
+Node: Shorthand Argument Names304246
+Node: Operator Methods305177
+Node: Trailing Closures305946
+Node: Capturing Values312029
+Node: Closures Are Reference Types317063
+Node: Escaping Closures318383
+Node: Autoclosures320685
+Node: Enumeration325554
+Node: Enumeration Syntax327466
+Node: Matching Enumeration Values with a Switch Statement329607
+Node: Iterating over Enumeration Cases331342
+Node: Associated Values332964
+Node: Raw Values337418
+Node: Implicitly Assigned Raw Values339024
+Node: Initializing from a Raw Value340735
+Node: Recursive Enumerations342853
+Node: Structures and Classes345889
+Node: Comparing Structures and Classes347134
+Node: Definition Syntax349311
+Node: Structure and Class Instances351733
+Node: Accessing Properties352866
+Node: Memberwise Initializers for Structure Types354098
+Node: Structures and Enumerations Are Value Types354816
+Node: Classes Are Reference Types358873
+Node: Identity Operators361888
+Node: Pointers363645
+Node: Properties364614
+Node: Stored Properties365729
+Node: Stored Properties of Constant Structure Instances367526
+Node: Lazy Stored Properties368746
+Node: Stored Properties and Instance Variables372477
+Node: Computed Properties373493
+Node: Shorthand Setter Declaration376855
+Node: Shorthand Getter Declaration377781
+Node: Read-Only Computed Properties378855
+Node: Property Observers380765
+Node: Global and Local Variables385534
+Node: Type Properties386873
+Node: Type Property Syntax388547
+Node: Querying and Setting Type Properties390149
+Node: Methods395045
+Node: Instance Methods395948
+Node: The self Property398410
+Node: Modifying Value Types from Within Instance Methods400387
+Node: Assigning to self Within a Mutating Method402527
+Node: Type Methods404240
+Node: Subscripts410792
+Node: Subscript Syntax411754
+Node: Subscript Usage414378
+Node: Subscript Options416268
+Node: Type Subscripts420443
+Node: Inheritance421361
+Node: Defining a Base Class422532
+Node: Subclassing424472
+Node: Overriding427113
+Node: Accessing Superclass Methods Properties and Subscripts428335
+Node: Overriding Methods429634
+Node: Overriding Properties430518
+Node: Preventing Overrides435808
+Node: Initialization436740
+Node: Setting Initial Values for Stored Properties438098
+Node: Initializers439019
+Node: Default Property Values440168
+Node: Customizing Initialization441431
+Node: Initialization Parameters442065
+Node: Parameter Names and Argument Labels443873
+Node: Initializer Parameters Without Argument Labels446224
+Node: Optional Property Types447706
+Node: Assigning Constant Properties During Initialization449302
+Node: Default Initializers450771
+Node: Memberwise Initializers for Structure Types 1452403
+Node: Initializer Delegation for Value Types454174
+Node: Class Inheritance and Initialization459667
+Node: Designated Initializers and Convenience Initializers460606
+Node: Syntax for Designated and Convenience Initializers462367
+Node: Initializer Delegation for Class Types463095
+Node: Two-Phase Initialization465464
+Node: Initializer Inheritance and Overriding471459
+Node: Automatic Initializer Inheritance477529
+Node: Designated and Convenience Initializers in Action479038
+Node: Failable Initializers487258
+Node: Failable Initializers for Enumerations491779
+Node: Failable Initializers for Enumerations with Raw Values493643
+Node: Propagation of Initialization Failure495074
+Node: Overriding a Failable Initializer498341
+Node: The init! Failable Initializer501922
+Node: Required Initializers502843
+Node: Setting a Default Property Value with a Closure or Function503969
+Node: Deinitialization507874
+Node: How Deinitialization Works508346
+Node: Deinitializers in Action510058
+Node: Optional Chaining515006
+Node: Optional Chaining as an Alternative to Forced Unwrapping516129
+Node: Defining Model Classes for Optional Chaining521092
+Node: Accessing Properties Through Optional Chaining525111
+Node: Calling Methods Through Optional Chaining527532
+Node: Accessing Subscripts Through Optional Chaining530152
+Node: Accessing Subscripts of Optional Type532633
+Node: Linking Multiple Levels of Chaining533933
+Node: Chaining on Methods with Optional Return Values537116
+Node: Error Handling 2538939
+Node: Representing and Throwing Errors540543
+Node: Handling Errors541740
+Node: Propagating Errors Using Throwing Functions543513
+Node: Handling Errors Using Do-Catch547749
+Node: Converting Errors to Optional Values551691
+Node: Disabling Error Propagation553244
+Node: Specifying Cleanup Actions554168
+Node: Type Casting556127
+Node: Defining a Class Hierarchy for Type Casting556906
+Node: Checking Type559974
+Node: Downcasting561464
+Node: Type Casting for Any and AnyObject565578
+Node: Nested Types569236
+Node: Nested Types in Action569996
+Node: Referring to Nested Types574354
+Node: Extensions574942
+Node: Extension Syntax576242
+Node: Computed Properties 1577529
+Node: Initializers 1580014
+Node: Methods 1583399
+Node: Mutating Instance Methods584310
+Node: Subscripts 1585031
+Node: Nested Types 1586163
+Node: Protocols588218
+Node: Protocol Syntax589364
+Node: Property Requirements590236
+Node: Method Requirements594227
+Node: Mutating Method Requirements596830
+Node: Initializer Requirements599624
+Node: Class Implementations of Protocol Initializer Requirements600254
+Node: Failable Initializer Requirements602212
+Node: Protocols as Types602852
+Node: Delegation606634
+Node: Adding Protocol Conformance with an Extension614364
+Node: Conditionally Conforming to a Protocol616740
+Node: Declaring Protocol Adoption with an Extension618056
+Node: Collections of Protocol Types619206
+Node: Protocol Inheritance620461
+Node: Class-Only Protocols623841
+Node: Protocol Composition624910
+Node: Checking for Protocol Conformance628849
+Node: Optional Protocol Requirements632792
+Node: Protocol Extensions640909
+Node: Providing Default Implementations642424
+Node: Adding Constraints to Protocol Extensions643688
+Node: Generics 1645825
+Node: The Problem That Generics Solve647155
+Node: Generic Functions649623
+Node: Type Parameters652599
+Node: Naming Type Parameters653764
+Node: Generic Types654624
+Node: Extending a Generic Type659642
+Node: Type Constraints661540
+Node: Type Constraint Syntax663416
+Node: Type Constraints in Action664309
+Node: Associated Types668469
+Node: Associated Types in Action669235
+Node: Extending an Existing Type to Specify an Associated Type674692
+Node: Adding Constraints to an Associated Type676088
+Node: Using a Protocol in Its Associated Type's Constraints676984
+Node: Generic Where Clauses679900
+Node: Extensions with a Generic Where Clause685768
+Node: Associated Types with a Generic Where Clause689749
+Node: Generic Subscripts691250
+Node: Opaque Types692877
+Node: The Problem That Opaque Types Solve693736
+Node: Returning an Opaque Type696708
+Node: Differences Between Opaque Types and Protocol Types703371
+Node: Automatic Reference Counting709484
+Node: How ARC Works711057
+Node: ARC in Action712641
+Node: Strong Reference Cycles Between Class Instances715539
+Node: Resolving Strong Reference Cycles Between Class Instances720486
+Node: Weak References721794
+Node: Unowned References725612
+Node: Unowned References and Implicitly Unwrapped Optional Properties731108
+Node: Strong Reference Cycles for Closures735846
+Node: Resolving Strong Reference Cycles for Closures742710
+Node: Defining a Capture List743872
+Node: Weak and Unowned References745094
+Node: Memory Safety747985
+Node: Understanding Conflicting Access to Memory749115
+Node: Characteristics of Memory Access752062
+Node: Conflicting Access to In-Out Parameters754164
+Node: Conflicting Access to self in Methods757575
+Node: Conflicting Access to Properties760337
+Node: Access Control763706
+Node: Modules and Source Files765279
+Node: Access Levels766455
+Node: Guiding Principle of Access Levels769372
+Node: Default Access Levels770298
+Node: Access Levels for Single-Target Apps770804
+Node: Access Levels for Frameworks771531
+Node: Access Levels for Unit Test Targets772417
+Node: Access Control Syntax773050
+Node: Custom Types774153
+Node: Tuple Types776856
+Node: Function Types 1777517
+Node: Enumeration Types779408
+Node: Nested Types 2780458
+Node: Subclassing 1781007
+Node: Constants Variables Properties and Subscripts782959
+Node: Getters and Setters783704
+Node: Initializers 2788048
+Node: Default Initializers 1788799
+Node: Default Memberwise Initializers for Structure Types789682
+Node: Protocols 1790491
+Node: Protocol Inheritance 1791560
+Node: Protocol Conformance791967
+Node: Extensions 1793219
+Node: Private Members in Extensions794576
+Node: Generics 2795839
+Node: Type Aliases 1796174
+Node: Advanced Operators796789
+Node: Bitwise Operators798455
+Node: Bitwise NOT Operator799201
+Node: Bitwise AND Operator800322
+Node: Bitwise OR Operator801137
+Node: Bitwise XOR Operator801910
+Node: Bitwise Left and Right Shift Operators802882
+Node: Overflow Operators809973
+Node: Value Overflow811465
+Node: Precedence and Associativity814354
+Node: Operator Methods 1817132
+Node: Prefix and Postfix Operators819760
+Node: Compound Assignment Operators 1821385
+Node: Equivalence Operators822937
+Node: Custom Operators826073
+Node: Precedence for Custom Infix Operators827623
+Node: Index829954
 
 End Tag Table
 

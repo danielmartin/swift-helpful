@@ -1,7 +1,6 @@
-#+TITLE: The Swift Programming Reference (Swift 5)
+#+TITLE: The Swift Programming Reference (Swift 5.1)
 
 #+AUTHOR: Apple Inc.
-#+DATE: 2019-03-22T10:48:51Z
 #+TEXINFO_HEADER: @syncodeindex vr cp
 #+TEXINFO_HEADER: @syncodeindex fn cp
 #+TEXINFO_HEADER: @syncodeindex ky cp
@@ -1129,13 +1128,13 @@
  Grammar of a type
 
  type →
+ function-type
+
+ type →
  array-type
 
  type →
  dictionary-type
-
- type →
- function-type
 
  type →
  type-identifier
@@ -1151,6 +1150,9 @@
 
  type →
  protocol-composition-type
+
+ type →
+ opaque-type
 
  type →
  metatype-type
@@ -1189,7 +1191,7 @@
 
 ** Type Identifier
 
- A type identifier refers to either a named type or a type alias of a
+ A /type identifier/ refers to either a named type or a type alias of a
  named or compound type.
 
  Most of the time, a type identifier directly refers to a named type with
@@ -1230,7 +1232,7 @@
 
 ** Tuple Type
 
- A tuple type is a comma-separated list of types, enclosed in
+ A /tuple type/ is a comma-separated list of types, enclosed in
  parentheses.
 
  You can use a tuple type as the return type of a function to enable the
@@ -1280,7 +1282,7 @@
 
 ** Function Type
 
- A function type represents the type of a function, method, or closure
+ A /function type/ represents the type of a function, method, or closure
  and consists of a parameter and return type separated by an arrow
  (=->=):
 
@@ -1625,7 +1627,7 @@
 
 ** Protocol Composition Type
 
- A protocol composition type defines a type that conforms to each
+ A /protocol composition/ type defines a type that conforms to each
  protocol in a list of specified protocols, or a type that is a subclass
  of a given class and conforms to each protocol in a list of specified
  protocols. Protocol composition types may be used only when specifying a
@@ -1681,7 +1683,7 @@
 
 ** Metatype Type
 
- A metatype type refers to the type of any type, including class types,
+ A /metatype type/ refers to the type of any type, including class types,
  structure types, enumeration types, and protocol types.
 
  The metatype of a class, structure, or enumeration type is the name of
@@ -1746,7 +1748,7 @@
 
 ** Type Inheritance Clause
 
- A type inheritance clause is used to specify which class a named type
+ A /type inheritance clause/ is used to specify which class a named type
  inherits from and which protocols a named type conforms to. A type
  inheritance clause begins with a colon (=:=), followed by a list of type
  identifiers.
@@ -1789,7 +1791,7 @@
 
 ** Type Inference
 
- Swift uses type inference extensively, allowing you to omit the type or
+ Swift uses /type inference/ extensively, allowing you to omit the type or
  part of the type of many variables and expressions in your code. For
  example, instead of writing =var x: Int = 0=, you can write =var x = 0=,
  omitting the type completely---the compiler correctly infers that =x=
@@ -5028,7 +5030,10 @@ when the type of the /constant name/ can be inferred, as described in
 [[Type Inference][Type Inference]].
 
 To declare a constant type property, mark the declaration with the
-=static= declaration modifier. Type properties are discussed in
+=static= declaration modifier. A constant type property of a class is
+always implicitly final; you can't mark it with the =class= or =final=
+declaration modifier to allow or disallow overriding by subclasses. Type
+properties are discussed in
 [[info:swift#Type%20Properties][Type Properties]].
 
 For more information about constants and for guidance about when to use
@@ -5225,7 +5230,7 @@ Observers]].
 *** Type Variable Properties
 
 To declare a type variable property, mark the declaration with the
-=static= declaration modifier. Classes may mark type computed properties
+=static= declaration modifier. Classes can mark type computed properties
 with the =class= declaration modifier instead to allow subclasses to
 override the superclass's implementation. Type properties are discussed
 in [[info:swift#Type%20Properties][Type Properties]].
@@ -5641,7 +5646,7 @@ marked with the =static= declaration modifier for enumerations and
 structures, or with either the =static= or =class= declaration modifier
 for classes. A class type method marked with the =class= declaration
 modifier can be overridden by a subclass implementation; a class type
-method marked with =static= can't be overridden.
+method marked with =class final= or =static= can't be overridden.
 
 
 *** Throwing Functions and Methods
@@ -5975,7 +5980,7 @@ assigned a string with the same text as the name of that case.
 
 In the above example, the raw value of =GamePlayMode.cooperative= is
 ="cooperative"=, the raw value of =GamePlayMode.individual= is
-="individual"=,. and the raw value of =GamePlayMode.competitive= is
+="individual"=, and the raw value of =GamePlayMode.competitive= is
 ="competitive"=.
 
 Enumerations that have cases of a raw-value type implicitly conform to
@@ -6534,11 +6539,13 @@ the method requirements of a protocol, see
 
 To declare a class or static method requirement in a protocol
 declaration, mark the method declaration with the =static= declaration
-modifier. Classes that implement this method declare the method with the
-=class= modifier. Structures that implement it must declare the method
-with the =static= declaration modifier instead. If you're implementing
-the method in an extension, use the =class= modifier if you're extending
-a class and the =static= modifier if you're extending a structure.
+modifier. Structures and enumerations that conform to the protocol
+declare the method with the =static= keyword, and classes that conform
+to the protocol declare the method with either the =static= or =class=
+keyword. Extensions that add protocol conformance to a structure,
+enumeration, or class use the same keyword as the type they extend uses.
+Extensions that provide a default implementation for a type method
+requirement use the =static= keyword.
 
 See also [[Function Declaration][Function Declaration]].
 
@@ -7201,8 +7208,8 @@ provide a setter clause, you must also provide a getter clause.
 The /setter name/ and enclosing parentheses are optional. If you provide
 a setter name, it is used as the name of the parameter to the setter. If
 you do not provide a setter name, the default parameter name to the
-setter is =value=. The type of the /setter name/ must be the same as the
-/return type/.
+setter is =value=. The type of the parameter to the setter is the same
+as the /return type/.
 
 You can overload a subscript declaration in the type in which it is
 declared, as long as the /parameters/ or the /return type/ differ from
@@ -7211,10 +7218,12 @@ declaration inherited from a superclass. When you do so, you must mark
 the overridden subscript declaration with the =override= declaration
 modifier.
 
-By default, the parameters used in subscripting don't have argument
-labels, unlike functions, methods, and initializers. However, you can
-provide explicit argument labels using the same syntax that functions,
-methods, and initializers use.
+Subscript parameters follow the same rules as function parameters, with
+two exceptions. By default, the parameters used in subscripting don't
+have argument labels, unlike functions, methods, and initializers.
+However, you can provide explicit argument labels using the same syntax
+that functions, methods, and initializers use. In addition, subscripts
+can't have in-out parameters.
 
 You can also declare subscripts in the context of a protocol
 declaration, as described in [[Protocol Subscript Declaration][Protocol
@@ -7492,6 +7501,12 @@ declaration modifier by writing the appropriate keyword or
 context-sensitive keyword between a declaration's attributes (if any)
 and the keyword that introduces the declaration.
 
+- =class= :: Apply this modifier to a member of a class to indicate that
+  the member is a member of the class itself, rather than a member of
+  instances of the class. Members of a superclass that have this
+  modifier and don't have the =final= modifier can be overridden by
+  subclasses.
+
 - =dynamic= :: Apply this modifier to any member of a class that can be
   represented by Objective-C. When you mark a member declaration with
   the =dynamic= modifier, access to that member is always dynamically
@@ -7534,6 +7549,16 @@ and the keyword that introduces the declaration.
   initializer of a class to indicate that every subclass must implement
   that initializer. The subclass's implementation of that initializer
   must also be marked with the =required= modifier.
+
+- =static= :: Apply this modifier to a member of a structure, class,
+  enumeration, or protocol to indicate that the member is a member of
+  the type, rather than a member of instances of that type. In the scope
+  of a class declaration, writing the =static= modifier on a member
+  declaration has the same effect as writing the =class= and =final=
+  modifiers on that member declaration. However, constant type
+  properties of a class are an exception: =static= has its normal,
+  nonclass meaning there because you can't write =class= or =final= on
+  those declarations.
 
 - =unowned= :: Apply this modifier to a stored variable, constant, or
   stored property to indicate that the variable or property has an
@@ -7875,10 +7900,10 @@ function that takes any number of arguments.
 13.
 14. // Use a dynamic method call.
 15. dial(4, 1, 1)
-16. // Prints "Get Swift help on forums.swift.org".
+16. // Prints "Get Swift help on forums.swift.org"
 17.
 18. dial(8, 6, 7, 5, 3, 0, 9)
-19. // Prints "Unrecognized number".
+19. // Prints "Unrecognized number"
 20.
 21. // Call the underlying method directly.
 22. dial.dynamicallyCall(withArguments: [4, 1, 1])
@@ -7954,12 +7979,29 @@ implement a =subscript(dynamicMemberLookup:)= subscript.
 
 In an explicit member expression, if there isn't a corresponding
 declaration for the named member, the expression is understood as a call
-to the type's =subscript(dynamicMemberLookup:)= subscript, passing a
-string literal that contains the member's name as the argument. The
-subscript's parameter type can be any type that conforms to the
-=ExpressibleByStringLiteral= protocol, and its return type can be any
-type. In most cases, the subscript's parameter is a =String= value. For
-example:
+to the type's =subscript(dynamicMemberLookup:)= subscript, passing
+information about the member as the argument. The subscript can accept a
+parameter that's either a key path or a member name; if you implement
+both subscripts, the subscript that takes key path argument is used.
+
+An implementation of =subscript(dynamicMemberLookup:)= can accept key
+paths using an argument of type
+[[https://developer.apple.com/documentation/swift/keypath][=KeyPath=]]
+[https://developer.apple.com/documentation/swift/keypath],
+[[https://developer.apple.com/documentation/swift/writablekeypath][=WritableKeyPath=]]
+[https://developer.apple.com/documentation/swift/writablekeypath], or
+[[https://developer.apple.com/documentation/swift/referencewritablekeypath][=ReferenceWritableKeyPath=]]
+[https://developer.apple.com/documentation/swift/referencewritablekeypath].
+It can accept member names using an argument of a type that conforms to
+the
+[[https://developer.apple.com/documentation/swift/expressiblebystringliteral][=ExpressibleByStringLiteral=]]
+[https://developer.apple.com/documentation/swift/expressiblebystringliteral]
+protocol---in most cases, =String=. The subscript's return type can be
+any type.
+
+Dynamic member lookup by member name can be used to create a wrapper
+type around data that can't be type checked at compile time, such as
+when bridging data from other languages into Swift. For example:
 
 1.  @dynamicMemberLookup
 2.  struct DynamicStruct {
@@ -8113,8 +8155,9 @@ The =objc= attribute is also implicitly added in the following cases:
 - The declaration satisfies a requirement from a protocol that has the
   =objc= attribute.
 
-- The declaration has the =IBAction=, =IBOutlet=, =IBDesignable=,
-  =IBInspectable=, =NSManaged=, or =GKInspectable= attribute.
+- The declaration has the =IBAction=, =IBSegueAction=, =IBOutlet=,
+  =IBDesignable=, =IBInspectable=, =NSManaged=, or =GKInspectable=
+  attribute.
 
 If you apply the =objc= attribute to an enumeration, each enumeration
 case is exposed to Objective-C code as the concatenation of the
@@ -8259,17 +8302,17 @@ confusion when attempting to use one or the other from within a
 
 Interface Builder attributes are declaration attributes used by
 Interface Builder to synchronize with Xcode. Swift provides the
-following Interface Builder attributes: =IBAction=, =IBOutlet=,
-=IBDesignable=, and =IBInspectable=. These attributes are conceptually
-the same as their Objective-C counterparts.
+following Interface Builder attributes: =IBAction=, =IBSegueAction=,
+ =IBOutlet=, =IBDesignable=, and =IBInspectable=. These attributes are
+conceptually the same as their Objective-C counterparts.
 
 You apply the =IBOutlet= and =IBInspectable= attributes to property
-declarations of a class. You apply the =IBAction= attribute to method
-declarations of a class and the =IBDesignable= attribute to class
-declarations.
+declarations of a class. You apply the =IBAction= and =IBSegueAction=
+ attribute to method declarations of a class and the =IBDesignable=
+attribute to class declarations.
 
-Applying the =IBAction=, =IBOutlet=, =IBDesignable=, or =IBInspectable=
-attribute also implies the =objc= attribute.
+Applying the =IBAction=, =IBSegueAction=, =IBOutlet=, =IBDesignable=, or
+=IBInspectable= attribute also implies the =objc= attribute.
 
 
 ** Type Attributes
@@ -9557,13 +9600,13 @@ operator
 Grammar of a type
 
 type →
+function-type
+
+type →
 array-type
 
 type →
 dictionary-type
-
-type →
-function-type
 
 type →
 type-identifier
@@ -9581,11 +9624,15 @@ type →
 protocol-composition-type
 
 type →
+opaque-type
+
+type →
 metatype-type
 
-type → =Any=
+type →
+self-type
 
-type → =Self=
+type → =Any=
 
 type → =(=
 type =)=
@@ -9712,6 +9759,11 @@ protocol-composition-continuation
 type-identifier
 |
 protocol-composition-type
+
+Grammar of an opaque type
+
+opaque-type →
+=some= type
 
 Grammar of a metatype type
 
