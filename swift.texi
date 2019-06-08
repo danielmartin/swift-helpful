@@ -18218,6 +18218,8 @@ print(trapezoid.draw())
 // *
 @end example
 
+@findex some
+
 The @samp{makeTrapezoid()} function in this example declares its return type
 as @samp{some Shape}; as a result, the function returns a value of some given
 type that conforms to the @samp{Shape} protocol, without specifying any

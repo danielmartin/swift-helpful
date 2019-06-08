@@ -16376,6 +16376,8 @@ trapezoid without exposing the underlying type of that shape.
   // *
 #+END_SRC
 
+#+FINDEX: some
+
 The =makeTrapezoid()= function in this example declares its return type
 as =some Shape=; as a result, the function returns a value of some given
 type that conforms to the =Shape= protocol, without specifying any

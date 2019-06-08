@@ -20618,6 +20618,8 @@ Index
                                                               (line   6)
 * right:                                 Operator Methods 1.  (line  37)
 * self:                                  The self Property.   (line   6)
+* some:                                  Returning an Opaque Type.
+                                                              (line  53)
 * static:                                Type Property Syntax.
                                                               (line  12)
 * struct:                                Definition Syntax.   (line   6)
