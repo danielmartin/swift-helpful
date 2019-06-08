@@ -20568,6 +20568,7 @@ Index
                                                               (line   6)
 * extension:                             Protocols and Extensions.
                                                               (line  47)
+* extension <1>:                         Extensions.          (line   6)
 * fallthrough:                           Fallthrough.         (line  15)
 * fileprivate:                           Access Levels.       (line  23)
 * fileprivate <1>:                       Access Control Syntax.
@@ -20606,6 +20607,7 @@ Index
 * prefix:                                Custom Operators.    (line  10)
 * private:                               Access Control Syntax.
                                                               (line   6)
+* protocol:                              Protocols.           (line   6)
 * public:                                Access Levels.       (line  11)
 * public <1>:                            Access Control Syntax.
                                                               (line   6)

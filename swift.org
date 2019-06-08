@@ -13391,6 +13391,8 @@ naturally qualified by the context in which they are defined.
 
 * Extensions
 
+#+FINDEX: extension
+
 /Extensions/ add new functionality to an existing class, structure,
 enumeration, or protocol type. This includes the ability to extend types
 for which you do not have access to the original source code (known as
@@ -13763,6 +13765,8 @@ inside the =switch= statement, such as =.negative= rather than
 =Int.Kind.negative=.
 
 * Protocols
+
+#+FINDEX: protocol
 
 A /protocol/ defines a blueprint of methods, properties, and other
 requirements that suit a particular task or piece of functionality. The
