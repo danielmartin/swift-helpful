@@ -6475,6 +6475,8 @@ You can use optional binding to check whether this version of the
 
 *** Functions With an Implicit Return
 
+[[https://github.com/apple/swift-evolution/blob/master/proposals/0255-omit-return.md][Proposal]]
+
 If the entire body of the function is a single expression, the function
 implicitly returns that expression. For example, both functions below
 have the same behavior:
@@ -8322,6 +8324,8 @@ property:
 
 *** Memberwise Initializers for Structure Types
 
+[[https://github.com/apple/swift-evolution/blob/master/proposals/0242-default-values-memberwise.md][Proposal]]
+
 All structures have an automatically generated /memberwise initializer/,
 which you can use to initialize the member properties of new structure
 instances. Initial values for the properties of the new instance can be
@@ -8831,6 +8835,8 @@ notation:
 #+END_SRC
 
 *** Shorthand Getter Declaration
+
+[[https://github.com/apple/swift-evolution/blob/master/proposals/0255-omit-return.md][Proposal]]
 
 If the entire body of a getter is a single expression, the getter
 implicitly returns that expression. Here's an another version of the
@@ -9845,6 +9851,8 @@ outside of the matrix bounds:
 
 ** Type Subscripts
 
+[[https://github.com/apple/swift-evolution/blob/master/proposals/0254-static-subscripts.md][Proposal]]
+
 Instance subscripts, as described above, are subscripts that you call on
 an instance of a particular type. You can also define subscripts that
 are called on the type itself. This kind of subscript is called a /type
@@ -10562,6 +10570,8 @@ create a new instance of the class with initializer syntax, written as
 =item=.
 
 *** Memberwise Initializers for Structure Types
+
+[[https://github.com/apple/swift-evolution/blob/master/proposals/0242-default-values-memberwise.md][Proposal]]
 
 Structure types automatically receive a /memberwise initializer/ if they
 don't define any of their own custom initializers. Unlike a default
@@ -16214,6 +16224,8 @@ Taken together, these constraints mean that the value passed for the
 =indices= parameter is a sequence of integers.
 
 * Opaque Types
+
+[[https://github.com/apple/swift-evolution/blob/master/proposals/0244-opaque-result-types.md][Proposal]]
 
 A function or method with an opaque return type hides its return value's
 type information. Instead of providing a concrete type as the function's

@@ -7677,6 +7677,8 @@ if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) @{
 @node Functions With an Implicit Return
 @subsection Functions With an Implicit Return
 
+@uref{https://github.com/apple/swift-evolution/blob/master/proposals/0255-omit-return.md, Proposal}
+
 If the entire body of the function is a single expression, the function
 implicitly returns that expression. For example, both functions below
 have the same behavior:
@@ -9647,6 +9649,8 @@ print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 @node Memberwise Initializers for Structure Types
 @subsection Memberwise Initializers for Structure Types
 
+@uref{https://github.com/apple/swift-evolution/blob/master/proposals/0242-default-values-memberwise.md, Proposal}
+
 All structures have an automatically generated @emph{memberwise initializer},
 which you can use to initialize the member properties of new structure
 instances. Initial values for the properties of the new instance can be
@@ -10202,6 +10206,8 @@ struct AlternativeRect @{
 
 @node Shorthand Getter Declaration
 @subsection Shorthand Getter Declaration
+
+@uref{https://github.com/apple/swift-evolution/blob/master/proposals/0255-omit-return.md, Proposal}
 
 If the entire body of a getter is a single expression, the getter
 implicitly returns that expression. Here's an another version of the
@@ -11269,6 +11275,8 @@ let someValue = matrix[2, 2]
 @node Type Subscripts
 @section Type Subscripts
 
+@uref{https://github.com/apple/swift-evolution/blob/master/proposals/0254-static-subscripts.md, Proposal}
+
 Instance subscripts, as described above, are subscripts that you call on
 an instance of a particular type. You can also define subscripts that
 are called on the type itself. This kind of subscript is called a @emph{type
@@ -12056,6 +12064,8 @@ create a new instance of the class with initializer syntax, written as
 
 @node Memberwise Initializers for Structure Types 1
 @subsection Memberwise Initializers for Structure Types
+
+@uref{https://github.com/apple/swift-evolution/blob/master/proposals/0242-default-values-memberwise.md, Proposal}
 
 Structure types automatically receive a @emph{memberwise initializer} if they
 don't define any of their own custom initializers. Unlike a default
@@ -18048,6 +18058,8 @@ Taken together, these constraints mean that the value passed for the
 
 @node Opaque Types
 @chapter Opaque Types
+
+@uref{https://github.com/apple/swift-evolution/blob/master/proposals/0244-opaque-result-types.md, Proposal}
 
 A function or method with an opaque return type hides its return value's
 type information. Instead of providing a concrete type as the function's
