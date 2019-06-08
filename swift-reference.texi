@@ -2365,6 +2365,8 @@ type @samp{.} @samp{Protocol}
 @node Self Type
 @section Self Type
 
+@uref{https://github.com/apple/swift-evolution/blob/master/proposals/0068-universal-self.md, Proposal}
+
 The @samp{Self} type isn't a specific type, but rather lets you conveniently
 refer to the current type without repeating or knowing that type's name.
 

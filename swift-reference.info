@@ -1857,8 +1857,12 @@ File: swift-reference.info,  Node: Self Type,  Next: Type Inheritance Clause,  P
 4.12 Self Type
 ==============
 
-The ‘Self’ type isn’t a specific type, but rather lets you conveniently
-refer to the current type without repeating or knowing that type’s name.
+Proposal
+(https://github.com/apple/swift-evolution/blob/master/proposals/0068-universal-self.md)
+
+   The ‘Self’ type isn’t a specific type, but rather lets you
+conveniently refer to the current type without repeating or knowing that
+type’s name.
 
    In a protocol declaration or a protocol member declaration, the
 ‘Self’ type refers to the eventual type that conforms to the protocol.
@@ -10357,147 +10361,147 @@ Node: Protocol Composition Type59826
 Node: Opaque Type61910
 Node: Metatype Type63447
 Node: Self Type66062
-Node: Type Inheritance Clause68089
-Node: Type Inference69919
-Node: Expressions71663
-Node: Prefix Expressions72704
-Node: Try Operator73918
-Node: Binary Expressions75880
-Node: Assignment Operator77512
-Node: Type-Casting Operators79083
-Node: Primary Expressions81959
-Node: Literal Expression83284
-Node: Self Expression87868
-Node: Superclass Expression89524
-Node: Closure Expression90704
-Node: Implicit Member Expression98053
-Node: Parenthesized Expression98691
-Node: Tuple Expression99307
-Node: Wildcard Expression100548
-Node: Key-Path Expression101041
-Node: Selector Expression107977
-Node: Key-Path String Expression110602
-Node: Postfix Expressions113341
-Node: Function Call Expression114810
-Node: Initializer Expression116947
-Node: Explicit Member Expression118559
-Node: Postfix Self Expression121316
-Node: Subscript Expression122205
-Node: Forced-Value Expression123068
-Node: Optional-Chaining Expression124092
-Node: Statements126891
-Node: Loop Statements128860
-Node: For-In Statement129734
-Node: While Statement131154
-Node: Repeat-While Statement132663
-Node: Branch Statements133950
-Node: If Statement134824
-Node: Guard Statement136663
-Node: Labeled Statement147024
-Node: Control Transfer Statements148372
-Node: Break Statement149358
-Node: Continue Statement150734
-Node: Fallthrough Statement152282
-Node: Return Statement153481
-Node: Throw Statement155021
-Node: Defer Statement156120
-Node: Do Statement157623
-Node: Compiler Control Statements159577
-Node: Conditional Compilation Block160349
-Node: Line Control Statement167290
-Node: Compile-Time Diagnostic Statement168786
-Node: Availability Condition169901
-Node: Declarations172067
-Node: Top-Level Code174154
-Node: Code Blocks174821
-Node: Import Declaration175387
-Node: Constant Declaration176548
-Node: Variable Declaration179527
-Node: Stored Variables and Stored Variable Properties180755
-Node: Computed Variables and Computed Properties182150
-Node: Stored Variable Observers and Property Observers184118
-Node: Type Variable Properties187479
-Node: Type Alias Declaration190113
-Node: Function Declaration192859
-Node: Parameter Names194614
-Node: In-Out Parameters196144
-Node: Special Kinds of Parameters198820
-Node: Special Kinds of Methods200324
-Node: Throwing Functions and Methods201414
-Node: Rethrowing Functions and Methods202812
-Node: Functions that Never Return204604
-Node: Enumeration Declaration206770
-Node: Enumerations with Cases of Any Type208628
-Node: Enumerations with Cases of a Raw-Value Type211516
-Node: Accessing Enumeration Cases214980
-Node: Structure Declaration217732
-Node: Class Declaration220700
-Node: Protocol Declaration225038
-Node: Protocol Property Declaration230245
-Node: Protocol Method Declaration231952
-Node: Protocol Initializer Declaration233558
-Node: Protocol Subscript Declaration235030
-Node: Protocol Associated Type Declaration236261
-Node: Initializer Declaration237896
-Node: Failable Initializers241580
-Node: Deinitializer Declaration245059
-Node: Extension Declaration246276
-Node: Conditional Conformance248761
-Node: Protocol Conformance Must Not Be Redundant252080
-Node: Subscript Declaration256542
-Node: Operator Declaration260076
-Node: Precedence Group Declaration263474
-Node: Declaration Modifiers268177
-Node: Access Control Levels273888
-Node: Attributes277599
-Node: Declaration Attributes278672
-Node: available279271
-Node: discardableResult284798
-Node: dynamicCallable285150
-Node: dynamicMemberLookup289070
-Node: GKInspectable291609
-Node: inlinable291940
-Node: nonobjc293027
-Node: NSApplicationMain294266
-Node: NSCopying294856
-Node: NSManaged295455
-Node: objc296015
-Node: objcMembers299663
-Node: requires_stored_property_inits300538
-Node: testable300985
-Node: UIApplicationMain301735
-Node: usableFromInline302638
-Node: warn_unqualified_access303828
-Node: Declaration Attributes Used by Interface Builder305056
-Node: Type Attributes306089
-Node: autoclosure306363
-Node: convention306963
-Node: escaping308412
-Node: Switch Case Attributes309006
-Node: unknown309245
-Node: Patterns310298
-Node: Wildcard Pattern312539
-Node: Identifier Pattern313140
-Node: Value-Binding Pattern313953
-Node: Tuple Pattern315193
-Node: Enumeration Case Pattern316916
-Node: Optional Pattern317856
-Node: Type-Casting Patterns319206
-Node: Expression Pattern320643
-Node: Generic Parameters and Arguments322366
-Node: Generic Parameter Clause323166
-Node: Generic Where Clauses325229
-Node: Generic Argument Clause328345
-Node: Summary of the Grammar330756
-Node: Lexical Structure 1331219
-Node: Types 1340443
-Node: Expressions 1343175
-Node: Statements 1351818
-Node: Declarations 1359770
-Node: Attributes 1374177
-Node: Patterns 1375004
-Node: Generic Parameters and Arguments 1376540
-Node: Index377772
+Node: Type Inheritance Clause68190
+Node: Type Inference70020
+Node: Expressions71764
+Node: Prefix Expressions72805
+Node: Try Operator74019
+Node: Binary Expressions75981
+Node: Assignment Operator77613
+Node: Type-Casting Operators79184
+Node: Primary Expressions82060
+Node: Literal Expression83385
+Node: Self Expression87969
+Node: Superclass Expression89625
+Node: Closure Expression90805
+Node: Implicit Member Expression98154
+Node: Parenthesized Expression98792
+Node: Tuple Expression99408
+Node: Wildcard Expression100649
+Node: Key-Path Expression101142
+Node: Selector Expression108078
+Node: Key-Path String Expression110703
+Node: Postfix Expressions113442
+Node: Function Call Expression114911
+Node: Initializer Expression117048
+Node: Explicit Member Expression118660
+Node: Postfix Self Expression121417
+Node: Subscript Expression122306
+Node: Forced-Value Expression123169
+Node: Optional-Chaining Expression124193
+Node: Statements126992
+Node: Loop Statements128961
+Node: For-In Statement129835
+Node: While Statement131255
+Node: Repeat-While Statement132764
+Node: Branch Statements134051
+Node: If Statement134925
+Node: Guard Statement136764
+Node: Labeled Statement147125
+Node: Control Transfer Statements148473
+Node: Break Statement149459
+Node: Continue Statement150835
+Node: Fallthrough Statement152383
+Node: Return Statement153582
+Node: Throw Statement155122
+Node: Defer Statement156221
+Node: Do Statement157724
+Node: Compiler Control Statements159678
+Node: Conditional Compilation Block160450
+Node: Line Control Statement167391
+Node: Compile-Time Diagnostic Statement168887
+Node: Availability Condition170002
+Node: Declarations172168
+Node: Top-Level Code174255
+Node: Code Blocks174922
+Node: Import Declaration175488
+Node: Constant Declaration176649
+Node: Variable Declaration179628
+Node: Stored Variables and Stored Variable Properties180856
+Node: Computed Variables and Computed Properties182251
+Node: Stored Variable Observers and Property Observers184219
+Node: Type Variable Properties187580
+Node: Type Alias Declaration190214
+Node: Function Declaration192960
+Node: Parameter Names194715
+Node: In-Out Parameters196245
+Node: Special Kinds of Parameters198921
+Node: Special Kinds of Methods200425
+Node: Throwing Functions and Methods201515
+Node: Rethrowing Functions and Methods202913
+Node: Functions that Never Return204705
+Node: Enumeration Declaration206871
+Node: Enumerations with Cases of Any Type208729
+Node: Enumerations with Cases of a Raw-Value Type211617
+Node: Accessing Enumeration Cases215081
+Node: Structure Declaration217833
+Node: Class Declaration220801
+Node: Protocol Declaration225139
+Node: Protocol Property Declaration230346
+Node: Protocol Method Declaration232053
+Node: Protocol Initializer Declaration233659
+Node: Protocol Subscript Declaration235131
+Node: Protocol Associated Type Declaration236362
+Node: Initializer Declaration237997
+Node: Failable Initializers241681
+Node: Deinitializer Declaration245160
+Node: Extension Declaration246377
+Node: Conditional Conformance248862
+Node: Protocol Conformance Must Not Be Redundant252181
+Node: Subscript Declaration256643
+Node: Operator Declaration260177
+Node: Precedence Group Declaration263575
+Node: Declaration Modifiers268278
+Node: Access Control Levels273989
+Node: Attributes277700
+Node: Declaration Attributes278773
+Node: available279372
+Node: discardableResult284899
+Node: dynamicCallable285251
+Node: dynamicMemberLookup289171
+Node: GKInspectable291710
+Node: inlinable292041
+Node: nonobjc293128
+Node: NSApplicationMain294367
+Node: NSCopying294957
+Node: NSManaged295556
+Node: objc296116
+Node: objcMembers299764
+Node: requires_stored_property_inits300639
+Node: testable301086
+Node: UIApplicationMain301836
+Node: usableFromInline302739
+Node: warn_unqualified_access303929
+Node: Declaration Attributes Used by Interface Builder305157
+Node: Type Attributes306190
+Node: autoclosure306464
+Node: convention307064
+Node: escaping308513
+Node: Switch Case Attributes309107
+Node: unknown309346
+Node: Patterns310399
+Node: Wildcard Pattern312640
+Node: Identifier Pattern313241
+Node: Value-Binding Pattern314054
+Node: Tuple Pattern315294
+Node: Enumeration Case Pattern317017
+Node: Optional Pattern317957
+Node: Type-Casting Patterns319307
+Node: Expression Pattern320744
+Node: Generic Parameters and Arguments322467
+Node: Generic Parameter Clause323267
+Node: Generic Where Clauses325330
+Node: Generic Argument Clause328446
+Node: Summary of the Grammar330857
+Node: Lexical Structure 1331320
+Node: Types 1340544
+Node: Expressions 1343276
+Node: Statements 1351919
+Node: Declarations 1359871
+Node: Attributes 1374278
+Node: Patterns 1375105
+Node: Generic Parameters and Arguments 1376641
+Node: Index377873
 
 End Tag Table
 
