@@ -1681,6 +1681,42 @@
  protocol-composition-type
 
 
+** Opaque Type
+
+An /opaque type/ defines a type that conforms to a protocol or protocol
+composition, without specifying the underlying concrete type.
+
+Opaque types appear as the return type of a function or subscript, or
+the type of a property. Opaque types can't appear as part of a tuple
+type or a generic type, such as the element type of an array or the
+wrapped type of an optional.
+
+Opaque types have the following form:
+
+1. some constraint
+
+The /constraint/ is a class type, protocol type, protocol composition
+type, or =Any=. A value can be used as an instance of the opaque type
+only if it's an instance of a type that conforms to the listed protocol
+or protocol composition, or inherits from the listed class. Code that
+interacts with an opaque value can use the value only in ways that are
+part of the interface defined by the /constraint/.
+
+Protocol declarations can't include opaque types. Classes can't use an
+opaque type as the return type of a nonfinal method.
+
+A function that uses an opaque type as its return type must return
+values that share a single underlying type. The return type can include
+types that are part of the function's generic type parameters. For
+example, a function =someFunction<T>()= could return a value of type =T=
+or =Dictionary<String, T>=.
+
+Grammar of an opaque type
+
+opaque-type → =some=
+type
+
+
 ** Metatype Type
 
  A /metatype type/ refers to the type of any type, including class types,
@@ -1744,6 +1780,58 @@
  metatype-type →
  type =.= =Type= |
  type =.= =Protocol=
+
+
+** Self Type
+
+The =Self= type isn't a specific type, but rather lets you conveniently
+refer to the current type without repeating or knowing that type's name.
+
+In a protocol declaration or a protocol member declaration, the =Self=
+type refers to the eventual type that conforms to the protocol.
+
+In a structure, class, or enumeration declaration, the =Self= type
+refers to the type introduced by the declaration. Inside the declaration
+for a member of a type, the =Self= type refers to that type. In the
+members of a class declaration, =Self= can appear as the return type of
+a method and in the body of a method, but not in any other context. For
+example, the code below shows an instance method =f= whose return type
+is =Self=.
+
+1.  class Superclass {
+2.  func f() -> Self { return self }
+3.  }
+4.  let x = Superclass()
+5.  print(type(of: x.f()))
+6.  // Prints "Superclass"
+7.
+8.  class Subclass: Superclass { }
+9.  let y = Subclass()
+10. print(type(of: y.f()))
+11. // Prints "Subclass"
+12.
+13. let z: Superclass = Subclass()
+14. print(type(of: z.f()))
+15. // Prints "Subclass"
+
+The last part of the example above shows that =Self= refers to the
+runtime type =Subclass= of the value of =z=, not the compile-time type
+=Superclass= of the variable itself.
+
+Inside a nested type declaration, the =Self= type refers to the type
+introduced by the innermost type declaration.
+
+The =Self= type refers to the same type as the
+[[https://developer.apple.com/documentation/swift/2885064-type][=type(of:)=]]
+[https://developer.apple.com/documentation/swift/2885064-type] function
+in the Swift standard library. Writing =Self.someStaticMember= to access
+a member of the current type is the same as writing
+=type(of: self).someStaticMember=.
+
+Grammar of a Self type
+
+self-type → =Self=
+
 
 
 ** Type Inheritance Clause

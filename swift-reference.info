@@ -58,7 +58,9 @@ Types
 * Optional Type::
 * Implicitly Unwrapped Optional Type::
 * Protocol Composition Type::
+* Opaque Type::
 * Metatype Type::
+* Self Type::
 * Type Inheritance Clause::
 * Type Inference::
 
@@ -1241,7 +1243,9 @@ and describes the type inference behavior of Swift.
 * Optional Type::
 * Implicitly Unwrapped Optional Type::
 * Protocol Composition Type::
+* Opaque Type::
 * Metatype Type::
+* Self Type::
 * Type Inheritance Clause::
 * Type Inference::
 
@@ -1691,7 +1695,7 @@ Optionals.
    implicitly-unwrapped-optional-type → type ‘!’
 
 
-File: swift-reference.info,  Node: Protocol Composition Type,  Next: Metatype Type,  Prev: Implicitly Unwrapped Optional Type,  Up: Types
+File: swift-reference.info,  Node: Protocol Composition Type,  Next: Opaque Type,  Prev: Implicitly Unwrapped Optional Type,  Up: Types
 
 4.9 Protocol Composition Type
 =============================
@@ -1744,9 +1748,47 @@ protocol-composition-continuation
    protocol-composition-type
 
 
-File: swift-reference.info,  Node: Metatype Type,  Next: Type Inheritance Clause,  Prev: Protocol Composition Type,  Up: Types
+File: swift-reference.info,  Node: Opaque Type,  Next: Metatype Type,  Prev: Protocol Composition Type,  Up: Types
 
-4.10 Metatype Type
+4.10 Opaque Type
+================
+
+An _opaque type_ defines a type that conforms to a protocol or protocol
+composition, without specifying the underlying concrete type.
+
+   Opaque types appear as the return type of a function or subscript, or
+the type of a property.  Opaque types can’t appear as part of a tuple
+type or a generic type, such as the element type of an array or the
+wrapped type of an optional.
+
+   Opaque types have the following form:
+
+  1. some constraint
+
+   The _constraint_ is a class type, protocol type, protocol composition
+type, or ‘Any’.  A value can be used as an instance of the opaque type
+only if it’s an instance of a type that conforms to the listed protocol
+or protocol composition, or inherits from the listed class.  Code that
+interacts with an opaque value can use the value only in ways that are
+part of the interface defined by the _constraint_.
+
+   Protocol declarations can’t include opaque types.  Classes can’t use
+an opaque type as the return type of a nonfinal method.
+
+   A function that uses an opaque type as its return type must return
+values that share a single underlying type.  The return type can include
+types that are part of the function’s generic type parameters.  For
+example, a function ‘someFunction<T>()’ could return a value of type ‘T’
+or ‘Dictionary<String, T>’.
+
+   Grammar of an opaque type
+
+   opaque-type → ‘some’ type
+
+
+File: swift-reference.info,  Node: Metatype Type,  Next: Self Type,  Prev: Opaque Type,  Up: Types
+
+4.11 Metatype Type
 ==================
 
 A _metatype type_ refers to the type of any type, including class types,
@@ -1810,9 +1852,63 @@ marked with the ‘final’ keyword.
    metatype-type → type ‘.’  ‘Type’ | type ‘.’  ‘Protocol’
 
 
-File: swift-reference.info,  Node: Type Inheritance Clause,  Next: Type Inference,  Prev: Metatype Type,  Up: Types
+File: swift-reference.info,  Node: Self Type,  Next: Type Inheritance Clause,  Prev: Metatype Type,  Up: Types
 
-4.11 Type Inheritance Clause
+4.12 Self Type
+==============
+
+The ‘Self’ type isn’t a specific type, but rather lets you conveniently
+refer to the current type without repeating or knowing that type’s name.
+
+   In a protocol declaration or a protocol member declaration, the
+‘Self’ type refers to the eventual type that conforms to the protocol.
+
+   In a structure, class, or enumeration declaration, the ‘Self’ type
+refers to the type introduced by the declaration.  Inside the
+declaration for a member of a type, the ‘Self’ type refers to that type.
+In the members of a class declaration, ‘Self’ can appear as the return
+type of a method and in the body of a method, but not in any other
+context.  For example, the code below shows an instance method ‘f’ whose
+return type is ‘Self’.
+
+  1. class Superclass {
+  2. func f() -> Self { return self }
+  3. }
+  4. let x = Superclass()
+  5. print(type(of: x.f()))
+  6. // Prints "Superclass"
+  7. 
+  8. class Subclass: Superclass { }
+  9. let y = Subclass()
+  10. print(type(of: y.f()))
+  11. // Prints "Subclass"
+  12. 
+  13. let z: Superclass = Subclass()
+  14. print(type(of: z.f()))
+  15. // Prints "Subclass"
+
+   The last part of the example above shows that ‘Self’ refers to the
+runtime type ‘Subclass’ of the value of ‘z’, not the compile-time type
+‘Superclass’ of the variable itself.
+
+   Inside a nested type declaration, the ‘Self’ type refers to the type
+introduced by the innermost type declaration.
+
+   The ‘Self’ type refers to the same type as the ‘type(of:)’
+(https://developer.apple.com/documentation/swift/2885064-type)
+[<https://developer.apple.com/documentation/swift/2885064-type>]
+function in the Swift standard library.  Writing ‘Self.someStaticMember’
+to access a member of the current type is the same as writing ‘type(of:
+self).someStaticMember’.
+
+   Grammar of a Self type
+
+   self-type → ‘Self’
+
+
+File: swift-reference.info,  Node: Type Inheritance Clause,  Next: Type Inference,  Prev: Self Type,  Up: Types
+
+4.13 Type Inheritance Clause
 ============================
 
 A _type inheritance clause_ is used to specify which class a named type
@@ -1852,7 +1948,7 @@ a type inheritance clause to specify the type of its raw values, see
 
 File: swift-reference.info,  Node: Type Inference,  Prev: Type Inheritance Clause,  Up: Types
 
-4.12 Type Inference
+4.14 Type Inference
 ===================
 
 Swift uses _type inference_ extensively, allowing you to omit the type
@@ -10235,171 +10331,173 @@ Index
 
 Tag Table:
 Node: Top235
-Node: Language Reference5287
-Node: About the Language Reference5800
-Node: How to Read the Grammar6654
-Node: Lexical Structure8496
-Node: Whitespace and Comments9381
-Node: Identifiers11459
-Node: Keywords and Punctuation14339
-Node: Literals17358
-Node: Integer Literals19892
-Node: Floating-Point Literals22661
-Node: String Literals25640
-Node: Operators33190
-Node: Types39195
-Node: Type Annotation41656
-Node: Type Identifier42496
-Node: Tuple Type43976
-Node: Function Type45489
-Node: Restrictions for Nonescaping Closures49933
-Node: Array Type52572
-Node: Dictionary Type54295
-Node: Optional Type55636
-Node: Implicitly Unwrapped Optional Type57392
-Node: Protocol Composition Type59766
-Node: Metatype Type61852
-Node: Type Inheritance Clause64495
-Node: Type Inference66329
-Node: Expressions68073
-Node: Prefix Expressions69114
-Node: Try Operator70328
-Node: Binary Expressions72290
-Node: Assignment Operator73922
-Node: Type-Casting Operators75493
-Node: Primary Expressions78369
-Node: Literal Expression79694
-Node: Self Expression84278
-Node: Superclass Expression85934
-Node: Closure Expression87114
-Node: Implicit Member Expression94463
-Node: Parenthesized Expression95101
-Node: Tuple Expression95717
-Node: Wildcard Expression96958
-Node: Key-Path Expression97451
-Node: Selector Expression104387
-Node: Key-Path String Expression107012
-Node: Postfix Expressions109751
-Node: Function Call Expression111220
-Node: Initializer Expression113357
-Node: Explicit Member Expression114969
-Node: Postfix Self Expression117726
-Node: Subscript Expression118615
-Node: Forced-Value Expression119478
-Node: Optional-Chaining Expression120502
-Node: Statements123301
-Node: Loop Statements125270
-Node: For-In Statement126144
-Node: While Statement127564
-Node: Repeat-While Statement129073
-Node: Branch Statements130360
-Node: If Statement131234
-Node: Guard Statement133073
-Node: Labeled Statement143434
-Node: Control Transfer Statements144782
-Node: Break Statement145768
-Node: Continue Statement147144
-Node: Fallthrough Statement148692
-Node: Return Statement149891
-Node: Throw Statement151431
-Node: Defer Statement152530
-Node: Do Statement154033
-Node: Compiler Control Statements155987
-Node: Conditional Compilation Block156759
-Node: Line Control Statement163700
-Node: Compile-Time Diagnostic Statement165196
-Node: Availability Condition166311
-Node: Declarations168477
-Node: Top-Level Code170564
-Node: Code Blocks171231
-Node: Import Declaration171797
-Node: Constant Declaration172958
-Node: Variable Declaration175937
-Node: Stored Variables and Stored Variable Properties177165
-Node: Computed Variables and Computed Properties178560
-Node: Stored Variable Observers and Property Observers180528
-Node: Type Variable Properties183889
-Node: Type Alias Declaration186523
-Node: Function Declaration189269
-Node: Parameter Names191024
-Node: In-Out Parameters192554
-Node: Special Kinds of Parameters195230
-Node: Special Kinds of Methods196734
-Node: Throwing Functions and Methods197824
-Node: Rethrowing Functions and Methods199222
-Node: Functions that Never Return201014
-Node: Enumeration Declaration203180
-Node: Enumerations with Cases of Any Type205038
-Node: Enumerations with Cases of a Raw-Value Type207926
-Node: Accessing Enumeration Cases211390
-Node: Structure Declaration214142
-Node: Class Declaration217110
-Node: Protocol Declaration221448
-Node: Protocol Property Declaration226655
-Node: Protocol Method Declaration228362
-Node: Protocol Initializer Declaration229968
-Node: Protocol Subscript Declaration231440
-Node: Protocol Associated Type Declaration232671
-Node: Initializer Declaration234306
-Node: Failable Initializers237990
-Node: Deinitializer Declaration241469
-Node: Extension Declaration242686
-Node: Conditional Conformance245171
-Node: Protocol Conformance Must Not Be Redundant248490
-Node: Subscript Declaration252952
-Node: Operator Declaration256486
-Node: Precedence Group Declaration259884
-Node: Declaration Modifiers264587
-Node: Access Control Levels270298
-Node: Attributes274009
-Node: Declaration Attributes275082
-Node: available275681
-Node: discardableResult281208
-Node: dynamicCallable281560
-Node: dynamicMemberLookup285480
-Node: GKInspectable288019
-Node: inlinable288350
-Node: nonobjc289437
-Node: NSApplicationMain290676
-Node: NSCopying291266
-Node: NSManaged291865
-Node: objc292425
-Node: objcMembers296073
-Node: requires_stored_property_inits296948
-Node: testable297395
-Node: UIApplicationMain298145
-Node: usableFromInline299048
-Node: warn_unqualified_access300238
-Node: Declaration Attributes Used by Interface Builder301466
-Node: Type Attributes302499
-Node: autoclosure302773
-Node: convention303373
-Node: escaping304822
-Node: Switch Case Attributes305416
-Node: unknown305655
-Node: Patterns306708
-Node: Wildcard Pattern308949
-Node: Identifier Pattern309550
-Node: Value-Binding Pattern310363
-Node: Tuple Pattern311603
-Node: Enumeration Case Pattern313326
-Node: Optional Pattern314266
-Node: Type-Casting Patterns315616
-Node: Expression Pattern317053
-Node: Generic Parameters and Arguments318776
-Node: Generic Parameter Clause319576
-Node: Generic Where Clauses321639
-Node: Generic Argument Clause324755
-Node: Summary of the Grammar327166
-Node: Lexical Structure 1327629
-Node: Types 1336853
-Node: Expressions 1339585
-Node: Statements 1348228
-Node: Declarations 1356180
-Node: Attributes 1370587
-Node: Patterns 1371414
-Node: Generic Parameters and Arguments 1372950
-Node: Index374182
+Node: Language Reference5317
+Node: About the Language Reference5830
+Node: How to Read the Grammar6684
+Node: Lexical Structure8526
+Node: Whitespace and Comments9411
+Node: Identifiers11489
+Node: Keywords and Punctuation14369
+Node: Literals17388
+Node: Integer Literals19922
+Node: Floating-Point Literals22691
+Node: String Literals25670
+Node: Operators33220
+Node: Types39225
+Node: Type Annotation41716
+Node: Type Identifier42556
+Node: Tuple Type44036
+Node: Function Type45549
+Node: Restrictions for Nonescaping Closures49993
+Node: Array Type52632
+Node: Dictionary Type54355
+Node: Optional Type55696
+Node: Implicitly Unwrapped Optional Type57452
+Node: Protocol Composition Type59826
+Node: Opaque Type61910
+Node: Metatype Type63447
+Node: Self Type66062
+Node: Type Inheritance Clause68089
+Node: Type Inference69919
+Node: Expressions71663
+Node: Prefix Expressions72704
+Node: Try Operator73918
+Node: Binary Expressions75880
+Node: Assignment Operator77512
+Node: Type-Casting Operators79083
+Node: Primary Expressions81959
+Node: Literal Expression83284
+Node: Self Expression87868
+Node: Superclass Expression89524
+Node: Closure Expression90704
+Node: Implicit Member Expression98053
+Node: Parenthesized Expression98691
+Node: Tuple Expression99307
+Node: Wildcard Expression100548
+Node: Key-Path Expression101041
+Node: Selector Expression107977
+Node: Key-Path String Expression110602
+Node: Postfix Expressions113341
+Node: Function Call Expression114810
+Node: Initializer Expression116947
+Node: Explicit Member Expression118559
+Node: Postfix Self Expression121316
+Node: Subscript Expression122205
+Node: Forced-Value Expression123068
+Node: Optional-Chaining Expression124092
+Node: Statements126891
+Node: Loop Statements128860
+Node: For-In Statement129734
+Node: While Statement131154
+Node: Repeat-While Statement132663
+Node: Branch Statements133950
+Node: If Statement134824
+Node: Guard Statement136663
+Node: Labeled Statement147024
+Node: Control Transfer Statements148372
+Node: Break Statement149358
+Node: Continue Statement150734
+Node: Fallthrough Statement152282
+Node: Return Statement153481
+Node: Throw Statement155021
+Node: Defer Statement156120
+Node: Do Statement157623
+Node: Compiler Control Statements159577
+Node: Conditional Compilation Block160349
+Node: Line Control Statement167290
+Node: Compile-Time Diagnostic Statement168786
+Node: Availability Condition169901
+Node: Declarations172067
+Node: Top-Level Code174154
+Node: Code Blocks174821
+Node: Import Declaration175387
+Node: Constant Declaration176548
+Node: Variable Declaration179527
+Node: Stored Variables and Stored Variable Properties180755
+Node: Computed Variables and Computed Properties182150
+Node: Stored Variable Observers and Property Observers184118
+Node: Type Variable Properties187479
+Node: Type Alias Declaration190113
+Node: Function Declaration192859
+Node: Parameter Names194614
+Node: In-Out Parameters196144
+Node: Special Kinds of Parameters198820
+Node: Special Kinds of Methods200324
+Node: Throwing Functions and Methods201414
+Node: Rethrowing Functions and Methods202812
+Node: Functions that Never Return204604
+Node: Enumeration Declaration206770
+Node: Enumerations with Cases of Any Type208628
+Node: Enumerations with Cases of a Raw-Value Type211516
+Node: Accessing Enumeration Cases214980
+Node: Structure Declaration217732
+Node: Class Declaration220700
+Node: Protocol Declaration225038
+Node: Protocol Property Declaration230245
+Node: Protocol Method Declaration231952
+Node: Protocol Initializer Declaration233558
+Node: Protocol Subscript Declaration235030
+Node: Protocol Associated Type Declaration236261
+Node: Initializer Declaration237896
+Node: Failable Initializers241580
+Node: Deinitializer Declaration245059
+Node: Extension Declaration246276
+Node: Conditional Conformance248761
+Node: Protocol Conformance Must Not Be Redundant252080
+Node: Subscript Declaration256542
+Node: Operator Declaration260076
+Node: Precedence Group Declaration263474
+Node: Declaration Modifiers268177
+Node: Access Control Levels273888
+Node: Attributes277599
+Node: Declaration Attributes278672
+Node: available279271
+Node: discardableResult284798
+Node: dynamicCallable285150
+Node: dynamicMemberLookup289070
+Node: GKInspectable291609
+Node: inlinable291940
+Node: nonobjc293027
+Node: NSApplicationMain294266
+Node: NSCopying294856
+Node: NSManaged295455
+Node: objc296015
+Node: objcMembers299663
+Node: requires_stored_property_inits300538
+Node: testable300985
+Node: UIApplicationMain301735
+Node: usableFromInline302638
+Node: warn_unqualified_access303828
+Node: Declaration Attributes Used by Interface Builder305056
+Node: Type Attributes306089
+Node: autoclosure306363
+Node: convention306963
+Node: escaping308412
+Node: Switch Case Attributes309006
+Node: unknown309245
+Node: Patterns310298
+Node: Wildcard Pattern312539
+Node: Identifier Pattern313140
+Node: Value-Binding Pattern313953
+Node: Tuple Pattern315193
+Node: Enumeration Case Pattern316916
+Node: Optional Pattern317856
+Node: Type-Casting Patterns319206
+Node: Expression Pattern320643
+Node: Generic Parameters and Arguments322366
+Node: Generic Parameter Clause323166
+Node: Generic Where Clauses325229
+Node: Generic Argument Clause328345
+Node: Summary of the Grammar330756
+Node: Lexical Structure 1331219
+Node: Types 1340443
+Node: Expressions 1343175
+Node: Statements 1351818
+Node: Declarations 1359770
+Node: Attributes 1374177
+Node: Patterns 1375004
+Node: Generic Parameters and Arguments 1376540
+Node: Index377772
 
 End Tag Table
 

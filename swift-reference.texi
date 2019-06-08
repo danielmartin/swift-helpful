@@ -73,7 +73,9 @@ Types
 * Optional Type::
 * Implicitly Unwrapped Optional Type::
 * Protocol Composition Type::
+* Opaque Type::
 * Metatype Type::
+* Self Type::
 * Type Inheritance Clause::
 * Type Inference::
 
@@ -1593,7 +1595,9 @@ type @samp{)}
 * Optional Type::
 * Implicitly Unwrapped Optional Type::
 * Protocol Composition Type::
+* Opaque Type::
 * Metatype Type::
+* Self Type::
 * Type Inheritance Clause::
 * Type Inference::
 @end menu
@@ -2224,6 +2228,45 @@ type-identifier
 @end multitable
 protocol-composition-type
 
+@node Opaque Type
+@section Opaque Type
+
+An @emph{opaque type} defines a type that conforms to a protocol or protocol
+composition, without specifying the underlying concrete type.
+
+Opaque types appear as the return type of a function or subscript, or
+the type of a property. Opaque types can't appear as part of a tuple
+type or a generic type, such as the element type of an array or the
+wrapped type of an optional.
+
+Opaque types have the following form:
+
+@enumerate
+@item
+some constraint
+@end enumerate
+
+The @emph{constraint} is a class type, protocol type, protocol composition
+type, or @samp{Any}. A value can be used as an instance of the opaque type
+only if it's an instance of a type that conforms to the listed protocol
+or protocol composition, or inherits from the listed class. Code that
+interacts with an opaque value can use the value only in ways that are
+part of the interface defined by the @emph{constraint}.
+
+Protocol declarations can't include opaque types. Classes can't use an
+opaque type as the return type of a nonfinal method.
+
+A function that uses an opaque type as its return type must return
+values that share a single underlying type. The return type can include
+types that are part of the function's generic type parameters. For
+example, a function @samp{someFunction<T>()} could return a value of type @samp{T}
+or @samp{Dictionary<String, T>}.
+
+Grammar of an opaque type
+
+opaque-type → @samp{some}
+type
+
 @node Metatype Type
 @section Metatype Type
 
@@ -2318,6 +2361,74 @@ Grammar of a metatype type
 metatype-type →
 type @samp{.} @samp{Type} |
 type @samp{.} @samp{Protocol}
+
+@node Self Type
+@section Self Type
+
+The @samp{Self} type isn't a specific type, but rather lets you conveniently
+refer to the current type without repeating or knowing that type's name.
+
+In a protocol declaration or a protocol member declaration, the @samp{Self}
+type refers to the eventual type that conforms to the protocol.
+
+In a structure, class, or enumeration declaration, the @samp{Self} type
+refers to the type introduced by the declaration. Inside the declaration
+for a member of a type, the @samp{Self} type refers to that type. In the
+members of a class declaration, @samp{Self} can appear as the return type of
+a method and in the body of a method, but not in any other context. For
+example, the code below shows an instance method @samp{f} whose return type
+is @samp{Self}.
+
+@enumerate
+@item
+class Superclass @{
+@item
+func f() -> Self @{ return self @}
+@item
+@}
+@item
+let x = Superclass()
+@item
+print(type(of: x.f()))
+@item
+// Prints "Superclass"
+@item
+
+@item
+class Subclass: Superclass @{ @}
+@item
+let y = Subclass()
+@item
+print(type(of: y.f()))
+@item
+// Prints "Subclass"
+@item
+
+@item
+let z: Superclass = Subclass()
+@item
+print(type(of: z.f()))
+@item
+// Prints "Subclass"
+@end enumerate
+
+The last part of the example above shows that @samp{Self} refers to the
+runtime type @samp{Subclass} of the value of @samp{z}, not the compile-time type
+@samp{Superclass} of the variable itself.
+
+Inside a nested type declaration, the @samp{Self} type refers to the type
+introduced by the innermost type declaration.
+
+The @samp{Self} type refers to the same type as the
+@uref{https://developer.apple.com/documentation/swift/2885064-type, @samp{type(of:)}}
+[@uref{https://developer.apple.com/documentation/swift/2885064-type}] function
+in the Swift standard library. Writing @samp{Self.someStaticMember} to access
+a member of the current type is the same as writing
+@samp{type(of: self).someStaticMember}.
+
+Grammar of a Self type
+
+self-type → @samp{Self}
 
 @node Type Inheritance Clause
 @section Type Inheritance Clause
