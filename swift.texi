@@ -7859,8 +7859,8 @@ before a parameter's type. An in-out parameter has a value that is
 passed @emph{in} to the function, is modified by the function, and is passed
 back @emph{out} of the function to replace the original value. For a detailed
 discussion of the behavior of in-out parameters and associated compiler
-optimizations, see @ref{In-Out Parameters, , In-Out
-Parameters}.
+optimizations, see @ref{In-Out Parameters,In-Out
+Parameters,,swift-reference,}.
 
 You can only pass a variable as the argument for an in-out parameter.
 You cannot pass a constant or a literal value as the argument, because
