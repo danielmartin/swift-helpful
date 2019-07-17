@@ -20605,6 +20605,8 @@ Index
 * open:                                  Access Levels.       (line  11)
 * override:                              Overriding.          (line  11)
 * postfix:                               Custom Operators.    (line  10)
+* precondition:                          Assertions and Preconditions.
+                                                              (line   6)
 * prefix:                                Custom Operators.    (line  10)
 * private:                               Access Control Syntax.
                                                               (line   6)

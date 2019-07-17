@@ -2286,6 +2286,8 @@ in [[Error Handling][Error Handling]].
 
 ** Assertions and Preconditions
 
+#+FINDEX: precondition
+
 /Assertions/ and /preconditions/ are checks that happen at runtime. You
 use them to make sure an essential condition is satisfied before
 executing any further code. If the Boolean condition in the assertion or

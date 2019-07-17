@@ -3129,6 +3129,8 @@ in @ref{Error Handling}.
 @node Assertions and Preconditions
 @section Assertions and Preconditions
 
+@findex precondition
+
 @emph{Assertions} and @emph{preconditions} are checks that happen at runtime. You
 use them to make sure an essential condition is satisfied before
 executing any further code. If the Boolean condition in the assertion or
