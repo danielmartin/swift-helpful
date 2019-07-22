@@ -8785,6 +8785,8 @@ print(instance.x)
 @node Autoclosures
 @section Autoclosures
 
+@findex @@autoclosure
+
 An @emph{autoclosure} is a closure that is automatically created to wrap an
 expression that's being passed as an argument to a function. It doesn't
 take any arguments, and when it's called, it returns the value of the

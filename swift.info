@@ -20534,6 +20534,7 @@ Index
                                                               (line  29)
 * #available:                            Checking API Availability.
                                                               (line   6)
+* @autoclosure:                          Autoclosures.        (line   6)
 * @escaping:                             Escaping Closures.   (line   6)
 * _:                                     Functions and Closures.
                                                               (line  20)
