@@ -96,6 +96,7 @@ single line:
   // Prints "Hello, world!"
 #+END_SRC
 
+
 If you have written code in C or Objective-C, this syntax looks familiar
 to you---in Swift, this line of code is a complete program. You don't
 need to import a separate library for functionality like input/output or
@@ -1005,8 +1006,6 @@ error.
       return "Job sent"
   }
 #+END_SRC
-
-#+FINDEX: try
 
 There are several ways to handle errors. One way is to use =do=-=catch=.
 Inside the =do= block, you mark code that can throw an error by writing
@@ -12631,6 +12630,8 @@ error using a =do=-=catch= statement, handle the error as an optional
 value, or assert that the error will not occur. Each approach is
 described in a section below.
 
+#+FINDEX: try
+
 When a function throws an error, it changes the flow of your program, so
 it's important that you can quickly identify places in your code that
 can throw errors. To identify these places in your code, write the =try=
@@ -12858,6 +12859,8 @@ then caught by the general =catch= clause.
 
 *** Converting Errors to Optional Values
 
+#+FINDEX: try?
+
 You use =try?= to handle an error by converting it to an optional value.
 If an error is thrown while evaluating the =try?= expression, the value
 of the expression is =nil=. For example, in the following code =x= and
@@ -12898,6 +12901,8 @@ approaches fail.
 #+END_SRC
 
 *** Disabling Error Propagation
+
+#+FINDEX: try!
 
 Sometimes you know a throwing function or method won't, in fact, throw
 an error at runtime. On those occasions, you can write =try!= before the

@@ -790,6 +790,7 @@ print("Hello, world!")
 // Prints "Hello, world!"
 @end example
 
+
 If you have written code in C or Objective-C, this syntax looks familiar
 to you---in Swift, this line of code is a complete program. You don't
 need to import a separate library for functionality like input/output or
@@ -1722,8 +1723,6 @@ func send(job: Int, toPrinter printerName: String) throws -> String @{
     return "Job sent"
 @}
 @end example
-
-@findex try
 
 There are several ways to handle errors. One way is to use @samp{do}-@samp{catch}.
 Inside the @samp{do} block, you mark code that can throw an error by writing
@@ -14241,6 +14240,8 @@ error using a @samp{do}-@samp{catch} statement, handle the error as an optional
 value, or assert that the error will not occur. Each approach is
 described in a section below.
 
+@findex try
+
 When a function throws an error, it changes the flow of your program, so
 it's important that you can quickly identify places in your code that
 can throw errors. To identify these places in your code, write the @samp{try}
@@ -14478,6 +14479,8 @@ then caught by the general @samp{catch} clause.
 @node Converting Errors to Optional Values
 @subsection Converting Errors to Optional Values
 
+@findex try?
+
 You use @samp{try?} to handle an error by converting it to an optional value.
 If an error is thrown while evaluating the @samp{try?} expression, the value
 of the expression is @samp{nil}. For example, in the following code @samp{x} and
@@ -14519,6 +14522,8 @@ func fetchData() -> Data? @{
 
 @node Disabling Error Propagation
 @subsection Disabling Error Propagation
+
+@findex try!
 
 Sometimes you know a throwing function or method won't, in fact, throw
 an error at runtime. On those occasions, you can write @samp{try!} before the

@@ -20632,7 +20632,11 @@ Index
                                                               (line  12)
 * switch:                                Switch.              (line   6)
 * throws:                                Error Handling 1.    (line  22)
-* try:                                   Error Handling.      (line  26)
+* try:                                   Handling Errors.     (line  17)
+* try!:                                  Disabling Error Propagation.
+                                                              (line   6)
+* try?:                                  Converting Errors to Optional Values.
+                                                              (line   6)
 * typealias:                             Type Aliases.        (line   6)
 * unowned:                               Unowned References.  (line   6)
 * var:                                   Constants and Variables.
