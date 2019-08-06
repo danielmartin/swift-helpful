@@ -14216,6 +14216,8 @@ enum VendingMachineError: Error @{
 @}
 @end example
 
+@findex throw
+
 Throwing an error lets you indicate that something unexpected happened
 and the normal flow of execution can't continue. You use a @samp{throw}
 statement to throw an error. For example, the following code throws an

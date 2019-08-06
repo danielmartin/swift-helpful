@@ -20631,6 +20631,8 @@ Index
 * super:                                 Accessing Superclass Methods Properties and Subscripts.
                                                               (line  12)
 * switch:                                Switch.              (line   6)
+* throw:                                 Representing and Throwing Errors.
+                                                              (line  22)
 * throws:                                Error Handling 1.    (line  22)
 * try:                                   Handling Errors.     (line  17)
 * try!:                                  Disabling Error Propagation.
