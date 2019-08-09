@@ -2,9 +2,9 @@
 
 ** Overview
    Emacs is described as "the extensible, customizable, self-documenting, real-time display editor". Wouldn't you like
-   the same self-documenting capabilities when you are writing Swift code in Emacs? ~swift-helpful~ is a minor mode that,
-   using information from ~swift-mode~, ~lsp-mode~ and ~swift-info~, is able to answer questions about anything you see in a
-   Swift program.
+   the same self-documenting capabilities when you are writing Swift code in Emacs? ~swift-helpful~ is a package that,
+   using information from ~swift-mode~, ~lsp-mode~ and ~swift-info~, is able to answer questions about anything you see
+   in a Swift program.
 
    While developer tools are typically identifier-centric in the sense that they only show documentation about API,
    ~swift-helpful~ also shows official Apple information about keywords, attributes, etc. It's the perfect companion for
