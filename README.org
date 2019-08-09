@@ -40,12 +40,12 @@ this time coming from the official Swift Reference manual:
 
 *** API documentation coming from Language Server Protocol
 
-~swift-helpful~ also shows documentation about API in the same way your favorite IDE does. It uses lsp-mode, if configured
-with my Swift-specific extension, sourcekit-lsp.
+~swift-helpful~ also shows documentation about API in the same way your favorite IDE does. It uses ~lsp-mode~, if
+configured with my specific extension for Swift, ~lsp-sourcekit~ (https://github.com/emacs-lsp/lsp-sourcekit).
 
-Let's say you want to know more about the ~isExecutable~ method you see in a SourceKit-LSP source file. If we invoke
-~swift-helpful~ on that symbol, we see information coming from Language Server Protocol, including the method type
-signature, its header documentation, and two convenient buttons to search for its definition or references in the
+Let's say you want to know more about the ~isExecutable~ method that is called from a ~SourceKit-LSP~ source file. If we
+invoke ~swift-helpful~ on that symbol, we see information coming from Language Server Protocol, including the method
+type signature, its header documentation, and two convenient buttons to search for its definition or references in the
 codebase.
 
 [[file:screenshots/isExecutableFile.png]]
