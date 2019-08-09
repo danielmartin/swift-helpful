@@ -1,0 +1,1 @@
+func contains<T>(_ other: T) -> Bool where T : StringProtocol

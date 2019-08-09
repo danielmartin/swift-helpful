@@ -1,0 +1,12 @@
+test-data/stdlib-mocks/ArrayType.swift:69:  @inlinable
+test-data/stdlib-mocks/ArrayType.swift:70:  public __consuming func filter(
+test-data/stdlib-mocks/ArrayType.swift:71:    _ isIncluded: (Element) throws -> Bool
+test-data/stdlib-mocks/ArrayType.swift:72:  ) rethrows -> [Element] {
+test-data/stdlib-mocks/Sequence.swift:638:  @inlinable
+test-data/stdlib-mocks/Sequence.swift:639:  public __consuming func filter(
+test-data/stdlib-mocks/Sequence.swift:640:    _ isIncluded: (Element) throws -> Bool
+test-data/stdlib-mocks/Sequence.swift:641:  ) rethrows -> [Element] {
+test-data/stdlib-mocks/ExistentialCollection.swift.gyb:788:  @inlinable
+test-data/stdlib-mocks/ExistentialCollection.swift.gyb:789:  public __consuming func filter(
+test-data/stdlib-mocks/ExistentialCollection.swift.gyb:790:    _ isIncluded: (Element) throws -> Bool
+test-data/stdlib-mocks/ExistentialCollection.swift.gyb:791:  ) rethrows -> [Element] {

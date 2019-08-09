@@ -1,0 +1,1 @@
+@inlinable __consuming func filter(_ isIncluded: (String) throws -> Bool) rethrows -> [String]

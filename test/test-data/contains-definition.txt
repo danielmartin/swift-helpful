@@ -1,0 +1,9 @@
+From test-data/stdlib-mocks/NSStringAPI.swift
+  public func contains<T : StringProtocol>(_ other: T) -> Bool {
+    let r = self.range(of: other) != nil
+    if #available(macOS 10.10, iOS 8.0, *) {
+      assert(r == _ns.contains(other._ephemeralString))
+    }
+    return r
+  }
+
