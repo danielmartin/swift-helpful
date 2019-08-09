@@ -535,9 +535,9 @@ that could be found about the Swift symbol SYM.  LSP-SNIPPET
 contains information from Language Server Protocol about that
 symbol."
   (let ((inhibit-read-only t)
-        (is-standard-library?
+        (standard-library-p
          (swift-helpful--standard-library-identifier-p source-buffer)))
-    (if is-standard-library?
+    (if standard-library-p
         (message "It is standard library")
       (message "It is NOT standard library"))
     (erase-buffer)
@@ -551,7 +551,7 @@ symbol."
     (when (swift-helpful--in-manual-p sym)
       (swift-helpful--insert-manuals sym))
     ;; Standard library source code.
-    (when (and is-standard-library? (swift-helpful--lsp-snippet-p lsp-snippet))
+    (when (and standard-library-p (swift-helpful--lsp-snippet-p lsp-snippet))
       (swift-helpful--insert-library-source-code lsp-snippet))
     ;; Position the point at the beginning of the buffer when
     ;; everything is in place.
