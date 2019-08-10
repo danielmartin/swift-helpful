@@ -61,6 +61,11 @@
   :type 'string
   :group 'swift-helpful)
 
+(defcustom swift-helpful-debug-log nil
+  "Whether `swift-helpful' will debug information to the Messages buffer during execution."
+  :type 'boolean
+  :group 'swift-helpful)
+
 (defface swift-helpful-section-title
   '((t (:weight bold)))
   "Face used for section titles in *swift-helpful* buffers.")
@@ -226,7 +231,7 @@ If narrowing is in effect, widen if POS isn't in the narrowed area."
 (defun swift-helpful--generate-doc-snippet-using-overlay (overlay)
   "Generate a documentation snippet around an OVERLAY.
 OVERLAY represents a highlighted symbol reference in the Swift manuals."
-  (message "We have a valid overlay!")
+  (swift-helpful--log "The documentation snippet is generated around a text match in the Info node.")
   (setq overlay-found t)
   (let* ((overlay-start (overlay-start overlay))
          (overlay-end (overlay-end overlay))
@@ -257,7 +262,7 @@ OVERLAY represents a highlighted symbol reference in the Swift manuals."
 The number of lines in the documentation snippet is controlled by
 the `swift-helpful-doc-snippet-number-of-lines-context'
 variable."
-  (message "We DON'T have a valid overlay!")
+  (swift-helpful--log "The documentation snippet is NOT generated around a text match in the Info node.")
   (setq overlay-found nil)
   (let* ((beg-line (line-number-at-pos
                     (swift-helpful--point-at-beginning-of-doc-snippet)))
@@ -424,7 +429,7 @@ hooks.")
 
 (defun swift-helpful--stdlib-grep (signature)
   "Grep for a Swift standard library SIGNATURE."
-  (message signature)
+  (swift-helpful--log signature)
   (with-temp-buffer
     (let* ((stdlib-search-query (swift-helpful--prepare-type-signature-for-grep
                                  signature))
@@ -434,9 +439,9 @@ hooks.")
                                  search-query-new-lines
                                  (expand-file-name swift-helpful-stdlib-path)))
            (search-results (shell-command-to-string grep-command-format)))
-      (message (format "Search query: %s" stdlib-search-query))
-      (message (format "Grep command: %s" grep-command-format))
-      (message (format "Query results : %s" search-results))
+      (swift-helpful--log "Search query: %s" stdlib-search-query)
+      (swift-helpful--log "Grep command: %s" grep-command-format)
+      (swift-helpful--log "Query results : %s" search-results)
       (insert search-results))
     (grep-mode)
     (setq current-file nil)
@@ -457,7 +462,7 @@ hooks.")
                (line (compilation--loc->line loc)))
           ;; Assume only one result per file.
           (unless (eq current-file file)
-            (message (format "Found in file %s" file))
+            (swift-helpful--log "Ripgrep result from file %s" file)
             (setq current-file file)
             (swift-helpful--insert-source-code-in-buffer
              file line source-code-buf))))
@@ -538,8 +543,8 @@ symbol."
         (standard-library-p
          (swift-helpful--standard-library-identifier-p source-buffer)))
     (if standard-library-p
-        (message "It is standard library")
-      (message "It is NOT standard library"))
+        (swift-helpful--log "Symbol %s probably comes from the Swift standard library" sym)
+      (swift-helpful--log "Symbol %s probably does not come from the Swift standard library" sym))
     (erase-buffer)
     (remove-overlays)
     ;; Header.
@@ -563,6 +568,11 @@ symbol."
     (forward-symbol -1)
     (swift-mode:token:text (swift-mode:forward-token-simple))))
 
+(defun swift-helpful--log (msg &rest args)
+  "Log MSG with ARGS to the Messages buffer if `swift-helpful-debug-log' is t."
+  (when swift-helpful-debug-log
+    (message msg args)))
+
 ;;;###autoload
 (defun swift-helpful ()
   "Open a panel with information about a Swift token at point.
@@ -575,7 +585,7 @@ accessible)."
          (source-buffer (current-buffer))
          (lsp-snippet
           (swift-helpful--generate-lsp-snippet source-buffer)))
-    (message sym)
+    (swift-helpful--log "Symbol under point %s" sym)
     (unless sym
       (user-error "There isn't a Swift symbol under point"))
     (unless (or (swift-helpful--lsp-snippet-p lsp-snippet)
