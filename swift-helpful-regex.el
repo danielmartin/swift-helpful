@@ -45,7 +45,7 @@
                (save-match-data
                  (swift-helpful--generic-replacement match)))
              signature)))
-    (if (not (string-empty-p swift-helpful--where-clause-match))
+    (if (not (string= "" swift-helpful--where-clause-match))
         (s-trim
          (replace-regexp-in-string
           "<\\([^>]*\\)>"
