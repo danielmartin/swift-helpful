@@ -590,7 +590,7 @@ accessible)."
       (user-error "There isn't a Swift symbol under point"))
     (unless (or (swift-helpful--lsp-snippet-p lsp-snippet)
                 (swift-helpful--in-manual-p sym))
-      (user-error "No information about the symbol at point"))
+      (user-error "%s: Not documented as a symbol" sym))
     (funcall swift-helpful-switch-buffer-function (swift-helpful--buffer sym))
     (swift-helpful--update sym source-buffer lsp-snippet)))
 
