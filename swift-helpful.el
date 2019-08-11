@@ -171,8 +171,7 @@
 
 (defun swift-helpful--buffer (sym)
   "Return a buffer *swift-helpful* to display information about SYM."
-  (let* ((current-buffer (current-buffer))
-         (buf-name
+  (let* ((buf-name
           (format "*swift-helpful %s*"
                   sym))
          (buf (get-buffer buf-name)))
