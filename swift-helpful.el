@@ -582,6 +582,13 @@ symbol."
     (message msg args)))
 
 ;;;###autoload
+(info-lookup-maybe-add-help
+ :mode 'swift-mode
+ :regexp "[#@_a-zA-Z][_a-zA-Z0-9\\?!]*"
+ :doc-spec '(("(swift)Index" nil "['`‘]" "['’]")
+             ("(swift-reference)Index" nil "['`‘]" "['’]")))
+
+;;;###autoload
 (defun swift-helpful ()
   "Open a panel with information about a Swift token at point.
 Information comes from different configurable sources: Language

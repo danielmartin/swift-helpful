@@ -18,9 +18,3 @@
 (require 'info-look)
 
 (add-to-list 'Info-directory-list (format "%s/swift-info" swift-helpful-default-directory))
-
-(info-lookup-maybe-add-help
- :mode 'swift-mode
- :regexp "[#@_a-zA-Z][_a-zA-Z0-9\\?!]*"
- :doc-spec '(("(swift)Index" nil "['`‘]" "['’]")
-             ("(swift-reference)Index" nil "['`‘]" "['’]")))
