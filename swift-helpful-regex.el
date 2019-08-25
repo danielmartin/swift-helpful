@@ -24,7 +24,7 @@
 (require 'dash)
 
 (defun swift-helpful--generic-replacement (where-str)
-  ""
+  "Convert `where' generic syntax in WHERE-STR to a format more appropriate for searching."
   (s-join ", "
           (-remove-first
            (lambda (str)
@@ -57,7 +57,7 @@
       (s-trim str))))
 
 (defun swift-helpful--prepend-public-keywords (signature)
-  "Prepend Swift keywords like `public', `func', `var', etc. that can appear in the actual standard library type signatures but may not appear in LSP type information."
+  "Prepend Swift keywords like `public', `func', `var' in SIGNATURE."
   (let ((case-fold-search nil))
     (replace-regexp-in-string
      (format "%s%s\\)"
@@ -73,7 +73,6 @@
          "\\[\\([a-z]\\{2,\\}\\)\\]"
          signature)
       (let ((type (match-string 1 signature)))
-        (message type)
         (replace-regexp-in-string
          type
          "Element"
@@ -119,4 +118,4 @@ lines in the stdlib code)."
 
 (provide 'swift-helpful-regex)
 
-;; swift-helpful-regex.el ends here
+;;; swift-helpful-regex.el ends here
