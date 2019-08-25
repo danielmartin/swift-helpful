@@ -461,7 +461,7 @@ hooks.")
                                             (or compilation-current-error
                                                 compilation-messages-start
                                                 (point-min)))))
-          (add-to-list 'messages msg)))
+          (push msg messages)))
       ;; Sort the grep results by filename.
       (sort messages #'swift-helpful--sort-stdlib-grep-results)
       (dolist (msg messages)
