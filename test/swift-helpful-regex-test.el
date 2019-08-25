@@ -18,17 +18,17 @@
 (require 'ert)
 (require 'swift-helpful-regex)
 
-(ert-deftest remove-non-interesting-syntax ()
+(ert-deftest swift-helpful-regex--remove-non-interesting-syntax ()
   (should (equal (swift-helpful--remove-non-interesting-syntax "@inlinable public var first: Element? { get }")
                  "@inlinable public var first: Element?"))
   (should (equal (swift-helpful--remove-non-interesting-syntax "func decode(_ type: String.Type, forKey key: KeyedDecodingContainer<K>.Key) throws -> String")
                  "func decode(_ type: String.Type, forKey key: Key) throws -> String")))
 
-(ert-deftest adapt-generics-test ()
+(ert-deftest swift-helpful-regex--adapt-generics-test ()
   (should (equal (swift-helpful--adapt-for-generics "public func contains<T>(_ other: T) -> Bool where T : StringProtocol")
                         "public func contains<T : StringProtocol>(_ other: T) -> Bool")))
 
-(ert-deftest prepare-signature-to-grep-test ()
+(ert-deftest swift-helpful-regex--prepare-signature-to-grep-test ()
   (should (equal (swift-helpful--prepare-type-signature-for-grep
                   "func contains<T>(_ other: T) -> Bool where T : StringProtocol")
                  "public func contains<T : StringProtocol>(_ other: T) -> Bool"))
@@ -44,7 +44,3 @@
   (should (equal (swift-helpful--prepare-type-signature-for-grep
                   "@inlinable mutating func append<S>(contentsOf newElements: __owned S) where Element == S.Element, S : Sequence")
                  "@inlinable public mutating func append<S : Sequence>(contentsOf newElements: __owned S) where Element == S.Element")))
-
-(provide 'swift-helpful-regex-test)
-
-;; swift-helpful-regex-test ends here
