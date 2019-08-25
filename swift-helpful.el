@@ -6,7 +6,7 @@
 ;; URL: https://github.com/danielmartin/swift-helpful
 ;; Keywords: help, swift
 ;; Version: 0.1
-;; Package-Requires: ((emacs "25.1") (dash "2.12.0") (lsp-mode "2.12.0"))
+;; Package-Requires: ((emacs "25.1") (dash "2.12.0") (lsp-mode "6.0") (swift-mode "8.0.0"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
