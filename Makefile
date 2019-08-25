@@ -13,6 +13,9 @@ test:
 		-l test/swift-helpful-info-loader.el \
 		-f ert-run-tests-batch-and-exit
 
+test-ert-runner:
+	$(CASK) exec ert-runner
+
 checkdoc:
 	$(EMACS) -batch -l targets/checkdoc.el
 
