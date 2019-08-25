@@ -19,75 +19,72 @@
 (require 'swift-helpful)
 
 ;; Doc snippet generation tests
-(ert-deftest generate-doc-snippet-blank-keyword-test ()
-  (should-error (swift-helpful--generate-doc-snippet "")))
+(ert-deftest swift-helpful--generate-doc-snippet-blank-keyword-test ()
+  (cl-letf (((symbol-function #'display-color-p) #'swift-helpful-display-color-p))
+    (should-error (swift-helpful--generate-doc-snippet ""))))
 
-(ert-deftest generate-doc-snippet-unknown-keyword-test ()
-  (should-error (swift-helpful--generate-doc-snippet "abc")))
+(ert-deftest swift-helpful--generate-doc-snippet-unknown-keyword-test ()
+  (cl-letf (((symbol-function #'display-color-p) #'swift-helpful-display-color-p))
+    (should-error (swift-helpful--generate-doc-snippet "abc"))))
 
-(ert-deftest generate-doc-snippet-test ()
-  (should (equal (swift-helpful--generate-doc-snippet "func")
+(ert-deftest swift-helpful--generate-doc-snippet-test ()
+  (cl-letf (((symbol-function #'display-color-p) #'swift-helpful-display-color-p))
+    (should (equal (swift-helpful--generate-doc-snippet "func")
                  "
    All of this information is rolled up into the function’s
 _definition_, which is prefixed with the ‘func’ keyword.  You indicate
 the function’s return type with the _return arrow_ ‘->’ (a hyphen
 followed by a right angle bracket), which is followed by the name of the
- [...]"))
-  (should (equal (swift-helpful--generate-doc-snippet "init")
+ [...]")))
+  (cl-letf (((symbol-function #'display-color-p) #'swift-helpful-display-color-p))
+    (should (equal (swift-helpful--generate-doc-snippet "init")
                  "_Initializers_ are called to create a new instance of a particular type.
 In its simplest form, an initializer is like an instance method with no
 parameters, written using the ‘init’ keyword:
 
      init() {
- [...]"))
-  (should (equal (swift-helpful--generate-doc-snippet "@autoclosure")
+ [...]")))
+  (cl-letf (((symbol-function #'display-color-p) #'swift-helpful-display-color-p))
+    (should (equal (swift-helpful--generate-doc-snippet "@autoclosure")
                  "‘serve(customer:)’ below performs the same operation but, instead of
 taking an explicit closure, it takes an autoclosure by marking its
 parameter’s type with the ‘@autoclosure’ attribute.  Now you can call
 the function as if it took a ‘String’ argument instead of a closure.
 The argument is automatically converted to a closure, because the
- [...]"))
-  (should (equal (swift-helpful--generate-doc-snippet "@dynamicCallable")
+ [...]")))
+  (cl-letf (((symbol-function #'display-color-p) #'swift-helpful-display-color-p))
+    (should (equal (swift-helpful--generate-doc-snippet "@dynamicCallable")
                  "
 8.1.3 dynamicCallable
 ---------------------
 
 Apply this attribute to a class, structure, enumeration, or protocol to
 treat instances of the type as callable functions.  The type must
- [...]"))
-  (should (equal (swift-helpful--generate-doc-snippet "if")
+ [...]")))
+  (cl-letf (((symbol-function #'display-color-p) #'swift-helpful-display-color-p))
+    (should (equal (swift-helpful--generate-doc-snippet "if")
                  "---------
 
 In its simplest form, the ‘if’ statement has a single ‘if’ condition.
 It executes a set of statements only if that condition is ‘true’.
 
- [...]")))
-
-(ert-deftest generate-doc-snippet-num-lines-context-test ()
-  (let ((swift-helpful-doc-snippet-number-of-lines-context 2))
-    (should (equal (swift-helpful--generate-doc-snippet "if")
-                   "
-In its simplest form, the ‘if’ statement has a single ‘if’ condition.
  [...]"))))
 
-(defun swift-helpful-test-contents (file)
-  "Return FILE contents as string."
-  (with-temp-buffer
-    (insert-file-contents file)
-    (buffer-string)))
+(ert-deftest swift-helpful--generate-doc-snippet-num-lines-context-test ()
+  (let ((swift-helpful-doc-snippet-number-of-lines-context 2))
+    (cl-letf (((symbol-function #'display-color-p) #'swift-helpful-display-color-p))
+      (should (equal (swift-helpful--generate-doc-snippet "if")
+                   "
+In its simplest form, the ‘if’ statement has a single ‘if’ condition.
+ [...]")))))
 
-(defun swift-helpful-shell-command-to-string (command)
-  "Mock `shell-command-to-string' to not access the system shell."
-  (cond
-   ((string-equal command (swift-helpful-test-contents "test-data/filter-rg-command.txt"))
-    (swift-helpful-test-contents "test-data/filter-rg-results.txt"))
-   ((string-equal command (swift-helpful-test-contents "test-data/contains-rg-command.txt"))
-    (swift-helpful-test-contents "test-data/contains-rg-results.txt"))
-   (t (error "Couldn't mock shell command %s" command))))
-
-(ert-deftest standard-library-grep ()
-  (cl-letf (((symbol-function 'shell-command-to-string) #'swift-helpful-shell-command-to-string))
-    (should (equal (swift-helpful--stdlib-grep (swift-helpful-test-contents "test-data/filter-type-signature.txt"))
-                   (swift-helpful-test-contents "test-data/filter-definition.txt")))
-    (should (equal (swift-helpful--stdlib-grep (swift-helpful-test-contents "test-data/contains-type-signature.txt"))
-                   (swift-helpful-test-contents "test-data/contains-definition.txt")))))
+(ert-deftest swift-helpful--standard-library-grep ()
+  (let ((swift-helpful-stdlib-path "/Users/fixture/swift-source/swift/stdlib/public/")
+        (default-directory swift-helpful-default-directory))
+    (cl-letf (((symbol-function #'shell-command-to-string) #'swift-helpful-shell-command-to-string))
+      (should (equal (swift-helpful--stdlib-grep (swift-helpful-test-contents
+                                                  "filter-type-signature.txt"))
+                     (swift-helpful-test-contents "filter-definition.txt")))
+      (should (equal (swift-helpful--stdlib-grep (swift-helpful-test-contents
+                                                  "contains-type-signature.txt"))
+                     (swift-helpful-test-contents "contains-definition.txt"))))))

@@ -1,4 +1,4 @@
-From test-data/stdlib-mocks/ExistentialCollection.swift.gyb
+From test/test-data/stdlib-mocks/ExistentialCollection.swift.gyb
   @inlinable
   public __consuming func filter(
     _ isIncluded: (Element) throws -> Bool
@@ -6,7 +6,7 @@ From test-data/stdlib-mocks/ExistentialCollection.swift.gyb
     return try _box._filter(isIncluded)
   }
 
-From test-data/stdlib-mocks/Sequence.swift
+From test/test-data/stdlib-mocks/Sequence.swift
   @inlinable
   public __consuming func filter(
     _ isIncluded: (Element) throws -> Bool

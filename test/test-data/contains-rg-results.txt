@@ -1,1 +1,1 @@
-test-data/stdlib-mocks/NSStringAPI.swift:1675:  public func contains<T : StringProtocol>(_ other: T) -> Bool {
+test/test-data/stdlib-mocks/NSStringAPI.swift:1675:  public func contains<T : StringProtocol>(_ other: T) -> Bool {

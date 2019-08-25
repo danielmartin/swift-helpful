@@ -1,0 +1,1 @@
+-L . -l test/test-helper.el test/swift-helpful-info-loader.el
