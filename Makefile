@@ -5,6 +5,10 @@ RM ?= rm -f
 LOADPATH = -L .
 EMACSBATCH = $(CASK) exec $(EMACS) -q -batch $(LOADPATH)
 
+compile:
+	$(EMACSBATCH) \
+		-f batch-byte-compile swift-helpful.el swift-helpful-regex.el
+
 test:
 	$(EMACSBATCH) \
 		-l test/test-helper.el \
