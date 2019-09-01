@@ -444,9 +444,6 @@ hooks.")
          (filey (caar (compilation--loc->file-struct locy))))
     (string< filex filey)))
 
-(defvar swift-helpful--current-file nil
-  "Current file result after a ripgrep search.")
-
 (defun swift-helpful--stdlib-grep (signature)
   "Grep for a Swift standard library SIGNATURE."
   (swift-helpful--log signature)
@@ -458,38 +455,39 @@ hooks.")
            (grep-command-format (swift-helpful--rg-format-command
                                  search-query-new-lines
                                  (expand-file-name swift-helpful-stdlib-path)))
-           (search-results (shell-command-to-string grep-command-format)))
+           (search-results (shell-command-to-string grep-command-format))
+           (current-file))
       (swift-helpful--log "Search query: %s" stdlib-search-query)
       (swift-helpful--log "Grep command: %s" grep-command-format)
       (swift-helpful--log "Query results : %s" search-results)
-      (insert search-results))
-    (grep-mode)
-    (setq swift-helpful--current-file nil)
-    (let ((source-code-buf (get-buffer-create "*stdlib-source-code*"))
-          (messages))
-      (dotimes (i (count-lines (point-min) (point-max)))
-        (goto-char (point-min))
-        (let* ((msg (compilation-next-error i nil
-                                            (or compilation-current-error
-                                                compilation-messages-start
-                                                (point-min)))))
-          (push msg messages)))
-      ;; Sort the grep results by filename.
-      (sort messages #'swift-helpful--sort-stdlib-grep-results)
-      (dolist (msg messages)
-        (let* ((loc (compilation--message->loc msg))
-               (file (caar (compilation--loc->file-struct loc)))
-               (line (compilation--loc->line loc)))
-          ;; Assume only one result per file.
-          (unless (eq swift-helpful--current-file file)
-            (swift-helpful--log "Ripgrep result from file %s" file)
-            (setq swift-helpful--current-file file)
-            (swift-helpful--insert-source-code-in-buffer
-             file line source-code-buf))))
-      (with-current-buffer source-code-buf
-        (unwind-protect
-            (buffer-string)
-          (kill-buffer source-code-buf))))))
+      (insert search-results)
+      (grep-mode)
+      (setq current-file nil)
+      (let ((source-code-buf (get-buffer-create "*stdlib-source-code*"))
+            (messages))
+        (dotimes (i (count-lines (point-min) (point-max)))
+          (goto-char (point-min))
+          (let* ((msg (compilation-next-error i nil
+                                              (or compilation-current-error
+                                                  compilation-messages-start
+                                                  (point-min)))))
+            (push msg messages)))
+        ;; Sort the grep results by filename.
+        (sort messages #'swift-helpful--sort-stdlib-grep-results)
+        (dolist (msg messages)
+          (let* ((loc (compilation--message->loc msg))
+                 (file (caar (compilation--loc->file-struct loc)))
+                 (line (compilation--loc->line loc)))
+            ;; Assume only one result per file.
+            (unless (eq current-file file)
+              (swift-helpful--log "Ripgrep result from file %s" file)
+              (setq current-file file)
+              (swift-helpful--insert-source-code-in-buffer
+               file line source-code-buf))))
+        (with-current-buffer source-code-buf
+          (unwind-protect
+              (buffer-string)
+            (kill-buffer source-code-buf)))))))
 
 (defun swift-helpful--lsp-snippet-p (lsp-snippet)
   "Return if LSP-SNIPPET is a non-empty LSP snippet."
