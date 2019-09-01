@@ -594,11 +594,15 @@ symbol."
     (message msg args)))
 
 ;;;###autoload
-(info-lookup-maybe-add-help
- :mode 'swift-mode
- :regexp "[#@_a-zA-Z][_a-zA-Z0-9\\?!]*"
- :doc-spec '(("(swift)Index" nil "['`‘]" "['’]")
-             ("(swift-reference)Index" nil "['`‘]" "['’]")))
+(defun swift-helpful-configure-manuals ()
+  "Configure `info-look' so that Swift reference indices can be queried."
+  (interactive)
+  (info-lookup-maybe-add-help
+   :mode 'swift-mode
+   :regexp "[#@_a-zA-Z][_a-zA-Z0-9\\?!]*"
+   :doc-spec '(("(swift)Index" nil "['`‘]" "['’]")
+               ("(swift-reference)Index" nil "['`‘]" "['’]")))
+  (message "Swift manuals configured successfully"))
 
 ;;;###autoload
 (defun swift-helpful ()

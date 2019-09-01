@@ -16,5 +16,8 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 (require 'info-look)
+(require 'swift-helpful)
 
 (add-to-list 'Info-directory-list (format "%s/swift-info" swift-helpful-default-directory))
+
+(swift-helpful-configure-manuals)
