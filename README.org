@@ -12,11 +12,25 @@
 
 ** Install and Configuration
 
-   Simply download ~swift-helpful~ and load it when you deem appropriate:
+*** Quelpa
+
+You can install ~swift-helpful~ via Quelpa (https://framagit.org/steckerhalter/quelpa):
 
 #+BEGIN_SRC emacs-lisp
-   (require 'swift-helpful)
+  (quelpa '(swift-helpful :repo "danielmartin/swift-helpful"
+                          :fetcher github
+                          :files ("*.el" "swift-info/*.info")))
 #+END_SRC
+
+*** MELPA
+
+Addition of this package to MELPA is planned.
+
+*** Usage
+
+Once installed, run ~swift-helpful-configure-manuals~ to prepare Emacs so that the Swift manuals can be queried by ~swift-helpful~.
+
+Main entry point is the ~swift-helpful~ command, which should be executed with the point placed in some Swift code.
 
 ** Features
 
