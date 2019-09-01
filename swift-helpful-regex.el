@@ -23,6 +23,9 @@
 (require 's)
 (require 'dash)
 
+(defvar swift-helpful--where-clause-match nil
+  "Regular expression match of a `where' clause in a Swift generic declaration.")
+
 (defun swift-helpful--generic-replacement (where-str)
   "Convert `where' generic syntax in WHERE-STR to a format more appropriate for searching."
   (s-join ", "

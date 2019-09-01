@@ -236,11 +236,20 @@ If narrowing is in effect, widen if POS isn't in the narrowed area."
               (swift-helpful--generate-doc-snippet-general-algorithm)))
         (kill-buffer "*info*")))))
 
+(defvar swift-helpful--overlay-found nil
+  "Flag that indicates if an `info-look' highlight overlay has been found.")
+
+(defvar swift-helpful--overlay-start-local nil
+  "Overlay start position relative to a `swift-helpful' documentation section.")
+
+(defvar swift-helpful--overlay-end-local nil
+  "Overlay end position relative to a `swift-helpful' documentation section.")
+
 (defun swift-helpful--generate-doc-snippet-using-overlay (overlay)
   "Generate a documentation snippet around an OVERLAY.
 OVERLAY represents a highlighted symbol reference in the Swift manuals."
   (swift-helpful--log "The documentation snippet is generated around a text match in the Info node.")
-  (setq overlay-found t)
+  (setq swift-helpful--overlay-found t)
   (let* ((overlay-start (overlay-start overlay))
          (overlay-end (overlay-end overlay))
          (beg-line (- (line-number-at-pos overlay-start)
@@ -251,11 +260,11 @@ OVERLAY represents a highlighted symbol reference in the Swift manuals."
          (info-buffer-string (buffer-string)))
     ;; Convert `overlay-start' coordinates to "local" coordinates,
     ;; that is, coordinates starting from `beg-line'.
-    (setq overlay-start-local (- overlay-start
+    (setq swift-helpful--overlay-start-local (- overlay-start
                                  (swift-helpful--point-from-line beg-line)))
     ;; Convert `overlay-end' coordinates to "local" coordinates,
     ;; that is, coordinates starting from `beg-line'.
-    (setq overlay-end-local (- overlay-end
+    (setq swift-helpful--overlay-end-local (- overlay-end
                                (swift-helpful--point-from-line beg-line)))
     (with-temp-buffer
       (insert info-buffer-string)
@@ -271,7 +280,7 @@ The number of lines in the documentation snippet is controlled by
 the `swift-helpful-doc-snippet-number-of-lines-context'
 variable."
   (swift-helpful--log "The documentation snippet is NOT generated around a text match in the Info node.")
-  (setq overlay-found nil)
+  (setq swift-helpful--overlay-found nil)
   (let* ((beg-line (line-number-at-pos
                     (swift-helpful--point-at-beginning-of-doc-snippet)))
          (end-line (1+
@@ -435,6 +444,9 @@ hooks.")
          (filey (caar (compilation--loc->file-struct locy))))
     (string< filex filey)))
 
+(defvar swift-helpful--current-file nil
+  "Current file result after a ripgrep search.")
+
 (defun swift-helpful--stdlib-grep (signature)
   "Grep for a Swift standard library SIGNATURE."
   (swift-helpful--log signature)
@@ -452,7 +464,7 @@ hooks.")
       (swift-helpful--log "Query results : %s" search-results)
       (insert search-results))
     (grep-mode)
-    (setq current-file nil)
+    (setq swift-helpful--current-file nil)
     (let ((source-code-buf (get-buffer-create "*stdlib-source-code*"))
           (messages))
       (dotimes (i (count-lines (point-min) (point-max)))
@@ -469,9 +481,9 @@ hooks.")
                (file (caar (compilation--loc->file-struct loc)))
                (line (compilation--loc->line loc)))
           ;; Assume only one result per file.
-          (unless (eq current-file file)
+          (unless (eq swift-helpful--current-file file)
             (swift-helpful--log "Ripgrep result from file %s" file)
-            (setq current-file file)
+            (setq swift-helpful--current-file file)
             (swift-helpful--insert-source-code-in-buffer
              file line source-code-buf))))
       (with-current-buffer source-code-buf
@@ -514,9 +526,11 @@ information is passed in LSP-SNIPPET."
    "\n")
   (let ((point-before-snippet (point)))
     (insert (swift-helpful--generate-doc-snippet sym))
-    (when overlay-found
-      (let ((new-overlay-start (+ point-before-snippet overlay-start-local))
-            (new-overlay-end (+ point-before-snippet overlay-end-local)))
+    (when swift-helpful--overlay-found
+      (let ((new-overlay-start (+ point-before-snippet
+                                  swift-helpful--overlay-start-local))
+            (new-overlay-end (+ point-before-snippet
+                                swift-helpful--overlay-end-local)))
         (overlay-put (make-overlay new-overlay-start new-overlay-end)
                      'face info-lookup-highlight-face))))
   ;; Insert a "Read more in manual" button in case the user is
