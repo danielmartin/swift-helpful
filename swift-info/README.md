@@ -6,19 +6,20 @@
 
 Curated Swift 5.1 documentation and reference in GNU Info format, with cross-references and indices for concepts and keywords.
 
-You can export the documentation yourself from the `swift.org` file by using the [Org to Texinfo exporter](https://orgmode.org/manual/Texinfo-export.html).
-
-You can also generate the Info manual from the `.texi` file if you have the `makeinfo` program installed.
-
-```sh
-makeinfo --no-split swift.texi
-```
-
 If you use macOS, I recommend you install a newer version of GNU texinfo:
 
 ```sh
 brew install texinfo
 ```
+
+You can export the documentation by making the `all` target:
+
+```sh
+make all
+```
+
+This will generate up to date `.info` and `.texi` files from `swift.org` and `swift-reference.org`.
+
 
 ## Emacs
 
@@ -40,5 +41,3 @@ If you want to use `info-lookup-symbol` in `swift-mode`, add the following code 
 ```
 
 Visit a Swift file in `swift-mode`, place the point on a keyword and hit `C-h S` to see definitive discussion about that Swift keyword or concept.
-
-For now, the list of index entries is still very small.

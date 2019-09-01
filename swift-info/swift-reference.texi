@@ -280,14 +280,14 @@ Generic Parameter Clause
 
 Summary of the Grammar
 
-* Lexical Structure: Lexical Structure 1.
-* Types: Types 1.
-* Expressions: Expressions 1.
-* Statements: Statements 1.
-* Declarations: Declarations 1.
-* Attributes: Attributes 1.
-* Patterns: Patterns 1.
-* Generic Parameters and Arguments: Generic Parameters and Arguments 1.
+* Lexical Structure: Lexical Structure 1. 
+* Types: Types 1. 
+* Expressions: Expressions 1. 
+* Statements: Statements 1. 
+* Declarations: Declarations 1. 
+* Attributes: Attributes 1. 
+* Patterns: Patterns 1. 
+* Generic Parameters and Arguments: Generic Parameters and Arguments 1. 
 
 @end detailmenu
 @end menu
@@ -544,7 +544,7 @@ implicit-parameter-name
 identifier-list →
 identifier
 @multitable {}
-@item
+@item 
 @end multitable
 identifier
 @samp{,}
@@ -729,15 +729,15 @@ Grammar of a literal
 literal →
 numeric-literal
 @multitable {}
-@item
+@item 
 @end multitable
 string-literal
 @multitable {}
-@item
+@item 
 @end multitable
 boolean-literal
 @multitable {}
-@item
+@item 
 @end multitable
 nil-literal
 
@@ -1165,7 +1165,7 @@ Grammar of a string literal
 string-literal →
 static-string-literal
 @multitable {}
-@item
+@item 
 @end multitable
 interpolated-string-literal
 
@@ -1722,7 +1722,7 @@ tuple-type-element-list
 tuple-type-element-list →
 tuple-type-element
 @multitable {}
-@item
+@item 
 @end multitable
 tuple-type-element
 @samp{,}
@@ -1937,7 +1937,7 @@ function-type-argument-list
 →
 function-type-argument
 @multitable {}
-@item
+@item 
 @end multitable
 function-type-argument
 @samp{,}
@@ -2224,7 +2224,7 @@ protocol-composition-continuation
 →
 type-identifier
 @multitable {}
-@item
+@item 
 @end multitable
 protocol-composition-type
 
@@ -2471,7 +2471,7 @@ type-inheritance-list
 type-inheritance-list →
 type-identifier
 @multitable {}
-@item
+@item 
 @end multitable
 type-identifier
 @samp{,}
@@ -2539,7 +2539,7 @@ _@{opt@}
 expression-list →
 expression
 @multitable {}
-@item
+@item 
 @end multitable
 expression
 @samp{,}
@@ -3068,11 +3068,11 @@ literal-expression
 →
 array-literal
 @multitable {}
-@item
+@item 
 @end multitable
 dictionary-literal
 @multitable {}
-@item
+@item 
 @end multitable
 playground-literal
 
@@ -3197,11 +3197,11 @@ Grammar of a self expression
 self-expression → @samp{self} |
 self-method-expression
 @multitable {}
-@item
+@item 
 @end multitable
 self-subscript-expression
 @multitable {}
-@item
+@item 
 @end multitable
 self-initializer-expression
 
@@ -3246,11 +3246,11 @@ superclass-expression
 →
 superclass-method-expression
 @multitable {}
-@item
+@item 
 @end multitable
 superclass-subscript-expression
 @multitable {}
-@item
+@item 
 @end multitable
 superclass-initializer-expression
 
@@ -3503,7 +3503,7 @@ closure-parameter-list
 →
 closure-parameter
 @multitable {}
-@item
+@item 
 @end multitable
 closure-parameter
 @samp{,}
@@ -3530,7 +3530,7 @@ capture-list-items
 capture-list-items →
 capture-list-item
 @multitable {}
-@item
+@item 
 @end multitable
 capture-list-item
 @samp{,}
@@ -3627,7 +3627,7 @@ tuple-element-list
 tuple-element-list →
 tuple-element
 @multitable {}
-@item
+@item 
 @end multitable
 tuple-element
 @samp{,}
@@ -3636,7 +3636,7 @@ tuple-element-list
 tuple-element →
 expression
 @multitable {}
-@item
+@item 
 @end multitable
 identifier
 @samp{:}
@@ -3921,7 +3921,7 @@ key-path-components
 key-path-components →
 key-path-component
 @multitable {}
-@item
+@item 
 @end multitable
 key-path-component
 @samp{.}
@@ -4284,7 +4284,7 @@ function-call-argument-list
 →
 function-call-argument
 @multitable {}
-@item
+@item 
 @end multitable
 function-call-argument
 @samp{,}
@@ -4294,7 +4294,7 @@ function-call-argument
 →
 expression
 @multitable {}
-@item
+@item 
 @end multitable
 identifier
 @samp{:}
@@ -4304,7 +4304,7 @@ function-call-argument
 →
 operator
 @multitable {}
-@item
+@item 
 @end multitable
 identifier
 @samp{:}
@@ -4922,15 +4922,15 @@ condition-list
 condition →
 expression
 @multitable {}
-@item
+@item 
 @end multitable
 availability-condition
 @multitable {}
-@item
+@item 
 @end multitable
 case-condition
 @multitable {}
-@item
+@item 
 @end multitable
 optional-binding-condition
 
@@ -6242,7 +6242,7 @@ availability-arguments
 →
 availability-argument
 @multitable {}
-@item
+@item 
 @end multitable
 availability-argument
 @samp{,}
@@ -6453,7 +6453,7 @@ import-kind → @samp{typealias} |
 import-path →
 import-path-identifier
 @multitable {}
-@item
+@item 
 @end multitable
 import-path-identifier
 @samp{.}
@@ -6463,7 +6463,7 @@ import-path-identifier
 →
 identifier
 @multitable {}
-@item
+@item 
 @end multitable
 operator
 
@@ -6548,7 +6548,7 @@ pattern-initializer-list
 →
 pattern-initializer
 @multitable {}
-@item
+@item 
 @end multitable
 pattern-initializer
 @samp{,}
@@ -7402,7 +7402,7 @@ _@{opt@} @samp{func}
 function-name →
 identifier
 @multitable {}
-@item
+@item 
 @end multitable
 operator
 
@@ -7741,11 +7741,11 @@ union-style-enum-member
 →
 declaration
 @multitable {}
-@item
+@item 
 @end multitable
 union-style-enum-case-clause
 @multitable {}
-@item
+@item 
 @end multitable
 compiler-control-statement
 
@@ -7758,7 +7758,7 @@ union-style-enum-case-list
 →
 union-style-enum-case
 @multitable {}
-@item
+@item 
 @end multitable
 union-style-enum-case
 @samp{,}
@@ -7796,11 +7796,11 @@ raw-value-style-enum-member
 →
 declaration
 @multitable {}
-@item
+@item 
 @end multitable
 raw-value-style-enum-case-clause
 @multitable {}
-@item
+@item 
 @end multitable
 compiler-control-statement
 
@@ -7813,7 +7813,7 @@ raw-value-style-enum-case-list
 →
 raw-value-style-enum-case
 @multitable {}
-@item
+@item 
 @end multitable
 raw-value-style-enum-case
 @samp{,}
@@ -7832,11 +7832,11 @@ raw-value-literal
 raw-value-literal →
 numeric-literal
 @multitable {}
-@item
+@item 
 @end multitable
 static-string-literal
 @multitable {}
-@item
+@item 
 @end multitable
 boolean-literal
 
@@ -7939,7 +7939,7 @@ _@{opt@}
 struct-member →
 declaration
 @multitable {}
-@item
+@item 
 @end multitable
 compiler-control-statement
 
@@ -8075,7 +8075,7 @@ _@{opt@}
 class-member →
 declaration
 @multitable {}
-@item
+@item 
 @end multitable
 compiler-control-statement
 
@@ -8202,7 +8202,7 @@ _@{opt@}
 protocol-member →
 protocol-member-declaration
 @multitable {}
-@item
+@item 
 @end multitable
 compiler-control-statement
 
@@ -9103,7 +9103,7 @@ _@{opt@}
 extension-member →
 declaration
 @multitable {}
-@item
+@item 
 @end multitable
 compiler-control-statement
 @end enumerate
@@ -9298,11 +9298,11 @@ operator-declaration
 →
 prefix-operator-declaration
 @multitable {}
-@item
+@item 
 @end multitable
 postfix-operator-declaration
 @multitable {}
-@item
+@item 
 @end multitable
 infix-operator-declaration
 
@@ -9453,7 +9453,7 @@ precedence-group-names
 →
 precedence-group-name
 @multitable {}
-@item
+@item 
 @end multitable
 precedence-group-name
 @samp{,}
@@ -10844,7 +10844,7 @@ tuple-pattern-element-list
 →
 tuple-pattern-element
 @multitable {}
-@item
+@item 
 @end multitable
 tuple-pattern-element
 @samp{,}
@@ -11200,7 +11200,7 @@ generic-parameter-list
 →
 generic-parameter
 @multitable {}
-@item
+@item 
 @end multitable
 generic-parameter
 @samp{,}
@@ -11225,7 +11225,7 @@ requirement-list
 →
 requirement
 @multitable {}
-@item
+@item 
 @end multitable
 requirement
 @samp{,}
@@ -11234,7 +11234,7 @@ requirement-list
 requirement →
 conformance-requirement
 @multitable {}
-@item
+@item 
 @end multitable
 same-type-requirement
 
@@ -11321,7 +11321,7 @@ generic-argument-list
 →
 generic-argument
 @multitable {}
-@item
+@item 
 @end multitable
 generic-argument
 @samp{,}
@@ -11334,14 +11334,14 @@ generic-argument
 @chapter Summary of the Grammar
 
 @menu
-* Lexical Structure: Lexical Structure 1.
-* Types: Types 1.
-* Expressions: Expressions 1.
-* Statements: Statements 1.
-* Declarations: Declarations 1.
-* Attributes: Attributes 1.
-* Patterns: Patterns 1.
-* Generic Parameters and Arguments: Generic Parameters and Arguments 1.
+* Lexical Structure: Lexical Structure 1. 
+* Types: Types 1. 
+* Expressions: Expressions 1. 
+* Statements: Statements 1. 
+* Declarations: Declarations 1. 
+* Attributes: Attributes 1. 
+* Patterns: Patterns 1. 
+* Generic Parameters and Arguments: Generic Parameters and Arguments 1. 
 @end menu
 
 @node Lexical Structure 1
@@ -11430,7 +11430,7 @@ identifier-list
 →
 identifier
 @multitable {}
-@item
+@item 
 @end multitable
 identifier
 @samp{,}
@@ -11513,15 +11513,15 @@ Grammar of a literal
 literal →
 numeric-literal
 @multitable {}
-@item
+@item 
 @end multitable
 string-literal
 @multitable {}
-@item
+@item 
 @end multitable
 boolean-literal
 @multitable {}
-@item
+@item 
 @end multitable
 nil-literal
 
@@ -11704,7 +11704,7 @@ string-literal
 →
 static-string-literal
 @multitable {}
-@item
+@item 
 @end multitable
 interpolated-string-literal
 
@@ -12050,7 +12050,7 @@ tuple-type-element-list
 →
 tuple-type-element
 @multitable {}
-@item
+@item 
 @end multitable
 tuple-type-element
 @samp{,}
@@ -12093,7 +12093,7 @@ function-type-argument-list
 →
 function-type-argument
 @multitable {}
-@item
+@item 
 @end multitable
 function-type-argument
 @samp{,}
@@ -12143,7 +12143,7 @@ protocol-composition-continuation
 →
 type-identifier
 @multitable {}
-@item
+@item 
 @end multitable
 protocol-composition-type
 
@@ -12168,7 +12168,7 @@ type-inheritance-list
 →
 type-identifier
 @multitable {}
-@item
+@item 
 @end multitable
 type-identifier
 @samp{,}
@@ -12190,7 +12190,7 @@ expression-list
 →
 expression
 @multitable {}
-@item
+@item 
 @end multitable
 expression
 @samp{,}
@@ -12335,11 +12335,11 @@ literal-expression
 →
 array-literal
 @multitable {}
-@item
+@item 
 @end multitable
 dictionary-literal
 @multitable {}
-@item
+@item 
 @end multitable
 playground-literal
 
@@ -12409,11 +12409,11 @@ self-expression
 → @samp{self} |
 self-method-expression
 @multitable {}
-@item
+@item 
 @end multitable
 self-subscript-expression
 @multitable {}
-@item
+@item 
 @end multitable
 self-initializer-expression
 
@@ -12435,11 +12435,11 @@ superclass-expression
 →
 superclass-method-expression
 @multitable {}
-@item
+@item 
 @end multitable
 superclass-subscript-expression
 @multitable {}
-@item
+@item 
 @end multitable
 superclass-initializer-expression
 
@@ -12488,7 +12488,7 @@ closure-parameter-list
 →
 closure-parameter
 @multitable {}
-@item
+@item 
 @end multitable
 closure-parameter
 @samp{,}
@@ -12519,7 +12519,7 @@ capture-list-items
 →
 capture-list-item
 @multitable {}
-@item
+@item 
 @end multitable
 capture-list-item
 @samp{,}
@@ -12560,7 +12560,7 @@ tuple-element-list
 →
 tuple-element
 @multitable {}
-@item
+@item 
 @end multitable
 tuple-element
 @samp{,}
@@ -12570,7 +12570,7 @@ tuple-element
 →
 expression
 @multitable {}
-@item
+@item 
 @end multitable
 identifier
 @samp{:}
@@ -12591,7 +12591,7 @@ key-path-components
 →
 key-path-component
 @multitable {}
-@item
+@item 
 @end multitable
 key-path-component
 @samp{.}
@@ -12701,7 +12701,7 @@ function-call-argument-list
 →
 function-call-argument
 @multitable {}
-@item
+@item 
 @end multitable
 function-call-argument
 @samp{,}
@@ -12711,7 +12711,7 @@ function-call-argument
 →
 expression
 @multitable {}
-@item
+@item 
 @end multitable
 identifier
 @samp{:}
@@ -12721,7 +12721,7 @@ function-call-argument
 →
 operator
 @multitable {}
-@item
+@item 
 @end multitable
 identifier
 @samp{:}
@@ -12895,15 +12895,15 @@ condition-list
 condition →
 expression
 @multitable {}
-@item
+@item 
 @end multitable
 availability-condition
 @multitable {}
-@item
+@item 
 @end multitable
 case-condition
 @multitable {}
-@item
+@item 
 @end multitable
 optional-binding-condition
 
@@ -13361,7 +13361,7 @@ availability-arguments
 →
 availability-argument
 @multitable {}
-@item
+@item 
 @end multitable
 availability-argument
 @samp{,}
@@ -13488,7 +13488,7 @@ import-kind →
 import-path →
 import-path-identifier
 @multitable {}
-@item
+@item 
 @end multitable
 import-path-identifier
 @samp{.}
@@ -13498,7 +13498,7 @@ import-path-identifier
 →
 identifier
 @multitable {}
-@item
+@item 
 @end multitable
 operator
 
@@ -13515,7 +13515,7 @@ pattern-initializer-list
 →
 pattern-initializer
 @multitable {}
-@item
+@item 
 @end multitable
 pattern-initializer
 @samp{,}
@@ -13714,7 +13714,7 @@ function-name
 →
 identifier
 @multitable {}
-@item
+@item 
 @end multitable
 operator
 
@@ -13825,11 +13825,11 @@ union-style-enum-member
 →
 declaration
 @multitable {}
-@item
+@item 
 @end multitable
 union-style-enum-case-clause
 @multitable {}
-@item
+@item 
 @end multitable
 compiler-control-statement
 
@@ -13842,7 +13842,7 @@ union-style-enum-case-list
 →
 union-style-enum-case
 @multitable {}
-@item
+@item 
 @end multitable
 union-style-enum-case
 @samp{,}
@@ -13881,11 +13881,11 @@ raw-value-style-enum-member
 →
 declaration
 @multitable {}
-@item
+@item 
 @end multitable
 raw-value-style-enum-case-clause
 @multitable {}
-@item
+@item 
 @end multitable
 compiler-control-statement
 
@@ -13898,7 +13898,7 @@ raw-value-style-enum-case-list
 →
 raw-value-style-enum-case
 @multitable {}
-@item
+@item 
 @end multitable
 raw-value-style-enum-case
 @samp{,}
@@ -13918,11 +13918,11 @@ raw-value-literal
 →
 numeric-literal
 @multitable {}
-@item
+@item 
 @end multitable
 static-string-literal
 @multitable {}
-@item
+@item 
 @end multitable
 boolean-literal
 
@@ -13960,7 +13960,7 @@ struct-member
 →
 declaration
 @multitable {}
-@item
+@item 
 @end multitable
 compiler-control-statement
 
@@ -14010,7 +14010,7 @@ _@{opt@}
 class-member →
 declaration
 @multitable {}
-@item
+@item 
 @end multitable
 compiler-control-statement
 
@@ -14047,7 +14047,7 @@ protocol-member
 →
 protocol-member-declaration
 @multitable {}
-@item
+@item 
 @end multitable
 compiler-control-statement
 
@@ -14225,7 +14225,7 @@ extension-member
 →
 declaration
 @multitable {}
-@item
+@item 
 @end multitable
 compiler-control-statement
 
@@ -14275,11 +14275,11 @@ operator-declaration
 →
 prefix-operator-declaration
 @multitable {}
-@item
+@item 
 @end multitable
 postfix-operator-declaration
 @multitable {}
-@item
+@item 
 @end multitable
 infix-operator-declaration
 
@@ -14353,7 +14353,7 @@ precedence-group-names
 →
 precedence-group-name
 @multitable {}
-@item
+@item 
 @end multitable
 precedence-group-name
 @samp{,}
@@ -14517,7 +14517,7 @@ tuple-pattern-element-list
 →
 tuple-pattern-element
 @multitable {}
-@item
+@item 
 @end multitable
 tuple-pattern-element
 @samp{,}
@@ -14578,7 +14578,7 @@ generic-parameter-list
 →
 generic-parameter
 @multitable {}
-@item
+@item 
 @end multitable
 generic-parameter
 @samp{,}
@@ -14603,7 +14603,7 @@ requirement-list
 →
 requirement
 @multitable {}
-@item
+@item 
 @end multitable
 requirement
 @samp{,}
@@ -14612,7 +14612,7 @@ requirement-list
 requirement →
 conformance-requirement
 @multitable {}
-@item
+@item 
 @end multitable
 same-type-requirement
 
@@ -14644,7 +14644,7 @@ generic-argument-list
 →
 generic-argument
 @multitable {}
-@item
+@item 
 @end multitable
 generic-argument
 @samp{,}

@@ -37,7 +37,7 @@
 * Basic Operators::
 * Strings and Characters::
 * Collection Types::
-* Control Flow: Control Flow 1.
+* Control Flow: Control Flow 1. 
 * Functions::
 * Closures::
 * Enumeration::
@@ -49,12 +49,12 @@
 * Initialization::
 * Deinitialization::
 * Optional Chaining::
-* Error Handling: Error Handling 2.
+* Error Handling: Error Handling 2. 
 * Type Casting::
 * Nested Types::
 * Extensions::
 * Protocols::
-* Generics: Generics 1.
+* Generics: Generics 1. 
 * Opaque Types::
 * Automatic Reference Counting::
 * Memory Safety::
@@ -90,7 +90,7 @@ The Basics
 * Booleans::
 * Tuples::
 * Optionals::
-* Error Handling: Error Handling 1.
+* Error Handling: Error Handling 1. 
 * Assertions and Preconditions::
 
 Constants and Variables
@@ -396,7 +396,7 @@ Inheritance
 
 Overriding
 
-* Accessing Superclass Methods, Properties, and Subscripts: Accessing Superclass Methods Properties and Subscripts.
+* Accessing Superclass Methods, Properties, and Subscripts: Accessing Superclass Methods Properties and Subscripts. 
 * Overriding Methods::
 * Overriding Properties::
 
@@ -426,7 +426,7 @@ Customizing Initialization
 
 Default Initializers
 
-* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types 1.
+* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types 1. 
 
 Class Inheritance and Initialization
 
@@ -493,11 +493,11 @@ Nested Types
 Extensions
 
 * Extension Syntax::
-* Computed Properties: Computed Properties 1.
-* Initializers: Initializers 1.
-* Methods: Methods 1.
-* Subscripts: Subscripts 1.
-* Nested Types: Nested Types 1.
+* Computed Properties: Computed Properties 1. 
+* Initializers: Initializers 1. 
+* Methods: Methods 1. 
+* Subscripts: Subscripts 1. 
+* Nested Types: Nested Types 1. 
 
 Methods
 
@@ -606,13 +606,13 @@ Access Control
 * Access Levels::
 * Access Control Syntax::
 * Custom Types::
-* Subclassing: Subclassing 1.
-* Constants, Variables, Properties, and Subscripts: Constants Variables Properties and Subscripts.
-* Initializers: Initializers 2.
-* Protocols: Protocols 1.
-* Extensions: Extensions 1.
-* Generics: Generics 2.
-* Type Aliases: Type Aliases 1.
+* Subclassing: Subclassing 1. 
+* Constants, Variables, Properties, and Subscripts: Constants Variables Properties and Subscripts. 
+* Initializers: Initializers 2. 
+* Protocols: Protocols 1. 
+* Extensions: Extensions 1. 
+* Generics: Generics 2. 
+* Type Aliases: Type Aliases 1. 
 
 Access Levels
 
@@ -625,9 +625,9 @@ Access Levels
 Custom Types
 
 * Tuple Types::
-* Function Types: Function Types 1.
+* Function Types: Function Types 1. 
 * Enumeration Types::
-* Nested Types: Nested Types 2.
+* Nested Types: Nested Types 2. 
 
 Constants, Variables, Properties, and Subscripts
 
@@ -635,12 +635,12 @@ Constants, Variables, Properties, and Subscripts
 
 Initializers
 
-* Default Initializers: Default Initializers 1.
+* Default Initializers: Default Initializers 1. 
 * Default Memberwise Initializers for Structure Types::
 
 Protocols
 
-* Protocol Inheritance: Protocol Inheritance 1.
+* Protocol Inheritance: Protocol Inheritance 1. 
 * Protocol Conformance::
 
 Extensions
@@ -652,7 +652,7 @@ Advanced Operators
 * Bitwise Operators::
 * Overflow Operators::
 * Precedence and Associativity::
-* Operator Methods: Operator Methods 1.
+* Operator Methods: Operator Methods 1. 
 * Custom Operators::
 
 Bitwise Operators
@@ -670,7 +670,7 @@ Overflow Operators
 Operator Methods
 
 * Prefix and Postfix Operators::
-* Compound Assignment Operators: Compound Assignment Operators 1.
+* Compound Assignment Operators: Compound Assignment Operators 1. 
 * Equivalence Operators::
 
 Custom Operators
@@ -1972,7 +1972,7 @@ errors as early as possible in the development process.
 * Booleans::
 * Tuples::
 * Optionals::
-* Error Handling: Error Handling 1.
+* Error Handling: Error Handling 1. 
 * Assertions and Preconditions::
 @end menu
 
@@ -11482,7 +11482,7 @@ declaration that matches the one you provided for the override. This
 check ensures that your overriding definition is correct.
 
 @menu
-* Accessing Superclass Methods, Properties, and Subscripts: Accessing Superclass Methods Properties and Subscripts.
+* Accessing Superclass Methods, Properties, and Subscripts: Accessing Superclass Methods Properties and Subscripts. 
 * Overriding Methods::
 * Overriding Properties::
 @end menu
@@ -12062,7 +12062,7 @@ create a new instance of the class with initializer syntax, written as
 @samp{item}.
 
 @menu
-* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types 1.
+* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types 1. 
 @end menu
 
 @node Memberwise Initializers for Structure Types 1
@@ -15096,11 +15096,11 @@ existing functionality.
 
 @menu
 * Extension Syntax::
-* Computed Properties: Computed Properties 1.
-* Initializers: Initializers 1.
-* Methods: Methods 1.
-* Subscripts: Subscripts 1.
-* Nested Types: Nested Types 1.
+* Computed Properties: Computed Properties 1. 
+* Initializers: Initializers 1. 
+* Methods: Methods 1. 
+* Subscripts: Subscripts 1. 
+* Nested Types: Nested Types 1. 
 @end menu
 
 @node Extension Syntax
@@ -19794,13 +19794,13 @@ them (properties, types, functions, and so on) are referred to as
 * Access Levels::
 * Access Control Syntax::
 * Custom Types::
-* Subclassing: Subclassing 1.
-* Constants, Variables, Properties, and Subscripts: Constants Variables Properties and Subscripts.
-* Initializers: Initializers 2.
-* Protocols: Protocols 1.
-* Extensions: Extensions 1.
-* Generics: Generics 2.
-* Type Aliases: Type Aliases 1.
+* Subclassing: Subclassing 1. 
+* Constants, Variables, Properties, and Subscripts: Constants Variables Properties and Subscripts. 
+* Initializers: Initializers 2. 
+* Protocols: Protocols 1. 
+* Extensions: Extensions 1. 
+* Generics: Generics 2. 
+* Type Aliases: Type Aliases 1. 
 @end menu
 
 @node Modules and Source Files
@@ -20080,9 +20080,9 @@ private class SomePrivateClass @{ // explicitly private class
 
 @menu
 * Tuple Types::
-* Function Types: Function Types 1.
+* Function Types: Function Types 1. 
 * Enumeration Types::
-* Nested Types: Nested Types 2.
+* Nested Types: Nested Types 2. 
 @end menu
 
 @node Tuple Types
@@ -20368,7 +20368,7 @@ parameters can't be more private than the initializer's own access
 level.
 
 @menu
-* Default Initializers: Default Initializers 1.
+* Default Initializers: Default Initializers 1. 
 * Default Memberwise Initializers for Structure Types::
 @end menu
 
@@ -20424,7 +20424,7 @@ This behavior is different from other types, where a public type
 definition implies an access level of internal for the type's members.
 
 @menu
-* Protocol Inheritance: Protocol Inheritance 1.
+* Protocol Inheritance: Protocol Inheritance 1. 
 * Protocol Conformance::
 @end menu
 
@@ -20589,7 +20589,7 @@ the custom operators you define.
 * Bitwise Operators::
 * Overflow Operators::
 * Precedence and Associativity::
-* Operator Methods: Operator Methods 1.
+* Operator Methods: Operator Methods 1. 
 * Custom Operators::
 @end menu
 
@@ -21105,7 +21105,7 @@ make the vector @samp{(5.0, 5.0)}, as illustrated below.
 
 @menu
 * Prefix and Postfix Operators::
-* Compound Assignment Operators: Compound Assignment Operators 1.
+* Compound Assignment Operators: Compound Assignment Operators 1. 
 * Equivalence Operators::
 @end menu
 
