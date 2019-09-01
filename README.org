@@ -1,14 +1,17 @@
-* swift-helpful - A Self-Documenting Programming Environment for Swift
+* swift-helpful
 
 ** Overview
    Emacs is described as "the extensible, customizable, self-documenting, real-time display editor". Wouldn't you like
-   the same self-documenting capabilities when you are writing Swift code in Emacs? ~swift-helpful~ is a package that,
+   the same self-documenting experience when you are writing Swift code in Emacs? ~swift-helpful~ is a package that,
    using information from ~swift-mode~, ~lsp-mode~ and ~swift-info~, is able to answer questions about anything you see
    in a Swift program.
 
    While developer tools are typically identifier-centric in the sense that they only show documentation about API,
-   ~swift-helpful~ also shows official Apple information about keywords, attributes, etc. It's the perfect companion for
-   experimenting with a Swift playground in Emacs.
+   ~swift-helpful~ also shows official Apple information about keywords, attributes, etc. It's the perfect company when
+   you are experimenting with a Swift playground in Emacs and it is equally useful for people just learning the
+   language, or people that wants to revisit recent language additions. Also, ~swift-helpful~ is decoupled from the
+   Apple ecosystem, so you can use it on other platforms like Windows or GNU/Linux. It's also extremely fast, so you can
+   perfectly use it on resource-constrained platforms like a Raspberry Pi.
 
 ** Install and Configuration
 
@@ -36,47 +39,63 @@ Main entry point is the ~swift-helpful~ command, which should be executed with t
 
 *** Contextual information about Swift keywords and attributes
 
-If you have installed the Swift manuals in GNU Info format that are included in ~swift-helpful~ under the ~swift-info~
-folder, it will show you information about any Swift keyword or attribute. Let's say you see ~import~ in a Swift program
-and you want to know more about importing modules in Swift (what's the default visibility, etc.). Simply place the point
-on top of "import" and invoke ~swift-helpful~ with ~M-x swift-helpful~. The tool will show you a
-brief snippet of information about Swift modules. Pressing the "Read more in manual" button opens the Swift manual in
-GNU Info format so that you can read the definitive discussion about that topic.
+If you have configured the Swift manuals by calling the ~swift-helpful-configure-manuals~ command, ~swift-helpful~ will
+show you information about any Swift keyword or attribute. Let's say you see ~import~ in a Swift program and you want to
+know more about how importing modules in Swift works. Simply place the point on top of "import" and invoke
+~swift-helpful~ with ~M-x swift-helpful~. The tool will show you a brief snippet of documentation about Swift
+modules. In many cases, the keyword will be highlighted to focus your attention on where it is mentioned in the
+documentation. Pressing the "Read more in manual" button opens the Swift manual section in an Info buffer so that you
+can read the definitive discussion about that topic.
 
 [[file:screenshots/import.png]]
 
-Information is not only limited to keywords. The Swift programming language is making use of attributes more and more,
-so swift-helpful will also show information about attributes too. Let's say you don't know what ~@dynamicCallable~
-means. Simply place the point in one occurrance of that attribute and invoke swift-helpful to show you an explanation,
-this time coming from the official Swift Reference manual:
+Information is not only limited to keywords. The Swift programming language is gradually increasing the use of
+attributes in the language, so ~swift-helpful~ will also show information about attributes. Let's say you don't know
+what ~@dynamicCallable~ means, an attribute introduced in Swift 5. Simply place the point in one occurrance of that
+attribute and invoke ~swift-helpful~ to read an explanation, this time coming from the official Swift Reference manual:
 
 [[file:screenshots/dynamicCallable.png]]
 
 *** API documentation coming from Language Server Protocol
 
-~swift-helpful~ also shows documentation about API in the same way your favorite IDE does. It uses ~lsp-mode~, if
+~swift-helpful~ also shows documentation about API in the same way your favorite IDE does. It leverages ~lsp-mode~, if
 configured with my specific extension for Swift, ~lsp-sourcekit~ (https://github.com/emacs-lsp/lsp-sourcekit).
 
-Let's say you want to know more about the ~isExecutable~ method that is called from a ~SourceKit-LSP~ source file. If we
-invoke ~swift-helpful~ on that symbol, we see information coming from Language Server Protocol, including the method
-type signature, its header documentation, and two convenient buttons to search for its definition or references in the
-codebase.
+Let's say you want to know more about the ~isExecutable~ method that you see in a source file from the ~SourceKit-LSP~
+project. If you invoke ~swift-helpful~ on that symbol, you'll see information coming from Language Server Protocol,
+including the method type signature, its header documentation, and two convenient buttons to search for its definition
+or references across the codebase.
 
 [[file:screenshots/isExecutableFile.png]]
 
 *** Swift standard library source code
 
-If you have a local checkout of the Swift standard library, ~swift-helpful~ is able to search it and present you with
-the implementation with almost zero configuration.
+If you have a compiled checkout of the Swift standard library, ~swift-helpful~ is able to search it and present you with
+implementation source code with almost zero configuration.
 
-Let's say you want to know more about the ~dropFirst~ collection function in Swift. If you ask ~swift-helpful~ about that
-you will be presented with the function implementation from ~Collection.swift~. All file paths are links, so if you click
-on them you will open the standard library source file in case you want to investigate further.
+There's only two requirements to use this feature:
+
+- You need to install the ripgrep tool (https://github.com/BurntSushi/ripgrep), a fast directory searcher.
+- You need to point ~swift-helpful~ to your local checkout of the Swift standard library:
+
+#+BEGIN_SRC emacs-lisp
+  (setq swift-helpful-stdlib-path "<Path to a local compiled checkout of the stdlib>")
+#+END_SRC
+
+Let's say you want to know more about the ~dropFirst~ collection function in Swift. If you ask ~swift-helpful~ about
+that, you will be presented with the function implementation from ~Collection.swift~. All file paths are actual links,
+so clicking on them opens the standard library source file, in case you want to explore further.
 
 [[file:screenshots/dropFirst.png]]
 ** Development
 
-Development is automated by means of Make (https://www.gnu.org/software/make/) and Cask (https://cask.readthedocs.io), so installing those programs is encouraged before developing on ~swift-helpful~.
+Development is automated by means of Make (https://www.gnu.org/software/make/) and Cask (https://cask.readthedocs.io), so installing those programs is encouraged before developing ~swift-helpful~.
+
+*** Installing Dependencies
+
+#+BEGIN_SRC sh
+   cask install
+#+END_SRC
 
 *** Byte-compilation
 
@@ -107,3 +126,7 @@ Any good Emacs package should follow some basic style rules regarding its functi
 #+END_SRC
 
 See ~README.md~ inside the ~swift-info~ folder to know how to update the documentation after you have modified the documentation source code in Org.
+
+** Acknowledgements
+
+The idea for this package was inspired by helpful.el (https://github.com/Wilfred/helpful).
