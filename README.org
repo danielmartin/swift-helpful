@@ -60,3 +60,36 @@ you will be presented with the function implementation from ~Collection.swift~. 
 on them you will open the standard library source file in case you want to investigate further.
 
 [[file:screenshots/dropFirst.png]]
+** Development
+
+Development is automated by means of Make (https://www.gnu.org/software/make/) and Cask (https://cask.readthedocs.io), so installing those programs is encouraged before developing on ~swift-helpful~.
+
+*** Byte-compilation
+
+#+BEGIN_SRC sh
+   make compile
+#+END_SRC
+
+*** Testing
+
+To minimize the chance of regressions, you can run ~swift-helpful~ regression test suite after introducing a change:
+
+#+BEGIN_SRC sh
+   make test
+#+END_SRC
+
+If you want to use ert-runner:
+
+#+BEGIN_SRC sh
+   make test-ert-runner
+#+END_SRC
+
+*** Lint Function Documentation
+
+Any good Emacs package should follow some basic style rules regarding its function documentation. To check that:
+
+#+BEGIN_SRC sh
+   make checkdoc
+#+END_SRC
+
+See ~README.md~ inside the ~swift-info~ folder to know how to update the documentation after you have modified the documentation source code in Org.
