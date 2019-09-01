@@ -6,8 +6,7 @@ LOADPATH = -L .
 EMACSBATCH = $(CASK) exec $(EMACS) -q -batch $(LOADPATH)
 
 compile:
-	$(EMACSBATCH) \
-		-f batch-byte-compile swift-helpful.el swift-helpful-regex.el
+	$(CASK) build
 
 test:
 	$(EMACSBATCH) \
