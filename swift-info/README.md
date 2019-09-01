@@ -23,7 +23,10 @@ This will generate up to date `.info` and `.texi` files from `swift.org` and `sw
 
 ## Emacs
 
-If you use Emacs, you can add this Info manual to the list of existing manuals:
+Note that if you are using `swift-info` as part of the `swift-helpful` Emacs package you don't need to follow these instructions because everything is
+configured automatically as part of the package installation and load.
+
+You can add this Info manual to the list of existing manuals:
 
 ```elisp
 (add-to-list 'Info-directory-list "<Path to swift-info repository>")
