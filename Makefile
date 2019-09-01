@@ -25,4 +25,4 @@ checkdoc:
 clean:
 	$(RM) *.elc
 
-.PHONY : test test-ert-runner checkdoc clean
+.PHONY : compile test test-ert-runner checkdoc clean
