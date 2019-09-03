@@ -83,7 +83,7 @@
     signature))
 
 (defun swift-helpful--remove-non-interesting-syntax (signature)
-  "Remove SIGNATURE parts that are not specially useful when grepping and can be omitted."
+  "Remove SIGNATURE parts that are not specially useful when grepping the standard library code."
   (s-trim (replace-regexp-in-string
    "Self."
    ""
@@ -99,7 +99,7 @@
       signature))))))
 
 (defun swift-helpful--prepare-type-signature-for-grep (signature)
-  "Perform a series of transformations on SIGNATURE that produce a new signature that is more amenable to use it for grepping the standard library source."
+  "Perform a series of transformations on SIGNATURE for grepping the standard library code."
   (swift-helpful--adapt-for-generics
    (swift-helpful--prepend-public-keywords
     (swift-helpful--prepare-regex-for-sequence-api
@@ -108,10 +108,11 @@
 
 (defun swift-helpful--regex-new-lines-escape-chars (str escape-chars)
   "Build a regex sequence flexibly matching STR and escaping some ESCAPE-CHARS.
-Inserts a regex between each char that matches a few
+Insert a regex between each char that matches a few
 non-interesting Swift attributes and new line/whitespace
-characters (the signature prototype may be formatted in multiple
-lines in the stdlib code)."
+characters (we need to do this because the signature prototype
+may be formatted in multiple lines in the standard library
+code)."
   (mapconcat (lambda (str)
                (if (member str escape-chars)
                    (format "\\%s" str)
