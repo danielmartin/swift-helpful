@@ -1,4 +1,4 @@
-;;; swift-helpful.el --- Show information about Swift things under point. -*- lexical-binding: t; -*-
+;;; swift-helpful.el --- Show documentation for Swift programs. -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2019  Daniel Martín
 
