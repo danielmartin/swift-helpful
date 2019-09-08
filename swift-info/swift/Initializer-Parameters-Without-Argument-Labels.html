@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Initializer Parameters Without Argument Labels (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Initializer Parameters Without Argument Labels (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Initializer Parameters Without Argument Labels (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Customizing-Initialization.html#Customizing-Initialization" rel="up" title="Customizing Initialization">
+<link href="Optional-Property-Types.html#Optional-Property-Types" rel="next" title="Optional Property Types">
+<link href="Parameter-Names-and-Argument-Labels.html#Parameter-Names-and-Argument-Labels" rel="prev" title="Parameter Names and Argument Labels">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Initializer-Parameters-Without-Argument-Labels"></span><div class="header">
+<p>
+Next: <a href="Optional-Property-Types.html#Optional-Property-Types" accesskey="n" rel="next">Optional Property Types</a>, Previous: <a href="Parameter-Names-and-Argument-Labels.html#Parameter-Names-and-Argument-Labels" accesskey="p" rel="prev">Parameter Names and Argument Labels</a>, Up: <a href="Customizing-Initialization.html#Customizing-Initialization" accesskey="u" rel="up">Customizing Initialization</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Initializer-Parameters-Without-Argument-Labels-1"></span><h4 class="subsection">19.2.3 Initializer Parameters Without Argument Labels</h4>
+
+<p>If you do not want to use an argument label for an initializer
+parameter, write an underscore (&lsquo;<samp>_</samp>&rsquo;) instead of an explicit argument
+label for that parameter to override the default behavior.
+</p>
+<p>Here&rsquo;s an expanded version of the &lsquo;<samp>Celsius</samp>&rsquo; example from
+<a href="Initialization-Parameters.html#Initialization-Parameters">Initialization Parameters</a> above, with
+an additional initializer to create a new &lsquo;<samp>Celsius</samp>&rsquo; instance from a
+&lsquo;<samp>Double</samp>&rsquo; value that is already in the Celsius scale:
+</p>
+<div class="example">
+<pre class="example">struct Celsius {
+    var temperatureInCelsius: Double
+    init(fromFahrenheit fahrenheit: Double) {
+        temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+    }
+    init(fromKelvin kelvin: Double) {
+        temperatureInCelsius = kelvin - 273.15
+    }
+    init(_ celsius: Double) {
+        temperatureInCelsius = celsius
+    }
+}
+let bodyTemperature = Celsius(37.0)
+// bodyTemperature.temperatureInCelsius is 37.0
+</pre></div>
+
+<p>The initializer call &lsquo;<samp>Celsius(37.0)</samp>&rsquo; is clear in its intent without the
+need for an argument label. It is therefore appropriate to write this
+initializer as &lsquo;<samp>init(_ celsius: Double)</samp>&rsquo; so that it can be called by
+providing an unnamed &lsquo;<samp>Double</samp>&rsquo; value.
+</p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Type Parameters (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Type Parameters (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Type Parameters (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Generics-1.html#Generics-1" rel="up" title="Generics 1">
+<link href="Naming-Type-Parameters.html#Naming-Type-Parameters" rel="next" title="Naming Type Parameters">
+<link href="Generic-Functions.html#Generic-Functions" rel="prev" title="Generic Functions">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Type-Parameters"></span><div class="header">
+<p>
+Next: <a href="Naming-Type-Parameters.html#Naming-Type-Parameters" accesskey="n" rel="next">Naming Type Parameters</a>, Previous: <a href="Generic-Functions.html#Generic-Functions" accesskey="p" rel="prev">Generic Functions</a>, Up: <a href="Generics-1.html#Generics-1" accesskey="u" rel="up">Generics 1</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Type-Parameters-1"></span><h3 class="section">27.3 Type Parameters</h3>
+
+<p>In the &lsquo;<samp>swapTwoValues(_:_:)</samp>&rsquo; example above, the placeholder type &lsquo;<samp>T</samp>&rsquo; is
+an example of a <em>type parameter</em>. Type parameters specify and name a
+placeholder type, and are written immediately after the function&rsquo;s name,
+between a pair of matching angle brackets (such as &lsquo;<samp>&lt;T&gt;</samp>&rsquo;).
+</p>
+<p>Once you specify a type parameter, you can use it to define the type of
+a function&rsquo;s parameters (such as the &lsquo;<samp>a</samp>&rsquo; and &lsquo;<samp>b</samp>&rsquo; parameters of the
+&lsquo;<samp>swapTwoValues(_:_:)</samp>&rsquo; function), or as the function&rsquo;s return type, or as
+a type annotation within the body of the function. In each case, the
+type parameter is replaced with an <em>actual</em> type whenever the function
+is called. (In the &lsquo;<samp>swapTwoValues(_:_:)</samp>&rsquo; example above, &lsquo;<samp>T</samp>&rsquo; was replaced
+with &lsquo;<samp>Int</samp>&rsquo; the first time the function was called, and was replaced with
+&lsquo;<samp>String</samp>&rsquo; the second time it was called.)
+</p>
+<p>You can provide more than one type parameter by writing multiple type
+parameter names within the angle brackets, separated by commas.
+</p>
+
+
+
+</body>
+</html>

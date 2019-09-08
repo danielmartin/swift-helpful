@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Tuple Expression (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Tuple Expression (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Tuple Expression (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Primary-Expressions.html#Primary-Expressions" rel="up" title="Primary Expressions">
+<link href="Wildcard-Expression.html#Wildcard-Expression" rel="next" title="Wildcard Expression">
+<link href="Parenthesized-Expression.html#Parenthesized-Expression" rel="prev" title="Parenthesized Expression">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Tuple-Expression"></span><div class="header">
+<p>
+Next: <a href="Wildcard-Expression.html#Wildcard-Expression" accesskey="n" rel="next">Wildcard Expression</a>, Previous: <a href="Parenthesized-Expression.html#Parenthesized-Expression" accesskey="p" rel="prev">Parenthesized Expression</a>, Up: <a href="Primary-Expressions.html#Primary-Expressions" accesskey="u" rel="up">Primary Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Tuple-Expression-1"></span><h4 class="subsection">5.3.7 Tuple Expression</h4>
+
+<p>A <em>tuple expression</em> consists of a comma-separated list of expressions
+surrounded by parentheses. Each expression can have an optional
+identifier before it, separated by a colon (&lsquo;<samp>:</samp>&rsquo;). It has the following
+form:
+</p>
+<ol>
+<li> (identifier 1: expression 1, identifier 2: expression 2, &hellip;)
+</li></ol>
+
+<p>A tuple expression can contain zero expressions, or it can contain two
+or more expressions. A single expression inside parentheses is a
+parenthesized expression.
+</p>
+<p>Note
+</p>
+<p>Both an empty tuple expression and an empty tuple type are written &lsquo;<samp>()</samp>&rsquo;
+in Swift. Because &lsquo;<samp>Void</samp>&rsquo; is a type alias for &lsquo;<samp>()</samp>&rsquo;, you can use it to
+write an empty tuple type. However, like all type aliases, &lsquo;<samp>Void</samp>&rsquo; is
+always a type&mdash;you can&rsquo;t use it to write an empty tuple expression.
+</p>
+<p>Grammar of a tuple expression
+</p>
+<p>tuple-expression → &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
+</p><table>
+<tr><td>&lsquo;<samp>(</samp>&rsquo;</td></tr>
+</table>
+<p>tuple-element
+&lsquo;<samp>,</samp>&rsquo;
+tuple-element-list
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>tuple-element-list →
+tuple-element
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>tuple-element
+&lsquo;<samp>,</samp>&rsquo;
+tuple-element-list
+</p>
+<p>tuple-element →
+expression
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>identifier
+&lsquo;<samp>:</samp>&rsquo;
+expression
+</p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Subclassing (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Subclassing (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Subclassing (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Inheritance.html#Inheritance" rel="up" title="Inheritance">
+<link href="Overriding.html#Overriding" rel="next" title="Overriding">
+<link href="Defining-a-Base-Class.html#Defining-a-Base-Class" rel="prev" title="Defining a Base Class">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Subclassing"></span><div class="header">
+<p>
+Next: <a href="Overriding.html#Overriding" accesskey="n" rel="next">Overriding</a>, Previous: <a href="Defining-a-Base-Class.html#Defining-a-Base-Class" accesskey="p" rel="prev">Defining a Base Class</a>, Up: <a href="Inheritance.html#Inheritance" accesskey="u" rel="up">Inheritance</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Subclassing-2"></span><h3 class="section">18.2 Subclassing</h3>
+
+<p><em>Subclassing</em> is the act of basing a new class on an existing class. The
+subclass inherits characteristics from the existing class, which you can
+then refine. You can also add new characteristics to the subclass.
+</p>
+<p>To indicate that a subclass has a superclass, write the subclass name
+before the superclass name, separated by a colon:
+</p>
+<div class="example">
+<pre class="example">class SomeSubclass: SomeSuperclass {
+    // subclass definition goes here
+}
+</pre></div>
+
+<p>The following example defines a subclass called &lsquo;<samp>Bicycle</samp>&rsquo;, with a
+superclass of &lsquo;<samp>Vehicle</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">class Bicycle: Vehicle {
+    var hasBasket = false
+}
+</pre></div>
+
+<p>The new &lsquo;<samp>Bicycle</samp>&rsquo; class automatically gains all of the characteristics
+of &lsquo;<samp>Vehicle</samp>&rsquo;, such as its &lsquo;<samp>currentSpeed</samp>&rsquo; and &lsquo;<samp>description</samp>&rsquo; properties
+and its &lsquo;<samp>makeNoise()</samp>&rsquo; method.
+</p>
+<p>In addition to the characteristics it inherits, the &lsquo;<samp>Bicycle</samp>&rsquo; class
+defines a new stored property, &lsquo;<samp>hasBasket</samp>&rsquo;, with a default value of
+&lsquo;<samp>false</samp>&rsquo; (inferring a type of &lsquo;<samp>Bool</samp>&rsquo; for the property).
+</p>
+<p>By default, any new &lsquo;<samp>Bicycle</samp>&rsquo; instance you create will not have a
+basket. You can set the &lsquo;<samp>hasBasket</samp>&rsquo; property to &lsquo;<samp>true</samp>&rsquo; for a particular
+&lsquo;<samp>Bicycle</samp>&rsquo; instance after that instance is created:
+</p>
+<div class="example">
+<pre class="example">let bicycle = Bicycle()
+bicycle.hasBasket = true
+</pre></div>
+
+<p>You can also modify the inherited &lsquo;<samp>currentSpeed</samp>&rsquo; property of a &lsquo;<samp>Bicycle</samp>&rsquo;
+instance, and query the instance&rsquo;s inherited &lsquo;<samp>description</samp>&rsquo; property:
+</p>
+<div class="example">
+<pre class="example">bicycle.currentSpeed = 15.0
+print(&quot;Bicycle: \(bicycle.description)&quot;)
+// Bicycle: traveling at 15.0 miles per hour
+</pre></div>
+
+<p>Subclasses can themselves be subclassed. The next example creates a
+subclass of &lsquo;<samp>Bicycle</samp>&rsquo; for a two-seater bicycle known as a “tandem”:
+</p>
+<div class="example">
+<pre class="example">class Tandem: Bicycle {
+    var currentNumberOfPassengers = 0
+}
+</pre></div>
+
+<p>&lsquo;<samp>Tandem</samp>&rsquo; inherits all of the properties and methods from &lsquo;<samp>Bicycle</samp>&rsquo;,
+which in turn inherits all of the properties and methods from &lsquo;<samp>Vehicle</samp>&rsquo;.
+The &lsquo;<samp>Tandem</samp>&rsquo; subclass also adds a new stored property called
+&lsquo;<samp>currentNumberOfPassengers</samp>&rsquo;, with a default value of &lsquo;<samp>0</samp>&rsquo;.
+</p>
+<p>If you create an instance of &lsquo;<samp>Tandem</samp>&rsquo;, you can work with any of its new
+and inherited properties, and query the read-only &lsquo;<samp>description</samp>&rsquo; property
+it inherits from &lsquo;<samp>Vehicle</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let tandem = Tandem()
+tandem.hasBasket = true
+tandem.currentNumberOfPassengers = 2
+tandem.currentSpeed = 22.0
+print(&quot;Tandem: \(tandem.description)&quot;)
+// Tandem: traveling at 22.0 miles per hour
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Overriding.html#Overriding" accesskey="n" rel="next">Overriding</a>, Previous: <a href="Defining-a-Base-Class.html#Defining-a-Base-Class" accesskey="p" rel="prev">Defining a Base Class</a>, Up: <a href="Inheritance.html#Inheritance" accesskey="u" rel="up">Inheritance</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

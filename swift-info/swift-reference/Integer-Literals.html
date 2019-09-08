@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Integer Literals (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Integer Literals (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Integer Literals (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Literals.html#Literals" rel="up" title="Literals">
+<link href="Floating_002dPoint-Literals.html#Floating_002dPoint-Literals" rel="next" title="Floating-Point Literals">
+<link href="Literals.html#Literals" rel="prev" title="Literals">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Integer-Literals"></span><div class="header">
+<p>
+Next: <a href="Floating_002dPoint-Literals.html#Floating_002dPoint-Literals" accesskey="n" rel="next">Floating-Point Literals</a>, Up: <a href="Literals.html#Literals" accesskey="u" rel="up">Literals</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Integer-Literals-1"></span><h4 class="subsection">3.4.1 Integer Literals</h4>
+
+<p><em>Integer literals</em> represent integer values of unspecified precision. By
+default, integer literals are expressed in decimal; you can specify an
+alternate base using a prefix. Binary literals begin with &lsquo;<samp>0b</samp>&rsquo;, octal
+literals begin with &lsquo;<samp>0o</samp>&rsquo;, and hexadecimal literals begin with &lsquo;<samp>0x</samp>&rsquo;.
+</p>
+<p>Decimal literals contain the digits &lsquo;<samp>0</samp>&rsquo; through &lsquo;<samp>9</samp>&rsquo;. Binary literals
+contain &lsquo;<samp>0</samp>&rsquo; and &lsquo;<samp>1</samp>&rsquo;, octal literals contain &lsquo;<samp>0</samp>&rsquo; through &lsquo;<samp>7</samp>&rsquo;, and
+hexadecimal literals contain &lsquo;<samp>0</samp>&rsquo; through &lsquo;<samp>9</samp>&rsquo; as well as &lsquo;<samp>A</samp>&rsquo; through &lsquo;<samp>F</samp>&rsquo;
+in upper- or lowercase.
+</p>
+<p>Negative integers literals are expressed by prepending a minus sign
+(&lsquo;<samp>-</samp>&rsquo;) to an integer literal, as in &lsquo;<samp>-42</samp>&rsquo;.
+</p>
+<p>Underscores (&lsquo;<samp>_</samp>&rsquo;) are allowed between digits for readability, but
+they&rsquo;re ignored and therefore don&rsquo;t affect the value of the literal.
+Integer literals can begin with leading zeros (&lsquo;<samp>0</samp>&rsquo;), but they&rsquo;re
+likewise ignored and don&rsquo;t affect the base or value of the literal.
+</p>
+<p>Unless otherwise specified, the default inferred type of an integer
+literal is the Swift standard library type &lsquo;<samp>Int</samp>&rsquo;. The Swift standard
+library also defines types for various sizes of signed and unsigned
+integers, as described in
+<a href="../swift/Integers.html#Integers">(swift)Integers</a>.
+</p>
+<p>Grammar of an integer literal
+</p>
+<p>integer-literal →
+binary-literal
+</p>
+<p>integer-literal →
+octal-literal
+</p>
+<p>integer-literal →
+decimal-literal
+</p>
+<p>integer-literal →
+hexadecimal-literal
+</p>
+<p>binary-literal → &lsquo;<samp>0b</samp>&rsquo;
+binary-digit
+binary-literal-characters
+_{opt}
+</p>
+<p>binary-digit → Digit 0 or
+1
+</p>
+<p>binary-literal-character
+→
+binary-digit
+</p><table>
+<tr><td>&lsquo;<samp>_</samp>&rsquo;</td></tr>
+</table>
+
+<p>binary-literal-characters
+→
+binary-literal-character
+binary-literal-characters
+_{opt}
+</p>
+<p>octal-literal → &lsquo;<samp>0o</samp>&rsquo;
+octal-digit
+octal-literal-characters
+_{opt}
+</p>
+<p>octal-digit → Digit 0
+through 7
+</p>
+<p>octal-literal-character
+→
+octal-digit
+</p><table>
+<tr><td>&lsquo;<samp>_</samp>&rsquo;</td></tr>
+</table>
+
+<p>octal-literal-characters
+→
+octal-literal-character
+octal-literal-characters
+_{opt}
+</p>
+<p>decimal-literal →
+decimal-digit
+decimal-literal-characters
+_{opt}
+</p>
+<p>decimal-digit → Digit 0
+through 9
+</p>
+<p>decimal-digits →
+decimal-digit
+decimal-digits
+_{opt}
+</p>
+<p>decimal-literal-character
+→
+decimal-digit
+</p><table>
+<tr><td>&lsquo;<samp>_</samp>&rsquo;</td></tr>
+</table>
+
+<p>decimal-literal-characters
+→
+decimal-literal-character
+decimal-literal-characters
+_{opt}
+</p>
+<p>hexadecimal-literal
+→ &lsquo;<samp>0x</samp>&rsquo;
+hexadecimal-digit
+hexadecimal-literal-characters
+_{opt}
+</p>
+<p>hexadecimal-digit →
+Digit 0 through 9, a through f, or A through F
+</p>
+<p>hexadecimal-literal-character
+→
+hexadecimal-digit
+</p><table>
+<tr><td>&lsquo;<samp>_</samp>&rsquo;</td></tr>
+</table>
+
+<p>hexadecimal-literal-characters
+→
+hexadecimal-literal-character
+hexadecimal-literal-characters
+_{opt}
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Floating_002dPoint-Literals.html#Floating_002dPoint-Literals" accesskey="n" rel="next">Floating-Point Literals</a>, Up: <a href="Literals.html#Literals" accesskey="u" rel="up">Literals</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

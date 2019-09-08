@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Strings and Characters (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Strings and Characters (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Strings and Characters (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="String-Literals.html#String-Literals" rel="next" title="String Literals">
+<link href="Explicit-Parentheses.html#Explicit-Parentheses" rel="prev" title="Explicit Parentheses">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Strings-and-Characters"></span><div class="header">
+<p>
+Next: <a href="Collection-Types.html#Collection-Types" accesskey="n" rel="next">Collection Types</a>, Previous: <a href="Basic-Operators.html#Basic-Operators" accesskey="p" rel="prev">Basic Operators</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Strings-and-Characters-1"></span><h2 class="chapter">8 Strings and Characters</h2>
+
+<p>A <em>string</em> is a series of characters, such as &lsquo;<samp>&quot;hello, world&quot;</samp>&rsquo; or
+&lsquo;<samp>&quot;albatross&quot;</samp>&rsquo;. Swift strings are represented by the &lsquo;<samp>String</samp>&rsquo; type. The
+contents of a &lsquo;<samp>String</samp>&rsquo; can be accessed in various ways, including as a
+collection of &lsquo;<samp>Character</samp>&rsquo; values.
+</p>
+<p>Swift&rsquo;s &lsquo;<samp>String</samp>&rsquo; and &lsquo;<samp>Character</samp>&rsquo; types provide a fast, Unicode-compliant
+way to work with text in your code. The syntax for string creation and
+manipulation is lightweight and readable, with a string literal syntax
+that is similar to C. String concatenation is as simple as combining two
+strings with the &lsquo;<samp>+</samp>&rsquo; operator, and string mutability is managed by
+choosing between a constant or a variable, just like any other value in
+Swift. You can also use strings to insert constants, variables,
+literals, and expressions into longer strings, in a process known as
+string interpolation. This makes it easy to create custom string values
+for display, storage, and printing.
+</p>
+<p>Despite this simplicity of syntax, Swift&rsquo;s &lsquo;<samp>String</samp>&rsquo; type is a fast,
+modern string implementation. Every string is composed of
+encoding-independent Unicode characters, and provides support for
+accessing those characters in various Unicode representations.
+</p>
+<p>Note
+</p>
+<p>Swift&rsquo;s &lsquo;<samp>String</samp>&rsquo; type is bridged with Foundation&rsquo;s &lsquo;<samp>NSString</samp>&rsquo; class.
+Foundation also extends &lsquo;<samp>String</samp>&rsquo; to expose methods defined by
+&lsquo;<samp>NSString</samp>&rsquo;. This means, if you import Foundation, you can access those
+&lsquo;<samp>NSString</samp>&rsquo; methods on &lsquo;<samp>String</samp>&rsquo; without casting.
+</p>
+<p>For more information about using &lsquo;<samp>String</samp>&rsquo; with Foundation and Cocoa, see
+<a href="https://developer.apple.com/documentation/swift/string#2919514">Bridging
+Between String and NSString</a>
+[<a href="https://developer.apple.com/documentation/swift/string#2919514">https://developer.apple.com/documentation/swift/string#2919514</a>].
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="String-Literals.html#String-Literals" accesskey="1">String Literals</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Initializing-an-Empty-String.html#Initializing-an-Empty-String" accesskey="2">Initializing an Empty String</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="String-Mutability.html#String-Mutability" accesskey="3">String Mutability</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Strings-Are-Value-Types.html#Strings-Are-Value-Types" accesskey="4">Strings Are Value Types</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Working-with-Characters.html#Working-with-Characters" accesskey="5">Working with Characters</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Concatenating-Strings-and-Characters.html#Concatenating-Strings-and-Characters" accesskey="6">Concatenating Strings and Characters</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="String-Interpolation.html#String-Interpolation" accesskey="7">String Interpolation</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Unicode.html#Unicode" accesskey="8">Unicode</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Counting-Characters.html#Counting-Characters" accesskey="9">Counting Characters</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Accessing-and-Modifying-a-String.html#Accessing-and-Modifying-a-String">Accessing and Modifying a String</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Substrings.html#Substrings">Substrings</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Comparing-Strings.html#Comparing-Strings">Comparing Strings</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Unicode-Representations-of-Strings.html#Unicode-Representations-of-Strings">Unicode Representations of Strings</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Collection-Types.html#Collection-Types" accesskey="n" rel="next">Collection Types</a>, Previous: <a href="Basic-Operators.html#Basic-Operators" accesskey="p" rel="prev">Basic Operators</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Selector Expression (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Selector Expression (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Selector Expression (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Primary-Expressions.html#Primary-Expressions" rel="up" title="Primary Expressions">
+<link href="Key_002dPath-String-Expression.html#Key_002dPath-String-Expression" rel="next" title="Key-Path String Expression">
+<link href="Key_002dPath-Expression.html#Key_002dPath-Expression" rel="prev" title="Key-Path Expression">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Selector-Expression"></span><div class="header">
+<p>
+Next: <a href="Key_002dPath-String-Expression.html#Key_002dPath-String-Expression" accesskey="n" rel="next">Key-Path String Expression</a>, Previous: <a href="Key_002dPath-Expression.html#Key_002dPath-Expression" accesskey="p" rel="prev">Key-Path Expression</a>, Up: <a href="Primary-Expressions.html#Primary-Expressions" accesskey="u" rel="up">Primary Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Selector-Expression-1"></span><h4 class="subsection">5.3.10 Selector Expression</h4>
+
+<p>A selector expression lets you access the selector used to refer to a
+method or to a property&rsquo;s getter or setter in Objective-C. It has the
+following form:
+</p>
+<span id="index-_0023selector"></span>
+
+<ol>
+<li> #selector(method name)
+</li><li> #selector(getter: property name)
+</li><li> #selector(setter: property name)
+</li></ol>
+
+<p>The <em>method name</em> and <em>property name</em> must be a reference to a method or
+a property that is available in the Objective-C runtime. The value of a
+selector expression is an instance of the &lsquo;<samp>Selector</samp>&rsquo; type. For example:
+</p>
+<ol>
+<li> class SomeClass: NSObject {
+</li><li> @objc let property: String
+</li><li> @objc(doSomethingWithInt:)
+</li><li> func doSomething(_ x: Int) {}
+</li><li> init(property: String) {
+</li><li> self.property = property
+</li><li> }
+</li><li> }
+</li><li> let selectorForMethod = #selector(SomeClass.doSomething(_:))
+</li><li> let selectorForPropertyGetter = #selector(getter:
+SomeClass.property)
+</li></ol>
+
+<p>When creating a selector for a property&rsquo;s getter, the <em>property name</em>
+can be a reference to a variable or constant property. In contrast, when
+creating a selector for a property&rsquo;s setter, the <em>property name</em> must be
+a reference to a variable property only.
+</p>
+<p>The <em>method name</em> can contain parentheses for grouping, as well the &lsquo;<samp>as</samp>&rsquo;
+operator to disambiguate between methods that share a name but have
+different type signatures. For example:
+</p>
+<ol>
+<li> extension SomeClass {
+</li><li> @objc(doSomethingWithString:)
+</li><li> func doSomething(_ x: String) { }
+</li><li> }
+</li><li> let anotherSelector = #selector(SomeClass.doSomething(_:) as
+(SomeClass) -&gt; (String) -&gt; Void)
+</li></ol>
+
+<p>Because a selector is created at compile time, not at runtime, the
+compiler can check that a method or property exists and that they&rsquo;re
+exposed to the Objective-C runtime.
+</p>
+<p>Note
+</p>
+<p>Although the <em>method name</em> and the <em>property name</em> are expressions,
+they&rsquo;re never evaluated.
+</p>
+<p>For more information about using selectors in Swift code that interacts
+with Objective-C APIs, see
+<a href="https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift">Using
+Objective-C Runtime Features in Swift</a>
+[<a href="https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift">https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift</a>].
+</p>
+<p>Grammar of a selector expression
+</p>
+<p>selector-expression →
+&lsquo;<samp>#selector</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo;
+expression
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>selector-expression
+→ &lsquo;<samp>#selector</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>getter:</samp>&rsquo;
+expression
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>selector-expression
+→ &lsquo;<samp>#selector</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>setter:</samp>&rsquo;
+expression
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Key_002dPath-String-Expression.html#Key_002dPath-String-Expression" accesskey="n" rel="next">Key-Path String Expression</a>, Previous: <a href="Key_002dPath-Expression.html#Key_002dPath-Expression" accesskey="p" rel="prev">Key-Path Expression</a>, Up: <a href="Primary-Expressions.html#Primary-Expressions" accesskey="u" rel="up">Primary Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

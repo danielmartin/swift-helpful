@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Optional Type (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Optional Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Optional Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Types.html#Types" rel="up" title="Types">
+<link href="Implicitly-Unwrapped-Optional-Type.html#Implicitly-Unwrapped-Optional-Type" rel="next" title="Implicitly Unwrapped Optional Type">
+<link href="Dictionary-Type.html#Dictionary-Type" rel="prev" title="Dictionary Type">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Optional-Type"></span><div class="header">
+<p>
+Next: <a href="Implicitly-Unwrapped-Optional-Type.html#Implicitly-Unwrapped-Optional-Type" accesskey="n" rel="next">Implicitly Unwrapped Optional Type</a>, Previous: <a href="Dictionary-Type.html#Dictionary-Type" accesskey="p" rel="prev">Dictionary Type</a>, Up: <a href="Types.html#Types" accesskey="u" rel="up">Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Optional-Type-1"></span><h3 class="section">4.7 Optional Type</h3>
+
+<p>The Swift language defines the postfix &lsquo;<samp>?</samp>&rsquo; as syntactic sugar for the
+named type &lsquo;<samp>Optional&lt;Wrapped&gt;</samp>&rsquo;, which is defined in the Swift standard
+library. In other words, the following two declarations are equivalent:
+</p>
+<ol>
+<li> var optionalInteger: Int?
+</li><li> var optionalInteger: Optional&lt;Int&gt;
+</li></ol>
+
+<p>In both cases, the variable &lsquo;<samp>optionalInteger</samp>&rsquo; is declared to have the
+type of an optional integer. Note that no whitespace may appear between
+the type and the &lsquo;<samp>?</samp>&rsquo;.
+</p>
+<p>The type &lsquo;<samp>Optional&lt;Wrapped&gt;</samp>&rsquo; is an enumeration with two cases, &lsquo;<samp>none</samp>&rsquo;
+and &lsquo;<samp>some(Wrapped)</samp>&rsquo;, which are used to represent values that may or may
+not be present. Any type can be explicitly declared to be (or implicitly
+converted to) an optional type. If you don&rsquo;t provide an initial value
+when you declare an optional variable or property, its value
+automatically defaults to &lsquo;<samp>nil</samp>&rsquo;.
+</p>
+<p>If an instance of an optional type contains a value, you can access that
+value using the postfix operator &lsquo;<samp>!</samp>&rsquo;, as shown below:
+</p>
+<ol>
+<li> optionalInteger = 42
+</li><li> optionalInteger! // 42
+</li></ol>
+
+<p>Using the &lsquo;<samp>!</samp>&rsquo; operator to unwrap an optional that has a value of &lsquo;<samp>nil</samp>&rsquo;
+results in a runtime error.
+</p>
+<p>You can also use optional chaining and optional binding to conditionally
+perform an operation on an optional expression. If the value is &lsquo;<samp>nil</samp>&rsquo;,
+no operation is performed and therefore no runtime error is produced.
+</p>
+<p>For more information and to see examples that show how to use optional
+types, see <a href="../swift/Optionals.html#Optionals">(swift)Optionals</a>.
+</p>
+<p>Grammar of an optional type
+</p>
+<p>optional-type →
+type &lsquo;<samp>?</samp>&rsquo;
+</p>
+
+
+
+</body>
+</html>

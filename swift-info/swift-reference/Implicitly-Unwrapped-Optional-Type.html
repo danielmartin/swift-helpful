@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Implicitly Unwrapped Optional Type (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Implicitly Unwrapped Optional Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Implicitly Unwrapped Optional Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Types.html#Types" rel="up" title="Types">
+<link href="Protocol-Composition-Type.html#Protocol-Composition-Type" rel="next" title="Protocol Composition Type">
+<link href="Optional-Type.html#Optional-Type" rel="prev" title="Optional Type">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Implicitly-Unwrapped-Optional-Type"></span><div class="header">
+<p>
+Next: <a href="Protocol-Composition-Type.html#Protocol-Composition-Type" accesskey="n" rel="next">Protocol Composition Type</a>, Previous: <a href="Optional-Type.html#Optional-Type" accesskey="p" rel="prev">Optional Type</a>, Up: <a href="Types.html#Types" accesskey="u" rel="up">Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Implicitly-Unwrapped-Optional-Type-1"></span><h3 class="section">4.8 Implicitly Unwrapped Optional Type</h3>
+
+<p>The Swift language defines the postfix &lsquo;<samp>!</samp>&rsquo; as syntactic sugar for the
+named type &lsquo;<samp>Optional&lt;Wrapped&gt;</samp>&rsquo;, which is defined in the Swift standard
+library, with the additional behavior that it&rsquo;s automatically unwrapped
+when it&rsquo;s accessed. If you try to use an implicitly unwrapped optional
+that has a value of &lsquo;<samp>nil</samp>&rsquo;, you&rsquo;ll get a runtime error. With the
+exception of the implicit unwrapping behavior, the following two
+declarations are equivalent:
+</p>
+<ol>
+<li> var implicitlyUnwrappedString: String!
+</li><li> var explicitlyUnwrappedString: Optional&lt;String&gt;
+</li></ol>
+
+<p>Note that no whitespace may appear between the type and the &lsquo;<samp>!</samp>&rsquo;.
+</p>
+<p>Because implicit unwrapping changes the meaning of the declaration that
+contains that type, optional types that are nested inside a tuple type
+or a generic type&mdash;such as the element types of a dictionary or
+array&mdash;can&rsquo;t be marked as implicitly unwrapped. For example:
+</p>
+<ol>
+<li> let tupleOfImplicitlyUnwrappedElements: (Int!, Int!) // Error
+</li><li> let implicitlyUnwrappedTuple: (Int, Int)! // OK
+</li><li> let arrayOfImplicitlyUnwrappedElements: [Int!] // Error
+</li><li> let implicitlyUnwrappedArray: [Int]! // OK
+</li></ol>
+
+<p>Because implicitly unwrapped optionals have the same &lsquo;<samp>Optional&lt;Wrapped&gt;</samp>&rsquo;
+type as optional values, you can use implicitly unwrapped optionals in
+all the same places in your code that you can use optionals. For
+example, you can assign values of implicitly unwrapped optionals to
+variables, constants, and properties of optionals, and vice versa.
+</p>
+<p>As with optionals, if you don&rsquo;t provide an initial value when you
+declare an implicitly unwrapped optional variable or property, its value
+automatically defaults to &lsquo;<samp>nil</samp>&rsquo;.
+</p>
+<p>Use optional chaining to conditionally perform an operation on an
+implicitly unwrapped optional expression. If the value is &lsquo;<samp>nil</samp>&rsquo;, no
+operation is performed and therefore no runtime error is produced.
+</p>
+<p>For more information about implicitly unwrapped optional types, see
+<a href="../swift/Implicitly-Unwrapped-Optionals.html#Implicitly-Unwrapped-Optionals">(swift)Implicitly Unwrapped
+Optionals</a>.
+</p>
+<p>Grammar of an implicitly unwrapped optional type
+</p>
+<p>implicitly-unwrapped-optional-type
+→ type &lsquo;<samp>!</samp>&rsquo;
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Protocol-Composition-Type.html#Protocol-Composition-Type" accesskey="n" rel="next">Protocol Composition Type</a>, Previous: <a href="Optional-Type.html#Optional-Type" accesskey="p" rel="prev">Optional Type</a>, Up: <a href="Types.html#Types" accesskey="u" rel="up">Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

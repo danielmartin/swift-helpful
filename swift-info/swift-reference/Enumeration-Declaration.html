@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Enumeration Declaration (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Enumeration Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Enumeration Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Declarations.html#Declarations" rel="up" title="Declarations">
+<link href="Enumerations-with-Cases-of-Any-Type.html#Enumerations-with-Cases-of-Any-Type" rel="next" title="Enumerations with Cases of Any Type">
+<link href="Functions-that-Never-Return.html#Functions-that-Never-Return" rel="prev" title="Functions that Never Return">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Enumeration-Declaration"></span><div class="header">
+<p>
+Next: <a href="Structure-Declaration.html#Structure-Declaration" accesskey="n" rel="next">Structure Declaration</a>, Previous: <a href="Function-Declaration.html#Function-Declaration" accesskey="p" rel="prev">Function Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Enumeration-Declaration-1"></span><h3 class="section">7.8 Enumeration Declaration</h3>
+
+<p>An <em>enumeration declaration</em> introduces a named enumeration type into
+your program.
+</p>
+<span id="index-enum"></span>
+
+<p>Enumeration declarations have two basic forms and are declared using the
+&lsquo;<samp>enum</samp>&rsquo; keyword. The body of an enumeration declared using either form
+contains zero or more values&mdash;called <em>enumeration cases</em>&mdash;and any
+number of declarations, including computed properties, instance methods,
+type methods, initializers, type aliases, and even other enumeration,
+structure, and class declarations. Enumeration declarations can&rsquo;t
+contain deinitializer or protocol declarations.
+</p>
+<p>Enumeration types can adopt any number of protocols, but can&rsquo;t inherit
+from classes, structures, or other enumerations.
+</p>
+<p>Unlike classes and structures, enumeration types do not have an
+implicitly provided default initializer; all initializers must be
+declared explicitly. Initializers can delegate to other initializers in
+the enumeration, but the initialization process is complete only after
+an initializer assigns one of the enumeration cases to &lsquo;<samp>self</samp>&rsquo;.
+</p>
+<p>Like structures but unlike classes, enumerations are value types;
+instances of an enumeration are copied when assigned to variables or
+constants, or when passed as arguments to a function call. For
+information about value types, see
+<a href="../swift/Structures-and-Enumerations-Are-Value-Types.html#Structures-and-Enumerations-Are-Value-Types">(swift)Structures and
+Enumerations Are Value Types</a>.
+</p>
+<p>You can extend the behavior of an enumeration type with an extension
+declaration, as discussed in <a href="Extension-Declaration.html#Extension-Declaration">Extension
+Declaration</a>.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Enumerations-with-Cases-of-Any-Type.html#Enumerations-with-Cases-of-Any-Type" accesskey="1">Enumerations with Cases of Any Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Enumerations-with-Cases-of-a-Raw_002dValue-Type.html#Enumerations-with-Cases-of-a-Raw_002dValue-Type" accesskey="2">Enumerations with Cases of a Raw-Value Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Accessing-Enumeration-Cases.html#Accessing-Enumeration-Cases" accesskey="3">Accessing Enumeration Cases</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

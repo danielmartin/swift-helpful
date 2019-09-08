@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Primary Expressions (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Primary Expressions (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Primary Expressions (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Expressions.html#Expressions" rel="up" title="Expressions">
+<link href="Literal-Expression.html#Literal-Expression" rel="next" title="Literal Expression">
+<link href="Type_002dCasting-Operators.html#Type_002dCasting-Operators" rel="prev" title="Type-Casting Operators">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Primary-Expressions"></span><div class="header">
+<p>
+Next: <a href="Postfix-Expressions.html#Postfix-Expressions" accesskey="n" rel="next">Postfix Expressions</a>, Previous: <a href="Binary-Expressions.html#Binary-Expressions" accesskey="p" rel="prev">Binary Expressions</a>, Up: <a href="Expressions.html#Expressions" accesskey="u" rel="up">Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Primary-Expressions-1"></span><h3 class="section">5.3 Primary Expressions</h3>
+
+<p><em>Primary expressions</em> are the most basic kind of expression. They can be
+used as expressions on their own, and they can be combined with other
+tokens to make prefix expressions, binary expressions, and postfix
+expressions.
+</p>
+<p>Grammar of a primary expression
+</p>
+<p>primary-expression →
+identifier
+generic-argument-clause
+_{opt}
+</p>
+<p>primary-expression
+→
+literal-expression
+</p>
+<p>primary-expression
+→
+self-expression
+</p>
+<p>primary-expression
+→
+superclass-expression
+</p>
+<p>primary-expression
+→
+closure-expression
+</p>
+<p>primary-expression
+→
+parenthesized-expression
+</p>
+<p>primary-expression
+→
+tuple-expression
+</p>
+<p>primary-expression
+→
+implicit-member-expression
+</p>
+<p>primary-expression
+→
+wildcard-expression
+</p>
+<p>primary-expression
+→
+key-path-expression
+</p>
+<p>primary-expression
+→
+selector-expression
+</p>
+<p>primary-expression
+→
+key-path-string-expression
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Literal-Expression.html#Literal-Expression" accesskey="1">Literal Expression</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Self-Expression.html#Self-Expression" accesskey="2">Self Expression</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Superclass-Expression.html#Superclass-Expression" accesskey="3">Superclass Expression</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Closure-Expression.html#Closure-Expression" accesskey="4">Closure Expression</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Implicit-Member-Expression.html#Implicit-Member-Expression" accesskey="5">Implicit Member Expression</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Parenthesized-Expression.html#Parenthesized-Expression" accesskey="6">Parenthesized Expression</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Tuple-Expression.html#Tuple-Expression" accesskey="7">Tuple Expression</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Wildcard-Expression.html#Wildcard-Expression" accesskey="8">Wildcard Expression</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Key_002dPath-Expression.html#Key_002dPath-Expression" accesskey="9">Key-Path Expression</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Selector-Expression.html#Selector-Expression">Selector Expression</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Key_002dPath-String-Expression.html#Key_002dPath-String-Expression">Key-Path String Expression</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

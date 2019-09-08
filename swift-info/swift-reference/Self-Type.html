@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Self Type (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Self Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Self Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Types.html#Types" rel="up" title="Types">
+<link href="Type-Inheritance-Clause.html#Type-Inheritance-Clause" rel="next" title="Type Inheritance Clause">
+<link href="Metatype-Type.html#Metatype-Type" rel="prev" title="Metatype Type">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Self-Type"></span><div class="header">
+<p>
+Next: <a href="Type-Inheritance-Clause.html#Type-Inheritance-Clause" accesskey="n" rel="next">Type Inheritance Clause</a>, Previous: <a href="Metatype-Type.html#Metatype-Type" accesskey="p" rel="prev">Metatype Type</a>, Up: <a href="Types.html#Types" accesskey="u" rel="up">Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Self-Type-1"></span><h3 class="section">4.12 Self Type</h3>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0068-universal-self.md">Proposal</a>
+</p>
+<p>The &lsquo;<samp>Self</samp>&rsquo; type isn&rsquo;t a specific type, but rather lets you conveniently
+refer to the current type without repeating or knowing that type&rsquo;s name.
+</p>
+<p>In a protocol declaration or a protocol member declaration, the &lsquo;<samp>Self</samp>&rsquo;
+type refers to the eventual type that conforms to the protocol.
+</p>
+<p>In a structure, class, or enumeration declaration, the &lsquo;<samp>Self</samp>&rsquo; type
+refers to the type introduced by the declaration. Inside the declaration
+for a member of a type, the &lsquo;<samp>Self</samp>&rsquo; type refers to that type. In the
+members of a class declaration, &lsquo;<samp>Self</samp>&rsquo; can appear as the return type of
+a method and in the body of a method, but not in any other context. For
+example, the code below shows an instance method &lsquo;<samp>f</samp>&rsquo; whose return type
+is &lsquo;<samp>Self</samp>&rsquo;.
+</p>
+<ol>
+<li> class Superclass {
+</li><li> func f() -&gt; Self { return self }
+</li><li> }
+</li><li> let x = Superclass()
+</li><li> print(type(of: x.f()))
+</li><li> // Prints &quot;Superclass&quot;
+</li><li> class Subclass: Superclass { }
+</li><li> let y = Subclass()
+</li><li> print(type(of: y.f()))
+</li><li> // Prints &quot;Subclass&quot;
+</li><li> let z: Superclass = Subclass()
+</li><li> print(type(of: z.f()))
+</li><li> // Prints &quot;Subclass&quot;
+</li></ol>
+
+<p>The last part of the example above shows that &lsquo;<samp>Self</samp>&rsquo; refers to the
+runtime type &lsquo;<samp>Subclass</samp>&rsquo; of the value of &lsquo;<samp>z</samp>&rsquo;, not the compile-time type
+&lsquo;<samp>Superclass</samp>&rsquo; of the variable itself.
+</p>
+<p>Inside a nested type declaration, the &lsquo;<samp>Self</samp>&rsquo; type refers to the type
+introduced by the innermost type declaration.
+</p>
+<p>The &lsquo;<samp>Self</samp>&rsquo; type refers to the same type as the
+<a href="https://developer.apple.com/documentation/swift/2885064-type">&lsquo;<samp>type(of:)</samp>&rsquo;</a>
+[<a href="https://developer.apple.com/documentation/swift/2885064-type">https://developer.apple.com/documentation/swift/2885064-type</a>] function
+in the Swift standard library. Writing &lsquo;<samp>Self.someStaticMember</samp>&rsquo; to access
+a member of the current type is the same as writing
+&lsquo;<samp>type(of: self).someStaticMember</samp>&rsquo;.
+</p>
+<p>Grammar of a Self type
+</p>
+<p>self-type → &lsquo;<samp>Self</samp>&rsquo;
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Type-Inheritance-Clause.html#Type-Inheritance-Clause" accesskey="n" rel="next">Type Inheritance Clause</a>, Previous: <a href="Metatype-Type.html#Metatype-Type" accesskey="p" rel="prev">Metatype Type</a>, Up: <a href="Types.html#Types" accesskey="u" rel="up">Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

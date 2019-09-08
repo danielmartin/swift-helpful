@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Functions with Multiple Return Values (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Functions with Multiple Return Values (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Functions with Multiple Return Values (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Function-Parameters-and-Return-Values.html#Function-Parameters-and-Return-Values" rel="up" title="Function Parameters and Return Values">
+<link href="Functions-With-an-Implicit-Return.html#Functions-With-an-Implicit-Return" rel="next" title="Functions With an Implicit Return">
+<link href="Functions-Without-Return-Values.html#Functions-Without-Return-Values" rel="prev" title="Functions Without Return Values">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Functions-with-Multiple-Return-Values"></span><div class="header">
+<p>
+Next: <a href="Functions-With-an-Implicit-Return.html#Functions-With-an-Implicit-Return" accesskey="n" rel="next">Functions With an Implicit Return</a>, Previous: <a href="Functions-Without-Return-Values.html#Functions-Without-Return-Values" accesskey="p" rel="prev">Functions Without Return Values</a>, Up: <a href="Function-Parameters-and-Return-Values.html#Function-Parameters-and-Return-Values" accesskey="u" rel="up">Function Parameters and Return Values</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Functions-with-Multiple-Return-Values-1"></span><h4 class="subsection">11.2.4 Functions with Multiple Return Values</h4>
+
+<p>You can use a tuple type as the return type for a function to return
+multiple values as part of one compound return value.
+</p>
+<p>The example below defines a function called &lsquo;<samp>minMax(array:)</samp>&rsquo;, which
+finds the smallest and largest numbers in an array of &lsquo;<samp>Int</samp>&rsquo; values:
+</p>
+<div class="example">
+<pre class="example">func minMax(array: [Int]) -&gt; (min: Int, max: Int) {
+    var currentMin = array[0]
+    var currentMax = array[0]
+    for value in array[1..&lt;array.count] {
+        if value &lt; currentMin {
+            currentMin = value
+        } else if value &gt; currentMax {
+            currentMax = value
+        }
+    }
+    return (currentMin, currentMax)
+}
+</pre></div>
+
+<p>The &lsquo;<samp>minMax(array:)</samp>&rsquo; function returns a tuple containing two &lsquo;<samp>Int</samp>&rsquo;
+values. These values are labeled &lsquo;<samp>min</samp>&rsquo; and &lsquo;<samp>max</samp>&rsquo; so that they can be
+accessed by name when querying the function&rsquo;s return value.
+</p>
+<p>The body of the &lsquo;<samp>minMax(array:)</samp>&rsquo; function starts by setting two working
+variables called &lsquo;<samp>currentMin</samp>&rsquo; and &lsquo;<samp>currentMax</samp>&rsquo; to the value of the first
+integer in the array. The function then iterates over the remaining
+values in the array and checks each value to see if it is smaller or
+larger than the values of &lsquo;<samp>currentMin</samp>&rsquo; and &lsquo;<samp>currentMax</samp>&rsquo; respectively.
+Finally, the overall minimum and maximum values are returned as a tuple
+of two &lsquo;<samp>Int</samp>&rsquo; values.
+</p>
+<p>Because the tuple&rsquo;s member values are named as part of the function&rsquo;s
+return type, they can be accessed with dot syntax to retrieve the
+minimum and maximum found values:
+</p>
+<div class="example">
+<pre class="example">let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
+print(&quot;min is \(bounds.min) and max is \(bounds.max)&quot;)
+// Prints &quot;min is -6 and max is 109&quot;
+</pre></div>
+
+<p>Note that the tuple&rsquo;s members do not need to be named at the point that
+the tuple is returned from the function, because their names are already
+specified as part of the function&rsquo;s return type.
+</p>
+<ol>
+<li> Optional Tuple Return Types
+
+
+<p>If the tuple type to be returned from a function has the potential to
+have “no value” for the entire tuple, you can use an <em>optional</em> tuple
+return type to reflect the fact that the entire tuple can be &lsquo;<samp>nil</samp>&rsquo;. You
+write an optional tuple return type by placing a question mark after the
+tuple type&rsquo;s closing parenthesis, such as &lsquo;<samp>(Int, Int)?</samp>&rsquo; or
+&lsquo;<samp>(String, Int, Bool)?</samp>&rsquo;.
+</p>
+<p>Note
+</p>
+<p>An optional tuple type such as &lsquo;<samp>(Int, Int)?</samp>&rsquo; is different from a tuple
+that contains optional types such as &lsquo;<samp>(Int?, Int?)</samp>&rsquo;. With an optional
+tuple type, the entire tuple is optional, not just each individual value
+within the tuple.
+</p>
+<p>The &lsquo;<samp>minMax(array:)</samp>&rsquo; function above returns a tuple containing two &lsquo;<samp>Int</samp>&rsquo;
+values. However, the function does not perform any safety checks on the
+array it is passed. If the &lsquo;<samp>array</samp>&rsquo; argument contains an empty array, the
+&lsquo;<samp>minMax(array:)</samp>&rsquo; function, as defined above, will trigger a runtime
+error when attempting to access &lsquo;<samp>array[0]</samp>&rsquo;.
+</p>
+<p>To handle an empty array safely, write the &lsquo;<samp>minMax(array:)</samp>&rsquo; function
+with an optional tuple return type and return a value of &lsquo;<samp>nil</samp>&rsquo; when the
+array is empty:
+</p>
+<div class="example">
+<pre class="example">func minMax(array: [Int]) -&gt; (min: Int, max: Int)? {
+    if array.isEmpty { return nil }
+    var currentMin = array[0]
+    var currentMax = array[0]
+    for value in array[1..&lt;array.count] {
+        if value &lt; currentMin {
+            currentMin = value
+        } else if value &gt; currentMax {
+            currentMax = value
+        }
+    }
+    return (currentMin, currentMax)
+}
+</pre></div>
+
+<p>You can use optional binding to check whether this version of the
+&lsquo;<samp>minMax(array:)</samp>&rsquo; function returns an actual tuple value or &lsquo;<samp>nil</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
+    print(&quot;min is \(bounds.min) and max is \(bounds.max)&quot;)
+}
+// Prints &quot;min is -6 and max is 109&quot;
+</pre></div>
+</li></ol>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Functions-With-an-Implicit-Return.html#Functions-With-an-Implicit-Return" accesskey="n" rel="next">Functions With an Implicit Return</a>, Previous: <a href="Functions-Without-Return-Values.html#Functions-Without-Return-Values" accesskey="p" rel="prev">Functions Without Return Values</a>, Up: <a href="Function-Parameters-and-Return-Values.html#Function-Parameters-and-Return-Values" accesskey="u" rel="up">Function Parameters and Return Values</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

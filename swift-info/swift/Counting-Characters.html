@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Counting Characters (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Counting Characters (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Counting Characters (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Strings-and-Characters.html#Strings-and-Characters" rel="up" title="Strings and Characters">
+<link href="Accessing-and-Modifying-a-String.html#Accessing-and-Modifying-a-String" rel="next" title="Accessing and Modifying a String">
+<link href="Extended-Grapheme-Clusters.html#Extended-Grapheme-Clusters" rel="prev" title="Extended Grapheme Clusters">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Counting-Characters"></span><div class="header">
+<p>
+Next: <a href="Accessing-and-Modifying-a-String.html#Accessing-and-Modifying-a-String" accesskey="n" rel="next">Accessing and Modifying a String</a>, Previous: <a href="Unicode.html#Unicode" accesskey="p" rel="prev">Unicode</a>, Up: <a href="Strings-and-Characters.html#Strings-and-Characters" accesskey="u" rel="up">Strings and Characters</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Counting-Characters-1"></span><h3 class="section">8.9 Counting Characters</h3>
+
+<p>To retrieve a count of the &lsquo;<samp>Character</samp>&rsquo; values in a string, use the
+&lsquo;<samp>count</samp>&rsquo; property of the string:
+</p>
+<div class="example">
+<pre class="example">let unusualMenagerie = &quot;Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪&quot;
+print(&quot;unusualMenagerie has \(unusualMenagerie.count) characters&quot;)
+// Prints &quot;unusualMenagerie has 40 characters&quot;
+</pre></div>
+
+<p>Note that Swift&rsquo;s use of extended grapheme clusters for &lsquo;<samp>Character</samp>&rsquo;
+values means that string concatenation and modification may not always
+affect a string&rsquo;s character count.
+</p>
+<p>For example, if you initialize a new string with the four-character word
+&lsquo;<samp>cafe</samp>&rsquo;, and then append a &lsquo;<samp>COMBINING ACUTE ACCENT</samp>&rsquo; (&lsquo;<samp>U+0301</samp>&rsquo;) to the end
+of the string, the resulting string will still have a character count of
+&lsquo;<samp>4</samp>&rsquo;, with a fourth character of &lsquo;<samp>é</samp>&rsquo;, not &lsquo;<samp>e</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">var word = &quot;cafe&quot;
+print(&quot;the number of characters in \(word) is \(word.count)&quot;)
+// Prints &quot;the number of characters in cafe is 4&quot;
+
+word += &quot;\u{301}&quot; // COMBINING ACUTE ACCENT, U+0301
+
+print(&quot;the number of characters in \(word) is \(word.count)&quot;)
+// Prints &quot;the number of characters in café is 4&quot;
+</pre></div>
+
+<p>Note
+</p>
+<p>Extended grapheme clusters can be composed of multiple Unicode scalars.
+This means that different characters&mdash;and different representations of
+the same character&mdash;can require different amounts of memory to store.
+Because of this, characters in Swift don&rsquo;t each take up the same amount
+of memory within a string&rsquo;s representation. As a result, the number of
+characters in a string can&rsquo;t be calculated without iterating through the
+string to determine its extended grapheme cluster boundaries. If you are
+working with particularly long string values, be aware that the &lsquo;<samp>count</samp>&rsquo;
+property must iterate over the Unicode scalars in the entire string in
+order to determine the characters for that string.
+</p>
+<p>The count of the characters returned by the &lsquo;<samp>count</samp>&rsquo; property isn&rsquo;t
+always the same as the &lsquo;<samp>length</samp>&rsquo; property of an &lsquo;<samp>NSString</samp>&rsquo; that contains
+the same characters. The length of an &lsquo;<samp>NSString</samp>&rsquo; is based on the number
+of 16-bit code units within the string&rsquo;s UTF-16 representation and not
+the number of Unicode extended grapheme clusters within the string.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Accessing-and-Modifying-a-String.html#Accessing-and-Modifying-a-String" accesskey="n" rel="next">Accessing and Modifying a String</a>, Previous: <a href="Unicode.html#Unicode" accesskey="p" rel="prev">Unicode</a>, Up: <a href="Strings-and-Characters.html#Strings-and-Characters" accesskey="u" rel="up">Strings and Characters</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

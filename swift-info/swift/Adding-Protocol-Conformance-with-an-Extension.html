@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Adding Protocol Conformance with an Extension (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Adding Protocol Conformance with an Extension (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Adding Protocol Conformance with an Extension (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Protocols.html#Protocols" rel="up" title="Protocols">
+<link href="Conditionally-Conforming-to-a-Protocol.html#Conditionally-Conforming-to-a-Protocol" rel="next" title="Conditionally Conforming to a Protocol">
+<link href="Delegation.html#Delegation" rel="prev" title="Delegation">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Adding-Protocol-Conformance-with-an-Extension"></span><div class="header">
+<p>
+Next: <a href="Collections-of-Protocol-Types.html#Collections-of-Protocol-Types" accesskey="n" rel="next">Collections of Protocol Types</a>, Previous: <a href="Delegation.html#Delegation" accesskey="p" rel="prev">Delegation</a>, Up: <a href="Protocols.html#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Adding-Protocol-Conformance-with-an-Extension-1"></span><h3 class="section">26.8 Adding Protocol Conformance with an Extension</h3>
+
+<p>You can extend an existing type to adopt and conform to a new protocol,
+even if you don&rsquo;t have access to the source code for the existing type.
+Extensions can add new properties, methods, and subscripts to an
+existing type, and are therefore able to add any requirements that a
+protocol may demand. For more about extensions, see
+<a href="Extensions.html#Extensions">Extensions</a>.
+</p>
+<p>Note
+</p>
+<p>Existing instances of a type automatically adopt and conform to a
+protocol when that conformance is added to the instance&rsquo;s type in an
+extension.
+</p>
+<p>For example, this protocol, called &lsquo;<samp>TextRepresentable</samp>&rsquo;, can be
+implemented by any type that has a way to be represented as text. This
+might be a description of itself, or a text version of its current
+state:
+</p>
+<div class="example">
+<pre class="example">protocol TextRepresentable {
+    var textualDescription: String { get }
+}
+</pre></div>
+
+<p>The &lsquo;<samp>Dice</samp>&rsquo; class from above can be extended to adopt and conform to
+&lsquo;<samp>TextRepresentable</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">extension Dice: TextRepresentable {
+    var textualDescription: String {
+        return &quot;A \(sides)-sided dice&quot;
+    }
+}
+</pre></div>
+
+<p>This extension adopts the new protocol in exactly the same way as if
+&lsquo;<samp>Dice</samp>&rsquo; had provided it in its original implementation. The protocol name
+is provided after the type name, separated by a colon, and an
+implementation of all requirements of the protocol is provided within
+the extension&rsquo;s curly braces.
+</p>
+<p>Any &lsquo;<samp>Dice</samp>&rsquo; instance can now be treated as &lsquo;<samp>TextRepresentable</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
+print(d12.textualDescription)
+// Prints &quot;A 12-sided dice&quot;
+</pre></div>
+
+<p>Similarly, the &lsquo;<samp>SnakesAndLadders</samp>&rsquo; game class can be extended to adopt
+and conform to the &lsquo;<samp>TextRepresentable</samp>&rsquo; protocol:
+</p>
+<div class="example">
+<pre class="example">extension SnakesAndLadders: TextRepresentable {
+    var textualDescription: String {
+        return &quot;A game of Snakes and Ladders with \(finalSquare) squares&quot;
+    }
+}
+print(game.textualDescription)
+// Prints &quot;A game of Snakes and Ladders with 25 squares&quot;
+</pre></div>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Conditionally-Conforming-to-a-Protocol.html#Conditionally-Conforming-to-a-Protocol" accesskey="1">Conditionally Conforming to a Protocol</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Declaring-Protocol-Adoption-with-an-Extension.html#Declaring-Protocol-Adoption-with-an-Extension" accesskey="2">Declaring Protocol Adoption with an Extension</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Collections-of-Protocol-Types.html#Collections-of-Protocol-Types" accesskey="n" rel="next">Collections of Protocol Types</a>, Previous: <a href="Delegation.html#Delegation" accesskey="p" rel="prev">Delegation</a>, Up: <a href="Protocols.html#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

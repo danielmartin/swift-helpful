@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Functions With an Implicit Return (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Functions With an Implicit Return (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Functions With an Implicit Return (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Function-Parameters-and-Return-Values.html#Function-Parameters-and-Return-Values" rel="up" title="Function Parameters and Return Values">
+<link href="Function-Argument-Labels-and-Parameter-Names.html#Function-Argument-Labels-and-Parameter-Names" rel="next" title="Function Argument Labels and Parameter Names">
+<link href="Functions-with-Multiple-Return-Values.html#Functions-with-Multiple-Return-Values" rel="prev" title="Functions with Multiple Return Values">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Functions-With-an-Implicit-Return"></span><div class="header">
+<p>
+Previous: <a href="Functions-with-Multiple-Return-Values.html#Functions-with-Multiple-Return-Values" accesskey="p" rel="prev">Functions with Multiple Return Values</a>, Up: <a href="Function-Parameters-and-Return-Values.html#Function-Parameters-and-Return-Values" accesskey="u" rel="up">Function Parameters and Return Values</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Functions-With-an-Implicit-Return-1"></span><h4 class="subsection">11.2.5 Functions With an Implicit Return</h4>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0255-omit-return.md">Proposal</a>
+</p>
+<p>If the entire body of the function is a single expression, the function
+implicitly returns that expression. For example, both functions below
+have the same behavior:
+</p>
+<div class="example">
+<pre class="example">func greeting(for person: String) -&gt; String {
+    &quot;Hello, &quot; + person + &quot;!&quot;
+}
+print(greeting(for: &quot;Dave&quot;))
+// Prints &quot;Hello, Dave!&quot;
+
+func anotherGreeting(for person: String) -&gt; String {
+    return &quot;Hello, &quot; + person + &quot;!&quot;
+}
+print(anotherGreeting(for: &quot;Dave&quot;))
+// Prints &quot;Hello, Dave!&quot;
+</pre></div>
+
+<p>The entire definition of the &lsquo;<samp>greeting(for:)</samp>&rsquo; function is the greeting
+message that it returns, which means it can use this shorter form. The
+&lsquo;<samp>anotherGreeting(for:)</samp>&rsquo; function returns the same greeting message,
+using the &lsquo;<samp>return</samp>&rsquo; keyword like a longer function. Any function that you
+write as just one &lsquo;<samp>return</samp>&rsquo; line can omit the &lsquo;<samp>return</samp>&rsquo;.
+</p>
+<p>As you&rsquo;ll see in <a href="Shorthand-Getter-Declaration.html#Shorthand-Getter-Declaration">Shorthand Getter
+Declaration</a>, property getters can also use an implicit return.
+</p>
+
+
+
+</body>
+</html>

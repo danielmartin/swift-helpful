@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Repeat-While (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Repeat-While (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Repeat-While (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="While-Loops.html#While-Loops" rel="up" title="While Loops">
+<link href="Conditional-Statements.html#Conditional-Statements" rel="next" title="Conditional Statements">
+<link href="While.html#While" rel="prev" title="While">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Repeat_002dWhile"></span><div class="header">
+<p>
+Previous: <a href="While.html#While" accesskey="p" rel="prev">While</a>, Up: <a href="While-Loops.html#While-Loops" accesskey="u" rel="up">While Loops</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Repeat_002dWhile-1"></span><h4 class="subsection">10.2.2 Repeat-While</h4>
+
+<span id="index-repeat"></span>
+
+<p>The other variation of the &lsquo;<samp>while</samp>&rsquo; loop, known as the &lsquo;<samp>repeat</samp>&rsquo;-&lsquo;<samp>while</samp>&rsquo;
+loop, performs a single pass through the loop block first, <em>before</em>
+considering the loop&rsquo;s condition. It then continues to repeat the loop
+until the condition is &lsquo;<samp>false</samp>&rsquo;.
+</p>
+<p>Note
+</p>
+<p>The &lsquo;<samp>repeat</samp>&rsquo;-&lsquo;<samp>while</samp>&rsquo; loop in Swift is analogous to a &lsquo;<samp>do</samp>&rsquo;-&lsquo;<samp>while</samp>&rsquo; loop
+in other languages.
+</p>
+<p>Here&rsquo;s the general form of a &lsquo;<samp>repeat</samp>&rsquo;-&lsquo;<samp>while</samp>&rsquo; loop:
+</p>
+<div class="example">
+<pre class="example">repeat {
+    statements
+} while condition
+</pre></div>
+
+<p>Here&rsquo;s the <em>Snakes and Ladders</em> example again, written as a
+&lsquo;<samp>repeat</samp>&rsquo;-&lsquo;<samp>while</samp>&rsquo; loop rather than a &lsquo;<samp>while</samp>&rsquo; loop. The values of
+&lsquo;<samp>finalSquare</samp>&rsquo;, &lsquo;<samp>board</samp>&rsquo;, &lsquo;<samp>square</samp>&rsquo;, and &lsquo;<samp>diceRoll</samp>&rsquo; are initialized in
+exactly the same way as with a &lsquo;<samp>while</samp>&rsquo; loop.
+</p>
+<div class="example">
+<pre class="example">let finalSquare = 25
+var board = [Int](repeating: 0, count: finalSquare + 1)
+board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+var square = 0
+var diceRoll = 0
+</pre></div>
+
+<p>In this version of the game, the <em>first</em> action in the loop is to check
+for a ladder or a snake. No ladder on the board takes the player
+straight to square 25, and so it isn&rsquo;t possible to win the game by
+moving up a ladder. Therefore, it&rsquo;s safe to check for a snake or a
+ladder as the first action in the loop.
+</p>
+<p>At the start of the game, the player is on “square zero”. &lsquo;<samp>board[0]</samp>&rsquo;
+always equals &lsquo;<samp>0</samp>&rsquo; and has no effect.
+</p>
+<div class="example">
+<pre class="example">repeat {
+    // move up or down for a snake or ladder
+    square += board[square]
+    // roll the dice
+    diceRoll += 1
+    if diceRoll == 7 { diceRoll = 1 }
+    // move by the rolled amount
+    square += diceRoll
+} while square &lt; finalSquare
+print(&quot;Game over!&quot;)
+</pre></div>
+
+<p>After the code checks for snakes and ladders, the dice is rolled and the
+player is moved forward by &lsquo;<samp>diceRoll</samp>&rsquo; squares. The current loop
+execution then ends.
+</p>
+<p>The loop&rsquo;s condition (&lsquo;<samp>while square &lt; finalSquare</samp>&rsquo;) is the same as
+before, but this time it&rsquo;s not evaluated until the <em>end</em> of the first
+run through the loop. The structure of the &lsquo;<samp>repeat</samp>&rsquo;-&lsquo;<samp>while</samp>&rsquo; loop is
+better suited to this game than the &lsquo;<samp>while</samp>&rsquo; loop in the previous
+example. In the &lsquo;<samp>repeat</samp>&rsquo;-&lsquo;<samp>while</samp>&rsquo; loop above, &lsquo;<samp>square +</samp>&rsquo; board[square]=
+is always executed <em>immediately after</em> the loop&rsquo;s &lsquo;<samp>while</samp>&rsquo; condition
+confirms that &lsquo;<samp>square</samp>&rsquo; is still on the board. This behavior removes the
+need for the array bounds check seen in the &lsquo;<samp>while</samp>&rsquo; loop version of the
+game described earlier.
+</p>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="While.html#While" accesskey="p" rel="prev">While</a>, Up: <a href="While-Loops.html#While-Loops" accesskey="u" rel="up">While Loops</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

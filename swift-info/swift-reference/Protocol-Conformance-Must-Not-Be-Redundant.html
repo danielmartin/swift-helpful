@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Protocol Conformance Must Not Be Redundant (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Protocol Conformance Must Not Be Redundant (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Protocol Conformance Must Not Be Redundant (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Extension-Declaration.html#Extension-Declaration" rel="up" title="Extension Declaration">
+<link href="Subscript-Declaration.html#Subscript-Declaration" rel="next" title="Subscript Declaration">
+<link href="Conditional-Conformance.html#Conditional-Conformance" rel="prev" title="Conditional Conformance">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Protocol-Conformance-Must-Not-Be-Redundant"></span><div class="header">
+<p>
+Previous: <a href="Conditional-Conformance.html#Conditional-Conformance" accesskey="p" rel="prev">Conditional Conformance</a>, Up: <a href="Extension-Declaration.html#Extension-Declaration" accesskey="u" rel="up">Extension Declaration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Protocol-Conformance-Must-Not-Be-Redundant-1"></span><h4 class="subsection">7.14.2 Protocol Conformance Must Not Be Redundant</h4>
+
+<p>A concrete type can conform to a particular protocol only once. Swift
+marks redundant protocol conformances as an error. You&rsquo;re likely to
+encounter this kind of error in two kinds of situations. The first
+situation is when you explicitly conform to the same protocol multiple
+times, but with different requirements. The second situation is when you
+implicitly inherit from the same protocol multiple times. These
+situations are discussed in the sections below.
+</p>
+<ol>
+<li> Resolving Explicit Redundancy
+
+
+<p>Multiple extensions on a concrete type can&rsquo;t add conformance to the same
+protocol, even if the extensions&rsquo; requirements are mutually exclusive.
+This restriction is demonstrated in the example below. Two extension
+declarations attempt to add conditional conformance to the
+&lsquo;<samp>Serializable</samp>&rsquo; protocol, one for for arrays with &lsquo;<samp>Int</samp>&rsquo; elements, and one
+for arrays with &lsquo;<samp>String</samp>&rsquo; elements.
+</p>
+<ol>
+<li> protocol Serializable {
+</li><li> func serialize() -&gt; Any
+</li><li> }
+</li><li> extension Array: Serializable where Element == Int {
+</li><li> func serialize() -&gt; Any {
+</li><li> // implementation
+</li><li> }
+</li><li> }
+</li><li> extension Array: Serializable where Element == String {
+</li><li> func serialize() -&gt; Any {
+</li><li> // implementation
+</li><li> }
+</li><li> }
+</li><li> // Error: redundant conformance of &rsquo;Array&lt;Element&gt;&rsquo; to protocol
+&rsquo;Serializable&rsquo;
+</li></ol>
+
+<p>If you need to add conditional conformance based on multiple concrete
+types, create a new protocol that each type can conform to and use that
+protocol as the requirement when declaring conditional conformance.
+</p>
+<ol>
+<li> protocol SerializableInArray { }
+</li><li> extension Int: SerializableInArray { }
+</li><li> extension String: SerializableInArray { }
+</li><li> extension Array: Serializable where Element: SerializableInArray {
+</li><li> func serialize() -&gt; Any {
+</li><li> // implementation
+</li><li> }
+</li><li> }
+</li></ol>
+
+</li><li> Resolving Implicit Redundancy
+
+
+<p>When a concrete type conditionally conforms to a protocol, that type
+implicitly conforms to any parent protocols with the same requirements.
+</p>
+<p>If you need a type to conditionally conform to two protocols that
+inherit from a single parent, explicitly declare conformance to the
+parent protocol. This avoids implicitly conforming to the parent
+protocol twice with different requirements.
+</p>
+<p>The following example explicitly declares the conditional conformance of
+&lsquo;<samp>Array</samp>&rsquo; to &lsquo;<samp>Loggable</samp>&rsquo; to avoid a conflict when declaring its conditional
+conformance to both &lsquo;<samp>TitledLoggable</samp>&rsquo; and the new &lsquo;<samp>MarkedLoggable</samp>&rsquo;
+protocol.
+</p>
+<ol>
+<li> protocol MarkedLoggable: Loggable {
+</li><li> func markAndLog()
+</li><li> }
+</li><li> extension MarkedLoggable {
+</li><li> func markAndLog() {
+</li><li> print(&quot;&mdash;&mdash;&mdash;-&quot;)
+</li><li> log()
+</li><li> }
+</li><li> }
+</li><li> extension Array: Loggable where Element: Loggable { }
+</li><li> extension Array: TitledLoggable where Element: TitledLoggable {
+</li><li> static var logTitle: String {
+</li><li> return &quot;Array of &rsquo;\(Element.logTitle)&rsquo;&quot;
+</li><li> }
+</li><li> }
+</li><li> extension Array: MarkedLoggable where Element: MarkedLoggable { }
+</li></ol>
+
+<p>Without the extension to explicitly declare conditional conformance to
+&lsquo;<samp>Loggable</samp>&rsquo;, the other &lsquo;<samp>Array</samp>&rsquo; extensions would implicitly create these
+declarations, resulting in an error:
+</p>
+<ol>
+<li> extension Array: Loggable where Element: TitledLoggable { }
+</li><li> extension Array: Loggable where Element: MarkedLoggable { }
+</li><li> // Error: redundant conformance of &rsquo;Array&lt;Element&gt;&rsquo; to protocol
+&rsquo;Loggable&rsquo;
+</li></ol>
+
+<p>Grammar of an extension declaration
+</p>
+<p>extension-declaration
+→ attributes
+_{opt}
+access-level-modifier
+_{opt} &lsquo;<samp>extension</samp>&rsquo;
+type-identifier
+type-inheritance-clause
+_{opt}
+generic-where-clause
+_{opt}
+extension-body
+</p>
+<p>extension-body → &lsquo;<samp>{</samp>&rsquo;
+extension-members
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>extension-members →
+extension-member
+extension-members
+_{opt}
+</p>
+<p>extension-member →
+declaration
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>compiler-control-statement
+</p></li></ol>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Conditional-Conformance.html#Conditional-Conformance" accesskey="p" rel="prev">Conditional Conformance</a>, Up: <a href="Extension-Declaration.html#Extension-Declaration" accesskey="u" rel="up">Extension Declaration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

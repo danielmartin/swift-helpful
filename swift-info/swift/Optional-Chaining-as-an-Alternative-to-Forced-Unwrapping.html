@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Optional Chaining as an Alternative to Forced Unwrapping (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Optional Chaining as an Alternative to Forced Unwrapping (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Optional Chaining as an Alternative to Forced Unwrapping (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Optional-Chaining.html#Optional-Chaining" rel="up" title="Optional Chaining">
+<link href="Defining-Model-Classes-for-Optional-Chaining.html#Defining-Model-Classes-for-Optional-Chaining" rel="next" title="Defining Model Classes for Optional Chaining">
+<link href="Optional-Chaining.html#Optional-Chaining" rel="prev" title="Optional Chaining">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping"></span><div class="header">
+<p>
+Next: <a href="Defining-Model-Classes-for-Optional-Chaining.html#Defining-Model-Classes-for-Optional-Chaining" accesskey="n" rel="next">Defining Model Classes for Optional Chaining</a>, Up: <a href="Optional-Chaining.html#Optional-Chaining" accesskey="u" rel="up">Optional Chaining</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping-1"></span><h3 class="section">21.1 Optional Chaining as an Alternative to Forced Unwrapping</h3>
+
+<p>You specify optional chaining by placing a question mark (&lsquo;<samp>?</samp>&rsquo;) after the
+optional value on which you wish to call a property, method or subscript
+if the optional is non-&lsquo;<samp>nil</samp>&rsquo;. This is very similar to placing an
+exclamation mark (&lsquo;<samp>!</samp>&rsquo;) after an optional value to force the unwrapping
+of its value. The main difference is that optional chaining fails
+gracefully when the optional is &lsquo;<samp>nil</samp>&rsquo;, whereas forced unwrapping
+triggers a runtime error when the optional is &lsquo;<samp>nil</samp>&rsquo;.
+</p>
+<p>To reflect the fact that optional chaining can be called on a &lsquo;<samp>nil</samp>&rsquo;
+value, the result of an optional chaining call is always an optional
+value, even if the property, method, or subscript you are querying
+returns a non-optional value. You can use this optional return value to
+check whether the optional chaining call was successful (the returned
+optional contains a value), or did not succeed due to a &lsquo;<samp>nil</samp>&rsquo; value in
+the chain (the returned optional value is &lsquo;<samp>nil</samp>&rsquo;).
+</p>
+<p>Specifically, the result of an optional chaining call is of the same
+type as the expected return value, but wrapped in an optional. A
+property that normally returns an &lsquo;<samp>Int</samp>&rsquo; will return an &lsquo;<samp>Int?</samp>&rsquo; when
+accessed through optional chaining.
+</p>
+<p>The next several code snippets demonstrate how optional chaining differs
+from forced unwrapping and enables you to check for success.
+</p>
+<p>First, two classes called &lsquo;<samp>Person</samp>&rsquo; and &lsquo;<samp>Residence</samp>&rsquo; are defined:
+</p>
+<div class="example">
+<pre class="example">class Person {
+    var residence: Residence?
+}
+
+class Residence {
+    var numberOfRooms = 1
+}
+</pre></div>
+
+<p>&lsquo;<samp>Residence</samp>&rsquo; instances have a single &lsquo;<samp>Int</samp>&rsquo; property called
+&lsquo;<samp>numberOfRooms</samp>&rsquo;, with a default value of &lsquo;<samp>1</samp>&rsquo;. &lsquo;<samp>Person</samp>&rsquo; instances have an
+optional &lsquo;<samp>residence</samp>&rsquo; property of type &lsquo;<samp>Residence?</samp>&rsquo;.
+</p>
+<p>If you create a new &lsquo;<samp>Person</samp>&rsquo; instance, its &lsquo;<samp>residence</samp>&rsquo; property is
+default initialized to &lsquo;<samp>nil</samp>&rsquo;, by virtue of being optional. In the code
+below, &lsquo;<samp>john</samp>&rsquo; has a &lsquo;<samp>residence</samp>&rsquo; property value of &lsquo;<samp>nil</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let john = Person()
+</pre></div>
+
+<p>If you try to access the &lsquo;<samp>numberOfRooms</samp>&rsquo; property of this person&rsquo;s
+&lsquo;<samp>residence</samp>&rsquo;, by placing an exclamation mark after &lsquo;<samp>residence</samp>&rsquo; to force
+the unwrapping of its value, you trigger a runtime error, because there
+is no &lsquo;<samp>residence</samp>&rsquo; value to unwrap:
+</p>
+<div class="example">
+<pre class="example">let roomCount = john.residence!.numberOfRooms
+// this triggers a runtime error
+</pre></div>
+
+<p>The code above succeeds when &lsquo;<samp>john.residence</samp>&rsquo; has a non-&lsquo;<samp>nil</samp>&rsquo; value and
+will set &lsquo;<samp>roomCount</samp>&rsquo; to an &lsquo;<samp>Int</samp>&rsquo; value containing the appropriate number
+of rooms. However, this code always triggers a runtime error when
+&lsquo;<samp>residence</samp>&rsquo; is &lsquo;<samp>nil</samp>&rsquo;, as illustrated above.
+</p>
+<p>Optional chaining provides an alternative way to access the value of
+&lsquo;<samp>numberOfRooms</samp>&rsquo;. To use optional chaining, use a question mark in place
+of the exclamation mark:
+</p>
+<div class="example">
+<pre class="example">if let roomCount = john.residence?.numberOfRooms {
+    print(&quot;John's residence has \(roomCount) room(s).&quot;)
+} else {
+    print(&quot;Unable to retrieve the number of rooms.&quot;)
+}
+// Prints &quot;Unable to retrieve the number of rooms.&quot;
+</pre></div>
+
+<p>This tells Swift to “chain” on the optional &lsquo;<samp>residence</samp>&rsquo; property and to
+retrieve the value of &lsquo;<samp>numberOfRooms</samp>&rsquo; if &lsquo;<samp>residence</samp>&rsquo; exists.
+</p>
+<p>Because the attempt to access &lsquo;<samp>numberOfRooms</samp>&rsquo; has the potential to fail,
+the optional chaining attempt returns a value of type &lsquo;<samp>Int?</samp>&rsquo;, or
+“optional &lsquo;<samp>Int=”. When =residence</samp>&rsquo; is &lsquo;<samp>nil</samp>&rsquo;, as in the example above,
+this optional &lsquo;<samp>Int</samp>&rsquo; will also be &lsquo;<samp>nil</samp>&rsquo;, to reflect the fact that it was
+not possible to access &lsquo;<samp>numberOfRooms</samp>&rsquo;. The optional &lsquo;<samp>Int</samp>&rsquo; is accessed
+through optional binding to unwrap the integer and assign the
+non-optional value to the &lsquo;<samp>roomCount</samp>&rsquo; variable.
+</p>
+<p>Note that this is true even though &lsquo;<samp>numberOfRooms</samp>&rsquo; is a non-optional
+&lsquo;<samp>Int</samp>&rsquo;. The fact that it is queried through an optional chain means that
+the call to &lsquo;<samp>numberOfRooms</samp>&rsquo; will always return an &lsquo;<samp>Int?</samp>&rsquo; instead of an
+&lsquo;<samp>Int</samp>&rsquo;.
+</p>
+<p>You can assign a &lsquo;<samp>Residence</samp>&rsquo; instance to &lsquo;<samp>john.residence</samp>&rsquo;, so that it no
+longer has a &lsquo;<samp>nil</samp>&rsquo; value:
+</p>
+<div class="example">
+<pre class="example">john.residence = Residence()
+</pre></div>
+
+<p>&lsquo;<samp>john.residence</samp>&rsquo; now contains an actual &lsquo;<samp>Residence</samp>&rsquo; instance, rather
+than &lsquo;<samp>nil</samp>&rsquo;. If you try to access &lsquo;<samp>numberOfRooms</samp>&rsquo; with the same optional
+chaining as before, it will now return an &lsquo;<samp>Int?</samp>&rsquo; that contains the
+default &lsquo;<samp>numberOfRooms</samp>&rsquo; value of &lsquo;<samp>1</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">if let roomCount = john.residence?.numberOfRooms {
+    print(&quot;John's residence has \(roomCount) room(s).&quot;)
+} else {
+    print(&quot;Unable to retrieve the number of rooms.&quot;)
+}
+// Prints &quot;John's residence has 1 room(s).&quot;
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Defining-Model-Classes-for-Optional-Chaining.html#Defining-Model-Classes-for-Optional-Chaining" accesskey="n" rel="next">Defining Model Classes for Optional Chaining</a>, Up: <a href="Optional-Chaining.html#Optional-Chaining" accesskey="u" rel="up">Optional Chaining</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Statements (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Statements (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Statements (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Loop-Statements.html#Loop-Statements" rel="next" title="Loop Statements">
+<link href="Optional_002dChaining-Expression.html#Optional_002dChaining-Expression" rel="prev" title="Optional-Chaining Expression">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Statements"></span><div class="header">
+<p>
+Next: <a href="Declarations.html#Declarations" accesskey="n" rel="next">Declarations</a>, Previous: <a href="Expressions.html#Expressions" accesskey="p" rel="prev">Expressions</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Statements-2"></span><h2 class="chapter">6 Statements</h2>
+
+<p>In Swift, there are three kinds of statements: simple statements,
+compiler control statements, and control flow statements. Simple
+statements are the most common and consist of either an expression or a
+declaration. Compiler control statements allow the program to change
+aspects of the compiler&rsquo;s behavior and include a conditional compilation
+block and a line control statement.
+</p>
+<p>Control flow statements are used to control the flow of execution in a
+program. There are several types of control flow statements in Swift,
+including loop statements, branch statements, and control transfer
+statements. Loop statements allow a block of code to be executed
+repeatedly, branch statements allow a certain block of code to be
+executed only when certain conditions are met, and control transfer
+statements provide a way to alter the order in which code is executed.
+In addition, Swift provides a &lsquo;<samp>do</samp>&rsquo; statement to introduce scope, and
+catch and handle errors, and a &lsquo;<samp>defer</samp>&rsquo; statement for running cleanup
+actions just before the current scope exits.
+</p>
+<p>A semicolon (&lsquo;<samp>;</samp>&rsquo;) can optionally appear after any statement and is used
+to separate multiple statements if they appear on the same line.
+</p>
+<p>Grammar of a statement
+</p>
+<p>statement →
+expression
+=;=<em>_opt</em>
+</p>
+<p>statement →
+declaration
+=;=<em>_opt</em>
+</p>
+<p>statement →
+loop-statement
+=;=<em>_opt</em>
+</p>
+<p>statement →
+branch-statement
+=;=<em>_opt</em>
+</p>
+<p>statement →
+labeled-statement
+=;=<em>_opt</em>
+</p>
+<p>statement →
+control-transfer-statement
+=;=<em>_opt</em>
+</p>
+<p>statement →
+defer-statement
+=;=<em>_opt</em>
+</p>
+<p>statement →
+do-statement
+=;=<em>_opt</em>
+</p>
+<p>statement →
+compiler-control-statement
+</p>
+<p>statements →
+statement
+statements
+_{opt}
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Loop-Statements.html#Loop-Statements" accesskey="1">Loop Statements</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Labeled-Statement.html#Labeled-Statement" accesskey="2">Labeled Statement</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Control-Transfer-Statements.html#Control-Transfer-Statements" accesskey="3">Control Transfer Statements</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Defer-Statement.html#Defer-Statement" accesskey="4">Defer Statement</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Do-Statement.html#Do-Statement" accesskey="5">Do Statement</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Compiler-Control-Statements.html#Compiler-Control-Statements" accesskey="6">Compiler Control Statements</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Availability-Condition.html#Availability-Condition" accesskey="7">Availability Condition</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Declarations.html#Declarations" accesskey="n" rel="next">Declarations</a>, Previous: <a href="Expressions.html#Expressions" accesskey="p" rel="prev">Expressions</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

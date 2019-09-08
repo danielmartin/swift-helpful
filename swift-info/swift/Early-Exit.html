@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Early Exit (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Early Exit (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Early Exit (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Control-Flow-1.html#Control-Flow-1" rel="up" title="Control Flow 1">
+<link href="Checking-API-Availability.html#Checking-API-Availability" rel="next" title="Checking API Availability">
+<link href="Labeled-Statements.html#Labeled-Statements" rel="prev" title="Labeled Statements">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Early-Exit"></span><div class="header">
+<p>
+Next: <a href="Checking-API-Availability.html#Checking-API-Availability" accesskey="n" rel="next">Checking API Availability</a>, Previous: <a href="Control-Transfer-Statements.html#Control-Transfer-Statements" accesskey="p" rel="prev">Control Transfer Statements</a>, Up: <a href="Control-Flow-1.html#Control-Flow-1" accesskey="u" rel="up">Control Flow 1</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Early-Exit-1"></span><h3 class="section">10.5 Early Exit</h3>
+
+<span id="index-guard"></span>
+
+<p>A &lsquo;<samp>guard</samp>&rsquo; statement, like an &lsquo;<samp>if</samp>&rsquo; statement, executes statements
+depending on the Boolean value of an expression. You use a &lsquo;<samp>guard</samp>&rsquo;
+statement to require that a condition must be true in order for the code
+after the &lsquo;<samp>guard</samp>&rsquo; statement to be executed. Unlike an &lsquo;<samp>if</samp>&rsquo; statement, a
+&lsquo;<samp>guard</samp>&rsquo; statement always has an &lsquo;<samp>else</samp>&rsquo; clause&mdash;the code inside the
+&lsquo;<samp>else</samp>&rsquo; clause is executed if the condition is not true.
+</p>
+<div class="example">
+<pre class="example">func greet(person: [String: String]) {
+    guard let name = person[&quot;name&quot;] else {
+        return
+    }
+
+    print(&quot;Hello \(name)!&quot;)
+
+    guard let location = person[&quot;location&quot;] else {
+        print(&quot;I hope the weather is nice near you.&quot;)
+        return
+    }
+
+    print(&quot;I hope the weather is nice in \(location).&quot;)
+}
+
+greet(person: [&quot;name&quot;: &quot;John&quot;])
+// Prints &quot;Hello John!&quot;
+// Prints &quot;I hope the weather is nice near you.&quot;
+greet(person: [&quot;name&quot;: &quot;Jane&quot;, &quot;location&quot;: &quot;Cupertino&quot;])
+// Prints &quot;Hello Jane!&quot;
+// Prints &quot;I hope the weather is nice in Cupertino.&quot;
+</pre></div>
+
+<p>If the &lsquo;<samp>guard</samp>&rsquo; statement&rsquo;s condition is met, code execution continues
+after the &lsquo;<samp>guard</samp>&rsquo; statement&rsquo;s closing brace. Any variables or constants
+that were assigned values using an optional binding as part of the
+condition are available for the rest of the code block that the &lsquo;<samp>guard</samp>&rsquo;
+statement appears in.
+</p>
+<p>If that condition is not met, the code inside the &lsquo;<samp>else</samp>&rsquo; branch is
+executed. That branch must transfer control to exit the code block in
+which the &lsquo;<samp>guard</samp>&rsquo; statement appears. It can do this with a control
+transfer statement such as &lsquo;<samp>return</samp>&rsquo;, &lsquo;<samp>break</samp>&rsquo;, &lsquo;<samp>continue</samp>&rsquo;, or &lsquo;<samp>throw</samp>&rsquo;, or
+it can call a function or method that doesn&rsquo;t return, such as
+&lsquo;<samp>fatalError(_:file:line:)</samp>&rsquo;.
+</p>
+<p>Using a &lsquo;<samp>guard</samp>&rsquo; statement for requirements improves the readability of
+your code, compared to doing the same check with an &lsquo;<samp>if</samp>&rsquo; statement. It
+lets you write the code that&rsquo;s typically executed without wrapping it in
+an &lsquo;<samp>else</samp>&rsquo; block, and it lets you keep the code that handles a violated
+requirement next to the requirement.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Checking-API-Availability.html#Checking-API-Availability" accesskey="n" rel="next">Checking API Availability</a>, Previous: <a href="Control-Transfer-Statements.html#Control-Transfer-Statements" accesskey="p" rel="prev">Control Transfer Statements</a>, Up: <a href="Control-Flow-1.html#Control-Flow-1" accesskey="u" rel="up">Control Flow 1</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

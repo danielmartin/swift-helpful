@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Protocol Declaration (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Protocol Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Protocol Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Declarations.html#Declarations" rel="up" title="Declarations">
+<link href="Protocol-Property-Declaration.html#Protocol-Property-Declaration" rel="next" title="Protocol Property Declaration">
+<link href="Class-Declaration.html#Class-Declaration" rel="prev" title="Class Declaration">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Protocol-Declaration"></span><div class="header">
+<p>
+Next: <a href="Initializer-Declaration.html#Initializer-Declaration" accesskey="n" rel="next">Initializer Declaration</a>, Previous: <a href="Class-Declaration.html#Class-Declaration" accesskey="p" rel="prev">Class Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Protocol-Declaration-1"></span><h3 class="section">7.11 Protocol Declaration</h3>
+
+<p>A <em>protocol declaration</em> introduces a named protocol type into your
+program. Protocol declarations are declared at global scope using the
+&lsquo;<samp>protocol</samp>&rsquo; keyword and have the following form:
+</p>
+<ol>
+<li> protocol protocol name: inherited protocols {
+</li><li> protocol member declarations
+</li><li> }
+</li></ol>
+
+<p>The body of a protocol contains zero or more <em>protocol member
+declarations</em>, which describe the conformance requirements that any type
+adopting the protocol must fulfill. In particular, a protocol can
+declare that conforming types must implement certain properties,
+methods, initializers, and subscripts. Protocols can also declare
+special kinds of type aliases, called <em>associated types</em>, that can
+specify relationships among the various declarations of the protocol.
+Protocol declarations can&rsquo;t contain class, structure, enumeration, or
+other protocol declarations. The <em>protocol member declarations</em> are
+discussed in detail below.
+</p>
+<p>Protocol types can inherit from any number of other protocols. When a
+protocol type inherits from other protocols, the set of requirements
+from those other protocols are aggregated, and any type that inherits
+from the current protocol must conform to all those requirements. For an
+example of how to use protocol inheritance, see
+<a href="../swift/Protocol-Inheritance.html#Protocol-Inheritance">(swift)Protocol Inheritance</a>.
+</p>
+<p>Note
+</p>
+<p>You can also aggregate the conformance requirements of multiple
+protocols using protocol composition types, as described in
+<a href="Protocol-Composition-Type.html#Protocol-Composition-Type">Protocol Composition Type</a> and
+<a href="../swift/Protocol-Composition.html#Protocol-Composition">(swift)Protocol Composition</a>.
+</p>
+<p>You can add protocol conformance to a previously declared type by
+adopting the protocol in an extension declaration of that type. In the
+extension, you must implement all of the adopted protocol&rsquo;s
+requirements. If the type already implements all of the requirements,
+you can leave the body of the extension declaration empty.
+</p>
+<p>By default, types that conform to a protocol must implement all
+properties, methods, and subscripts declared in the protocol. That said,
+you can mark these protocol member declarations with the &lsquo;<samp>optional</samp>&rsquo;
+declaration modifier to specify that their implementation by a
+conforming type is optional. The &lsquo;<samp>optional</samp>&rsquo; modifier can be applied only
+to members that are marked with the &lsquo;<samp>objc</samp>&rsquo; attribute, and only to
+members of protocols that are marked with the &lsquo;<samp>objc</samp>&rsquo; attribute. As a
+result, only class types can adopt and conform to a protocol that
+contains optional member requirements. For more information about how to
+use the &lsquo;<samp>optional</samp>&rsquo; declaration modifier and for guidance about how to
+access optional protocol members&mdash;for example, when you&rsquo;re not sure
+whether a conforming type implements them&mdash;see
+<a href="../swift/Optional-Protocol-Requirements.html#Optional-Protocol-Requirements">(swift)Optional Protocol
+Requirements</a>.
+</p>
+<p>To restrict the adoption of a protocol to class types only, include the
+&lsquo;<samp>AnyObject</samp>&rsquo; protocol in the <em>inherited protocols</em> list after the colon.
+For example, the following protocol can be adopted only by class types:
+</p>
+<ol>
+<li> protocol SomeProtocol: AnyObject {
+</li><li> <em>* Protocol members go here *</em>
+</li><li> }
+</li></ol>
+
+<p>Any protocol that inherits from a protocol that&rsquo;s marked with the
+&lsquo;<samp>AnyObject</samp>&rsquo; requirement can likewise be adopted only by class types.
+</p>
+<p>Note
+</p>
+<p>If a protocol is marked with the &lsquo;<samp>objc</samp>&rsquo; attribute, the &lsquo;<samp>AnyObject</samp>&rsquo;
+requirement is implicitly applied to that protocol; there&rsquo;s no need to
+mark the protocol with the &lsquo;<samp>AnyObject</samp>&rsquo; requirement explicitly.
+</p>
+<p>Protocols are named types, and thus they can appear in all the same
+places in your code as other named types, as discussed in
+<a href="../swift/Protocols-as-Types.html#Protocols-as-Types">(swift)Protocols as Types</a>. However,
+you can&rsquo;t construct an instance of a protocol, because protocols do not
+actually provide the implementations for the requirements they specify.
+</p>
+<p>You can use protocols to declare which methods a delegate of a class or
+structure should implement, as described in
+<a href="../swift/Delegation.html#Delegation">(swift)Delegation</a>.
+</p>
+<p>Grammar of a protocol declaration
+</p>
+<p>protocol-declaration
+→ attributes
+_{opt}
+access-level-modifier
+_{opt} &lsquo;<samp>protocol</samp>&rsquo;
+protocol-name
+type-inheritance-clause
+_{opt}
+generic-where-clause
+_{opt}
+protocol-body
+</p>
+<p>protocol-name →
+identifier
+</p>
+<p>protocol-body → &lsquo;<samp>{</samp>&rsquo;
+protocol-members
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>protocol-members →
+protocol-member
+protocol-members
+_{opt}
+</p>
+<p>protocol-member →
+protocol-member-declaration
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>compiler-control-statement
+</p>
+<p>protocol-member-declaration
+→
+protocol-property-declaration
+</p>
+<p>protocol-member-declaration
+→
+protocol-method-declaration
+</p>
+<p>protocol-member-declaration
+→
+protocol-initializer-declaration
+</p>
+<p>protocol-member-declaration
+→
+protocol-subscript-declaration
+</p>
+<p>protocol-member-declaration
+→
+protocol-associated-type-declaration
+</p>
+<p>protocol-member-declaration
+→
+typealias-declaration
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Protocol-Property-Declaration.html#Protocol-Property-Declaration" accesskey="1">Protocol Property Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Protocol-Method-Declaration.html#Protocol-Method-Declaration" accesskey="2">Protocol Method Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Protocol-Initializer-Declaration.html#Protocol-Initializer-Declaration" accesskey="3">Protocol Initializer Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Protocol-Subscript-Declaration.html#Protocol-Subscript-Declaration" accesskey="4">Protocol Subscript Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Protocol-Associated-Type-Declaration.html#Protocol-Associated-Type-Declaration" accesskey="5">Protocol Associated Type Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Initializer-Declaration.html#Initializer-Declaration" accesskey="n" rel="next">Initializer Declaration</a>, Previous: <a href="Class-Declaration.html#Class-Declaration" accesskey="p" rel="prev">Class Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -20,6 +20,11 @@ make all
 
 This will generate up to date `.info` and `.texi` files from `swift.org` and `swift-reference.org`.
 
+You can also export the documentation to HTML (the CSS used is the same one used by the Emacs manuals):
+
+```sh
+make html
+```
 
 ## Emacs
 

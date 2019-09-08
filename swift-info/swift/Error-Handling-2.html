@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Error Handling 2 (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Error Handling 2 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Error Handling 2 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Representing-and-Throwing-Errors.html#Representing-and-Throwing-Errors" rel="next" title="Representing and Throwing Errors">
+<link href="Chaining-on-Methods-with-Optional-Return-Values.html#Chaining-on-Methods-with-Optional-Return-Values" rel="prev" title="Chaining on Methods with Optional Return Values">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Error-Handling-2"></span><div class="header">
+<p>
+Next: <a href="Type-Casting.html#Type-Casting" accesskey="n" rel="next">Type Casting</a>, Previous: <a href="Optional-Chaining.html#Optional-Chaining" accesskey="p" rel="prev">Optional Chaining</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Error-Handling-5"></span><h2 class="chapter">22 Error Handling</h2>
+
+<p><em>Error handling</em> is the process of responding to and recovering from
+error conditions in your program. Swift provides first-class support for
+throwing, catching, propagating, and manipulating recoverable errors at
+runtime.
+</p>
+<p>Some operations aren&rsquo;t guaranteed to always complete execution or
+produce a useful output. Optionals are used to represent the absence of
+a value, but when an operation fails, it&rsquo;s often useful to understand
+what caused the failure, so that your code can respond accordingly.
+</p>
+<p>As an example, consider the task of reading and processing data from a
+file on disk. There are a number of ways this task can fail, including
+the file not existing at the specified path, the file not having read
+permissions, or the file not being encoded in a compatible format.
+Distinguishing among these different situations allows a program to
+resolve some errors and to communicate to the user any errors it can&rsquo;t
+resolve.
+</p>
+<p>Note
+</p>
+<p>Error handling in Swift interoperates with error handling patterns that
+use the &lsquo;<samp>NSError</samp>&rsquo; class in Cocoa and Objective-C. For more information
+about this class, see
+<a href="https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift">Handling
+Cocoa Errors in Swift</a>
+[<a href="https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift">https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift</a>].
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Representing-and-Throwing-Errors.html#Representing-and-Throwing-Errors" accesskey="1">Representing and Throwing Errors</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Handling-Errors.html#Handling-Errors" accesskey="2">Handling Errors</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Specifying-Cleanup-Actions.html#Specifying-Cleanup-Actions" accesskey="3">Specifying Cleanup Actions</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

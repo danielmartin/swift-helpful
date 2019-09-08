@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Generics (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Generics (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Generics (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="A-Swift-Tour.html#A-Swift-Tour" rel="up" title="A Swift Tour">
+<link href="Language-Guide.html#Language-Guide" rel="next" title="Language Guide">
+<link href="Error-Handling.html#Error-Handling" rel="prev" title="Error Handling">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Generics"></span><div class="header">
+<p>
+Previous: <a href="Error-Handling.html#Error-Handling" accesskey="p" rel="prev">Error Handling</a>, Up: <a href="A-Swift-Tour.html#A-Swift-Tour" accesskey="u" rel="up">A Swift Tour</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Generics-3"></span><h3 class="section">4.8 Generics</h3>
+
+<p>Write a name inside angle brackets to make a generic function or type.
+</p>
+<div class="example">
+<pre class="example">func makeArray&lt;Item&gt;(repeating item: Item, numberOfTimes: Int) -&gt; [Item] {
+    var result = [Item]()
+    for _ in 0..&lt;numberOfTimes {
+        result.append(item)
+    }
+    return result
+}
+makeArray(repeating: &quot;knock&quot;, numberOfTimes: 4)
+</pre></div>
+
+<p>You can make generic forms of functions and methods, as well as classes,
+enumerations, and structures.
+</p>
+<div class="example">
+<pre class="example">// Reimplement the Swift standard library's optional type
+enum OptionalValue&lt;Wrapped&gt; {
+    case none
+    case some(Wrapped)
+}
+var possibleInteger: OptionalValue&lt;Int&gt; = .none
+possibleInteger = .some(100)
+</pre></div>
+
+<p>Use &lsquo;<samp>where</samp>&rsquo; right before the body to specify a list of
+requirements&mdash;for example, to require the type to implement a protocol,
+to require two types to be the same, or to require a class to have a
+particular superclass.
+</p>
+<div class="example">
+<pre class="example">func anyCommonElements&lt;T: Sequence, U: Sequence&gt;(_ lhs: T, _ rhs: U) -&gt; Bool where T.Element: Equatable, T.Element == U.Element
+{
+    for lhsItem in lhs {
+        for rhsItem in rhs {
+            if lhsItem == rhsItem {
+                return true
+            }
+        }
+    }
+    return false
+}
+anyCommonElements([1, 2, 3], [3])
+</pre></div>
+
+<p>Experiment
+</p>
+<p>Modify the &lsquo;<samp>anyCommonElements(_:_:)</samp>&rsquo; function to make a function that
+returns an array of the elements that any two sequences have in common.
+</p>
+<p>Writing &lsquo;<samp>&lt;T: Equatable&gt;</samp>&rsquo; is the same as writing
+&lsquo;<samp>&lt;T&gt; ... where T: Equatable</samp>&rsquo;.
+</p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Defining Model Classes for Optional Chaining (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Defining Model Classes for Optional Chaining (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Defining Model Classes for Optional Chaining (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Optional-Chaining.html#Optional-Chaining" rel="up" title="Optional Chaining">
+<link href="Accessing-Properties-Through-Optional-Chaining.html#Accessing-Properties-Through-Optional-Chaining" rel="next" title="Accessing Properties Through Optional Chaining">
+<link href="Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping.html#Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping" rel="prev" title="Optional Chaining as an Alternative to Forced Unwrapping">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Defining-Model-Classes-for-Optional-Chaining"></span><div class="header">
+<p>
+Next: <a href="Accessing-Properties-Through-Optional-Chaining.html#Accessing-Properties-Through-Optional-Chaining" accesskey="n" rel="next">Accessing Properties Through Optional Chaining</a>, Previous: <a href="Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping.html#Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping" accesskey="p" rel="prev">Optional Chaining as an Alternative to Forced Unwrapping</a>, Up: <a href="Optional-Chaining.html#Optional-Chaining" accesskey="u" rel="up">Optional Chaining</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Defining-Model-Classes-for-Optional-Chaining-1"></span><h3 class="section">21.2 Defining Model Classes for Optional Chaining</h3>
+
+<p>You can use optional chaining with calls to properties, methods, and
+subscripts that are more than one level deep. This enables you to drill
+down into subproperties within complex models of interrelated types, and
+to check whether it is possible to access properties, methods, and
+subscripts on those subproperties.
+</p>
+<p>The code snippets below define four model classes for use in several
+subsequent examples, including examples of multilevel optional chaining.
+These classes expand upon the &lsquo;<samp>Person</samp>&rsquo; and &lsquo;<samp>Residence</samp>&rsquo; model from above
+by adding a &lsquo;<samp>Room</samp>&rsquo; and &lsquo;<samp>Address</samp>&rsquo; class, with associated properties,
+methods, and subscripts.
+</p>
+<p>The &lsquo;<samp>Person</samp>&rsquo; class is defined in the same way as before:
+</p>
+<div class="example">
+<pre class="example">class Person {
+    var residence: Residence?
+}
+</pre></div>
+
+<p>The &lsquo;<samp>Residence</samp>&rsquo; class is more complex than before. This time, the
+&lsquo;<samp>Residence</samp>&rsquo; class defines a variable property called &lsquo;<samp>rooms</samp>&rsquo;, which is
+initialized with an empty array of type &lsquo;<samp>[Room]</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">class Residence {
+    var rooms = [Room]()
+    var numberOfRooms: Int {
+        return rooms.count
+    }
+    subscript(i: Int) -&gt; Room {
+        get {
+            return rooms[i]
+        }
+        set {
+            rooms[i] = newValue
+        }
+    }
+    func printNumberOfRooms() {
+        print(&quot;The number of rooms is \(numberOfRooms)&quot;)
+    }
+    var address: Address?
+}
+</pre></div>
+
+<p>Because this version of &lsquo;<samp>Residence</samp>&rsquo; stores an array of &lsquo;<samp>Room</samp>&rsquo; instances,
+its &lsquo;<samp>numberOfRooms</samp>&rsquo; property is implemented as a computed property, not
+a stored property. The computed &lsquo;<samp>numberOfRooms</samp>&rsquo; property simply returns
+the value of the &lsquo;<samp>count</samp>&rsquo; property from the &lsquo;<samp>rooms</samp>&rsquo; array.
+</p>
+<p>As a shortcut to accessing its &lsquo;<samp>rooms</samp>&rsquo; array, this version of
+&lsquo;<samp>Residence</samp>&rsquo; provides a read-write subscript that provides access to the
+room at the requested index in the &lsquo;<samp>rooms</samp>&rsquo; array.
+</p>
+<p>This version of &lsquo;<samp>Residence</samp>&rsquo; also provides a method called
+&lsquo;<samp>printNumberOfRooms</samp>&rsquo;, which simply prints the number of rooms in the
+residence.
+</p>
+<p>Finally, &lsquo;<samp>Residence</samp>&rsquo; defines an optional property called &lsquo;<samp>address</samp>&rsquo;, with
+a type of &lsquo;<samp>Address?</samp>&rsquo;. The &lsquo;<samp>Address</samp>&rsquo; class type for this property is
+defined below.
+</p>
+<p>The &lsquo;<samp>Room</samp>&rsquo; class used for the &lsquo;<samp>rooms</samp>&rsquo; array is a simple class with one
+property called &lsquo;<samp>name</samp>&rsquo;, and an initializer to set that property to a
+suitable room name:
+</p>
+<div class="example">
+<pre class="example">class Room {
+    let name: String
+    init(name: String) { self.name = name }
+}
+</pre></div>
+
+<p>The final class in this model is called &lsquo;<samp>Address</samp>&rsquo;. This class has three
+optional properties of type &lsquo;<samp>String?</samp>&rsquo;. The first two properties,
+&lsquo;<samp>buildingName</samp>&rsquo; and &lsquo;<samp>buildingNumber</samp>&rsquo;, are alternative ways to identify a
+particular building as part of an address. The third property, &lsquo;<samp>street</samp>&rsquo;,
+is used to name the street for that address:
+</p>
+<div class="example">
+<pre class="example">class Address {
+    var buildingName: String?
+    var buildingNumber: String?
+    var street: String?
+    func buildingIdentifier() -&gt; String? {
+        if let buildingNumber = buildingNumber, let street = street {
+            return &quot;\(buildingNumber) \(street)&quot;
+        } else if buildingName != nil {
+            return buildingName
+        } else {
+            return nil
+        }
+    }
+}
+</pre></div>
+
+<p>The &lsquo;<samp>Address</samp>&rsquo; class also provides a method called
+&lsquo;<samp>buildingIdentifier()</samp>&rsquo;, which has a return type of &lsquo;<samp>String?</samp>&rsquo;. This
+method checks the properties of the address and returns &lsquo;<samp>buildingName</samp>&rsquo;
+if it has a value, or &lsquo;<samp>buildingNumber</samp>&rsquo; concatenated with &lsquo;<samp>street</samp>&rsquo; if
+both have values, or &lsquo;<samp>nil</samp>&rsquo; otherwise.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Accessing-Properties-Through-Optional-Chaining.html#Accessing-Properties-Through-Optional-Chaining" accesskey="n" rel="next">Accessing Properties Through Optional Chaining</a>, Previous: <a href="Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping.html#Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping" accesskey="p" rel="prev">Optional Chaining as an Alternative to Forced Unwrapping</a>, Up: <a href="Optional-Chaining.html#Optional-Chaining" accesskey="u" rel="up">Optional Chaining</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

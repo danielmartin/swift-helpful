@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Handling Errors (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Handling Errors (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Handling Errors (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Error-Handling-2.html#Error-Handling-2" rel="up" title="Error Handling 2">
+<link href="Propagating-Errors-Using-Throwing-Functions.html#Propagating-Errors-Using-Throwing-Functions" rel="next" title="Propagating Errors Using Throwing Functions">
+<link href="Representing-and-Throwing-Errors.html#Representing-and-Throwing-Errors" rel="prev" title="Representing and Throwing Errors">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Handling-Errors"></span><div class="header">
+<p>
+Next: <a href="Specifying-Cleanup-Actions.html#Specifying-Cleanup-Actions" accesskey="n" rel="next">Specifying Cleanup Actions</a>, Previous: <a href="Representing-and-Throwing-Errors.html#Representing-and-Throwing-Errors" accesskey="p" rel="prev">Representing and Throwing Errors</a>, Up: <a href="Error-Handling-2.html#Error-Handling-2" accesskey="u" rel="up">Error Handling 2</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Handling-Errors-1"></span><h3 class="section">22.2 Handling Errors</h3>
+
+<p>When an error is thrown, some surrounding piece of code must be
+responsible for handling the error&mdash;for example, by correcting the
+problem, trying an alternative approach, or informing the user of the
+failure.
+</p>
+<p>There are four ways to handle errors in Swift. You can propagate the
+error from a function to the code that calls that function, handle the
+error using a &lsquo;<samp>do</samp>&rsquo;-&lsquo;<samp>catch</samp>&rsquo; statement, handle the error as an optional
+value, or assert that the error will not occur. Each approach is
+described in a section below.
+</p>
+<span id="index-try"></span>
+
+<p>When a function throws an error, it changes the flow of your program, so
+it&rsquo;s important that you can quickly identify places in your code that
+can throw errors. To identify these places in your code, write the &lsquo;<samp>try</samp>&rsquo;
+keyword&mdash;or the &lsquo;<samp>try?</samp>&rsquo; or &lsquo;<samp>try!</samp>&rsquo; variation&mdash;before a piece of code
+that calls a function, method, or initializer that can throw an error.
+These keywords are described in the sections below.
+</p>
+<p>Note
+</p>
+<p>Error handling in Swift resembles exception handling in other languages,
+with the use of the &lsquo;<samp>try</samp>&rsquo;, &lsquo;<samp>catch</samp>&rsquo; and &lsquo;<samp>throw</samp>&rsquo; keywords. Unlike
+exception handling in many languages&mdash;including Objective-C&mdash;error
+handling in Swift does not involve unwinding the call stack, a process
+that can be computationally expensive. As such, the performance
+characteristics of a &lsquo;<samp>throw</samp>&rsquo; statement are comparable to those of a
+&lsquo;<samp>return</samp>&rsquo; statement.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Propagating-Errors-Using-Throwing-Functions.html#Propagating-Errors-Using-Throwing-Functions" accesskey="1">Propagating Errors Using Throwing Functions</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Handling-Errors-Using-Do_002dCatch.html#Handling-Errors-Using-Do_002dCatch" accesskey="2">Handling Errors Using Do-Catch</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Converting-Errors-to-Optional-Values.html#Converting-Errors-to-Optional-Values" accesskey="3">Converting Errors to Optional Values</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Disabling-Error-Propagation.html#Disabling-Error-Propagation" accesskey="4">Disabling Error Propagation</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Specifying-Cleanup-Actions.html#Specifying-Cleanup-Actions" accesskey="n" rel="next">Specifying Cleanup Actions</a>, Previous: <a href="Representing-and-Throwing-Errors.html#Representing-and-Throwing-Errors" accesskey="p" rel="prev">Representing and Throwing Errors</a>, Up: <a href="Error-Handling-2.html#Error-Handling-2" accesskey="u" rel="up">Error Handling 2</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

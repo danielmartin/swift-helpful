@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Mutating Method Requirements (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Mutating Method Requirements (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Mutating Method Requirements (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Protocols.html#Protocols" rel="up" title="Protocols">
+<link href="Initializer-Requirements.html#Initializer-Requirements" rel="next" title="Initializer Requirements">
+<link href="Method-Requirements.html#Method-Requirements" rel="prev" title="Method Requirements">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Mutating-Method-Requirements"></span><div class="header">
+<p>
+Next: <a href="Initializer-Requirements.html#Initializer-Requirements" accesskey="n" rel="next">Initializer Requirements</a>, Previous: <a href="Method-Requirements.html#Method-Requirements" accesskey="p" rel="prev">Method Requirements</a>, Up: <a href="Protocols.html#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Mutating-Method-Requirements-1"></span><h3 class="section">26.4 Mutating Method Requirements</h3>
+
+<p>It&rsquo;s sometimes necessary for a method to modify (or <em>mutate</em>) the
+instance it belongs to. For instance methods on value types (that is,
+structures and enumerations) you place the &lsquo;<samp>mutating</samp>&rsquo; keyword before a
+method&rsquo;s &lsquo;<samp>func</samp>&rsquo; keyword to indicate that the method is allowed to modify
+the instance it belongs to and any properties of that instance. This
+process is described in <a href="Modifying-Value-Types-from-Within-Instance-Methods.html#Modifying-Value-Types-from-Within-Instance-Methods">Modifying Value Types
+from Within Instance Methods</a>.
+</p>
+<p>If you define a protocol instance method requirement that is intended to
+mutate instances of any type that adopts the protocol, mark the method
+with the &lsquo;<samp>mutating</samp>&rsquo; keyword as part of the protocol&rsquo;s definition. This
+enables structures and enumerations to adopt the protocol and satisfy
+that method requirement.
+</p>
+<p>Note
+</p>
+<p>If you mark a protocol instance method requirement as &lsquo;<samp>mutating</samp>&rsquo;, you
+don&rsquo;t need to write the &lsquo;<samp>mutating</samp>&rsquo; keyword when writing an
+implementation of that method for a class. The &lsquo;<samp>mutating</samp>&rsquo; keyword is
+only used by structures and enumerations.
+</p>
+<p>The example below defines a protocol called &lsquo;<samp>Togglable</samp>&rsquo;, which defines a
+single instance method requirement called &lsquo;<samp>toggle</samp>&rsquo;. As its name
+suggests, the &lsquo;<samp>toggle()</samp>&rsquo; method is intended to toggle or invert the
+state of any conforming type, typically by modifying a property of that
+type.
+</p>
+<p>The &lsquo;<samp>toggle()</samp>&rsquo; method is marked with the &lsquo;<samp>mutating</samp>&rsquo; keyword as part of
+the &lsquo;<samp>Togglable</samp>&rsquo; protocol definition, to indicate that the method is
+expected to mutate the state of a conforming instance when it&rsquo;s called:
+</p>
+<div class="example">
+<pre class="example">protocol Togglable {
+    mutating func toggle()
+}
+</pre></div>
+
+<p>If you implement the &lsquo;<samp>Togglable</samp>&rsquo; protocol for a structure or
+enumeration, that structure or enumeration can conform to the protocol
+by providing an implementation of the &lsquo;<samp>toggle()</samp>&rsquo; method that is also
+marked as &lsquo;<samp>mutating</samp>&rsquo;.
+</p>
+<p>The example below defines an enumeration called &lsquo;<samp>OnOffSwitch</samp>&rsquo;. This
+enumeration toggles between two states, indicated by the enumeration
+cases &lsquo;<samp>on</samp>&rsquo; and &lsquo;<samp>off</samp>&rsquo;. The enumeration&rsquo;s &lsquo;<samp>toggle</samp>&rsquo; implementation is
+marked as &lsquo;<samp>mutating</samp>&rsquo;, to match the &lsquo;<samp>Togglable</samp>&rsquo; protocol&rsquo;s requirements:
+</p>
+<div class="example">
+<pre class="example">enum OnOffSwitch: Togglable {
+    case off, on
+    mutating func toggle() {
+        switch self {
+        case .off:
+            self = .on
+        case .on:
+            self = .off
+        }
+    }
+}
+var lightSwitch = OnOffSwitch.off
+lightSwitch.toggle()
+// lightSwitch is now equal to .on
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Initializer-Requirements.html#Initializer-Requirements" accesskey="n" rel="next">Initializer Requirements</a>, Previous: <a href="Method-Requirements.html#Method-Requirements" accesskey="p" rel="prev">Method Requirements</a>, Up: <a href="Protocols.html#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

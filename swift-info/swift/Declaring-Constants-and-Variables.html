@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Declaring Constants and Variables (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Declaring Constants and Variables (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Declaring Constants and Variables (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Constants-and-Variables.html#Constants-and-Variables" rel="up" title="Constants and Variables">
+<link href="Type-Annotations.html#Type-Annotations" rel="next" title="Type Annotations">
+<link href="Constants-and-Variables.html#Constants-and-Variables" rel="prev" title="Constants and Variables">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Declaring-Constants-and-Variables"></span><div class="header">
+<p>
+Next: <a href="Type-Annotations.html#Type-Annotations" accesskey="n" rel="next">Type Annotations</a>, Up: <a href="Constants-and-Variables.html#Constants-and-Variables" accesskey="u" rel="up">Constants and Variables</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Declaring-Constants-and-Variables-1"></span><h4 class="subsection">6.1.1 Declaring Constants and Variables</h4>
+
+<p>Constants and variables must be declared before they&rsquo;re used. You
+declare constants with the &lsquo;<samp>let</samp>&rsquo; keyword and variables with the &lsquo;<samp>var</samp>&rsquo;
+keyword. Here&rsquo;s an example of how constants and variables can be used to
+track the number of login attempts a user has made:
+</p>
+<div class="example">
+<pre class="example">let maximumNumberOfLoginAttempts = 10
+var currentLoginAttempt = 0
+</pre></div>
+
+<p>This code can be read as:
+</p>
+<p>“Declare a new constant called &lsquo;<samp>maximumNumberOfLoginAttempts</samp>&rsquo;, and give
+it a value of &lsquo;<samp>10</samp>&rsquo;. Then, declare a new variable called
+&lsquo;<samp>currentLoginAttempt</samp>&rsquo;, and give it an initial value of &lsquo;<samp>0</samp>&rsquo;.”
+</p>
+<p>In this example, the maximum number of allowed login attempts is
+declared as a constant, because the maximum value never changes. The
+current login attempt counter is declared as a variable, because this
+value must be incremented after each failed login attempt.
+</p>
+<p>You can declare multiple constants or multiple variables on a single
+line, separated by commas:
+</p>
+<div class="example">
+<pre class="example">var x = 0.0, y = 0.0, z = 0.0
+</pre></div>
+
+<p>Note
+</p>
+<p>If a stored value in your code won&rsquo;t change, always declare it as a
+constant with the &lsquo;<samp>let</samp>&rsquo; keyword. Use variables only for storing values
+that need to be able to change.
+</p>
+
+
+
+</body>
+</html>

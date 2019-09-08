@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Creating an Empty Dictionary (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Creating an Empty Dictionary (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Creating an Empty Dictionary (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Dictionaries.html#Dictionaries" rel="up" title="Dictionaries">
+<link href="Creating-a-Dictionary-with-a-Dictionary-Literal.html#Creating-a-Dictionary-with-a-Dictionary-Literal" rel="next" title="Creating a Dictionary with a Dictionary Literal">
+<link href="Dictionary-Type-Shorthand-Syntax.html#Dictionary-Type-Shorthand-Syntax" rel="prev" title="Dictionary Type Shorthand Syntax">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Creating-an-Empty-Dictionary"></span><div class="header">
+<p>
+Next: <a href="Creating-a-Dictionary-with-a-Dictionary-Literal.html#Creating-a-Dictionary-with-a-Dictionary-Literal" accesskey="n" rel="next">Creating a Dictionary with a Dictionary Literal</a>, Previous: <a href="Dictionary-Type-Shorthand-Syntax.html#Dictionary-Type-Shorthand-Syntax" accesskey="p" rel="prev">Dictionary Type Shorthand Syntax</a>, Up: <a href="Dictionaries.html#Dictionaries" accesskey="u" rel="up">Dictionaries</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Creating-an-Empty-Dictionary-1"></span><h4 class="subsection">9.5.2 Creating an Empty Dictionary</h4>
+
+<p>As with arrays, you can create an empty &lsquo;<samp>Dictionary</samp>&rsquo; of a certain type
+by using initializer syntax:
+</p>
+<div class="example">
+<pre class="example">var namesOfIntegers = [Int: String]()
+// namesOfIntegers is an empty [Int: String] dictionary
+</pre></div>
+
+<p>This example creates an empty dictionary of type &lsquo;<samp>[Int: String]</samp>&rsquo; to
+store human-readable names of integer values. Its keys are of type
+&lsquo;<samp>Int</samp>&rsquo;, and its values are of type &lsquo;<samp>String</samp>&rsquo;.
+</p>
+<p>If the context already provides type information, you can create an
+empty dictionary with an empty dictionary literal, which is written as
+&lsquo;<samp>[:]</samp>&rsquo; (a colon inside a pair of square brackets):
+</p>
+<div class="example">
+<pre class="example">namesOfIntegers[16] = &quot;sixteen&quot;
+// namesOfIntegers now contains 1 key-value pair
+namesOfIntegers = [:]
+// namesOfIntegers is once again an empty dictionary of type [Int: String]
+</pre></div>
+
+
+
+
+</body>
+</html>

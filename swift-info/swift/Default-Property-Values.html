@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Default Property Values (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Default Property Values (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Default Property Values (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Setting-Initial-Values-for-Stored-Properties.html#Setting-Initial-Values-for-Stored-Properties" rel="up" title="Setting Initial Values for Stored Properties">
+<link href="Customizing-Initialization.html#Customizing-Initialization" rel="next" title="Customizing Initialization">
+<link href="Initializers.html#Initializers" rel="prev" title="Initializers">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Default-Property-Values"></span><div class="header">
+<p>
+Previous: <a href="Initializers.html#Initializers" accesskey="p" rel="prev">Initializers</a>, Up: <a href="Setting-Initial-Values-for-Stored-Properties.html#Setting-Initial-Values-for-Stored-Properties" accesskey="u" rel="up">Setting Initial Values for Stored Properties</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Default-Property-Values-1"></span><h4 class="subsection">19.1.2 Default Property Values</h4>
+
+<p>You can set the initial value of a stored property from within an
+initializer, as shown above. Alternatively, specify a <em>default property
+value</em> as part of the property&rsquo;s declaration. You specify a default
+property value by assigning an initial value to the property when it is
+defined.
+</p>
+<p>Note
+</p>
+<p>If a property always takes the same initial value, provide a default
+value rather than setting a value within an initializer. The end result
+is the same, but the default value ties the property&rsquo;s initialization
+more closely to its declaration. It makes for shorter, clearer
+initializers and enables you to infer the type of the property from its
+default value. The default value also makes it easier for you to take
+advantage of default initializers and initializer inheritance, as
+described later in this chapter.
+</p>
+<p>You can write the &lsquo;<samp>Fahrenheit</samp>&rsquo; structure from above in a simpler form by
+providing a default value for its &lsquo;<samp>temperature</samp>&rsquo; property at the point
+that the property is declared:
+</p>
+<div class="example">
+<pre class="example">struct Fahrenheit {
+    var temperature = 32.0
+}
+</pre></div>
+
+
+
+
+</body>
+</html>

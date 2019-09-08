@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Default Memberwise Initializers for Structure Types (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Default Memberwise Initializers for Structure Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Default Memberwise Initializers for Structure Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Initializers-2.html#Initializers-2" rel="up" title="Initializers 2">
+<link href="Protocols-1.html#Protocols-1" rel="next" title="Protocols 1">
+<link href="Default-Initializers-1.html#Default-Initializers-1" rel="prev" title="Default Initializers 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Default-Memberwise-Initializers-for-Structure-Types"></span><div class="header">
+<p>
+Previous: <a href="Default-Initializers-1.html#Default-Initializers-1" accesskey="p" rel="prev">Default Initializers 1</a>, Up: <a href="Initializers-2.html#Initializers-2" accesskey="u" rel="up">Initializers 2</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Default-Memberwise-Initializers-for-Structure-Types-1"></span><h4 class="subsection">31.7.2 Default Memberwise Initializers for Structure Types</h4>
+
+<p>The default memberwise initializer for a structure type is considered
+private if any of the structure&rsquo;s stored properties are private.
+Likewise, if any of the structure&rsquo;s stored properties are file private,
+the initializer is file private. Otherwise, the initializer has an
+access level of internal.
+</p>
+<p>As with the default initializer above, if you want a public structure
+type to be initializable with a memberwise initializer when used in
+another module, you must provide a public memberwise initializer
+yourself as part of the type&rsquo;s definition.
+</p>
+
+
+
+</body>
+</html>

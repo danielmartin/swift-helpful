@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Types 1 (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Types 1 (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Types 1 (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" rel="up" title="Summary of the Grammar">
+<link href="Expressions-1.html#Expressions-1" rel="next" title="Expressions 1">
+<link href="Lexical-Structure-1.html#Lexical-Structure-1" rel="prev" title="Lexical Structure 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Types-1"></span><div class="header">
+<p>
+Next: <a href="Expressions-1.html#Expressions-1" accesskey="n" rel="next">Expressions 1</a>, Previous: <a href="Lexical-Structure-1.html#Lexical-Structure-1" accesskey="p" rel="prev">Lexical Structure 1</a>, Up: <a href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" accesskey="u" rel="up">Summary of the Grammar</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Types-3"></span><h3 class="section">11.2 Types</h3>
+
+<p>Grammar of a type
+</p>
+<p>type →
+function-type
+</p>
+<p>type →
+array-type
+</p>
+<p>type →
+dictionary-type
+</p>
+<p>type →
+type-identifier
+</p>
+<p>type →
+tuple-type
+</p>
+<p>type →
+optional-type
+</p>
+<p>type →
+implicitly-unwrapped-optional-type
+</p>
+<p>type →
+protocol-composition-type
+</p>
+<p>type →
+opaque-type
+</p>
+<p>type →
+metatype-type
+</p>
+<p>type →
+self-type
+</p>
+<p>type → &lsquo;<samp>Any</samp>&rsquo;
+</p>
+<p>type → &lsquo;<samp>(</samp>&rsquo;
+type &lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>Grammar of a type annotation
+</p>
+<p>type-annotation
+→ &lsquo;<samp>:</samp>&rsquo;
+attributes
+_{opt} =inout=<em>_opt</em>
+type
+</p>
+<p>Grammar of a type identifier
+</p>
+<p>type-identifier
+→ type-name
+generic-argument-clause
+_{opt} | type-name
+generic-argument-clause
+_{opt} &lsquo;<samp>.</samp>&rsquo;
+type-identifier
+</p>
+<p>type-name →
+identifier
+</p>
+<p>Grammar of a tuple type
+</p>
+<p>tuple-type → &lsquo;<samp>(</samp>&rsquo;
+&lsquo;<samp>)</samp>&rsquo; | &lsquo;<samp>(</samp>&rsquo;
+tuple-type-element
+&lsquo;<samp>,</samp>&rsquo;
+tuple-type-element-list
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>tuple-type-element-list
+→
+tuple-type-element
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>tuple-type-element
+&lsquo;<samp>,</samp>&rsquo;
+tuple-type-element-list
+</p>
+<p>tuple-type-element
+→ element-name
+type-annotation
+</p><table>
+<tr><td>type</td></tr>
+</table>
+
+<p>element-name →
+identifier
+</p>
+<p>Grammar of a function type
+</p>
+<p>function-type
+→ attributes
+_{opt}
+function-type-argument-clause
+&lsquo;<samp>throws=_{opt} =-&gt;</samp>&rsquo;
+type
+</p>
+<p>function-type
+→ attributes
+_{opt}
+function-type-argument-clause
+&lsquo;<samp>rethrows</samp>&rsquo; &lsquo;<samp>-&gt;</samp>&rsquo; type
+</p>
+<p>function-type-argument-clause
+→ &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>function-type-argument-clause
+→ &lsquo;<samp>(</samp>&rsquo;
+function-type-argument-list
+&lsquo;<samp>...=_{opt} =)</samp>&rsquo;
+</p>
+<p>function-type-argument-list
+→
+function-type-argument
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>function-type-argument
+&lsquo;<samp>,</samp>&rsquo;
+function-type-argument-list
+</p>
+<p>function-type-argument
+→ attributes
+_{opt} =inout=<em>_opt</em>
+type |
+argument-label
+type-annotation
+</p>
+<p>argument-label
+→
+identifier
+</p>
+<p>Grammar of an array type
+</p>
+<p>array-type → &lsquo;<samp>[</samp>&rsquo;
+type &lsquo;<samp>]</samp>&rsquo;
+</p>
+<p>Grammar of a dictionary type
+</p>
+<p>dictionary-type
+→ &lsquo;<samp>[</samp>&rsquo; type &lsquo;<samp>:</samp>&rsquo;
+type &lsquo;<samp>]</samp>&rsquo;
+</p>
+<p>Grammar of an optional type
+</p>
+<p>optional-type
+→ type &lsquo;<samp>?</samp>&rsquo;
+</p>
+<p>Grammar of an implicitly unwrapped optional type
+</p>
+<p>implicitly-unwrapped-optional-type
+→ type &lsquo;<samp>!</samp>&rsquo;
+</p>
+<p>Grammar of a protocol composition type
+</p>
+<p>protocol-composition-type
+→
+type-identifier
+&lsquo;<samp>&amp;</samp>&rsquo;
+protocol-composition-continuation
+</p>
+<p>protocol-composition-continuation
+→
+type-identifier
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>protocol-composition-type
+</p>
+<p>Grammar of an opaque type
+</p>
+<p>opaque-type →
+&lsquo;<samp>some</samp>&rsquo; type
+</p>
+<p>Grammar of a metatype type
+</p>
+<p>metatype-type
+→ type &lsquo;<samp>.</samp>&rsquo; &lsquo;<samp>Type</samp>&rsquo; |
+type &lsquo;<samp>.</samp>&rsquo; &lsquo;<samp>Protocol</samp>&rsquo;
+</p>
+<p>Grammar of a type inheritance clause
+</p>
+<p>type-inheritance-clause
+→ &lsquo;<samp>:</samp>&rsquo;
+type-inheritance-list
+</p>
+<p>type-inheritance-list
+→
+type-identifier
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>type-identifier
+&lsquo;<samp>,</samp>&rsquo;
+type-inheritance-list
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Expressions-1.html#Expressions-1" accesskey="n" rel="next">Expressions 1</a>, Previous: <a href="Lexical-Structure-1.html#Lexical-Structure-1" accesskey="p" rel="prev">Lexical Structure 1</a>, Up: <a href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" accesskey="u" rel="up">Summary of the Grammar</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

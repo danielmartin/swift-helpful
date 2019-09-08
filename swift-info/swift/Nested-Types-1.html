@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Nested Types 1 (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Nested Types 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Nested Types 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Extensions.html#Extensions" rel="up" title="Extensions">
+<link href="Protocols.html#Protocols" rel="next" title="Protocols">
+<link href="Subscripts-1.html#Subscripts-1" rel="prev" title="Subscripts 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Nested-Types-1"></span><div class="header">
+<p>
+Previous: <a href="Subscripts-1.html#Subscripts-1" accesskey="p" rel="prev">Subscripts 1</a>, Up: <a href="Extensions.html#Extensions" accesskey="u" rel="up">Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Nested-Types-4"></span><h3 class="section">25.6 Nested Types</h3>
+
+<p>Extensions can add new nested types to existing classes, structures, and
+enumerations:
+</p>
+<div class="example">
+<pre class="example">extension Int {
+    enum Kind {
+        case negative, zero, positive
+    }
+    var kind: Kind {
+        switch self {
+        case 0:
+            return .zero
+        case let x where x &gt; 0:
+            return .positive
+        default:
+            return .negative
+        }
+    }
+}
+</pre></div>
+
+<p>This example adds a new nested enumeration to &lsquo;<samp>Int</samp>&rsquo;. This enumeration,
+called &lsquo;<samp>Kind</samp>&rsquo;, expresses the kind of number that a particular integer
+represents. Specifically, it expresses whether the number is negative,
+zero, or positive.
+</p>
+<p>This example also adds a new computed instance property to &lsquo;<samp>Int</samp>&rsquo;, called
+&lsquo;<samp>kind</samp>&rsquo;, which returns the appropriate &lsquo;<samp>Kind</samp>&rsquo; enumeration case for that
+integer.
+</p>
+<p>The nested enumeration can now be used with any &lsquo;<samp>Int</samp>&rsquo; value:
+</p>
+<div class="example">
+<pre class="example">func printIntegerKinds(_ numbers: [Int]) {
+    for number in numbers {
+        switch number.kind {
+        case .negative:
+            print(&quot;- &quot;, terminator: &quot;&quot;)
+        case .zero:
+            print(&quot;0 &quot;, terminator: &quot;&quot;)
+        case .positive:
+            print(&quot;+ &quot;, terminator: &quot;&quot;)
+        }
+    }
+    print(&quot;&quot;)
+}
+printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
+// Prints &quot;+ + - 0 - 0 + &quot;
+</pre></div>
+
+<p>This function, &lsquo;<samp>printIntegerKinds(_:)</samp>&rsquo;, takes an input array of &lsquo;<samp>Int</samp>&rsquo;
+values and iterates over those values in turn. For each integer in the
+array, the function considers the &lsquo;<samp>kind</samp>&rsquo; computed property for that
+integer, and prints an appropriate description.
+</p>
+<p>Note
+</p>
+<p>&lsquo;<samp>number.kind</samp>&rsquo; is already known to be of type &lsquo;<samp>Int.Kind</samp>&rsquo;. Because of
+this, all of the &lsquo;<samp>Int.Kind</samp>&rsquo; case values can be written in shorthand form
+inside the &lsquo;<samp>switch</samp>&rsquo; statement, such as &lsquo;<samp>.negative</samp>&rsquo; rather than
+&lsquo;<samp>Int.Kind.negative</samp>&rsquo;.
+</p>
+
+
+
+</body>
+</html>

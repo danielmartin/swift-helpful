@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Naming Constants and Variables (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Naming Constants and Variables (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Naming Constants and Variables (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Constants-and-Variables.html#Constants-and-Variables" rel="up" title="Constants and Variables">
+<link href="Printing-Constants-and-Variables.html#Printing-Constants-and-Variables" rel="next" title="Printing Constants and Variables">
+<link href="Type-Annotations.html#Type-Annotations" rel="prev" title="Type Annotations">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Naming-Constants-and-Variables"></span><div class="header">
+<p>
+Next: <a href="Printing-Constants-and-Variables.html#Printing-Constants-and-Variables" accesskey="n" rel="next">Printing Constants and Variables</a>, Previous: <a href="Type-Annotations.html#Type-Annotations" accesskey="p" rel="prev">Type Annotations</a>, Up: <a href="Constants-and-Variables.html#Constants-and-Variables" accesskey="u" rel="up">Constants and Variables</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Naming-Constants-and-Variables-1"></span><h4 class="subsection">6.1.3 Naming Constants and Variables</h4>
+
+<p>Constant and variable names can contain almost any character, including
+Unicode characters:
+</p>
+<div class="example">
+<pre class="example">let π = 3.14159
+let 你好 = &quot;你好世界&quot;
+let 🐶🐮 = &quot;dogcow&quot;
+</pre></div>
+
+<p>Constant and variable names can&rsquo;t contain whitespace characters,
+mathematical symbols, arrows, private-use Unicode scalar values, or
+line- and box-drawing characters. Nor can they begin with a number,
+although numbers may be included elsewhere within the name.
+</p>
+<p>Once you&rsquo;ve declared a constant or variable of a certain type, you can&rsquo;t
+declare it again with the same name, or change it to store values of a
+different type. Nor can you change a constant into a variable or a
+variable into a constant.
+</p>
+<p>Note
+</p>
+<p>If you need to give a constant or variable the same name as a reserved
+Swift keyword, surround the keyword with backticks (&lsquo;<samp>`</samp>&rsquo;) when using it
+as a name. However, avoid using keywords as names unless you have
+absolutely no choice.
+</p>
+<p>You can change the value of an existing variable to another value of a
+compatible type. In this example, the value of &lsquo;<samp>friendlyWelcome</samp>&rsquo; is
+changed from &lsquo;<samp>&quot;Hello!&quot;</samp>&rsquo; to &lsquo;<samp>&quot;Bonjour!&quot;</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">var friendlyWelcome = &quot;Hello!&quot;
+friendlyWelcome = &quot;Bonjour!&quot;
+// friendlyWelcome is now &quot;Bonjour!&quot;
+</pre></div>
+
+<p>Unlike a variable, the value of a constant can&rsquo;t be changed after it&rsquo;s
+set. Attempting to do so is reported as an error when your code is
+compiled:
+</p>
+<div class="example">
+<pre class="example">let languageName = &quot;Swift&quot;
+languageName = &quot;Swift++&quot;
+// This is a compile-time error: languageName cannot be changed.
+</pre></div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,693 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Expressions 1 (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Expressions 1 (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Expressions 1 (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" rel="up" title="Summary of the Grammar">
+<link href="Statements-1.html#Statements-1" rel="next" title="Statements 1">
+<link href="Types-1.html#Types-1" rel="prev" title="Types 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Expressions-1"></span><div class="header">
+<p>
+Next: <a href="Statements-1.html#Statements-1" accesskey="n" rel="next">Statements 1</a>, Previous: <a href="Types-1.html#Types-1" accesskey="p" rel="prev">Types 1</a>, Up: <a href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" accesskey="u" rel="up">Summary of the Grammar</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Expressions-3"></span><h3 class="section">11.3 Expressions</h3>
+
+<p>Grammar of an expression
+</p>
+<p>expression →
+try-operator
+_{opt}
+prefix-expression
+binary-expressions
+_{opt}
+</p>
+<p>expression-list
+→
+expression
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>expression
+&lsquo;<samp>,</samp>&rsquo;
+expression-list
+</p>
+<p>Grammar of a prefix expression
+</p>
+<p>prefix-expression
+→
+prefix-operator
+_{opt}
+postfix-expression
+</p>
+<p>prefix-expression
+→
+in-out-expression
+</p>
+<p>in-out-expression
+→ &lsquo;<samp>&amp;</samp>&rsquo;
+identifier
+</p>
+<p>Grammar of a try expression
+</p>
+<p>try-operator →
+&lsquo;<samp>try</samp>&rsquo; | &lsquo;<samp>try</samp>&rsquo; &lsquo;<samp>?</samp>&rsquo; | &lsquo;<samp>try</samp>&rsquo; &lsquo;<samp>!</samp>&rsquo;
+</p>
+<p>Grammar of a binary expression
+</p>
+<p>binary-expression
+→
+binary-operator
+prefix-expression
+</p>
+<p>binary-expression
+→
+assignment-operator
+try-operator
+_{opt}
+prefix-expression
+</p>
+<p>binary-expression
+→
+conditional-operator
+try-operator
+_{opt}
+prefix-expression
+</p>
+<p>binary-expression
+→
+type-casting-operator
+</p>
+<p>binary-expressions
+→
+binary-expression
+binary-expressions
+_{opt}
+</p>
+<p>Grammar of an assignment operator
+</p>
+<p>assignment-operator
+→ &lsquo;<samp>=</samp>&rsquo;
+</p>
+<p>Grammar of a conditional operator
+</p>
+<p>conditional-operator
+→ &lsquo;<samp>?</samp>&rsquo;
+expression
+&lsquo;<samp>:</samp>&rsquo;
+</p>
+<p>Grammar of a type-casting operator
+</p>
+<p>type-casting-operator
+→ &lsquo;<samp>is</samp>&rsquo; type
+</p>
+<p>type-casting-operator
+→ &lsquo;<samp>as</samp>&rsquo; type
+</p>
+<p>type-casting-operator
+→ &lsquo;<samp>as</samp>&rsquo; &lsquo;<samp>?</samp>&rsquo; type
+</p>
+<p>type-casting-operator
+→ &lsquo;<samp>as</samp>&rsquo; &lsquo;<samp>!</samp>&rsquo; type
+</p>
+<p>Grammar of a primary expression
+</p>
+<p>primary-expression
+→
+identifier
+generic-argument-clause
+_{opt}
+</p>
+<p>primary-expression
+→
+literal-expression
+</p>
+<p>primary-expression
+→
+self-expression
+</p>
+<p>primary-expression
+→
+superclass-expression
+</p>
+<p>primary-expression
+→
+closure-expression
+</p>
+<p>primary-expression
+→
+parenthesized-expression
+</p>
+<p>primary-expression
+→
+tuple-expression
+</p>
+<p>primary-expression
+→
+implicit-member-expression
+</p>
+<p>primary-expression
+→
+wildcard-expression
+</p>
+<p>primary-expression
+→
+key-path-expression
+</p>
+<p>primary-expression
+→
+selector-expression
+</p>
+<p>primary-expression
+→
+key-path-string-expression
+</p>
+<p>Grammar of a literal expression
+</p>
+<p>literal-expression
+→ literal
+</p>
+<p>literal-expression
+→
+array-literal
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>dictionary-literal
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>playground-literal
+</p>
+<p>literal-expression
+→ &lsquo;<samp>#file</samp>&rsquo; | &lsquo;<samp>#line</samp>&rsquo; | &lsquo;<samp>#column</samp>&rsquo; | &lsquo;<samp>#function</samp>&rsquo; | &lsquo;<samp>#dsohandle</samp>&rsquo;
+</p>
+<p>array-literal
+→ &lsquo;<samp>[</samp>&rsquo;
+array-literal-items
+_{opt} &lsquo;<samp>]</samp>&rsquo;
+</p>
+<p>array-literal-items
+→
+array-literal-item
+=,=<em>_opt</em> |
+array-literal-item
+&lsquo;<samp>,</samp>&rsquo;
+array-literal-items
+</p>
+<p>array-literal-item
+→
+expression
+</p>
+<p>dictionary-literal
+→ &lsquo;<samp>[</samp>&rsquo;
+dictionary-literal-items
+&lsquo;<samp>]</samp>&rsquo; | &lsquo;<samp>[</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo; &lsquo;<samp>]</samp>&rsquo;
+</p>
+<p>dictionary-literal-items
+→
+dictionary-literal-item
+=,=<em>_opt</em> |
+dictionary-literal-item
+&lsquo;<samp>,</samp>&rsquo;
+dictionary-literal-items
+</p>
+<p>dictionary-literal-item
+→
+expression
+&lsquo;<samp>:</samp>&rsquo;
+expression
+</p>
+<p>playground-literal
+→ &lsquo;<samp>#colorLiteral</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>red</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo;
+expression
+&lsquo;<samp>,</samp>&rsquo; &lsquo;<samp>green</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo;
+expression
+&lsquo;<samp>,</samp>&rsquo; &lsquo;<samp>blue</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo;
+expression
+&lsquo;<samp>,</samp>&rsquo; &lsquo;<samp>alpha</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo;
+expression
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>playground-literal
+→ &lsquo;<samp>#fileLiteral</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>resourceName</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo;
+expression
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>playground-literal
+→ &lsquo;<samp>#imageLiteral</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>resourceName</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo;
+expression
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>Grammar of a self expression
+</p>
+<p>self-expression
+→ &lsquo;<samp>self</samp>&rsquo; |
+self-method-expression
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>self-subscript-expression
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>self-initializer-expression
+</p>
+<p>self-method-expression
+→ &lsquo;<samp>self</samp>&rsquo; &lsquo;<samp>.</samp>&rsquo;
+identifier
+</p>
+<p>self-subscript-expression
+→ &lsquo;<samp>self</samp>&rsquo; &lsquo;<samp>[</samp>&rsquo;
+function-call-argument-list
+&lsquo;<samp>]</samp>&rsquo;
+</p>
+<p>self-initializer-expression
+→ &lsquo;<samp>self</samp>&rsquo; &lsquo;<samp>.</samp>&rsquo; &lsquo;<samp>init</samp>&rsquo;
+</p>
+<p>Grammar of a superclass expression
+</p>
+<p>superclass-expression
+→
+superclass-method-expression
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>superclass-subscript-expression
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>superclass-initializer-expression
+</p>
+<p>superclass-method-expression
+→ &lsquo;<samp>super</samp>&rsquo; &lsquo;<samp>.</samp>&rsquo;
+identifier
+</p>
+<p>superclass-subscript-expression
+→ &lsquo;<samp>super</samp>&rsquo; &lsquo;<samp>[</samp>&rsquo;
+function-call-argument-list
+&lsquo;<samp>]</samp>&rsquo;
+</p>
+<p>superclass-initializer-expression
+→ &lsquo;<samp>super</samp>&rsquo; &lsquo;<samp>.</samp>&rsquo; &lsquo;<samp>init</samp>&rsquo;
+</p>
+<p>Grammar of a closure expression
+</p>
+<p>closure-expression
+→ &lsquo;<samp>{</samp>&rsquo;
+closure-signature
+_{opt}
+statements
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>closure-signature
+→
+capture-list
+_{opt}
+closure-parameter-clause
+=throws=<em>_opt</em>
+function-result
+_{opt} &lsquo;<samp>in</samp>&rsquo;
+</p>
+<p>closure-signature
+→
+capture-list
+&lsquo;<samp>in</samp>&rsquo;
+</p>
+<p>closure-parameter-clause
+→ &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo; | &lsquo;<samp>(</samp>&rsquo;
+closure-parameter-list
+&lsquo;<samp>)</samp>&rsquo; |
+identifier-list
+</p>
+<p>closure-parameter-list
+→
+closure-parameter
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>closure-parameter
+&lsquo;<samp>,</samp>&rsquo;
+closure-parameter-list
+</p>
+<p>closure-parameter
+→
+closure-parameter-name
+type-annotation
+_{opt}
+</p>
+<p>closure-parameter
+→
+closure-parameter-name
+type-annotation
+&lsquo;<samp>...</samp>&rsquo;
+</p>
+<p>closure-parameter-name
+→
+identifier
+</p>
+<p>capture-list →
+&lsquo;<samp>[</samp>&rsquo;
+capture-list-items
+&lsquo;<samp>]</samp>&rsquo;
+</p>
+<p>capture-list-items
+→
+capture-list-item
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>capture-list-item
+&lsquo;<samp>,</samp>&rsquo;
+capture-list-items
+</p>
+<p>capture-list-item
+→
+capture-specifier
+_{opt}
+expression
+</p>
+<p>capture-specifier
+→ &lsquo;<samp>weak</samp>&rsquo; | &lsquo;<samp>unowned</samp>&rsquo; | &lsquo;<samp>unowned(safe)</samp>&rsquo; | &lsquo;<samp>unowned(unsafe)</samp>&rsquo;
+</p>
+<p>Grammar of a implicit member expression
+</p>
+<p>implicit-member-expression
+→ &lsquo;<samp>.</samp>&rsquo;
+identifier
+</p>
+<p>Grammar of a parenthesized expression
+</p>
+<p>parenthesized-expression
+→ &lsquo;<samp>(</samp>&rsquo;
+expression
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>Grammar of a tuple expression
+</p>
+<p>tuple-expression
+→ &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo; | &lsquo;<samp>(</samp>&rsquo;
+tuple-element
+&lsquo;<samp>,</samp>&rsquo;
+tuple-element-list
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>tuple-element-list
+→
+tuple-element
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>tuple-element
+&lsquo;<samp>,</samp>&rsquo;
+tuple-element-list
+</p>
+<p>tuple-element
+→
+expression
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>identifier
+&lsquo;<samp>:</samp>&rsquo;
+expression
+</p>
+<p>Grammar of a wildcard expression
+</p>
+<p>wildcard-expression
+→ &lsquo;<samp>_</samp>&rsquo;
+</p>
+<p>Grammar of a key-path expression
+</p>
+<p>key-path-expression
+→ &lsquo;<samp>\</samp>&rsquo; type _{opt} &lsquo;<samp>.</samp>&rsquo;
+key-path-components
+</p>
+<p>key-path-components
+→
+key-path-component
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>key-path-component
+&lsquo;<samp>.</samp>&rsquo;
+key-path-components
+</p>
+<p>key-path-component
+→
+identifier
+key-path-postfixes
+_{opt} |
+key-path-postfixes
+</p>
+<p>key-path-postfixes
+→
+key-path-postfix
+key-path-postfixes
+_{opt}
+</p>
+<p>key-path-postfix
+→ &lsquo;<samp>?</samp>&rsquo; | &lsquo;<samp>!</samp>&rsquo; | &lsquo;<samp>self</samp>&rsquo; | &lsquo;<samp>[</samp>&rsquo;
+function-call-argument-list
+&lsquo;<samp>]</samp>&rsquo;
+</p>
+<p>Grammar of a selector expression
+</p>
+<p>selector-expression
+→ &lsquo;<samp>#selector</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo;
+expression
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>selector-expression
+→ &lsquo;<samp>#selector</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>getter:</samp>&rsquo;
+expression
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>selector-expression
+→ &lsquo;<samp>#selector</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>setter:</samp>&rsquo;
+expression
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>Grammar of a key-path string expression
+</p>
+<p>key-path-string-expression
+→ &lsquo;<samp>#keyPath</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo;
+expression
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>Grammar of a postfix expression
+</p>
+<p>postfix-expression
+→
+primary-expression
+</p>
+<p>postfix-expression
+→
+postfix-expression
+postfix-operator
+</p>
+<p>postfix-expression
+→
+function-call-expression
+</p>
+<p>postfix-expression
+→
+initializer-expression
+</p>
+<p>postfix-expression
+→
+explicit-member-expression
+</p>
+<p>postfix-expression
+→
+postfix-self-expression
+</p>
+<p>postfix-expression
+→
+subscript-expression
+</p>
+<p>postfix-expression
+→
+forced-value-expression
+</p>
+<p>postfix-expression
+→
+optional-chaining-expression
+</p>
+<p>Grammar of a function call expression
+</p>
+<p>function-call-expression
+→
+postfix-expression
+function-call-argument-clause
+</p>
+<p>function-call-expression
+→
+postfix-expression
+function-call-argument-clause
+_{opt}
+trailing-closure
+</p>
+<p>function-call-argument-clause
+→ &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo; | &lsquo;<samp>(</samp>&rsquo;
+function-call-argument-list
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>function-call-argument-list
+→
+function-call-argument
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>function-call-argument
+&lsquo;<samp>,</samp>&rsquo;
+function-call-argument-list
+</p>
+<p>function-call-argument
+→
+expression
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>identifier
+&lsquo;<samp>:</samp>&rsquo;
+expression
+</p>
+<p>function-call-argument
+→
+operator
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>identifier
+&lsquo;<samp>:</samp>&rsquo;
+operator
+</p>
+<p>trailing-closure
+→
+closure-expression
+</p>
+<p>Grammar of an initializer expression
+</p>
+<p>initializer-expression
+→
+postfix-expression
+&lsquo;<samp>.</samp>&rsquo; &lsquo;<samp>init</samp>&rsquo;
+</p>
+<p>initializer-expression
+→
+postfix-expression
+&lsquo;<samp>.</samp>&rsquo; &lsquo;<samp>init</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo;
+argument-names
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>Grammar of an explicit member expression
+</p>
+<p>explicit-member-expression
+→
+postfix-expression
+&lsquo;<samp>.</samp>&rsquo;
+decimal-digits
+</p>
+<p>explicit-member-expression
+→
+postfix-expression
+&lsquo;<samp>.</samp>&rsquo;
+identifier
+generic-argument-clause
+_{opt}
+</p>
+<p>explicit-member-expression
+→
+postfix-expression
+&lsquo;<samp>.</samp>&rsquo;
+identifier
+&lsquo;<samp>(</samp>&rsquo;
+argument-names
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>argument-names
+→
+argument-name
+argument-names
+_{opt}
+</p>
+<p>argument-name
+→
+identifier
+&lsquo;<samp>:</samp>&rsquo;
+</p>
+<p>Grammar of a postfix self expression
+</p>
+<p>postfix-self-expression
+→
+postfix-expression
+&lsquo;<samp>.</samp>&rsquo; &lsquo;<samp>self</samp>&rsquo;
+</p>
+<p>Grammar of a subscript expression
+</p>
+<p>subscript-expression
+→
+postfix-expression
+&lsquo;<samp>[</samp>&rsquo;
+function-call-argument-list
+&lsquo;<samp>]</samp>&rsquo;
+</p>
+<p>Grammar of a forced-value expression
+</p>
+<p>forced-value-expression
+→
+postfix-expression
+&lsquo;<samp>!</samp>&rsquo;
+</p>
+<p>Grammar of an optional-chaining expression
+</p>
+<p>optional-chaining-expression
+→
+postfix-expression
+&lsquo;<samp>?</samp>&rsquo;
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Statements-1.html#Statements-1" accesskey="n" rel="next">Statements 1</a>, Previous: <a href="Types-1.html#Types-1" accesskey="p" rel="prev">Types 1</a>, Up: <a href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" accesskey="u" rel="up">Summary of the Grammar</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

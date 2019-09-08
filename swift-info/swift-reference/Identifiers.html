@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Identifiers (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Identifiers (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Identifiers (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Lexical-Structure.html#Lexical-Structure" rel="up" title="Lexical Structure">
+<link href="Keywords-and-Punctuation.html#Keywords-and-Punctuation" rel="next" title="Keywords and Punctuation">
+<link href="Whitespace-and-Comments.html#Whitespace-and-Comments" rel="prev" title="Whitespace and Comments">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Identifiers"></span><div class="header">
+<p>
+Next: <a href="Keywords-and-Punctuation.html#Keywords-and-Punctuation" accesskey="n" rel="next">Keywords and Punctuation</a>, Previous: <a href="Whitespace-and-Comments.html#Whitespace-and-Comments" accesskey="p" rel="prev">Whitespace and Comments</a>, Up: <a href="Lexical-Structure.html#Lexical-Structure" accesskey="u" rel="up">Lexical Structure</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Identifiers-1"></span><h3 class="section">3.2 Identifiers</h3>
+
+<p><em>Identifiers</em> begin with an uppercase or lowercase letter A through Z,
+an underscore (&lsquo;<samp>_</samp>&rsquo;), a noncombining alphanumeric Unicode character in
+the Basic Multilingual Plane, or a character outside the Basic
+Multilingual Plane that isn&rsquo;t in a Private Use Area. After the first
+character, digits and combining Unicode characters are also allowed.
+</p>
+<p>To use a reserved word as an identifier, put a backtick (&lsquo;<samp>`</samp>&rsquo;) before and
+after it. For example, &lsquo;<samp>class</samp>&rsquo; is not a valid identifier, but &lsquo;<samp>`class`</samp>&rsquo;
+is valid. The backticks aren&rsquo;t considered part of the identifier; &lsquo;<samp>`x`</samp>&rsquo;
+and &lsquo;<samp>x</samp>&rsquo; have the same meaning.
+</p>
+<p>Inside a closure with no explicit parameter names, the parameters are
+implicitly named &lsquo;<samp>$0</samp>&rsquo;, &lsquo;<samp>$1</samp>&rsquo;, &lsquo;<samp>$2</samp>&rsquo;, and so on. These names are valid
+identifiers within the scope of the closure.
+</p>
+<p>Grammar of an identifier
+</p>
+<p>identifier →
+identifier-head
+identifier-characters
+_{opt}
+</p>
+<p>identifier → &lsquo;<samp>`</samp>&rsquo;
+identifier-head
+identifier-characters
+_{opt} &lsquo;<samp>`</samp>&rsquo;
+</p>
+<p>identifier →
+implicit-parameter-name
+</p>
+<p>identifier-list →
+identifier
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>identifier
+&lsquo;<samp>,</samp>&rsquo;
+identifier-list
+</p>
+<p>identifier-head →
+Upper- or lowercase letter A through Z
+</p>
+<p>identifier-head →
+&lsquo;<samp>_</samp>&rsquo;
+</p>
+<p>identifier-head →
+U+00A8, U+00AA, U+00AD, U+00AF, U+00B2&ndash;U+00B5, or U+00B7&ndash;U+00BA
+</p>
+<p>identifier-head →
+U+00BC&ndash;U+00BE, U+00C0&ndash;U+00D6, U+00D8&ndash;U+00F6, or U+00F8&ndash;U+00FF
+</p>
+<p>identifier-head →
+U+0100&ndash;U+02FF, U+0370&ndash;U+167F, U+1681&ndash;U+180D, or U+180F&ndash;U+1DBF
+</p>
+<p>identifier-head →
+U+1E00&ndash;U+1FFF
+</p>
+<p>identifier-head →
+U+200B&ndash;U+200D, U+202A&ndash;U+202E, U+203F&ndash;U+2040, U+2054, or
+U+2060&ndash;U+206F
+</p>
+<p>identifier-head →
+U+2070&ndash;U+20CF, U+2100&ndash;U+218F, U+2460&ndash;U+24FF, or U+2776&ndash;U+2793
+</p>
+<p>identifier-head →
+U+2C00&ndash;U+2DFF or U+2E80&ndash;U+2FFF
+</p>
+<p>identifier-head →
+U+3004&ndash;U+3007, U+3021&ndash;U+302F, U+3031&ndash;U+303F, or U+3040&ndash;U+D7FF
+</p>
+<p>identifier-head →
+U+F900&ndash;U+FD3D, U+FD40&ndash;U+FDCF, U+FDF0&ndash;U+FE1F, or U+FE30&ndash;U+FE44
+</p>
+<p>identifier-head →
+U+FE47&ndash;U+FFFD
+</p>
+<p>identifier-head →
+U+10000&ndash;U+1FFFD, U+20000&ndash;U+2FFFD, U+30000&ndash;U+3FFFD, or
+U+40000&ndash;U+4FFFD
+</p>
+<p>identifier-head →
+U+50000&ndash;U+5FFFD, U+60000&ndash;U+6FFFD, U+70000&ndash;U+7FFFD, or
+U+80000&ndash;U+8FFFD
+</p>
+<p>identifier-head →
+U+90000&ndash;U+9FFFD, U+A0000&ndash;U+AFFFD, U+B0000&ndash;U+BFFFD, or
+U+C0000&ndash;U+CFFFD
+</p>
+<p>identifier-head →
+U+D0000&ndash;U+DFFFD or U+E0000&ndash;U+EFFFD
+</p>
+<p>identifier-character
+→ Digit 0 through 9
+</p>
+<p>identifier-character
+→ U+0300&ndash;U+036F, U+1DC0&ndash;U+1DFF, U+20D0&ndash;U+20FF, or U+FE20&ndash;U+FE2F
+</p>
+<p>identifier-character
+→
+identifier-head
+</p>
+<p>identifier-characters
+→
+identifier-character
+identifier-characters
+_{opt}
+</p>
+<p>implicit-parameter-name
+→ &lsquo;<samp>$</samp>&rsquo;
+decimal-digits
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Keywords-and-Punctuation.html#Keywords-and-Punctuation" accesskey="n" rel="next">Keywords and Punctuation</a>, Previous: <a href="Whitespace-and-Comments.html#Whitespace-and-Comments" accesskey="p" rel="prev">Whitespace and Comments</a>, Up: <a href="Lexical-Structure.html#Lexical-Structure" accesskey="u" rel="up">Lexical Structure</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

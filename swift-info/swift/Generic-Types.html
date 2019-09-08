@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Generic Types (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Generic Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Generic Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Generics-1.html#Generics-1" rel="up" title="Generics 1">
+<link href="Extending-a-Generic-Type.html#Extending-a-Generic-Type" rel="next" title="Extending a Generic Type">
+<link href="Naming-Type-Parameters.html#Naming-Type-Parameters" rel="prev" title="Naming Type Parameters">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Generic-Types"></span><div class="header">
+<p>
+Next: <a href="Extending-a-Generic-Type.html#Extending-a-Generic-Type" accesskey="n" rel="next">Extending a Generic Type</a>, Previous: <a href="Naming-Type-Parameters.html#Naming-Type-Parameters" accesskey="p" rel="prev">Naming Type Parameters</a>, Up: <a href="Generics-1.html#Generics-1" accesskey="u" rel="up">Generics 1</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Generic-Types-1"></span><h3 class="section">27.5 Generic Types</h3>
+
+<p>In addition to generic functions, Swift enables you to define your own
+<em>generic types</em>. These are custom classes, structures, and enumerations
+that can work with <em>any</em> type, in a similar way to &lsquo;<samp>Array</samp>&rsquo; and
+&lsquo;<samp>Dictionary</samp>&rsquo;.
+</p>
+<p>This section shows you how to write a generic collection type called
+&lsquo;<samp>Stack</samp>&rsquo;. A stack is an ordered set of values, similar to an array, but
+with a more restricted set of operations than Swift&rsquo;s &lsquo;<samp>Array</samp>&rsquo; type. An
+array allows new items to be inserted and removed at any location in the
+array. A stack, however, allows new items to be appended only to the end
+of the collection (known as <em>pushing</em> a new value on to the stack).
+Similarly, a stack allows items to be removed only from the end of the
+collection (known as <em>popping</em> a value off the stack).
+</p>
+<p>Note
+</p>
+<p>The concept of a stack is used by the &lsquo;<samp>UINavigationController</samp>&rsquo; class to
+model the view controllers in its navigation hierarchy. You call the
+&lsquo;<samp>UINavigationController</samp>&rsquo; class &lsquo;<samp>pushViewController(_:animated:)</samp>&rsquo; method
+to add (or push) a view controller on to the navigation stack, and its
+&lsquo;<samp>popViewControllerAnimated(_:)</samp>&rsquo; method to remove (or pop) a view
+controller from the navigation stack. A stack is a useful collection
+model whenever you need a strict “last in, first out” approach to
+managing a collection.
+</p>
+<p>The illustration below shows the push and pop behavior for a stack:
+</p>
+<img src="_images/stackPushPop_2x.png" alt="_images/stackPushPop_2x">
+
+<ol>
+<li> There are currently three values on the stack.
+
+</li><li> A fourth value is pushed onto the top of the stack.
+
+</li><li> The stack now holds four values, with the most recent one at the top.
+
+</li><li> The top item in the stack is popped.
+
+</li><li> After popping a value, the stack once again holds three values.
+</li></ol>
+
+<p>Here&rsquo;s how to write a nongeneric version of a stack, in this case for a
+stack of &lsquo;<samp>Int</samp>&rsquo; values:
+</p>
+<div class="example">
+<pre class="example">struct IntStack {
+    var items = [Int]()
+    mutating func push(_ item: Int) {
+        items.append(item)
+    }
+    mutating func pop() -&gt; Int {
+        return items.removeLast()
+    }
+}
+</pre></div>
+
+<p>This structure uses an &lsquo;<samp>Array</samp>&rsquo; property called &lsquo;<samp>items</samp>&rsquo; to store the
+values in the stack. &lsquo;<samp>Stack</samp>&rsquo; provides two methods, &lsquo;<samp>push</samp>&rsquo; and &lsquo;<samp>pop</samp>&rsquo;, to
+push and pop values on and off the stack. These methods are marked as
+&lsquo;<samp>mutating</samp>&rsquo;, because they need to modify (or <em>mutate</em>) the structure&rsquo;s
+&lsquo;<samp>items</samp>&rsquo; array.
+</p>
+<p>The &lsquo;<samp>IntStack</samp>&rsquo; type shown above can only be used with &lsquo;<samp>Int</samp>&rsquo; values,
+however. It would be much more useful to define a <em>generic</em> &lsquo;<samp>Stack</samp>&rsquo;
+class, that can manage a stack of <em>any</em> type of value.
+</p>
+<p>Here&rsquo;s a generic version of the same code:
+</p>
+<div class="example">
+<pre class="example">struct Stack&lt;Element&gt; {
+    var items = [Element]()
+    mutating func push(_ item: Element) {
+        items.append(item)
+    }
+    mutating func pop() -&gt; Element {
+        return items.removeLast()
+    }
+}
+</pre></div>
+
+<p>Note how the generic version of &lsquo;<samp>Stack</samp>&rsquo; is essentially the same as the
+nongeneric version, but with a type parameter called &lsquo;<samp>Element</samp>&rsquo; instead
+of an actual type of &lsquo;<samp>Int</samp>&rsquo;. This type parameter is written within a pair
+of angle brackets (&lsquo;<samp>&lt;Element&gt;</samp>&rsquo;) immediately after the structure&rsquo;s name.
+</p>
+<p>&lsquo;<samp>Element</samp>&rsquo; defines a placeholder name for a type to be provided later.
+This future type can be referred to as &lsquo;<samp>Element</samp>&rsquo; anywhere within the
+structure&rsquo;s definition. In this case, &lsquo;<samp>Element</samp>&rsquo; is used as a placeholder
+in three places:
+</p>
+<ul>
+<li> To create a property called &lsquo;<samp>items</samp>&rsquo;, which is initialized with an
+empty array of values of type &lsquo;<samp>Element</samp>&rsquo;
+
+</li><li> To specify that the &lsquo;<samp>push(_:)</samp>&rsquo; method has a single parameter called
+&lsquo;<samp>item</samp>&rsquo;, which must be of type &lsquo;<samp>Element</samp>&rsquo;
+
+</li><li> To specify that the value returned by the &lsquo;<samp>pop()</samp>&rsquo; method will be a
+value of type &lsquo;<samp>Element</samp>&rsquo;
+</li></ul>
+
+<p>Because it&rsquo;s a generic type, &lsquo;<samp>Stack</samp>&rsquo; can be used to create a stack of
+<em>any</em> valid type in Swift, in a similar manner to &lsquo;<samp>Array</samp>&rsquo; and
+&lsquo;<samp>Dictionary</samp>&rsquo;.
+</p>
+<p>You create a new &lsquo;<samp>Stack</samp>&rsquo; instance by writing the type to be stored in
+the stack within angle brackets. For example, to create a new stack of
+strings, you write &lsquo;<samp>Stack&lt;String&gt;()</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">var stackOfStrings = Stack&lt;String&gt;()
+stackOfStrings.push(&quot;uno&quot;)
+stackOfStrings.push(&quot;dos&quot;)
+stackOfStrings.push(&quot;tres&quot;)
+stackOfStrings.push(&quot;cuatro&quot;)
+// the stack now contains 4 strings
+</pre></div>
+
+<p>Here&rsquo;s how &lsquo;<samp>stackOfStrings</samp>&rsquo; looks after pushing these four values on to
+the stack:
+</p>
+<img src="_images/stackPushedFourStrings_2x.png" alt="_images/stackPushedFourStrings_2x">
+<p>Popping a value from the stack removes and returns the top value,
+&lsquo;<samp>&quot;cuatro&quot;</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let fromTheTop = stackOfStrings.pop()
+// fromTheTop is equal to &quot;cuatro&quot;, and the stack now contains 3 strings
+</pre></div>
+
+<p>Here&rsquo;s how the stack looks after popping its top value:
+</p>
+<img src="_images/stackPoppedOneString_2x.png" alt="_images/stackPoppedOneString_2x">
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Extending-a-Generic-Type.html#Extending-a-Generic-Type" accesskey="n" rel="next">Extending a Generic Type</a>, Previous: <a href="Naming-Type-Parameters.html#Naming-Type-Parameters" accesskey="p" rel="prev">Naming Type Parameters</a>, Up: <a href="Generics-1.html#Generics-1" accesskey="u" rel="up">Generics 1</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

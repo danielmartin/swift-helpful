@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Enumeration (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Enumeration (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Enumeration (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Enumeration-Syntax.html#Enumeration-Syntax" rel="next" title="Enumeration Syntax">
+<link href="Autoclosures.html#Autoclosures" rel="prev" title="Autoclosures">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Enumeration"></span><div class="header">
+<p>
+Next: <a href="Structures-and-Classes.html#Structures-and-Classes" accesskey="n" rel="next">Structures and Classes</a>, Previous: <a href="Closures.html#Closures" accesskey="p" rel="prev">Closures</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Enumeration-1"></span><h2 class="chapter">13 Enumeration</h2>
+
+<p>An <em>enumeration</em> defines a common type for a group of related values and
+enables you to work with those values in a type-safe way within your
+code.
+</p>
+<p>If you are familiar with C, you will know that C enumerations assign
+related names to a set of integer values. Enumerations in Swift are much
+more flexible, and don&rsquo;t have to provide a value for each case of the
+enumeration. If a value (known as a <em>raw</em> value) is provided for each
+enumeration case, the value can be a string, a character, or a value of
+any integer or floating-point type.
+</p>
+<p>Alternatively, enumeration cases can specify associated values of <em>any</em>
+type to be stored along with each different case value, much as unions
+or variants do in other languages. You can define a common set of
+related cases as part of one enumeration, each of which has a different
+set of values of appropriate types associated with it.
+</p>
+<p>Enumerations in Swift are first-class types in their own right. They
+adopt many features traditionally supported only by classes, such as
+computed properties to provide additional information about the
+enumeration&rsquo;s current value, and instance methods to provide
+functionality related to the values the enumeration represents.
+Enumerations can also define initializers to provide an initial case
+value; can be extended to expand their functionality beyond their
+original implementation; and can conform to protocols to provide
+standard functionality.
+</p>
+<p>For more about these capabilities, see
+<a href="Properties.html#Properties">Properties</a>, <a href="Methods.html#Methods">Methods</a>,
+<a href="Initialization.html#Initialization">Initialization</a>,
+<a href="Extensions.html#Extensions">Extensions</a>, and <a href="Protocols.html#Protocols">Protocols</a>.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Enumeration-Syntax.html#Enumeration-Syntax" accesskey="1">Enumeration Syntax</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Matching-Enumeration-Values-with-a-Switch-Statement.html#Matching-Enumeration-Values-with-a-Switch-Statement" accesskey="2">Matching Enumeration Values with a Switch Statement</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Iterating-over-Enumeration-Cases.html#Iterating-over-Enumeration-Cases" accesskey="3">Iterating over Enumeration Cases</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Associated-Values.html#Associated-Values" accesskey="4">Associated Values</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Raw-Values.html#Raw-Values" accesskey="5">Raw Values</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Recursive-Enumerations.html#Recursive-Enumerations" accesskey="6">Recursive Enumerations</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Structures-and-Classes.html#Structures-and-Classes" accesskey="n" rel="next">Structures and Classes</a>, Previous: <a href="Closures.html#Closures" accesskey="p" rel="prev">Closures</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

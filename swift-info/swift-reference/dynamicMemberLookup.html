@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>dynamicMemberLookup (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="dynamicMemberLookup (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="dynamicMemberLookup (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Declaration-Attributes.html#Declaration-Attributes" rel="up" title="Declaration Attributes">
+<link href="GKInspectable.html#GKInspectable" rel="next" title="GKInspectable">
+<link href="dynamicCallable.html#dynamicCallable" rel="prev" title="dynamicCallable">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="dynamicMemberLookup"></span><div class="header">
+<p>
+Next: <a href="GKInspectable.html#GKInspectable" accesskey="n" rel="next">GKInspectable</a>, Previous: <a href="dynamicCallable.html#dynamicCallable" accesskey="p" rel="prev">dynamicCallable</a>, Up: <a href="Declaration-Attributes.html#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="dynamicMemberLookup-1"></span><h4 class="subsection">8.1.4 dynamicMemberLookup</h4>
+
+<span id="index-_0040dynamicMemberLookup"></span>
+
+<p>Apply this attribute to a class, structure, enumeration, or protocol to
+enable members to be looked up by name at runtime. The type must
+implement a &lsquo;<samp>subscript(dynamicMemberLookup:)</samp>&rsquo; subscript.
+</p>
+<p>In an explicit member expression, if there isn&rsquo;t a corresponding
+declaration for the named member, the expression is understood as a call
+to the type&rsquo;s &lsquo;<samp>subscript(dynamicMemberLookup:)</samp>&rsquo; subscript, passing
+information about the member as the argument. The subscript can accept a
+parameter that&rsquo;s either a key path or a member name; if you implement
+both subscripts, the subscript that takes key path argument is used.
+</p>
+<p>An implementation of &lsquo;<samp>subscript(dynamicMemberLookup:)</samp>&rsquo; can accept key
+paths using an argument of type
+<a href="https://developer.apple.com/documentation/swift/keypath">&lsquo;<samp>KeyPath</samp>&rsquo;</a>
+[<a href="https://developer.apple.com/documentation/swift/keypath">https://developer.apple.com/documentation/swift/keypath</a>],
+<a href="https://developer.apple.com/documentation/swift/writablekeypath">&lsquo;<samp>WritableKeyPath</samp>&rsquo;</a>
+[<a href="https://developer.apple.com/documentation/swift/writablekeypath">https://developer.apple.com/documentation/swift/writablekeypath</a>], or
+<a href="https://developer.apple.com/documentation/swift/referencewritablekeypath">&lsquo;<samp>ReferenceWritableKeyPath</samp>&rsquo;</a>
+[<a href="https://developer.apple.com/documentation/swift/referencewritablekeypath">https://developer.apple.com/documentation/swift/referencewritablekeypath</a>].
+It can accept member names using an argument of a type that conforms to
+the
+<a href="https://developer.apple.com/documentation/swift/expressiblebystringliteral">&lsquo;<samp>ExpressibleByStringLiteral</samp>&rsquo;</a>
+[<a href="https://developer.apple.com/documentation/swift/expressiblebystringliteral">https://developer.apple.com/documentation/swift/expressiblebystringliteral</a>]
+protocol&mdash;in most cases, &lsquo;<samp>String</samp>&rsquo;. The subscript&rsquo;s return type can be
+any type.
+</p>
+<p>Dynamic member lookup by member name can be used to create a wrapper
+type around data that can&rsquo;t be type checked at compile time, such as
+when bridging data from other languages into Swift. For example:
+</p>
+<ol>
+<li> @dynamicMemberLookup
+</li><li> struct DynamicStruct {
+</li><li> let dictionary = [&quot;someDynamicMember&quot;: 325,
+</li><li> &quot;someOtherMember&quot;: 787]
+</li><li> subscript(dynamicMember member: String) -&gt; Int {
+</li><li> return dictionary[member] ?? 1054
+</li><li> }
+</li><li> }
+</li><li> let s = DynamicStruct()
+</li><li> // Use dynamic member lookup.
+</li><li> let dynamic = s.someDynamicMember
+</li><li> print(dynamic)
+</li><li> // Prints &quot;325&quot;
+</li><li> // Call the underlying subscript directly.
+</li><li> let equivalent = s[dynamicMember: &quot;someDynamicMember&quot;]
+</li><li> print(dynamic == equivalent)
+</li><li> // Prints &quot;true&quot;
+</li></ol>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ARC in Action (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="ARC in Action (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="ARC in Action (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Automatic-Reference-Counting.html#Automatic-Reference-Counting" rel="up" title="Automatic Reference Counting">
+<link href="Strong-Reference-Cycles-Between-Class-Instances.html#Strong-Reference-Cycles-Between-Class-Instances" rel="next" title="Strong Reference Cycles Between Class Instances">
+<link href="How-ARC-Works.html#How-ARC-Works" rel="prev" title="How ARC Works">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="ARC-in-Action"></span><div class="header">
+<p>
+Next: <a href="Strong-Reference-Cycles-Between-Class-Instances.html#Strong-Reference-Cycles-Between-Class-Instances" accesskey="n" rel="next">Strong Reference Cycles Between Class Instances</a>, Previous: <a href="How-ARC-Works.html#How-ARC-Works" accesskey="p" rel="prev">How ARC Works</a>, Up: <a href="Automatic-Reference-Counting.html#Automatic-Reference-Counting" accesskey="u" rel="up">Automatic Reference Counting</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="ARC-in-Action-1"></span><h3 class="section">29.2 ARC in Action</h3>
+
+<p>Here&rsquo;s an example of how Automatic Reference Counting works. This
+example starts with a simple class called &lsquo;<samp>Person</samp>&rsquo;, which defines a
+stored constant property called &lsquo;<samp>name</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">class Person {
+    let name: String
+    init(name: String) {
+        self.name = name
+        print(&quot;\(name) is being initialized&quot;)
+    }
+    deinit {
+        print(&quot;\(name) is being deinitialized&quot;)
+    }
+}
+</pre></div>
+
+<p>The &lsquo;<samp>Person</samp>&rsquo; class has an initializer that sets the instance&rsquo;s &lsquo;<samp>name</samp>&rsquo;
+property and prints a message to indicate that initialization is
+underway. The &lsquo;<samp>Person</samp>&rsquo; class also has a deinitializer that prints a
+message when an instance of the class is deallocated.
+</p>
+<p>The next code snippet defines three variables of type &lsquo;<samp>Person?</samp>&rsquo;, which
+are used to set up multiple references to a new &lsquo;<samp>Person</samp>&rsquo; instance in
+subsequent code snippets. Because these variables are of an optional
+type (&lsquo;<samp>Person?</samp>&rsquo;, not &lsquo;<samp>Person</samp>&rsquo;), they are automatically initialized with
+a value of &lsquo;<samp>nil</samp>&rsquo;, and do not currently reference a &lsquo;<samp>Person</samp>&rsquo; instance.
+</p>
+<div class="example">
+<pre class="example">var reference1: Person?
+var reference2: Person?
+var reference3: Person?
+</pre></div>
+
+<p>You can now create a new &lsquo;<samp>Person</samp>&rsquo; instance and assign it to one of these
+three variables:
+</p>
+<div class="example">
+<pre class="example">reference1 = Person(name: &quot;John Appleseed&quot;)
+// Prints &quot;John Appleseed is being initialized&quot;
+</pre></div>
+
+<p>Note that the message &lsquo;<samp>&quot;John Appleseed is being initialized&quot;</samp>&rsquo; is printed
+at the point that you call the &lsquo;<samp>Person</samp>&rsquo; class&rsquo;s initializer. This
+confirms that initialization has taken place.
+</p>
+<p>Because the new &lsquo;<samp>Person</samp>&rsquo; instance has been assigned to the &lsquo;<samp>reference1</samp>&rsquo;
+variable, there is now a strong reference from &lsquo;<samp>reference1</samp>&rsquo; to the new
+&lsquo;<samp>Person</samp>&rsquo; instance. Because there is at least one strong reference, ARC
+makes sure that this &lsquo;<samp>Person</samp>&rsquo; is kept in memory and is not deallocated.
+</p>
+<p>If you assign the same &lsquo;<samp>Person</samp>&rsquo; instance to two more variables, two more
+strong references to that instance are established:
+</p>
+<div class="example">
+<pre class="example">reference2 = reference1
+reference3 = reference1
+</pre></div>
+
+<p>There are now <em>three</em> strong references to this single &lsquo;<samp>Person</samp>&rsquo;
+instance.
+</p>
+<p>If you break two of these strong references (including the original
+reference) by assigning &lsquo;<samp>nil</samp>&rsquo; to two of the variables, a single strong
+reference remains, and the &lsquo;<samp>Person</samp>&rsquo; instance is not deallocated:
+</p>
+<div class="example">
+<pre class="example">reference1 = nil
+reference2 = nil
+</pre></div>
+
+<p>ARC does not deallocate the &lsquo;<samp>Person</samp>&rsquo; instance until the third and final
+strong reference is broken, at which point it&rsquo;s clear that you are no
+longer using the &lsquo;<samp>Person</samp>&rsquo; instance:
+</p>
+<div class="example">
+<pre class="example">reference3 = nil
+// Prints &quot;John Appleseed is being deinitialized&quot;
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Strong-Reference-Cycles-Between-Class-Instances.html#Strong-Reference-Cycles-Between-Class-Instances" accesskey="n" rel="next">Strong Reference Cycles Between Class Instances</a>, Previous: <a href="How-ARC-Works.html#How-ARC-Works" accesskey="p" rel="prev">How ARC Works</a>, Up: <a href="Automatic-Reference-Counting.html#Automatic-Reference-Counting" accesskey="u" rel="up">Automatic Reference Counting</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

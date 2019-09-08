@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Type Constraint Syntax (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Type Constraint Syntax (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Type Constraint Syntax (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Type-Constraints.html#Type-Constraints" rel="up" title="Type Constraints">
+<link href="Type-Constraints-in-Action.html#Type-Constraints-in-Action" rel="next" title="Type Constraints in Action">
+<link href="Type-Constraints.html#Type-Constraints" rel="prev" title="Type Constraints">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Type-Constraint-Syntax"></span><div class="header">
+<p>
+Next: <a href="Type-Constraints-in-Action.html#Type-Constraints-in-Action" accesskey="n" rel="next">Type Constraints in Action</a>, Up: <a href="Type-Constraints.html#Type-Constraints" accesskey="u" rel="up">Type Constraints</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Type-Constraint-Syntax-1"></span><h4 class="subsection">27.7.1 Type Constraint Syntax</h4>
+
+<p>You write type constraints by placing a single class or protocol
+constraint after a type parameter&rsquo;s name, separated by a colon, as part
+of the type parameter list. The basic syntax for type constraints on a
+generic function is shown below (although the syntax is the same for
+generic types):
+</p>
+<div class="example">
+<pre class="example">func someFunction&lt;T: SomeClass, U: SomeProtocol&gt;(someT: T, someU: U) {
+    // function body goes here
+}
+</pre></div>
+
+<p>The hypothetical function above has two type parameters. The first type
+parameter, &lsquo;<samp>T</samp>&rsquo;, has a type constraint that requires &lsquo;<samp>T</samp>&rsquo; to be a subclass
+of &lsquo;<samp>SomeClass</samp>&rsquo;. The second type parameter, &lsquo;<samp>U</samp>&rsquo;, has a type constraint
+that requires &lsquo;<samp>U</samp>&rsquo; to conform to the protocol &lsquo;<samp>SomeProtocol</samp>&rsquo;.
+</p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Disabling Error Propagation (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Disabling Error Propagation (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Disabling Error Propagation (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Handling-Errors.html#Handling-Errors" rel="up" title="Handling Errors">
+<link href="Specifying-Cleanup-Actions.html#Specifying-Cleanup-Actions" rel="next" title="Specifying Cleanup Actions">
+<link href="Converting-Errors-to-Optional-Values.html#Converting-Errors-to-Optional-Values" rel="prev" title="Converting Errors to Optional Values">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Disabling-Error-Propagation"></span><div class="header">
+<p>
+Previous: <a href="Converting-Errors-to-Optional-Values.html#Converting-Errors-to-Optional-Values" accesskey="p" rel="prev">Converting Errors to Optional Values</a>, Up: <a href="Handling-Errors.html#Handling-Errors" accesskey="u" rel="up">Handling Errors</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Disabling-Error-Propagation-1"></span><h4 class="subsection">22.2.4 Disabling Error Propagation</h4>
+
+<span id="index-try_0021"></span>
+
+<p>Sometimes you know a throwing function or method won&rsquo;t, in fact, throw
+an error at runtime. On those occasions, you can write &lsquo;<samp>try!</samp>&rsquo; before the
+expression to disable error propagation and wrap the call in a runtime
+assertion that no error will be thrown. If an error actually is thrown,
+you&rsquo;ll get a runtime error.
+</p>
+<p>For example, the following code uses a &lsquo;<samp>loadImage(atPath:)</samp>&rsquo; function,
+which loads the image resource at a given path or throws an error if the
+image can&rsquo;t be loaded. In this case, because the image is shipped with
+the application, no error will be thrown at runtime, so it is
+appropriate to disable error propagation.
+</p>
+<div class="example">
+<pre class="example">let photo = try! loadImage(atPath: &quot;./Resources/John Appleseed.jpg&quot;)
+</pre></div>
+
+
+
+
+</body>
+</html>

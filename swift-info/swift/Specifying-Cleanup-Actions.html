@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Specifying Cleanup Actions (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Specifying Cleanup Actions (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Specifying Cleanup Actions (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Error-Handling-2.html#Error-Handling-2" rel="up" title="Error Handling 2">
+<link href="Type-Casting.html#Type-Casting" rel="next" title="Type Casting">
+<link href="Disabling-Error-Propagation.html#Disabling-Error-Propagation" rel="prev" title="Disabling Error Propagation">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Specifying-Cleanup-Actions"></span><div class="header">
+<p>
+Previous: <a href="Handling-Errors.html#Handling-Errors" accesskey="p" rel="prev">Handling Errors</a>, Up: <a href="Error-Handling-2.html#Error-Handling-2" accesskey="u" rel="up">Error Handling 2</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Specifying-Cleanup-Actions-1"></span><h3 class="section">22.3 Specifying Cleanup Actions</h3>
+
+<span id="index-defer"></span>
+
+<p>You use a &lsquo;<samp>defer</samp>&rsquo; statement to execute a set of statements just before
+code execution leaves the current block of code. This statement lets you
+do any necessary cleanup that should be performed regardless of <em>how</em>
+execution leaves the current block of code&mdash;whether it leaves because
+an error was thrown or because of a statement such as &lsquo;<samp>return</samp>&rsquo; or
+&lsquo;<samp>break</samp>&rsquo;. For example, you can use a &lsquo;<samp>defer</samp>&rsquo; statement to ensure that
+file descriptors are closed and manually allocated memory is freed.
+</p>
+<p>A &lsquo;<samp>defer</samp>&rsquo; statement defers execution until the current scope is exited.
+This statement consists of the &lsquo;<samp>defer</samp>&rsquo; keyword and the statements to be
+executed later. The deferred statements may not contain any code that
+would transfer control out of the statements, such as a &lsquo;<samp>break</samp>&rsquo; or a
+&lsquo;<samp>return</samp>&rsquo; statement, or by throwing an error. Deferred actions are
+executed in the reverse of the order that they&rsquo;re written in your source
+code. That is, the code in the first &lsquo;<samp>defer</samp>&rsquo; statement executes last,
+the code in the second &lsquo;<samp>defer</samp>&rsquo; statement executes second to last, and so
+on. The last &lsquo;<samp>defer</samp>&rsquo; statement in source code order executes first.
+</p>
+<div class="example">
+<pre class="example">func processFile(filename: String) throws {
+    if exists(filename) {
+        let file = open(filename)
+        defer {
+            close(file)
+        }
+        while let line = try file.readline() {
+            // Work with the file.
+        }
+        // close(file) is called here, at the end of the scope.
+    }
+}
+</pre></div>
+
+<p>The above example uses a &lsquo;<samp>defer</samp>&rsquo; statement to ensure that the &lsquo;<samp>open(_:)</samp>&rsquo;
+function has a corresponding call to &lsquo;<samp>close(_:)</samp>&rsquo;.
+</p>
+<p>Note
+</p>
+<p>You can use a &lsquo;<samp>defer</samp>&rsquo; statement even when no error handling code is
+involved.
+</p>
+
+
+
+</body>
+</html>

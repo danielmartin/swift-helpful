@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Self Expression (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Self Expression (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Self Expression (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Primary-Expressions.html#Primary-Expressions" rel="up" title="Primary Expressions">
+<link href="Superclass-Expression.html#Superclass-Expression" rel="next" title="Superclass Expression">
+<link href="Literal-Expression.html#Literal-Expression" rel="prev" title="Literal Expression">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Self-Expression"></span><div class="header">
+<p>
+Next: <a href="Superclass-Expression.html#Superclass-Expression" accesskey="n" rel="next">Superclass Expression</a>, Previous: <a href="Literal-Expression.html#Literal-Expression" accesskey="p" rel="prev">Literal Expression</a>, Up: <a href="Primary-Expressions.html#Primary-Expressions" accesskey="u" rel="up">Primary Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Self-Expression-1"></span><h4 class="subsection">5.3.2 Self Expression</h4>
+
+<p>The &lsquo;<samp>self</samp>&rsquo; expression is an explicit reference to the current type or
+instance of the type in which it occurs. It has the following forms:
+</p>
+<ol>
+<li> self
+</li><li> self.member name
+</li><li> self[subscript index]
+</li><li> self(initializer arguments)
+</li><li> self.init(initializer arguments)
+</li></ol>
+
+<p>In an initializer, subscript, or instance method, &lsquo;<samp>self</samp>&rsquo; refers to the
+current instance of the type in which it occurs. In a type method,
+&lsquo;<samp>self</samp>&rsquo; refers to the current type in which it occurs.
+</p>
+<p>The &lsquo;<samp>self</samp>&rsquo; expression is used to specify scope when accessing members,
+providing disambiguation when there is another variable of the same name
+in scope, such as a function parameter. For example:
+</p>
+<ol>
+<li> class SomeClass {
+</li><li> var greeting: String
+</li><li> init(greeting: String) {
+</li><li> self.greeting = greeting
+</li><li> }
+</li><li> }
+</li></ol>
+
+<p>In a mutating method of a value type, you can assign a new instance of
+that value type to &lsquo;<samp>self</samp>&rsquo;. For example:
+</p>
+<ol>
+<li> struct Point {
+</li><li> var x = 0.0, y = 0.0
+</li><li> mutating func moveBy(x deltaX: Double, y deltaY: Double) {
+</li><li> self = Point(x: x + deltaX, y: y + deltaY)
+</li><li> }
+</li><li> }
+</li></ol>
+
+<p>Grammar of a self expression
+</p>
+<p>self-expression → &lsquo;<samp>self</samp>&rsquo; |
+self-method-expression
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>self-subscript-expression
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>self-initializer-expression
+</p>
+<p>self-method-expression
+→ &lsquo;<samp>self</samp>&rsquo; &lsquo;<samp>.</samp>&rsquo;
+identifier
+</p>
+<p>self-subscript-expression
+→ &lsquo;<samp>self</samp>&rsquo; &lsquo;<samp>[</samp>&rsquo;
+function-call-argument-list
+&lsquo;<samp>]</samp>&rsquo;
+</p>
+<p>self-initializer-expression
+→ &lsquo;<samp>self</samp>&rsquo; &lsquo;<samp>.</samp>&rsquo; &lsquo;<samp>init</samp>&rsquo;
+</p>
+
+
+
+</body>
+</html>

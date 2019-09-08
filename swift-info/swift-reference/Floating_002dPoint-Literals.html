@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Floating-Point Literals (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Floating-Point Literals (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Floating-Point Literals (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Literals.html#Literals" rel="up" title="Literals">
+<link href="String-Literals.html#String-Literals" rel="next" title="String Literals">
+<link href="Integer-Literals.html#Integer-Literals" rel="prev" title="Integer Literals">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Floating_002dPoint-Literals"></span><div class="header">
+<p>
+Next: <a href="String-Literals.html#String-Literals" accesskey="n" rel="next">String Literals</a>, Previous: <a href="Integer-Literals.html#Integer-Literals" accesskey="p" rel="prev">Integer Literals</a>, Up: <a href="Literals.html#Literals" accesskey="u" rel="up">Literals</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Floating_002dPoint-Literals-1"></span><h4 class="subsection">3.4.2 Floating-Point Literals</h4>
+
+<p><em>Floating-point literals</em> represent floating-point values of unspecified
+precision.
+</p>
+<p>By default, floating-point literals are expressed in decimal (with no
+prefix), but they can also be expressed in hexadecimal (with a &lsquo;<samp>0x</samp>&rsquo;
+prefix).
+</p>
+<p>Decimal floating-point literals consist of a sequence of decimal digits
+followed by either a decimal fraction, a decimal exponent, or both. The
+decimal fraction consists of a decimal point (&lsquo;<samp>.</samp>&rsquo;) followed by a
+sequence of decimal digits. The exponent consists of an upper- or
+lowercase &lsquo;<samp>e</samp>&rsquo; prefix followed by a sequence of decimal digits that
+indicates what power of 10 the value preceding the &lsquo;<samp>e</samp>&rsquo; is multiplied by.
+For example, &lsquo;<samp>1.25e2</samp>&rsquo; represents 1.25 x 10<em>^2</em>, which evaluates to
+&lsquo;<samp>125.0</samp>&rsquo;. Similarly, &lsquo;<samp>1.25e-2</samp>&rsquo; represents 1.25 x 10<em>^-2</em>, which evaluates
+to &lsquo;<samp>0.0125</samp>&rsquo;.
+</p>
+<p>Hexadecimal floating-point literals consist of a &lsquo;<samp>0x</samp>&rsquo; prefix, followed
+by an optional hexadecimal fraction, followed by a hexadecimal exponent.
+The hexadecimal fraction consists of a decimal point followed by a
+sequence of hexadecimal digits. The exponent consists of an upper- or
+lowercase &lsquo;<samp>p</samp>&rsquo; prefix followed by a sequence of decimal digits that
+indicates what power of 2 the value preceding the &lsquo;<samp>p</samp>&rsquo; is multiplied by.
+For example, &lsquo;<samp>0xFp2</samp>&rsquo; represents 15 x 2<em>^2</em>, which evaluates to &lsquo;<samp>60</samp>&rsquo;.
+Similarly, &lsquo;<samp>0xFp-2</samp>&rsquo; represents 15 x 2<em>^-2</em>, which evaluates to &lsquo;<samp>3.75</samp>&rsquo;.
+</p>
+<p>Negative floating-point literals are expressed by prepending a minus
+sign (&lsquo;<samp>-</samp>&rsquo;) to a floating-point literal, as in &lsquo;<samp>-42.5</samp>&rsquo;.
+</p>
+<p>Underscores (&lsquo;<samp>_</samp>&rsquo;) are allowed between digits for readability, but
+they&rsquo;re ignored and therefore don&rsquo;t affect the value of the literal.
+Floating-point literals can begin with leading zeros (&lsquo;<samp>0</samp>&rsquo;), but they&rsquo;re
+likewise ignored and don&rsquo;t affect the base or value of the literal.
+</p>
+<p>Unless otherwise specified, the default inferred type of a
+floating-point literal is the Swift standard library type &lsquo;<samp>Double</samp>&rsquo;,
+which represents a 64-bit floating-point number. The Swift standard
+library also defines a &lsquo;<samp>Float</samp>&rsquo; type, which represents a 32-bit
+floating-point number.
+</p>
+<p>Grammar of a floating-point literal
+</p>
+<p>floating-point-literal
+→
+decimal-literal
+decimal-fraction
+_{opt}
+decimal-exponent
+_{opt}
+</p>
+<p>floating-point-literal
+→
+hexadecimal-literal
+hexadecimal-fraction
+_{opt}
+hexadecimal-exponent
+</p>
+<p>decimal-fraction →
+&lsquo;<samp>.</samp>&rsquo;
+decimal-literal
+</p>
+<p>decimal-exponent →
+floating-point-e
+sign _{opt}
+decimal-literal
+</p>
+<p>hexadecimal-fraction
+→ &lsquo;<samp>.</samp>&rsquo;
+hexadecimal-digit
+hexadecimal-literal-characters
+_{opt}
+</p>
+<p>hexadecimal-exponent
+→
+floating-point-p
+sign _{opt}
+decimal-literal
+</p>
+<p>floating-point-e →
+&lsquo;<samp>e</samp>&rsquo; | &lsquo;<samp>E</samp>&rsquo;
+</p>
+<p>floating-point-p →
+&lsquo;<samp>p</samp>&rsquo; | &lsquo;<samp>P</samp>&rsquo;
+</p>
+<p>sign → &lsquo;<samp>+</samp>&rsquo; | &lsquo;<samp>-</samp>&rsquo;
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="String-Literals.html#String-Literals" accesskey="n" rel="next">String Literals</a>, Previous: <a href="Integer-Literals.html#Integer-Literals" accesskey="p" rel="prev">Integer Literals</a>, Up: <a href="Literals.html#Literals" accesskey="u" rel="up">Literals</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

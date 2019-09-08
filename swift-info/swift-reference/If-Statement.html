@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>If Statement (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="If Statement (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="If Statement (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Loop-Statements.html#Loop-Statements" rel="up" title="Loop Statements">
+<link href="Guard-Statement.html#Guard-Statement" rel="next" title="Guard Statement">
+<link href="Branch-Statements.html#Branch-Statements" rel="prev" title="Branch Statements">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="If-Statement"></span><div class="header">
+<p>
+Next: <a href="Guard-Statement.html#Guard-Statement" accesskey="n" rel="next">Guard Statement</a>, Previous: <a href="Branch-Statements.html#Branch-Statements" accesskey="p" rel="prev">Branch Statements</a>, Up: <a href="Loop-Statements.html#Loop-Statements" accesskey="u" rel="up">Loop Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="If-Statement-1"></span><h4 class="subsection">6.1.5 If Statement</h4>
+
+<p>An &lsquo;<samp>if</samp>&rsquo; statement is used for executing code based on the evaluation of
+one or more conditions.
+</p>
+<p>There are two basic forms of an &lsquo;<samp>if</samp>&rsquo; statement. In each form, the
+opening and closing braces are required.
+</p>
+<p>The first form allows code to be executed only when a condition is true
+and has the following form:
+</p>
+<ol>
+<li> if condition {
+</li><li> statements
+</li><li> }
+</li></ol>
+
+<p>The second form of an &lsquo;<samp>if</samp>&rsquo; statement provides an additional <em>else
+clause</em> (introduced by the &lsquo;<samp>else</samp>&rsquo; keyword) and is used for executing one
+part of code when the condition is true and another part of code when
+the same condition is false. When a single else clause is present, an
+&lsquo;<samp>if</samp>&rsquo; statement has the following form:
+</p>
+<ol>
+<li> if condition {
+</li><li> statements to execute if condition is true
+</li><li> } else {
+</li><li> statements to execute if condition is false
+</li><li> }
+</li></ol>
+
+<p>The else clause of an &lsquo;<samp>if</samp>&rsquo; statement can contain another &lsquo;<samp>if</samp>&rsquo; statement
+to test more than one condition. An &lsquo;<samp>if</samp>&rsquo; statement chained together in
+this way has the following form:
+</p>
+<ol>
+<li> if condition 1 {
+</li><li> statements to execute if condition 1 is true
+</li><li> } else if condition 2 {
+</li><li> statements to execute if condition 2 is true
+</li><li> } else {
+</li><li> statements to execute if both conditions are false
+</li><li> }
+</li></ol>
+
+<p>The value of any condition in an &lsquo;<samp>if</samp>&rsquo; statement must be of type &lsquo;<samp>Bool</samp>&rsquo;
+or a type bridged to &lsquo;<samp>Bool</samp>&rsquo;. The condition can also be an optional
+binding declaration, as discussed in
+<a href="../swift/Optional-Binding.html#Optional-Binding">(swift)Optional Binding</a>.
+</p>
+<p>Grammar of an if statement
+</p>
+<p>if-statement → &lsquo;<samp>if</samp>&rsquo;
+condition-list
+code-block
+else-clause
+_{opt}
+</p>
+<p>else-clause → &lsquo;<samp>else</samp>&rsquo;
+code-block
+</p><table>
+<tr><td>&lsquo;<samp>else</samp>&rsquo;</td></tr>
+</table>
+<p>if-statement
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Guard-Statement.html#Guard-Statement" accesskey="n" rel="next">Guard Statement</a>, Previous: <a href="Branch-Statements.html#Branch-Statements" accesskey="p" rel="prev">Branch Statements</a>, Up: <a href="Loop-Statements.html#Loop-Statements" accesskey="u" rel="up">Loop Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

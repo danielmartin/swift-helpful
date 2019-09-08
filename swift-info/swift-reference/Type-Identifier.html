@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Type Identifier (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Type Identifier (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Type Identifier (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Types.html#Types" rel="up" title="Types">
+<link href="Tuple-Type.html#Tuple-Type" rel="next" title="Tuple Type">
+<link href="Type-Annotation.html#Type-Annotation" rel="prev" title="Type Annotation">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Type-Identifier"></span><div class="header">
+<p>
+Next: <a href="Tuple-Type.html#Tuple-Type" accesskey="n" rel="next">Tuple Type</a>, Previous: <a href="Type-Annotation.html#Type-Annotation" accesskey="p" rel="prev">Type Annotation</a>, Up: <a href="Types.html#Types" accesskey="u" rel="up">Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Type-Identifier-1"></span><h3 class="section">4.2 Type Identifier</h3>
+
+<p>A <em>type identifier</em> refers to either a named type or a type alias of a
+named or compound type.
+</p>
+<p>Most of the time, a type identifier directly refers to a named type with
+the same name as the identifier. For example, &lsquo;<samp>Int</samp>&rsquo; is a type identifier
+that directly refers to the named type &lsquo;<samp>Int</samp>&rsquo;, and the type identifier
+&lsquo;<samp>Dictionary&lt;String, Int&gt;</samp>&rsquo; directly refers to the named type
+&lsquo;<samp>Dictionary&lt;String, Int&gt;</samp>&rsquo;.
+</p>
+<p>There are two cases in which a type identifier doesn&rsquo;t refer to a type
+with the same name. In the first case, a type identifier refers to a
+type alias of a named or compound type. For instance, in the example
+below, the use of &lsquo;<samp>Point</samp>&rsquo; in the type annotation refers to the tuple
+type &lsquo;<samp>(Int, Int)</samp>&rsquo;.
+</p>
+<ol>
+<li> typealias Point = (Int, Int)
+</li><li> let origin: Point = (0, 0)
+</li></ol>
+
+<p>In the second case, a type identifier uses dot (&lsquo;<samp>.</samp>&rsquo;) syntax to refer to
+named types declared in other modules or nested within other types. For
+example, the type identifier in the following code references the named
+type &lsquo;<samp>MyType</samp>&rsquo; that is declared in the &lsquo;<samp>ExampleModule</samp>&rsquo; module.
+</p>
+<ol>
+<li> var someValue: ExampleModule.MyType
+</li></ol>
+
+<p>Grammar of a type identifier
+</p>
+<p>type-identifier →
+type-name
+generic-argument-clause
+_{opt} | type-name
+generic-argument-clause
+_{opt} &lsquo;<samp>.</samp>&rsquo;
+type-identifier
+</p>
+<p>type-name →
+identifier
+</p>
+
+
+
+</body>
+</html>

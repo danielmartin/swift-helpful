@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Labeled Statements (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Labeled Statements (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Labeled Statements (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Control-Transfer-Statements.html#Control-Transfer-Statements" rel="up" title="Control Transfer Statements">
+<link href="Early-Exit.html#Early-Exit" rel="next" title="Early Exit">
+<link href="Fallthrough.html#Fallthrough" rel="prev" title="Fallthrough">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Labeled-Statements"></span><div class="header">
+<p>
+Previous: <a href="Fallthrough.html#Fallthrough" accesskey="p" rel="prev">Fallthrough</a>, Up: <a href="Control-Transfer-Statements.html#Control-Transfer-Statements" accesskey="u" rel="up">Control Transfer Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Labeled-Statements-1"></span><h4 class="subsection">10.4.4 Labeled Statements</h4>
+
+<p>In Swift, you can nest loops and conditional statements inside other
+loops and conditional statements to create complex control flow
+structures. However, loops and conditional statements can both use the
+&lsquo;<samp>break</samp>&rsquo; statement to end their execution prematurely. Therefore, it is
+sometimes useful to be explicit about which loop or conditional
+statement you want a &lsquo;<samp>break</samp>&rsquo; statement to terminate. Similarly, if you
+have multiple nested loops, it can be useful to be explicit about which
+loop the &lsquo;<samp>continue</samp>&rsquo; statement should affect.
+</p>
+<p>To achieve these aims, you can mark a loop statement or conditional
+statement with a <em>statement label</em>. With a conditional statement, you
+can use a statement label with the &lsquo;<samp>break</samp>&rsquo; statement to end the
+execution of the labeled statement. With a loop statement, you can use a
+statement label with the &lsquo;<samp>break</samp>&rsquo; or &lsquo;<samp>continue</samp>&rsquo; statement to end or
+continue the execution of the labeled statement.
+</p>
+<p>A labeled statement is indicated by placing a label on the same line as
+the statement&rsquo;s introducer keyword, followed by a colon. Here&rsquo;s an
+example of this syntax for a &lsquo;<samp>while</samp>&rsquo; loop, although the principle is the
+same for all loops and &lsquo;<samp>switch</samp>&rsquo; statements:
+</p>
+<div class="example">
+<pre class="example">label name: while condition {
+    statements
+}
+</pre></div>
+
+<p>The following example uses the &lsquo;<samp>break</samp>&rsquo; and &lsquo;<samp>continue</samp>&rsquo; statements with a
+labeled &lsquo;<samp>while</samp>&rsquo; loop for an adapted version of the <em>Snakes and Ladders</em>
+game that you saw earlier in this chapter. This time around, the game
+has an extra rule:
+</p>
+<ul>
+<li> To win, you must land <em>exactly</em> on square 25.
+</li></ul>
+
+<p>If a particular dice roll would take you beyond square 25, you must roll
+again until you roll the exact number needed to land on square 25.
+</p>
+<p>The game board is the same as before.
+</p>
+<img src="_images/snakesAndLadders_2x.png" alt="_images/snakesAndLadders_2x">
+<p>The values of &lsquo;<samp>finalSquare</samp>&rsquo;, &lsquo;<samp>board</samp>&rsquo;, &lsquo;<samp>square</samp>&rsquo;, and &lsquo;<samp>diceRoll</samp>&rsquo; are
+initialized in the same way as before:
+</p>
+<div class="example">
+<pre class="example">let finalSquare = 25
+var board = [Int](repeating: 0, count: finalSquare + 1)
+board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+var square = 0
+var diceRoll = 0
+</pre></div>
+
+<p>This version of the game uses a &lsquo;<samp>while</samp>&rsquo; loop and a &lsquo;<samp>switch</samp>&rsquo; statement to
+implement the game&rsquo;s logic. The &lsquo;<samp>while</samp>&rsquo; loop has a statement label
+called &lsquo;<samp>gameLoop</samp>&rsquo; to indicate that it is the main game loop for the
+Snakes and Ladders game.
+</p>
+<p>The &lsquo;<samp>while</samp>&rsquo; loop&rsquo;s condition is &lsquo;<samp>while square !</samp>&rsquo; finalSquare=, to
+reflect that you must land exactly on square 25.
+</p>
+<div class="example">
+<pre class="example">gameLoop: while square != finalSquare {
+    diceRoll += 1
+    if diceRoll == 7 { diceRoll = 1 }
+    switch square + diceRoll {
+    case finalSquare:
+        // diceRoll will move us to the final square, so the game is over
+        break gameLoop
+    case let newSquare where newSquare &gt; finalSquare:
+        // diceRoll will move us beyond the final square, so roll again
+        continue gameLoop
+    default:
+        // this is a valid move, so find out its effect
+        square += diceRoll
+        square += board[square]
+    }
+}
+print(&quot;Game over!&quot;)
+</pre></div>
+
+<p>The dice is rolled at the start of each loop. Rather than moving the
+player immediately, the loop uses a &lsquo;<samp>switch</samp>&rsquo; statement to consider the
+result of the move and to determine whether the move is allowed:
+</p>
+<ul>
+<li> If the dice roll will move the player onto the final square, the game
+is over. The &lsquo;<samp>break gameLoop</samp>&rsquo; statement transfers control to the first
+line of code outside of the &lsquo;<samp>while</samp>&rsquo; loop, which ends the game.
+
+</li><li> If the dice roll will move the player <em>beyond</em> the final square, the
+move is invalid and the player needs to roll again. The
+&lsquo;<samp>continue gameLoop</samp>&rsquo; statement ends the current &lsquo;<samp>while</samp>&rsquo; loop iteration
+and begins the next iteration of the loop.
+
+</li><li> In all other cases, the dice roll is a valid move. The player moves
+forward by &lsquo;<samp>diceRoll</samp>&rsquo; squares, and the game logic checks for any
+snakes and ladders. The loop then ends, and control returns to the
+&lsquo;<samp>while</samp>&rsquo; condition to decide whether another turn is required.
+</li></ul>
+
+<p>Note
+</p>
+<p>If the &lsquo;<samp>break</samp>&rsquo; statement above did not use the &lsquo;<samp>gameLoop</samp>&rsquo; label, it
+would break out of the &lsquo;<samp>switch</samp>&rsquo; statement, not the &lsquo;<samp>while</samp>&rsquo; statement.
+Using the &lsquo;<samp>gameLoop</samp>&rsquo; label makes it clear which control statement should
+be terminated.
+</p>
+<p>It is not strictly necessary to use the &lsquo;<samp>gameLoop</samp>&rsquo; label when calling
+&lsquo;<samp>continue gameLoop</samp>&rsquo; to jump to the next iteration of the loop. There is
+only one loop in the game, and therefore no ambiguity as to which loop
+the &lsquo;<samp>continue</samp>&rsquo; statement will affect. However, there is no harm in using
+the &lsquo;<samp>gameLoop</samp>&rsquo; label with the &lsquo;<samp>continue</samp>&rsquo; statement. Doing so is
+consistent with the label&rsquo;s use alongside the &lsquo;<samp>break</samp>&rsquo; statement and
+helps make the game&rsquo;s logic clearer to read and understand.
+</p>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Fallthrough.html#Fallthrough" accesskey="p" rel="prev">Fallthrough</a>, Up: <a href="Control-Transfer-Statements.html#Control-Transfer-Statements" accesskey="u" rel="up">Control Transfer Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Generics 1 (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Generics 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Generics 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="The-Problem-That-Generics-Solve.html#The-Problem-That-Generics-Solve" rel="next" title="The Problem That Generics Solve">
+<link href="Adding-Constraints-to-Protocol-Extensions.html#Adding-Constraints-to-Protocol-Extensions" rel="prev" title="Adding Constraints to Protocol Extensions">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Generics-1"></span><div class="header">
+<p>
+Next: <a href="Opaque-Types.html#Opaque-Types" accesskey="n" rel="next">Opaque Types</a>, Previous: <a href="Protocols.html#Protocols" accesskey="p" rel="prev">Protocols</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Generics-4"></span><h2 class="chapter">27 Generics</h2>
+
+<p><em>Generic code</em> enables you to write flexible, reusable functions and
+types that can work with any type, subject to requirements that you
+define. You can write code that avoids duplication and expresses its
+intent in a clear, abstracted manner.
+</p>
+<p>Generics are one of the most powerful features of Swift, and much of the
+Swift standard library is built with generic code. In fact, you&rsquo;ve been
+using generics throughout the <em>Language Guide</em>, even if you didn&rsquo;t
+realize it. For example, Swift&rsquo;s &lsquo;<samp>Array</samp>&rsquo; and &lsquo;<samp>Dictionary</samp>&rsquo; types are both
+generic collections. You can create an array that holds &lsquo;<samp>Int</samp>&rsquo; values, or
+an array that holds &lsquo;<samp>String</samp>&rsquo; values, or indeed an array for any other
+type that can be created in Swift. Similarly, you can create a
+dictionary to store values of any specified type, and there are no
+limitations on what that type can be.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="The-Problem-That-Generics-Solve.html#The-Problem-That-Generics-Solve" accesskey="1">The Problem That Generics Solve</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Generic-Functions.html#Generic-Functions" accesskey="2">Generic Functions</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Type-Parameters.html#Type-Parameters" accesskey="3">Type Parameters</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Naming-Type-Parameters.html#Naming-Type-Parameters" accesskey="4">Naming Type Parameters</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Generic-Types.html#Generic-Types" accesskey="5">Generic Types</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Extending-a-Generic-Type.html#Extending-a-Generic-Type" accesskey="6">Extending a Generic Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Type-Constraints.html#Type-Constraints" accesskey="7">Type Constraints</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Associated-Types.html#Associated-Types" accesskey="8">Associated Types</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Generic-Where-Clauses.html#Generic-Where-Clauses" accesskey="9">Generic Where Clauses</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Extensions-with-a-Generic-Where-Clause.html#Extensions-with-a-Generic-Where-Clause">Extensions with a Generic Where Clause</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Associated-Types-with-a-Generic-Where-Clause.html#Associated-Types-with-a-Generic-Where-Clause">Associated Types with a Generic Where Clause</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Generic-Subscripts.html#Generic-Subscripts">Generic Subscripts</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Opaque-Types.html#Opaque-Types" accesskey="n" rel="next">Opaque Types</a>, Previous: <a href="Protocols.html#Protocols" accesskey="p" rel="prev">Protocols</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

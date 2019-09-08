@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Extensions (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Extensions (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Extensions (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Extension-Syntax.html#Extension-Syntax" rel="next" title="Extension Syntax">
+<link href="Referring-to-Nested-Types.html#Referring-to-Nested-Types" rel="prev" title="Referring to Nested Types">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Extensions"></span><div class="header">
+<p>
+Next: <a href="Protocols.html#Protocols" accesskey="n" rel="next">Protocols</a>, Previous: <a href="Nested-Types.html#Nested-Types" accesskey="p" rel="prev">Nested Types</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Extensions-2"></span><h2 class="chapter">25 Extensions</h2>
+
+<span id="index-extension-1"></span>
+
+<p><em>Extensions</em> add new functionality to an existing class, structure,
+enumeration, or protocol type. This includes the ability to extend types
+for which you do not have access to the original source code (known as
+<em>retroactive modeling</em>). Extensions are similar to categories in
+Objective-C. (Unlike Objective-C categories, Swift extensions do not
+have names.)
+</p>
+<p>Extensions in Swift can:
+</p>
+<ul>
+<li> Add computed instance properties and computed type properties
+
+</li><li> Define instance methods and type methods
+
+</li><li> Provide new initializers
+
+</li><li> Define subscripts
+
+</li><li> Define and use new nested types
+
+</li><li> Make an existing type conform to a protocol
+</li></ul>
+
+<p>In Swift, you can even extend a protocol to provide implementations of
+its requirements or add additional functionality that conforming types
+can take advantage of. For more details, see
+<a href="Protocol-Extensions.html#Protocol-Extensions">Protocol Extensions</a>.
+</p>
+<p>Note
+</p>
+<p>Extensions can add new functionality to a type, but they cannot override
+existing functionality.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Extension-Syntax.html#Extension-Syntax" accesskey="1">Extension Syntax</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Computed-Properties-1.html#Computed-Properties-1" accesskey="2">Computed Properties</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Initializers-1.html#Initializers-1" accesskey="3">Initializers</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Methods-1.html#Methods-1" accesskey="4">Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Subscripts-1.html#Subscripts-1" accesskey="5">Subscripts</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Nested-Types-1.html#Nested-Types-1" accesskey="6">Nested Types</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

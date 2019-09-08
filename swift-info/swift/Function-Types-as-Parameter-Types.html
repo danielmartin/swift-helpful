@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Function Types as Parameter Types (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Function Types as Parameter Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Function Types as Parameter Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Function-Types.html#Function-Types" rel="up" title="Function Types">
+<link href="Function-Types-as-Return-Types.html#Function-Types-as-Return-Types" rel="next" title="Function Types as Return Types">
+<link href="Using-Function-Types.html#Using-Function-Types" rel="prev" title="Using Function Types">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Function-Types-as-Parameter-Types"></span><div class="header">
+<p>
+Next: <a href="Function-Types-as-Return-Types.html#Function-Types-as-Return-Types" accesskey="n" rel="next">Function Types as Return Types</a>, Previous: <a href="Using-Function-Types.html#Using-Function-Types" accesskey="p" rel="prev">Using Function Types</a>, Up: <a href="Function-Types.html#Function-Types" accesskey="u" rel="up">Function Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Function-Types-as-Parameter-Types-1"></span><h4 class="subsection">11.4.2 Function Types as Parameter Types</h4>
+
+<p>You can use a function type such as &lsquo;<samp>(Int, Int) -&gt; Int</samp>&rsquo; as a parameter
+type for another function. This enables you to leave some aspects of a
+function&rsquo;s implementation for the function&rsquo;s caller to provide when the
+function is called.
+</p>
+<p>Here&rsquo;s an example to print the results of the math functions from above:
+</p>
+<div class="example">
+<pre class="example">func printMathResult(_ mathFunction: (Int, Int) -&gt; Int, _ a: Int, _ b: Int) {
+    print(&quot;Result: \(mathFunction(a, b))&quot;)
+}
+printMathResult(addTwoInts, 3, 5)
+// Prints &quot;Result: 8&quot;
+</pre></div>
+
+<p>This example defines a function called &lsquo;<samp>printMathResult(_:_:_:)</samp>&rsquo;, which
+has three parameters. The first parameter is called &lsquo;<samp>mathFunction</samp>&rsquo;, and
+is of type &lsquo;<samp>(Int, Int) -&gt; Int</samp>&rsquo;. You can pass any function of that type
+as the argument for this first parameter. The second and third
+parameters are called &lsquo;<samp>a</samp>&rsquo; and &lsquo;<samp>b</samp>&rsquo;, and are both of type &lsquo;<samp>Int</samp>&rsquo;. These are
+used as the two input values for the provided math function.
+</p>
+<p>When &lsquo;<samp>printMathResult(_:_:_:)</samp>&rsquo; is called, it is passed the
+&lsquo;<samp>addTwoInts(_:_:)</samp>&rsquo; function, and the integer values &lsquo;<samp>3</samp>&rsquo; and &lsquo;<samp>5</samp>&rsquo;. It
+calls the provided function with the values &lsquo;<samp>3</samp>&rsquo; and &lsquo;<samp>5</samp>&rsquo;, and prints the
+result of &lsquo;<samp>8</samp>&rsquo;.
+</p>
+<p>The role of &lsquo;<samp>printMathResult(_:_:_:)</samp>&rsquo; is to print the result of a call
+to a math function of an appropriate type. It doesn&rsquo;t matter what that
+function&rsquo;s implementation actually does&mdash;it matters only that the
+function is of the correct type. This enables &lsquo;<samp>printMathResult(_:_:_:)</samp>&rsquo;
+to hand off some of its functionality to the caller of the function in a
+type-safe way.
+</p>
+
+
+
+</body>
+</html>

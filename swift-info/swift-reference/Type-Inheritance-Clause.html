@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Type Inheritance Clause (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Type Inheritance Clause (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Type Inheritance Clause (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Types.html#Types" rel="up" title="Types">
+<link href="Type-Inference.html#Type-Inference" rel="next" title="Type Inference">
+<link href="Self-Type.html#Self-Type" rel="prev" title="Self Type">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Type-Inheritance-Clause"></span><div class="header">
+<p>
+Next: <a href="Type-Inference.html#Type-Inference" accesskey="n" rel="next">Type Inference</a>, Previous: <a href="Self-Type.html#Self-Type" accesskey="p" rel="prev">Self Type</a>, Up: <a href="Types.html#Types" accesskey="u" rel="up">Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Type-Inheritance-Clause-1"></span><h3 class="section">4.13 Type Inheritance Clause</h3>
+
+<p>A <em>type inheritance clause</em> is used to specify which class a named type
+inherits from and which protocols a named type conforms to. A type
+inheritance clause begins with a colon (&lsquo;<samp>:</samp>&rsquo;), followed by a list of type
+identifiers.
+</p>
+<p>Class types can inherit from a single superclass and conform to any
+number of protocols. When defining a class, the name of the superclass
+must appear first in the list of type identifiers, followed by any
+number of protocols the class must conform to. If the class doesn&rsquo;t
+inherit from another class, the list can begin with a protocol instead.
+For an extended discussion and several examples of class inheritance,
+see <a href="../swift/Inheritance.html#Inheritance">(swift)Inheritance</a>.
+</p>
+<p>Other named types can only inherit from or conform to a list of
+protocols. Protocol types can inherit from any number of other
+protocols. When a protocol type inherits from other protocols, the set
+of requirements from those other protocols are aggregated together, and
+any type that inherits from the current protocol must conform to all of
+those requirements.
+</p>
+<p>A type inheritance clause in an enumeration definition can be either a
+list of protocols, or in the case of an enumeration that assigns raw
+values to its cases, a single, named type that specifies the type of
+those raw values. For an example of an enumeration definition that uses
+a type inheritance clause to specify the type of its raw values, see
+<a href="../swift/Raw-Values.html#Raw-Values">(swift)Raw Values</a>.
+</p>
+<p>Grammar of a type inheritance clause
+</p>
+<p>type-inheritance-clause →
+&lsquo;<samp>:</samp>&rsquo;
+type-inheritance-list
+</p>
+<p>type-inheritance-list →
+type-identifier
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>type-identifier
+&lsquo;<samp>,</samp>&rsquo;
+type-inheritance-list
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Type-Inference.html#Type-Inference" accesskey="n" rel="next">Type Inference</a>, Previous: <a href="Self-Type.html#Self-Type" accesskey="p" rel="prev">Self Type</a>, Up: <a href="Types.html#Types" accesskey="u" rel="up">Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

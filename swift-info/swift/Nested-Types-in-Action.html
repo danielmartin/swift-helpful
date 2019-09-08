@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Nested Types in Action (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Nested Types in Action (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Nested Types in Action (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Nested-Types.html#Nested-Types" rel="up" title="Nested Types">
+<link href="Referring-to-Nested-Types.html#Referring-to-Nested-Types" rel="next" title="Referring to Nested Types">
+<link href="Nested-Types.html#Nested-Types" rel="prev" title="Nested Types">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Nested-Types-in-Action"></span><div class="header">
+<p>
+Next: <a href="Referring-to-Nested-Types.html#Referring-to-Nested-Types" accesskey="n" rel="next">Referring to Nested Types</a>, Up: <a href="Nested-Types.html#Nested-Types" accesskey="u" rel="up">Nested Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Nested-Types-in-Action-1"></span><h3 class="section">24.1 Nested Types in Action</h3>
+
+<p>The example below defines a structure called &lsquo;<samp>BlackjackCard</samp>&rsquo;, which
+models a playing card as used in the game of Blackjack. The
+&lsquo;<samp>BlackjackCard</samp>&rsquo; structure contains two nested enumeration types called
+&lsquo;<samp>Suit</samp>&rsquo; and &lsquo;<samp>Rank</samp>&rsquo;.
+</p>
+<p>In Blackjack, the Ace cards have a value of either one or eleven. This
+feature is represented by a structure called &lsquo;<samp>Values</samp>&rsquo;, which is nested
+within the &lsquo;<samp>Rank</samp>&rsquo; enumeration:
+</p>
+<div class="example">
+<pre class="example">struct BlackjackCard {
+
+    // nested Suit enumeration
+    enum Suit: Character {
+        case spades = &quot;♠&quot;, hearts = &quot;♡&quot;, diamonds = &quot;♢&quot;, clubs = &quot;♣&quot;
+    }
+
+    // nested Rank enumeration
+    enum Rank: Int {
+        case two = 2, three, four, five, six, seven, eight, nine, ten
+        case jack, queen, king, ace
+        struct Values {
+            let first: Int, second: Int?
+        }
+        var values: Values {
+            switch self {
+            case .ace:
+                return Values(first: 1, second: 11)
+            case .jack, .queen, .king:
+                return Values(first: 10, second: nil)
+            default:
+                return Values(first: self.rawValue, second: nil)
+            }
+        }
+    }
+
+    // BlackjackCard properties and methods
+    let rank: Rank, suit: Suit
+    var description: String {
+        var output = &quot;suit is \(suit.rawValue),&quot;
+        output += &quot; value is \(rank.values.first)&quot;
+        if let second = rank.values.second {
+            output += &quot; or \(second)&quot;
+        }
+        return output
+    }
+}
+</pre></div>
+
+<p>The &lsquo;<samp>Suit</samp>&rsquo; enumeration describes the four common playing card suits,
+together with a raw &lsquo;<samp>Character</samp>&rsquo; value to represent their symbol.
+</p>
+<p>The &lsquo;<samp>Rank</samp>&rsquo; enumeration describes the thirteen possible playing card
+ranks, together with a raw &lsquo;<samp>Int</samp>&rsquo; value to represent their face value.
+(This raw &lsquo;<samp>Int</samp>&rsquo; value is not used for the Jack, Queen, King, and Ace
+cards.)
+</p>
+<p>As mentioned above, the &lsquo;<samp>Rank</samp>&rsquo; enumeration defines a further nested
+structure of its own, called &lsquo;<samp>Values</samp>&rsquo;. This structure encapsulates the
+fact that most cards have one value, but the Ace card has two values.
+The &lsquo;<samp>Values</samp>&rsquo; structure defines two properties to represent this:
+</p>
+<ul>
+<li> &lsquo;<samp>first</samp>&rsquo;, of type &lsquo;<samp>Int</samp>&rsquo;
+
+</li><li> &lsquo;<samp>second</samp>&rsquo;, of type &lsquo;<samp>Int?</samp>&rsquo;, or “optional =Int=”
+</li></ul>
+
+<p>&lsquo;<samp>Rank</samp>&rsquo; also defines a computed property, &lsquo;<samp>values</samp>&rsquo;, which returns an
+instance of the &lsquo;<samp>Values</samp>&rsquo; structure. This computed property considers the
+rank of the card and initializes a new &lsquo;<samp>Values</samp>&rsquo; instance with
+appropriate values based on its rank. It uses special values for &lsquo;<samp>jack</samp>&rsquo;,
+&lsquo;<samp>queen</samp>&rsquo;, &lsquo;<samp>king</samp>&rsquo;, and &lsquo;<samp>ace</samp>&rsquo;. For the numeric cards, it uses the rank&rsquo;s
+raw &lsquo;<samp>Int</samp>&rsquo; value.
+</p>
+<p>The &lsquo;<samp>BlackjackCard</samp>&rsquo; structure itself has two properties&mdash;&lsquo;<samp>rank</samp>&rsquo; and
+&lsquo;<samp>suit</samp>&rsquo;. It also defines a computed property called &lsquo;<samp>description</samp>&rsquo;, which
+uses the values stored in &lsquo;<samp>rank</samp>&rsquo; and &lsquo;<samp>suit</samp>&rsquo; to build a description of
+the name and value of the card. The &lsquo;<samp>description</samp>&rsquo; property uses optional
+binding to check whether there is a second value to display, and if so,
+inserts additional description detail for that second value.
+</p>
+<p>Because &lsquo;<samp>BlackjackCard</samp>&rsquo; is a structure with no custom initializers, it
+has an implicit memberwise initializer, as described in
+<a href="Memberwise-Initializers-for-Structure-Types.html#Memberwise-Initializers-for-Structure-Types">Memberwise Initializers for Structure
+Types</a>. You can use this initializer to initialize a new constant
+called &lsquo;<samp>theAceOfSpades</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let theAceOfSpades = BlackjackCard(rank: .ace, suit: .spades)
+print(&quot;theAceOfSpades: \(theAceOfSpades.description)&quot;)
+// Prints &quot;theAceOfSpades: suit is ♠, value is 1 or 11&quot;
+</pre></div>
+
+<p>Even though &lsquo;<samp>Rank</samp>&rsquo; and &lsquo;<samp>Suit</samp>&rsquo; are nested within &lsquo;<samp>BlackjackCard</samp>&rsquo;, their
+type can be inferred from context, and so the initialization of this
+instance is able to refer to the enumeration cases by their case names
+(&lsquo;<samp>.ace</samp>&rsquo; and &lsquo;<samp>.spades</samp>&rsquo;) alone. In the example above, the &lsquo;<samp>description</samp>&rsquo;
+property correctly reports that the Ace of Spades has a value of &lsquo;<samp>1</samp>&rsquo; or
+&lsquo;<samp>11</samp>&rsquo;.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Referring-to-Nested-Types.html#Referring-to-Nested-Types" accesskey="n" rel="next">Referring to Nested Types</a>, Up: <a href="Nested-Types.html#Nested-Types" accesskey="u" rel="up">Nested Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

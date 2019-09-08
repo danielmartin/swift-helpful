@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Chaining on Methods with Optional Return Values (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Chaining on Methods with Optional Return Values (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Chaining on Methods with Optional Return Values (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Optional-Chaining.html#Optional-Chaining" rel="up" title="Optional Chaining">
+<link href="Error-Handling-2.html#Error-Handling-2" rel="next" title="Error Handling 2">
+<link href="Linking-Multiple-Levels-of-Chaining.html#Linking-Multiple-Levels-of-Chaining" rel="prev" title="Linking Multiple Levels of Chaining">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Chaining-on-Methods-with-Optional-Return-Values"></span><div class="header">
+<p>
+Previous: <a href="Linking-Multiple-Levels-of-Chaining.html#Linking-Multiple-Levels-of-Chaining" accesskey="p" rel="prev">Linking Multiple Levels of Chaining</a>, Up: <a href="Optional-Chaining.html#Optional-Chaining" accesskey="u" rel="up">Optional Chaining</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Chaining-on-Methods-with-Optional-Return-Values-1"></span><h3 class="section">21.7 Chaining on Methods with Optional Return Values</h3>
+
+<p>The previous example shows how to retrieve the value of a property of
+optional type through optional chaining. You can also use optional
+chaining to call a method that returns a value of optional type, and to
+chain on that method&rsquo;s return value if needed.
+</p>
+<p>The example below calls the &lsquo;<samp>Address</samp>&rsquo; class&rsquo;s &lsquo;<samp>buildingIdentifier()</samp>&rsquo;
+method through optional chaining. This method returns a value of type
+&lsquo;<samp>String?</samp>&rsquo;. As described above, the ultimate return type of this method
+call after optional chaining is also &lsquo;<samp>String?</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
+    print(&quot;John's building identifier is \(buildingIdentifier).&quot;)
+}
+// Prints &quot;John's building identifier is The Larches.&quot;
+</pre></div>
+
+<p>If you want to perform further optional chaining on this method&rsquo;s return
+value, place the optional chaining question mark <em>after</em> the method&rsquo;s
+parentheses:
+</p>
+<div class="example">
+<pre class="example">if let beginsWithThe =
+     john.residence?.address?.buildingIdentifier()?.hasPrefix(&quot;The&quot;) {
+    if beginsWithThe {
+        print(&quot;John's building identifier begins with \&quot;The\&quot;.&quot;)
+    } else {
+        print(&quot;John's building identifier does not begin with \&quot;The\&quot;.&quot;)
+    }
+}
+// Prints &quot;John's building identifier begins with &quot;The&quot;.&quot;
+</pre></div>
+
+<p>Note
+</p>
+<p>In the example above, you place the optional chaining question mark
+<em>after</em> the parentheses, because the optional value you are chaining on
+is the &lsquo;<samp>buildingIdentifier()</samp>&rsquo; method&rsquo;s return value, and not the
+&lsquo;<samp>buildingIdentifier()</samp>&rsquo; method itself.
+</p>
+
+
+
+</body>
+</html>

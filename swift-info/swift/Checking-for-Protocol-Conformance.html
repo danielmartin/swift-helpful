@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Checking for Protocol Conformance (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Checking for Protocol Conformance (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Checking for Protocol Conformance (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Protocols.html#Protocols" rel="up" title="Protocols">
+<link href="Optional-Protocol-Requirements.html#Optional-Protocol-Requirements" rel="next" title="Optional Protocol Requirements">
+<link href="Protocol-Composition.html#Protocol-Composition" rel="prev" title="Protocol Composition">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Checking-for-Protocol-Conformance"></span><div class="header">
+<p>
+Next: <a href="Optional-Protocol-Requirements.html#Optional-Protocol-Requirements" accesskey="n" rel="next">Optional Protocol Requirements</a>, Previous: <a href="Protocol-Composition.html#Protocol-Composition" accesskey="p" rel="prev">Protocol Composition</a>, Up: <a href="Protocols.html#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Checking-for-Protocol-Conformance-1"></span><h3 class="section">26.13 Checking for Protocol Conformance</h3>
+
+<p>You can use the &lsquo;<samp>is</samp>&rsquo; and &lsquo;<samp>as</samp>&rsquo; operators described in
+<a href="Type-Casting.html#Type-Casting">Type Casting</a> to check for protocol conformance,
+and to cast to a specific protocol. Checking for and casting to a
+protocol follows exactly the same syntax as checking for and casting to
+a type:
+</p>
+<ul>
+<li> The &lsquo;<samp>is</samp>&rsquo; operator returns &lsquo;<samp>true</samp>&rsquo; if an instance conforms to a protocol
+and returns &lsquo;<samp>false</samp>&rsquo; if it doesn&rsquo;t.
+
+</li><li> The &lsquo;<samp>as?</samp>&rsquo; version of the downcast operator returns an optional value
+of the protocol&rsquo;s type, and this value is &lsquo;<samp>nil</samp>&rsquo; if the instance
+doesn&rsquo;t conform to that protocol.
+
+</li><li> The &lsquo;<samp>as!</samp>&rsquo; version of the downcast operator forces the downcast to the
+protocol type and triggers a runtime error if the downcast doesn&rsquo;t
+succeed.
+</li></ul>
+
+<p>This example defines a protocol called &lsquo;<samp>HasArea</samp>&rsquo;, with a single property
+requirement of a gettable &lsquo;<samp>Double</samp>&rsquo; property called &lsquo;<samp>area</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">protocol HasArea {
+    var area: Double { get }
+}
+</pre></div>
+
+<p>Here are two classes, &lsquo;<samp>Circle</samp>&rsquo; and &lsquo;<samp>Country</samp>&rsquo;, both of which conform to
+the &lsquo;<samp>HasArea</samp>&rsquo; protocol:
+</p>
+<div class="example">
+<pre class="example">class Circle: HasArea {
+    let pi = 3.1415927
+    var radius: Double
+    var area: Double { return pi * radius * radius }
+    init(radius: Double) { self.radius = radius }
+}
+class Country: HasArea {
+    var area: Double
+    init(area: Double) { self.area = area }
+}
+</pre></div>
+
+<p>The &lsquo;<samp>Circle</samp>&rsquo; class implements the &lsquo;<samp>area</samp>&rsquo; property requirement as a
+computed property, based on a stored &lsquo;<samp>radius</samp>&rsquo; property. The &lsquo;<samp>Country</samp>&rsquo;
+class implements the &lsquo;<samp>area</samp>&rsquo; requirement directly as a stored property.
+Both classes correctly conform to the &lsquo;<samp>HasArea</samp>&rsquo; protocol.
+</p>
+<p>Here&rsquo;s a class called &lsquo;<samp>Animal</samp>&rsquo;, which doesn&rsquo;t conform to the &lsquo;<samp>HasArea</samp>&rsquo;
+protocol:
+</p>
+<div class="example">
+<pre class="example">class Animal {
+    var legs: Int
+    init(legs: Int) { self.legs = legs }
+}
+</pre></div>
+
+<p>The &lsquo;<samp>Circle</samp>&rsquo;, &lsquo;<samp>Country</samp>&rsquo; and &lsquo;<samp>Animal</samp>&rsquo; classes don&rsquo;t have a shared base
+class. Nonetheless, they&rsquo;re all classes, and so instances of all three
+types can be used to initialize an array that stores values of type
+&lsquo;<samp>AnyObject</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let objects: [AnyObject] = [
+  Circle(radius: 2.0),
+  Country(area: 243_610),
+  Animal(legs: 4)
+]
+</pre></div>
+
+<p>The &lsquo;<samp>objects</samp>&rsquo; array is initialized with an array literal containing a
+&lsquo;<samp>Circle</samp>&rsquo; instance with a radius of 2 units; a &lsquo;<samp>Country</samp>&rsquo; instance
+initialized with the surface area of the United Kingdom in square
+kilometers; and an &lsquo;<samp>Animal</samp>&rsquo; instance with four legs.
+</p>
+<p>The &lsquo;<samp>objects</samp>&rsquo; array can now be iterated, and each object in the array
+can be checked to see if it conforms to the &lsquo;<samp>HasArea</samp>&rsquo; protocol:
+</p>
+<div class="example">
+<pre class="example">for object in objects {
+    if let objectWithArea = object as? HasArea {
+        print(&quot;Area is \(objectWithArea.area)&quot;)
+    } else {
+        print(&quot;Something that doesn't have an area&quot;)
+    }
+}
+// Area is 12.5663708
+// Area is 243610.0
+// Something that doesn't have an area
+</pre></div>
+
+<p>Whenever an object in the array conforms to the &lsquo;<samp>HasArea</samp>&rsquo; protocol, the
+optional value returned by the &lsquo;<samp>as?</samp>&rsquo; operator is unwrapped with optional
+binding into a constant called &lsquo;<samp>objectWithArea</samp>&rsquo;. The &lsquo;<samp>objectWithArea</samp>&rsquo;
+constant is known to be of type &lsquo;<samp>HasArea</samp>&rsquo;, and so its &lsquo;<samp>area</samp>&rsquo; property
+can be accessed and printed in a type-safe way.
+</p>
+<p>Note that the underlying objects aren&rsquo;t changed by the casting process.
+They continue to be a &lsquo;<samp>Circle</samp>&rsquo;, a &lsquo;<samp>Country</samp>&rsquo; and an &lsquo;<samp>Animal</samp>&rsquo;. However, at
+the point that they&rsquo;re stored in the &lsquo;<samp>objectWithArea</samp>&rsquo; constant, they&rsquo;re
+only known to be of type &lsquo;<samp>HasArea</samp>&rsquo;, and so only their &lsquo;<samp>area</samp>&rsquo; property
+can be accessed.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Optional-Protocol-Requirements.html#Optional-Protocol-Requirements" accesskey="n" rel="next">Optional Protocol Requirements</a>, Previous: <a href="Protocol-Composition.html#Protocol-Composition" accesskey="p" rel="prev">Protocol Composition</a>, Up: <a href="Protocols.html#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

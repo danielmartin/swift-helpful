@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Initializer Declaration (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Initializer Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Initializer Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Declarations.html#Declarations" rel="up" title="Declarations">
+<link href="Failable-Initializers.html#Failable-Initializers" rel="next" title="Failable Initializers">
+<link href="Protocol-Associated-Type-Declaration.html#Protocol-Associated-Type-Declaration" rel="prev" title="Protocol Associated Type Declaration">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Initializer-Declaration"></span><div class="header">
+<p>
+Next: <a href="Deinitializer-Declaration.html#Deinitializer-Declaration" accesskey="n" rel="next">Deinitializer Declaration</a>, Previous: <a href="Protocol-Declaration.html#Protocol-Declaration" accesskey="p" rel="prev">Protocol Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Initializer-Declaration-1"></span><h3 class="section">7.12 Initializer Declaration</h3>
+
+<p>An <em>initializer declaration</em> introduces an initializer for a class,
+structure, or enumeration into your program. Initializer declarations
+are declared using the &lsquo;<samp>init</samp>&rsquo; keyword and have two basic forms.
+</p>
+<p>Structure, enumeration, and class types can have any number of
+initializers, but the rules and associated behavior for class
+initializers are different. Unlike structures and enumerations, classes
+have two kinds of initializers: designated initializers and convenience
+initializers, as described in
+<a href="../swift/Initialization.html#Initialization">(swift)Initialization</a>.
+</p>
+<p>The following form declares initializers for structures, enumerations,
+and designated initializers of classes:
+</p>
+<ol>
+<li> init(parameters) {
+</li><li> statements
+</li><li> }
+</li></ol>
+
+<p>A designated initializer of a class initializes all of the class&rsquo;s
+properties directly. It can&rsquo;t call any other initializers of the same
+class, and if the class has a superclass, it must call one of the
+superclass&rsquo;s designated initializers. If the class inherits any
+properties from its superclass, one of the superclass&rsquo;s designated
+initializers must be called before any of these properties can be set or
+modified in the current class.
+</p>
+<p>Designated initializers can be declared in the context of a class
+declaration only and therefore can&rsquo;t be added to a class using an
+extension declaration.
+</p>
+<p>Initializers in structures and enumerations can call other declared
+initializers to delegate part or all of the initialization process.
+</p>
+<p>To declare convenience initializers for a class, mark the initializer
+declaration with the &lsquo;<samp>convenience</samp>&rsquo; declaration modifier.
+</p>
+<ol>
+<li> convenience init(parameters) {
+</li><li> statements
+</li><li> }
+</li></ol>
+
+<p>Convenience initializers can delegate the initialization process to
+another convenience initializer or to one of the class&rsquo;s designated
+initializers. That said, the initialization processes must end with a
+call to a designated initializer that ultimately initializes the class&rsquo;s
+properties. Convenience initializers can&rsquo;t call a superclass&rsquo;s
+initializers.
+</p>
+<p>You can mark designated and convenience initializers with the &lsquo;<samp>required</samp>&rsquo;
+declaration modifier to require that every subclass implement the
+initializer. A subclass&rsquo;s implementation of that initializer must also
+be marked with the &lsquo;<samp>required</samp>&rsquo; declaration modifier.
+</p>
+<p>By default, initializers declared in a superclass are not inherited by
+subclasses. That said, if a subclass initializes all of its stored
+properties with default values and doesn&rsquo;t define any initializers of
+its own, it inherits all of the superclass&rsquo;s initializers. If the
+subclass overrides all of the superclass&rsquo;s designated initializers, it
+inherits the superclass&rsquo;s convenience initializers.
+</p>
+<p>As with methods, properties, and subscripts, you need to mark overridden
+designated initializers with the &lsquo;<samp>override</samp>&rsquo; declaration modifier.
+</p>
+<p>Note
+</p>
+<p>If you mark an initializer with the &lsquo;<samp>required</samp>&rsquo; declaration modifier, you
+don&rsquo;t also mark the initializer with the &lsquo;<samp>override</samp>&rsquo; modifier when you
+override the required initializer in a subclass.
+</p>
+<p>Just like functions and methods, initializers can throw or rethrow
+errors. And just like functions and methods, you use the &lsquo;<samp>throws</samp>&rsquo; or
+&lsquo;<samp>rethrows</samp>&rsquo; keyword after an initializer&rsquo;s parameters to indicate the
+appropriate behavior.
+</p>
+<p>To see examples of initializers in various type declarations, see
+<a href="../swift/Initialization.html#Initialization">(swift)Initialization</a>.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Failable-Initializers.html#Failable-Initializers" accesskey="1">Failable Initializers</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Deinitializer-Declaration.html#Deinitializer-Declaration" accesskey="n" rel="next">Deinitializer Declaration</a>, Previous: <a href="Protocol-Declaration.html#Protocol-Declaration" accesskey="p" rel="prev">Protocol Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

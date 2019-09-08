@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Autoclosures (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Autoclosures (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Autoclosures (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Closures.html#Closures" rel="up" title="Closures">
+<link href="Enumeration.html#Enumeration" rel="next" title="Enumeration">
+<link href="Escaping-Closures.html#Escaping-Closures" rel="prev" title="Escaping Closures">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Autoclosures"></span><div class="header">
+<p>
+Previous: <a href="Escaping-Closures.html#Escaping-Closures" accesskey="p" rel="prev">Escaping Closures</a>, Up: <a href="Closures.html#Closures" accesskey="u" rel="up">Closures</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Autoclosures-1"></span><h3 class="section">12.6 Autoclosures</h3>
+
+<span id="index-_0040autoclosure"></span>
+
+<p>An <em>autoclosure</em> is a closure that is automatically created to wrap an
+expression that&rsquo;s being passed as an argument to a function. It doesn&rsquo;t
+take any arguments, and when it&rsquo;s called, it returns the value of the
+expression that&rsquo;s wrapped inside of it. This syntactic convenience lets
+you omit braces around a function&rsquo;s parameter by writing a normal
+expression instead of an explicit closure.
+</p>
+<p>It&rsquo;s common to <em>call</em> functions that take autoclosures, but it&rsquo;s not
+common to <em>implement</em> that kind of function. For example, the
+&lsquo;<samp>assert(condition:message:file:line:)</samp>&rsquo; function takes an autoclosure for
+its &lsquo;<samp>condition</samp>&rsquo; and &lsquo;<samp>message</samp>&rsquo; parameters; its &lsquo;<samp>condition</samp>&rsquo; parameter is
+evaluated only in debug builds and its &lsquo;<samp>message</samp>&rsquo; parameter is evaluated
+only if &lsquo;<samp>condition</samp>&rsquo; is &lsquo;<samp>false</samp>&rsquo;.
+</p>
+<p>An autoclosure lets you delay evaluation, because the code inside isn&rsquo;t
+run until you call the closure. Delaying evaluation is useful for code
+that has side effects or is computationally expensive, because it lets
+you control when that code is evaluated. The code below shows how a
+closure delays evaluation.
+</p>
+<div class="example">
+<pre class="example">var customersInLine = [&quot;Chris&quot;, &quot;Alex&quot;, &quot;Ewa&quot;, &quot;Barry&quot;, &quot;Daniella&quot;]
+print(customersInLine.count)
+// Prints &quot;5&quot;
+
+let customerProvider = { customersInLine.remove(at: 0) }
+print(customersInLine.count)
+// Prints &quot;5&quot;
+
+print(&quot;Now serving \(customerProvider())!&quot;)
+// Prints &quot;Now serving Chris!&quot;
+print(customersInLine.count)
+// Prints &quot;4&quot;
+</pre></div>
+
+<p>Even though the first element of the &lsquo;<samp>customersInLine</samp>&rsquo; array is removed
+by the code inside the closure, the array element isn&rsquo;t removed until
+the closure is actually called. If the closure is never called, the
+expression inside the closure is never evaluated, which means the array
+element is never removed. Note that the type of &lsquo;<samp>customerProvider</samp>&rsquo; is
+not &lsquo;<samp>String</samp>&rsquo; but &lsquo;<samp>() -&gt; String</samp>&rsquo;&mdash;a function with no parameters that
+returns a string.
+</p>
+<p>You get the same behavior of delayed evaluation when you pass a closure
+as an argument to a function.
+</p>
+<div class="example">
+<pre class="example">// customersInLine is [&quot;Alex&quot;, &quot;Ewa&quot;, &quot;Barry&quot;, &quot;Daniella&quot;]
+func serve(customer customerProvider: () -&gt; String) {
+    print(&quot;Now serving \(customerProvider())!&quot;)
+}
+serve(customer: { customersInLine.remove(at: 0) } )
+// Prints &quot;Now serving Alex!&quot;
+</pre></div>
+
+<p>The &lsquo;<samp>serve(customer:)</samp>&rsquo; function in the listing above takes an explicit
+closure that returns a customer&rsquo;s name. The version of
+&lsquo;<samp>serve(customer:)</samp>&rsquo; below performs the same operation but, instead of
+taking an explicit closure, it takes an autoclosure by marking its
+parameter&rsquo;s type with the &lsquo;<samp>@autoclosure</samp>&rsquo; attribute. Now you can call the
+function as if it took a &lsquo;<samp>String</samp>&rsquo; argument instead of a closure. The
+argument is automatically converted to a closure, because the
+&lsquo;<samp>customerProvider</samp>&rsquo; parameter&rsquo;s type is marked with the &lsquo;<samp>@autoclosure</samp>&rsquo;
+attribute.
+</p>
+<div class="example">
+<pre class="example">// customersInLine is [&quot;Ewa&quot;, &quot;Barry&quot;, &quot;Daniella&quot;]
+func serve(customer customerProvider: @autoclosure () -&gt; String) {
+    print(&quot;Now serving \(customerProvider())!&quot;)
+}
+serve(customer: customersInLine.remove(at: 0))
+// Prints &quot;Now serving Ewa!&quot;
+</pre></div>
+
+<p>Note
+</p>
+<p>Overusing autoclosures can make your code hard to understand. The
+context and function name should make it clear that evaluation is being
+deferred.
+</p>
+<p>If you want an autoclosure that is allowed to escape, use both the
+&lsquo;<samp>@autoclosure</samp>&rsquo; and &lsquo;<samp>@escaping</samp>&rsquo; attributes. The &lsquo;<samp>@escaping</samp>&rsquo; attribute is
+described above in <a href="Escaping-Closures.html#Escaping-Closures">Escaping Closures</a>.
+</p>
+<div class="example">
+<pre class="example">// customersInLine is [&quot;Barry&quot;, &quot;Daniella&quot;]
+var customerProviders: [() -&gt; String] = []
+func collectCustomerProviders(_ customerProvider: @autoclosure
+                                @escaping () -&gt; String) {
+    customerProviders.append(customerProvider)
+}
+collectCustomerProviders(customersInLine.remove(at: 0))
+collectCustomerProviders(customersInLine.remove(at: 0))
+
+print(&quot;Collected \(customerProviders.count) closures.&quot;)
+// Prints &quot;Collected 2 closures.&quot;
+for customerProvider in customerProviders {
+    print(&quot;Now serving \(customerProvider())!&quot;)
+}
+// Prints &quot;Now serving Barry!&quot;
+// Prints &quot;Now serving Daniella!&quot;
+</pre></div>
+
+<p>In the code above, instead of calling the closure passed to it as its
+&lsquo;<samp>customerProvider</samp>&rsquo; argument, the &lsquo;<samp>collectCustomerProviders(_:)</samp>&rsquo; function
+appends the closure to the &lsquo;<samp>customerProviders</samp>&rsquo; array. The array is
+declared outside the scope of the function, which means the closures in
+the array can be executed after the function returns. As a result, the
+value of the &lsquo;<samp>customerProvider</samp>&rsquo; argument must be allowed to escape the
+function&rsquo;s scope.
+</p>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Escaping-Closures.html#Escaping-Closures" accesskey="p" rel="prev">Escaping Closures</a>, Up: <a href="Closures.html#Closures" accesskey="u" rel="up">Closures</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

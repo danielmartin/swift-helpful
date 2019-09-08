@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Closure Expression (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Closure Expression (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Closure Expression (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Primary-Expressions.html#Primary-Expressions" rel="up" title="Primary Expressions">
+<link href="Implicit-Member-Expression.html#Implicit-Member-Expression" rel="next" title="Implicit Member Expression">
+<link href="Superclass-Expression.html#Superclass-Expression" rel="prev" title="Superclass Expression">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Closure-Expression"></span><div class="header">
+<p>
+Next: <a href="Implicit-Member-Expression.html#Implicit-Member-Expression" accesskey="n" rel="next">Implicit Member Expression</a>, Previous: <a href="Superclass-Expression.html#Superclass-Expression" accesskey="p" rel="prev">Superclass Expression</a>, Up: <a href="Primary-Expressions.html#Primary-Expressions" accesskey="u" rel="up">Primary Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Closure-Expression-1"></span><h4 class="subsection">5.3.4 Closure Expression</h4>
+
+<p>A <em>closure expression</em> creates a closure, also known as a <em>lambda</em> or an
+<em>anonymous function</em> in other programming languages. Like a function
+declaration, a closure contains statements, and it captures constants
+and variables from its enclosing scope. It has the following form:
+</p>
+<ol>
+<li> { (parameters) -&gt; return type in
+</li><li> statements
+</li><li> }
+</li></ol>
+
+<p>The <em>parameters</em> have the same form as the parameters in a function
+declaration, as described in <a href="Function-Declaration.html#Function-Declaration">Function
+Declaration</a>.
+</p>
+<p>There are several special forms that allow closures to be written more
+concisely:
+</p>
+<ul>
+<li> A closure can omit the types of its parameters, its return type, or
+both. If you omit the parameter names and both types, omit the &lsquo;<samp>in</samp>&rsquo;
+keyword before the statements. If the omitted types can&rsquo;t be inferred,
+a compile-time error is raised.
+
+</li><li> A closure may omit names for its parameters. Its parameters are then
+implicitly named &lsquo;<samp>$</samp>&rsquo; followed by their position: &lsquo;<samp>$0</samp>&rsquo;, &lsquo;<samp>$1</samp>&rsquo;, &lsquo;<samp>$2</samp>&rsquo;, and
+so on.
+
+</li><li> A closure that consists of only a single expression is understood to
+return the value of that expression. The contents of this expression
+are also considered when performing type inference on the surrounding
+expression.
+</li></ul>
+
+<p>The following closure expressions are equivalent:
+</p>
+<ol>
+<li> myFunction { (x: Int, y: Int) -&gt; Int in
+</li><li> return x + y
+</li><li> }
+</li><li> myFunction { x, y in
+</li><li> return x + y
+</li><li> }
+</li><li> myFunction { return $0 + $1 }
+</li><li> myFunction { $0 + $1 }
+</li></ol>
+
+<p>For information about passing a closure as an argument to a function,
+see <a href="Function-Call-Expression.html#Function-Call-Expression">Function Call Expression</a>.
+</p>
+<p>Closure expressions can be used without being stored in a variable or
+constant, such as when you immediately use a closure as part of a
+function call. The closure expressions passed to &lsquo;<samp>myFunction</samp>&rsquo; in code
+above are examples of this kind of immediate use. As a result, whether a
+closure expression is escaping or nonescaping depends on the surrounding
+context of the expression. A closure expression is nonescaping if it is
+called immediately or passed as a nonescaping function argument.
+Otherwise, the closure expression is escaping.
+</p>
+<p>For more information about escaping closures, see
+<a href="../swift/Escaping-Closures.html#Escaping-Closures">(swift)Escaping Closures</a>.
+</p>
+<ol>
+<li> Capture Lists
+
+
+<p>By default, a closure expression captures constants and variables from
+its surrounding scope with strong references to those values. You can
+use a <em>capture list</em> to explicitly control how values are captured in a
+closure.
+</p>
+<p>A capture list is written as a comma-separated list of expressions
+surrounded by square brackets, before the list of parameters. If you use
+a capture list, you must also use the &lsquo;<samp>in</samp>&rsquo; keyword, even if you omit the
+parameter names, parameter types, and return type.
+</p>
+<p>The entries in the capture list are initialized when the closure is
+created. For each entry in the capture list, a constant is initialized
+to the value of the constant or variable that has the same name in the
+surrounding scope. For example in the code below, &lsquo;<samp>a</samp>&rsquo; is included in the
+capture list but &lsquo;<samp>b</samp>&rsquo; is not, which gives them different behavior.
+</p>
+<ol>
+<li> var a = 0
+</li><li> var b = 0
+</li><li> let closure = { [a] in
+</li><li> print(a, b)
+</li><li> }
+</li><li> a = 10
+</li><li> b = 10
+</li><li> closure()
+</li><li> // Prints &quot;0 10&quot;
+</li></ol>
+
+<p>There are two different things named &lsquo;<samp>a</samp>&rsquo;, the variable in the
+surrounding scope and the constant in the closure&rsquo;s scope, but only one
+variable named &lsquo;<samp>b</samp>&rsquo;. The &lsquo;<samp>a</samp>&rsquo; in the inner scope is initialized with the
+value of the &lsquo;<samp>a</samp>&rsquo; in the outer scope when the closure is created, but
+their values are not connected in any special way. This means that a
+change to the value of &lsquo;<samp>a</samp>&rsquo; in the outer scope does not affect the value
+of &lsquo;<samp>a</samp>&rsquo; in the inner scope, nor does a change to &lsquo;<samp>a</samp>&rsquo; inside the closure
+affect the value of &lsquo;<samp>a</samp>&rsquo; outside the closure. In contrast, there is only
+one variable named &lsquo;<samp>b</samp>&rsquo;&mdash;the &lsquo;<samp>b</samp>&rsquo; in the outer scope&mdash;so changes from
+inside or outside the closure are visible in both places.
+</p>
+<p>This distinction is not visible when the captured variable&rsquo;s type has
+reference semantics. For example, there are two things named &lsquo;<samp>x</samp>&rsquo; in the
+code below, a variable in the outer scope and a constant in the inner
+scope, but they both refer to the same object because of reference
+semantics.
+</p>
+<ol>
+<li> class SimpleClass {
+</li><li> var value: Int = 0
+</li><li> }
+</li><li> var x = SimpleClass()
+</li><li> var y = SimpleClass()
+</li><li> let closure = { [x] in
+</li><li> print(x.value, y.value)
+</li><li> }
+</li><li> x.value = 10
+</li><li> y.value = 10
+</li><li> closure()
+</li><li> // Prints &quot;10 10&quot;
+</li></ol>
+
+<p>If the type of the expression&rsquo;s value is a class, you can mark the
+expression in a capture list with &lsquo;<samp>weak</samp>&rsquo; or &lsquo;<samp>unowned</samp>&rsquo; to capture a weak
+or unowned reference to the expression&rsquo;s value.
+</p>
+<ol>
+<li> myFunction { print(self.title) } // implicit strong capture
+</li><li> myFunction { [self] in print(self.title) } // explicit strong capture
+</li><li> myFunction { [weak self] in print(self!.title) } // weak capture
+</li><li> myFunction { [unowned self] in print(self.title) } // unowned capture
+</li></ol>
+
+<p>You can also bind an arbitrary expression to a named value in a capture
+list. The expression is evaluated when the closure is created, and the
+value is captured with the specified strength. For example:
+</p>
+<ol>
+<li> // Weak capture of &quot;self.parent&quot; as &quot;parent&quot;
+</li><li> myFunction { [weak parent = self.parent] in print(parent!.title) }
+</li></ol>
+
+<p>For more information and examples of closure expressions, see
+<a href="../swift/Closure-Expressions.html#Closure-Expressions">(swift)Closure Expressions</a>. For more
+information and examples of capture lists, see
+<a href="../swift/Resolving-Strong-Reference-Cycles-for-Closures.html#Resolving-Strong-Reference-Cycles-for-Closures">(swift)Resolving
+Strong Reference Cycles for Closures</a>.
+</p>
+<p>Grammar of a closure expression
+</p>
+<p>closure-expression → &lsquo;<samp>{</samp>&rsquo;
+closure-signature
+_{opt}
+statements
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>closure-signature →
+capture-list
+_{opt}
+closure-parameter-clause
+=throws=<em>_opt</em>
+function-result
+_{opt} &lsquo;<samp>in</samp>&rsquo;
+</p>
+<p>closure-signature →
+capture-list
+&lsquo;<samp>in</samp>&rsquo;
+</p>
+<p>closure-parameter-clause
+→ &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo; | &lsquo;<samp>(</samp>&rsquo;
+closure-parameter-list
+&lsquo;<samp>)</samp>&rsquo; |
+identifier-list
+</p>
+<p>closure-parameter-list
+→
+closure-parameter
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>closure-parameter
+&lsquo;<samp>,</samp>&rsquo;
+closure-parameter-list
+</p>
+<p>closure-parameter →
+closure-parameter-name
+type-annotation
+_{opt}
+</p>
+<p>closure-parameter →
+closure-parameter-name
+type-annotation
+&lsquo;<samp>...</samp>&rsquo;
+</p>
+<p>closure-parameter-name
+→
+identifier
+</p>
+<p>capture-list → &lsquo;<samp>[</samp>&rsquo;
+capture-list-items
+&lsquo;<samp>]</samp>&rsquo;
+</p>
+<p>capture-list-items →
+capture-list-item
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>capture-list-item
+&lsquo;<samp>,</samp>&rsquo;
+capture-list-items
+</p>
+<p>capture-list-item →
+capture-specifier
+_{opt}
+expression
+</p>
+<p>capture-specifier →
+&lsquo;<samp>weak</samp>&rsquo; | &lsquo;<samp>unowned</samp>&rsquo; | &lsquo;<samp>unowned(safe)</samp>&rsquo; | &lsquo;<samp>unowned(unsafe)</samp>&rsquo;
+</p></li></ol>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Implicit-Member-Expression.html#Implicit-Member-Expression" accesskey="n" rel="next">Implicit Member Expression</a>, Previous: <a href="Superclass-Expression.html#Superclass-Expression" accesskey="p" rel="prev">Superclass Expression</a>, Up: <a href="Primary-Expressions.html#Primary-Expressions" accesskey="u" rel="up">Primary Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

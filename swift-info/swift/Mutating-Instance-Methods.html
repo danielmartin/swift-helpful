@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Mutating Instance Methods (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Mutating Instance Methods (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Mutating Instance Methods (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Methods-1.html#Methods-1" rel="up" title="Methods 1">
+<link href="Subscripts-1.html#Subscripts-1" rel="next" title="Subscripts 1">
+<link href="Methods-1.html#Methods-1" rel="prev" title="Methods 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Mutating-Instance-Methods"></span><div class="header">
+<p>
+Up: <a href="Methods-1.html#Methods-1" accesskey="u" rel="up">Methods 1</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Mutating-Instance-Methods-1"></span><h4 class="subsection">25.4.1 Mutating Instance Methods</h4>
+
+<p>Instance methods added with an extension can also modify (or <em>mutate</em>)
+the instance itself. Structure and enumeration methods that modify
+&lsquo;<samp>self</samp>&rsquo; or its properties must mark the instance method as &lsquo;<samp>mutating</samp>&rsquo;,
+just like mutating methods from an original implementation.
+</p>
+<p>The example below adds a new mutating method called &lsquo;<samp>square</samp>&rsquo; to Swift&rsquo;s
+&lsquo;<samp>Int</samp>&rsquo; type, which squares the original value:
+</p>
+<div class="example">
+<pre class="example">extension Int {
+    mutating func square() {
+        self = self * self
+    }
+}
+var someInt = 3
+someInt.square()
+// someInt is now 9
+</pre></div>
+
+
+
+
+</body>
+</html>

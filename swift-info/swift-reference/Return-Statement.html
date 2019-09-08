@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Return Statement (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Return Statement (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Return Statement (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Control-Transfer-Statements.html#Control-Transfer-Statements" rel="up" title="Control Transfer Statements">
+<link href="Throw-Statement.html#Throw-Statement" rel="next" title="Throw Statement">
+<link href="Fallthrough-Statement.html#Fallthrough-Statement" rel="prev" title="Fallthrough Statement">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Return-Statement"></span><div class="header">
+<p>
+Next: <a href="Throw-Statement.html#Throw-Statement" accesskey="n" rel="next">Throw Statement</a>, Previous: <a href="Fallthrough-Statement.html#Fallthrough-Statement" accesskey="p" rel="prev">Fallthrough Statement</a>, Up: <a href="Control-Transfer-Statements.html#Control-Transfer-Statements" accesskey="u" rel="up">Control Transfer Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Return-Statement-1"></span><h4 class="subsection">6.3.4 Return Statement</h4>
+
+<p>A &lsquo;<samp>return</samp>&rsquo; statement occurs in the body of a function or method
+definition and causes program execution to return to the calling
+function or method. Program execution continues at the point immediately
+following the function or method call.
+</p>
+<p>A &lsquo;<samp>return</samp>&rsquo; statement can consist of only the &lsquo;<samp>return</samp>&rsquo; keyword, or it can
+consist of the &lsquo;<samp>return</samp>&rsquo; keyword followed by an expression, as shown
+below.
+</p>
+<ol>
+<li> return
+</li><li> return expression
+</li></ol>
+
+<p>When a &lsquo;<samp>return</samp>&rsquo; statement is followed by an expression, the value of the
+expression is returned to the calling function or method. If the value
+of the expression does not match the value of the return type declared
+in the function or method declaration, the expression&rsquo;s value is
+converted to the return type before it is returned to the calling
+function or method.
+</p>
+<p>Note
+</p>
+<p>As described in <a href="Failable-Initializers.html#Failable-Initializers">Failable Initializers</a>, a
+special form of the &lsquo;<samp>return</samp>&rsquo; statement (&lsquo;<samp>return nil</samp>&rsquo;) can be used in a
+failable initializer to indicate initialization failure.
+</p>
+<p>When a &lsquo;<samp>return</samp>&rsquo; statement is not followed by an expression, it can be
+used only to return from a function or method that does not return a
+value (that is, when the return type of the function or method is &lsquo;<samp>Void</samp>&rsquo;
+or &lsquo;<samp>()</samp>&rsquo;).
+</p>
+<p>Grammar of a return statement
+</p>
+<p>return-statement → &lsquo;<samp>return</samp>&rsquo;
+expression
+_{opt}
+</p>
+
+
+
+</body>
+</html>

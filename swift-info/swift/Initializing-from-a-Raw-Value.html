@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Initializing from a Raw Value (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Initializing from a Raw Value (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Initializing from a Raw Value (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Raw-Values.html#Raw-Values" rel="up" title="Raw Values">
+<link href="Recursive-Enumerations.html#Recursive-Enumerations" rel="next" title="Recursive Enumerations">
+<link href="Implicitly-Assigned-Raw-Values.html#Implicitly-Assigned-Raw-Values" rel="prev" title="Implicitly Assigned Raw Values">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Initializing-from-a-Raw-Value"></span><div class="header">
+<p>
+Previous: <a href="Implicitly-Assigned-Raw-Values.html#Implicitly-Assigned-Raw-Values" accesskey="p" rel="prev">Implicitly Assigned Raw Values</a>, Up: <a href="Raw-Values.html#Raw-Values" accesskey="u" rel="up">Raw Values</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Initializing-from-a-Raw-Value-1"></span><h4 class="subsection">13.5.2 Initializing from a Raw Value</h4>
+
+<p>If you define an enumeration with a raw-value type, the enumeration
+automatically receives an initializer that takes a value of the raw
+value&rsquo;s type (as a parameter called &lsquo;<samp>rawValue</samp>&rsquo;) and returns either an
+enumeration case or &lsquo;<samp>nil</samp>&rsquo;. You can use this initializer to try to create
+a new instance of the enumeration.
+</p>
+<p>This example identifies Uranus from its raw value of &lsquo;<samp>7</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let possiblePlanet = Planet(rawValue: 7)
+// possiblePlanet is of type Planet? and equals Planet.uranus
+</pre></div>
+
+<p>Not all possible &lsquo;<samp>Int</samp>&rsquo; values will find a matching planet, however.
+Because of this, the raw value initializer always returns an <em>optional</em>
+enumeration case. In the example above, &lsquo;<samp>possiblePlanet</samp>&rsquo; is of type
+&lsquo;<samp>Planet?</samp>&rsquo;, or “optional &lsquo;<samp>Planet</samp>&rsquo;.”
+</p>
+<p>Note
+</p>
+<p>The raw value initializer is a failable initializer, because not every
+raw value will return an enumeration case. For more information, see
+<a href="Failable-Initializers.html#Failable-Initializers">Failable Initializers</a>.
+</p>
+<p>If you try to find a planet with a position of &lsquo;<samp>11</samp>&rsquo;, the optional
+&lsquo;<samp>Planet</samp>&rsquo; value returned by the raw value initializer will be &lsquo;<samp>nil</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let positionToFind = 11
+if let somePlanet = Planet(rawValue: positionToFind) {
+    switch somePlanet {
+    case .earth:
+        print(&quot;Mostly harmless&quot;)
+    default:
+        print(&quot;Not a safe place for humans&quot;)
+    }
+} else {
+    print(&quot;There isn't a planet at position \(positionToFind)&quot;)
+}
+// Prints &quot;There isn't a planet at position 11&quot;
+</pre></div>
+
+<p>This example uses optional binding to try to access a planet with a raw
+value of &lsquo;<samp>11</samp>&rsquo;. The statement &lsquo;<samp>if let somePlanet = Planet(rawValue: 11)</samp>&rsquo;
+creates an optional &lsquo;<samp>Planet</samp>&rsquo;, and sets &lsquo;<samp>somePlanet</samp>&rsquo; to the value of that
+optional &lsquo;<samp>Planet</samp>&rsquo; if it can be retrieved. In this case, it isn&rsquo;t
+possible to retrieve a planet with a position of &lsquo;<samp>11</samp>&rsquo;, and so the &lsquo;<samp>else</samp>&rsquo;
+branch is executed instead.
+</p>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Implicitly-Assigned-Raw-Values.html#Implicitly-Assigned-Raw-Values" accesskey="p" rel="prev">Implicitly Assigned Raw Values</a>, Up: <a href="Raw-Values.html#Raw-Values" accesskey="u" rel="up">Raw Values</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

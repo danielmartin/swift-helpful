@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Key-Path Expression (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Key-Path Expression (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Key-Path Expression (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Primary-Expressions.html#Primary-Expressions" rel="up" title="Primary Expressions">
+<link href="Selector-Expression.html#Selector-Expression" rel="next" title="Selector Expression">
+<link href="Wildcard-Expression.html#Wildcard-Expression" rel="prev" title="Wildcard Expression">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Key_002dPath-Expression"></span><div class="header">
+<p>
+Next: <a href="Selector-Expression.html#Selector-Expression" accesskey="n" rel="next">Selector Expression</a>, Previous: <a href="Wildcard-Expression.html#Wildcard-Expression" accesskey="p" rel="prev">Wildcard Expression</a>, Up: <a href="Primary-Expressions.html#Primary-Expressions" accesskey="u" rel="up">Primary Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Key_002dPath-Expression-1"></span><h4 class="subsection">5.3.9 Key-Path Expression</h4>
+
+<p>A <em>key-path expression</em> refers to a property or subscript of a type. You
+use key-path expressions in dynamic programming tasks, such as key-value
+observing. They have the following form:
+</p>
+<ol>
+<li> name.path
+</li></ol>
+
+<p>The <em>type name</em> is the name of a concrete type, including any generic
+parameters, such as &lsquo;<samp>String</samp>&rsquo;, &lsquo;<samp>[Int]</samp>&rsquo;, or &lsquo;<samp>Set&lt;Int&gt;</samp>&rsquo;.
+</p>
+<p>The <em>path</em> consists of property names, subscripts, optional-chaining
+expressions, and forced unwrapping expressions. Each of these key-path
+components can be repeated as many times as needed, in any order.
+</p>
+<p>At compile time, a key-path expression is replaced by an instance of the
+<a href="https://developer.apple.com/documentation/swift/keypath">&lsquo;<samp>KeyPath</samp>&rsquo;</a>
+[<a href="https://developer.apple.com/documentation/swift/keypath">https://developer.apple.com/documentation/swift/keypath</a>] class.
+</p>
+<p>To access a value using a key path, pass the key path to the
+&lsquo;<samp>subscript(keyPath:)</samp>&rsquo; subscript, which is available on all types. For
+example:
+</p>
+<ol>
+<li> struct SomeStructure {
+</li><li> var someValue: Int
+</li><li> }
+</li><li> let s = SomeStructure(someValue: 12)
+</li><li> let pathToProperty = .someValue
+</li><li> let value = s[keyPath: pathToProperty]
+</li><li> // value is 12
+</li></ol>
+
+<p>The <em>type name</em> can be omitted in contexts where type inference can
+determine the implied type. The following code uses &lsquo;<samp>\.someProperty</samp>&rsquo;
+instead of &lsquo;<samp>\SomeClass.someProperty</samp>&rsquo;:
+</p>
+<ol>
+<li> class SomeClass: NSObject {
+</li><li> @objc var someProperty: Int
+</li><li> init(someProperty: Int) {
+</li><li> self.someProperty = someProperty
+</li><li> }
+</li><li> }
+</li><li> let c = SomeClass(someProperty: 10)
+</li><li> c.observe(\.someProperty) { object, change in
+</li><li> // &hellip;
+</li><li> }
+</li></ol>
+
+<p>The <em>path</em> can refer to &lsquo;<samp>self</samp>&rsquo; to create the identity key path
+(&lsquo;<samp>\.self</samp>&rsquo;). The identity key path refers to a whole instance, so you can
+use it to access and change all of the data stored in a variable in a
+single step. For example:
+</p>
+<ol>
+<li> var compoundValue = (a: 1, b: 2)
+</li><li> // Equivalent to compoundValue = (a: 10, b: 20)
+</li><li> compoundValue[keyPath: \.self] = (a: 10, b: 20)
+</li></ol>
+
+<p>The <em>path</em> can contain multiple property names, separated by periods, to
+refer to a property of a property&rsquo;s value. This code uses the key path
+expression &lsquo;<samp>\OuterStructure.outer.someValue</samp>&rsquo; to access the &lsquo;<samp>someValue</samp>&rsquo;
+property of the &lsquo;<samp>OuterStructure</samp>&rsquo; type&rsquo;s &lsquo;<samp>outer</samp>&rsquo; property:
+</p>
+<ol>
+<li> struct OuterStructure {
+</li><li> var outer: SomeStructure
+</li><li> init(someValue: Int) {
+</li><li> self.outer = SomeStructure(someValue: someValue)
+</li><li> }
+</li><li> }
+</li><li> let nested = OuterStructure(someValue: 24)
+</li><li> let nestedKeyPath = .outer.someValue
+</li><li> let nestedValue = nested[keyPath: nestedKeyPath]
+</li><li> // nestedValue is 24
+</li></ol>
+
+<p>The <em>path</em> can include subscripts using brackets, as long as the
+subscript&rsquo;s parameter type conforms to the &lsquo;<samp>Hashable</samp>&rsquo; protocol. This
+example uses a subscript in a key path to access the second element of
+an array:
+</p>
+<ol>
+<li> let greetings = [&quot;hello&quot;, &quot;hola&quot;, &quot;bonjour&quot;, &quot;안녕&quot;]
+</li><li> let myGreeting = greetings[keyPath: \[String].[1]]
+</li><li> // myGreeting is &rsquo;hola&rsquo;
+</li></ol>
+
+<p>The value used in a subscript can be a named value or a literal. Values
+are captured in key paths using value semantics. The following code uses
+the variable &lsquo;<samp>index</samp>&rsquo; in both a key-path expression and in a closure to
+access the third element of the &lsquo;<samp>greetings</samp>&rsquo; array. When &lsquo;<samp>index</samp>&rsquo; is
+modified, the key-path expression still references the third element,
+while the closure uses the new index.
+</p>
+<ol>
+<li> var index = 2
+</li><li> let path = \[String].[index]
+</li><li> let fn: ([String]) -&gt; String = { strings in strings[index] }
+</li><li> print(greetings[keyPath: path])
+</li><li> // Prints &quot;bonjour&quot;
+</li><li> print(fn(greetings))
+</li><li> // Prints &quot;bonjour&quot;
+</li><li> // Setting &rsquo;index&rsquo; to a new value doesn&rsquo;t affect &rsquo;path&rsquo;
+</li><li> index += 1
+</li><li> print(greetings[keyPath: path])
+</li><li> // Prints &quot;bonjour&quot;
+</li><li> // Because &rsquo;fn&rsquo; closes over &rsquo;index&rsquo;, it uses the new value
+</li><li> print(fn(greetings))
+</li><li> // Prints &quot;안녕&quot;
+</li></ol>
+
+<p>The <em>path</em> can use optional chaining and forced unwrapping. This code
+uses optional chaining in a key path to access a property of an optional
+string:
+</p>
+<ol>
+<li> let firstGreeting: String? = greetings.first
+</li><li> print(firstGreeting?.count as Any)
+</li><li> // Prints &quot;Optional(5)&quot;
+</li><li> // Do the same thing using a key path.
+</li><li> let count = greetings[keyPath: \[String].first?.count]
+</li><li> print(count as Any)
+</li><li> // Prints &quot;Optional(5)&quot;
+</li></ol>
+
+<p>You can mix and match components of key paths to access values that are
+deeply nested within a type. The following code accesses different
+values and properties of a dictionary of arrays by using key-path
+expressions that combine these components.
+</p>
+<ol>
+<li> let interestingNumbers = [&quot;prime&quot;: [2, 3, 5, 7, 11, 13, 17],
+</li><li> &quot;triangular&quot;: [1, 3, 6, 10, 15, 21, 28],
+</li><li> &quot;hexagonal&quot;: [1, 6, 15, 28, 45, 66, 91]]
+</li><li> print(interestingNumbers[keyPath: \[String: [Int]].[&quot;prime&quot;]] as
+Any)
+</li><li> // Prints &quot;Optional([2, 3, 5, 7, 11, 13, 17])&quot;
+</li><li> print(interestingNumbers[keyPath: \[String: [Int]].[&quot;prime&quot;]![0]])
+</li><li> // Prints &quot;2&quot;
+</li><li> print(interestingNumbers[keyPath: \[String:
+[Int]].[&quot;hexagonal&quot;]!.count])
+</li><li> // Prints &quot;7&quot;
+</li><li> print(interestingNumbers[keyPath: \[String:
+[Int]].[&quot;hexagonal&quot;]!.count.bitWidth])
+</li><li> // Prints &quot;64&quot;
+</li></ol>
+
+<p>For more information about using key paths in code that interacts with
+Objective-C APIs, see
+<a href="https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift">Using
+Objective-C Runtime Features in Swift</a>
+[<a href="https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift">https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift</a>].
+For information about key-value coding and key-value observing, see
+<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i">Key-Value
+Coding Programming Guide</a>
+[<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i">https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i</a>]
+and
+<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i">Key-Value
+Observing Programming Guide</a>
+[<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i">https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i</a>].
+</p>
+<p>Grammar of a key-path expression
+</p>
+<p>key-path-expression →
+&lsquo;<samp>\</samp>&rsquo; type _{opt} &lsquo;<samp>.</samp>&rsquo;
+key-path-components
+</p>
+<p>key-path-components →
+key-path-component
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>key-path-component
+&lsquo;<samp>.</samp>&rsquo;
+key-path-components
+</p>
+<p>key-path-component →
+identifier
+key-path-postfixes
+_{opt} |
+key-path-postfixes
+</p>
+<p>key-path-postfixes →
+key-path-postfix
+key-path-postfixes
+_{opt}
+</p>
+<p>key-path-postfix → &lsquo;<samp>?</samp>&rsquo; |
+&lsquo;<samp>!</samp>&rsquo; | &lsquo;<samp>self</samp>&rsquo; | &lsquo;<samp>[</samp>&rsquo;
+function-call-argument-list
+&lsquo;<samp>]</samp>&rsquo;
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Selector-Expression.html#Selector-Expression" accesskey="n" rel="next">Selector Expression</a>, Previous: <a href="Wildcard-Expression.html#Wildcard-Expression" accesskey="p" rel="prev">Wildcard Expression</a>, Up: <a href="Primary-Expressions.html#Primary-Expressions" accesskey="u" rel="up">Primary Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

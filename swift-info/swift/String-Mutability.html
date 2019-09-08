@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>String Mutability (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="String Mutability (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="String Mutability (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Strings-and-Characters.html#Strings-and-Characters" rel="up" title="Strings and Characters">
+<link href="Strings-Are-Value-Types.html#Strings-Are-Value-Types" rel="next" title="Strings Are Value Types">
+<link href="Initializing-an-Empty-String.html#Initializing-an-Empty-String" rel="prev" title="Initializing an Empty String">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="String-Mutability"></span><div class="header">
+<p>
+Next: <a href="Strings-Are-Value-Types.html#Strings-Are-Value-Types" accesskey="n" rel="next">Strings Are Value Types</a>, Previous: <a href="Initializing-an-Empty-String.html#Initializing-an-Empty-String" accesskey="p" rel="prev">Initializing an Empty String</a>, Up: <a href="Strings-and-Characters.html#Strings-and-Characters" accesskey="u" rel="up">Strings and Characters</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="String-Mutability-1"></span><h3 class="section">8.3 String Mutability</h3>
+
+<p>You indicate whether a particular &lsquo;<samp>String</samp>&rsquo; can be modified (or
+<em>mutated</em>) by assigning it to a variable (in which case it can be
+modified), or to a constant (in which case it can&rsquo;t be modified):
+</p>
+<div class="example">
+<pre class="example">var variableString = &quot;Horse&quot;
+variableString += &quot; and carriage&quot;
+// variableString is now &quot;Horse and carriage&quot;
+
+let constantString = &quot;Highlander&quot;
+constantString += &quot; and another Highlander&quot;
+// this reports a compile-time error - a constant string cannot be modified
+</pre></div>
+
+<p>Note
+</p>
+<p>This approach is different from string mutation in Objective-C and
+Cocoa, where you choose between two classes (&lsquo;<samp>NSString</samp>&rsquo; and
+&lsquo;<samp>NSMutableString</samp>&rsquo;) to indicate whether a string can be mutated.
+</p>
+
+
+
+</body>
+</html>

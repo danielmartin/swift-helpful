@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Compile-Time Diagnostic Statement (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Compile-Time Diagnostic Statement (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Compile-Time Diagnostic Statement (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Compiler-Control-Statements.html#Compiler-Control-Statements" rel="up" title="Compiler Control Statements">
+<link href="Availability-Condition.html#Availability-Condition" rel="next" title="Availability Condition">
+<link href="Line-Control-Statement.html#Line-Control-Statement" rel="prev" title="Line Control Statement">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Compile_002dTime-Diagnostic-Statement"></span><div class="header">
+<p>
+Previous: <a href="Line-Control-Statement.html#Line-Control-Statement" accesskey="p" rel="prev">Line Control Statement</a>, Up: <a href="Compiler-Control-Statements.html#Compiler-Control-Statements" accesskey="u" rel="up">Compiler Control Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Compile_002dTime-Diagnostic-Statement-1"></span><h4 class="subsection">6.6.3 Compile-Time Diagnostic Statement</h4>
+
+<p>A compile-time diagnostic statement causes the compiler to emit an error
+or a warning during compilation. A compile-time diagnostic statement has
+the following forms:
+</p>
+<span id="index-_0023error"></span>
+<span id="index-_0023warning"></span>
+
+<ol>
+<li> #error(&quot;error message&quot;)
+</li><li> #warning(&quot;warning message&quot;)
+</li></ol>
+
+<p>The first form emits the <em>error message</em> as a fatal error and terminates
+the compilation process. The second form emits the <em>warning message</em> as
+a nonfatal warning and allows compilation to proceed. You write the
+diagnostic message as a static string literal. Static string literals
+can&rsquo;t use features like string interpolation or concatenation, but they
+can use the multiline string literal syntax.
+</p>
+<p>Grammar of a compile-time diagnostic statement
+</p>
+<p>diagnostic-statement →
+&lsquo;<samp>#error</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo;
+diagnostic-message
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>diagnostic-statement
+→ &lsquo;<samp>#warning</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo;
+diagnostic-message
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>diagnostic-message →
+static-string-literal
+</p>
+
+
+
+</body>
+</html>

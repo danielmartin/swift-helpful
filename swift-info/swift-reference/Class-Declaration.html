@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Class Declaration (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Class Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Class Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Declarations.html#Declarations" rel="up" title="Declarations">
+<link href="Protocol-Declaration.html#Protocol-Declaration" rel="next" title="Protocol Declaration">
+<link href="Structure-Declaration.html#Structure-Declaration" rel="prev" title="Structure Declaration">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Class-Declaration"></span><div class="header">
+<p>
+Next: <a href="Protocol-Declaration.html#Protocol-Declaration" accesskey="n" rel="next">Protocol Declaration</a>, Previous: <a href="Structure-Declaration.html#Structure-Declaration" accesskey="p" rel="prev">Structure Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Class-Declaration-1"></span><h3 class="section">7.10 Class Declaration</h3>
+
+<p>A <em>class declaration</em> introduces a named class type into your program.
+Class declarations are declared using the &lsquo;<samp>class</samp>&rsquo; keyword and have the
+following form:
+</p>
+<ol>
+<li> class class name: superclass, adopted protocols {
+</li><li> declarations
+</li><li> }
+</li></ol>
+
+<p>The body of a class contains zero or more <em>declarations</em>. These
+<em>declarations</em> can include both stored and computed properties, instance
+methods, type methods, initializers, a single deinitializer, subscripts,
+type aliases, and even other class, structure, and enumeration
+declarations. Class declarations can&rsquo;t contain protocol declarations.
+For a discussion and several examples of classes that include various
+kinds of declarations, see
+<a href="../swift/Structures-and-Classes.html#Structures-and-Classes">(swift)Structures and Classes</a>.
+</p>
+<p>A class type can inherit from only one parent class, its <em>superclass</em>,
+but can adopt any number of protocols. The <em>superclass</em> appears first
+after the <em>class name</em> and colon, followed by any <em>adopted protocols</em>.
+Generic classes can inherit from other generic and nongeneric classes,
+but a nongeneric class can inherit only from other nongeneric classes.
+When you write the name of a generic superclass class after the colon,
+you must include the full name of that generic class, including its
+generic parameter clause.
+</p>
+<p>As discussed in <a href="Initializer-Declaration.html#Initializer-Declaration">Initializer Declaration</a>,
+classes can have designated and convenience initializers. The designated
+initializer of a class must initialize all of the class&rsquo;s declared
+properties and it must do so before calling any of its superclass&rsquo;s
+designated initializers.
+</p>
+<p>A class can override properties, methods, subscripts, and initializers
+of its superclass. Overridden properties, methods, subscripts, and
+designated initializers must be marked with the &lsquo;<samp>override</samp>&rsquo; declaration
+modifier.
+</p>
+<p>To require that subclasses implement a superclass&rsquo;s initializer, mark
+the superclass&rsquo;s initializer with the &lsquo;<samp>required</samp>&rsquo; declaration modifier.
+The subclass&rsquo;s implementation of that initializer must also be marked
+with the &lsquo;<samp>required</samp>&rsquo; declaration modifier.
+</p>
+<p>Although properties and methods declared in the <em>superclass</em> are
+inherited by the current class, designated initializers declared in the
+<em>superclass</em> are only inherited when the subclass meets the conditions
+described in <a href="../swift/Automatic-Initializer-Inheritance.html#Automatic-Initializer-Inheritance">(swift)Automatic
+Initializer Inheritance</a>. Swift classes do not inherit from a universal
+base class.
+</p>
+<p>There are two ways to create an instance of a previously declared class:
+</p>
+<ul>
+<li> Call one of the initializers declared within the class, as described
+in <a href="../swift/Initializers.html#Initializers">(swift)Initializers</a>.
+
+</li><li> If no initializers are declared, and all properties of the class
+declaration were given initial values, call the class&rsquo;s default
+initializer, as described in
+<a href="../swift/Default-Initializers.html#Default-Initializers">(swift)Default Initializers</a>.
+</li></ul>
+
+<p>Access properties of a class instance with dot (&lsquo;<samp>.</samp>&rsquo;) syntax, as
+described in
+<a href="../swift/Accessing-Properties.html#Accessing-Properties">(swift)Accessing
+Properties</a>.
+</p>
+<p>Classes are reference types; instances of a class are referred to,
+rather than copied, when assigned to variables or constants, or when
+passed as arguments to a function call. For information about reference
+types, see
+<a href="../swift/Structures-and-Enumerations-Are-Value-Types.html#Structures-and-Enumerations-Are-Value-Types">(swift)Structures and
+Enumerations Are Value Types</a>.
+</p>
+<p>You can extend the behavior of a class type with an extension
+declaration, as discussed in <a href="Extension-Declaration.html#Extension-Declaration">Extension
+Declaration</a>.
+</p>
+<p>Grammar of a class declaration
+</p>
+<p>class-declaration →
+attributes
+_{opt}
+access-level-modifier
+_{opt} &lsquo;<samp>final=_{opt} =class</samp>&rsquo;
+class-name
+generic-parameter-clause
+_{opt}
+type-inheritance-clause
+_{opt}
+generic-where-clause
+_{opt}
+class-body
+</p>
+<p>class-declaration →
+attributes
+_{opt} &lsquo;<samp>final</samp>&rsquo;
+access-level-modifier
+_{opt} &lsquo;<samp>class</samp>&rsquo;
+class-name
+generic-parameter-clause
+_{opt}
+type-inheritance-clause
+_{opt}
+generic-where-clause
+_{opt}
+class-body
+</p>
+<p>class-name →
+identifier
+</p>
+<p>class-body → &lsquo;<samp>{</samp>&rsquo;
+class-members
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>class-members →
+class-member
+class-members
+_{opt}
+</p>
+<p>class-member →
+declaration
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>compiler-control-statement
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Protocol-Declaration.html#Protocol-Declaration" accesskey="n" rel="next">Protocol Declaration</a>, Previous: <a href="Structure-Declaration.html#Structure-Declaration" accesskey="p" rel="prev">Structure Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

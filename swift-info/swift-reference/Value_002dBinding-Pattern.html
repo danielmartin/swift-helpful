@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Value-Binding Pattern (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Value-Binding Pattern (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Value-Binding Pattern (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Patterns.html#Patterns" rel="up" title="Patterns">
+<link href="Tuple-Pattern.html#Tuple-Pattern" rel="next" title="Tuple Pattern">
+<link href="Identifier-Pattern.html#Identifier-Pattern" rel="prev" title="Identifier Pattern">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Value_002dBinding-Pattern"></span><div class="header">
+<p>
+Next: <a href="Tuple-Pattern.html#Tuple-Pattern" accesskey="n" rel="next">Tuple Pattern</a>, Previous: <a href="Identifier-Pattern.html#Identifier-Pattern" accesskey="p" rel="prev">Identifier Pattern</a>, Up: <a href="Patterns.html#Patterns" accesskey="u" rel="up">Patterns</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Value_002dBinding-Pattern-1"></span><h3 class="section">9.3 Value-Binding Pattern</h3>
+
+<p>A <em>value-binding pattern</em> binds matched values to variable or constant
+names. Value-binding patterns that bind a matched value to the name of a
+constant begin with the &lsquo;<samp>let</samp>&rsquo; keyword; those that bind to the name of
+variable begin with the &lsquo;<samp>var</samp>&rsquo; keyword.
+</p>
+<p>Identifiers patterns within a value-binding pattern bind new named
+variables or constants to their matching values. For example, you can
+decompose the elements of a tuple and bind the value of each element to
+a corresponding identifier pattern.
+</p>
+<ol>
+<li> let point = (3, 2)
+</li><li> switch point {
+</li><li> // Bind x and y to the elements of point.
+</li><li> case let (x, y):
+</li><li> print(&quot;The point is at (\(x), \(y)).&quot;)
+</li><li> }
+</li><li> // Prints &quot;The point is at (3, 2).&quot;
+</li></ol>
+
+<p>In the example above, &lsquo;<samp>let</samp>&rsquo; distributes to each identifier pattern in
+the tuple pattern &lsquo;<samp>(x, y)</samp>&rsquo;. Because of this behavior, the &lsquo;<samp>switch</samp>&rsquo; cases
+&lsquo;<samp>case let (x, y):</samp>&rsquo; and &lsquo;<samp>case (let x, let y):</samp>&rsquo; match the same values.
+</p>
+<p>Grammar of a value-binding pattern
+</p>
+<p>value-binding-pattern →
+&lsquo;<samp>var</samp>&rsquo; pattern |
+&lsquo;<samp>let</samp>&rsquo; pattern
+</p>
+
+
+
+</body>
+</html>

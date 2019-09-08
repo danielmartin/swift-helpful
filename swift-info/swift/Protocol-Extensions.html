@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Protocol Extensions (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Protocol Extensions (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Protocol Extensions (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Protocols.html#Protocols" rel="up" title="Protocols">
+<link href="Providing-Default-Implementations.html#Providing-Default-Implementations" rel="next" title="Providing Default Implementations">
+<link href="Optional-Protocol-Requirements.html#Optional-Protocol-Requirements" rel="prev" title="Optional Protocol Requirements">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Protocol-Extensions"></span><div class="header">
+<p>
+Previous: <a href="Optional-Protocol-Requirements.html#Optional-Protocol-Requirements" accesskey="p" rel="prev">Optional Protocol Requirements</a>, Up: <a href="Protocols.html#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Protocol-Extensions-1"></span><h3 class="section">26.15 Protocol Extensions</h3>
+
+<p>Protocols can be extended to provide method, initializer, subscript, and
+computed property implementations to conforming types. This allows you
+to define behavior on protocols themselves, rather than in each type&rsquo;s
+individual conformance or in a global function.
+</p>
+<p>For example, the &lsquo;<samp>RandomNumberGenerator</samp>&rsquo; protocol can be extended to
+provide a &lsquo;<samp>randomBool()</samp>&rsquo; method, which uses the result of the required
+&lsquo;<samp>random()</samp>&rsquo; method to return a random &lsquo;<samp>Bool</samp>&rsquo; value:
+</p>
+<div class="example">
+<pre class="example">extension RandomNumberGenerator {
+    func randomBool() -&gt; Bool {
+        return random() &gt; 0.5
+    }
+}
+</pre></div>
+
+<p>By creating an extension on the protocol, all conforming types
+automatically gain this method implementation without any additional
+modification.
+</p>
+<div class="example">
+<pre class="example">let generator = LinearCongruentialGenerator()
+print(&quot;Here's a random number: \(generator.random())&quot;)
+// Prints &quot;Here's a random number: 0.3746499199817101&quot;
+print(&quot;And here's a random Boolean: \(generator.randomBool())&quot;)
+// Prints &quot;And here's a random Boolean: true&quot;
+</pre></div>
+
+<p>Protocol extensions can add implementations to conforming types but
+can&rsquo;t make a protocol extend or inherit from another protocol. Protocol
+inheritance is always specified in the protocol declaration itself.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Providing-Default-Implementations.html#Providing-Default-Implementations" accesskey="1">Providing Default Implementations</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Adding-Constraints-to-Protocol-Extensions.html#Adding-Constraints-to-Protocol-Extensions" accesskey="2">Adding Constraints to Protocol Extensions</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

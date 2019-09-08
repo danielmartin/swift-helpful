@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Tuple Type (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Tuple Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Tuple Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Types.html#Types" rel="up" title="Types">
+<link href="Function-Type.html#Function-Type" rel="next" title="Function Type">
+<link href="Type-Identifier.html#Type-Identifier" rel="prev" title="Type Identifier">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Tuple-Type"></span><div class="header">
+<p>
+Next: <a href="Function-Type.html#Function-Type" accesskey="n" rel="next">Function Type</a>, Previous: <a href="Type-Identifier.html#Type-Identifier" accesskey="p" rel="prev">Type Identifier</a>, Up: <a href="Types.html#Types" accesskey="u" rel="up">Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Tuple-Type-1"></span><h3 class="section">4.3 Tuple Type</h3>
+
+<p>A <em>tuple type</em> is a comma-separated list of types, enclosed in
+parentheses.
+</p>
+<p>You can use a tuple type as the return type of a function to enable the
+function to return a single tuple containing multiple values. You can
+also name the elements of a tuple type and use those names to refer to
+the values of the individual elements. An element name consists of an
+identifier followed immediately by a colon (:). For an example that
+demonstrates both of these features, see
+<a href="../swift/Functions-with-Multiple-Return-Values.html#Functions-with-Multiple-Return-Values">(swift)Functions with Multiple Return
+Values</a>.
+</p>
+<p>When an element of a tuple type has a name, that name is part of the
+type.
+</p>
+<ol>
+<li> var someTuple = (top: 10, bottom: 12) // someTuple is of type (top:
+Int, bottom: Int)
+</li><li> someTuple = (top: 4, bottom: 42) // OK: names match
+</li><li> someTuple = (9, 99) // OK: names are inferred
+</li><li> someTuple = (left: 5, right: 5) // Error: names don&rsquo;t match
+</li></ol>
+
+<p>All tuple types contain two or more types, except for &lsquo;<samp>Void</samp>&rsquo; which is a
+type alias for the empty tuple type, &lsquo;<samp>()</samp>&rsquo;.
+</p>
+<p>Grammar of a tuple type
+</p>
+<p>tuple-type → &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo; | &lsquo;<samp>(</samp>&rsquo;
+tuple-type-element
+&lsquo;<samp>,</samp>&rsquo;
+tuple-type-element-list
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>tuple-type-element-list →
+tuple-type-element
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>tuple-type-element
+&lsquo;<samp>,</samp>&rsquo;
+tuple-type-element-list
+</p>
+<p>tuple-type-element →
+element-name
+type-annotation
+</p><table>
+<tr><td>type</td></tr>
+</table>
+
+<p>element-name →
+identifier
+</p>
+
+
+
+</body>
+</html>

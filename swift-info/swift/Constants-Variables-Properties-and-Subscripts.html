@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Constants Variables Properties and Subscripts (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Constants Variables Properties and Subscripts (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Constants Variables Properties and Subscripts (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Access-Control.html#Access-Control" rel="up" title="Access Control">
+<link href="Getters-and-Setters.html#Getters-and-Setters" rel="next" title="Getters and Setters">
+<link href="Subclassing-1.html#Subclassing-1" rel="prev" title="Subclassing 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Constants-Variables-Properties-and-Subscripts"></span><div class="header">
+<p>
+Next: <a href="Initializers-2.html#Initializers-2" accesskey="n" rel="next">Initializers 2</a>, Previous: <a href="Subclassing-1.html#Subclassing-1" accesskey="p" rel="prev">Subclassing 1</a>, Up: <a href="Access-Control.html#Access-Control" accesskey="u" rel="up">Access Control</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Constants_002c-Variables_002c-Properties_002c-and-Subscripts"></span><h3 class="section">31.6 Constants, Variables, Properties, and Subscripts</h3>
+
+<p>A constant, variable, or property can&rsquo;t be more public than its type.
+It&rsquo;s not valid to write a public property with a private type, for
+example. Similarly, a subscript can&rsquo;t be more public than either its
+index type or return type.
+</p>
+<p>If a constant, variable, property, or subscript makes use of a private
+type, the constant, variable, property, or subscript must also be marked
+as &lsquo;<samp>private</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">private var privateInstance = SomePrivateClass()
+</pre></div>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Getters-and-Setters.html#Getters-and-Setters" accesskey="1">Getters and Setters</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

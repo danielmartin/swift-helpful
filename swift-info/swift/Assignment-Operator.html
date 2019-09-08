@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Assignment Operator (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Assignment Operator (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Assignment Operator (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Basic-Operators.html#Basic-Operators" rel="up" title="Basic Operators">
+<link href="Arithmetic-Operators.html#Arithmetic-Operators" rel="next" title="Arithmetic Operators">
+<link href="Terminology.html#Terminology" rel="prev" title="Terminology">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Assignment-Operator"></span><div class="header">
+<p>
+Next: <a href="Arithmetic-Operators.html#Arithmetic-Operators" accesskey="n" rel="next">Arithmetic Operators</a>, Previous: <a href="Terminology.html#Terminology" accesskey="p" rel="prev">Terminology</a>, Up: <a href="Basic-Operators.html#Basic-Operators" accesskey="u" rel="up">Basic Operators</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Assignment-Operator-1"></span><h3 class="section">7.2 Assignment Operator</h3>
+
+<p>The <em>assignment operator</em> (&lsquo;<samp>a = b</samp>&rsquo;) initializes or updates the value of
+&lsquo;<samp>a</samp>&rsquo; with the value of &lsquo;<samp>b</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let b = 10
+var a = 5
+a = b
+// a is now equal to 10
+</pre></div>
+
+<p>If the right side of the assignment is a tuple with multiple values, its
+elements can be decomposed into multiple constants or variables at once:
+</p>
+<div class="example">
+<pre class="example">let (x, y) = (1, 2)
+// x is equal to 1, and y is equal to 2
+</pre></div>
+
+<p>Unlike the assignment operator in C and Objective-C, the assignment
+operator in Swift does not itself return a value. The following
+statement is not valid:
+</p>
+<div class="example">
+<pre class="example">if x = y {
+    // This is not valid, because x = y does not return a value.
+}
+</pre></div>
+
+<p>This feature prevents the assignment operator (&lsquo;<samp>=</samp>&rsquo;) from being used by
+accident when the equal to operator (&lsquo;<samp>==</samp>&rsquo;) is actually intended. By
+making &lsquo;<samp>if x = y</samp>&rsquo; invalid, Swift helps you to avoid these kinds of
+errors in your code.
+</p>
+
+
+
+</body>
+</html>

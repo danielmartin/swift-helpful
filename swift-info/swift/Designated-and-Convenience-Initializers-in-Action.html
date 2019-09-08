@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Designated and Convenience Initializers in Action (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Designated and Convenience Initializers in Action (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Designated and Convenience Initializers in Action (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Class-Inheritance-and-Initialization.html#Class-Inheritance-and-Initialization" rel="up" title="Class Inheritance and Initialization">
+<link href="Failable-Initializers.html#Failable-Initializers" rel="next" title="Failable Initializers">
+<link href="Automatic-Initializer-Inheritance.html#Automatic-Initializer-Inheritance" rel="prev" title="Automatic Initializer Inheritance">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Designated-and-Convenience-Initializers-in-Action"></span><div class="header">
+<p>
+Previous: <a href="Automatic-Initializer-Inheritance.html#Automatic-Initializer-Inheritance" accesskey="p" rel="prev">Automatic Initializer Inheritance</a>, Up: <a href="Class-Inheritance-and-Initialization.html#Class-Inheritance-and-Initialization" accesskey="u" rel="up">Class Inheritance and Initialization</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Designated-and-Convenience-Initializers-in-Action-1"></span><h4 class="subsection">19.5.7 Designated and Convenience Initializers in Action</h4>
+
+<p>The following example shows designated initializers, convenience
+initializers, and automatic initializer inheritance in action. This
+example defines a hierarchy of three classes called &lsquo;<samp>Food</samp>&rsquo;,
+&lsquo;<samp>RecipeIngredient</samp>&rsquo;, and &lsquo;<samp>ShoppingListItem</samp>&rsquo;, and demonstrates how their
+initializers interact.
+</p>
+<p>The base class in the hierarchy is called &lsquo;<samp>Food</samp>&rsquo;, which is a simple
+class to encapsulate the name of a foodstuff. The &lsquo;<samp>Food</samp>&rsquo; class
+introduces a single &lsquo;<samp>String</samp>&rsquo; property called &lsquo;<samp>name</samp>&rsquo; and provides two
+initializers for creating &lsquo;<samp>Food</samp>&rsquo; instances:
+</p>
+<div class="example">
+<pre class="example">class Food {
+    var name: String
+    init(name: String) {
+        self.name = name
+    }
+    convenience init() {
+        self.init(name: &quot;[Unnamed]&quot;)
+    }
+}
+</pre></div>
+
+<p>The figure below shows the initializer chain for the &lsquo;<samp>Food</samp>&rsquo; class:
+</p>
+<img src="_images/initializersExample01_2x.png" alt="_images/initializersExample01_2x">
+<p>Classes do not have a default memberwise initializer, and so the &lsquo;<samp>Food</samp>&rsquo;
+class provides a designated initializer that takes a single argument
+called &lsquo;<samp>name</samp>&rsquo;. This initializer can be used to create a new &lsquo;<samp>Food</samp>&rsquo;
+instance with a specific name:
+</p>
+<div class="example">
+<pre class="example">let namedMeat = Food(name: &quot;Bacon&quot;)
+// namedMeat's name is &quot;Bacon&quot;
+</pre></div>
+
+<p>The &lsquo;<samp>init(name: String)</samp>&rsquo; initializer from the &lsquo;<samp>Food</samp>&rsquo; class is provided
+as a <em>designated</em> initializer, because it ensures that all stored
+properties of a new &lsquo;<samp>Food</samp>&rsquo; instance are fully initialized. The &lsquo;<samp>Food</samp>&rsquo;
+class does not have a superclass, and so the &lsquo;<samp>init(name: String)</samp>&rsquo;
+initializer does not need to call &lsquo;<samp>super.init()</samp>&rsquo; to complete its
+initialization.
+</p>
+<p>The &lsquo;<samp>Food</samp>&rsquo; class also provides a <em>convenience</em> initializer, &lsquo;<samp>init()</samp>&rsquo;,
+with no arguments. The &lsquo;<samp>init()</samp>&rsquo; initializer provides a default
+placeholder name for a new food by delegating across to the &lsquo;<samp>Food</samp>&rsquo;
+class&rsquo;s &lsquo;<samp>init(name: String)</samp>&rsquo; with a &lsquo;<samp>name</samp>&rsquo; value of &lsquo;<samp>[Unnamed]</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let mysteryMeat = Food()
+// mysteryMeat's name is &quot;[Unnamed]&quot;
+</pre></div>
+
+<p>The second class in the hierarchy is a subclass of &lsquo;<samp>Food</samp>&rsquo; called
+&lsquo;<samp>RecipeIngredient</samp>&rsquo;. The &lsquo;<samp>RecipeIngredient</samp>&rsquo; class models an ingredient in
+a cooking recipe. It introduces an &lsquo;<samp>Int</samp>&rsquo; property called &lsquo;<samp>quantity</samp>&rsquo; (in
+addition to the &lsquo;<samp>name</samp>&rsquo; property it inherits from &lsquo;<samp>Food</samp>&rsquo;) and defines two
+initializers for creating &lsquo;<samp>RecipeIngredient</samp>&rsquo; instances:
+</p>
+<div class="example">
+<pre class="example">class RecipeIngredient: Food {
+    var quantity: Int
+    init(name: String, quantity: Int) {
+        self.quantity = quantity
+        super.init(name: name)
+    }
+    override convenience init(name: String) {
+        self.init(name: name, quantity: 1)
+    }
+}
+</pre></div>
+
+<p>The figure below shows the initializer chain for the &lsquo;<samp>RecipeIngredient</samp>&rsquo;
+class:
+</p>
+<img src="_images/initializersExample02_2x.png" alt="_images/initializersExample02_2x">
+<p>The &lsquo;<samp>RecipeIngredient</samp>&rsquo; class has a single designated initializer,
+&lsquo;<samp>init(name: String, quantity: Int)</samp>&rsquo;, which can be used to populate all
+of the properties of a new &lsquo;<samp>RecipeIngredient</samp>&rsquo; instance. This initializer
+starts by assigning the passed &lsquo;<samp>quantity</samp>&rsquo; argument to the &lsquo;<samp>quantity</samp>&rsquo;
+property, which is the only new property introduced by
+&lsquo;<samp>RecipeIngredient</samp>&rsquo;. After doing so, the initializer delegates up to the
+&lsquo;<samp>init(name: String)</samp>&rsquo; initializer of the &lsquo;<samp>Food</samp>&rsquo; class. This process
+satisfies safety check 1 from <a href="Two_002dPhase-Initialization.html#Two_002dPhase-Initialization">Two-Phase
+Initialization</a> above.
+</p>
+<p>&lsquo;<samp>RecipeIngredient</samp>&rsquo; also defines a convenience initializer,
+&lsquo;<samp>init(name: String)</samp>&rsquo;, which is used to create a &lsquo;<samp>RecipeIngredient</samp>&rsquo;
+instance by name alone. This convenience initializer assumes a quantity
+of &lsquo;<samp>1</samp>&rsquo; for any &lsquo;<samp>RecipeIngredient</samp>&rsquo; instance that is created without an
+explicit quantity. The definition of this convenience initializer makes
+&lsquo;<samp>RecipeIngredient</samp>&rsquo; instances quicker and more convenient to create, and
+avoids code duplication when creating several single-quantity
+&lsquo;<samp>RecipeIngredient</samp>&rsquo; instances. This convenience initializer simply
+delegates across to the class&rsquo;s designated initializer, passing in a
+&lsquo;<samp>quantity</samp>&rsquo; value of &lsquo;<samp>1</samp>&rsquo;.
+</p>
+<p>The &lsquo;<samp>init(name: String)</samp>&rsquo; convenience initializer provided by
+&lsquo;<samp>RecipeIngredient</samp>&rsquo; takes the same parameters as the &lsquo;<samp>init(name: String)</samp>&rsquo;
+<em>designated</em> initializer from &lsquo;<samp>Food</samp>&rsquo;. Because this convenience
+initializer overrides a designated initializer from its superclass, it
+must be marked with the &lsquo;<samp>override</samp>&rsquo; modifier (as described in
+<a href="Initializer-Inheritance-and-Overriding.html#Initializer-Inheritance-and-Overriding">Initializer Inheritance and
+Overriding</a>).
+</p>
+<p>Even though &lsquo;<samp>RecipeIngredient</samp>&rsquo; provides the &lsquo;<samp>init(name: String)</samp>&rsquo;
+initializer as a convenience initializer, &lsquo;<samp>RecipeIngredient</samp>&rsquo; has
+nonetheless provided an implementation of all of its superclass&rsquo;s
+designated initializers. Therefore, &lsquo;<samp>RecipeIngredient</samp>&rsquo; automatically
+inherits all of its superclass&rsquo;s convenience initializers too.
+</p>
+<p>In this example, the superclass for &lsquo;<samp>RecipeIngredient</samp>&rsquo; is &lsquo;<samp>Food</samp>&rsquo;, which
+has a single convenience initializer called &lsquo;<samp>init()</samp>&rsquo;. This initializer
+is therefore inherited by &lsquo;<samp>RecipeIngredient</samp>&rsquo;. The inherited version of
+&lsquo;<samp>init()</samp>&rsquo; functions in exactly the same way as the &lsquo;<samp>Food</samp>&rsquo; version, except
+that it delegates to the &lsquo;<samp>RecipeIngredient</samp>&rsquo; version of
+&lsquo;<samp>init(name: String)</samp>&rsquo; rather than the &lsquo;<samp>Food</samp>&rsquo; version.
+</p>
+<p>All three of these initializers can be used to create new
+&lsquo;<samp>RecipeIngredient</samp>&rsquo; instances:
+</p>
+<div class="example">
+<pre class="example">let oneMysteryItem = RecipeIngredient()
+let oneBacon = RecipeIngredient(name: &quot;Bacon&quot;)
+let sixEggs = RecipeIngredient(name: &quot;Eggs&quot;, quantity: 6)
+</pre></div>
+
+<p>The third and final class in the hierarchy is a subclass of
+&lsquo;<samp>RecipeIngredient</samp>&rsquo; called &lsquo;<samp>ShoppingListItem</samp>&rsquo;. The &lsquo;<samp>ShoppingListItem</samp>&rsquo;
+class models a recipe ingredient as it appears in a shopping list.
+</p>
+<p>Every item in the shopping list starts out as “unpurchased”. To
+represent this fact, &lsquo;<samp>ShoppingListItem</samp>&rsquo; introduces a Boolean property
+called &lsquo;<samp>purchased</samp>&rsquo;, with a default value of &lsquo;<samp>false</samp>&rsquo;. &lsquo;<samp>ShoppingListItem</samp>&rsquo;
+also adds a computed &lsquo;<samp>description</samp>&rsquo; property, which provides a textual
+description of a &lsquo;<samp>ShoppingListItem</samp>&rsquo; instance:
+</p>
+<div class="example">
+<pre class="example">class ShoppingListItem: RecipeIngredient {
+    var purchased = false
+    var description: String {
+        var output = &quot;\(quantity) x \(name)&quot;
+        output += purchased ? &quot; ✔&quot; : &quot; ✘&quot;
+        return output
+    }
+}
+</pre></div>
+
+<p>Note
+</p>
+<p>&lsquo;<samp>ShoppingListItem</samp>&rsquo; does not define an initializer to provide an initial
+value for &lsquo;<samp>purchased</samp>&rsquo;, because items in a shopping list (as modeled
+here) always start out unpurchased.
+</p>
+<p>Because it provides a default value for all of the properties it
+introduces and does not define any initializers itself,
+&lsquo;<samp>ShoppingListItem</samp>&rsquo; automatically inherits <em>all</em> of the designated and
+convenience initializers from its superclass.
+</p>
+<p>The figure below shows the overall initializer chain for all three
+classes:
+</p>
+<img src="_images/initializersExample03_2x.png" alt="_images/initializersExample03_2x">
+<p>You can use all three of the inherited initializers to create a new
+&lsquo;<samp>ShoppingListItem</samp>&rsquo; instance:
+</p>
+<div class="example">
+<pre class="example">var breakfastList = [
+  ShoppingListItem(),
+  ShoppingListItem(name: &quot;Bacon&quot;),
+  ShoppingListItem(name: &quot;Eggs&quot;, quantity: 6),
+]
+breakfastList[0].name = &quot;Orange juice&quot;
+breakfastList[0].purchased = true
+for item in breakfastList {
+    print(item.description)
+}
+// 1 x Orange juice ✔
+// 1 x Bacon ✘
+// 6 x Eggs ✘
+</pre></div>
+
+<p>Here, a new array called &lsquo;<samp>breakfastList</samp>&rsquo; is created from an array
+literal containing three new &lsquo;<samp>ShoppingListItem</samp>&rsquo; instances. The type of
+the array is inferred to be &lsquo;<samp>[ShoppingListItem]</samp>&rsquo;. After the array is
+created, the name of the &lsquo;<samp>ShoppingListItem</samp>&rsquo; at the start of the array is
+changed from &lsquo;<samp>&quot;[Unnamed]&quot;</samp>&rsquo; to &lsquo;<samp>&quot;Orange juice&quot;</samp>&rsquo; and it is marked as
+having been purchased. Printing the description of each item in the
+array shows that their default states have been set as expected.
+</p>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Automatic-Initializer-Inheritance.html#Automatic-Initializer-Inheritance" accesskey="p" rel="prev">Automatic Initializer Inheritance</a>, Up: <a href="Class-Inheritance-and-Initialization.html#Class-Inheritance-and-Initialization" accesskey="u" rel="up">Class Inheritance and Initialization</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

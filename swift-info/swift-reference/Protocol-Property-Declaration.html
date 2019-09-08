@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Protocol Property Declaration (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Protocol Property Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Protocol Property Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Protocol-Declaration.html#Protocol-Declaration" rel="up" title="Protocol Declaration">
+<link href="Protocol-Method-Declaration.html#Protocol-Method-Declaration" rel="next" title="Protocol Method Declaration">
+<link href="Protocol-Declaration.html#Protocol-Declaration" rel="prev" title="Protocol Declaration">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Protocol-Property-Declaration"></span><div class="header">
+<p>
+Next: <a href="Protocol-Method-Declaration.html#Protocol-Method-Declaration" accesskey="n" rel="next">Protocol Method Declaration</a>, Up: <a href="Protocol-Declaration.html#Protocol-Declaration" accesskey="u" rel="up">Protocol Declaration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Protocol-Property-Declaration-1"></span><h4 class="subsection">7.11.1 Protocol Property Declaration</h4>
+
+<p>Protocols declare that conforming types must implement a property by
+including a <em>protocol property declaration</em> in the body of the protocol
+declaration. Protocol property declarations have a special form of a
+variable declaration:
+</p>
+<ol>
+<li> var property name: type { get set }
+</li></ol>
+
+<p>As with other protocol member declarations, these property declarations
+declare only the getter and setter requirements for types that conform
+to the protocol. As a result, you don&rsquo;t implement the getter or setter
+directly in the protocol in which it is declared.
+</p>
+<p>The getter and setter requirements can be satisfied by a conforming type
+in a variety of ways. If a property declaration includes both the &lsquo;<samp>get</samp>&rsquo;
+and &lsquo;<samp>set</samp>&rsquo; keywords, a conforming type can implement it with a stored
+variable property or a computed property that is both readable and
+writeable (that is, one that implements both a getter and a setter).
+However, that property declaration can&rsquo;t be implemented as a constant
+property or a read-only computed property. If a property declaration
+includes only the &lsquo;<samp>get</samp>&rsquo; keyword, it can be implemented as any kind of
+property. For examples of conforming types that implement the property
+requirements of a protocol, see
+<a href="../swift/Property-Requirements.html#Property-Requirements">(swift)Property Requirements</a>.
+</p>
+<p>See also <a href="Variable-Declaration.html#Variable-Declaration">Variable Declaration</a>.
+</p>
+<p>Grammar of a protocol property declaration
+</p>
+<p>protocol-property-declaration
+→
+variable-declaration-head
+variable-name
+type-annotation
+getter-setter-keyword-block
+</p>
+
+
+
+</body>
+</html>

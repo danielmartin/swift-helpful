@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Method Requirements (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Method Requirements (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Method Requirements (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Protocols.html#Protocols" rel="up" title="Protocols">
+<link href="Mutating-Method-Requirements.html#Mutating-Method-Requirements" rel="next" title="Mutating Method Requirements">
+<link href="Property-Requirements.html#Property-Requirements" rel="prev" title="Property Requirements">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Method-Requirements"></span><div class="header">
+<p>
+Next: <a href="Mutating-Method-Requirements.html#Mutating-Method-Requirements" accesskey="n" rel="next">Mutating Method Requirements</a>, Previous: <a href="Property-Requirements.html#Property-Requirements" accesskey="p" rel="prev">Property Requirements</a>, Up: <a href="Protocols.html#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Method-Requirements-1"></span><h3 class="section">26.3 Method Requirements</h3>
+
+<p>Protocols can require specific instance methods and type methods to be
+implemented by conforming types. These methods are written as part of
+the protocol&rsquo;s definition in exactly the same way as for normal instance
+and type methods, but without curly braces or a method body. Variadic
+parameters are allowed, subject to the same rules as for normal methods.
+Default values, however, can&rsquo;t be specified for method parameters within
+a protocol&rsquo;s definition.
+</p>
+<p>As with type property requirements, you always prefix type method
+requirements with the &lsquo;<samp>static</samp>&rsquo; keyword when they&rsquo;re defined in a
+protocol. This is true even though type method requirements are prefixed
+with the &lsquo;<samp>class</samp>&rsquo; or &lsquo;<samp>static</samp>&rsquo; keyword when implemented by a class:
+</p>
+<div class="example">
+<pre class="example">protocol SomeProtocol {
+    static func someTypeMethod()
+}
+</pre></div>
+
+<p>The following example defines a protocol with a single instance method
+requirement:
+</p>
+<div class="example">
+<pre class="example">protocol RandomNumberGenerator {
+    func random() -&gt; Double
+}
+</pre></div>
+
+<p>This protocol, &lsquo;<samp>RandomNumberGenerator</samp>&rsquo;, requires any conforming type to
+have an instance method called &lsquo;<samp>random</samp>&rsquo;, which returns a &lsquo;<samp>Double</samp>&rsquo; value
+whenever it&rsquo;s called. Although it&rsquo;s not specified as part of the
+protocol, it&rsquo;s assumed that this value will be a number from &lsquo;<samp>0.0</samp>&rsquo; up to
+(but not including) &lsquo;<samp>1.0</samp>&rsquo;.
+</p>
+<p>The &lsquo;<samp>RandomNumberGenerator</samp>&rsquo; protocol doesn&rsquo;t make any assumptions about
+how each random number will be generated&mdash;it simply requires the
+generator to provide a standard way to generate a new random number.
+</p>
+<p>Here&rsquo;s an implementation of a class that adopts and conforms to the
+&lsquo;<samp>RandomNumberGenerator</samp>&rsquo; protocol. This class implements a pseudorandom
+number generator algorithm known as a <em>linear congruential generator</em>:
+</p>
+<div class="example">
+<pre class="example">class LinearCongruentialGenerator: RandomNumberGenerator {
+    var lastRandom = 42.0
+    let m = 139968.0
+    let a = 3877.0
+    let c = 29573.0
+    func random() -&gt; Double {
+        lastRandom = ((lastRandom * a +
+                         c).truncatingRemainder(dividingBy:m))
+        return lastRandom / m
+    }
+}
+let generator = LinearCongruentialGenerator()
+print(&quot;Here's a random number: \(generator.random())&quot;)
+// Prints &quot;Here's a random number: 0.3746499199817101&quot;
+print(&quot;And another one: \(generator.random())&quot;)
+// Prints &quot;And another one: 0.729023776863283&quot;
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Mutating-Method-Requirements.html#Mutating-Method-Requirements" accesskey="n" rel="next">Mutating Method Requirements</a>, Previous: <a href="Property-Requirements.html#Property-Requirements" accesskey="p" rel="prev">Property Requirements</a>, Up: <a href="Protocols.html#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

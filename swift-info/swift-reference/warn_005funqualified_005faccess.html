@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>warn_unqualified_access (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="warn_unqualified_access (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="warn_unqualified_access (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Declaration-Attributes.html#Declaration-Attributes" rel="up" title="Declaration Attributes">
+<link href="Declaration-Attributes-Used-by-Interface-Builder.html#Declaration-Attributes-Used-by-Interface-Builder" rel="next" title="Declaration Attributes Used by Interface Builder">
+<link href="usableFromInline.html#usableFromInline" rel="prev" title="usableFromInline">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="warn_005funqualified_005faccess"></span><div class="header">
+<p>
+Next: <a href="Declaration-Attributes-Used-by-Interface-Builder.html#Declaration-Attributes-Used-by-Interface-Builder" accesskey="n" rel="next">Declaration Attributes Used by Interface Builder</a>, Previous: <a href="usableFromInline.html#usableFromInline" accesskey="p" rel="prev">usableFromInline</a>, Up: <a href="Declaration-Attributes.html#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="warn_005funqualified_005faccess-1"></span><h4 class="subsection">8.1.17 warn<em>_unqualified</em><em>_access</em></h4>
+
+<span id="index-_0040warn_005funqualified_005faccess"></span>
+
+<p>Apply this attribute to a top-level function, instance method, or class
+or static method to trigger warnings when that function or method is
+used without a preceding qualifier, such as a module name, type name, or
+instance variable or constant. Use this attribute to help discourage
+ambiguity between functions with the same name that are accessible from
+the same scope.
+</p>
+<p>For example, the Swift standard library includes both a top-level
+<a href="https://developer.apple.com/documentation/swift/1538339-min/">&lsquo;<samp>min(_:_:)</samp>&rsquo;</a>
+[<a href="https://developer.apple.com/documentation/swift/1538339-min/">https://developer.apple.com/documentation/swift/1538339-min/</a>] function
+and a
+<a href="https://developer.apple.com/documentation/swift/sequence/1641174-min">&lsquo;<samp>min()</samp>&rsquo;</a>
+[<a href="https://developer.apple.com/documentation/swift/sequence/1641174-min">https://developer.apple.com/documentation/swift/sequence/1641174-min</a>]
+method for sequences with comparable elements. The sequence method is
+declared with the &lsquo;<samp>warn_unqualified_access</samp>&rsquo; attribute to help reduce
+confusion when attempting to use one or the other from within a
+&lsquo;<samp>Sequence</samp>&rsquo; extension.
+</p>
+
+
+
+</body>
+</html>

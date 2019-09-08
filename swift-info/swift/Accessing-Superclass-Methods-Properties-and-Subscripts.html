@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Accessing Superclass Methods Properties and Subscripts (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Accessing Superclass Methods Properties and Subscripts (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Accessing Superclass Methods Properties and Subscripts (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Overriding.html#Overriding" rel="up" title="Overriding">
+<link href="Overriding-Methods.html#Overriding-Methods" rel="next" title="Overriding Methods">
+<link href="Overriding.html#Overriding" rel="prev" title="Overriding">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Accessing-Superclass-Methods-Properties-and-Subscripts"></span><div class="header">
+<p>
+Next: <a href="Overriding-Methods.html#Overriding-Methods" accesskey="n" rel="next">Overriding Methods</a>, Up: <a href="Overriding.html#Overriding" accesskey="u" rel="up">Overriding</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Accessing-Superclass-Methods_002c-Properties_002c-and-Subscripts"></span><h4 class="subsection">18.3.1 Accessing Superclass Methods, Properties, and Subscripts</h4>
+
+<p>When you provide a method, property, or subscript override for a
+subclass, it is sometimes useful to use the existing superclass
+implementation as part of your override. For example, you can refine the
+behavior of that existing implementation, or store a modified value in
+an existing inherited variable.
+</p>
+<span id="index-super"></span>
+
+<p>Where this is appropriate, you access the superclass version of a
+method, property, or subscript by using the &lsquo;<samp>super</samp>&rsquo; prefix:
+</p>
+<ul>
+<li> An overridden method named &lsquo;<samp>someMethod()</samp>&rsquo; can call the superclass
+version of &lsquo;<samp>someMethod()</samp>&rsquo; by calling &lsquo;<samp>super.someMethod()</samp>&rsquo; within the
+overriding method implementation.
+
+</li><li> An overridden property called &lsquo;<samp>someProperty</samp>&rsquo; can access the superclass
+version of &lsquo;<samp>someProperty</samp>&rsquo; as &lsquo;<samp>super.someProperty</samp>&rsquo; within the
+overriding getter or setter implementation.
+
+</li><li> An overridden subscript for &lsquo;<samp>someIndex</samp>&rsquo; can access the superclass
+version of the same subscript as &lsquo;<samp>super[someIndex]</samp>&rsquo; from within the
+overriding subscript implementation.
+</li></ul>
+
+
+
+
+</body>
+</html>

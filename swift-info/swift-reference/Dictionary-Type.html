@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Dictionary Type (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Dictionary Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Dictionary Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Types.html#Types" rel="up" title="Types">
+<link href="Optional-Type.html#Optional-Type" rel="next" title="Optional Type">
+<link href="Array-Type.html#Array-Type" rel="prev" title="Array Type">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Dictionary-Type"></span><div class="header">
+<p>
+Next: <a href="Optional-Type.html#Optional-Type" accesskey="n" rel="next">Optional Type</a>, Previous: <a href="Array-Type.html#Array-Type" accesskey="p" rel="prev">Array Type</a>, Up: <a href="Types.html#Types" accesskey="u" rel="up">Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Dictionary-Type-1"></span><h3 class="section">4.6 Dictionary Type</h3>
+
+<p>The Swift language provides the following syntactic sugar for the Swift
+standard library &lsquo;<samp>Dictionary&lt;Key, Value&gt;</samp>&rsquo; type:
+</p>
+<ol>
+<li> [key type: value type]
+</li></ol>
+
+<p>In other words, the following two declarations are equivalent:
+</p>
+<ol>
+<li> let someDictionary: [String: Int] = [&quot;Alex&quot;: 31, &quot;Paul&quot;: 39]
+</li><li> let someDictionary: Dictionary&lt;String, Int&gt; = [&quot;Alex&quot;: 31, &quot;Paul&quot;:
+39]
+</li></ol>
+
+<p>In both cases, the constant &lsquo;<samp>someDictionary</samp>&rsquo; is declared as a dictionary
+with strings as keys and integers as values.
+</p>
+<p>The values of a dictionary can be accessed through subscripting by
+specifying the corresponding key in square brackets:
+&lsquo;<samp>someDictionary[&quot;Alex&quot;]</samp>&rsquo; refers to the value associated with the key
+&lsquo;<samp>&quot;Alex&quot;</samp>&rsquo;. The subscript returns an optional value of the dictionary&rsquo;s
+value type. If the specified key isn&rsquo;t contained in the dictionary, the
+subscript returns &lsquo;<samp>nil</samp>&rsquo;.
+</p>
+<p>The key type of a dictionary must conform to the Swift standard library
+&lsquo;<samp>Hashable</samp>&rsquo; protocol.
+</p>
+<p>For a detailed discussion of the Swift standard library &lsquo;<samp>Dictionary</samp>&rsquo;
+type, see
+<a href="../swift/Dictionaries.html#Dictionaries">(swift)Dictionaries</a>.
+</p>
+<p>Grammar of a dictionary type
+</p>
+<p>dictionary-type → &lsquo;<samp>[</samp>&rsquo;
+type &lsquo;<samp>:</samp>&rsquo;
+type &lsquo;<samp>]</samp>&rsquo;
+</p>
+
+
+
+</body>
+</html>

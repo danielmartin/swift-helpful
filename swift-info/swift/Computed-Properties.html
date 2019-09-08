@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Computed Properties (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Computed Properties (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Computed Properties (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Properties.html#Properties" rel="up" title="Properties">
+<link href="Shorthand-Setter-Declaration.html#Shorthand-Setter-Declaration" rel="next" title="Shorthand Setter Declaration">
+<link href="Stored-Properties-and-Instance-Variables.html#Stored-Properties-and-Instance-Variables" rel="prev" title="Stored Properties and Instance Variables">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Computed-Properties"></span><div class="header">
+<p>
+Next: <a href="Property-Observers.html#Property-Observers" accesskey="n" rel="next">Property Observers</a>, Previous: <a href="Stored-Properties.html#Stored-Properties" accesskey="p" rel="prev">Stored Properties</a>, Up: <a href="Properties.html#Properties" accesskey="u" rel="up">Properties</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Computed-Properties-2"></span><h3 class="section">15.2 Computed Properties</h3>
+
+<p>In addition to stored properties, classes, structures, and enumerations
+can define <em>computed properties</em>, which do not actually store a value.
+Instead, they provide a getter and an optional setter to retrieve and
+set other properties and values indirectly.
+</p>
+<div class="example">
+<pre class="example">struct Point {
+    var x = 0.0, y = 0.0
+}
+struct Size {
+    var width = 0.0, height = 0.0
+}
+struct Rect {
+    var origin = Point()
+    var size = Size()
+    var center: Point {
+        get {
+            let centerX = origin.x + (size.width / 2)
+            let centerY = origin.y + (size.height / 2)
+            return Point(x: centerX, y: centerY)
+        }
+        set(newCenter) {
+            origin.x = newCenter.x - (size.width / 2)
+            origin.y = newCenter.y - (size.height / 2)
+        }
+    }
+}
+var square = Rect(origin: Point(x: 0.0, y: 0.0),
+                  size: Size(width: 10.0, height: 10.0))
+let initialSquareCenter = square.center
+square.center = Point(x: 15.0, y: 15.0)
+print(&quot;square.origin is now at (\(square.origin.x), \(square.origin.y))&quot;)
+// Prints &quot;square.origin is now at (10.0, 10.0)&quot;
+</pre></div>
+
+<p>This example defines three structures for working with geometric shapes:
+</p>
+<ul>
+<li> &lsquo;<samp>Point</samp>&rsquo; encapsulates the x- and y-coordinate of a point.
+
+</li><li> &lsquo;<samp>Size</samp>&rsquo; encapsulates a &lsquo;<samp>width</samp>&rsquo; and a &lsquo;<samp>height</samp>&rsquo;.
+
+</li><li> &lsquo;<samp>Rect</samp>&rsquo; defines a rectangle by an origin point and a size.
+</li></ul>
+
+<p>The &lsquo;<samp>Rect</samp>&rsquo; structure also provides a computed property called &lsquo;<samp>center</samp>&rsquo;.
+The current center position of a &lsquo;<samp>Rect</samp>&rsquo; can always be determined from
+its &lsquo;<samp>origin</samp>&rsquo; and &lsquo;<samp>size</samp>&rsquo;, and so you don&rsquo;t need to store the center point
+as an explicit &lsquo;<samp>Point</samp>&rsquo; value. Instead, &lsquo;<samp>Rect</samp>&rsquo; defines a custom getter
+and setter for a computed variable called &lsquo;<samp>center</samp>&rsquo;, to enable you to
+work with the rectangle&rsquo;s &lsquo;<samp>center</samp>&rsquo; as if it were a real stored property.
+</p>
+<p>The example above creates a new &lsquo;<samp>Rect</samp>&rsquo; variable called &lsquo;<samp>square</samp>&rsquo;. The
+&lsquo;<samp>square</samp>&rsquo; variable is initialized with an origin point of &lsquo;<samp>(0, 0)</samp>&rsquo;, and a
+width and height of &lsquo;<samp>10</samp>&rsquo;. This square is represented by the blue square
+in the diagram below.
+</p>
+<p>The &lsquo;<samp>square</samp>&rsquo; variable&rsquo;s &lsquo;<samp>center</samp>&rsquo; property is then accessed through dot
+syntax (&lsquo;<samp>square.center</samp>&rsquo;), which causes the getter for &lsquo;<samp>center</samp>&rsquo; to be
+called, to retrieve the current property value. Rather than returning an
+existing value, the getter actually calculates and returns a new &lsquo;<samp>Point</samp>&rsquo;
+to represent the center of the square. As can be seen above, the getter
+correctly returns a center point of &lsquo;<samp>(5, 5)</samp>&rsquo;.
+</p>
+<p>The &lsquo;<samp>center</samp>&rsquo; property is then set to a new value of &lsquo;<samp>(15, 15)</samp>&rsquo;, which
+moves the square up and to the right, to the new position shown by the
+orange square in the diagram below. Setting the &lsquo;<samp>center</samp>&rsquo; property calls
+the setter for &lsquo;<samp>center</samp>&rsquo;, which modifies the &lsquo;<samp>x</samp>&rsquo; and &lsquo;<samp>y</samp>&rsquo; values of the
+stored &lsquo;<samp>origin</samp>&rsquo; property, and moves the square to its new position.
+</p>
+<img src="_images/computedProperties_2x.png" alt="_images/computedProperties_2x">
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Shorthand-Setter-Declaration.html#Shorthand-Setter-Declaration" accesskey="1">Shorthand Setter Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Shorthand-Getter-Declaration.html#Shorthand-Getter-Declaration" accesskey="2">Shorthand Getter Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Read_002dOnly-Computed-Properties.html#Read_002dOnly-Computed-Properties" accesskey="3">Read-Only Computed Properties</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Property-Observers.html#Property-Observers" accesskey="n" rel="next">Property Observers</a>, Previous: <a href="Stored-Properties.html#Stored-Properties" accesskey="p" rel="prev">Stored Properties</a>, Up: <a href="Properties.html#Properties" accesskey="u" rel="up">Properties</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

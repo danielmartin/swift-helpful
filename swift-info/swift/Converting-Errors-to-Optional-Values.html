@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Converting Errors to Optional Values (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Converting Errors to Optional Values (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Converting Errors to Optional Values (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Handling-Errors.html#Handling-Errors" rel="up" title="Handling Errors">
+<link href="Disabling-Error-Propagation.html#Disabling-Error-Propagation" rel="next" title="Disabling Error Propagation">
+<link href="Handling-Errors-Using-Do_002dCatch.html#Handling-Errors-Using-Do_002dCatch" rel="prev" title="Handling Errors Using Do-Catch">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Converting-Errors-to-Optional-Values"></span><div class="header">
+<p>
+Next: <a href="Disabling-Error-Propagation.html#Disabling-Error-Propagation" accesskey="n" rel="next">Disabling Error Propagation</a>, Previous: <a href="Handling-Errors-Using-Do_002dCatch.html#Handling-Errors-Using-Do_002dCatch" accesskey="p" rel="prev">Handling Errors Using Do-Catch</a>, Up: <a href="Handling-Errors.html#Handling-Errors" accesskey="u" rel="up">Handling Errors</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Converting-Errors-to-Optional-Values-1"></span><h4 class="subsection">22.2.3 Converting Errors to Optional Values</h4>
+
+<span id="index-try_003f"></span>
+
+<p>You use &lsquo;<samp>try?</samp>&rsquo; to handle an error by converting it to an optional value.
+If an error is thrown while evaluating the &lsquo;<samp>try?</samp>&rsquo; expression, the value
+of the expression is &lsquo;<samp>nil</samp>&rsquo;. For example, in the following code &lsquo;<samp>x</samp>&rsquo; and
+&lsquo;<samp>y</samp>&rsquo; have the same value and behavior:
+</p>
+<div class="example">
+<pre class="example">func someThrowingFunction() throws -&gt; Int {
+    // ...
+}
+
+let x = try? someThrowingFunction()
+
+let y: Int?
+do {
+    y = try someThrowingFunction()
+} catch {
+    y = nil
+}
+</pre></div>
+
+<p>If &lsquo;<samp>someThrowingFunction()</samp>&rsquo; throws an error, the value of &lsquo;<samp>x</samp>&rsquo; and &lsquo;<samp>y</samp>&rsquo; is
+&lsquo;<samp>nil</samp>&rsquo;. Otherwise, the value of &lsquo;<samp>x</samp>&rsquo; and &lsquo;<samp>y</samp>&rsquo; is the value that the
+function returned. Note that &lsquo;<samp>x</samp>&rsquo; and &lsquo;<samp>y</samp>&rsquo; are an optional of whatever
+type &lsquo;<samp>someThrowingFunction()</samp>&rsquo; returns. Here the function returns an
+integer, so &lsquo;<samp>x</samp>&rsquo; and &lsquo;<samp>y</samp>&rsquo; are optional integers.
+</p>
+<p>Using &lsquo;<samp>try?</samp>&rsquo; lets you write concise error handling code when you want to
+handle all errors in the same way. For example, the following code uses
+several approaches to fetch data, or returns &lsquo;<samp>nil</samp>&rsquo; if all of the
+approaches fail.
+</p>
+<div class="example">
+<pre class="example">func fetchData() -&gt; Data? {
+    if let data = try? fetchDataFromDisk() { return data }
+    if let data = try? fetchDataFromServer() { return data }
+    return nil
+}
+</pre></div>
+
+
+
+
+</body>
+</html>

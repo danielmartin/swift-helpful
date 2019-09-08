@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Deinitializer Declaration (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Deinitializer Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Deinitializer Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Declarations.html#Declarations" rel="up" title="Declarations">
+<link href="Extension-Declaration.html#Extension-Declaration" rel="next" title="Extension Declaration">
+<link href="Failable-Initializers.html#Failable-Initializers" rel="prev" title="Failable Initializers">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Deinitializer-Declaration"></span><div class="header">
+<p>
+Next: <a href="Extension-Declaration.html#Extension-Declaration" accesskey="n" rel="next">Extension Declaration</a>, Previous: <a href="Initializer-Declaration.html#Initializer-Declaration" accesskey="p" rel="prev">Initializer Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Deinitializer-Declaration-1"></span><h3 class="section">7.13 Deinitializer Declaration</h3>
+
+<span id="index-deinit"></span>
+
+<p>A <em>deinitializer declaration</em> declares a deinitializer for a class type.
+Deinitializers take no parameters and have the following form:
+</p>
+<ol>
+<li> deinit {
+</li><li> statements
+</li><li> }
+</li></ol>
+
+<p>A deinitializer is called automatically when there are no longer any
+references to a class object, just before the class object is
+deallocated. A deinitializer can be declared only in the body of a class
+declaration&mdash;but not in an extension of a class&mdash;and each class can
+have at most one.
+</p>
+<p>A subclass inherits its superclass&rsquo;s deinitializer, which is implicitly
+called just before the subclass object is deallocated. The subclass
+object is not deallocated until all deinitializers in its inheritance
+chain have finished executing.
+</p>
+<p>Deinitializers are not called directly.
+</p>
+<p>For an example of how to use a deinitializer in a class declaration, see
+<a href="../swift/Deinitialization.html#Deinitialization">(swift)Deinitialization</a>.
+</p>
+<p>Grammar of a deinitializer declaration
+</p>
+<p>deinitializer-declaration
+→ attributes
+_{opt} &lsquo;<samp>deinit</samp>&rsquo;
+code-block
+</p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Metatype Type (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Metatype Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Metatype Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Types.html#Types" rel="up" title="Types">
+<link href="Self-Type.html#Self-Type" rel="next" title="Self Type">
+<link href="Opaque-Type.html#Opaque-Type" rel="prev" title="Opaque Type">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Metatype-Type"></span><div class="header">
+<p>
+Next: <a href="Self-Type.html#Self-Type" accesskey="n" rel="next">Self Type</a>, Previous: <a href="Opaque-Type.html#Opaque-Type" accesskey="p" rel="prev">Opaque Type</a>, Up: <a href="Types.html#Types" accesskey="u" rel="up">Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Metatype-Type-1"></span><h3 class="section">4.11 Metatype Type</h3>
+
+<p>A <em>metatype type</em> refers to the type of any type, including class types,
+structure types, enumeration types, and protocol types.
+</p>
+<p>The metatype of a class, structure, or enumeration type is the name of
+that type followed by &lsquo;<samp>.Type</samp>&rsquo;. The metatype of a protocol type&mdash;not the
+concrete type that conforms to the protocol at runtime&mdash;is the name of
+that protocol followed by &lsquo;<samp>.Protocol</samp>&rsquo;. For example, the metatype of the
+class type &lsquo;<samp>SomeClass</samp>&rsquo; is &lsquo;<samp>SomeClass.Type</samp>&rsquo; and the metatype of the
+protocol &lsquo;<samp>SomeProtocol</samp>&rsquo; is &lsquo;<samp>SomeProtocol.Protocol</samp>&rsquo;.
+</p>
+<p>You can use the postfix &lsquo;<samp>self</samp>&rsquo; expression to access a type as a value.
+For example, &lsquo;<samp>SomeClass.self</samp>&rsquo; returns &lsquo;<samp>SomeClass</samp>&rsquo; itself, not an
+instance of &lsquo;<samp>SomeClass</samp>&rsquo;. And &lsquo;<samp>SomeProtocol.self</samp>&rsquo; returns &lsquo;<samp>SomeProtocol</samp>&rsquo;
+itself, not an instance of a type that conforms to &lsquo;<samp>SomeProtocol</samp>&rsquo; at
+runtime. You can call the &lsquo;<samp>type(of:)</samp>&rsquo; function with an instance of a
+type to access that instance&rsquo;s dynamic, runtime type as a value, as the
+following example shows:
+</p>
+<ol>
+<li> class SomeBaseClass {
+</li><li> class func printClassName() {
+</li><li> print(&quot;SomeBaseClass&quot;)
+</li><li> }
+</li><li> }
+</li><li> class SomeSubClass: SomeBaseClass {
+</li><li> override class func printClassName() {
+</li><li> print(&quot;SomeSubClass&quot;)
+</li><li> }
+</li><li> }
+</li><li> let someInstance: SomeBaseClass = SomeSubClass()
+</li><li> // The compile-time type of someInstance is SomeBaseClass,
+</li><li> // and the runtime type of someInstance is SomeSubClass
+</li><li> type(of: someInstance).printClassName()
+</li><li> // Prints &quot;SomeSubClass&quot;
+</li></ol>
+
+<p>For more information, see
+<a href="https://developer.apple.com/documentation/swift/2885064-type">&lsquo;<samp>type(of:)</samp>&rsquo;</a>
+[<a href="https://developer.apple.com/documentation/swift/2885064-type">https://developer.apple.com/documentation/swift/2885064-type</a>] in the
+Swift standard library.
+</p>
+<p>Use an initializer expression to construct an instance of a type from
+that type&rsquo;s metatype value. For class instances, the initializer that&rsquo;s
+called must be marked with the &lsquo;<samp>required</samp>&rsquo; keyword or the entire class
+marked with the &lsquo;<samp>final</samp>&rsquo; keyword.
+</p>
+<ol>
+<li> class AnotherSubClass: SomeBaseClass {
+</li><li> let string: String
+</li><li> required init(string: String) {
+</li><li> self.string = string
+</li><li> }
+</li><li> override class func printClassName() {
+</li><li> print(&quot;AnotherSubClass&quot;)
+</li><li> }
+</li><li> }
+</li><li> let metatype: AnotherSubClass.Type = AnotherSubClass.self
+</li><li> let anotherInstance = metatype.init(string: &quot;some string&quot;)
+</li></ol>
+
+<p>Grammar of a metatype type
+</p>
+<p>metatype-type →
+type &lsquo;<samp>.</samp>&rsquo; &lsquo;<samp>Type</samp>&rsquo; |
+type &lsquo;<samp>.</samp>&rsquo; &lsquo;<samp>Protocol</samp>&rsquo;
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Self-Type.html#Self-Type" accesskey="n" rel="next">Self Type</a>, Previous: <a href="Opaque-Type.html#Opaque-Type" accesskey="p" rel="prev">Opaque Type</a>, Up: <a href="Types.html#Types" accesskey="u" rel="up">Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

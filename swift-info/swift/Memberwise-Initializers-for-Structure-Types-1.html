@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Memberwise Initializers for Structure Types 1 (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Memberwise Initializers for Structure Types 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Memberwise Initializers for Structure Types 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Default-Initializers.html#Default-Initializers" rel="up" title="Default Initializers">
+<link href="Initializer-Delegation-for-Value-Types.html#Initializer-Delegation-for-Value-Types" rel="next" title="Initializer Delegation for Value Types">
+<link href="Default-Initializers.html#Default-Initializers" rel="prev" title="Default Initializers">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Memberwise-Initializers-for-Structure-Types-1"></span><div class="header">
+<p>
+Up: <a href="Default-Initializers.html#Default-Initializers" accesskey="u" rel="up">Default Initializers</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Memberwise-Initializers-for-Structure-Types-3"></span><h4 class="subsection">19.3.1 Memberwise Initializers for Structure Types</h4>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0242-default-values-memberwise.md">Proposal</a>
+</p>
+<p>Structure types automatically receive a <em>memberwise initializer</em> if they
+don&rsquo;t define any of their own custom initializers. Unlike a default
+initializer, the structure receives a memberwise initializer even if it
+has stored properties that don&rsquo;t have default values.
+</p>
+<p>The memberwise initializer is a shorthand way to initialize the member
+properties of new structure instances. Initial values for the properties
+of the new instance can be passed to the memberwise initializer by name.
+</p>
+<p>The example below defines a structure called &lsquo;<samp>Size</samp>&rsquo; with two properties
+called &lsquo;<samp>width</samp>&rsquo; and &lsquo;<samp>height</samp>&rsquo;. Both properties are inferred to be of type
+&lsquo;<samp>Double</samp>&rsquo; by assigning a default value of &lsquo;<samp>0.0</samp>&rsquo;.
+</p>
+<p>The &lsquo;<samp>Size</samp>&rsquo; structure automatically receives an &lsquo;<samp>init(width:height:)</samp>&rsquo;
+memberwise initializer, which you can use to initialize a new &lsquo;<samp>Size</samp>&rsquo;
+instance:
+</p>
+<div class="example">
+<pre class="example">struct Size {
+    var width = 0.0, height = 0.0
+}
+let twoByTwo = Size(width: 2.0, height: 2.0)
+</pre></div>
+
+<p>When you call a memberwise initializer, you can omit values for any
+properties that have default values. In the example above, the &lsquo;<samp>Size</samp>&rsquo;
+structure has a default value for both its &lsquo;<samp>height</samp>&rsquo; and &lsquo;<samp>width</samp>&rsquo;
+properties. You can omit either property or both properties, and the
+initializer uses the default value for anything you omit&mdash;for example:
+</p>
+<div class="example">
+<pre class="example">let zeroByTwo = Size(height: 2.0)
+print(zeroByTwo.width, zeroByTwo.height)
+// Prints &quot;0.0 2.0&quot;
+
+let zeroByZero = Size()
+print(zeroByZero.width, zeroByZero.height)
+// Prints &quot;0.0 0.0&quot;
+</pre></div>
+
+
+
+
+</body>
+</html>

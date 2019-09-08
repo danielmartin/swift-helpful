@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Nested Functions (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Nested Functions (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Nested Functions (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Functions.html#Functions" rel="up" title="Functions">
+<link href="Closures.html#Closures" rel="next" title="Closures">
+<link href="Function-Types-as-Return-Types.html#Function-Types-as-Return-Types" rel="prev" title="Function Types as Return Types">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Nested-Functions"></span><div class="header">
+<p>
+Previous: <a href="Function-Types.html#Function-Types" accesskey="p" rel="prev">Function Types</a>, Up: <a href="Functions.html#Functions" accesskey="u" rel="up">Functions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Nested-Functions-1"></span><h3 class="section">11.5 Nested Functions</h3>
+
+<p>All of the functions you have encountered so far in this chapter have
+been examples of <em>global functions</em>, which are defined at a global
+scope. You can also define functions inside the bodies of other
+functions, known as <em>nested functions</em>.
+</p>
+<p>Nested functions are hidden from the outside world by default, but can
+still be called and used by their enclosing function. An enclosing
+function can also return one of its nested functions to allow the nested
+function to be used in another scope.
+</p>
+<p>You can rewrite the &lsquo;<samp>chooseStepFunction(backward:)</samp>&rsquo; example above to use
+and return nested functions:
+</p>
+<div class="example">
+<pre class="example">func chooseStepFunction(backward: Bool) -&gt; (Int) -&gt; Int {
+    func stepForward(input: Int) -&gt; Int { return input + 1 }
+    func stepBackward(input: Int) -&gt; Int { return input - 1 }
+    return backward ? stepBackward : stepForward
+}
+var currentValue = -4
+let moveNearerToZero = chooseStepFunction(backward: currentValue &gt; 0)
+// moveNearerToZero now refers to the nested stepForward() function
+while currentValue != 0 {
+    print(&quot;\(currentValue)... &quot;)
+    currentValue = moveNearerToZero(currentValue)
+}
+print(&quot;zero!&quot;)
+// -4...
+// -3...
+// -2...
+// -1...
+// zero!
+</pre></div>
+
+
+
+
+</body>
+</html>

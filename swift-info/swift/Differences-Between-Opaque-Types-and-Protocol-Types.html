@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Differences Between Opaque Types and Protocol Types (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Differences Between Opaque Types and Protocol Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Differences Between Opaque Types and Protocol Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Opaque-Types.html#Opaque-Types" rel="up" title="Opaque Types">
+<link href="Automatic-Reference-Counting.html#Automatic-Reference-Counting" rel="next" title="Automatic Reference Counting">
+<link href="Returning-an-Opaque-Type.html#Returning-an-Opaque-Type" rel="prev" title="Returning an Opaque Type">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Differences-Between-Opaque-Types-and-Protocol-Types"></span><div class="header">
+<p>
+Previous: <a href="Returning-an-Opaque-Type.html#Returning-an-Opaque-Type" accesskey="p" rel="prev">Returning an Opaque Type</a>, Up: <a href="Opaque-Types.html#Opaque-Types" accesskey="u" rel="up">Opaque Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Differences-Between-Opaque-Types-and-Protocol-Types-1"></span><h3 class="section">28.3 Differences Between Opaque Types and Protocol Types</h3>
+
+<p>Returning an opaque type looks very similar to using a protocol type as
+the return type of a function, but these two kinds of return type differ
+in whether they preserve type identity. An opaque type refers to one
+specific type, although the caller of the function isn&rsquo;t able to see
+which type; a protocol type can refer to any type that conforms to the
+protocol. Generally speaking, protocol types give you more flexibility
+about the underlying types of the values they store, and opaque types
+let you make stronger guarantees about those underlying types.
+</p>
+<p>For example, here&rsquo;s a version of &lsquo;<samp>flip(_:)</samp>&rsquo; that returns a value of
+protocol type instead of using an opaque return type:
+</p>
+<div class="example">
+<pre class="example">func protoFlip&lt;T: Shape&gt;(_ shape: T) -&gt; Shape {
+    return FlippedShape(shape: shape)
+}
+</pre></div>
+
+<p>This version of &lsquo;<samp>protoFlip(_:)</samp>&rsquo; has the same body as &lsquo;<samp>flip(_:)</samp>&rsquo;, and it
+always returns a value of the same type. Unlike &lsquo;<samp>flip(_:)</samp>&rsquo;, the value
+that &lsquo;<samp>protoFlip(_:)</samp>&rsquo; returns isn&rsquo;t required to always have the same
+type&mdash;it just has to conform to the &lsquo;<samp>Shape</samp>&rsquo; protocol. Put another way,
+&lsquo;<samp>protoFlip(_:)</samp>&rsquo; makes a much looser API contract with its caller than
+&lsquo;<samp>flip(_:)</samp>&rsquo; makes. It reserves the flexibility to return values of
+multiple types:
+</p>
+<div class="example">
+<pre class="example">func protoFlip&lt;T: Shape&gt;(_ shape: T) -&gt; Shape {
+    if shape is Square {
+        return shape
+    }
+
+    return FlippedShape(shape: shape)
+}
+</pre></div>
+
+<p>The revised version of the code returns an instance of &lsquo;<samp>Square</samp>&rsquo; or an
+instance of &lsquo;<samp>FlippedShape</samp>&rsquo;, depending on what shape is passed in. Two
+flipped shapes returned by this function might have completely different
+types. Other valid versions of this function could return values of
+different types when flipping multiple instances of the same shape. The
+less specific return type information from &lsquo;<samp>protoFlip(_:)</samp>&rsquo; means that
+many operations that depend on type information aren&rsquo;t available on the
+returned value. For example, it&rsquo;s not possible to write an &lsquo;<samp>==</samp>&rsquo; operator
+comparing results returned by this function.
+</p>
+<div class="example">
+<pre class="example">let protoFlippedTriangle = protoFlip(smallTriangle)
+let sameThing = protoFlip(smallTriangle)
+protoFlippedTriangle == sameThing // Error
+</pre></div>
+
+<p>The error on the last line of the example occurs for several reasons.
+The immediate issue is that the &lsquo;<samp>Shape</samp>&rsquo; doesn&rsquo;t include an &lsquo;<samp>==</samp>&rsquo; operator
+as part of its protocol requirements. If you try adding one, the next
+issue you&rsquo;ll encounter is that the &lsquo;<samp>==</samp>&rsquo; operator needs to know the types
+of its left-hand and right-hand arguments. This sort of operator usually
+takes arguments of type &lsquo;<samp>Self</samp>&rsquo;, matching whatever concrete type adopts
+the protocol, but adding a &lsquo;<samp>Self</samp>&rsquo; requirement to the protocol doesn&rsquo;t
+allow for the type erasure that happens when you use the protocol as a
+type.
+</p>
+<p>Using a protocol type as the return type for a function gives you the
+flexibility to return any type that conforms to the protocol. However,
+the cost of that flexibility is that some operations aren&rsquo;t possible on
+the returned values. The example shows how the &lsquo;<samp>==</samp>&rsquo; operator isn&rsquo;t
+available&mdash;it depends on specific type information that isn&rsquo;t preserved
+by using a protocol type.
+</p>
+<p>Another problem with this approach is that the shape transformations
+don&rsquo;t nest. The result of flipping a triangle is a value of type
+&lsquo;<samp>Shape</samp>&rsquo;, and the &lsquo;<samp>protoFlip(_:)</samp>&rsquo; function takes an argument of some type
+that conforms to the &lsquo;<samp>Shape</samp>&rsquo; protocol. However, a value of a protocol
+type doesn&rsquo;t conform to that protocol; the value returned by
+&lsquo;<samp>protoFlip(_:)</samp>&rsquo; doesn&rsquo;t conform to &lsquo;<samp>Shape</samp>&rsquo;. This means code like
+&lsquo;<samp>protoFlip(protoFlip(smallTriange))</samp>&rsquo; that applies multiple
+transformations is invalid because the flipped shape isn&rsquo;t a valid
+argument to &lsquo;<samp>protoFlip(_:)</samp>&rsquo;.
+</p>
+<p>In contrast, opaque types preserve the identity of the underlying type.
+Swift can infer associated types, which lets you use an opaque return
+value in places where a protocol type can&rsquo;t be used as a return value.
+For example, here&rsquo;s a version of the &lsquo;<samp>Container</samp>&rsquo; protocol from
+<a href="Generics.html#Generics">Generics</a>:
+</p>
+<div class="example">
+<pre class="example">protocol Container {
+    associatedtype Item
+    var count: Int { get }
+    subscript(i: Int) -&gt; Item { get }
+}
+extension Array: Container { }
+</pre></div>
+
+<p>You can&rsquo;t use &lsquo;<samp>Container</samp>&rsquo; as the return type of a function because that
+protocol has an associated type. You also can&rsquo;t use it as constraint a
+generic return type because there isn&rsquo;t enough information outside the
+function body to infer what the generic type needs to be.
+</p>
+<div class="example">
+<pre class="example">// Error: Protocol with associated types can't be used as a return type.
+func makeProtocolContainer&lt;T&gt;(item: T) -&gt; Container {
+    return [item]
+}
+
+// Error: Not enough information to infer C.
+func makeProtocolContainer&lt;T, C: Container&gt;(item: T) -&gt; C {
+    return [item]
+}
+</pre></div>
+
+<p>Using the opaque type &lsquo;<samp>some Container</samp>&rsquo; as a return type expresses the
+desired API contract&mdash;the function returns a container, but declines to
+specify the container&rsquo;s type:
+</p>
+<div class="example">
+<pre class="example">func makeOpaqueContainer&lt;T&gt;(item: T) -&gt; some Container {
+    return [item]
+}
+let opaqueContainer = makeOpaqueContainer(item: 12)
+let twelve = opaqueContainer[0]
+print(type(of: twelve))
+// Prints &quot;Int&quot;
+</pre></div>
+
+<p>The type of &lsquo;<samp>twelve</samp>&rsquo; is inferred to be &lsquo;<samp>Int</samp>&rsquo;, which illustrates the fact
+that type inference works with opaque types. In the implementation of
+&lsquo;<samp>makeOpaqueContainer(item:)</samp>&rsquo;, the underlying type of the opaque
+container is &lsquo;<samp>[T]</samp>&rsquo;. In this case, &lsquo;<samp>T</samp>&rsquo; is &lsquo;<samp>Int</samp>&rsquo;, so the return value is
+an array of integers and the &lsquo;<samp>Item</samp>&rsquo; associated type is inferred to be
+&lsquo;<samp>Int</samp>&rsquo;. The subscript on &lsquo;<samp>Container</samp>&rsquo; returns &lsquo;<samp>Item</samp>&rsquo;, which means that the
+type of &lsquo;<samp>twelve</samp>&rsquo; is also inferred to be &lsquo;<samp>Int</samp>&rsquo;.
+</p>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Returning-an-Opaque-Type.html#Returning-an-Opaque-Type" accesskey="p" rel="prev">Returning an Opaque Type</a>, Up: <a href="Opaque-Types.html#Opaque-Types" accesskey="u" rel="up">Opaque Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

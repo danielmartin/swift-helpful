@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Prefix and Postfix Operators (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Prefix and Postfix Operators (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Prefix and Postfix Operators (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Operator-Methods-1.html#Operator-Methods-1" rel="up" title="Operator Methods 1">
+<link href="Compound-Assignment-Operators-1.html#Compound-Assignment-Operators-1" rel="next" title="Compound Assignment Operators 1">
+<link href="Operator-Methods-1.html#Operator-Methods-1" rel="prev" title="Operator Methods 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Prefix-and-Postfix-Operators"></span><div class="header">
+<p>
+Next: <a href="Compound-Assignment-Operators-1.html#Compound-Assignment-Operators-1" accesskey="n" rel="next">Compound Assignment Operators 1</a>, Up: <a href="Operator-Methods-1.html#Operator-Methods-1" accesskey="u" rel="up">Operator Methods 1</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Prefix-and-Postfix-Operators-1"></span><h4 class="subsection">32.4.1 Prefix and Postfix Operators</h4>
+
+<p>The example shown above demonstrates a custom implementation of a binary
+infix operator. Classes and structures can also provide implementations
+of the standard <em>unary operators</em>. Unary operators operate on a single
+target. They are <em>prefix</em> if they precede their target (such as &lsquo;<samp>-a</samp>&rsquo;)
+and <em>postfix</em> operators if they follow their target (such as &lsquo;<samp>b!</samp>&rsquo;).
+</p>
+<p>You implement a prefix or postfix unary operator by writing the &lsquo;<samp>prefix</samp>&rsquo;
+or &lsquo;<samp>postfix</samp>&rsquo; modifier before the &lsquo;<samp>func</samp>&rsquo; keyword when declaring the
+operator method:
+</p>
+<div class="example">
+<pre class="example">extension Vector2D {
+    static prefix func - (vector: Vector2D) -&gt; Vector2D {
+        return Vector2D(x: -vector.x, y: -vector.y)
+    }
+}
+</pre></div>
+
+<p>The example above implements the unary minus operator (&lsquo;<samp>-a</samp>&rsquo;) for
+&lsquo;<samp>Vector2D</samp>&rsquo; instances. The unary minus operator is a prefix operator, and
+so this method has to be qualified with the &lsquo;<samp>prefix</samp>&rsquo; modifier.
+</p>
+<p>For simple numeric values, the unary minus operator converts positive
+numbers into their negative equivalent and vice versa. The corresponding
+implementation for &lsquo;<samp>Vector2D</samp>&rsquo; instances performs this operation on both
+the &lsquo;<samp>x</samp>&rsquo; and &lsquo;<samp>y</samp>&rsquo; properties:
+</p>
+<div class="example">
+<pre class="example">let positive = Vector2D(x: 3.0, y: 4.0)
+let negative = -positive
+// negative is a Vector2D instance with values of (-3.0, -4.0)
+let alsoPositive = -negative
+// alsoPositive is a Vector2D instance with values of (3.0, 4.0)
+</pre></div>
+
+
+
+
+</body>
+</html>

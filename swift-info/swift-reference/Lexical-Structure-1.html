@@ -1,0 +1,684 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Lexical Structure 1 (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Lexical Structure 1 (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Lexical Structure 1 (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" rel="up" title="Summary of the Grammar">
+<link href="Types-1.html#Types-1" rel="next" title="Types 1">
+<link href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" rel="prev" title="Summary of the Grammar">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Lexical-Structure-1"></span><div class="header">
+<p>
+Next: <a href="Types-1.html#Types-1" accesskey="n" rel="next">Types 1</a>, Up: <a href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" accesskey="u" rel="up">Summary of the Grammar</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Lexical-Structure-3"></span><h3 class="section">11.1 Lexical Structure</h3>
+
+<p>Grammar of whitespace
+</p>
+<p>whitespace →
+whitespace-item
+whitespace
+_{opt}
+</p>
+<p>whitespace-item
+→
+line-break
+</p>
+<p>whitespace-item
+→ comment
+</p>
+<p>whitespace-item
+→
+multiline-comment
+</p>
+<p>whitespace-item
+→ U+0000, U+0009, U+000B, U+000C, or U+0020
+</p>
+<p>line-break →
+U+000A
+</p>
+<p>line-break →
+U+000D
+</p>
+<p>line-break →
+U+000D followed by U+000A
+</p>
+<p>comment → &lsquo;<samp>//</samp>&rsquo;
+comment-text
+line-break
+</p>
+<p>multiline-comment
+→ &lsquo;<samp>/*</samp>&rsquo;
+multiline-comment-text
+&lsquo;<samp>*/</samp>&rsquo;
+</p>
+<p>comment-text →
+comment-text-item
+comment-text
+_{opt}
+</p>
+<p>comment-text-item
+→ Any Unicode scalar value except U+000A or U+000D
+</p>
+<p>multiline-comment-text
+→
+multiline-comment-text-item
+multiline-comment-text
+_{opt}
+</p>
+<p>multiline-comment-text-item
+→
+multiline-comment
+</p>
+<p>multiline-comment-text-item
+→
+comment-text-item
+</p>
+<p>multiline-comment-text-item
+→ Any Unicode scalar value except &lsquo;<samp>/*</samp>&rsquo; or &lsquo;<samp>*/</samp>&rsquo;
+</p>
+<p>Grammar of an identifier
+</p>
+<p>identifier →
+identifier-head
+identifier-characters
+_{opt}
+</p>
+<p>identifier → &lsquo;<samp>`</samp>&rsquo;
+identifier-head
+identifier-characters
+_{opt} &lsquo;<samp>`</samp>&rsquo;
+</p>
+<p>identifier →
+implicit-parameter-name
+</p>
+<p>identifier-list
+→
+identifier
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>identifier
+&lsquo;<samp>,</samp>&rsquo;
+identifier-list
+</p>
+<p>identifier-head
+→ Upper- or lowercase letter A through Z
+</p>
+<p>identifier-head
+→ &lsquo;<samp>_</samp>&rsquo;
+</p>
+<p>identifier-head
+→ U+00A8, U+00AA, U+00AD, U+00AF, U+00B2&ndash;U+00B5, or U+00B7&ndash;U+00BA
+</p>
+<p>identifier-head
+→ U+00BC&ndash;U+00BE, U+00C0&ndash;U+00D6, U+00D8&ndash;U+00F6, or U+00F8&ndash;U+00FF
+</p>
+<p>identifier-head
+→ U+0100&ndash;U+02FF, U+0370&ndash;U+167F, U+1681&ndash;U+180D, or U+180F&ndash;U+1DBF
+</p>
+<p>identifier-head
+→ U+1E00&ndash;U+1FFF
+</p>
+<p>identifier-head
+→ U+200B&ndash;U+200D, U+202A&ndash;U+202E, U+203F&ndash;U+2040, U+2054, or
+U+2060&ndash;U+206F
+</p>
+<p>identifier-head
+→ U+2070&ndash;U+20CF, U+2100&ndash;U+218F, U+2460&ndash;U+24FF, or U+2776&ndash;U+2793
+</p>
+<p>identifier-head
+→ U+2C00&ndash;U+2DFF or U+2E80&ndash;U+2FFF
+</p>
+<p>identifier-head
+→ U+3004&ndash;U+3007, U+3021&ndash;U+302F, U+3031&ndash;U+303F, or U+3040&ndash;U+D7FF
+</p>
+<p>identifier-head
+→ U+F900&ndash;U+FD3D, U+FD40&ndash;U+FDCF, U+FDF0&ndash;U+FE1F, or U+FE30&ndash;U+FE44
+</p>
+<p>identifier-head
+→ U+FE47&ndash;U+FFFD
+</p>
+<p>identifier-head
+→ U+10000&ndash;U+1FFFD, U+20000&ndash;U+2FFFD, U+30000&ndash;U+3FFFD, or
+U+40000&ndash;U+4FFFD
+</p>
+<p>identifier-head
+→ U+50000&ndash;U+5FFFD, U+60000&ndash;U+6FFFD, U+70000&ndash;U+7FFFD, or
+U+80000&ndash;U+8FFFD
+</p>
+<p>identifier-head
+→ U+90000&ndash;U+9FFFD, U+A0000&ndash;U+AFFFD, U+B0000&ndash;U+BFFFD, or
+U+C0000&ndash;U+CFFFD
+</p>
+<p>identifier-head
+→ U+D0000&ndash;U+DFFFD or U+E0000&ndash;U+EFFFD
+</p>
+<p>identifier-character
+→ Digit 0 through 9
+</p>
+<p>identifier-character
+→ U+0300&ndash;U+036F, U+1DC0&ndash;U+1DFF, U+20D0&ndash;U+20FF, or U+FE20&ndash;U+FE2F
+</p>
+<p>identifier-character
+→
+identifier-head
+</p>
+<p>identifier-characters
+→
+identifier-character
+identifier-characters
+_{opt}
+</p>
+<p>implicit-parameter-name
+→ &lsquo;<samp>$</samp>&rsquo;
+decimal-digits
+</p>
+<p>Grammar of a literal
+</p>
+<p>literal →
+numeric-literal
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>string-literal
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>boolean-literal
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>nil-literal
+</p>
+<p>numeric-literal
+→ =-=<em>_opt</em>
+integer-literal
+</p><table>
+<tr><td>=-=<em>_opt</em></td></tr>
+</table>
+<p>floating-point-literal
+</p>
+<p>boolean-literal
+→ &lsquo;<samp>true</samp>&rsquo; | &lsquo;<samp>false</samp>&rsquo;
+</p>
+<p>nil-literal →
+&lsquo;<samp>nil</samp>&rsquo;
+</p>
+<p>Grammar of an integer literal
+</p>
+<p>integer-literal
+→
+binary-literal
+</p>
+<p>integer-literal
+→
+octal-literal
+</p>
+<p>integer-literal
+→
+decimal-literal
+</p>
+<p>integer-literal
+→
+hexadecimal-literal
+</p>
+<p>binary-literal
+→ &lsquo;<samp>0b</samp>&rsquo;
+binary-digit
+binary-literal-characters
+_{opt}
+</p>
+<p>binary-digit →
+Digit 0 or 1
+</p>
+<p>binary-literal-character
+→
+binary-digit
+</p><table>
+<tr><td>&lsquo;<samp>_</samp>&rsquo;</td></tr>
+</table>
+
+<p>binary-literal-characters
+→
+binary-literal-character
+binary-literal-characters
+_{opt}
+</p>
+<p>octal-literal
+→ &lsquo;<samp>0o</samp>&rsquo;
+octal-digit
+octal-literal-characters
+_{opt}
+</p>
+<p>octal-digit →
+Digit 0 through 7
+</p>
+<p>octal-literal-character
+→
+octal-digit
+</p><table>
+<tr><td>&lsquo;<samp>_</samp>&rsquo;</td></tr>
+</table>
+
+<p>octal-literal-characters
+→
+octal-literal-character
+octal-literal-characters
+_{opt}
+</p>
+<p>decimal-literal
+→
+decimal-digit
+decimal-literal-characters
+_{opt}
+</p>
+<p>decimal-digit
+→ Digit 0 through 9
+</p>
+<p>decimal-digits
+→
+decimal-digit
+decimal-digits
+_{opt}
+</p>
+<p>decimal-literal-character
+→
+decimal-digit
+</p><table>
+<tr><td>&lsquo;<samp>_</samp>&rsquo;</td></tr>
+</table>
+
+<p>decimal-literal-characters
+→
+decimal-literal-character
+decimal-literal-characters
+_{opt}
+</p>
+<p>hexadecimal-literal
+→ &lsquo;<samp>0x</samp>&rsquo;
+hexadecimal-digit
+hexadecimal-literal-characters
+_{opt}
+</p>
+<p>hexadecimal-digit
+→ Digit 0 through 9, a through f, or A through F
+</p>
+<p>hexadecimal-literal-character
+→
+hexadecimal-digit
+</p><table>
+<tr><td>&lsquo;<samp>_</samp>&rsquo;</td></tr>
+</table>
+
+<p>hexadecimal-literal-characters
+→
+hexadecimal-literal-character
+hexadecimal-literal-characters
+_{opt}
+</p>
+<p>Grammar of a floating-point literal
+</p>
+<p>floating-point-literal
+→
+decimal-literal
+decimal-fraction
+_{opt}
+decimal-exponent
+_{opt}
+</p>
+<p>floating-point-literal
+→
+hexadecimal-literal
+hexadecimal-fraction
+_{opt}
+hexadecimal-exponent
+</p>
+<p>decimal-fraction
+→ &lsquo;<samp>.</samp>&rsquo;
+decimal-literal
+</p>
+<p>decimal-exponent
+→
+floating-point-e
+sign _{opt}
+decimal-literal
+</p>
+<p>hexadecimal-fraction
+→ &lsquo;<samp>.</samp>&rsquo;
+hexadecimal-digit
+hexadecimal-literal-characters
+_{opt}
+</p>
+<p>hexadecimal-exponent
+→
+floating-point-p
+sign _{opt}
+decimal-literal
+</p>
+<p>floating-point-e
+→ &lsquo;<samp>e</samp>&rsquo; | &lsquo;<samp>E</samp>&rsquo;
+</p>
+<p>floating-point-p
+→ &lsquo;<samp>p</samp>&rsquo; | &lsquo;<samp>P</samp>&rsquo;
+</p>
+<p>sign → &lsquo;<samp>+</samp>&rsquo; | &lsquo;<samp>-</samp>&rsquo;
+</p>
+<p>Grammar of a string literal
+</p>
+<p>string-literal
+→
+static-string-literal
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>interpolated-string-literal
+</p>
+<p>string-literal-opening-delimiter
+→
+extended-string-literal-delimiter
+_{opt} &lsquo;<samp>&quot;</samp>&rsquo;
+</p>
+<p>string-literal-closing-delimiter
+→ &lsquo;<samp>&quot;</samp>&rsquo;
+extended-string-literal-delimiter
+_{opt}
+</p>
+<p>static-string-literal
+→
+string-literal-opening-delimiter
+quoted-text
+_{opt}
+string-literal-closing-delimiter
+</p>
+<p>static-string-literal
+→
+multiline-string-literal-opening-delimiter
+multiline-quoted-text
+_{opt}
+multiline-string-literal-closing-delimiter
+</p>
+<p>multiline-string-literal-opening-delimiter
+→
+extended-string-literal-delimiter
+&lsquo;<samp>&quot;&quot;&quot;</samp>&rsquo;
+</p>
+<p>multiline-string-literal-closing-delimiter
+→ &lsquo;<samp>&quot;&quot;&quot;</samp>&rsquo;
+extended-string-literal-delimiter
+</p>
+<p>extended-string-literal-delimiter
+→ &lsquo;<samp>#</samp>&rsquo;
+extended-string-literal-delimiter
+_{opt}
+</p>
+<p>quoted-text →
+quoted-text-item
+quoted-text
+_{opt}
+</p>
+<p>quoted-text-item
+→
+escaped-character
+</p>
+<p>quoted-text-item
+→ Any Unicode scalar value except &lsquo;<samp>&quot;</samp>&rsquo;, &lsquo;<samp>\</samp>&rsquo;, U+000A, or U+000D
+</p>
+<p>multiline-quoted-text
+→
+multiline-quoted-text-item
+multiline-quoted-text
+_{opt}
+</p>
+<p>multiline-quoted-text-item
+→
+escaped-character
+</p>
+<p>multiline-quoted-text-item
+→ Any Unicode scalar value except &lsquo;<samp>\</samp>&rsquo;
+</p>
+<p>multiline-quoted-text-item
+→
+escaped-newline
+</p>
+<p>interpolated-string-literal
+→
+string-literal-opening-delimiter
+interpolated-text
+_{opt}
+string-literal-closing-delimiter
+</p>
+<p>interpolated-string-literal
+→
+multiline-string-literal-opening-delimiter
+interpolated-text
+_{opt}
+multiline-string-literal-closing-delimiter
+</p>
+<p>interpolated-text
+→
+interpolated-text-item
+interpolated-text
+_{opt}
+</p>
+<p>interpolated-text-item
+→ &lsquo;<samp>\(</samp>&rsquo;
+expression
+&lsquo;<samp>)</samp>&rsquo; |
+quoted-text-item
+</p>
+<p>multiline-interpolated-text
+→
+multiline-interpolated-text-item
+multiline-interpolated-text
+_{opt}
+</p>
+<p>multiline-interpolated-text-item
+→ &lsquo;<samp>\(</samp>&rsquo;
+expression
+&lsquo;<samp>)</samp>&rsquo; |
+multiline-quoted-text-item
+</p>
+<p>escape-sequence
+→ &lsquo;<samp>\</samp>&rsquo;
+extended-string-literal-delimiter
+</p>
+<p>escaped-character
+→
+escape-sequence
+&lsquo;<samp>0</samp>&rsquo; |
+escape-sequence
+&lsquo;<samp>\</samp>&rsquo; |
+escape-sequence
+&lsquo;<samp>t</samp>&rsquo; |
+escape-sequence
+&lsquo;<samp>n</samp>&rsquo; |
+escape-sequence
+&lsquo;<samp>r</samp>&rsquo; |
+escape-sequence
+&lsquo;<samp>&quot;</samp>&rsquo; |
+escape-sequence
+&lsquo;<samp>'</samp>&rsquo;
+</p>
+<p>escaped-character
+→
+escape-sequence
+&lsquo;<samp>u</samp>&rsquo; &lsquo;<samp>{</samp>&rsquo;
+unicode-scalar-digits
+&lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>unicode-scalar-digits
+→ Between one and eight hexadecimal digits
+</p>
+<p>escaped-newline
+→
+escape-sequence
+whitespace
+_{opt}
+line-break
+</p>
+<p>Grammar of operators
+</p>
+<p>operator →
+operator-head
+operator-characters
+_{opt}
+</p>
+<p>operator →
+dot-operator-head
+dot-operator-characters
+</p>
+<p>operator-head
+→ &lsquo;<samp>/</samp>&rsquo; | &lsquo;<samp>=</samp>&rsquo; | &lsquo;<samp>-</samp>&rsquo; | &lsquo;<samp>+</samp>&rsquo; | &lsquo;<samp>!</samp>&rsquo; | &lsquo;<samp>*</samp>&rsquo; | &lsquo;<samp>%</samp>&rsquo; | &lsquo;<samp>&lt;</samp>&rsquo; | &lsquo;<samp>&gt;</samp>&rsquo; | &lsquo;<samp>&amp;</samp>&rsquo; | &lsquo;<samp>|</samp>&rsquo; | &lsquo;<samp>^</samp>&rsquo;
+</p><table>
+<tr><td>&lsquo;<samp>~</samp>&rsquo;</td><td>&lsquo;<samp>?</samp>&rsquo;</td></tr>
+</table>
+
+<p>operator-head
+→ U+00A1&ndash;U+00A7
+</p>
+<p>operator-head
+→ U+00A9 or U+00AB
+</p>
+<p>operator-head
+→ U+00AC or U+00AE
+</p>
+<p>operator-head
+→ U+00B0&ndash;U+00B1
+</p>
+<p>operator-head
+→ U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7
+</p>
+<p>operator-head
+→ U+2016&ndash;U+2017
+</p>
+<p>operator-head
+→ U+2020&ndash;U+2027
+</p>
+<p>operator-head
+→ U+2030&ndash;U+203E
+</p>
+<p>operator-head
+→ U+2041&ndash;U+2053
+</p>
+<p>operator-head
+→ U+2055&ndash;U+205E
+</p>
+<p>operator-head
+→ U+2190&ndash;U+23FF
+</p>
+<p>operator-head
+→ U+2500&ndash;U+2775
+</p>
+<p>operator-head
+→ U+2794&ndash;U+2BFF
+</p>
+<p>operator-head
+→ U+2E00&ndash;U+2E7F
+</p>
+<p>operator-head
+→ U+3001&ndash;U+3003
+</p>
+<p>operator-head
+→ U+3008&ndash;U+3020
+</p>
+<p>operator-head
+→ U+3030
+</p>
+<p>operator-character
+→
+operator-head
+</p>
+<p>operator-character
+→ U+0300&ndash;U+036F
+</p>
+<p>operator-character
+→ U+1DC0&ndash;U+1DFF
+</p>
+<p>operator-character
+→ U+20D0&ndash;U+20FF
+</p>
+<p>operator-character
+→ U+FE00&ndash;U+FE0F
+</p>
+<p>operator-character
+→ U+FE20&ndash;U+FE2F
+</p>
+<p>operator-character
+→ U+E0100&ndash;U+E01EF
+</p>
+<p>operator-characters
+→
+operator-character
+operator-characters
+_{opt}
+</p>
+<p>dot-operator-head
+→ &lsquo;<samp>.</samp>&rsquo;
+</p>
+<p>dot-operator-character
+→ &lsquo;<samp>.</samp>&rsquo; |
+operator-character
+</p>
+<p>dot-operator-characters
+→
+dot-operator-character
+dot-operator-characters
+_{opt}
+</p>
+<p>binary-operator
+→
+operator
+</p>
+<p>prefix-operator
+→
+operator
+</p>
+<p>postfix-operator
+→
+operator
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Types-1.html#Types-1" accesskey="n" rel="next">Types 1</a>, Up: <a href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" accesskey="u" rel="up">Summary of the Grammar</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Keywords and Punctuation (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Keywords and Punctuation (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Keywords and Punctuation (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Lexical-Structure.html#Lexical-Structure" rel="up" title="Lexical Structure">
+<link href="Literals.html#Literals" rel="next" title="Literals">
+<link href="Identifiers.html#Identifiers" rel="prev" title="Identifiers">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Keywords-and-Punctuation"></span><div class="header">
+<p>
+Next: <a href="Literals.html#Literals" accesskey="n" rel="next">Literals</a>, Previous: <a href="Identifiers.html#Identifiers" accesskey="p" rel="prev">Identifiers</a>, Up: <a href="Lexical-Structure.html#Lexical-Structure" accesskey="u" rel="up">Lexical Structure</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Keywords-and-Punctuation-1"></span><h3 class="section">3.3 Keywords and Punctuation</h3>
+
+<p>The following keywords are reserved and can&rsquo;t be used as identifiers,
+unless they&rsquo;re escaped with backticks, as described above in
+<a href="Identifiers.html#Identifiers">Identifiers</a>. Keywords other than
+&lsquo;<samp>inout</samp>&rsquo;, &lsquo;<samp>var</samp>&rsquo;, and &lsquo;<samp>let</samp>&rsquo; can be used as parameter names in a function
+declaration or function call without being escaped with backticks. When
+a member has the same name as a keyword, references to that member don&rsquo;t
+need to be escaped with backticks, except when there&rsquo;s ambiguity between
+referring to the member and using the keyword&mdash;for example, &lsquo;<samp>self</samp>&rsquo;,
+&lsquo;<samp>Type</samp>&rsquo;, and &lsquo;<samp>Protocol</samp>&rsquo; have special meaning in an explicit member
+expression, so they must be escaped with backticks in that context.
+</p>
+<ul>
+<li> Keywords used in declarations: &lsquo;<samp>associatedtype</samp>&rsquo;, &lsquo;<samp>class</samp>&rsquo;, &lsquo;<samp>deinit</samp>&rsquo;,
+&lsquo;<samp>enum</samp>&rsquo;, &lsquo;<samp>extension</samp>&rsquo;, &lsquo;<samp>fileprivate</samp>&rsquo;, &lsquo;<samp>func</samp>&rsquo;, &lsquo;<samp>import</samp>&rsquo;, &lsquo;<samp>init</samp>&rsquo;, &lsquo;<samp>inout</samp>&rsquo;,
+&lsquo;<samp>internal</samp>&rsquo;, &lsquo;<samp>let</samp>&rsquo;, &lsquo;<samp>open</samp>&rsquo;, &lsquo;<samp>operator</samp>&rsquo;, &lsquo;<samp>private</samp>&rsquo;, &lsquo;<samp>protocol</samp>&rsquo;,
+&lsquo;<samp>public</samp>&rsquo;, &lsquo;<samp>static</samp>&rsquo;, &lsquo;<samp>struct</samp>&rsquo;, &lsquo;<samp>subscript</samp>&rsquo;, &lsquo;<samp>typealias</samp>&rsquo;, and &lsquo;<samp>var</samp>&rsquo;.
+
+</li><li> Keywords used in statements: &lsquo;<samp>break</samp>&rsquo;, &lsquo;<samp>case</samp>&rsquo;, &lsquo;<samp>continue</samp>&rsquo;, &lsquo;<samp>default</samp>&rsquo;,
+&lsquo;<samp>defer</samp>&rsquo;, &lsquo;<samp>do</samp>&rsquo;, &lsquo;<samp>else</samp>&rsquo;, &lsquo;<samp>fallthrough</samp>&rsquo;, &lsquo;<samp>for</samp>&rsquo;, &lsquo;<samp>guard</samp>&rsquo;, &lsquo;<samp>if</samp>&rsquo;, &lsquo;<samp>in</samp>&rsquo;,
+&lsquo;<samp>repeat</samp>&rsquo;, &lsquo;<samp>return</samp>&rsquo;, &lsquo;<samp>switch</samp>&rsquo;, &lsquo;<samp>where</samp>&rsquo;, and &lsquo;<samp>while</samp>&rsquo;.
+
+</li><li> Keywords used in expressions and types: &lsquo;<samp>as</samp>&rsquo;, &lsquo;<samp>Any</samp>&rsquo;, &lsquo;<samp>catch</samp>&rsquo;, &lsquo;<samp>false</samp>&rsquo;,
+&lsquo;<samp>is</samp>&rsquo;, &lsquo;<samp>nil</samp>&rsquo;, &lsquo;<samp>rethrows</samp>&rsquo;, &lsquo;<samp>super</samp>&rsquo;, &lsquo;<samp>self</samp>&rsquo;, &lsquo;<samp>Self</samp>&rsquo;, &lsquo;<samp>throw</samp>&rsquo;, &lsquo;<samp>throws</samp>&rsquo;,
+&lsquo;<samp>true</samp>&rsquo;, and &lsquo;<samp>try</samp>&rsquo;.
+
+</li><li> Keywords used in patterns: &lsquo;<samp>_</samp>&rsquo;.
+
+</li><li> Keywords that begin with a number sign (&lsquo;<samp>#</samp>&rsquo;): &lsquo;<samp>#available</samp>&rsquo;,
+&lsquo;<samp>#colorLiteral</samp>&rsquo;, &lsquo;<samp>#column</samp>&rsquo;, &lsquo;<samp>#else</samp>&rsquo;, &lsquo;<samp>#elseif</samp>&rsquo;, &lsquo;<samp>#endif</samp>&rsquo;, &lsquo;<samp>#error</samp>&rsquo;,
+&lsquo;<samp>#file</samp>&rsquo;, &lsquo;<samp>#fileLiteral</samp>&rsquo;, &lsquo;<samp>#function</samp>&rsquo;, &lsquo;<samp>#if</samp>&rsquo;, &lsquo;<samp>#imageLiteral</samp>&rsquo;, &lsquo;<samp>#line</samp>&rsquo;,
+&lsquo;<samp>#selector</samp>&rsquo;, &lsquo;<samp>#sourceLocation</samp>&rsquo;, and &lsquo;<samp>#warning</samp>&rsquo;.
+
+</li><li> Keywords reserved in particular contexts: &lsquo;<samp>associativity</samp>&rsquo;,
+&lsquo;<samp>convenience</samp>&rsquo;, &lsquo;<samp>dynamic</samp>&rsquo;, &lsquo;<samp>didSet</samp>&rsquo;, &lsquo;<samp>final</samp>&rsquo;, &lsquo;<samp>get</samp>&rsquo;, &lsquo;<samp>infix</samp>&rsquo;,
+&lsquo;<samp>indirect</samp>&rsquo;, &lsquo;<samp>lazy</samp>&rsquo;, &lsquo;<samp>left</samp>&rsquo;, &lsquo;<samp>mutating</samp>&rsquo;, &lsquo;<samp>none</samp>&rsquo;, &lsquo;<samp>nonmutating</samp>&rsquo;,
+&lsquo;<samp>optional</samp>&rsquo;, &lsquo;<samp>override</samp>&rsquo;, &lsquo;<samp>postfix</samp>&rsquo;, &lsquo;<samp>precedence</samp>&rsquo;, &lsquo;<samp>prefix</samp>&rsquo;, &lsquo;<samp>Protocol</samp>&rsquo;,
+&lsquo;<samp>required</samp>&rsquo;, &lsquo;<samp>right</samp>&rsquo;, &lsquo;<samp>set</samp>&rsquo;, &lsquo;<samp>Type</samp>&rsquo;, &lsquo;<samp>unowned</samp>&rsquo;, &lsquo;<samp>weak</samp>&rsquo;, and &lsquo;<samp>willSet</samp>&rsquo;.
+Outside the context in which they appear in the grammar, they can be
+used as identifiers.
+</li></ul>
+
+<p>The following tokens are reserved as punctuation and can&rsquo;t be used as
+custom operators: &lsquo;<samp>(</samp>&rsquo;, &lsquo;<samp>)</samp>&rsquo;, &lsquo;<samp>{</samp>&rsquo;, &lsquo;<samp>}</samp>&rsquo;, &lsquo;<samp>[</samp>&rsquo;, &lsquo;<samp>]</samp>&rsquo;, &lsquo;<samp>.</samp>&rsquo;, &lsquo;<samp>,</samp>&rsquo;, &lsquo;<samp>:</samp>&rsquo;, &lsquo;<samp>;</samp>&rsquo;, &lsquo;<samp>=</samp>&rsquo;,
+&lsquo;<samp>@</samp>&rsquo;, &lsquo;<samp>#</samp>&rsquo;, &lsquo;<samp>&amp;</samp>&rsquo; (as a prefix operator), &lsquo;<samp>-&gt;</samp>&rsquo;, &lsquo;<samp>`</samp>&rsquo;, &lsquo;<samp>?</samp>&rsquo;, and &lsquo;<samp>!</samp>&rsquo; (as a
+postfix operator).
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Literals.html#Literals" accesskey="n" rel="next">Literals</a>, Previous: <a href="Identifiers.html#Identifiers" accesskey="p" rel="prev">Identifiers</a>, Up: <a href="Lexical-Structure.html#Lexical-Structure" accesskey="u" rel="up">Lexical Structure</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

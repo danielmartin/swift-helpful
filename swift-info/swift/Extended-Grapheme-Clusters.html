@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Extended Grapheme Clusters (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Extended Grapheme Clusters (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Extended Grapheme Clusters (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Unicode.html#Unicode" rel="up" title="Unicode">
+<link href="Counting-Characters.html#Counting-Characters" rel="next" title="Counting Characters">
+<link href="Unicode-Scalar-Values.html#Unicode-Scalar-Values" rel="prev" title="Unicode Scalar Values">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Extended-Grapheme-Clusters"></span><div class="header">
+<p>
+Previous: <a href="Unicode-Scalar-Values.html#Unicode-Scalar-Values" accesskey="p" rel="prev">Unicode Scalar Values</a>, Up: <a href="Unicode.html#Unicode" accesskey="u" rel="up">Unicode</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Extended-Grapheme-Clusters-1"></span><h4 class="subsection">8.8.2 Extended Grapheme Clusters</h4>
+
+<p>Every instance of Swift&rsquo;s &lsquo;<samp>Character</samp>&rsquo; type represents a single <em>extended
+grapheme cluster</em>. An extended grapheme cluster is a sequence of one or
+more Unicode scalars that (when combined) produce a single
+human-readable character.
+</p>
+<p>Here&rsquo;s an example. The letter &lsquo;<samp>é</samp>&rsquo; can be represented as the single
+Unicode scalar &lsquo;<samp>é</samp>&rsquo; (&lsquo;<samp>LATIN SMALL LETTER E WITH ACUTE</samp>&rsquo;, or &lsquo;<samp>U+00E9</samp>&rsquo;).
+However, the same letter can also be represented as a <em>pair</em> of
+scalars&mdash;a standard letter &lsquo;<samp>e</samp>&rsquo; (&lsquo;<samp>LATIN SMALL LETTER E</samp>&rsquo;, or &lsquo;<samp>U+0065</samp>&rsquo;),
+followed by the &lsquo;<samp>COMBINING ACUTE ACCENT</samp>&rsquo; scalar (&lsquo;<samp>U+0301</samp>&rsquo;). The
+&lsquo;<samp>COMBINING ACUTE ACCENT</samp>&rsquo; scalar is graphically applied to the scalar
+that precedes it, turning an &lsquo;<samp>e</samp>&rsquo; into an &lsquo;<samp>é</samp>&rsquo; when it&rsquo;s rendered by a
+Unicode-aware text-rendering system.
+</p>
+<p>In both cases, the letter &lsquo;<samp>é</samp>&rsquo; is represented as a single Swift
+&lsquo;<samp>Character</samp>&rsquo; value that represents an extended grapheme cluster. In the
+first case, the cluster contains a single scalar; in the second case,
+it&rsquo;s a cluster of two scalars:
+</p>
+<div class="example">
+<pre class="example">let eAcute: Character = &quot;\u{E9}&quot; // é
+let combinedEAcute: Character = &quot;\u{65}\u{301}&quot; // e followed by ́
+// eAcute is é, combinedEAcute is é
+</pre></div>
+
+<p>Extended grapheme clusters are a flexible way to represent many complex
+script characters as a single &lsquo;<samp>Character</samp>&rsquo; value. For example, Hangul
+syllables from the Korean alphabet can be represented as either a
+precomposed or decomposed sequence. Both of these representations
+qualify as a single &lsquo;<samp>Character</samp>&rsquo; value in Swift:
+</p>
+<div class="example">
+<pre class="example">let precomposed: Character = &quot;\u{D55C}&quot; // 한
+let decomposed: Character = &quot;\u{1112}\u{1161}\u{11AB}&quot; // ᄒ, ᅡ, ᆫ
+// precomposed is 한, decomposed is 한
+</pre></div>
+
+<p>Extended grapheme clusters enable scalars for enclosing marks (such as
+&lsquo;<samp>COMBINING ENCLOSING CIRCLE</samp>&rsquo;, or &lsquo;<samp>U+20DD</samp>&rsquo;) to enclose other Unicode
+scalars as part of a single &lsquo;<samp>Character</samp>&rsquo; value:
+</p>
+<div class="example">
+<pre class="example">let enclosedEAcute: Character = &quot;\u{E9}\u{20DD}&quot;
+// enclosedEAcute is é⃝
+</pre></div>
+
+<p>Unicode scalars for regional indicator symbols can be combined in pairs
+to make a single &lsquo;<samp>Character</samp>&rsquo; value, such as this combination of
+&lsquo;<samp>REGIONAL INDICATOR SYMBOL LETTER U</samp>&rsquo; (&lsquo;<samp>U+1F1FA</samp>&rsquo;) and
+&lsquo;<samp>REGIONAL INDICATOR SYMBOL LETTER S</samp>&rsquo; (&lsquo;<samp>U+1F1F8</samp>&rsquo;):
+</p>
+<div class="example">
+<pre class="example">let regionalIndicatorForUS: Character = &quot;\u{1F1FA}\u{1F1F8}&quot;
+// regionalIndicatorForUS is 🇺🇸
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Unicode-Scalar-Values.html#Unicode-Scalar-Values" accesskey="p" rel="prev">Unicode Scalar Values</a>, Up: <a href="Unicode.html#Unicode" accesskey="u" rel="up">Unicode</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

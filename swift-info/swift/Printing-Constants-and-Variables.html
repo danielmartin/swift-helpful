@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Printing Constants and Variables (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Printing Constants and Variables (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Printing Constants and Variables (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Constants-and-Variables.html#Constants-and-Variables" rel="up" title="Constants and Variables">
+<link href="Comments.html#Comments" rel="next" title="Comments">
+<link href="Naming-Constants-and-Variables.html#Naming-Constants-and-Variables" rel="prev" title="Naming Constants and Variables">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Printing-Constants-and-Variables"></span><div class="header">
+<p>
+Previous: <a href="Naming-Constants-and-Variables.html#Naming-Constants-and-Variables" accesskey="p" rel="prev">Naming Constants and Variables</a>, Up: <a href="Constants-and-Variables.html#Constants-and-Variables" accesskey="u" rel="up">Constants and Variables</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Printing-Constants-and-Variables-1"></span><h4 class="subsection">6.1.4 Printing Constants and Variables</h4>
+
+<p>You can print the current value of a constant or variable with the
+&lsquo;<samp>print(_:separator:terminator:)</samp>&rsquo; function:
+</p>
+<div class="example">
+<pre class="example">print(friendlyWelcome)
+// Prints &quot;Bonjour!&quot;
+</pre></div>
+
+<p>The &lsquo;<samp>print(_:separator:terminator:)</samp>&rsquo; function is a global function that
+prints one or more values to an appropriate output. In Xcode, for
+example, the &lsquo;<samp>print(_:separator:terminator:)</samp>&rsquo; function prints its output
+in Xcode&rsquo;s “console” pane. The &lsquo;<samp>separator</samp>&rsquo; and &lsquo;<samp>terminator</samp>&rsquo; parameter
+have default values, so you can omit them when you call this function.
+By default, the function terminates the line it prints by adding a line
+break. To print a value without a line break after it, pass an empty
+string as the terminator&mdash;for example,
+&lsquo;<samp>print(someValue, terminator: &quot;&quot;)</samp>&rsquo;. For information about parameters
+with default values, see <a href="Default-Parameter-Values.html#Default-Parameter-Values">Default Parameter
+Values</a>.
+</p>
+<p>Swift uses <em>string interpolation</em> to include the name of a constant or
+variable as a placeholder in a longer string, and to prompt Swift to
+replace it with the current value of that constant or variable. Wrap the
+name in parentheses and escape it with a backslash before the opening
+parenthesis:
+</p>
+<div class="example">
+<pre class="example">print(&quot;The current value of friendlyWelcome is \(friendlyWelcome)&quot;)
+// Prints &quot;The current value of friendlyWelcome is Bonjour!&quot;
+</pre></div>
+
+<p>Note
+</p>
+<p>All options you can use with string interpolation are described in
+<a href="String-Interpolation.html#String-Interpolation">String Interpolation</a>.
+</p>
+
+
+
+</body>
+</html>

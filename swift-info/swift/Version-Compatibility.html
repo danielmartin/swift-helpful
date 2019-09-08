@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Version Compatibility (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Version Compatibility (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Version Compatibility (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="A-Swift-Tour.html#A-Swift-Tour" rel="next" title="A Swift Tour">
+<link href="About-Swift.html#About-Swift" rel="prev" title="About Swift">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Version-Compatibility"></span><div class="header">
+<p>
+Next: <a href="A-Swift-Tour.html#A-Swift-Tour" accesskey="n" rel="next">A Swift Tour</a>, Previous: <a href="About-Swift.html#About-Swift" accesskey="p" rel="prev">About Swift</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Version-Compatibility-1"></span><h2 class="chapter">3 Version Compatibility</h2>
+
+<p>This book describes Swift 5.1, the default version of Swift that&rsquo;s
+included in Xcode 11. You can use Xcode 11 to build targets that are
+written in either Swift 5.1, Swift 4.2, or Swift 4.
+</p>
+<p>When you use Xcode 11 to build Swift 4 and Swift 4.2 code, most Swift
+5.1 functionality is available. That said, the following changes are
+available only to code that uses Swift 5.1 or later:
+</p>
+<ul>
+<li> Functions that return an opaque type require the Swift 5.1 runtime.
+
+</li><li> The &lsquo;<samp>try?</samp>&rsquo; expression doesn&rsquo;t introduce an extra level of optionality
+to expressions that already return optionals.
+
+</li><li> Large integer literal initialization expressions are inferred to be of
+the correct integer type. For example, &lsquo;<samp>UInt64(0xffff_ffff_ffff_ffff)</samp>&rsquo;
+evaluates to the correct value rather than overflowing.
+</li></ul>
+
+<p>A target written in Swift 5.1 can depend on a target that&rsquo;s written in
+Swift 4.2 or Swift 4, and vice versa. This means, if you have a large
+project that&rsquo;s divided into multiple frameworks, you can migrate your
+code from Swift 4 to Swift 5.1 one framework at a time.
+</p>
+
+
+
+</body>
+</html>

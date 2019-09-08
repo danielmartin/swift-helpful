@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Function Type (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Function Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Function Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Types.html#Types" rel="up" title="Types">
+<link href="Restrictions-for-Nonescaping-Closures.html#Restrictions-for-Nonescaping-Closures" rel="next" title="Restrictions for Nonescaping Closures">
+<link href="Tuple-Type.html#Tuple-Type" rel="prev" title="Tuple Type">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Function-Type"></span><div class="header">
+<p>
+Next: <a href="Array-Type.html#Array-Type" accesskey="n" rel="next">Array Type</a>, Previous: <a href="Tuple-Type.html#Tuple-Type" accesskey="p" rel="prev">Tuple Type</a>, Up: <a href="Types.html#Types" accesskey="u" rel="up">Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Function-Type-1"></span><h3 class="section">4.4 Function Type</h3>
+
+<p>A <em>function type</em> represents the type of a function, method, or closure
+and consists of a parameter and return type separated by an arrow
+(&lsquo;<samp>-&gt;</samp>&rsquo;):
+</p>
+<ol>
+<li> (parameter type) -&gt; return type
+</li></ol>
+
+<p>The <em>parameter type</em> is comma-separated list of types. Because the
+<em>return type</em> can be a tuple type, function types support functions and
+methods that return multiple values.
+</p>
+<p>A parameter of the function type &lsquo;<samp>() -&gt; T</samp>&rsquo; (where &lsquo;<samp>T</samp>&rsquo; is any type) can
+apply the &lsquo;<samp>autoclosure</samp>&rsquo; attribute to implicitly create a closure at its
+call sites. This provides a syntactically convenient way to defer the
+evaluation of an expression without needing to write an explicit closure
+when you call the function. For an example of an autoclosure function
+type parameter, see
+<a href="../swift/Autoclosures.html#Autoclosures">(swift)Autoclosures</a>.
+</p>
+<p>A function type can have a variadic parameter in its <em>parameter type</em>.
+Syntactically, a variadic parameter consists of a base type name
+followed immediately by three dots (&lsquo;<samp>...</samp>&rsquo;), as in &lsquo;<samp>Int...</samp>&rsquo;. A variadic
+parameter is treated as an array that contains elements of the base type
+name. For instance, the variadic parameter &lsquo;<samp>Int...</samp>&rsquo; is treated as
+&lsquo;<samp>[Int]</samp>&rsquo;. For an example that uses a variadic parameter, see
+<a href="../swift/Variadic-Parameters.html#Variadic-Parameters">(swift)Variadic Parameters</a>.
+</p>
+<p>To specify an in-out parameter, prefix the parameter type with the
+&lsquo;<samp>inout</samp>&rsquo; keyword. You can&rsquo;t mark a variadic parameter or a return type
+with the &lsquo;<samp>inout</samp>&rsquo; keyword. In-out parameters are discussed in
+<a href="In_002dOut-Parameters.html#In_002dOut-Parameters">In-Out Parameters</a>.
+</p>
+<p>If a function type has only one parameter and that parameter&rsquo;s type is a
+tuple type, then the tuple type must be parenthesized when writing the
+function&rsquo;s type. For example, &lsquo;<samp>((Int, Int)) -&gt; Void</samp>&rsquo; is the type of a
+function that takes a single parameter of the tuple type &lsquo;<samp>(Int, Int)</samp>&rsquo;
+and doesn&rsquo;t return any value. In contrast, without parentheses,
+&lsquo;<samp>(Int, Int) -&gt; Void</samp>&rsquo; is the type of a function that takes two &lsquo;<samp>Int</samp>&rsquo;
+parameters and doesn&rsquo;t return any value. Likewise, because &lsquo;<samp>Void</samp>&rsquo; is a
+type alias for &lsquo;<samp>()</samp>&rsquo;, the function type &lsquo;<samp>(Void) -&gt; Void</samp>&rsquo; is the same as
+&lsquo;<samp>(()) -&gt; ()</samp>&rsquo;&mdash;a function that takes a single argument that is an empty
+tuple. These types are not the same as &lsquo;<samp>() -&gt; ()</samp>&rsquo;&mdash;a function that
+takes no arguments.
+</p>
+<p>Argument names in functions and methods are not part of the
+corresponding function type. For example:
+</p>
+<ol>
+<li> func someFunction(left: Int, right: Int) {}
+</li><li> func anotherFunction(left: Int, right: Int) {}
+</li><li> func functionWithDifferentLabels(top: Int, bottom: Int) {}
+</li><li> var f = someFunction // The type of f is (Int, Int) -&gt; Void, not
+(left: Int, right: Int) -&gt; Void.
+</li><li> f = anotherFunction // OK
+</li><li> f = functionWithDifferentLabels // OK
+</li><li> func functionWithDifferentArgumentTypes(left: Int, right: String) {}
+</li><li> f = functionWithDifferentArgumentTypes // Error
+</li><li> func functionWithDifferentNumberOfArguments(left: Int, right: Int,
+top: Int) {}
+</li><li> f = functionWithDifferentNumberOfArguments // Error
+</li></ol>
+
+<p>Because argument labels are not part of a function&rsquo;s type, you omit them
+when writing a function type.
+</p>
+<ol>
+<li> var operation: (lhs: Int, rhs: Int) -&gt; Int // Error
+</li><li> var operation: (_ lhs: Int, _ rhs: Int) -&gt; Int // OK
+</li><li> var operation: (Int, Int) -&gt; Int // OK
+</li></ol>
+
+<p>If a function type includes more than a single arrow (&lsquo;<samp>-&gt;</samp>&rsquo;), the
+function types are grouped from right to left. For example, the function
+type &lsquo;<samp>(Int) -&gt; (Int) -&gt; Int</samp>&rsquo; is understood as
+&lsquo;<samp>(Int) -&gt; ((Int) -&gt; Int)</samp>&rsquo;&mdash;that is, a function that takes an &lsquo;<samp>Int</samp>&rsquo; and
+returns another function that takes and returns an &lsquo;<samp>Int</samp>&rsquo;.
+</p>
+<p>Function types that can throw an error must be marked with the &lsquo;<samp>throws</samp>&rsquo;
+keyword, and function types that can rethrow an error must be marked
+with the &lsquo;<samp>rethrows</samp>&rsquo; keyword. The &lsquo;<samp>throws</samp>&rsquo; keyword is part of a
+function&rsquo;s type, and nonthrowing functions are subtypes of throwing
+functions. As a result, you can use a nonthrowing function in the same
+places as a throwing one. Throwing and rethrowing functions are
+described in <a href="Throwing-Functions-and-Methods.html#Throwing-Functions-and-Methods">Throwing Functions and
+Methods</a> and <a href="Rethrowing-Functions-and-Methods.html#Rethrowing-Functions-and-Methods">Rethrowing Functions and
+Methods</a>.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Restrictions-for-Nonescaping-Closures.html#Restrictions-for-Nonescaping-Closures" accesskey="1">Restrictions for Nonescaping Closures</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Array-Type.html#Array-Type" accesskey="n" rel="next">Array Type</a>, Previous: <a href="Tuple-Type.html#Tuple-Type" accesskey="p" rel="prev">Tuple Type</a>, Up: <a href="Types.html#Types" accesskey="u" rel="up">Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

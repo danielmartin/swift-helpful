@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Hash Values for Set Types (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Hash Values for Set Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Hash Values for Set Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Sets.html#Sets" rel="up" title="Sets">
+<link href="Set-Type-Syntax.html#Set-Type-Syntax" rel="next" title="Set Type Syntax">
+<link href="Sets.html#Sets" rel="prev" title="Sets">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Hash-Values-for-Set-Types"></span><div class="header">
+<p>
+Next: <a href="Set-Type-Syntax.html#Set-Type-Syntax" accesskey="n" rel="next">Set Type Syntax</a>, Up: <a href="Sets.html#Sets" accesskey="u" rel="up">Sets</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Hash-Values-for-Set-Types-1"></span><h4 class="subsection">9.3.1 Hash Values for Set Types</h4>
+
+<p>A type must be <em>hashable</em> in order to be stored in a set&mdash;that is, the
+type must provide a way to compute a <em>hash value</em> for itself. A hash
+value is an &lsquo;<samp>Int</samp>&rsquo; value that is the same for all objects that compare
+equally, such that if &lsquo;<samp>a =</samp>&rsquo; b=, it follows that
+&lsquo;<samp>a.hashValue =</samp>&rsquo; b.hashValue=.
+</p>
+<p>All of Swift&rsquo;s basic types (such as &lsquo;<samp>String</samp>&rsquo;, &lsquo;<samp>Int</samp>&rsquo;, &lsquo;<samp>Double</samp>&rsquo;, and
+&lsquo;<samp>Bool</samp>&rsquo;) are hashable by default, and can be used as set value types or
+dictionary key types. Enumeration case values without associated values
+(as described in <a href="Enumeration.html#Enumeration">Enumeration</a>) are also hashable
+by default.
+</p>
+<p>Note
+</p>
+<p>You can use your own custom types as set value types or dictionary key
+types by making them conform to the &lsquo;<samp>Hashable</samp>&rsquo; protocol from Swift&rsquo;s
+standard library. Types that conform to the &lsquo;<samp>Hashable</samp>&rsquo; protocol must
+provide a gettable &lsquo;<samp>Int</samp>&rsquo; property called &lsquo;<samp>hashValue</samp>&rsquo;. The value returned
+by a type&rsquo;s &lsquo;<samp>hashValue</samp>&rsquo; property is not required to be the same across
+different executions of the same program, or in different programs.
+</p>
+<p>Because the &lsquo;<samp>Hashable</samp>&rsquo; protocol conforms to &lsquo;<samp>Equatable</samp>&rsquo;, conforming
+types must also provide an implementation of the equals operator (&lsquo;<samp>==</samp>&rsquo;).
+The &lsquo;<samp>Equatable</samp>&rsquo; protocol requires any conforming implementation of &lsquo;<samp>==</samp>&rsquo;
+to be an equivalence relation. That is, an implementation of &lsquo;<samp>==</samp>&rsquo; must
+satisfy the following three conditions, for all values &lsquo;<samp>a</samp>&rsquo;, &lsquo;<samp>b</samp>&rsquo;, and
+&lsquo;<samp>c</samp>&rsquo;:
+</p>
+<ul>
+<li> &lsquo;<samp>a =</samp>&rsquo; a= (Reflexivity)
+
+</li><li> &lsquo;<samp>a =</samp>&rsquo; b= implies &lsquo;<samp>b =</samp>&rsquo; a= (Symmetry)
+
+</li><li> &lsquo;<samp>a =</samp>&rsquo; b &amp;&amp; b &lsquo;<samp>= c</samp>&rsquo; implies &lsquo;<samp>a =</samp>&rsquo; c= (Transitivity)
+</li></ul>
+
+<p>For more information about conforming to protocols, see
+<a href="Protocols.html#Protocols">Protocols</a>.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Set-Type-Syntax.html#Set-Type-Syntax" accesskey="n" rel="next">Set Type Syntax</a>, Up: <a href="Sets.html#Sets" accesskey="u" rel="up">Sets</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

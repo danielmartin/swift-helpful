@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Optional Protocol Requirements (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Optional Protocol Requirements (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Optional Protocol Requirements (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Protocols.html#Protocols" rel="up" title="Protocols">
+<link href="Protocol-Extensions.html#Protocol-Extensions" rel="next" title="Protocol Extensions">
+<link href="Checking-for-Protocol-Conformance.html#Checking-for-Protocol-Conformance" rel="prev" title="Checking for Protocol Conformance">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Optional-Protocol-Requirements"></span><div class="header">
+<p>
+Next: <a href="Protocol-Extensions.html#Protocol-Extensions" accesskey="n" rel="next">Protocol Extensions</a>, Previous: <a href="Checking-for-Protocol-Conformance.html#Checking-for-Protocol-Conformance" accesskey="p" rel="prev">Checking for Protocol Conformance</a>, Up: <a href="Protocols.html#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Optional-Protocol-Requirements-1"></span><h3 class="section">26.14 Optional Protocol Requirements</h3>
+
+<p>You can define <em>optional requirements</em> for protocols. These requirements
+don&rsquo;t have to be implemented by types that conform to the protocol.
+Optional requirements are prefixed by the &lsquo;<samp>optional</samp>&rsquo; modifier as part of
+the protocol&rsquo;s definition. Optional requirements are available so that
+you can write code that interoperates with Objective-C. Both the
+protocol and the optional requirement must be marked with the &lsquo;<samp>@objc</samp>&rsquo;
+attribute. Note that &lsquo;<samp>@objc</samp>&rsquo; protocols can be adopted only by classes
+that inherit from Objective-C classes or other &lsquo;<samp>@objc</samp>&rsquo; classes. They
+can&rsquo;t be adopted by structures or enumerations.
+</p>
+<p>When you use a method or property in an optional requirement, its type
+automatically becomes an optional. For example, a method of type
+&lsquo;<samp>(Int) -&gt; String</samp>&rsquo; becomes &lsquo;<samp>((Int) -&gt; String)?</samp>&rsquo;. Note that the entire
+function type is wrapped in the optional, not the method&rsquo;s return value.
+</p>
+<p>An optional protocol requirement can be called with optional chaining,
+to account for the possibility that the requirement was not implemented
+by a type that conforms to the protocol. You check for an implementation
+of an optional method by writing a question mark after the name of the
+method when it&rsquo;s called, such as &lsquo;<samp>someOptionalMethod?(someArgument)</samp>&rsquo;.
+For information on optional chaining, see
+<a href="Optional-Chaining.html#Optional-Chaining">Optional Chaining</a>.
+</p>
+<p>The following example defines an integer-counting class called
+&lsquo;<samp>Counter</samp>&rsquo;, which uses an external data source to provide its increment
+amount. This data source is defined by the &lsquo;<samp>CounterDataSource</samp>&rsquo; protocol,
+which has two optional requirements:
+</p>
+<div class="example">
+<pre class="example">@objc protocol CounterDataSource {
+    @objc optional func increment(forCount count: Int) -&gt; Int
+    @objc optional var fixedIncrement: Int { get }
+}
+</pre></div>
+
+<p>The &lsquo;<samp>CounterDataSource</samp>&rsquo; protocol defines an optional method requirement
+called &lsquo;<samp>increment(forCount:)</samp>&rsquo; and an optional property requirement
+called &lsquo;<samp>fixedIncrement</samp>&rsquo;. These requirements define two different ways
+for data sources to provide an appropriate increment amount for a
+&lsquo;<samp>Counter</samp>&rsquo; instance.
+</p>
+<p>Note
+</p>
+<p>Strictly speaking, you can write a custom class that conforms to
+&lsquo;<samp>CounterDataSource</samp>&rsquo; without implementing <em>either</em> protocol requirement.
+They&rsquo;re both optional, after all. Although technically allowed, this
+wouldn&rsquo;t make for a very good data source.
+</p>
+<p>The &lsquo;<samp>Counter</samp>&rsquo; class, defined below, has an optional &lsquo;<samp>dataSource</samp>&rsquo;
+property of type &lsquo;<samp>CounterDataSource?</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">class Counter {
+    var count = 0
+    var dataSource: CounterDataSource?
+    func increment() {
+        if let amount = dataSource?.increment?(forCount: count) {
+            count += amount
+        } else if let amount = dataSource?.fixedIncrement {
+            count += amount
+        }
+    }
+}
+</pre></div>
+
+<p>The &lsquo;<samp>Counter</samp>&rsquo; class stores its current value in a variable property
+called &lsquo;<samp>count</samp>&rsquo;. The &lsquo;<samp>Counter</samp>&rsquo; class also defines a method called
+&lsquo;<samp>increment</samp>&rsquo;, which increments the &lsquo;<samp>count</samp>&rsquo; property every time the method
+is called.
+</p>
+<p>The &lsquo;<samp>increment()</samp>&rsquo; method first tries to retrieve an increment amount by
+looking for an implementation of the &lsquo;<samp>increment(forCount:)</samp>&rsquo; method on
+its data source. The &lsquo;<samp>increment()</samp>&rsquo; method uses optional chaining to try
+to call &lsquo;<samp>increment(forCount:)</samp>&rsquo;, and passes the current &lsquo;<samp>count</samp>&rsquo; value as
+the method&rsquo;s single argument.
+</p>
+<p>Note that <em>two</em> levels of optional chaining are at play here. First,
+it&rsquo;s possible that &lsquo;<samp>dataSource</samp>&rsquo; may be &lsquo;<samp>nil</samp>&rsquo;, and so &lsquo;<samp>dataSource</samp>&rsquo; has a
+question mark after its name to indicate that &lsquo;<samp>increment(forCount:)</samp>&rsquo;
+should be called only if &lsquo;<samp>dataSource</samp>&rsquo; isn&rsquo;t &lsquo;<samp>nil</samp>&rsquo;. Second, even if
+&lsquo;<samp>dataSource</samp>&rsquo; <em>does</em> exist, there&rsquo;s no guarantee that it implements
+&lsquo;<samp>increment(forCount:)</samp>&rsquo;, because it&rsquo;s an optional requirement. Here, the
+possibility that &lsquo;<samp>increment(forCount:)</samp>&rsquo; might not be implemented is also
+handled by optional chaining. The call to &lsquo;<samp>increment(forCount:)</samp>&rsquo; happens
+only if &lsquo;<samp>increment(forCount:)</samp>&rsquo; exists&mdash;that is, if it isn&rsquo;t &lsquo;<samp>nil</samp>&rsquo;. This
+is why &lsquo;<samp>increment(forCount:)</samp>&rsquo; is also written with a question mark after
+its name.
+</p>
+<p>Because the call to &lsquo;<samp>increment(forCount:)</samp>&rsquo; can fail for either of these
+two reasons, the call returns an <em>optional</em> &lsquo;<samp>Int</samp>&rsquo; value. This is true
+even though &lsquo;<samp>increment(forCount:)</samp>&rsquo; is defined as returning a
+non-optional &lsquo;<samp>Int</samp>&rsquo; value in the definition of &lsquo;<samp>CounterDataSource</samp>&rsquo;. Even
+though there are two optional chaining operations, one after another,
+the result is still wrapped in a single optional. For more information
+about using multiple optional chaining operations, see
+<a href="Linking-Multiple-Levels-of-Chaining.html#Linking-Multiple-Levels-of-Chaining">Linking Multiple Levels of Chaining</a>.
+</p>
+<p>After calling &lsquo;<samp>increment(forCount:)</samp>&rsquo;, the optional &lsquo;<samp>Int</samp>&rsquo; that it returns
+is unwrapped into a constant called &lsquo;<samp>amount</samp>&rsquo;, using optional binding. If
+the optional &lsquo;<samp>Int</samp>&rsquo; does contain a value&mdash;that is, if the delegate and
+method both exist, and the method returned a value&mdash;the unwrapped
+&lsquo;<samp>amount</samp>&rsquo; is added onto the stored &lsquo;<samp>count</samp>&rsquo; property, and incrementation
+is complete.
+</p>
+<p>If it&rsquo;s <em>not</em> possible to retrieve a value from the
+&lsquo;<samp>increment(forCount:)</samp>&rsquo; method&mdash;either because &lsquo;<samp>dataSource</samp>&rsquo; is nil, or
+because the data source doesn&rsquo;t implement &lsquo;<samp>increment(forCount:)</samp>&rsquo;&mdash;then
+the &lsquo;<samp>increment()</samp>&rsquo; method tries to retrieve a value from the data
+source&rsquo;s &lsquo;<samp>fixedIncrement</samp>&rsquo; property instead. The &lsquo;<samp>fixedIncrement</samp>&rsquo;
+property is also an optional requirement, so its value is an optional
+&lsquo;<samp>Int</samp>&rsquo; value, even though &lsquo;<samp>fixedIncrement</samp>&rsquo; is defined as a non-optional
+&lsquo;<samp>Int</samp>&rsquo; property as part of the &lsquo;<samp>CounterDataSource</samp>&rsquo; protocol definition.
+</p>
+<p>Here&rsquo;s a simple &lsquo;<samp>CounterDataSource</samp>&rsquo; implementation where the data source
+returns a constant value of &lsquo;<samp>3</samp>&rsquo; every time it&rsquo;s queried. It does this by
+implementing the optional &lsquo;<samp>fixedIncrement</samp>&rsquo; property requirement:
+</p>
+<div class="example">
+<pre class="example">class ThreeSource: NSObject, CounterDataSource {
+    let fixedIncrement = 3
+}
+</pre></div>
+
+<p>You can use an instance of &lsquo;<samp>ThreeSource</samp>&rsquo; as the data source for a new
+&lsquo;<samp>Counter</samp>&rsquo; instance:
+</p>
+<div class="example">
+<pre class="example">var counter = Counter()
+counter.dataSource = ThreeSource()
+for _ in 1...4 {
+    counter.increment()
+    print(counter.count)
+}
+// 3
+// 6
+// 9
+// 12
+</pre></div>
+
+<p>The code above creates a new &lsquo;<samp>Counter</samp>&rsquo; instance; sets its data source to
+be a new &lsquo;<samp>ThreeSource</samp>&rsquo; instance; and calls the counter&rsquo;s &lsquo;<samp>increment()</samp>&rsquo;
+method four times. As expected, the counter&rsquo;s &lsquo;<samp>count</samp>&rsquo; property increases
+by three each time &lsquo;<samp>increment()</samp>&rsquo; is called.
+</p>
+<p>Here&rsquo;s a more complex data source called &lsquo;<samp>TowardsZeroSource</samp>&rsquo;, which
+makes a &lsquo;<samp>Counter</samp>&rsquo; instance count up or down towards zero from its
+current &lsquo;<samp>count</samp>&rsquo; value:
+</p>
+<div class="example">
+<pre class="example">class TowardsZeroSource: NSObject, CounterDataSource {
+    func increment(forCount count: Int) -&gt; Int {
+        if count == 0 {
+            return 0
+        } else if count &lt; 0 {
+            return 1
+        } else {
+            return -1
+        }
+    }
+}
+</pre></div>
+
+<p>The &lsquo;<samp>TowardsZeroSource</samp>&rsquo; class implements the optional
+&lsquo;<samp>increment(forCount:)</samp>&rsquo; method from the &lsquo;<samp>CounterDataSource</samp>&rsquo; protocol and
+uses the &lsquo;<samp>count</samp>&rsquo; argument value to work out which direction to count in.
+If &lsquo;<samp>count</samp>&rsquo; is already zero, the method returns &lsquo;<samp>0</samp>&rsquo; to indicate that no
+further counting should take place.
+</p>
+<p>You can use an instance of &lsquo;<samp>TowardsZeroSource</samp>&rsquo; with the existing
+&lsquo;<samp>Counter</samp>&rsquo; instance to count from &lsquo;<samp>-4</samp>&rsquo; to zero. Once the counter reaches
+zero, no more counting takes place:
+</p>
+<div class="example">
+<pre class="example">counter.count = -4
+counter.dataSource = TowardsZeroSource()
+for _ in 1...5 {
+    counter.increment()
+    print(counter.count)
+}
+// -3
+// -2
+// -1
+// 0
+// 0
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Protocol-Extensions.html#Protocol-Extensions" accesskey="n" rel="next">Protocol Extensions</a>, Previous: <a href="Checking-for-Protocol-Conformance.html#Checking-for-Protocol-Conformance" accesskey="p" rel="prev">Checking for Protocol Conformance</a>, Up: <a href="Protocols.html#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

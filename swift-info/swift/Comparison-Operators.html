@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Comparison Operators (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Comparison Operators (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Comparison Operators (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Basic-Operators.html#Basic-Operators" rel="up" title="Basic Operators">
+<link href="Ternary-Conditional-Operator.html#Ternary-Conditional-Operator" rel="next" title="Ternary Conditional Operator">
+<link href="Compound-Assignment-Operators.html#Compound-Assignment-Operators" rel="prev" title="Compound Assignment Operators">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Comparison-Operators"></span><div class="header">
+<p>
+Next: <a href="Ternary-Conditional-Operator.html#Ternary-Conditional-Operator" accesskey="n" rel="next">Ternary Conditional Operator</a>, Previous: <a href="Compound-Assignment-Operators.html#Compound-Assignment-Operators" accesskey="p" rel="prev">Compound Assignment Operators</a>, Up: <a href="Basic-Operators.html#Basic-Operators" accesskey="u" rel="up">Basic Operators</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Comparison-Operators-1"></span><h3 class="section">7.5 Comparison Operators</h3>
+
+<p>Swift supports all standard C <em>comparison operators</em>:
+</p>
+<ul>
+<li> Equal to (&lsquo;<samp>a =</samp>&rsquo; b=)
+
+</li><li> Not equal to (&lsquo;<samp>a !</samp>&rsquo; b=)
+
+</li><li> Greater than (&lsquo;<samp>a &gt; b</samp>&rsquo;)
+
+</li><li> Less than (&lsquo;<samp>a &lt; b</samp>&rsquo;)
+
+</li><li> Greater than or equal to (&lsquo;<samp>a &gt;</samp>&rsquo; b=)
+
+</li><li> Less than or equal to (&lsquo;<samp>a &lt;</samp>&rsquo; b=)
+</li></ul>
+
+<p>Note
+</p>
+<p>Swift also provides two <em>identity operators</em> (&lsquo;<samp>===</samp>&rsquo; and &lsquo;<samp>!==</samp>&rsquo;), which
+you use to test whether two object references both refer to the same
+object instance. For more information, see
+<a href="Identity-Operators.html#Identity-Operators">Identity Operators</a>.
+</p>
+<p>Each of the comparison operators returns a &lsquo;<samp>Bool</samp>&rsquo; value to indicate
+whether or not the statement is true:
+</p>
+<div class="example">
+<pre class="example">1 == 1 // true because 1 is equal to 1
+2 != 1 // true because 2 is not equal to 1
+2 &gt; 1 // true because 2 is greater than 1
+1 &lt; 2 // true because 1 is less than 2
+1 &gt;= 1 // true because 1 is greater than or equal to 1
+2 &lt;= 1 // false because 2 is not less than or equal to 1
+</pre></div>
+
+<p>Comparison operators are often used in conditional statements, such as
+the &lsquo;<samp>if</samp>&rsquo; statement:
+</p>
+<div class="example">
+<pre class="example">let name = &quot;world&quot;
+if name == &quot;world&quot; {
+    print(&quot;hello, world&quot;)
+} else {
+    print(&quot;I'm sorry \(name), but I don't recognize you&quot;)
+}
+// Prints &quot;hello, world&quot;, because name is indeed equal to &quot;world&quot;.
+</pre></div>
+
+<p>For more about the &lsquo;<samp>if</samp>&rsquo; statement, see <a href="Control-Flow.html#Control-Flow">Control
+Flow</a>.
+</p>
+<p>You can compare two tuples if they have the same type and the same
+number of values. Tuples are compared from left to right, one value at a
+time, until the comparison finds two values that aren&rsquo;t equal. Those two
+values are compared, and the result of that comparison determines the
+overall result of the tuple comparison. If all the elements are equal,
+then the tuples themselves are equal. For example:
+</p>
+<div class="example">
+<pre class="example">(1, &quot;zebra&quot;) &lt; (2, &quot;apple&quot;) // true because 1 is less than 2; &quot;zebra&quot; and &quot;apple&quot; are not compared
+(3, &quot;apple&quot;) &lt; (3, &quot;bird&quot;) // true because 3 is equal to 3, and &quot;apple&quot; is less than &quot;bird&quot;
+(4, &quot;dog&quot;) == (4, &quot;dog&quot;) // true because 4 is equal to 4, and &quot;dog&quot; is equal to &quot;dog&quot;
+</pre></div>
+
+<p>In the example above, you can see the left-to-right comparison behavior
+on the first line. Because &lsquo;<samp>1</samp>&rsquo; is less than &lsquo;<samp>2</samp>&rsquo;, &lsquo;<samp>(1, &quot;zebra&quot;)</samp>&rsquo; is
+considered less than &lsquo;<samp>(2, &quot;apple&quot;)</samp>&rsquo;, regardless of any other values in
+the tuples. It doesn&rsquo;t matter that &lsquo;<samp>&quot;zebra&quot;</samp>&rsquo; isn&rsquo;t less than &lsquo;<samp>&quot;apple&quot;</samp>&rsquo;,
+because the comparison is already determined by the tuples&rsquo; first
+elements. However, when the tuples&rsquo; first elements are the same, their
+second elements <em>are</em> compared&mdash;this is what happens on the second and
+third line.
+</p>
+<p>Tuples can be compared with a given operator only if the operator can be
+applied to each value in the respective tuples. For example, as
+demonstrated in the code below, you can compare two tuples of type
+&lsquo;<samp>(String, Int)</samp>&rsquo; because both &lsquo;<samp>String</samp>&rsquo; and &lsquo;<samp>Int</samp>&rsquo; values can be compared
+using the &lsquo;<samp>&lt;</samp>&rsquo; operator. In contrast, two tuples of type &lsquo;<samp>(String, Bool)</samp>&rsquo;
+can&rsquo;t be compared with the &lsquo;<samp>&lt;</samp>&rsquo; operator because the &lsquo;<samp>&lt;</samp>&rsquo; operator can&rsquo;t
+be applied to &lsquo;<samp>Bool</samp>&rsquo; values.
+</p>
+<div class="example">
+<pre class="example">(&quot;blue&quot;, -1) &lt; (&quot;purple&quot;, 1) // OK, evaluates to true
+(&quot;blue&quot;, false) &lt; (&quot;purple&quot;, true) // Error because &lt; can't compare Boolean values
+</pre></div>
+
+<p>Note
+</p>
+<p>The Swift standard library includes tuple comparison operators for
+tuples with fewer than seven elements. To compare tuples with seven or
+more elements, you must implement the comparison operators yourself.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Ternary-Conditional-Operator.html#Ternary-Conditional-Operator" accesskey="n" rel="next">Ternary Conditional Operator</a>, Previous: <a href="Compound-Assignment-Operators.html#Compound-Assignment-Operators" accesskey="p" rel="prev">Compound Assignment Operators</a>, Up: <a href="Basic-Operators.html#Basic-Operators" accesskey="u" rel="up">Basic Operators</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

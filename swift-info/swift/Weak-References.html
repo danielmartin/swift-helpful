@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Weak References (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Weak References (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Weak References (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Resolving-Strong-Reference-Cycles-Between-Class-Instances.html#Resolving-Strong-Reference-Cycles-Between-Class-Instances" rel="up" title="Resolving Strong Reference Cycles Between Class Instances">
+<link href="Unowned-References.html#Unowned-References" rel="next" title="Unowned References">
+<link href="Resolving-Strong-Reference-Cycles-Between-Class-Instances.html#Resolving-Strong-Reference-Cycles-Between-Class-Instances" rel="prev" title="Resolving Strong Reference Cycles Between Class Instances">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Weak-References"></span><div class="header">
+<p>
+Next: <a href="Unowned-References.html#Unowned-References" accesskey="n" rel="next">Unowned References</a>, Up: <a href="Resolving-Strong-Reference-Cycles-Between-Class-Instances.html#Resolving-Strong-Reference-Cycles-Between-Class-Instances" accesskey="u" rel="up">Resolving Strong Reference Cycles Between Class Instances</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Weak-References-1"></span><h4 class="subsection">29.4.1 Weak References</h4>
+
+<span id="index-weak"></span>
+
+<p>A <em>weak reference</em> is a reference that does not keep a strong hold on
+the instance it refers to, and so does not stop ARC from disposing of
+the referenced instance. This behavior prevents the reference from
+becoming part of a strong reference cycle. You indicate a weak reference
+by placing the &lsquo;<samp>weak</samp>&rsquo; keyword before a property or variable declaration.
+</p>
+<p>Because a weak reference does not keep a strong hold on the instance it
+refers to, it&rsquo;s possible for that instance to be deallocated while the
+weak reference is still referring to it. Therefore, ARC automatically
+sets a weak reference to &lsquo;<samp>nil</samp>&rsquo; when the instance that it refers to is
+deallocated. And, because weak references need to allow their value to
+be changed to &lsquo;<samp>nil</samp>&rsquo; at runtime, they are always declared as variables,
+rather than constants, of an optional type.
+</p>
+<p>You can check for the existence of a value in the weak reference, just
+like any other optional value, and you will never end up with a
+reference to an invalid instance that no longer exists.
+</p>
+<p>Note
+</p>
+<p>Property observers aren&rsquo;t called when ARC sets a weak reference to
+&lsquo;<samp>nil</samp>&rsquo;.
+</p>
+<p>The example below is identical to the &lsquo;<samp>Person</samp>&rsquo; and &lsquo;<samp>Apartment</samp>&rsquo; example
+from above, with one important difference. This time around, the
+&lsquo;<samp>Apartment</samp>&rsquo; type&rsquo;s &lsquo;<samp>tenant</samp>&rsquo; property is declared as a weak reference:
+</p>
+<div class="example">
+<pre class="example">class Person {
+    let name: String
+    init(name: String) { self.name = name }
+    var apartment: Apartment?
+    deinit { print(&quot;\(name) is being deinitialized&quot;) }
+}
+
+class Apartment {
+    let unit: String
+    init(unit: String) { self.unit = unit }
+    weak var tenant: Person?
+    deinit { print(&quot;Apartment \(unit) is being deinitialized&quot;) }
+}
+</pre></div>
+
+<p>The strong references from the two variables (&lsquo;<samp>john</samp>&rsquo; and &lsquo;<samp>unit4A</samp>&rsquo;) and
+the links between the two instances are created as before:
+</p>
+<div class="example">
+<pre class="example">var john: Person?
+var unit4A: Apartment?
+
+john = Person(name: &quot;John Appleseed&quot;)
+unit4A = Apartment(unit: &quot;4A&quot;)
+
+john!.apartment = unit4A
+unit4A!.tenant = john
+</pre></div>
+
+<p>Here&rsquo;s how the references look now that you&rsquo;ve linked the two instances
+together:
+</p>
+<img src="_images/weakReference01_2x.png" alt="_images/weakReference01_2x">
+<p>The &lsquo;<samp>Person</samp>&rsquo; instance still has a strong reference to the &lsquo;<samp>Apartment</samp>&rsquo;
+instance, but the &lsquo;<samp>Apartment</samp>&rsquo; instance now has a <em>weak</em> reference to the
+&lsquo;<samp>Person</samp>&rsquo; instance. This means that when you break the strong reference
+held by the &lsquo;<samp>john</samp>&rsquo; variable by setting it to &lsquo;<samp>nil</samp>&rsquo;, there are no more
+strong references to the &lsquo;<samp>Person</samp>&rsquo; instance:
+</p>
+<div class="example">
+<pre class="example">john = nil
+// Prints &quot;John Appleseed is being deinitialized&quot;
+</pre></div>
+
+<p>Because there are no more strong references to the &lsquo;<samp>Person</samp>&rsquo; instance,
+it&rsquo;s deallocated and the &lsquo;<samp>tenant</samp>&rsquo; property is set to &lsquo;<samp>nil</samp>&rsquo;:
+</p>
+<img src="_images/weakReference02_2x.png" alt="_images/weakReference02_2x">
+<p>The only remaining strong reference to the &lsquo;<samp>Apartment</samp>&rsquo; instance is from
+the &lsquo;<samp>unit4A</samp>&rsquo; variable. If you break <em>that</em> strong reference, there are
+no more strong references to the &lsquo;<samp>Apartment</samp>&rsquo; instance:
+</p>
+<div class="example">
+<pre class="example">unit4A = nil
+// Prints &quot;Apartment 4A is being deinitialized&quot;
+</pre></div>
+
+<p>Because there are no more strong references to the &lsquo;<samp>Apartment</samp>&rsquo; instance,
+it too is deallocated:
+</p>
+<img src="_images/weakReference03_2x.png" alt="_images/weakReference03_2x">
+
+<p>Note
+</p>
+<p>In systems that use garbage collection, weak pointers are sometimes used
+to implement a simple caching mechanism because objects with no strong
+references are deallocated only when memory pressure triggers garbage
+collection. However, with ARC, values are deallocated as soon as their
+last strong reference is removed, making weak references unsuitable for
+such a purpose.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Unowned-References.html#Unowned-References" accesskey="n" rel="next">Unowned References</a>, Up: <a href="Resolving-Strong-Reference-Cycles-Between-Class-Instances.html#Resolving-Strong-Reference-Cycles-Between-Class-Instances" accesskey="u" rel="up">Resolving Strong Reference Cycles Between Class Instances</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

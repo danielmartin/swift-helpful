@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Whitespace and Comments (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Whitespace and Comments (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Whitespace and Comments (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Lexical-Structure.html#Lexical-Structure" rel="up" title="Lexical Structure">
+<link href="Identifiers.html#Identifiers" rel="next" title="Identifiers">
+<link href="Lexical-Structure.html#Lexical-Structure" rel="prev" title="Lexical Structure">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Whitespace-and-Comments"></span><div class="header">
+<p>
+Next: <a href="Identifiers.html#Identifiers" accesskey="n" rel="next">Identifiers</a>, Up: <a href="Lexical-Structure.html#Lexical-Structure" accesskey="u" rel="up">Lexical Structure</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Whitespace-and-Comments-1"></span><h3 class="section">3.1 Whitespace and Comments</h3>
+
+<p>Whitespace has two uses: to separate tokens in the source file and to
+help determine whether an operator is a prefix or postfix (see
+<a href="Operators.html#Operators">Operators</a>), but is otherwise ignored.
+The following characters are considered whitespace: space (U+0020), line
+feed (U+000A), carriage return (U+000D), horizontal tab (U+0009),
+vertical tab (U+000B), form feed (U+000C) and null (U+0000).
+</p>
+<p>Comments are treated as whitespace by the compiler. Single line comments
+begin with &lsquo;<samp>//</samp>&rsquo; and continue until a line feed (U+000A) or carriage
+return (U+000D). Multiline comments begin with &lsquo;<samp>/*</samp>&rsquo; and end with &lsquo;<samp>*/</samp>&rsquo;.
+Nesting multiline comments is allowed, but the comment markers must be
+balanced.
+</p>
+<p>Comments can contain additional formatting and markup, as described in
+<a href="https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html">Markup
+Formatting Reference</a>
+[<a href="https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html">https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html</a>].
+</p>
+<p>Grammar of whitespace
+</p>
+<p>whitespace →
+whitespace-item
+whitespace
+_{opt}
+</p>
+<p>whitespace-item →
+line-break
+</p>
+<p>whitespace-item →
+comment
+</p>
+<p>whitespace-item →
+multiline-comment
+</p>
+<p>whitespace-item →
+U+0000, U+0009, U+000B, U+000C, or U+0020
+</p>
+<p>line-break → U+000A
+</p>
+<p>line-break → U+000D
+</p>
+<p>line-break → U+000D
+followed by U+000A
+</p>
+<p>comment → &lsquo;<samp>//</samp>&rsquo;
+comment-text
+line-break
+</p>
+<p>multiline-comment →
+&lsquo;<samp>/*</samp>&rsquo;
+multiline-comment-text
+&lsquo;<samp>*/</samp>&rsquo;
+</p>
+<p>comment-text →
+comment-text-item
+comment-text
+_{opt}
+</p>
+<p>comment-text-item →
+Any Unicode scalar value except U+000A or U+000D
+</p>
+<p>multiline-comment-text
+→
+multiline-comment-text-item
+multiline-comment-text
+_{opt}
+</p>
+<p>multiline-comment-text-item
+→
+multiline-comment
+</p>
+<p>multiline-comment-text-item
+→
+comment-text-item
+</p>
+<p>multiline-comment-text-item
+→ Any Unicode scalar value except &lsquo;<samp>/*</samp>&rsquo; or &lsquo;<samp>*/</samp>&rsquo;
+</p>
+
+
+
+</body>
+</html>

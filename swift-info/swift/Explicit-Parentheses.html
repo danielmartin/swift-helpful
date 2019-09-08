@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Explicit Parentheses (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Explicit Parentheses (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Explicit Parentheses (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Logical-Operators.html#Logical-Operators" rel="up" title="Logical Operators">
+<link href="Strings-and-Characters.html#Strings-and-Characters" rel="next" title="Strings and Characters">
+<link href="Combining-Logical-Operators.html#Combining-Logical-Operators" rel="prev" title="Combining Logical Operators">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Explicit-Parentheses"></span><div class="header">
+<p>
+Previous: <a href="Combining-Logical-Operators.html#Combining-Logical-Operators" accesskey="p" rel="prev">Combining Logical Operators</a>, Up: <a href="Logical-Operators.html#Logical-Operators" accesskey="u" rel="up">Logical Operators</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Explicit-Parentheses-1"></span><h4 class="subsection">7.9.5 Explicit Parentheses</h4>
+
+<p>It&rsquo;s sometimes useful to include parentheses when they&rsquo;re not strictly
+needed, to make the intention of a complex expression easier to read. In
+the door access example above, it&rsquo;s useful to add parentheses around the
+first part of the compound expression to make its intent explicit:
+</p>
+<div class="example">
+<pre class="example">if (enteredDoorCode &amp;&amp; passedRetinaScan) || hasDoorKey || knowsOverridePassword {
+    print(&quot;Welcome!&quot;)
+} else {
+    print(&quot;ACCESS DENIED&quot;)
+}
+// Prints &quot;Welcome!&quot;
+</pre></div>
+
+<p>The parentheses make it clear that the first two values are considered
+as part of a separate possible state in the overall logic. The output of
+the compound expression doesn&rsquo;t change, but the overall intention is
+clearer to the reader. Readability is always preferred over brevity; use
+parentheses where they help to make your intentions clear.
+</p>
+
+
+
+</body>
+</html>

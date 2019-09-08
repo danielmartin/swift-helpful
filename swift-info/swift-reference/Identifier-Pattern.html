@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Identifier Pattern (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Identifier Pattern (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Identifier Pattern (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Patterns.html#Patterns" rel="up" title="Patterns">
+<link href="Value_002dBinding-Pattern.html#Value_002dBinding-Pattern" rel="next" title="Value-Binding Pattern">
+<link href="Wildcard-Pattern.html#Wildcard-Pattern" rel="prev" title="Wildcard Pattern">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Identifier-Pattern"></span><div class="header">
+<p>
+Next: <a href="Value_002dBinding-Pattern.html#Value_002dBinding-Pattern" accesskey="n" rel="next">Value-Binding Pattern</a>, Previous: <a href="Wildcard-Pattern.html#Wildcard-Pattern" accesskey="p" rel="prev">Wildcard Pattern</a>, Up: <a href="Patterns.html#Patterns" accesskey="u" rel="up">Patterns</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Identifier-Pattern-1"></span><h3 class="section">9.2 Identifier Pattern</h3>
+
+<p>An <em>identifier pattern</em> matches any value and binds the matched value to
+a variable or constant name. For example, in the following constant
+declaration, &lsquo;<samp>someValue</samp>&rsquo; is an identifier pattern that matches the value
+&lsquo;<samp>42</samp>&rsquo; of type &lsquo;<samp>Int</samp>&rsquo;:
+</p>
+<ol>
+<li> let someValue = 42
+</li></ol>
+
+<p>When the match succeeds, the value &lsquo;<samp>42</samp>&rsquo; is bound (assigned) to the
+constant name &lsquo;<samp>someValue</samp>&rsquo;.
+</p>
+<p>When the pattern on the left-hand side of a variable or constant
+declaration is an identifier pattern, the identifier pattern is
+implicitly a subpattern of a value-binding pattern.
+</p>
+<p>Grammar of an identifier pattern
+</p>
+<p>identifier-pattern →
+identifier
+</p>
+
+
+
+</body>
+</html>

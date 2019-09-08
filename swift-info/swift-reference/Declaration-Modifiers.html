@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Declaration Modifiers (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Declaration Modifiers (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Declaration Modifiers (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Declarations.html#Declarations" rel="up" title="Declarations">
+<link href="Access-Control-Levels.html#Access-Control-Levels" rel="next" title="Access Control Levels">
+<link href="Precedence-Group-Declaration.html#Precedence-Group-Declaration" rel="prev" title="Precedence Group Declaration">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Declaration-Modifiers"></span><div class="header">
+<p>
+Previous: <a href="Precedence-Group-Declaration.html#Precedence-Group-Declaration" accesskey="p" rel="prev">Precedence Group Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Declaration-Modifiers-1"></span><h3 class="section">7.18 Declaration Modifiers</h3>
+
+<p><em>Declaration modifiers</em> are keywords or context-sensitive keywords that
+modify the behavior or meaning of a declaration. You specify a
+declaration modifier by writing the appropriate keyword or
+context-sensitive keyword between a declaration&rsquo;s attributes (if any)
+and the keyword that introduces the declaration.
+</p>
+<dl compact="compact">
+<dt>&lsquo;<samp>class</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to a member of a class to indicate that
+the member is a member of the class itself, rather than a member of
+instances of the class. Members of a superclass that have this
+modifier and don&rsquo;t have the &lsquo;<samp>final</samp>&rsquo; modifier can be overridden by
+subclasses.
+</p>
+</dd>
+<dt>&lsquo;<samp>dynamic</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to any member of a class that can be
+represented by Objective-C. When you mark a member declaration with
+the &lsquo;<samp>dynamic</samp>&rsquo; modifier, access to that member is always dynamically
+dispatched using the Objective-C runtime. Access to that member is
+never inlined or devirtualized by the compiler.
+</p>
+<p>Because declarations marked with the &lsquo;<samp>dynamic</samp>&rsquo; modifier are dispatched
+using the Objective-C runtime, they must be marked with the &lsquo;<samp>objc</samp>&rsquo;
+attribute.
+</p>
+</dd>
+<dt>&lsquo;<samp>final</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to a class or to a property, method, or
+subscript member of a class. It&rsquo;s applied to a class to indicate that
+the class can&rsquo;t be subclassed. It&rsquo;s applied to a property, method, or
+subscript of a class to indicate that a class member can&rsquo;t be
+overridden in any subclass. For an example of how to use the &lsquo;<samp>final</samp>&rsquo;
+attribute, see <a href="../swift/Preventing-Overrides.html#Preventing-Overrides">(swift)Preventing
+Overrides</a>.
+</p>
+</dd>
+<dt>&lsquo;<samp>lazy</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to a stored variable property of a class
+or structure to indicate that the property&rsquo;s initial value is
+calculated and stored at most once, when the property is first
+accessed. For an example of how to use the &lsquo;<samp>lazy</samp>&rsquo; modifier, see
+<a href="../swift/Lazy-Stored-Properties.html#Lazy-Stored-Properties">(swift)Lazy Stored Properties</a>.
+</p>
+</dd>
+<dt>&lsquo;<samp>optional</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to a protocol&rsquo;s property, method, or
+subscript members to indicate that a conforming type isn&rsquo;t required to
+implement those members.
+</p>
+<p>You can apply the &lsquo;<samp>optional</samp>&rsquo; modifier only to protocols that are
+marked with the &lsquo;<samp>objc</samp>&rsquo; attribute. As a result, only class types can
+adopt and conform to a protocol that contains optional member
+requirements. For more information about how to use the &lsquo;<samp>optional</samp>&rsquo;
+modifier and for guidance about how to access optional protocol
+members&mdash;for example, when you&rsquo;re not sure whether a conforming type
+implements them&mdash;see
+<a href="../swift/Optional-Protocol-Requirements.html#Optional-Protocol-Requirements">(swift)Optional Protocol
+Requirements</a>.
+</p>
+</dd>
+<dt>&lsquo;<samp>required</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to a designated or convenience
+initializer of a class to indicate that every subclass must implement
+that initializer. The subclass&rsquo;s implementation of that initializer
+must also be marked with the &lsquo;<samp>required</samp>&rsquo; modifier.
+</p>
+</dd>
+<dt>&lsquo;<samp>static</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to a member of a structure, class,
+enumeration, or protocol to indicate that the member is a member of
+the type, rather than a member of instances of that type. In the scope
+of a class declaration, writing the &lsquo;<samp>static</samp>&rsquo; modifier on a member
+declaration has the same effect as writing the &lsquo;<samp>class</samp>&rsquo; and &lsquo;<samp>final</samp>&rsquo;
+modifiers on that member declaration. However, constant type
+properties of a class are an exception: &lsquo;<samp>static</samp>&rsquo; has its normal,
+nonclass meaning there because you can&rsquo;t write &lsquo;<samp>class</samp>&rsquo; or &lsquo;<samp>final</samp>&rsquo; on
+those declarations.
+</p>
+</dd>
+<dt>&lsquo;<samp>unowned</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to a stored variable, constant, or
+stored property to indicate that the variable or property has an
+unowned reference to the object stored as its value. If you try to
+access the variable or property after the object has been deallocated,
+a runtime error is raised. Like a weak reference, the type of the
+property or value must be a class type; unlike a weak reference, the
+type is non-optional. For an example and more information about the
+&lsquo;<samp>unowned</samp>&rsquo; modifier, see
+<a href="../swift/Unowned-References.html#Unowned-References">(swift)Unowned
+References</a>.
+</p>
+</dd>
+<dt>&lsquo;<samp>unowned(safe)</samp>&rsquo;</dt>
+<dd><p>An explicit spelling of &lsquo;<samp>unowned</samp>&rsquo;.
+</p>
+</dd>
+<dt>&lsquo;<samp>unowned(unsafe)</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to a stored variable,
+constant, or stored property to indicate that the variable or property
+has an unowned reference to the object stored as its value. If you try
+to access the variable or property after the object has been
+deallocated, you&rsquo;ll access the memory at the location where the object
+used to be, which is a memory-unsafe operation. Like a weak reference,
+the type of the property or value must be a class type; unlike a weak
+reference, the type is non-optional. For an example and more
+information about the &lsquo;<samp>unowned</samp>&rsquo; modifier, see
+<a href="../swift/Unowned-References.html#Unowned-References">(swift)Unowned
+References</a>.
+</p>
+</dd>
+<dt>&lsquo;<samp>weak</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to a stored variable or stored variable
+property to indicate that the variable or property has a weak
+reference to the object stored as its value. The type of the variable
+or property must be an optional class type. If you access the variable
+or property after the object has been deallocated, its value is &lsquo;<samp>nil</samp>&rsquo;.
+For an example and more information about the &lsquo;<samp>weak</samp>&rsquo; modifier, see
+<a href="../swift/Weak-References.html#Weak-References">(swift)Weak
+References</a>.
+</p></dd>
+</dl>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Access-Control-Levels.html#Access-Control-Levels" accesskey="1">Access Control Levels</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Precedence-Group-Declaration.html#Precedence-Group-Declaration" accesskey="p" rel="prev">Precedence Group Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

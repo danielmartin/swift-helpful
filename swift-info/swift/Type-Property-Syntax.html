@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Type Property Syntax (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Type Property Syntax (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Type Property Syntax (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Type-Properties.html#Type-Properties" rel="up" title="Type Properties">
+<link href="Querying-and-Setting-Type-Properties.html#Querying-and-Setting-Type-Properties" rel="next" title="Querying and Setting Type Properties">
+<link href="Type-Properties.html#Type-Properties" rel="prev" title="Type Properties">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Type-Property-Syntax"></span><div class="header">
+<p>
+Next: <a href="Querying-and-Setting-Type-Properties.html#Querying-and-Setting-Type-Properties" accesskey="n" rel="next">Querying and Setting Type Properties</a>, Up: <a href="Type-Properties.html#Type-Properties" accesskey="u" rel="up">Type Properties</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Type-Property-Syntax-1"></span><h4 class="subsection">15.5.1 Type Property Syntax</h4>
+
+<p>In C and Objective-C, you define static constants and variables
+associated with a type as <em>global</em> static variables. In Swift, however,
+type properties are written as part of the type&rsquo;s definition, within the
+type&rsquo;s outer curly braces, and each type property is explicitly scoped
+to the type it supports.
+</p>
+<span id="index-static"></span>
+<span id="index-class-2"></span>
+
+<p>You define type properties with the &lsquo;<samp>static</samp>&rsquo; keyword. For computed type
+properties for class types, you can use the &lsquo;<samp>class</samp>&rsquo; keyword instead to
+allow subclasses to override the superclass&rsquo;s implementation. The
+example below shows the syntax for stored and computed type properties:
+</p>
+<div class="example">
+<pre class="example">struct SomeStructure {
+    static var storedTypeProperty = &quot;Some value.&quot;
+    static var computedTypeProperty: Int {
+        return 1
+    }
+}
+enum SomeEnumeration {
+    static var storedTypeProperty = &quot;Some value.&quot;
+    static var computedTypeProperty: Int {
+        return 6
+    }
+}
+class SomeClass {
+    static var storedTypeProperty = &quot;Some value.&quot;
+    static var computedTypeProperty: Int {
+        return 27
+    }
+    class var overrideableComputedTypeProperty: Int {
+        return 107
+    }
+}
+</pre></div>
+
+<p>Note
+</p>
+<p>The computed type property examples above are for read-only computed
+type properties, but you can also define read-write computed type
+properties with the same syntax as for computed instance properties.
+</p>
+
+
+
+</body>
+</html>

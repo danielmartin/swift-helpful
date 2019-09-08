@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>For-In Statement (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="For-In Statement (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="For-In Statement (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Loop-Statements.html#Loop-Statements" rel="up" title="Loop Statements">
+<link href="While-Statement.html#While-Statement" rel="next" title="While Statement">
+<link href="Loop-Statements.html#Loop-Statements" rel="prev" title="Loop Statements">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="For_002dIn-Statement"></span><div class="header">
+<p>
+Next: <a href="While-Statement.html#While-Statement" accesskey="n" rel="next">While Statement</a>, Up: <a href="Loop-Statements.html#Loop-Statements" accesskey="u" rel="up">Loop Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="For_002dIn-Statement-1"></span><h4 class="subsection">6.1.1 For-In Statement</h4>
+
+<p>A &lsquo;<samp>for</samp>&rsquo;-&lsquo;<samp>in</samp>&rsquo; statement allows a block of code to be executed once for
+each item in a collection (or any type) that conforms to the
+<a href="https://developer.apple.com/documentation/swift/sequence">&lsquo;<samp>Sequence</samp>&rsquo;</a>
+[<a href="https://developer.apple.com/documentation/swift/sequence">https://developer.apple.com/documentation/swift/sequence</a>] protocol.
+</p>
+<p>A &lsquo;<samp>for</samp>&rsquo;-&lsquo;<samp>in</samp>&rsquo; statement has the following form:
+</p>
+<ol>
+<li> for item in collection {
+</li><li> statements
+</li><li> }
+</li></ol>
+
+<p>The &lsquo;<samp>makeIterator()</samp>&rsquo; method is called on the <em>collection</em> expression to
+obtain a value of an iterator type&mdash;that is, a type that conforms to
+the
+<a href="https://developer.apple.com/documentation/swift/iteratorprotocol">&lsquo;<samp>IteratorProtocol</samp>&rsquo;</a>
+[<a href="https://developer.apple.com/documentation/swift/iteratorprotocol">https://developer.apple.com/documentation/swift/iteratorprotocol</a>]
+protocol. The program begins executing a loop by calling the &lsquo;<samp>next()</samp>&rsquo;
+method on the iterator. If the value returned is not &lsquo;<samp>nil</samp>&rsquo;, it is
+assigned to the <em>item</em> pattern, the program executes the <em>statements</em>,
+and then continues execution at the beginning of the loop. Otherwise,
+the program does not perform assignment or execute the <em>statements</em>, and
+it is finished executing the &lsquo;<samp>for</samp>&rsquo;-&lsquo;<samp>in</samp>&rsquo; statement.
+</p>
+<p>Grammar of a for-in statement
+</p>
+<p>for-in-statement → &lsquo;<samp>for</samp>&rsquo;
+&lsquo;<samp>case=_{opt}
+pattern =in</samp>&rsquo;
+expression
+where-clause
+_{opt}
+code-block
+</p>
+
+
+
+</body>
+</html>

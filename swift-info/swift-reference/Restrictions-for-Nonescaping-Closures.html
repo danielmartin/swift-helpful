@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Restrictions for Nonescaping Closures (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Restrictions for Nonescaping Closures (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Restrictions for Nonescaping Closures (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Function-Type.html#Function-Type" rel="up" title="Function Type">
+<link href="Array-Type.html#Array-Type" rel="next" title="Array Type">
+<link href="Function-Type.html#Function-Type" rel="prev" title="Function Type">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Restrictions-for-Nonescaping-Closures"></span><div class="header">
+<p>
+Up: <a href="Function-Type.html#Function-Type" accesskey="u" rel="up">Function Type</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Restrictions-for-Nonescaping-Closures-1"></span><h4 class="subsection">4.4.1 Restrictions for Nonescaping Closures</h4>
+
+<p>A parameter that&rsquo;s a nonescaping function can&rsquo;t be stored in a property,
+variable, or constant of type &lsquo;<samp>Any</samp>&rsquo;, because that might allow the value
+to escape.
+</p>
+<p>A parameter that&rsquo;s a nonescaping function can&rsquo;t be passed as an argument
+to another nonescaping function parameter. This restriction helps Swift
+perform more of its checks for conflicting access to memory at compile
+time instead of at runtime. For example:
+</p>
+<ol>
+<li> let external: (() -&gt; Void) -&gt; Void = { _ in () }
+</li><li> func takesTwoFunctions(first: (() -&gt; Void) -&gt; Void, second: (() -&gt;
+Void) -&gt; Void) {
+</li><li> first { first {} } // Error
+</li><li> second { second {} } // Error
+</li><li> first { second {} } // Error
+</li><li> second { first {} } // Error
+</li><li> first { external {} } // OK
+</li><li> external { first {} } // OK
+</li><li> }
+</li></ol>
+
+<p>In the code above, both of the parameters to
+&lsquo;<samp>takesTwoFunctions(first:second:)</samp>&rsquo; are functions. Neither parameter is
+marked &lsquo;<samp>@escaping</samp>&rsquo;, so they&rsquo;re both nonescaping as a result.
+</p>
+<p>The four function calls marked “Error” in the example above cause
+compiler errors. Because the &lsquo;<samp>first</samp>&rsquo; and &lsquo;<samp>second</samp>&rsquo; parameters are
+nonescaping functions, they can&rsquo;t be passed as arguments to another
+nonescaping function parameter. In contrast, the two function calls
+marked “OK” don&rsquo;t cause a compiler error. These function calls don&rsquo;t
+violate the restriction because &lsquo;<samp>external</samp>&rsquo; isn&rsquo;t one of the parameters
+of &lsquo;<samp>takesTwoFunctions(first:second:)</samp>&rsquo;.
+</p>
+<p>If you need to avoid this restriction, mark one of the parameters as
+escaping, or temporarily convert one of the nonescaping function
+parameters to an escaping function by using the
+&lsquo;<samp>withoutActuallyEscaping(_:do:)</samp>&rsquo; function. For information about
+avoiding conflicting access to memory, see
+<a href="../swift/Memory-Safety.html#Memory-Safety">(swift)Memory Safety</a>.
+</p>
+<p>Grammar of a function type
+</p>
+<p>function-type →
+attributes
+_{opt}
+function-type-argument-clause
+&lsquo;<samp>throws=_{opt} =-&gt;</samp>&rsquo;
+type
+</p>
+<p>function-type →
+attributes
+_{opt}
+function-type-argument-clause
+&lsquo;<samp>rethrows</samp>&rsquo; &lsquo;<samp>-&gt;</samp>&rsquo; type
+</p>
+<p>function-type-argument-clause
+→ &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>function-type-argument-clause
+→ &lsquo;<samp>(</samp>&rsquo;
+function-type-argument-list
+&lsquo;<samp>...=_{opt} =)</samp>&rsquo;
+</p>
+<p>function-type-argument-list
+→
+function-type-argument
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>function-type-argument
+&lsquo;<samp>,</samp>&rsquo;
+function-type-argument-list
+</p>
+<p>function-type-argument →
+attributes
+_{opt} =inout=<em>_opt</em>
+type |
+argument-label
+type-annotation
+</p>
+<p>argument-label →
+identifier
+</p>
+<hr>
+<div class="header">
+<p>
+Up: <a href="Function-Type.html#Function-Type" accesskey="u" rel="up">Function Type</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Failable Initializers for Enumerations (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Failable Initializers for Enumerations (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Failable Initializers for Enumerations (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Failable-Initializers.html#Failable-Initializers" rel="up" title="Failable Initializers">
+<link href="Failable-Initializers-for-Enumerations-with-Raw-Values.html#Failable-Initializers-for-Enumerations-with-Raw-Values" rel="next" title="Failable Initializers for Enumerations with Raw Values">
+<link href="Failable-Initializers.html#Failable-Initializers" rel="prev" title="Failable Initializers">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Failable-Initializers-for-Enumerations"></span><div class="header">
+<p>
+Next: <a href="Failable-Initializers-for-Enumerations-with-Raw-Values.html#Failable-Initializers-for-Enumerations-with-Raw-Values" accesskey="n" rel="next">Failable Initializers for Enumerations with Raw Values</a>, Up: <a href="Failable-Initializers.html#Failable-Initializers" accesskey="u" rel="up">Failable Initializers</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Failable-Initializers-for-Enumerations-1"></span><h4 class="subsection">19.6.1 Failable Initializers for Enumerations</h4>
+
+<p>You can use a failable initializer to select an appropriate enumeration
+case based on one or more parameters. The initializer can then fail if
+the provided parameters do not match an appropriate enumeration case.
+</p>
+<p>The example below defines an enumeration called &lsquo;<samp>TemperatureUnit</samp>&rsquo;, with
+three possible states (&lsquo;<samp>kelvin</samp>&rsquo;, &lsquo;<samp>celsius</samp>&rsquo;, and &lsquo;<samp>fahrenheit</samp>&rsquo;). A
+failable initializer is used to find an appropriate enumeration case for
+a &lsquo;<samp>Character</samp>&rsquo; value representing a temperature symbol:
+</p>
+<div class="example">
+<pre class="example">enum TemperatureUnit {
+    case kelvin, celsius, fahrenheit
+    init?(symbol: Character) {
+        switch symbol {
+        case &quot;K&quot;:
+            self = .kelvin
+        case &quot;C&quot;:
+            self = .celsius
+        case &quot;F&quot;:
+            self = .fahrenheit
+        default:
+            return nil
+        }
+    }
+}
+</pre></div>
+
+<p>You can use this failable initializer to choose an appropriate
+enumeration case for the three possible states and to cause
+initialization to fail if the parameter does not match one of these
+states:
+</p>
+<div class="example">
+<pre class="example">let fahrenheitUnit = TemperatureUnit(symbol: &quot;F&quot;)
+if fahrenheitUnit != nil {
+    print(&quot;This is a defined temperature unit, so initialization succeeded.&quot;)
+}
+// Prints &quot;This is a defined temperature unit, so initialization succeeded.&quot;
+
+let unknownUnit = TemperatureUnit(symbol: &quot;X&quot;)
+if unknownUnit == nil {
+    print(&quot;This is not a defined temperature unit, so initialization failed.&quot;)
+}
+// Prints &quot;This is not a defined temperature unit, so initialization failed.&quot;
+</pre></div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Types (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Types (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Types (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Type-Annotation.html#Type-Annotation" rel="next" title="Type Annotation">
+<link href="Operators.html#Operators" rel="prev" title="Operators">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Types"></span><div class="header">
+<p>
+Next: <a href="Expressions.html#Expressions" accesskey="n" rel="next">Expressions</a>, Previous: <a href="Lexical-Structure.html#Lexical-Structure" accesskey="p" rel="prev">Lexical Structure</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Types-2"></span><h2 class="chapter">4 Types</h2>
+
+<p>In Swift, there are two kinds of types: named types and compound types.
+A <em>named type</em> is a type that can be given a particular name when it&rsquo;s
+defined. Named types include classes, structures, enumerations, and
+protocols. For example, instances of a user-defined class named
+&lsquo;<samp>MyClass</samp>&rsquo; have the type &lsquo;<samp>MyClass</samp>&rsquo;. In addition to user-defined named
+types, the Swift standard library defines many commonly used named
+types, including those that represent arrays, dictionaries, and optional
+values.
+</p>
+<p>Data types that are normally considered basic or primitive in other
+languages&mdash;such as types that represent numbers, characters, and
+strings&mdash;are actually named types, defined and implemented in the Swift
+standard library using structures. Because they&rsquo;re named types, you can
+extend their behavior to suit the needs of your program, using an
+extension declaration, discussed in
+<a href="../swift/Extensions.html#Extensions">(swift)Extensions</a> and
+<a href="Extension-Declaration.html#Extension-Declaration">Extension Declaration</a>.
+</p>
+<p>A <em>compound type</em> is a type without a name, defined in the Swift
+language itself. There are two compound types: function types and tuple
+types. A compound type may contain named types and other compound types.
+For example, the tuple type &lsquo;<samp>(Int, (Int, Int))</samp>&rsquo; contains two elements:
+The first is the named type &lsquo;<samp>Int</samp>&rsquo;, and the second is another compound
+type &lsquo;<samp>(Int, Int)</samp>&rsquo;.
+</p>
+<p>You can put parentheses around a named type or a compound type. However,
+adding parentheses around a type doesn&rsquo;t have any effect. For example,
+&lsquo;<samp>(Int)</samp>&rsquo; is equivalent to &lsquo;<samp>Int</samp>&rsquo;.
+</p>
+<p>This chapter discusses the types defined in the Swift language itself
+and describes the type inference behavior of Swift.
+</p>
+<p>Grammar of a type
+</p>
+<p>type →
+function-type
+</p>
+<p>type →
+array-type
+</p>
+<p>type →
+dictionary-type
+</p>
+<p>type →
+type-identifier
+</p>
+<p>type →
+tuple-type
+</p>
+<p>type →
+optional-type
+</p>
+<p>type →
+implicitly-unwrapped-optional-type
+</p>
+<p>type →
+protocol-composition-type
+</p>
+<p>type →
+opaque-type
+</p>
+<p>type →
+metatype-type
+</p>
+<p>type → &lsquo;<samp>Any</samp>&rsquo;
+</p>
+<p>type → &lsquo;<samp>Self</samp>&rsquo;
+</p>
+<p>type → &lsquo;<samp>(</samp>&rsquo;
+type &lsquo;<samp>)</samp>&rsquo;
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Type-Annotation.html#Type-Annotation" accesskey="1">Type Annotation</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Type-Identifier.html#Type-Identifier" accesskey="2">Type Identifier</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Tuple-Type.html#Tuple-Type" accesskey="3">Tuple Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Function-Type.html#Function-Type" accesskey="4">Function Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Array-Type.html#Array-Type" accesskey="5">Array Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Dictionary-Type.html#Dictionary-Type" accesskey="6">Dictionary Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Optional-Type.html#Optional-Type" accesskey="7">Optional Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Implicitly-Unwrapped-Optional-Type.html#Implicitly-Unwrapped-Optional-Type" accesskey="8">Implicitly Unwrapped Optional Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Protocol-Composition-Type.html#Protocol-Composition-Type" accesskey="9">Protocol Composition Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Opaque-Type.html#Opaque-Type">Opaque Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Metatype-Type.html#Metatype-Type">Metatype Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Self-Type.html#Self-Type">Self Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Type-Inheritance-Clause.html#Type-Inheritance-Clause">Type Inheritance Clause</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Type-Inference.html#Type-Inference">Type Inference</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Expressions.html#Expressions" accesskey="n" rel="next">Expressions</a>, Previous: <a href="Lexical-Structure.html#Lexical-Structure" accesskey="p" rel="prev">Lexical Structure</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

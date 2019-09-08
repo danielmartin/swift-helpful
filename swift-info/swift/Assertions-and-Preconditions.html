@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Assertions and Preconditions (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Assertions and Preconditions (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Assertions and Preconditions (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="The-Basics.html#The-Basics" rel="up" title="The Basics">
+<link href="Debugging-with-Assertions.html#Debugging-with-Assertions" rel="next" title="Debugging with Assertions">
+<link href="Error-Handling-1.html#Error-Handling-1" rel="prev" title="Error Handling 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Assertions-and-Preconditions"></span><div class="header">
+<p>
+Previous: <a href="Error-Handling-1.html#Error-Handling-1" accesskey="p" rel="prev">Error Handling 1</a>, Up: <a href="The-Basics.html#The-Basics" accesskey="u" rel="up">The Basics</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Assertions-and-Preconditions-1"></span><h3 class="section">6.14 Assertions and Preconditions</h3>
+
+<span id="index-precondition"></span>
+
+<p><em>Assertions</em> and <em>preconditions</em> are checks that happen at runtime. You
+use them to make sure an essential condition is satisfied before
+executing any further code. If the Boolean condition in the assertion or
+precondition evaluates to &lsquo;<samp>true</samp>&rsquo;, code execution continues as usual. If
+the condition evaluates to &lsquo;<samp>false</samp>&rsquo;, the current state of the program is
+invalid; code execution ends, and your app is terminated.
+</p>
+<p>You use assertions and preconditions to express the assumptions you make
+and the expectations you have while coding, so you can include them as
+part of your code. Assertions help you find mistakes and incorrect
+assumptions during development, and preconditions help you detect issues
+in production.
+</p>
+<p>In addition to verifying your expectations at runtime, assertions and
+preconditions also become a useful form of documentation within the
+code. Unlike the error conditions discussed in
+<a href="Error-Handling.html#Error-Handling">Error Handling</a> above, assertions and
+preconditions aren&rsquo;t used for recoverable or expected errors. Because a
+failed assertion or precondition indicates an invalid program state,
+there&rsquo;s no way to catch a failed assertion.
+</p>
+<p>Using assertions and preconditions isn&rsquo;t a substitute for designing your
+code in such a way that invalid conditions are unlikely to arise.
+However, using them to enforce valid data and state causes your app to
+terminate more predictably if an invalid state occurs, and helps make
+the problem easier to debug. Stopping execution as soon as an invalid
+state is detected also helps limit the damage caused by that invalid
+state.
+</p>
+<p>The difference between assertions and preconditions is in when they&rsquo;re
+checked: Assertions are checked only in debug builds, but preconditions
+are checked in both debug and production builds. In production builds,
+the condition inside an assertion isn&rsquo;t evaluated. This means you can
+use as many assertions as you want during your development process,
+without impacting performance in production.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Debugging-with-Assertions.html#Debugging-with-Assertions" accesskey="1">Debugging with Assertions</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Enforcing-Preconditions.html#Enforcing-Preconditions" accesskey="2">Enforcing Preconditions</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Error-Handling-1.html#Error-Handling-1" accesskey="p" rel="prev">Error Handling 1</a>, Up: <a href="The-Basics.html#The-Basics" accesskey="u" rel="up">The Basics</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

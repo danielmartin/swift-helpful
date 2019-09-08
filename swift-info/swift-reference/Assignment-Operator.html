@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Assignment Operator (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Assignment Operator (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Assignment Operator (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Binary-Expressions.html#Binary-Expressions" rel="up" title="Binary Expressions">
+<link href="Type_002dCasting-Operators.html#Type_002dCasting-Operators" rel="next" title="Type-Casting Operators">
+<link href="Binary-Expressions.html#Binary-Expressions" rel="prev" title="Binary Expressions">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Assignment-Operator"></span><div class="header">
+<p>
+Next: <a href="Type_002dCasting-Operators.html#Type_002dCasting-Operators" accesskey="n" rel="next">Type-Casting Operators</a>, Up: <a href="Binary-Expressions.html#Binary-Expressions" accesskey="u" rel="up">Binary Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Assignment-Operator-1"></span><h4 class="subsection">5.2.1 Assignment Operator</h4>
+
+<p>The <em>assignment operator</em> sets a new value for a given expression. It
+has the following form:
+</p>
+<ol>
+<li> expression = value
+</li></ol>
+
+<p>The value of the <em>expression</em> is set to the value obtained by evaluating
+the <em>value</em>. If the <em>expression</em> is a tuple, the <em>value</em> must be a tuple
+with the same number of elements. (Nested tuples are allowed.)
+Assignment is performed from each part of the <em>value</em> to the
+corresponding part of the <em>expression</em>. For example:
+</p>
+<ol>
+<li> (a, _, (b, c)) = (&quot;test&quot;, 9.45, (12, 3))
+</li><li> // a is &quot;test&quot;, b is 12, c is 3, and 9.45 is ignored
+</li></ol>
+
+<p>The assignment operator does not return any value.
+</p>
+<p>Grammar of an assignment operator
+</p>
+<p>assignment-operator →
+&lsquo;<samp>=</samp>&rsquo;
+</p>
+
+<p><strong>*</strong> Ternary Conditional Operator
+</p>
+<p>The <em>ternary conditional operator</em> evaluates to one of two given values
+based on the value of a condition. It has the following form:
+</p>
+<ol>
+<li> condition ? expression used if true : expression used if false
+</li></ol>
+
+<p>If the <em>condition</em> evaluates to &lsquo;<samp>true</samp>&rsquo;, the conditional operator
+evaluates the first expression and returns its value. Otherwise, it
+evaluates the second expression and returns its value. The unused
+expression is not evaluated.
+</p>
+<p>For an example that uses the ternary conditional operator, see
+<a href="../swift/Ternary-Conditional-Operator.html#Ternary-Conditional-Operator">(swift)Ternary Conditional
+Operator</a>.
+</p>
+<p>Grammar of a conditional operator
+</p>
+<p>conditional-operator →
+&lsquo;<samp>?</samp>&rsquo;
+expression
+&lsquo;<samp>:</samp>&rsquo;
+</p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Conflicting Access to Properties (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Conflicting Access to Properties (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Conflicting Access to Properties (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Memory-Safety.html#Memory-Safety" rel="up" title="Memory Safety">
+<link href="Access-Control.html#Access-Control" rel="next" title="Access Control">
+<link href="Conflicting-Access-to-self-in-Methods.html#Conflicting-Access-to-self-in-Methods" rel="prev" title="Conflicting Access to self in Methods">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Conflicting-Access-to-Properties"></span><div class="header">
+<p>
+Previous: <a href="Conflicting-Access-to-self-in-Methods.html#Conflicting-Access-to-self-in-Methods" accesskey="p" rel="prev">Conflicting Access to self in Methods</a>, Up: <a href="Memory-Safety.html#Memory-Safety" accesskey="u" rel="up">Memory Safety</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Conflicting-Access-to-Properties-1"></span><h3 class="section">30.4 Conflicting Access to Properties</h3>
+
+<p>Types like structures, tuples, and enumerations are made up of
+individual constituent values, such as the properties of a structure or
+the elements of a tuple. Because these are value types, mutating any
+piece of the value mutates the whole value, meaning read or write access
+to one of the properties requires read or write access to the whole
+value. For example, overlapping write accesses to the elements of a
+tuple produces a conflict:
+</p>
+<div class="example">
+<pre class="example">var playerInformation = (health: 10, energy: 20)
+balance(&amp;playerInformation.health, &amp;playerInformation.energy)
+// Error: conflicting access to properties of playerInformation
+</pre></div>
+
+<p>In the example above, calling &lsquo;<samp>balance(_:_:)</samp>&rsquo; on the elements of a tuple
+produces a conflict because there are overlapping write accesses to
+&lsquo;<samp>playerInformation</samp>&rsquo;. Both &lsquo;<samp>playerInformation.health</samp>&rsquo; and
+&lsquo;<samp>playerInformation.energy</samp>&rsquo; are passed as in-out parameters, which means
+&lsquo;<samp>balance(_:_:)</samp>&rsquo; needs write access to them for the duration of the
+function call. In both cases, a write access to the tuple element
+requires a write access to the entire tuple. This means there are two
+write accesses to &lsquo;<samp>playerInformation</samp>&rsquo; with durations that overlap,
+causing a conflict.
+</p>
+<p>The code below shows that the same error appears for overlapping write
+accesses to the properties of a structure that&rsquo;s stored in a global
+variable.
+</p>
+<div class="example">
+<pre class="example">var holly = Player(name: &quot;Holly&quot;, health: 10, energy: 10)
+balance(&amp;holly.health, &amp;holly.energy) // Error
+</pre></div>
+
+<p>In practice, most access to the properties of a structure can overlap
+safely. For example, if the variable &lsquo;<samp>holly</samp>&rsquo; in the example above is
+changed to a local variable instead of a global variable, the compiler
+can prove that overlapping access to stored properties of the structure
+is safe:
+</p>
+<div class="example">
+<pre class="example">func someFunction() {
+    var oscar = Player(name: &quot;Oscar&quot;, health: 10, energy: 10)
+    balance(&amp;oscar.health, &amp;oscar.energy) // OK
+}
+</pre></div>
+
+<p>In the example above, Oscar&rsquo;s health and energy are passed as the two
+in-out parameters to &lsquo;<samp>balance(_:_:)</samp>&rsquo;. The compiler can prove that memory
+safety is preserved because the two stored properties don&rsquo;t interact in
+any way.
+</p>
+<p>The restriction against overlapping access to properties of a structure
+isn&rsquo;t always necessary to preserve memory safety. Memory safety is the
+desired guarantee, but exclusive access is a stricter requirement than
+memory safety&mdash;which means some code preserves memory safety, even
+though it violates exclusive access to memory. Swift allows this
+memory-safe code if the compiler can prove that the nonexclusive access
+to memory is still safe. Specifically, it can prove that overlapping
+access to properties of a structure is safe if the following conditions
+apply:
+</p>
+<ul>
+<li> You&rsquo;re accessing only stored properties of an instance, not computed
+properties or class properties.
+
+</li><li> The structure is the value of a local variable, not a global variable.
+
+</li><li> The structure is either not captured by any closures, or it&rsquo;s captured
+only by nonescaping closures.
+</li></ul>
+
+<p>If the compiler can&rsquo;t prove the access is safe, it doesn&rsquo;t allow the
+access.
+</p>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Conflicting-Access-to-self-in-Methods.html#Conflicting-Access-to-self-in-Methods" accesskey="p" rel="prev">Conflicting Access to self in Methods</a>, Up: <a href="Memory-Safety.html#Memory-Safety" accesskey="u" rel="up">Memory Safety</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

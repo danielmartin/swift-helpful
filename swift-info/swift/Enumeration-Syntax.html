@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Enumeration Syntax (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Enumeration Syntax (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Enumeration Syntax (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Enumeration.html#Enumeration" rel="up" title="Enumeration">
+<link href="Matching-Enumeration-Values-with-a-Switch-Statement.html#Matching-Enumeration-Values-with-a-Switch-Statement" rel="next" title="Matching Enumeration Values with a Switch Statement">
+<link href="Enumeration.html#Enumeration" rel="prev" title="Enumeration">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Enumeration-Syntax"></span><div class="header">
+<p>
+Next: <a href="Matching-Enumeration-Values-with-a-Switch-Statement.html#Matching-Enumeration-Values-with-a-Switch-Statement" accesskey="n" rel="next">Matching Enumeration Values with a Switch Statement</a>, Up: <a href="Enumeration.html#Enumeration" accesskey="u" rel="up">Enumeration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Enumeration-Syntax-1"></span><h3 class="section">13.1 Enumeration Syntax</h3>
+
+<p>You introduce enumerations with the &lsquo;<samp>enum</samp>&rsquo; keyword and place their
+entire definition within a pair of braces:
+</p>
+<div class="example">
+<pre class="example">enum SomeEnumeration {
+    // enumeration definition goes here
+}
+</pre></div>
+
+<p>Here&rsquo;s an example for the four main points of a compass:
+</p>
+<div class="example">
+<pre class="example">enum CompassPoint {
+    case north
+    case south
+    case east
+    case west
+}
+</pre></div>
+
+<p>The values defined in an enumeration (such as &lsquo;<samp>north</samp>&rsquo;, &lsquo;<samp>south</samp>&rsquo;, &lsquo;<samp>east</samp>&rsquo;,
+and &lsquo;<samp>west</samp>&rsquo;) are its <em>enumeration cases</em>. You use the &lsquo;<samp>case</samp>&rsquo; keyword to
+introduce new enumeration cases.
+</p>
+<p>Note
+</p>
+<p>Swift enumeration cases don&rsquo;t have an integer value set by default,
+unlike languages like C and Objective-C. In the &lsquo;<samp>CompassPoint</samp>&rsquo; example
+above, &lsquo;<samp>north</samp>&rsquo;, &lsquo;<samp>south</samp>&rsquo;, &lsquo;<samp>east</samp>&rsquo; and &lsquo;<samp>west</samp>&rsquo; don&rsquo;t implicitly equal &lsquo;<samp>0</samp>&rsquo;,
+&lsquo;<samp>1</samp>&rsquo;, &lsquo;<samp>2</samp>&rsquo; and &lsquo;<samp>3</samp>&rsquo;. Instead, the different enumeration cases are values in
+their own right, with an explicitly defined type of &lsquo;<samp>CompassPoint</samp>&rsquo;.
+</p>
+<p>Multiple cases can appear on a single line, separated by commas:
+</p>
+<div class="example">
+<pre class="example">enum Planet {
+    case mercury, venus, earth, mars, jupiter, saturn, uranus, neptune
+}
+</pre></div>
+
+<p>Each enumeration definition defines a new type. Like other types in
+Swift, their names (such as &lsquo;<samp>CompassPoint</samp>&rsquo; and &lsquo;<samp>Planet</samp>&rsquo;) start with a
+capital letter. Give enumeration types singular rather than plural
+names, so that they read as self-evident:
+</p>
+<div class="example">
+<pre class="example">var directionToHead = CompassPoint.west
+</pre></div>
+
+<p>The type of &lsquo;<samp>directionToHead</samp>&rsquo; is inferred when it&rsquo;s initialized with one
+of the possible values of &lsquo;<samp>CompassPoint</samp>&rsquo;. Once &lsquo;<samp>directionToHead</samp>&rsquo; is
+declared as a &lsquo;<samp>CompassPoint</samp>&rsquo;, you can set it to a different
+&lsquo;<samp>CompassPoint</samp>&rsquo; value using a shorter dot syntax:
+</p>
+<div class="example">
+<pre class="example">directionToHead = .east
+</pre></div>
+
+<p>The type of &lsquo;<samp>directionToHead</samp>&rsquo; is already known, and so you can drop the
+type when setting its value. This makes for highly readable code when
+working with explicitly typed enumeration values.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Matching-Enumeration-Values-with-a-Switch-Statement.html#Matching-Enumeration-Values-with-a-Switch-Statement" accesskey="n" rel="next">Matching Enumeration Values with a Switch Statement</a>, Up: <a href="Enumeration.html#Enumeration" accesskey="u" rel="up">Enumeration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

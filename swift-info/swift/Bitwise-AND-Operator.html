@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Bitwise AND Operator (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Bitwise AND Operator (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Bitwise AND Operator (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Bitwise-Operators.html#Bitwise-Operators" rel="up" title="Bitwise Operators">
+<link href="Bitwise-OR-Operator.html#Bitwise-OR-Operator" rel="next" title="Bitwise OR Operator">
+<link href="Bitwise-NOT-Operator.html#Bitwise-NOT-Operator" rel="prev" title="Bitwise NOT Operator">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Bitwise-AND-Operator"></span><div class="header">
+<p>
+Next: <a href="Bitwise-OR-Operator.html#Bitwise-OR-Operator" accesskey="n" rel="next">Bitwise OR Operator</a>, Previous: <a href="Bitwise-NOT-Operator.html#Bitwise-NOT-Operator" accesskey="p" rel="prev">Bitwise NOT Operator</a>, Up: <a href="Bitwise-Operators.html#Bitwise-Operators" accesskey="u" rel="up">Bitwise Operators</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Bitwise-AND-Operator-1"></span><h4 class="subsection">32.1.2 Bitwise AND Operator</h4>
+
+<p>The <em>bitwise AND operator</em> (&lsquo;<samp>&amp;</samp>&rsquo;) combines the bits of two numbers. It
+returns a new number whose bits are set to &lsquo;<samp>1</samp>&rsquo; only if the bits were
+equal to &lsquo;<samp>1</samp>&rsquo; in <em>both</em> input numbers:
+</p>
+<img src="_images/bitwiseAND_2x.png" alt="_images/bitwiseAND_2x">
+<p>In the example below, the values of &lsquo;<samp>firstSixBits</samp>&rsquo; and &lsquo;<samp>lastSixBits</samp>&rsquo;
+both have four middle bits equal to &lsquo;<samp>1</samp>&rsquo;. The bitwise AND operator
+combines them to make the number &lsquo;<samp>00111100</samp>&rsquo;, which is equal to an
+unsigned decimal value of &lsquo;<samp>60</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let firstSixBits: UInt8 = 0b11111100
+let lastSixBits: UInt8 = 0b00111111
+let middleFourBits = firstSixBits &amp; lastSixBits // equals 00111100
+</pre></div>
+
+
+
+
+</body>
+</html>

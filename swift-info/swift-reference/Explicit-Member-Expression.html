@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Explicit Member Expression (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Explicit Member Expression (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Explicit Member Expression (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Postfix-Expressions.html#Postfix-Expressions" rel="up" title="Postfix Expressions">
+<link href="Postfix-Self-Expression.html#Postfix-Self-Expression" rel="next" title="Postfix Self Expression">
+<link href="Initializer-Expression.html#Initializer-Expression" rel="prev" title="Initializer Expression">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Explicit-Member-Expression"></span><div class="header">
+<p>
+Next: <a href="Postfix-Self-Expression.html#Postfix-Self-Expression" accesskey="n" rel="next">Postfix Self Expression</a>, Previous: <a href="Initializer-Expression.html#Initializer-Expression" accesskey="p" rel="prev">Initializer Expression</a>, Up: <a href="Postfix-Expressions.html#Postfix-Expressions" accesskey="u" rel="up">Postfix Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Explicit-Member-Expression-1"></span><h4 class="subsection">5.4.3 Explicit Member Expression</h4>
+
+<p>An <em>explicit member expression</em> allows access to the members of a named
+type, a tuple, or a module. It consists of a period (&lsquo;<samp>.</samp>&rsquo;) between the
+item and the identifier of its member.
+</p>
+<ol>
+<li> expression.member name
+</li></ol>
+
+<p>The members of a named type are named as part of the type&rsquo;s declaration
+or extension. For example:
+</p>
+<ol>
+<li> class SomeClass {
+</li><li> var someProperty = 42
+</li><li> }
+</li><li> let c = SomeClass()
+</li><li> let y = c.someProperty // Member access
+</li></ol>
+
+<p>The members of a tuple are implicitly named using integers in the order
+they appear, starting from zero. For example:
+</p>
+<ol>
+<li> var t = (10, 20, 30)
+</li><li> t.0 = t.1
+</li><li> // Now t is (20, 20, 30)
+</li></ol>
+
+<p>The members of a module access the top-level declarations of that
+module.
+</p>
+<p>Types declared with the &lsquo;<samp>dynamicMemberLookup</samp>&rsquo; attribute include members
+that are looked up at runtime, as described in
+<a href="Attributes.html#Attributes">Attributes</a>.
+</p>
+<p>To distinguish between methods or initializers whose names differ only
+by the names of their arguments, include the argument names in
+parentheses, with each argument name followed by a colon (&lsquo;<samp>:</samp>&rsquo;). Write an
+underscore (&lsquo;<samp>_</samp>&rsquo;) for an argument with no name. To distinguish between
+overloaded methods, use a type annotation. For example:
+</p>
+<ol>
+<li> class SomeClass {
+</li><li> func someMethod(x: Int, y: Int) {}
+</li><li> func someMethod(x: Int, z: Int) {}
+</li><li> func overloadedMethod(x: Int, y: Int) {}
+</li><li> func overloadedMethod(x: Int, y: Bool) {}
+</li><li> }
+</li><li> let instance = SomeClass()
+</li><li> let a = instance.someMethod // Ambiguous
+</li><li> let b = instance.someMethod(x:y:) // Unambiguous
+</li><li> let d = instance.overloadedMethod // Ambiguous
+</li><li> let d = instance.overloadedMethod(x:y:) // Still ambiguous
+</li><li> let d: (Int, Bool) -&gt; Void = instance.overloadedMethod(x:y:) //
+Unambiguous
+</li></ol>
+
+<p>If a period appears at the beginning of a line, it is understood as part
+of an explicit member expression, not as an implicit member expression.
+For example, the following listing shows chained method calls split over
+several lines:
+</p>
+<ol>
+<li> let x = [10, 3, 20, 15, 4]
+</li><li> .sorted()
+</li><li> .filter { $0 &gt; 5 }
+</li><li> .map { $0 * 100 }
+</li></ol>
+
+<p>Grammar of an explicit member expression
+</p>
+<p>explicit-member-expression
+→
+postfix-expression
+&lsquo;<samp>.</samp>&rsquo;
+decimal-digits
+</p>
+<p>explicit-member-expression
+→
+postfix-expression
+&lsquo;<samp>.</samp>&rsquo;
+identifier
+generic-argument-clause
+_{opt}
+</p>
+<p>explicit-member-expression
+→
+postfix-expression
+&lsquo;<samp>.</samp>&rsquo;
+identifier
+&lsquo;<samp>(</samp>&rsquo;
+argument-names
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>argument-names →
+argument-name
+argument-names
+_{opt}
+</p>
+<p>argument-name →
+identifier
+&lsquo;<samp>:</samp>&rsquo;
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Postfix-Self-Expression.html#Postfix-Self-Expression" accesskey="n" rel="next">Postfix Self Expression</a>, Previous: <a href="Initializer-Expression.html#Initializer-Expression" accesskey="p" rel="prev">Initializer Expression</a>, Up: <a href="Postfix-Expressions.html#Postfix-Expressions" accesskey="u" rel="up">Postfix Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

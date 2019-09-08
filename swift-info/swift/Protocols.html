@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Protocols (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Protocols (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Protocols (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Protocol-Syntax.html#Protocol-Syntax" rel="next" title="Protocol Syntax">
+<link href="Nested-Types-1.html#Nested-Types-1" rel="prev" title="Nested Types 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Protocols"></span><div class="header">
+<p>
+Next: <a href="Generics-1.html#Generics-1" accesskey="n" rel="next">Generics 1</a>, Previous: <a href="Extensions.html#Extensions" accesskey="p" rel="prev">Extensions</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Protocols-2"></span><h2 class="chapter">26 Protocols</h2>
+
+<span id="index-protocol"></span>
+
+<p>A <em>protocol</em> defines a blueprint of methods, properties, and other
+requirements that suit a particular task or piece of functionality. The
+protocol can then be <em>adopted</em> by a class, structure, or enumeration to
+provide an actual implementation of those requirements. Any type that
+satisfies the requirements of a protocol is said to <em>conform</em> to that
+protocol.
+</p>
+<p>In addition to specifying requirements that conforming types must
+implement, you can extend a protocol to implement some of these
+requirements or to implement additional functionality that conforming
+types can take advantage of.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Protocol-Syntax.html#Protocol-Syntax" accesskey="1">Protocol Syntax</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Property-Requirements.html#Property-Requirements" accesskey="2">Property Requirements</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Method-Requirements.html#Method-Requirements" accesskey="3">Method Requirements</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Mutating-Method-Requirements.html#Mutating-Method-Requirements" accesskey="4">Mutating Method Requirements</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Initializer-Requirements.html#Initializer-Requirements" accesskey="5">Initializer Requirements</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Protocols-as-Types.html#Protocols-as-Types" accesskey="6">Protocols as Types</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Delegation.html#Delegation" accesskey="7">Delegation</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Adding-Protocol-Conformance-with-an-Extension.html#Adding-Protocol-Conformance-with-an-Extension" accesskey="8">Adding Protocol Conformance with an Extension</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Collections-of-Protocol-Types.html#Collections-of-Protocol-Types" accesskey="9">Collections of Protocol Types</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Protocol-Inheritance.html#Protocol-Inheritance">Protocol Inheritance</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Class_002dOnly-Protocols.html#Class_002dOnly-Protocols">Class-Only Protocols</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Protocol-Composition.html#Protocol-Composition">Protocol Composition</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Checking-for-Protocol-Conformance.html#Checking-for-Protocol-Conformance">Checking for Protocol Conformance</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Optional-Protocol-Requirements.html#Optional-Protocol-Requirements">Optional Protocol Requirements</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Protocol-Extensions.html#Protocol-Extensions">Protocol Extensions</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

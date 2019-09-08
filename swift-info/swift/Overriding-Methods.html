@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Overriding Methods (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Overriding Methods (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Overriding Methods (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Overriding.html#Overriding" rel="up" title="Overriding">
+<link href="Overriding-Properties.html#Overriding-Properties" rel="next" title="Overriding Properties">
+<link href="Accessing-Superclass-Methods-Properties-and-Subscripts.html#Accessing-Superclass-Methods-Properties-and-Subscripts" rel="prev" title="Accessing Superclass Methods Properties and Subscripts">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Overriding-Methods"></span><div class="header">
+<p>
+Next: <a href="Overriding-Properties.html#Overriding-Properties" accesskey="n" rel="next">Overriding Properties</a>, Previous: <a href="Accessing-Superclass-Methods-Properties-and-Subscripts.html#Accessing-Superclass-Methods-Properties-and-Subscripts" accesskey="p" rel="prev">Accessing Superclass Methods Properties and Subscripts</a>, Up: <a href="Overriding.html#Overriding" accesskey="u" rel="up">Overriding</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Overriding-Methods-1"></span><h4 class="subsection">18.3.2 Overriding Methods</h4>
+
+<p>You can override an inherited instance or type method to provide a
+tailored or alternative implementation of the method within your
+subclass.
+</p>
+<p>The following example defines a new subclass of &lsquo;<samp>Vehicle</samp>&rsquo; called
+&lsquo;<samp>Train</samp>&rsquo;, which overrides the &lsquo;<samp>makeNoise()</samp>&rsquo; method that &lsquo;<samp>Train</samp>&rsquo; inherits
+from &lsquo;<samp>Vehicle</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">class Train: Vehicle {
+    override func makeNoise() {
+        print(&quot;Choo Choo&quot;)
+    }
+}
+</pre></div>
+
+<p>If you create a new instance of &lsquo;<samp>Train</samp>&rsquo; and call its &lsquo;<samp>makeNoise()</samp>&rsquo;
+method, you can see that the &lsquo;<samp>Train</samp>&rsquo; subclass version of the method is
+called:
+</p>
+<div class="example">
+<pre class="example">let train = Train()
+train.makeNoise()
+// Prints &quot;Choo Choo&quot;
+</pre></div>
+
+
+
+
+</body>
+</html>

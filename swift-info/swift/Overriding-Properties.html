@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Overriding Properties (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Overriding Properties (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Overriding Properties (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Overriding.html#Overriding" rel="up" title="Overriding">
+<link href="Preventing-Overrides.html#Preventing-Overrides" rel="next" title="Preventing Overrides">
+<link href="Overriding-Methods.html#Overriding-Methods" rel="prev" title="Overriding Methods">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Overriding-Properties"></span><div class="header">
+<p>
+Previous: <a href="Overriding-Methods.html#Overriding-Methods" accesskey="p" rel="prev">Overriding Methods</a>, Up: <a href="Overriding.html#Overriding" accesskey="u" rel="up">Overriding</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Overriding-Properties-1"></span><h4 class="subsection">18.3.3 Overriding Properties</h4>
+
+<p>You can override an inherited instance or type property to provide your
+own custom getter and setter for that property, or to add property
+observers to enable the overriding property to observe when the
+underlying property value changes.
+</p>
+<ol>
+<li> Overriding Property Getters and Setters
+
+
+<p>You can provide a custom getter (and setter, if appropriate) to override
+<em>any</em> inherited property, regardless of whether the inherited property
+is implemented as a stored or computed property at source. The stored or
+computed nature of an inherited property is not known by a subclass&mdash;it
+only knows that the inherited property has a certain name and type. You
+must always state both the name and the type of the property you are
+overriding, to enable the compiler to check that your override matches a
+superclass property with the same name and type.
+</p>
+<p>You can present an inherited read-only property as a read-write property
+by providing both a getter and a setter in your subclass property
+override. You cannot, however, present an inherited read-write property
+as a read-only property.
+</p>
+<p>Note
+</p>
+<p>If you provide a setter as part of a property override, you must also
+provide a getter for that override. If you don&rsquo;t want to modify the
+inherited property&rsquo;s value within the overriding getter, you can simply
+pass through the inherited value by returning &lsquo;<samp>super.someProperty</samp>&rsquo; from
+the getter, where &lsquo;<samp>someProperty</samp>&rsquo; is the name of the property you are
+overriding.
+</p>
+<p>The following example defines a new class called &lsquo;<samp>Car</samp>&rsquo;, which is a
+subclass of &lsquo;<samp>Vehicle</samp>&rsquo;. The &lsquo;<samp>Car</samp>&rsquo; class introduces a new stored property
+called &lsquo;<samp>gear</samp>&rsquo;, with a default integer value of &lsquo;<samp>1</samp>&rsquo;. The &lsquo;<samp>Car</samp>&rsquo; class also
+overrides the &lsquo;<samp>description</samp>&rsquo; property it inherits from &lsquo;<samp>Vehicle</samp>&rsquo;, to
+provide a custom description that includes the current gear:
+</p>
+<div class="example">
+<pre class="example">class Car: Vehicle {
+    var gear = 1
+    override var description: String {
+        return super.description + &quot; in gear \(gear)&quot;
+    }
+}
+</pre></div>
+
+<p>The override of the &lsquo;<samp>description</samp>&rsquo; property starts by calling
+&lsquo;<samp>super.description</samp>&rsquo;, which returns the &lsquo;<samp>Vehicle</samp>&rsquo; class&rsquo;s &lsquo;<samp>description</samp>&rsquo;
+property. The &lsquo;<samp>Car</samp>&rsquo; class&rsquo;s version of &lsquo;<samp>description</samp>&rsquo; then adds some
+extra text onto the end of this description to provide information about
+the current gear.
+</p>
+<p>If you create an instance of the &lsquo;<samp>Car</samp>&rsquo; class and set its &lsquo;<samp>gear</samp>&rsquo; and
+&lsquo;<samp>currentSpeed</samp>&rsquo; properties, you can see that its &lsquo;<samp>description</samp>&rsquo; property
+returns the tailored description defined within the &lsquo;<samp>Car</samp>&rsquo; class:
+</p>
+<div class="example">
+<pre class="example">let car = Car()
+car.currentSpeed = 25.0
+car.gear = 3
+print(&quot;Car: \(car.description)&quot;)
+// Car: traveling at 25.0 miles per hour in gear 3
+</pre></div>
+
+</li><li> Overriding Property Observers
+
+
+<p>You can use property overriding to add property observers to an
+inherited property. This enables you to be notified when the value of an
+inherited property changes, regardless of how that property was
+originally implemented. For more information on property observers, see
+<a href="Property-Observers.html#Property-Observers">Property Observers</a>.
+</p>
+<p>Note
+</p>
+<p>You cannot add property observers to inherited constant stored
+properties or inherited read-only computed properties. The value of
+these properties cannot be set, and so it is not appropriate to provide
+a &lsquo;<samp>willSet</samp>&rsquo; or &lsquo;<samp>didSet</samp>&rsquo; implementation as part of an override.
+</p>
+<p>Note also that you cannot provide both an overriding setter and an
+overriding property observer for the same property. If you want to
+observe changes to a property&rsquo;s value, and you are already providing a
+custom setter for that property, you can simply observe any value
+changes from within the custom setter.
+</p>
+<p>The following example defines a new class called &lsquo;<samp>AutomaticCar</samp>&rsquo;, which
+is a subclass of &lsquo;<samp>Car</samp>&rsquo;. The &lsquo;<samp>AutomaticCar</samp>&rsquo; class represents a car with
+an automatic gearbox, which automatically selects an appropriate gear to
+use based on the current speed:
+</p>
+<div class="example">
+<pre class="example">class AutomaticCar: Car {
+    override var currentSpeed: Double {
+        didSet {
+            gear = Int(currentSpeed / 10.0) + 1
+        }
+    }
+}
+</pre></div>
+
+<p>Whenever you set the &lsquo;<samp>currentSpeed</samp>&rsquo; property of an &lsquo;<samp>AutomaticCar</samp>&rsquo;
+instance, the property&rsquo;s &lsquo;<samp>didSet</samp>&rsquo; observer sets the instance&rsquo;s &lsquo;<samp>gear</samp>&rsquo;
+property to an appropriate choice of gear for the new speed.
+Specifically, the property observer chooses a gear that is the new
+&lsquo;<samp>currentSpeed</samp>&rsquo; value divided by &lsquo;<samp>10</samp>&rsquo;, rounded down to the nearest
+integer, plus &lsquo;<samp>1</samp>&rsquo;. A speed of &lsquo;<samp>35.0</samp>&rsquo; produces a gear of &lsquo;<samp>4</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let automatic = AutomaticCar()
+automatic.currentSpeed = 35.0
+print(&quot;AutomaticCar: \(automatic.description)&quot;)
+// AutomaticCar: traveling at 35.0 miles per hour in gear 4
+</pre></div>
+</li></ol>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Overriding-Methods.html#Overriding-Methods" accesskey="p" rel="prev">Overriding Methods</a>, Up: <a href="Overriding.html#Overriding" accesskey="u" rel="up">Overriding</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

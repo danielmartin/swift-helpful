@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Implicitly Unwrapped Optionals (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Implicitly Unwrapped Optionals (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Implicitly Unwrapped Optionals (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Optionals.html#Optionals" rel="up" title="Optionals">
+<link href="Error-Handling-1.html#Error-Handling-1" rel="next" title="Error Handling 1">
+<link href="Optional-Binding.html#Optional-Binding" rel="prev" title="Optional Binding">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Implicitly-Unwrapped-Optionals"></span><div class="header">
+<p>
+Previous: <a href="Optional-Binding.html#Optional-Binding" accesskey="p" rel="prev">Optional Binding</a>, Up: <a href="Optionals.html#Optionals" accesskey="u" rel="up">Optionals</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Implicitly-Unwrapped-Optionals-1"></span><h4 class="subsection">6.12.4 Implicitly Unwrapped Optionals</h4>
+
+<p>As described above, optionals indicate that a constant or variable is
+allowed to have “no value”. Optionals can be checked with an &lsquo;<samp>if</samp>&rsquo;
+statement to see if a value exists, and can be conditionally unwrapped
+with optional binding to access the optional&rsquo;s value if it does exist.
+</p>
+<p>Sometimes it&rsquo;s clear from a program&rsquo;s structure that an optional will
+<em>always</em> have a value, after that value is first set. In these cases,
+it&rsquo;s useful to remove the need to check and unwrap the optional&rsquo;s value
+every time it&rsquo;s accessed, because it can be safely assumed to have a
+value all of the time.
+</p>
+<p>These kinds of optionals are defined as <em>implicitly unwrapped
+optionals</em>. You write an implicitly unwrapped optional by placing an
+exclamation mark (&lsquo;<samp>String!</samp>&rsquo;) rather than a question mark (&lsquo;<samp>String?</samp>&rsquo;)
+after the type that you want to make optional.
+</p>
+<p>Implicitly unwrapped optionals are useful when an optional&rsquo;s value is
+confirmed to exist immediately after the optional is first defined and
+can definitely be assumed to exist at every point thereafter. The
+primary use of implicitly unwrapped optionals in Swift is during class
+initialization, as described in
+<a href="Unowned-References-and-Implicitly-Unwrapped-Optional-Properties.html#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties">Unowned References and
+Implicitly Unwrapped Optional Properties</a>.
+</p>
+<p>An implicitly unwrapped optional is a normal optional behind the scenes,
+but can also be used like a non-optional value, without the need to
+unwrap the optional value each time it&rsquo;s accessed. The following example
+shows the difference in behavior between an optional string and an
+implicitly unwrapped optional string when accessing their wrapped value
+as an explicit &lsquo;<samp>String</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let possibleString: String? = &quot;An optional string.&quot;
+let forcedString: String = possibleString! // requires an exclamation mark
+
+let assumedString: String! = &quot;An implicitly unwrapped optional string.&quot;
+let implicitString: String = assumedString // no need for an exclamation mark
+</pre></div>
+
+<p>You can think of an implicitly unwrapped optional as giving permission
+for the optional to be unwrapped automatically whenever it&rsquo;s used.
+Rather than placing an exclamation mark after the optional&rsquo;s name each
+time you use it, you place an exclamation mark after the optional&rsquo;s type
+when you declare it.
+</p>
+<p>Note
+</p>
+<p>If an implicitly unwrapped optional is &lsquo;<samp>nil</samp>&rsquo; and you try to access its
+wrapped value, you&rsquo;ll trigger a runtime error. The result is exactly the
+same as if you place an exclamation mark after a normal optional that
+doesn&rsquo;t contain a value.
+</p>
+<p>You can still treat an implicitly unwrapped optional like a normal
+optional, to check if it contains a value:
+</p>
+<div class="example">
+<pre class="example">if assumedString != nil {
+    print(assumedString!)
+}
+// Prints &quot;An implicitly unwrapped optional string.&quot;
+</pre></div>
+
+<p>You can also use an implicitly unwrapped optional with optional binding,
+to check and unwrap its value in a single statement:
+</p>
+<div class="example">
+<pre class="example">if let definiteString = assumedString {
+    print(definiteString)
+}
+// Prints &quot;An implicitly unwrapped optional string.&quot;
+</pre></div>
+
+<p>Note
+</p>
+<p>Don&rsquo;t use an implicitly unwrapped optional when there&rsquo;s a possibility of
+a variable becoming &lsquo;<samp>nil</samp>&rsquo; at a later point. Always use a normal optional
+type if you need to check for a &lsquo;<samp>nil</samp>&rsquo; value during the lifetime of a
+variable.
+</p>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Optional-Binding.html#Optional-Binding" accesskey="p" rel="prev">Optional Binding</a>, Up: <a href="Optionals.html#Optionals" accesskey="u" rel="up">Optionals</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

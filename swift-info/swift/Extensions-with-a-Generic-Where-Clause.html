@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Extensions with a Generic Where Clause (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Extensions with a Generic Where Clause (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Extensions with a Generic Where Clause (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Generics-1.html#Generics-1" rel="up" title="Generics 1">
+<link href="Associated-Types-with-a-Generic-Where-Clause.html#Associated-Types-with-a-Generic-Where-Clause" rel="next" title="Associated Types with a Generic Where Clause">
+<link href="Generic-Where-Clauses.html#Generic-Where-Clauses" rel="prev" title="Generic Where Clauses">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Extensions-with-a-Generic-Where-Clause"></span><div class="header">
+<p>
+Next: <a href="Associated-Types-with-a-Generic-Where-Clause.html#Associated-Types-with-a-Generic-Where-Clause" accesskey="n" rel="next">Associated Types with a Generic Where Clause</a>, Previous: <a href="Generic-Where-Clauses.html#Generic-Where-Clauses" accesskey="p" rel="prev">Generic Where Clauses</a>, Up: <a href="Generics-1.html#Generics-1" accesskey="u" rel="up">Generics 1</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Extensions-with-a-Generic-Where-Clause-1"></span><h3 class="section">27.10 Extensions with a Generic Where Clause</h3>
+
+<span id="index-where"></span>
+
+<p>You can also use a generic &lsquo;<samp>where</samp>&rsquo; clause as part of an extension. The
+example below extends the generic &lsquo;<samp>Stack</samp>&rsquo; structure from the previous
+examples to add an &lsquo;<samp>isTop(_:)</samp>&rsquo; method.
+</p>
+<div class="example">
+<pre class="example">extension Stack where Element: Equatable {
+    func isTop(_ item: Element) -&gt; Bool {
+        guard let topItem = items.last else {
+            return false
+        }
+        return topItem == item
+    }
+}
+</pre></div>
+
+<p>This new &lsquo;<samp>isTop(_:)</samp>&rsquo; method first checks that the stack isn&rsquo;t empty, and
+then compares the given item against the stack&rsquo;s topmost item. If you
+tried to do this without a generic &lsquo;<samp>where</samp>&rsquo; clause, you would have a
+problem: The implementation of &lsquo;<samp>isTop(_:)</samp>&rsquo; uses the &lsquo;<samp>==</samp>&rsquo; operator, but
+the definition of &lsquo;<samp>Stack</samp>&rsquo; doesn&rsquo;t require its items to be equatable, so
+using the &lsquo;<samp>==</samp>&rsquo; operator results in a compile-time error. Using a generic
+&lsquo;<samp>where</samp>&rsquo; clause lets you add a new requirement to the extension, so that
+the extension adds the &lsquo;<samp>isTop(_:)</samp>&rsquo; method only when the items in the
+stack are equatable.
+</p>
+<p>Here&rsquo;s how the &lsquo;<samp>isTop(_:)</samp>&rsquo; method looks in action:
+</p>
+<div class="example">
+<pre class="example">if stackOfStrings.isTop(&quot;tres&quot;) {
+    print(&quot;Top element is tres.&quot;)
+} else {
+    print(&quot;Top element is something else.&quot;)
+}
+// Prints &quot;Top element is tres.&quot;
+</pre></div>
+
+<p>If you try to call the &lsquo;<samp>isTop(_:)</samp>&rsquo; method on a stack whose elements
+aren&rsquo;t equatable, you&rsquo;ll get a compile-time error.
+</p>
+<div class="example">
+<pre class="example">struct NotEquatable { }
+var notEquatableStack = Stack&lt;NotEquatable&gt;()
+let notEquatableValue = NotEquatable()
+notEquatableStack.push(notEquatableValue)
+notEquatableStack.isTop(notEquatableValue) // Error
+</pre></div>
+
+<p>You can use a generic &lsquo;<samp>where</samp>&rsquo; clause with extensions to a protocol. The
+example below extends the &lsquo;<samp>Container</samp>&rsquo; protocol from the previous
+examples to add a &lsquo;<samp>startsWith(_:)</samp>&rsquo; method.
+</p>
+<div class="example">
+<pre class="example">extension Container where Item: Equatable {
+    func startsWith(_ item: Item) -&gt; Bool {
+        return count &gt;= 1 &amp;&amp; self[0] == item
+    }
+}
+</pre></div>
+
+<p>The &lsquo;<samp>startsWith(_:)</samp>&rsquo; method first makes sure that the container has at
+least one item, and then it checks whether the first item in the
+container matches the given item. This new &lsquo;<samp>startsWith(_:)</samp>&rsquo; method can
+be used with any type that conforms to the &lsquo;<samp>Container</samp>&rsquo; protocol,
+including the stacks and arrays used above, as long as the container&rsquo;s
+items are equatable.
+</p>
+<div class="example">
+<pre class="example">if [9, 9, 9].startsWith(42) {
+    print(&quot;Starts with 42.&quot;)
+} else {
+    print(&quot;Starts with something else.&quot;)
+}
+// Prints &quot;Starts with something else.&quot;
+</pre></div>
+
+<p>The generic &lsquo;<samp>where</samp>&rsquo; clause in the example above requires &lsquo;<samp>Item</samp>&rsquo; to
+conform to a protocol, but you can also write a generic &lsquo;<samp>where</samp>&rsquo; clauses
+that require &lsquo;<samp>Item</samp>&rsquo; to be a specific type. For example:
+</p>
+<div class="example">
+<pre class="example">extension Container where Item == Double {
+    func average() -&gt; Double {
+        var sum = 0.0
+        for index in 0..&lt;count {
+            sum += self[index]
+        }
+        return sum / Double(count)
+    }
+}
+print([1260.0, 1200.0, 98.6, 37.0].average())
+// Prints &quot;648.9&quot;
+</pre></div>
+
+<p>This example adds an &lsquo;<samp>average()</samp>&rsquo; method to containers whose &lsquo;<samp>Item</samp>&rsquo; type
+is &lsquo;<samp>Double</samp>&rsquo;. It iterates over the items in the container to add them up,
+and divides by the container&rsquo;s count to compute the average. It
+explicitly converts the count from &lsquo;<samp>Int</samp>&rsquo; to &lsquo;<samp>Double</samp>&rsquo; to be able to do
+floating-point division.
+</p>
+<p>You can include multiple requirements in a generic &lsquo;<samp>where</samp>&rsquo; clause that
+is part of an extension, just like you can for a generic &lsquo;<samp>where</samp>&rsquo; clause
+that you write elsewhere. Separate each requirement in the list with a
+comma.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Associated-Types-with-a-Generic-Where-Clause.html#Associated-Types-with-a-Generic-Where-Clause" accesskey="n" rel="next">Associated Types with a Generic Where Clause</a>, Previous: <a href="Generic-Where-Clauses.html#Generic-Where-Clauses" accesskey="p" rel="prev">Generic Where Clauses</a>, Up: <a href="Generics-1.html#Generics-1" accesskey="u" rel="up">Generics 1</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Associated Types (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Associated Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Associated Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Generics-1.html#Generics-1" rel="up" title="Generics 1">
+<link href="Associated-Types-in-Action.html#Associated-Types-in-Action" rel="next" title="Associated Types in Action">
+<link href="Type-Constraints-in-Action.html#Type-Constraints-in-Action" rel="prev" title="Type Constraints in Action">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Associated-Types"></span><div class="header">
+<p>
+Next: <a href="Generic-Where-Clauses.html#Generic-Where-Clauses" accesskey="n" rel="next">Generic Where Clauses</a>, Previous: <a href="Type-Constraints.html#Type-Constraints" accesskey="p" rel="prev">Type Constraints</a>, Up: <a href="Generics-1.html#Generics-1" accesskey="u" rel="up">Generics 1</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Associated-Types-1"></span><h3 class="section">27.8 Associated Types</h3>
+
+<span id="index-associatedtype"></span>
+
+<p>When defining a protocol, it&rsquo;s sometimes useful to declare one or more
+associated types as part of the protocol&rsquo;s definition. An &lsquo;<samp>associated
+type</samp>&rsquo; gives a placeholder name to a type that is used as part of the
+protocol. The actual type to use for that associated type isn&rsquo;t
+specified until the protocol is adopted. Associated types are specified
+with the &lsquo;<samp>associatedtype</samp>&rsquo; keyword.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Associated-Types-in-Action.html#Associated-Types-in-Action" accesskey="1">Associated Types in Action</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Extending-an-Existing-Type-to-Specify-an-Associated-Type.html#Extending-an-Existing-Type-to-Specify-an-Associated-Type" accesskey="2">Extending an Existing Type to Specify an Associated Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Adding-Constraints-to-an-Associated-Type.html#Adding-Constraints-to-an-Associated-Type" accesskey="3">Adding Constraints to an Associated Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Using-a-Protocol-in-Its-Associated-Type_0027s-Constraints.html#Using-a-Protocol-in-Its-Associated-Type_0027s-Constraints" accesskey="4">Using a Protocol in Its Associated Type's Constraints</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

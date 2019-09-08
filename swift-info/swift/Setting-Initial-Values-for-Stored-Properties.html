@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Setting Initial Values for Stored Properties (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Setting Initial Values for Stored Properties (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Setting Initial Values for Stored Properties (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Initialization.html#Initialization" rel="up" title="Initialization">
+<link href="Initializers.html#Initializers" rel="next" title="Initializers">
+<link href="Initialization.html#Initialization" rel="prev" title="Initialization">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Setting-Initial-Values-for-Stored-Properties"></span><div class="header">
+<p>
+Next: <a href="Customizing-Initialization.html#Customizing-Initialization" accesskey="n" rel="next">Customizing Initialization</a>, Up: <a href="Initialization.html#Initialization" accesskey="u" rel="up">Initialization</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Setting-Initial-Values-for-Stored-Properties-1"></span><h3 class="section">19.1 Setting Initial Values for Stored Properties</h3>
+
+<p>Classes and structures <em>must</em> set all of their stored properties to an
+appropriate initial value by the time an instance of that class or
+structure is created. Stored properties cannot be left in an
+indeterminate state.
+</p>
+<p>You can set an initial value for a stored property within an
+initializer, or by assigning a default property value as part of the
+property&rsquo;s definition. These actions are described in the following
+sections.
+</p>
+<p>Note
+</p>
+<p>When you assign a default value to a stored property, or set its initial
+value within an initializer, the value of that property is set directly,
+without calling any property observers.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Initializers.html#Initializers" accesskey="1">Initializers</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Default-Property-Values.html#Default-Property-Values" accesskey="2">Default Property Values</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

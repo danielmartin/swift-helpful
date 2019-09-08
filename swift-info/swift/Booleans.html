@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Booleans (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Booleans (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Booleans (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="The-Basics.html#The-Basics" rel="up" title="The Basics">
+<link href="Tuples.html#Tuples" rel="next" title="Tuples">
+<link href="Type-Aliases.html#Type-Aliases" rel="prev" title="Type Aliases">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Booleans"></span><div class="header">
+<p>
+Next: <a href="Tuples.html#Tuples" accesskey="n" rel="next">Tuples</a>, Previous: <a href="Type-Aliases.html#Type-Aliases" accesskey="p" rel="prev">Type Aliases</a>, Up: <a href="The-Basics.html#The-Basics" accesskey="u" rel="up">The Basics</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Booleans-1"></span><h3 class="section">6.10 Booleans</h3>
+
+<p>Swift has a basic <em>Boolean</em> type, called &lsquo;<samp>Bool</samp>&rsquo;. Boolean values are
+referred to as <em>logical</em>, because they can only ever be true or false.
+Swift provides two Boolean constant values, &lsquo;<samp>true</samp>&rsquo; and &lsquo;<samp>false</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let orangesAreOrange = true
+let turnipsAreDelicious = false
+</pre></div>
+
+<p>The types of &lsquo;<samp>orangesAreOrange</samp>&rsquo; and &lsquo;<samp>turnipsAreDelicious</samp>&rsquo; have been
+inferred as &lsquo;<samp>Bool</samp>&rsquo; from the fact that they were initialized with Boolean
+literal values. As with &lsquo;<samp>Int</samp>&rsquo; and &lsquo;<samp>Double</samp>&rsquo; above, you don&rsquo;t need to
+declare constants or variables as &lsquo;<samp>Bool</samp>&rsquo; if you set them to &lsquo;<samp>true</samp>&rsquo; or
+&lsquo;<samp>false</samp>&rsquo; as soon as you create them. Type inference helps make Swift code
+more concise and readable when it initializes constants or variables
+with other values whose type is already known.
+</p>
+<p>Boolean values are particularly useful when you work with conditional
+statements such as the &lsquo;<samp>if</samp>&rsquo; statement:
+</p>
+<div class="example">
+<pre class="example">if turnipsAreDelicious {
+    print(&quot;Mmm, tasty turnips!&quot;)
+} else {
+    print(&quot;Eww, turnips are horrible.&quot;)
+}
+// Prints &quot;Eww, turnips are horrible.&quot;
+</pre></div>
+
+<p>Conditional statements such as the &lsquo;<samp>if</samp>&rsquo; statement are covered in more
+detail in <a href="Control-Flow.html#Control-Flow">Control Flow</a>.
+</p>
+<p>Swift&rsquo;s type safety prevents non-Boolean values from being substituted
+for &lsquo;<samp>Bool</samp>&rsquo;. The following example reports a compile-time error:
+</p>
+<div class="example">
+<pre class="example">let i = 1
+if i {
+    // this example will not compile, and will report an error
+}
+</pre></div>
+
+<p>However, the alternative example below is valid:
+</p>
+<div class="example">
+<pre class="example">let i = 1
+if i == 1 {
+    // this example will compile successfully
+}
+</pre></div>
+
+<p>The result of the &lsquo;<samp>i =</samp>&rsquo; 1= comparison is of type &lsquo;<samp>Bool</samp>&rsquo;, and so this
+second example passes the type-check. Comparisons like &lsquo;<samp>i =</samp>&rsquo; 1= are
+discussed in <a href="Basic-Operators.html#Basic-Operators">Basic Operators</a>.
+</p>
+<p>As with other examples of type safety in Swift, this approach avoids
+accidental errors and ensures that the intention of a particular section
+of code is always clear.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Tuples.html#Tuples" accesskey="n" rel="next">Tuples</a>, Previous: <a href="Type-Aliases.html#Type-Aliases" accesskey="p" rel="prev">Type Aliases</a>, Up: <a href="The-Basics.html#The-Basics" accesskey="u" rel="up">The Basics</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

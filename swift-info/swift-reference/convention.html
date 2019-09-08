@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>convention (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="convention (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="convention (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Type-Attributes.html#Type-Attributes" rel="up" title="Type Attributes">
+<link href="escaping.html#escaping" rel="next" title="escaping">
+<link href="autoclosure.html#autoclosure" rel="prev" title="autoclosure">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="convention"></span><div class="header">
+<p>
+Next: <a href="escaping.html#escaping" accesskey="n" rel="next">escaping</a>, Previous: <a href="autoclosure.html#autoclosure" accesskey="p" rel="prev">autoclosure</a>, Up: <a href="Type-Attributes.html#Type-Attributes" accesskey="u" rel="up">Type Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="convention-1"></span><h4 class="subsection">8.2.2 convention</h4>
+
+<p>Apply this attribute to the type of a function to indicate its calling
+conventions.
+</p>
+<p>The &lsquo;<samp>convention</samp>&rsquo; attribute always appears with one of the following
+arguments:
+</p>
+<ul>
+<li> The &lsquo;<samp>swift</samp>&rsquo; argument indicates a Swift function reference. This is the
+standard calling convention for function values in Swift.
+
+</li><li> The &lsquo;<samp>block</samp>&rsquo; argument indicates an Objective-C compatible block
+reference. The function value is represented as a reference to the
+block object, which is an &lsquo;<samp>id</samp>&rsquo;-compatible Objective-C object that
+embeds its invocation function within the object. The invocation
+function uses the C calling convention.
+
+</li><li> The &lsquo;<samp>c</samp>&rsquo; argument indicates a C function reference. The function value
+carries no context and uses the C calling convention.
+</li></ul>
+
+<p>With a few exceptions, a function of any calling convention can be used
+when a function any other calling convention is needed. A nongeneric
+global function, a local function that doesn&rsquo;t capture any local
+variables or a closure that doesn&rsquo;t capture any local variables can be
+converted to the C calling convention. Other Swift functions can&rsquo;t be
+converted to the C calling convention. A function with the Objective-C
+block calling convention can&rsquo;t be converted to the C calling convention.
+</p>
+
+
+
+</body>
+</html>

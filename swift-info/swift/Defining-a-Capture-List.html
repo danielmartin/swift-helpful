@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Defining a Capture List (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Defining a Capture List (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Defining a Capture List (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Resolving-Strong-Reference-Cycles-for-Closures.html#Resolving-Strong-Reference-Cycles-for-Closures" rel="up" title="Resolving Strong Reference Cycles for Closures">
+<link href="Weak-and-Unowned-References.html#Weak-and-Unowned-References" rel="next" title="Weak and Unowned References">
+<link href="Resolving-Strong-Reference-Cycles-for-Closures.html#Resolving-Strong-Reference-Cycles-for-Closures" rel="prev" title="Resolving Strong Reference Cycles for Closures">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Defining-a-Capture-List"></span><div class="header">
+<p>
+Next: <a href="Weak-and-Unowned-References.html#Weak-and-Unowned-References" accesskey="n" rel="next">Weak and Unowned References</a>, Up: <a href="Resolving-Strong-Reference-Cycles-for-Closures.html#Resolving-Strong-Reference-Cycles-for-Closures" accesskey="u" rel="up">Resolving Strong Reference Cycles for Closures</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Defining-a-Capture-List-1"></span><h4 class="subsection">29.6.1 Defining a Capture List</h4>
+
+<p>Each item in a capture list is a pairing of the &lsquo;<samp>weak</samp>&rsquo; or &lsquo;<samp>unowned</samp>&rsquo;
+keyword with a reference to a class instance (such as &lsquo;<samp>self</samp>&rsquo;) or a
+variable initialized with some value (such as
+&lsquo;<samp>delegate = self.delegate!</samp>&rsquo;). These pairings are written within a pair
+of square braces, separated by commas.
+</p>
+<p>Place the capture list before a closure&rsquo;s parameter list and return type
+if they are provided:
+</p>
+<div class="example">
+<pre class="example">lazy var someClosure: (Int, String) -&gt; String = {
+    [unowned self, weak delegate = self.delegate!] (index: Int,
+                                                    stringToProcess: String) -&gt; String in
+    // closure body goes here
+}
+</pre></div>
+
+<p>If a closure does not specify a parameter list or return type because
+they can be inferred from context, place the capture list at the very
+start of the closure, followed by the &lsquo;<samp>in</samp>&rsquo; keyword:
+</p>
+<div class="example">
+<pre class="example">lazy var someClosure: () -&gt; String = {
+    [unowned self, weak delegate = self.delegate!] in
+    // closure body goes here
+}
+</pre></div>
+
+
+
+
+</body>
+</html>

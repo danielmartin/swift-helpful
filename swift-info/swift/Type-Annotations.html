@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Type Annotations (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Type Annotations (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Type Annotations (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Constants-and-Variables.html#Constants-and-Variables" rel="up" title="Constants and Variables">
+<link href="Naming-Constants-and-Variables.html#Naming-Constants-and-Variables" rel="next" title="Naming Constants and Variables">
+<link href="Declaring-Constants-and-Variables.html#Declaring-Constants-and-Variables" rel="prev" title="Declaring Constants and Variables">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Type-Annotations"></span><div class="header">
+<p>
+Next: <a href="Naming-Constants-and-Variables.html#Naming-Constants-and-Variables" accesskey="n" rel="next">Naming Constants and Variables</a>, Previous: <a href="Declaring-Constants-and-Variables.html#Declaring-Constants-and-Variables" accesskey="p" rel="prev">Declaring Constants and Variables</a>, Up: <a href="Constants-and-Variables.html#Constants-and-Variables" accesskey="u" rel="up">Constants and Variables</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Type-Annotations-1"></span><h4 class="subsection">6.1.2 Type Annotations</h4>
+
+<p>You can provide a <em>type annotation</em> when you declare a constant or
+variable, to be clear about the kind of values the constant or variable
+can store. Write a type annotation by placing a colon after the constant
+or variable name, followed by a space, followed by the name of the type
+to use.
+</p>
+<p>This example provides a type annotation for a variable called
+&lsquo;<samp>welcomeMessage</samp>&rsquo;, to indicate that the variable can store &lsquo;<samp>String</samp>&rsquo;
+values:
+</p>
+<div class="example">
+<pre class="example">var welcomeMessage: String
+</pre></div>
+
+<p>The colon in the declaration means “&hellip;of type&hellip;,” so the code above
+can be read as:
+</p>
+<p>“Declare a variable called &lsquo;<samp>welcomeMessage</samp>&rsquo; that is of type &lsquo;<samp>String</samp>&rsquo;.”
+</p>
+<p>The phrase “of type &lsquo;<samp>String=” means “can store any =String</samp>&rsquo; value.”
+Think of it as meaning “the type of thing” (or “the kind of thing”) that
+can be stored.
+</p>
+<p>The &lsquo;<samp>welcomeMessage</samp>&rsquo; variable can now be set to any string value without
+error:
+</p>
+<div class="example">
+<pre class="example">welcomeMessage = &quot;Hello&quot;
+</pre></div>
+
+<p>You can define multiple related variables of the same type on a single
+line, separated by commas, with a single type annotation after the final
+variable name:
+</p>
+<div class="example">
+<pre class="example">var red, green, blue: Double
+</pre></div>
+
+<p>Note
+</p>
+<p>It&rsquo;s rare that you need to write type annotations in practice. If you
+provide an initial value for a constant or variable at the point that
+it&rsquo;s defined, Swift can almost always infer the type to be used for that
+constant or variable, as described in <a href="Type-Safety-and-Type-Inference.html#Type-Safety-and-Type-Inference">Type
+Safety and Type Inference</a>. In the &lsquo;<samp>welcomeMessage</samp>&rsquo; example above, no
+initial value is provided, and so the type of the &lsquo;<samp>welcomeMessage</samp>&rsquo;
+variable is specified with a type annotation rather than being inferred
+from an initial value.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Naming-Constants-and-Variables.html#Naming-Constants-and-Variables" accesskey="n" rel="next">Naming Constants and Variables</a>, Previous: <a href="Declaring-Constants-and-Variables.html#Declaring-Constants-and-Variables" accesskey="p" rel="prev">Declaring Constants and Variables</a>, Up: <a href="Constants-and-Variables.html#Constants-and-Variables" accesskey="u" rel="up">Constants and Variables</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

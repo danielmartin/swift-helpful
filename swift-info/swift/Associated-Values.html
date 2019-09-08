@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Associated Values (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Associated Values (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Associated Values (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Enumeration.html#Enumeration" rel="up" title="Enumeration">
+<link href="Raw-Values.html#Raw-Values" rel="next" title="Raw Values">
+<link href="Iterating-over-Enumeration-Cases.html#Iterating-over-Enumeration-Cases" rel="prev" title="Iterating over Enumeration Cases">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Associated-Values"></span><div class="header">
+<p>
+Next: <a href="Raw-Values.html#Raw-Values" accesskey="n" rel="next">Raw Values</a>, Previous: <a href="Iterating-over-Enumeration-Cases.html#Iterating-over-Enumeration-Cases" accesskey="p" rel="prev">Iterating over Enumeration Cases</a>, Up: <a href="Enumeration.html#Enumeration" accesskey="u" rel="up">Enumeration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Associated-Values-1"></span><h3 class="section">13.4 Associated Values</h3>
+
+<p>The examples in the previous section show how the cases of an
+enumeration are a defined (and typed) value in their own right. You can
+set a constant or variable to &lsquo;<samp>Planet.earth</samp>&rsquo;, and check for this value
+later. However, it&rsquo;s sometimes useful to be able to store values of
+other types alongside these case values. This additional information is
+called an <em>associated value</em>, and it varies each time you use that case
+as a value in your code.
+</p>
+<p>You can define Swift enumerations to store associated values of any
+given type, and the value types can be different for each case of the
+enumeration if needed. Enumerations similar to these are known as
+<em>discriminated unions</em>, <em>tagged unions</em>, or <em>variants</em> in other
+programming languages.
+</p>
+<p>For example, suppose an inventory tracking system needs to track
+products by two different types of barcode. Some products are labeled
+with 1D barcodes in UPC format, which uses the numbers &lsquo;<samp>0</samp>&rsquo; to &lsquo;<samp>9</samp>&rsquo;. Each
+barcode has a number system digit, followed by five manufacturer code
+digits and five product code digits. These are followed by a check digit
+to verify that the code has been scanned correctly:
+</p>
+<img src="_images/barcode_UPC_2x.png" alt="_images/barcode_UPC_2x">
+<p>Other products are labeled with 2D barcodes in QR code format, which can
+use any ISO 8859-1 character and can encode a string up to 2,953
+characters long:
+</p>
+<img src="_images/barcode_QR_2x.png" alt="_images/barcode_QR_2x">
+<p>It&rsquo;s convenient for an inventory tracking system to store UPC barcodes
+as a tuple of four integers, and QR code barcodes as a string of any
+length.
+</p>
+<p>In Swift, an enumeration to define product barcodes of either type might
+look like this:
+</p>
+<div class="example">
+<pre class="example">enum Barcode {
+    case upc(Int, Int, Int, Int)
+    case qrCode(String)
+}
+</pre></div>
+
+<p>This can be read as:
+</p>
+<p>“Define an enumeration type called &lsquo;<samp>Barcode</samp>&rsquo;, which can take either a
+value of &lsquo;<samp>upc</samp>&rsquo; with an associated value of type (&lsquo;<samp>Int</samp>&rsquo;, &lsquo;<samp>Int</samp>&rsquo;, &lsquo;<samp>Int</samp>&rsquo;,
+&lsquo;<samp>Int</samp>&rsquo;), or a value of &lsquo;<samp>qrCode</samp>&rsquo; with an associated value of type
+&lsquo;<samp>String</samp>&rsquo;.”
+</p>
+<p>This definition doesn&rsquo;t provide any actual &lsquo;<samp>Int</samp>&rsquo; or &lsquo;<samp>String</samp>&rsquo; values&mdash;it
+just defines the <em>type</em> of associated values that &lsquo;<samp>Barcode</samp>&rsquo; constants
+and variables can store when they are equal to &lsquo;<samp>Barcode.upc</samp>&rsquo; or
+&lsquo;<samp>Barcode.qrCode</samp>&rsquo;.
+</p>
+<p>You can then create new barcodes using either type:
+</p>
+<div class="example">
+<pre class="example">var productBarcode = Barcode.upc(8, 85909, 51226, 3)
+</pre></div>
+
+<p>This example creates a new variable called &lsquo;<samp>productBarcode</samp>&rsquo; and assigns
+it a value of &lsquo;<samp>Barcode.upc</samp>&rsquo; with an associated tuple value of
+&lsquo;<samp>(8, 85909, 51226, 3)</samp>&rsquo;.
+</p>
+<p>You can assign the same product a different type of barcode:
+</p>
+<div class="example">
+<pre class="example">productBarcode = .qrCode(&quot;ABCDEFGHIJKLMNOP&quot;)
+</pre></div>
+
+<p>At this point, the original &lsquo;<samp>Barcode.upc</samp>&rsquo; and its integer values are
+replaced by the new &lsquo;<samp>Barcode.qrCode</samp>&rsquo; and its string value. Constants and
+variables of type &lsquo;<samp>Barcode</samp>&rsquo; can store either a &lsquo;<samp>.upc</samp>&rsquo; or a &lsquo;<samp>.qrCode</samp>&rsquo;
+(together with their associated values), but they can store only one of
+them at any given time.
+</p>
+<p>You can check the different barcode types using a switch statement,
+similar to the example in <a href="Matching-Enumeration-Values-with-a-Switch-Statement.html#Matching-Enumeration-Values-with-a-Switch-Statement">Matching
+Enumeration Values with a Switch Statement</a>. This time, however, the
+associated values are extracted as part of the switch statement. You
+extract each associated value as a constant (with the &lsquo;<samp>let</samp>&rsquo; prefix) or a
+variable (with the &lsquo;<samp>var</samp>&rsquo; prefix) for use within the &lsquo;<samp>switch</samp>&rsquo; case&rsquo;s
+body:
+</p>
+<div class="example">
+<pre class="example">switch productBarcode {
+case .upc(let numberSystem, let manufacturer, let product, let check):
+    print(&quot;UPC: \(numberSystem), \(manufacturer), \(product), \(check).&quot;)
+case .qrCode(let productCode):
+    print(&quot;QR code: \(productCode).&quot;)
+}
+// Prints &quot;QR code: ABCDEFGHIJKLMNOP.&quot;
+</pre></div>
+
+<p>If all of the associated values for an enumeration case are extracted as
+constants, or if all are extracted as variables, you can place a single
+&lsquo;<samp>var</samp>&rsquo; or &lsquo;<samp>let</samp>&rsquo; annotation before the case name, for brevity:
+</p>
+<div class="example">
+<pre class="example">switch productBarcode {
+case let .upc(numberSystem, manufacturer, product, check):
+    print(&quot;UPC : \(numberSystem), \(manufacturer), \(product), \(check).&quot;)
+case let .qrCode(productCode):
+    print(&quot;QR code: \(productCode).&quot;)
+}
+// Prints &quot;QR code: ABCDEFGHIJKLMNOP.&quot;
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Raw-Values.html#Raw-Values" accesskey="n" rel="next">Raw Values</a>, Previous: <a href="Iterating-over-Enumeration-Cases.html#Iterating-over-Enumeration-Cases" accesskey="p" rel="prev">Iterating over Enumeration Cases</a>, Up: <a href="Enumeration.html#Enumeration" accesskey="u" rel="up">Enumeration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

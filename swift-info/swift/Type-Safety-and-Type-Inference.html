@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Type Safety and Type Inference (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Type Safety and Type Inference (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Type Safety and Type Inference (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="The-Basics.html#The-Basics" rel="up" title="The Basics">
+<link href="Numeric-Literals.html#Numeric-Literals" rel="next" title="Numeric Literals">
+<link href="Floating_002dPoint-Numbers.html#Floating_002dPoint-Numbers" rel="prev" title="Floating-Point Numbers">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Type-Safety-and-Type-Inference"></span><div class="header">
+<p>
+Next: <a href="Numeric-Literals.html#Numeric-Literals" accesskey="n" rel="next">Numeric Literals</a>, Previous: <a href="Floating_002dPoint-Numbers.html#Floating_002dPoint-Numbers" accesskey="p" rel="prev">Floating-Point Numbers</a>, Up: <a href="The-Basics.html#The-Basics" accesskey="u" rel="up">The Basics</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Type-Safety-and-Type-Inference-1"></span><h3 class="section">6.6 Type Safety and Type Inference</h3>
+
+<p>Swift is a <em>type-safe</em> language. A type safe language encourages you to
+be clear about the types of values your code can work with. If part of
+your code requires a &lsquo;<samp>String</samp>&rsquo;, you can&rsquo;t pass it an &lsquo;<samp>Int</samp>&rsquo; by mistake.
+</p>
+<p>Because Swift is type safe, it performs <em>type checks</em> when compiling
+your code and flags any mismatched types as errors. This enables you to
+catch and fix errors as early as possible in the development process.
+</p>
+<p>Type-checking helps you avoid errors when you&rsquo;re working with different
+types of values. However, this doesn&rsquo;t mean that you have to specify the
+type of every constant and variable that you declare. If you don&rsquo;t
+specify the type of value you need, Swift uses <em>type inference</em> to work
+out the appropriate type. Type inference enables a compiler to deduce
+the type of a particular expression automatically when it compiles your
+code, simply by examining the values you provide.
+</p>
+<p>Because of type inference, Swift requires far fewer type declarations
+than languages such as C or Objective-C. Constants and variables are
+still explicitly typed, but much of the work of specifying their type is
+done for you.
+</p>
+<p>Type inference is particularly useful when you declare a constant or
+variable with an initial value. This is often done by assigning a
+<em>literal value</em> (or <em>literal</em>) to the constant or variable at the point
+that you declare it. (A literal value is a value that appears directly
+in your source code, such as &lsquo;<samp>42</samp>&rsquo; and &lsquo;<samp>3.14159</samp>&rsquo; in the examples below.)
+</p>
+<p>For example, if you assign a literal value of &lsquo;<samp>42</samp>&rsquo; to a new constant
+without saying what type it is, Swift infers that you want the constant
+to be an &lsquo;<samp>Int</samp>&rsquo;, because you have initialized it with a number that looks
+like an integer:
+</p>
+<div class="example">
+<pre class="example">let meaningOfLife = 42
+// meaningOfLife is inferred to be of type Int
+</pre></div>
+
+<p>Likewise, if you don&rsquo;t specify a type for a floating-point literal,
+Swift infers that you want to create a &lsquo;<samp>Double</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let pi = 3.14159
+// pi is inferred to be of type Double
+</pre></div>
+
+<p>Swift always chooses &lsquo;<samp>Double</samp>&rsquo; (rather than &lsquo;<samp>Float</samp>&rsquo;) when inferring the
+type of floating-point numbers.
+</p>
+<p>If you combine integer and floating-point literals in an expression, a
+type of &lsquo;<samp>Double</samp>&rsquo; will be inferred from the context:
+</p>
+<div class="example">
+<pre class="example">let anotherPi = 3 + 0.14159
+// anotherPi is also inferred to be of type Double
+</pre></div>
+
+<p>The literal value of &lsquo;<samp>3</samp>&rsquo; has no explicit type in and of itself, and so
+an appropriate output type of &lsquo;<samp>Double</samp>&rsquo; is inferred from the presence of
+a floating-point literal as part of the addition.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Numeric-Literals.html#Numeric-Literals" accesskey="n" rel="next">Numeric Literals</a>, Previous: <a href="Floating_002dPoint-Numbers.html#Floating_002dPoint-Numbers" accesskey="p" rel="prev">Floating-Point Numbers</a>, Up: <a href="The-Basics.html#The-Basics" accesskey="u" rel="up">The Basics</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

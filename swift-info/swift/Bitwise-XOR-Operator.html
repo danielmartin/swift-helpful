@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Bitwise XOR Operator (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Bitwise XOR Operator (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Bitwise XOR Operator (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Bitwise-Operators.html#Bitwise-Operators" rel="up" title="Bitwise Operators">
+<link href="Bitwise-Left-and-Right-Shift-Operators.html#Bitwise-Left-and-Right-Shift-Operators" rel="next" title="Bitwise Left and Right Shift Operators">
+<link href="Bitwise-OR-Operator.html#Bitwise-OR-Operator" rel="prev" title="Bitwise OR Operator">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Bitwise-XOR-Operator"></span><div class="header">
+<p>
+Next: <a href="Bitwise-Left-and-Right-Shift-Operators.html#Bitwise-Left-and-Right-Shift-Operators" accesskey="n" rel="next">Bitwise Left and Right Shift Operators</a>, Previous: <a href="Bitwise-OR-Operator.html#Bitwise-OR-Operator" accesskey="p" rel="prev">Bitwise OR Operator</a>, Up: <a href="Bitwise-Operators.html#Bitwise-Operators" accesskey="u" rel="up">Bitwise Operators</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Bitwise-XOR-Operator-1"></span><h4 class="subsection">32.1.4 Bitwise XOR Operator</h4>
+
+<p>The <em>bitwise XOR operator</em>, or “exclusive OR operator” (&lsquo;<samp>^</samp>&rsquo;), compares
+the bits of two numbers. The operator returns a new number whose bits
+are set to &lsquo;<samp>1</samp>&rsquo; where the input bits are different and are set to &lsquo;<samp>0</samp>&rsquo;
+where the input bits are the same:
+</p>
+<img src="_images/bitwiseXOR_2x.png" alt="_images/bitwiseXOR_2x">
+<p>In the example below, the values of &lsquo;<samp>firstBits</samp>&rsquo; and &lsquo;<samp>otherBits</samp>&rsquo; each
+have a bit set to &lsquo;<samp>1</samp>&rsquo; in a location that the other does not. The bitwise
+XOR operator sets both of these bits to &lsquo;<samp>1</samp>&rsquo; in its output value. All of
+the other bits in &lsquo;<samp>firstBits</samp>&rsquo; and &lsquo;<samp>otherBits</samp>&rsquo; match and are set to &lsquo;<samp>0</samp>&rsquo;
+in the output value:
+</p>
+<div class="example">
+<pre class="example">let firstBits: UInt8 = 0b00010100
+let otherBits: UInt8 = 0b00000101
+let outputBits = firstBits ^ otherBits // equals 00010001
+</pre></div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Parameter Names and Argument Labels (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Parameter Names and Argument Labels (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Parameter Names and Argument Labels (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Customizing-Initialization.html#Customizing-Initialization" rel="up" title="Customizing Initialization">
+<link href="Initializer-Parameters-Without-Argument-Labels.html#Initializer-Parameters-Without-Argument-Labels" rel="next" title="Initializer Parameters Without Argument Labels">
+<link href="Initialization-Parameters.html#Initialization-Parameters" rel="prev" title="Initialization Parameters">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Parameter-Names-and-Argument-Labels"></span><div class="header">
+<p>
+Next: <a href="Initializer-Parameters-Without-Argument-Labels.html#Initializer-Parameters-Without-Argument-Labels" accesskey="n" rel="next">Initializer Parameters Without Argument Labels</a>, Previous: <a href="Initialization-Parameters.html#Initialization-Parameters" accesskey="p" rel="prev">Initialization Parameters</a>, Up: <a href="Customizing-Initialization.html#Customizing-Initialization" accesskey="u" rel="up">Customizing Initialization</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Parameter-Names-and-Argument-Labels-1"></span><h4 class="subsection">19.2.2 Parameter Names and Argument Labels</h4>
+
+<p>As with function and method parameters, initialization parameters can
+have both a parameter name for use within the initializer&rsquo;s body and an
+argument label for use when calling the initializer.
+</p>
+<p>However, initializers do not have an identifying function name before
+their parentheses in the way that functions and methods do. Therefore,
+the names and types of an initializer&rsquo;s parameters play a particularly
+important role in identifying which initializer should be called.
+Because of this, Swift provides an automatic argument label for <em>every</em>
+parameter in an initializer if you don&rsquo;t provide one.
+</p>
+<p>The following example defines a structure called &lsquo;<samp>Color</samp>&rsquo;, with three
+constant properties called &lsquo;<samp>red</samp>&rsquo;, &lsquo;<samp>green</samp>&rsquo;, and &lsquo;<samp>blue</samp>&rsquo;. These properties
+store a value between &lsquo;<samp>0.0</samp>&rsquo; and &lsquo;<samp>1.0</samp>&rsquo; to indicate the amount of red,
+green, and blue in the color.
+</p>
+<p>&lsquo;<samp>Color</samp>&rsquo; provides an initializer with three appropriately named
+parameters of type &lsquo;<samp>Double</samp>&rsquo; for its red, green, and blue components.
+&lsquo;<samp>Color</samp>&rsquo; also provides a second initializer with a single &lsquo;<samp>white</samp>&rsquo;
+parameter, which is used to provide the same value for all three color
+components.
+</p>
+<div class="example">
+<pre class="example">struct Color {
+    let red, green, blue: Double
+    init(red: Double, green: Double, blue: Double) {
+        self.red = red
+        self.green = green
+        self.blue = blue
+    }
+    init(white: Double) {
+        red = white
+        green = white
+        blue = white
+    }
+}
+</pre></div>
+
+<p>Both initializers can be used to create a new &lsquo;<samp>Color</samp>&rsquo; instance, by
+providing named values for each initializer parameter:
+</p>
+<div class="example">
+<pre class="example">let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
+let halfGray = Color(white: 0.5)
+</pre></div>
+
+<p>Note that it is not possible to call these initializers without using
+argument labels. Argument labels must always be used in an initializer
+if they are defined, and omitting them is a compile-time error:
+</p>
+<div class="example">
+<pre class="example">let veryGreen = Color(0.0, 1.0, 0.0)
+// this reports a compile-time error - argument labels are required
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Initializer-Parameters-Without-Argument-Labels.html#Initializer-Parameters-Without-Argument-Labels" accesskey="n" rel="next">Initializer Parameters Without Argument Labels</a>, Previous: <a href="Initialization-Parameters.html#Initialization-Parameters" accesskey="p" rel="prev">Initialization Parameters</a>, Up: <a href="Customizing-Initialization.html#Customizing-Initialization" accesskey="u" rel="up">Customizing Initialization</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

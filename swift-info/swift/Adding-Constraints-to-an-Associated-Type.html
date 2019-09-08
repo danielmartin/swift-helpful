@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Adding Constraints to an Associated Type (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Adding Constraints to an Associated Type (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Adding Constraints to an Associated Type (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Associated-Types.html#Associated-Types" rel="up" title="Associated Types">
+<link href="Using-a-Protocol-in-Its-Associated-Type_0027s-Constraints.html#Using-a-Protocol-in-Its-Associated-Type_0027s-Constraints" rel="next" title="Using a Protocol in Its Associated Type's Constraints">
+<link href="Extending-an-Existing-Type-to-Specify-an-Associated-Type.html#Extending-an-Existing-Type-to-Specify-an-Associated-Type" rel="prev" title="Extending an Existing Type to Specify an Associated Type">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Adding-Constraints-to-an-Associated-Type"></span><div class="header">
+<p>
+Next: <a href="Using-a-Protocol-in-Its-Associated-Type_0027s-Constraints.html#Using-a-Protocol-in-Its-Associated-Type_0027s-Constraints" accesskey="n" rel="next">Using a Protocol in Its Associated Type's Constraints</a>, Previous: <a href="Extending-an-Existing-Type-to-Specify-an-Associated-Type.html#Extending-an-Existing-Type-to-Specify-an-Associated-Type" accesskey="p" rel="prev">Extending an Existing Type to Specify an Associated Type</a>, Up: <a href="Associated-Types.html#Associated-Types" accesskey="u" rel="up">Associated Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Adding-Constraints-to-an-Associated-Type-1"></span><h4 class="subsection">27.8.3 Adding Constraints to an Associated Type</h4>
+
+<p>You can add type constraints to an associated type in a protocol to
+require that conforming types satisfy those constraints. For example,
+the following code defines a version of &lsquo;<samp>Container</samp>&rsquo; that requires the
+items in the container to be equatable.
+</p>
+<div class="example">
+<pre class="example">protocol Container {
+    associatedtype Item: Equatable
+    mutating func append(_ item: Item)
+    var count: Int { get }
+    subscript(i: Int) -&gt; Item { get }
+}
+</pre></div>
+
+<p>To conform to this version of &lsquo;<samp>Container</samp>&rsquo;, the container&rsquo;s &lsquo;<samp>Item</samp>&rsquo; type
+has to conform to the &lsquo;<samp>Equatable</samp>&rsquo; protocol.
+</p>
+
+
+
+</body>
+</html>

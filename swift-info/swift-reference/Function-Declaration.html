@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Function Declaration (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Function Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Function Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Declarations.html#Declarations" rel="up" title="Declarations">
+<link href="Parameter-Names.html#Parameter-Names" rel="next" title="Parameter Names">
+<link href="Type-Alias-Declaration.html#Type-Alias-Declaration" rel="prev" title="Type Alias Declaration">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Function-Declaration"></span><div class="header">
+<p>
+Next: <a href="Enumeration-Declaration.html#Enumeration-Declaration" accesskey="n" rel="next">Enumeration Declaration</a>, Previous: <a href="Type-Alias-Declaration.html#Type-Alias-Declaration" accesskey="p" rel="prev">Type Alias Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Function-Declaration-1"></span><h3 class="section">7.7 Function Declaration</h3>
+
+<p>A <em>function declaration</em> introduces a function or method into your
+program. A function declared in the context of class, structure,
+enumeration, or protocol is referred to as a <em>method</em>. Function
+declarations are declared using the &lsquo;<samp>func</samp>&rsquo; keyword and have the
+following form:
+</p>
+<ol>
+<li> func function name(parameters) -&gt; return type {
+</li><li> statements
+</li><li> }
+</li></ol>
+
+<p>If the function has a return type of &lsquo;<samp>Void</samp>&rsquo;, the return type can be
+omitted as follows:
+</p>
+<ol>
+<li> func function name(parameters) {
+</li><li> statements
+</li><li> }
+</li></ol>
+
+<p>The type of each parameter must be included&mdash;it can&rsquo;t be inferred. If
+you write &lsquo;<samp>inout</samp>&rsquo; in front of a parameter&rsquo;s type, the parameter can be
+modified inside the scope of the function. In-out parameters are
+discussed in detail in <a href="In_002dOut-Parameters.html#In_002dOut-Parameters">In-Out Parameters</a>,
+below.
+</p>
+<p>Functions can return multiple values using a tuple type as the return
+type of the function.
+</p>
+<p>A function definition can appear inside another function declaration.
+This kind of function is known as a <em>nested function</em>.
+</p>
+<p>A nested function is nonescaping if it captures a value that is
+guaranteed to never escape&mdash;such as an in-out parameter&mdash;or passed as
+a nonescaping function argument. Otherwise, the nested function is an
+escaping function.
+</p>
+<p>For a discussion of nested functions, see
+<a href="../swift/Nested-Functions.html#Nested-Functions">(swift)Nested Functions</a>.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Parameter-Names.html#Parameter-Names" accesskey="1">Parameter Names</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="In_002dOut-Parameters.html#In_002dOut-Parameters" accesskey="2">In-Out Parameters</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Special-Kinds-of-Parameters.html#Special-Kinds-of-Parameters" accesskey="3">Special Kinds of Parameters</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Special-Kinds-of-Methods.html#Special-Kinds-of-Methods" accesskey="4">Special Kinds of Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Throwing-Functions-and-Methods.html#Throwing-Functions-and-Methods" accesskey="5">Throwing Functions and Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Rethrowing-Functions-and-Methods.html#Rethrowing-Functions-and-Methods" accesskey="6">Rethrowing Functions and Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Functions-that-Never-Return.html#Functions-that-Never-Return" accesskey="7">Functions that Never Return</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Enumeration-Declaration.html#Enumeration-Declaration" accesskey="n" rel="next">Enumeration Declaration</a>, Previous: <a href="Type-Alias-Declaration.html#Type-Alias-Declaration" accesskey="p" rel="prev">Type Alias Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

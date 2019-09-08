@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Methods 1 (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Methods 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Methods 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Extensions.html#Extensions" rel="up" title="Extensions">
+<link href="Mutating-Instance-Methods.html#Mutating-Instance-Methods" rel="next" title="Mutating Instance Methods">
+<link href="Initializers-1.html#Initializers-1" rel="prev" title="Initializers 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Methods-1"></span><div class="header">
+<p>
+Next: <a href="Subscripts-1.html#Subscripts-1" accesskey="n" rel="next">Subscripts 1</a>, Previous: <a href="Initializers-1.html#Initializers-1" accesskey="p" rel="prev">Initializers 1</a>, Up: <a href="Extensions.html#Extensions" accesskey="u" rel="up">Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Methods-3"></span><h3 class="section">25.4 Methods</h3>
+
+<p>Extensions can add new instance methods and type methods to existing
+types. The following example adds a new instance method called
+&lsquo;<samp>repetitions</samp>&rsquo; to the &lsquo;<samp>Int</samp>&rsquo; type:
+</p>
+<div class="example">
+<pre class="example">extension Int {
+    func repetitions(task: () -&gt; Void) {
+        for _ in 0..&lt;self {
+            task()
+        }
+    }
+}
+</pre></div>
+
+<p>The &lsquo;<samp>repetitions(task:)</samp>&rsquo; method takes a single argument of type
+&lsquo;<samp>() -&gt; Void</samp>&rsquo;, which indicates a function that has no parameters and does
+not return a value.
+</p>
+<p>After defining this extension, you can call the &lsquo;<samp>repetitions(task:)</samp>&rsquo;
+method on any integer to perform a task that many number of times:
+</p>
+<div class="example">
+<pre class="example">3.repetitions {
+    print(&quot;Hello!&quot;)
+}
+// Hello!
+// Hello!
+// Hello!
+</pre></div>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Mutating-Instance-Methods.html#Mutating-Instance-Methods" accesskey="1">Mutating Instance Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Ternary Conditional Operator (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Ternary Conditional Operator (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Ternary Conditional Operator (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Basic-Operators.html#Basic-Operators" rel="up" title="Basic Operators">
+<link href="Nil_002dCoalescing-Operator.html#Nil_002dCoalescing-Operator" rel="next" title="Nil-Coalescing Operator">
+<link href="Comparison-Operators.html#Comparison-Operators" rel="prev" title="Comparison Operators">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Ternary-Conditional-Operator"></span><div class="header">
+<p>
+Next: <a href="Nil_002dCoalescing-Operator.html#Nil_002dCoalescing-Operator" accesskey="n" rel="next">Nil-Coalescing Operator</a>, Previous: <a href="Comparison-Operators.html#Comparison-Operators" accesskey="p" rel="prev">Comparison Operators</a>, Up: <a href="Basic-Operators.html#Basic-Operators" accesskey="u" rel="up">Basic Operators</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Ternary-Conditional-Operator-1"></span><h3 class="section">7.6 Ternary Conditional Operator</h3>
+
+<p>The <em>ternary conditional operator</em> is a special operator with three
+parts, which takes the form &lsquo;<samp>question ? answer1 : answer2</samp>&rsquo;. It&rsquo;s a
+shortcut for evaluating one of two expressions based on whether
+&lsquo;<samp>question</samp>&rsquo; is true or false. If &lsquo;<samp>question</samp>&rsquo; is true, it evaluates
+&lsquo;<samp>answer1</samp>&rsquo; and returns its value; otherwise, it evaluates &lsquo;<samp>answer2</samp>&rsquo; and
+returns its value.
+</p>
+<p>The ternary conditional operator is shorthand for the code below:
+</p>
+<div class="example">
+<pre class="example">if question {
+    answer1
+} else {
+    answer2
+}
+</pre></div>
+
+<p>Here&rsquo;s an example, which calculates the height for a table row. The row
+height should be 50 points taller than the content height if the row has
+a header, and 20 points taller if the row doesn&rsquo;t have a header:
+</p>
+<div class="example">
+<pre class="example">let contentHeight = 40
+let hasHeader = true
+let rowHeight = contentHeight + (hasHeader ? 50 : 20)
+// rowHeight is equal to 90
+</pre></div>
+
+<p>The example above is shorthand for the code below:
+</p>
+<div class="example">
+<pre class="example">let contentHeight = 40
+let hasHeader = true
+let rowHeight: Int
+if hasHeader {
+    rowHeight = contentHeight + 50
+} else {
+    rowHeight = contentHeight + 20
+}
+// rowHeight is equal to 90
+</pre></div>
+
+<p>The first example&rsquo;s use of the ternary conditional operator means that
+&lsquo;<samp>rowHeight</samp>&rsquo; can be set to the correct value on a single line of code,
+which is more concise than the code used in the second example.
+</p>
+<p>The ternary conditional operator provides an efficient shorthand for
+deciding which of two expressions to consider. Use the ternary
+conditional operator with care, however. Its conciseness can lead to
+hard-to-read code if overused. Avoid combining multiple instances of the
+ternary conditional operator into one compound statement.
+</p>
+
+
+
+</body>
+</html>

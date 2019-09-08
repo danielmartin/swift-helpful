@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Labeled Statement (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Labeled Statement (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Labeled Statement (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Statements.html#Statements" rel="up" title="Statements">
+<link href="Control-Transfer-Statements.html#Control-Transfer-Statements" rel="next" title="Control Transfer Statements">
+<link href="Guard-Statement.html#Guard-Statement" rel="prev" title="Guard Statement">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Labeled-Statement"></span><div class="header">
+<p>
+Next: <a href="Control-Transfer-Statements.html#Control-Transfer-Statements" accesskey="n" rel="next">Control Transfer Statements</a>, Previous: <a href="Loop-Statements.html#Loop-Statements" accesskey="p" rel="prev">Loop Statements</a>, Up: <a href="Statements.html#Statements" accesskey="u" rel="up">Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Labeled-Statement-1"></span><h3 class="section">6.2 Labeled Statement</h3>
+
+<p>You can prefix a loop statement, an &lsquo;<samp>if</samp>&rsquo; statement, a &lsquo;<samp>switch</samp>&rsquo;
+statement, or a &lsquo;<samp>do</samp>&rsquo; statement with a <em>statement label</em>, which consists
+of the name of the label followed immediately by a colon (:). Use
+statement labels with &lsquo;<samp>break</samp>&rsquo; and &lsquo;<samp>continue</samp>&rsquo; statements to be explicit
+about how you want to change control flow in a loop statement or a
+&lsquo;<samp>switch</samp>&rsquo; statement, as discussed in <a href="Break-Statement.html#Break-Statement">Break
+Statement</a> and <a href="Continue-Statement.html#Continue-Statement">Continue Statement</a> below.
+</p>
+<p>The scope of a labeled statement is the entire statement following the
+statement label. You can nest labeled statements, but the name of each
+statement label must be unique.
+</p>
+<p>For more information and to see examples of how to use statement labels,
+see <a href="../swift/Labeled-Statements.html#Labeled-Statements">(swift)Labeled Statements</a> in
+<a href="../swift/Control-Flow.html#Control-Flow">(swift)Control Flow</a>.
+</p>
+<p>Grammar of a labeled statement
+</p>
+<p>labeled-statement →
+statement-label
+loop-statement
+</p>
+<p>labeled-statement →
+statement-label
+if-statement
+</p>
+<p>labeled-statement →
+statement-label
+switch-statement
+</p>
+<p>labeled-statement →
+statement-label
+do-statement
+</p>
+<p>statement-label →
+label-name
+&lsquo;<samp>:</samp>&rsquo;
+</p>
+<p>label-name →
+identifier
+</p>
+
+
+
+</body>
+</html>

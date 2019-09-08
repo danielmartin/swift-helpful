@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Enumerations and Structures (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Enumerations and Structures (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Enumerations and Structures (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="A-Swift-Tour.html#A-Swift-Tour" rel="up" title="A Swift Tour">
+<link href="Protocols-and-Extensions.html#Protocols-and-Extensions" rel="next" title="Protocols and Extensions">
+<link href="Objects-and-Classes.html#Objects-and-Classes" rel="prev" title="Objects and Classes">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Enumerations-and-Structures"></span><div class="header">
+<p>
+Next: <a href="Protocols-and-Extensions.html#Protocols-and-Extensions" accesskey="n" rel="next">Protocols and Extensions</a>, Previous: <a href="Objects-and-Classes.html#Objects-and-Classes" accesskey="p" rel="prev">Objects and Classes</a>, Up: <a href="A-Swift-Tour.html#A-Swift-Tour" accesskey="u" rel="up">A Swift Tour</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Enumerations-and-Structures-1"></span><h3 class="section">4.5 Enumerations and Structures</h3>
+
+<span id="index-enum"></span>
+
+<p>Use &lsquo;<samp>enum</samp>&rsquo; to create an enumeration. Like classes and all other named
+types, enumerations can have methods associated with them.
+</p>
+<div class="example">
+<pre class="example">enum Rank: Int {
+    case ace = 1
+    case two, three, four, five, six, seven, eight, nine, ten
+    case jack, queen, king
+
+    func simpleDescription() -&gt; String {
+        switch self {
+        case .ace:
+            return &quot;ace&quot;
+        case .jack:
+            return &quot;jack&quot;
+        case .queen:
+            return &quot;queen&quot;
+        case .king:
+            return &quot;king&quot;
+        default:
+            return String(self.rawValue)
+        }
+    }
+}
+let ace = Rank.ace
+let aceRawValue = ace.rawValue
+</pre></div>
+
+<p>Experiment
+</p>
+<p>Write a function that compares two &lsquo;<samp>Rank</samp>&rsquo; values by comparing their raw
+values.
+</p>
+<p>By default, Swift assigns the raw values starting at zero and
+incrementing by one each time, but you can change this behavior by
+explicitly specifying values. In the example above, &lsquo;<samp>Ace</samp>&rsquo; is explicitly
+given a raw value of &lsquo;<samp>1</samp>&rsquo;, and the rest of the raw values are assigned in
+order. You can also use strings or floating-point numbers as the raw
+type of an enumeration. Use the &lsquo;<samp>rawValue</samp>&rsquo; property to access the raw
+value of an enumeration case.
+</p>
+<p>Use the &lsquo;<samp>init?(rawValue:)</samp>&rsquo; initializer to make an instance of an
+enumeration from a raw value. It returns either the enumeration case
+matching the raw value or &lsquo;<samp>nil</samp>&rsquo; if there is no matching &lsquo;<samp>Rank</samp>&rsquo;.
+</p>
+<div class="example">
+<pre class="example">if let convertedRank = Rank(rawValue: 3) {
+    let threeDescription = convertedRank.simpleDescription()
+}
+</pre></div>
+
+<p>The case values of an enumeration are actual values, not just another
+way of writing their raw values. In fact, in cases where there isn&rsquo;t a
+meaningful raw value, you don&rsquo;t have to provide one.
+</p>
+<div class="example">
+<pre class="example">enum Suit {
+    case spades, hearts, diamonds, clubs
+
+    func simpleDescription() -&gt; String {
+        switch self {
+        case .spades:
+            return &quot;spades&quot;
+        case .hearts:
+            return &quot;hearts&quot;
+        case .diamonds:
+            return &quot;diamonds&quot;
+        case .clubs:
+            return &quot;clubs&quot;
+        }
+    }
+}
+let hearts = Suit.hearts
+let heartsDescription = hearts.simpleDescription()
+</pre></div>
+
+<p>Experiment
+</p>
+<p>Add a &lsquo;<samp>color()</samp>&rsquo; method to &lsquo;<samp>Suit</samp>&rsquo; that returns “black” for spades and
+clubs, and returns “red” for hearts and diamonds.
+</p>
+<p>Notice the two ways that the &lsquo;<samp>hearts</samp>&rsquo; case of the enumeration is
+referred to above: When assigning a value to the &lsquo;<samp>hearts</samp>&rsquo; constant, the
+enumeration case &lsquo;<samp>Suit.hearts</samp>&rsquo; is referred to by its full name because
+the constant doesn&rsquo;t have an explicit type specified. Inside the switch,
+the enumeration case is referred to by the abbreviated form &lsquo;<samp>.hearts</samp>&rsquo;
+because the value of &lsquo;<samp>self</samp>&rsquo; is already known to be a suit. You can use
+the abbreviated form anytime the value&rsquo;s type is already known.
+</p>
+<p>If an enumeration has raw values, those values are determined as part of
+the declaration, which means every instance of a particular enumeration
+case always has the same raw value. Another choice for enumeration cases
+is to have values associated with the case&mdash;these values are determined
+when you make the instance, and they can be different for each instance
+of an enumeration case. You can think of the associated values as
+behaving like stored properties of the enumeration case instance. For
+example, consider the case of requesting the sunrise and sunset times
+from a server. The server either responds with the requested
+information, or it responds with a description of what went wrong.
+</p>
+<div class="example">
+<pre class="example">enum ServerResponse {
+    case result(String, String)
+    case failure(String)
+}
+
+let success = ServerResponse.result(&quot;6:00 am&quot;, &quot;8:09 pm&quot;)
+let failure = ServerResponse.failure(&quot;Out of cheese.&quot;)
+
+switch success {
+case let .result(sunrise, sunset):
+    print(&quot;Sunrise is at \(sunrise) and sunset is at \(sunset).&quot;)
+case let .failure(message):
+    print(&quot;Failure... \(message)&quot;)
+}
+// Prints &quot;Sunrise is at 6:00 am and sunset is at 8:09 pm.&quot;
+</pre></div>
+
+<p>Experiment
+</p>
+<p>Add a third case to &lsquo;<samp>ServerResponse</samp>&rsquo; and to the switch.
+</p>
+<p>Notice how the sunrise and sunset times are extracted from the
+&lsquo;<samp>ServerResponse</samp>&rsquo; value as part of matching the value against the switch
+cases.
+</p>
+<p>Use &lsquo;<samp>struct</samp>&rsquo; to create a structure. Structures support many of the same
+behaviors as classes, including methods and initializers. One of the
+most important differences between structures and classes is that
+structures are always copied when they are passed around in your code,
+but classes are passed by reference.
+</p>
+<div class="example">
+<pre class="example">struct Card {
+    var rank: Rank
+    var suit: Suit
+    func simpleDescription() -&gt; String {
+        return &quot;The \(rank.simpleDescription()) of
+          \(suit.simpleDescription())&quot;
+    }
+}
+let threeOfSpades = Card(rank: .three, suit: .spades)
+let threeOfSpadesDescription = threeOfSpades.simpleDescription()
+</pre></div>
+
+<p>Experiment
+</p>
+<p>Write a function that returns an array containing a full deck of cards,
+with one card of each combination of rank and suit.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Protocols-and-Extensions.html#Protocols-and-Extensions" accesskey="n" rel="next">Protocols and Extensions</a>, Previous: <a href="Objects-and-Classes.html#Objects-and-Classes" accesskey="p" rel="prev">Objects and Classes</a>, Up: <a href="A-Swift-Tour.html#A-Swift-Tour" accesskey="u" rel="up">A Swift Tour</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

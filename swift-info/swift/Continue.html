@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Continue (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Continue (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Continue (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Control-Transfer-Statements.html#Control-Transfer-Statements" rel="up" title="Control Transfer Statements">
+<link href="Break.html#Break" rel="next" title="Break">
+<link href="Control-Transfer-Statements.html#Control-Transfer-Statements" rel="prev" title="Control Transfer Statements">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Continue"></span><div class="header">
+<p>
+Next: <a href="Break.html#Break" accesskey="n" rel="next">Break</a>, Up: <a href="Control-Transfer-Statements.html#Control-Transfer-Statements" accesskey="u" rel="up">Control Transfer Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Continue-1"></span><h4 class="subsection">10.4.1 Continue</h4>
+
+<span id="index-continue"></span>
+
+<p>The &lsquo;<samp>continue</samp>&rsquo; statement tells a loop to stop what it is doing and start
+again at the beginning of the next iteration through the loop. It says
+“I am done with the current loop iteration” without leaving the loop
+altogether.
+</p>
+<p>The following example removes all vowels and spaces from a lowercase
+string to create a cryptic puzzle phrase:
+</p>
+<div class="example">
+<pre class="example">let puzzleInput = &quot;great minds think alike&quot;
+var puzzleOutput = &quot;&quot;
+let charactersToRemove: [Character] = [&quot;a&quot;, &quot;e&quot;, &quot;i&quot;, &quot;o&quot;, &quot;u&quot;, &quot; &quot;]
+for character in puzzleInput {
+    if charactersToRemove.contains(character) {
+        continue
+    }
+    puzzleOutput.append(character)
+}
+print(puzzleOutput)
+// Prints &quot;grtmndsthnklk&quot;
+</pre></div>
+
+<p>The code above calls the &lsquo;<samp>continue</samp>&rsquo; keyword whenever it matches a vowel
+or a space, causing the current iteration of the loop to end immediately
+and to jump straight to the start of the next iteration.
+</p>
+
+
+
+</body>
+</html>

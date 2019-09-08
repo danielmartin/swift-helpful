@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Access Control Levels (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Access Control Levels (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Access Control Levels (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Declaration-Modifiers.html#Declaration-Modifiers" rel="up" title="Declaration Modifiers">
+<link href="Attributes.html#Attributes" rel="next" title="Attributes">
+<link href="Declaration-Modifiers.html#Declaration-Modifiers" rel="prev" title="Declaration Modifiers">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Access-Control-Levels"></span><div class="header">
+<p>
+Up: <a href="Declaration-Modifiers.html#Declaration-Modifiers" accesskey="u" rel="up">Declaration Modifiers</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Access-Control-Levels-1"></span><h4 class="subsection">7.18.1 Access Control Levels</h4>
+
+<p>Swift provides five levels of access control: open, public, internal,
+file private, and private. You can mark a declaration with one of the
+access-level modifiers below to specify the declaration&rsquo;s access level.
+Access control is discussed in detail in
+<a href="../swift/Access-Control.html#Access-Control">(swift)Access Control</a>.
+</p>
+<span id="index-open"></span>
+
+<dl compact="compact">
+<dt>&lsquo;<samp>open</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to a declaration to indicate the
+declaration can be accessed and subclassed by code in the same module
+as the declaration. Declarations marked with the &lsquo;<samp>open</samp>&rsquo; access-level
+modifier can also be accessed and subclassed by code in a module that
+imports the module that contains that declaration.
+</p></dd>
+</dl>
+
+<span id="index-public"></span>
+
+<dl compact="compact">
+<dt>&lsquo;<samp>public</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to a declaration to indicate the
+declaration can be accessed and subclassed by code in the same module
+as the declaration. Declarations marked with the &lsquo;<samp>public</samp>&rsquo; access-level
+modifier can also be accessed (but not subclassed) by code in a module
+that imports the module that contains that declaration.
+</p></dd>
+</dl>
+
+<span id="index-internal"></span>
+
+<dl compact="compact">
+<dt>&lsquo;<samp>internal</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to a declaration to indicate the
+declaration can be accessed only by code in the same module as the
+declaration. By default, most declarations are implicitly marked with
+the &lsquo;<samp>internal</samp>&rsquo; access-level modifier.
+</p></dd>
+</dl>
+
+<span id="index-fileprivate"></span>
+
+<dl compact="compact">
+<dt>&lsquo;<samp>fileprivate</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to a declaration to indicate the
+declaration can be accessed only by code in the same source file as
+the declaration.
+</p></dd>
+</dl>
+
+<span id="index-private"></span>
+
+<dl compact="compact">
+<dt>&lsquo;<samp>private</samp>&rsquo;</dt>
+<dd><p>Apply this modifier to a declaration to indicate the
+declaration can be accessed only by code within the declaration&rsquo;s
+immediate enclosing scope.
+</p></dd>
+</dl>
+
+<p>For the purpose of access control, extensions to the same type that are
+in the same file share an access-control scope. If the type they extend
+is also in the same file, they share the type&rsquo;s access-control scope.
+Private members declared in the type&rsquo;s declaration can be accessed from
+extensions, and private members declared in one extension can be
+accessed from other extensions and from the type&rsquo;s declaration.
+</p>
+<p>Each access-level modifier above optionally accepts a single argument,
+which consists of the &lsquo;<samp>set</samp>&rsquo; keyword enclosed in parentheses (for
+example, &lsquo;<samp>private(set)</samp>&rsquo;). Use this form of an access-level modifier when
+you want to specify an access level for the setter of a variable or
+subscript that&rsquo;s less than or equal to the access level of the variable
+or subscript itself, as discussed in
+<a href="../swift/Getters-and-Setters.html#Getters-and-Setters">(swift)Getters and Setters</a>.
+</p>
+<p>Grammar of a declaration modifier
+</p>
+<p>declaration-modifier
+→ &lsquo;<samp>class</samp>&rsquo; | &lsquo;<samp>convenience</samp>&rsquo; | &lsquo;<samp>dynamic</samp>&rsquo; | &lsquo;<samp>final</samp>&rsquo; | &lsquo;<samp>infix</samp>&rsquo; | &lsquo;<samp>lazy</samp>&rsquo; |
+&lsquo;<samp>optional</samp>&rsquo; | &lsquo;<samp>override</samp>&rsquo; | &lsquo;<samp>postfix</samp>&rsquo; | &lsquo;<samp>prefix</samp>&rsquo; | &lsquo;<samp>required</samp>&rsquo; | &lsquo;<samp>static</samp>&rsquo; |
+&lsquo;<samp>unowned</samp>&rsquo; | &lsquo;<samp>unowned</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>safe</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo; | &lsquo;<samp>unowned</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>unsafe</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo; |
+&lsquo;<samp>weak</samp>&rsquo;
+</p>
+<p>declaration-modifier
+→
+access-level-modifier
+</p>
+<p>declaration-modifier
+→
+mutation-modifier
+</p>
+<p>declaration-modifiers
+→
+declaration-modifier
+declaration-modifiers
+_{opt}
+</p>
+<p>access-level-modifier
+→ &lsquo;<samp>private</samp>&rsquo; | &lsquo;<samp>private</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>set</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>access-level-modifier
+→ &lsquo;<samp>fileprivate</samp>&rsquo; | &lsquo;<samp>fileprivate</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>set</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>access-level-modifier
+→ &lsquo;<samp>internal</samp>&rsquo; | &lsquo;<samp>internal</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>set</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>access-level-modifier
+→ &lsquo;<samp>public</samp>&rsquo; | &lsquo;<samp>public</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>set</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>access-level-modifier
+→ &lsquo;<samp>open</samp>&rsquo; | &lsquo;<samp>open</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>set</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>mutation-modifier →
+&lsquo;<samp>mutating</samp>&rsquo; | &lsquo;<samp>nonmutating</samp>&rsquo;
+</p>
+<hr>
+<div class="header">
+<p>
+Up: <a href="Declaration-Modifiers.html#Declaration-Modifiers" accesskey="u" rel="up">Declaration Modifiers</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

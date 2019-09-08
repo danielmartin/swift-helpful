@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Linking Multiple Levels of Chaining (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Linking Multiple Levels of Chaining (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Linking Multiple Levels of Chaining (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Optional-Chaining.html#Optional-Chaining" rel="up" title="Optional Chaining">
+<link href="Chaining-on-Methods-with-Optional-Return-Values.html#Chaining-on-Methods-with-Optional-Return-Values" rel="next" title="Chaining on Methods with Optional Return Values">
+<link href="Accessing-Subscripts-of-Optional-Type.html#Accessing-Subscripts-of-Optional-Type" rel="prev" title="Accessing Subscripts of Optional Type">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Linking-Multiple-Levels-of-Chaining"></span><div class="header">
+<p>
+Next: <a href="Chaining-on-Methods-with-Optional-Return-Values.html#Chaining-on-Methods-with-Optional-Return-Values" accesskey="n" rel="next">Chaining on Methods with Optional Return Values</a>, Previous: <a href="Accessing-Subscripts-Through-Optional-Chaining.html#Accessing-Subscripts-Through-Optional-Chaining" accesskey="p" rel="prev">Accessing Subscripts Through Optional Chaining</a>, Up: <a href="Optional-Chaining.html#Optional-Chaining" accesskey="u" rel="up">Optional Chaining</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Linking-Multiple-Levels-of-Chaining-1"></span><h3 class="section">21.6 Linking Multiple Levels of Chaining</h3>
+
+<p>You can link together multiple levels of optional chaining to drill down
+to properties, methods, and subscripts deeper within a model. However,
+multiple levels of optional chaining do not add more levels of
+optionality to the returned value.
+</p>
+<p>To put it another way:
+</p>
+<ul>
+<li> If the type you are trying to retrieve is not optional, it will become
+optional because of the optional chaining.
+
+</li><li> If the type you are trying to retrieve is <em>already</em> optional, it will
+not become <em>more</em> optional because of the chaining.
+</li></ul>
+
+<p>Therefore:
+</p>
+<ul>
+<li> If you try to retrieve an &lsquo;<samp>Int</samp>&rsquo; value through optional chaining, an
+&lsquo;<samp>Int?</samp>&rsquo; is always returned, no matter how many levels of chaining are
+used.
+
+</li><li> Similarly, if you try to retrieve an &lsquo;<samp>Int?</samp>&rsquo; value through optional
+chaining, an &lsquo;<samp>Int?</samp>&rsquo; is always returned, no matter how many levels of
+chaining are used.
+</li></ul>
+
+<p>The example below tries to access the &lsquo;<samp>street</samp>&rsquo; property of the &lsquo;<samp>address</samp>&rsquo;
+property of the &lsquo;<samp>residence</samp>&rsquo; property of &lsquo;<samp>john</samp>&rsquo;. There are <em>two</em> levels
+of optional chaining in use here, to chain through the &lsquo;<samp>residence</samp>&rsquo; and
+&lsquo;<samp>address</samp>&rsquo; properties, both of which are of optional type:
+</p>
+<div class="example">
+<pre class="example">if let johnsStreet = john.residence?.address?.street {
+    print(&quot;John's street name is \(johnsStreet).&quot;)
+} else {
+    print(&quot;Unable to retrieve the address.&quot;)
+}
+// Prints &quot;Unable to retrieve the address.&quot;
+</pre></div>
+
+<p>The value of &lsquo;<samp>john.residence</samp>&rsquo; currently contains a valid &lsquo;<samp>Residence</samp>&rsquo;
+instance. However, the value of &lsquo;<samp>john.residence.address</samp>&rsquo; is currently
+&lsquo;<samp>nil</samp>&rsquo;. Because of this, the call to &lsquo;<samp>john.residence?.address?.street</samp>&rsquo;
+fails.
+</p>
+<p>Note that in the example above, you are trying to retrieve the value of
+the &lsquo;<samp>street</samp>&rsquo; property. The type of this property is &lsquo;<samp>String?</samp>&rsquo;. The
+return value of &lsquo;<samp>john.residence?.address?.street</samp>&rsquo; is therefore also
+&lsquo;<samp>String?</samp>&rsquo;, even though two levels of optional chaining are applied in
+addition to the underlying optional type of the property.
+</p>
+<p>If you set an actual &lsquo;<samp>Address</samp>&rsquo; instance as the value for
+&lsquo;<samp>john.residence.address</samp>&rsquo;, and set an actual value for the address&rsquo;s
+&lsquo;<samp>street</samp>&rsquo; property, you can access the value of the &lsquo;<samp>street</samp>&rsquo; property
+through multilevel optional chaining:
+</p>
+<div class="example">
+<pre class="example">let johnsAddress = Address()
+johnsAddress.buildingName = &quot;The Larches&quot;
+johnsAddress.street = &quot;Laurel Street&quot;
+john.residence?.address = johnsAddress
+
+if let johnsStreet = john.residence?.address?.street {
+    print(&quot;John's street name is \(johnsStreet).&quot;)
+} else {
+    print(&quot;Unable to retrieve the address.&quot;)
+}
+// Prints &quot;John's street name is Laurel Street.&quot;
+</pre></div>
+
+<p>In this example, the attempt to set the &lsquo;<samp>address</samp>&rsquo; property of
+&lsquo;<samp>john.residence</samp>&rsquo; will succeed, because the value of &lsquo;<samp>john.residence</samp>&rsquo;
+currently contains a valid &lsquo;<samp>Residence</samp>&rsquo; instance.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Chaining-on-Methods-with-Optional-Return-Values.html#Chaining-on-Methods-with-Optional-Return-Values" accesskey="n" rel="next">Chaining on Methods with Optional Return Values</a>, Previous: <a href="Accessing-Subscripts-Through-Optional-Chaining.html#Accessing-Subscripts-Through-Optional-Chaining" accesskey="p" rel="prev">Accessing Subscripts Through Optional Chaining</a>, Up: <a href="Optional-Chaining.html#Optional-Chaining" accesskey="u" rel="up">Optional Chaining</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

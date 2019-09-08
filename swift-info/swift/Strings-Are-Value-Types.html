@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Strings Are Value Types (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Strings Are Value Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Strings Are Value Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Strings-and-Characters.html#Strings-and-Characters" rel="up" title="Strings and Characters">
+<link href="Working-with-Characters.html#Working-with-Characters" rel="next" title="Working with Characters">
+<link href="String-Mutability.html#String-Mutability" rel="prev" title="String Mutability">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Strings-Are-Value-Types"></span><div class="header">
+<p>
+Next: <a href="Working-with-Characters.html#Working-with-Characters" accesskey="n" rel="next">Working with Characters</a>, Previous: <a href="String-Mutability.html#String-Mutability" accesskey="p" rel="prev">String Mutability</a>, Up: <a href="Strings-and-Characters.html#Strings-and-Characters" accesskey="u" rel="up">Strings and Characters</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Strings-Are-Value-Types-1"></span><h3 class="section">8.4 Strings Are Value Types</h3>
+
+<p>Swift&rsquo;s &lsquo;<samp>String</samp>&rsquo; type is a <em>value type</em>. If you create a new &lsquo;<samp>String</samp>&rsquo;
+value, that &lsquo;<samp>String</samp>&rsquo; value is <em>copied</em> when it&rsquo;s passed to a function or
+method, or when it&rsquo;s assigned to a constant or variable. In each case, a
+new copy of the existing &lsquo;<samp>String</samp>&rsquo; value is created, and the new copy is
+passed or assigned, not the original version. Value types are described
+in <a href="Structures-and-Enumerations-Are-Value-Types.html#Structures-and-Enumerations-Are-Value-Types">Structures and Enumerations Are
+Value Types</a>.
+</p>
+<p>Swift&rsquo;s copy-by-default &lsquo;<samp>String</samp>&rsquo; behavior ensures that when a function
+or method passes you a &lsquo;<samp>String</samp>&rsquo; value, it&rsquo;s clear that you own that
+exact &lsquo;<samp>String</samp>&rsquo; value, regardless of where it came from. You can be
+confident that the string you are passed won&rsquo;t be modified unless you
+modify it yourself.
+</p>
+<p>Behind the scenes, Swift&rsquo;s compiler optimizes string usage so that
+actual copying takes place only when absolutely necessary. This means
+you always get great performance when working with strings as value
+types.
+</p>
+
+
+
+</body>
+</html>

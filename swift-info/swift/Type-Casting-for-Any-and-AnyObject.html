@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Type Casting for Any and AnyObject (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Type Casting for Any and AnyObject (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Type Casting for Any and AnyObject (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Type-Casting.html#Type-Casting" rel="up" title="Type Casting">
+<link href="Nested-Types.html#Nested-Types" rel="next" title="Nested Types">
+<link href="Downcasting.html#Downcasting" rel="prev" title="Downcasting">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Type-Casting-for-Any-and-AnyObject"></span><div class="header">
+<p>
+Previous: <a href="Downcasting.html#Downcasting" accesskey="p" rel="prev">Downcasting</a>, Up: <a href="Type-Casting.html#Type-Casting" accesskey="u" rel="up">Type Casting</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Type-Casting-for-Any-and-AnyObject-1"></span><h3 class="section">23.4 Type Casting for Any and AnyObject</h3>
+
+<span id="index-Any"></span>
+<span id="index-AnyObject"></span>
+
+<p>Swift provides two special types for working with nonspecific types:
+</p>
+<ul>
+<li> &lsquo;<samp>Any</samp>&rsquo; can represent an instance of any type at all, including function
+types.
+
+</li><li> &lsquo;<samp>AnyObject</samp>&rsquo; can represent an instance of any class type.
+</li></ul>
+
+<p>Use &lsquo;<samp>Any</samp>&rsquo; and &lsquo;<samp>AnyObject</samp>&rsquo; only when you explicitly need the behavior and
+capabilities they provide. It is always better to be specific about the
+types you expect to work with in your code.
+</p>
+<p>Here&rsquo;s an example of using &lsquo;<samp>Any</samp>&rsquo; to work with a mix of different types,
+including function types and nonclass types. The example creates an
+array called &lsquo;<samp>things</samp>&rsquo;, which can store values of type &lsquo;<samp>Any</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">var things = [Any]()
+
+things.append(0)
+things.append(0.0)
+things.append(42)
+things.append(3.14159)
+things.append(&quot;hello&quot;)
+things.append((3.0, 5.0))
+things.append(Movie(name: &quot;Ghostbusters&quot;, director: &quot;Ivan Reitman&quot;))
+things.append({ (name: String) -&gt; String in &quot;Hello, \(name)&quot; })
+</pre></div>
+
+<p>The &lsquo;<samp>things</samp>&rsquo; array contains two &lsquo;<samp>Int</samp>&rsquo; values, two &lsquo;<samp>Double</samp>&rsquo; values, a
+&lsquo;<samp>String</samp>&rsquo; value, a tuple of type &lsquo;<samp>(Double, Double)</samp>&rsquo;, the movie
+“Ghostbusters”, and a closure expression that takes a &lsquo;<samp>String</samp>&rsquo; value and
+returns another &lsquo;<samp>String</samp>&rsquo; value.
+</p>
+<p>To discover the specific type of a constant or variable that is known
+only to be of type &lsquo;<samp>Any</samp>&rsquo; or &lsquo;<samp>AnyObject</samp>&rsquo;, you can use an &lsquo;<samp>is</samp>&rsquo; or &lsquo;<samp>as</samp>&rsquo;
+pattern in a &lsquo;<samp>switch</samp>&rsquo; statement&rsquo;s cases. The example below iterates over
+the items in the &lsquo;<samp>things</samp>&rsquo; array and queries the type of each item with a
+&lsquo;<samp>switch</samp>&rsquo; statement. Several of the &lsquo;<samp>switch</samp>&rsquo; statement&rsquo;s cases bind their
+matched value to a constant of the specified type to enable its value to
+be printed:
+</p>
+<div class="example">
+<pre class="example">for thing in things {
+    switch thing {
+    case 0 as Int:
+        print(&quot;zero as an Int&quot;)
+    case 0 as Double:
+        print(&quot;zero as a Double&quot;)
+    case let someInt as Int:
+        print(&quot;an integer value of \(someInt)&quot;)
+    case let someDouble as Double where someDouble &gt; 0:
+        print(&quot;a positive double value of \(someDouble)&quot;)
+    case is Double:
+        print(&quot;some other double value that I don't want to print&quot;)
+    case let someString as String:
+        print(&quot;a string value of \&quot;\(someString)\&quot;&quot;)
+    case let (x, y) as (Double, Double):
+        print(&quot;an (x, y) point at \(x), \(y)&quot;)
+    case let movie as Movie:
+        print(&quot;a movie called \(movie.name), dir. \(movie.director)&quot;)
+    case let stringConverter as (String) -&gt; String:
+        print(stringConverter(&quot;Michael&quot;))
+    default:
+        print(&quot;something else&quot;)
+    }
+}
+
+// zero as an Int
+// zero as a Double
+// an integer value of 42
+// a positive double value of 3.14159
+// a string value of &quot;hello&quot;
+// an (x, y) point at 3.0, 5.0
+// a movie called Ghostbusters, dir. Ivan Reitman
+// Hello, Michael
+</pre></div>
+
+<p>Note
+</p>
+<p>The &lsquo;<samp>Any</samp>&rsquo; type represents values of any type, including optional types.
+Swift gives you a warning if you use an optional value where a value of
+type &lsquo;<samp>Any</samp>&rsquo; is expected. If you really do need to use an optional value
+as an &lsquo;<samp>Any</samp>&rsquo; value, you can use the &lsquo;<samp>as</samp>&rsquo; operator to explicitly cast the
+optional to &lsquo;<samp>Any</samp>&rsquo;, as shown below.
+</p>
+<div class="example">
+<pre class="example">let optionalNumber: Int? = 3
+things.append(optionalNumber) // Warning
+things.append(optionalNumber as Any) // No warning
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Downcasting.html#Downcasting" accesskey="p" rel="prev">Downcasting</a>, Up: <a href="Type-Casting.html#Type-Casting" accesskey="u" rel="up">Type Casting</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

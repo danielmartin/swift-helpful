@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Protocol Inheritance (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Protocol Inheritance (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Protocol Inheritance (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Protocols.html#Protocols" rel="up" title="Protocols">
+<link href="Class_002dOnly-Protocols.html#Class_002dOnly-Protocols" rel="next" title="Class-Only Protocols">
+<link href="Collections-of-Protocol-Types.html#Collections-of-Protocol-Types" rel="prev" title="Collections of Protocol Types">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Protocol-Inheritance"></span><div class="header">
+<p>
+Next: <a href="Class_002dOnly-Protocols.html#Class_002dOnly-Protocols" accesskey="n" rel="next">Class-Only Protocols</a>, Previous: <a href="Collections-of-Protocol-Types.html#Collections-of-Protocol-Types" accesskey="p" rel="prev">Collections of Protocol Types</a>, Up: <a href="Protocols.html#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Protocol-Inheritance-2"></span><h3 class="section">26.10 Protocol Inheritance</h3>
+
+<p>A protocol can <em>inherit</em> one or more other protocols and can add further
+requirements on top of the requirements it inherits. The syntax for
+protocol inheritance is similar to the syntax for class inheritance, but
+with the option to list multiple inherited protocols, separated by
+commas:
+</p>
+<div class="example">
+<pre class="example">protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
+    // protocol definition goes here
+}
+</pre></div>
+
+<p>Here&rsquo;s an example of a protocol that inherits the &lsquo;<samp>TextRepresentable</samp>&rsquo;
+protocol from above:
+</p>
+<div class="example">
+<pre class="example">protocol PrettyTextRepresentable: TextRepresentable {
+    var prettyTextualDescription: String { get }
+}
+</pre></div>
+
+<p>This example defines a new protocol, &lsquo;<samp>PrettyTextRepresentable</samp>&rsquo;, which
+inherits from &lsquo;<samp>TextRepresentable</samp>&rsquo;. Anything that adopts
+&lsquo;<samp>PrettyTextRepresentable</samp>&rsquo; must satisfy all of the requirements enforced
+by &lsquo;<samp>TextRepresentable</samp>&rsquo;, <em>plus</em> the additional requirements enforced by
+&lsquo;<samp>PrettyTextRepresentable</samp>&rsquo;. In this example, &lsquo;<samp>PrettyTextRepresentable</samp>&rsquo;
+adds a single requirement to provide a gettable property called
+&lsquo;<samp>prettyTextualDescription</samp>&rsquo; that returns a &lsquo;<samp>String</samp>&rsquo;.
+</p>
+<p>The &lsquo;<samp>SnakesAndLadders</samp>&rsquo; class can be extended to adopt and conform to
+&lsquo;<samp>PrettyTextRepresentable</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">extension SnakesAndLadders: PrettyTextRepresentable {
+    var prettyTextualDescription: String {
+        var output = textualDescription + &quot;:\n&quot;
+        for index in 1...finalSquare {
+            switch board[index] {
+            case let ladder where ladder &gt; 0:
+                output += &quot;▲ &quot;
+            case let snake where snake &lt; 0:
+                output += &quot;▼ &quot;
+            default:
+                output += &quot;○ &quot;
+            }
+        }
+        return output
+    }
+}
+</pre></div>
+
+<p>This extension states that it adopts the &lsquo;<samp>PrettyTextRepresentable</samp>&rsquo;
+protocol and provides an implementation of the
+&lsquo;<samp>prettyTextualDescription</samp>&rsquo; property for the &lsquo;<samp>SnakesAndLadders</samp>&rsquo; type.
+Anything that is &lsquo;<samp>PrettyTextRepresentable</samp>&rsquo; must also be
+&lsquo;<samp>TextRepresentable</samp>&rsquo;, and so the implementation of
+&lsquo;<samp>prettyTextualDescription</samp>&rsquo; starts by accessing the &lsquo;<samp>textualDescription</samp>&rsquo;
+property from the &lsquo;<samp>TextRepresentable</samp>&rsquo; protocol to begin an output
+string. It appends a colon and a line break, and uses this as the start
+of its pretty text representation. It then iterates through the array of
+board squares, and appends a geometric shape to represent the contents
+of each square:
+</p>
+<ul>
+<li> If the square&rsquo;s value is greater than &lsquo;<samp>0</samp>&rsquo;, it&rsquo;s the base of a ladder,
+and is represented by &lsquo;<samp>▲</samp>&rsquo;.
+
+</li><li> If the square&rsquo;s value is less than &lsquo;<samp>0</samp>&rsquo;, it&rsquo;s the head of a snake, and
+is represented by &lsquo;<samp>▼</samp>&rsquo;.
+
+</li><li> Otherwise, the square&rsquo;s value is &lsquo;<samp>0</samp>&rsquo;, and it&rsquo;s a “free” square,
+represented by &lsquo;<samp>○</samp>&rsquo;.
+</li></ul>
+
+<p>The &lsquo;<samp>prettyTextualDescription</samp>&rsquo; property can now be used to print a
+pretty text description of any &lsquo;<samp>SnakesAndLadders</samp>&rsquo; instance:
+</p>
+<div class="example">
+<pre class="example">print(game.prettyTextualDescription)
+// A game of Snakes and Ladders with 25 squares:
+// ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Class_002dOnly-Protocols.html#Class_002dOnly-Protocols" accesskey="n" rel="next">Class-Only Protocols</a>, Previous: <a href="Collections-of-Protocol-Types.html#Collections-of-Protocol-Types" accesskey="p" rel="prev">Collections of Protocol Types</a>, Up: <a href="Protocols.html#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

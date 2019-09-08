@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>String Interpolation (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="String Interpolation (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="String Interpolation (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Strings-and-Characters.html#Strings-and-Characters" rel="up" title="Strings and Characters">
+<link href="Unicode.html#Unicode" rel="next" title="Unicode">
+<link href="Concatenating-Strings-and-Characters.html#Concatenating-Strings-and-Characters" rel="prev" title="Concatenating Strings and Characters">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="String-Interpolation"></span><div class="header">
+<p>
+Next: <a href="Unicode.html#Unicode" accesskey="n" rel="next">Unicode</a>, Previous: <a href="Concatenating-Strings-and-Characters.html#Concatenating-Strings-and-Characters" accesskey="p" rel="prev">Concatenating Strings and Characters</a>, Up: <a href="Strings-and-Characters.html#Strings-and-Characters" accesskey="u" rel="up">Strings and Characters</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="String-Interpolation-1"></span><h3 class="section">8.7 String Interpolation</h3>
+
+<p><em>String interpolation</em> is a way to construct a new &lsquo;<samp>String</samp>&rsquo; value from a
+mix of constants, variables, literals, and expressions by including
+their values inside a string literal. You can use string interpolation
+in both single-line and multiline string literals. Each item that you
+insert into the string literal is wrapped in a pair of parentheses,
+prefixed by a backslash (&lsquo;<samp>\</samp>&rsquo;):
+</p>
+<div class="example">
+<pre class="example">let multiplier = 3
+let message = &quot;\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)&quot;
+// message is &quot;3 times 2.5 is 7.5&quot;
+</pre></div>
+
+<p>In the example above, the value of &lsquo;<samp>multiplier</samp>&rsquo; is inserted into a
+string literal as &lsquo;<samp>\(multiplier)</samp>&rsquo;. This placeholder is replaced with the
+actual value of &lsquo;<samp>multiplier</samp>&rsquo; when the string interpolation is evaluated
+to create an actual string.
+</p>
+<p>The value of &lsquo;<samp>multiplier</samp>&rsquo; is also part of a larger expression later in
+the string. This expression calculates the value of
+&lsquo;<samp>Double(multiplier) * 2.5</samp>&rsquo; and inserts the result (&lsquo;<samp>7.5</samp>&rsquo;) into the
+string. In this case, the expression is written as
+&lsquo;<samp>\(Double(multiplier) * 2.5)</samp>&rsquo; when it&rsquo;s included inside the string
+literal.
+</p>
+<span id="index-_0023"></span>
+
+<p>You can use extended string delimiters to create strings containing
+characters that would otherwise be treated as a string interpolation.
+For example:
+</p>
+<div class="example">
+<pre class="example">print(#&quot;Write an interpolated string in Swift using \(multiplier).&quot;#)
+// Prints &quot;Write an interpolated string in Swift using \(multiplier).&quot;
+</pre></div>
+
+<p>To use string interpolation inside a string that uses extended
+delimiters, match the number of number signs before the backslash to the
+number of number signs at the beginning and end of the string. For
+example:
+</p>
+<div class="example">
+<pre class="example">print(#&quot;6 times 7 is \#(6 * 7).&quot;#)
+// Prints &quot;6 times 7 is 42.&quot;
+</pre></div>
+
+<p>Note
+</p>
+<p>The expressions you write inside parentheses within an interpolated
+string can&rsquo;t contain an unescaped backslash (&lsquo;<samp>\</samp>&rsquo;), a carriage return, or
+a line feed. However, they can contain other string literals.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Unicode.html#Unicode" accesskey="n" rel="next">Unicode</a>, Previous: <a href="Concatenating-Strings-and-Characters.html#Concatenating-Strings-and-Characters" accesskey="p" rel="prev">Concatenating Strings and Characters</a>, Up: <a href="Strings-and-Characters.html#Strings-and-Characters" accesskey="u" rel="up">Strings and Characters</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

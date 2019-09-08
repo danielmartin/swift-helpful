@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Private Members in Extensions (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Private Members in Extensions (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Private Members in Extensions (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Extensions-1.html#Extensions-1" rel="up" title="Extensions 1">
+<link href="Generics-2.html#Generics-2" rel="next" title="Generics 2">
+<link href="Extensions-1.html#Extensions-1" rel="prev" title="Extensions 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Private-Members-in-Extensions"></span><div class="header">
+<p>
+Up: <a href="Extensions-1.html#Extensions-1" accesskey="u" rel="up">Extensions 1</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Private-Members-in-Extensions-1"></span><h4 class="subsection">31.9.1 Private Members in Extensions</h4>
+
+<p>Extensions that are in the same file as the class, structure, or
+enumeration that they extend behave as if the code in the extension had
+been written as part of the original type&rsquo;s declaration. As a result,
+you can:
+</p>
+<ul>
+<li> Declare a private member in the original declaration, and access that
+member from extensions in the same file.
+
+</li><li> Declare a private member in one extension, and access that member from
+another extension in the same file.
+
+</li><li> Declare a private member in an extension, and access that member from
+the original declaration in the same file.
+</li></ul>
+
+<p>This behavior means you can use extensions in the same way to organize
+your code, whether or not your types have private entities. For example,
+given the following simple protocol:
+</p>
+<div class="example">
+<pre class="example">protocol SomeProtocol {
+    func doSomething()
+}
+</pre></div>
+
+<p>You can use an extension to add protocol conformance, like this:
+</p>
+<div class="example">
+<pre class="example">struct SomeStruct {
+    private var privateVariable = 12
+}
+
+extension SomeStruct: SomeProtocol {
+    func doSomething() {
+        print(privateVariable)
+    }
+}
+</pre></div>
+
+
+
+
+</body>
+</html>

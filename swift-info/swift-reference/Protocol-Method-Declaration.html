@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Protocol Method Declaration (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Protocol Method Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Protocol Method Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Protocol-Declaration.html#Protocol-Declaration" rel="up" title="Protocol Declaration">
+<link href="Protocol-Initializer-Declaration.html#Protocol-Initializer-Declaration" rel="next" title="Protocol Initializer Declaration">
+<link href="Protocol-Property-Declaration.html#Protocol-Property-Declaration" rel="prev" title="Protocol Property Declaration">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Protocol-Method-Declaration"></span><div class="header">
+<p>
+Next: <a href="Protocol-Initializer-Declaration.html#Protocol-Initializer-Declaration" accesskey="n" rel="next">Protocol Initializer Declaration</a>, Previous: <a href="Protocol-Property-Declaration.html#Protocol-Property-Declaration" accesskey="p" rel="prev">Protocol Property Declaration</a>, Up: <a href="Protocol-Declaration.html#Protocol-Declaration" accesskey="u" rel="up">Protocol Declaration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Protocol-Method-Declaration-1"></span><h4 class="subsection">7.11.2 Protocol Method Declaration</h4>
+
+<p>Protocols declare that conforming types must implement a method by
+including a protocol method declaration in the body of the protocol
+declaration. Protocol method declarations have the same form as function
+declarations, with two exceptions: They don&rsquo;t include a function body,
+and you can&rsquo;t provide any default parameter values as part of the
+function declaration. For examples of conforming types that implement
+the method requirements of a protocol, see
+<a href="../swift/Method-Requirements.html#Method-Requirements">(swift)Method Requirements</a>.
+</p>
+<p>To declare a class or static method requirement in a protocol
+declaration, mark the method declaration with the &lsquo;<samp>static</samp>&rsquo; declaration
+modifier. Structures and enumerations that conform to the protocol
+declare the method with the &lsquo;<samp>static</samp>&rsquo; keyword, and classes that conform
+to the protocol declare the method with either the &lsquo;<samp>static</samp>&rsquo; or &lsquo;<samp>class</samp>&rsquo;
+keyword. Extensions that add protocol conformance to a structure,
+enumeration, or class use the same keyword as the type they extend uses.
+Extensions that provide a default implementation for a type method
+requirement use the &lsquo;<samp>static</samp>&rsquo; keyword.
+</p>
+<p>See also <a href="Function-Declaration.html#Function-Declaration">Function Declaration</a>.
+</p>
+<p>Grammar of a protocol method declaration
+</p>
+<p>protocol-method-declaration
+→
+function-head
+function-name
+generic-parameter-clause
+_{opt}
+function-signature
+generic-where-clause
+_{opt}
+</p>
+
+
+
+</body>
+</html>

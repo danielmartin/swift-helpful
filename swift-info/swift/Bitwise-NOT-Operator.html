@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Bitwise NOT Operator (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Bitwise NOT Operator (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Bitwise NOT Operator (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Bitwise-Operators.html#Bitwise-Operators" rel="up" title="Bitwise Operators">
+<link href="Bitwise-AND-Operator.html#Bitwise-AND-Operator" rel="next" title="Bitwise AND Operator">
+<link href="Bitwise-Operators.html#Bitwise-Operators" rel="prev" title="Bitwise Operators">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Bitwise-NOT-Operator"></span><div class="header">
+<p>
+Next: <a href="Bitwise-AND-Operator.html#Bitwise-AND-Operator" accesskey="n" rel="next">Bitwise AND Operator</a>, Up: <a href="Bitwise-Operators.html#Bitwise-Operators" accesskey="u" rel="up">Bitwise Operators</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Bitwise-NOT-Operator-1"></span><h4 class="subsection">32.1.1 Bitwise NOT Operator</h4>
+
+<p>The <em>bitwise NOT operator</em> (&lsquo;<samp>~</samp>&rsquo;) inverts all bits in a number:
+</p>
+<img src="_images/bitwiseNOT_2x.png" alt="_images/bitwiseNOT_2x">
+<p>The bitwise NOT operator is a prefix operator, and appears immediately
+before the value it operates on, without any white space:
+</p>
+<ol>
+<li> let initialBits: UInt8 = 0b00001111
+</li><li> let invertedBits = ~initialBits // equals 11110000
+</li></ol>
+
+<p>&lsquo;<samp>UInt8</samp>&rsquo; integers have eight bits and can store any value between &lsquo;<samp>0</samp>&rsquo; and
+&lsquo;<samp>255</samp>&rsquo;. This example initializes a &lsquo;<samp>UInt8</samp>&rsquo; integer with the binary value
+&lsquo;<samp>00001111</samp>&rsquo;, which has its first four bits set to &lsquo;<samp>0</samp>&rsquo;, and its second
+four bits set to &lsquo;<samp>1</samp>&rsquo;. This is equivalent to a decimal value of &lsquo;<samp>15</samp>&rsquo;.
+</p>
+<p>The bitwise NOT operator is then used to create a new constant called
+&lsquo;<samp>invertedBits</samp>&rsquo;, which is equal to &lsquo;<samp>initialBits</samp>&rsquo;, but with all of the
+bits inverted. Zeros become ones, and ones become zeros. The value of
+&lsquo;<samp>invertedBits</samp>&rsquo; is &lsquo;<samp>11110000</samp>&rsquo;, which is equal to an unsigned decimal
+value of &lsquo;<samp>240</samp>&rsquo;.
+</p>
+
+
+
+</body>
+</html>

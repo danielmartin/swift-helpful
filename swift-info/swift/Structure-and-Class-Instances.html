@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Structure and Class Instances (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Structure and Class Instances (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Structure and Class Instances (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Comparing-Structures-and-Classes.html#Comparing-Structures-and-Classes" rel="up" title="Comparing Structures and Classes">
+<link href="Accessing-Properties.html#Accessing-Properties" rel="next" title="Accessing Properties">
+<link href="Definition-Syntax.html#Definition-Syntax" rel="prev" title="Definition Syntax">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Structure-and-Class-Instances"></span><div class="header">
+<p>
+Next: <a href="Accessing-Properties.html#Accessing-Properties" accesskey="n" rel="next">Accessing Properties</a>, Previous: <a href="Definition-Syntax.html#Definition-Syntax" accesskey="p" rel="prev">Definition Syntax</a>, Up: <a href="Comparing-Structures-and-Classes.html#Comparing-Structures-and-Classes" accesskey="u" rel="up">Comparing Structures and Classes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Structure-and-Class-Instances-1"></span><h4 class="subsection">14.1.2 Structure and Class Instances</h4>
+
+<p>The &lsquo;<samp>Resolution</samp>&rsquo; structure definition and the &lsquo;<samp>VideoMode</samp>&rsquo; class
+definition only describe what a &lsquo;<samp>Resolution</samp>&rsquo; or &lsquo;<samp>VideoMode</samp>&rsquo; will look
+like. They themselves don&rsquo;t describe a specific resolution or video
+mode. To do that, you need to create an instance of the structure or
+class.
+</p>
+<p>The syntax for creating instances is very similar for both structures
+and classes:
+</p>
+<div class="example">
+<pre class="example">let someResolution = Resolution()
+let someVideoMode = VideoMode()
+</pre></div>
+
+<p>Structures and classes both use initializer syntax for new instances.
+The simplest form of initializer syntax uses the type name of the class
+or structure followed by empty parentheses, such as &lsquo;<samp>Resolution()</samp>&rsquo; or
+&lsquo;<samp>VideoMode()</samp>&rsquo;. This creates a new instance of the class or structure,
+with any properties initialized to their default values. Class and
+structure initialization is described in more detail in
+<a href="Initialization.html#Initialization">Initialization</a>.
+</p>
+
+
+
+</body>
+</html>

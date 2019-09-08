@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Initialization (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Initialization (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Initialization (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Setting-Initial-Values-for-Stored-Properties.html#Setting-Initial-Values-for-Stored-Properties" rel="next" title="Setting Initial Values for Stored Properties">
+<link href="Preventing-Overrides.html#Preventing-Overrides" rel="prev" title="Preventing Overrides">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Initialization"></span><div class="header">
+<p>
+Next: <a href="Deinitialization.html#Deinitialization" accesskey="n" rel="next">Deinitialization</a>, Previous: <a href="Inheritance.html#Inheritance" accesskey="p" rel="prev">Inheritance</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Initialization-1"></span><h2 class="chapter">19 Initialization</h2>
+
+<p><em>Initialization</em> is the process of preparing an instance of a class,
+structure, or enumeration for use. This process involves setting an
+initial value for each stored property on that instance and performing
+any other setup or initialization that is required before the new
+instance is ready for use.
+</p>
+<p>You implement this initialization process by defining <em>initializers</em>,
+which are like special methods that can be called to create a new
+instance of a particular type. Unlike Objective-C initializers, Swift
+initializers do not return a value. Their primary role is to ensure that
+new instances of a type are correctly initialized before they are used
+for the first time.
+</p>
+<p>Instances of class types can also implement a <em>deinitializer</em>, which
+performs any custom cleanup just before an instance of that class is
+deallocated. For more information about deinitializers, see
+<a href="Deinitialization.html#Deinitialization">Deinitialization</a>.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Setting-Initial-Values-for-Stored-Properties.html#Setting-Initial-Values-for-Stored-Properties" accesskey="1">Setting Initial Values for Stored Properties</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Customizing-Initialization.html#Customizing-Initialization" accesskey="2">Customizing Initialization</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Default-Initializers.html#Default-Initializers" accesskey="3">Default Initializers</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Initializer-Delegation-for-Value-Types.html#Initializer-Delegation-for-Value-Types" accesskey="4">Initializer Delegation for Value Types</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Class-Inheritance-and-Initialization.html#Class-Inheritance-and-Initialization" accesskey="5">Class Inheritance and Initialization</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Failable-Initializers.html#Failable-Initializers" accesskey="6">Failable Initializers</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Required-Initializers.html#Required-Initializers" accesskey="7">Required Initializers</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Setting-a-Default-Property-Value-with-a-Closure-or-Function.html#Setting-a-Default-Property-Value-with-a-Closure-or-Function" accesskey="8">Setting a Default Property Value with a Closure or Function</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

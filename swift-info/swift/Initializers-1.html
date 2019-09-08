@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Initializers 1 (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Initializers 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Initializers 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Extensions.html#Extensions" rel="up" title="Extensions">
+<link href="Methods-1.html#Methods-1" rel="next" title="Methods 1">
+<link href="Computed-Properties-1.html#Computed-Properties-1" rel="prev" title="Computed Properties 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Initializers-1"></span><div class="header">
+<p>
+Next: <a href="Methods-1.html#Methods-1" accesskey="n" rel="next">Methods 1</a>, Previous: <a href="Computed-Properties-1.html#Computed-Properties-1" accesskey="p" rel="prev">Computed Properties 1</a>, Up: <a href="Extensions.html#Extensions" accesskey="u" rel="up">Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Initializers-4"></span><h3 class="section">25.3 Initializers</h3>
+
+<p>Extensions can add new initializers to existing types. This enables you
+to extend other types to accept your own custom types as initializer
+parameters, or to provide additional initialization options that were
+not included as part of the type&rsquo;s original implementation.
+</p>
+<p>Extensions can add new convenience initializers to a class, but they
+cannot add new designated initializers or deinitializers to a class.
+Designated initializers and deinitializers must always be provided by
+the original class implementation.
+</p>
+<p>If you use an extension to add an initializer to a value type that
+provides default values for all of its stored properties and does not
+define any custom initializers, you can call the default initializer and
+memberwise initializer for that value type from within your extension&rsquo;s
+initializer. This wouldn&rsquo;t be the case if you had written the
+initializer as part of the value type&rsquo;s original implementation, as
+described in <a href="Initializer-Delegation-for-Value-Types.html#Initializer-Delegation-for-Value-Types">Initializer Delegation for
+Value Types</a>.
+</p>
+<p>If you use an extension to add an initializer to a structure that was
+declared in another module, the new initializer can&rsquo;t access &lsquo;<samp>self</samp>&rsquo;
+until it calls an initializer from the defining module.
+</p>
+<p>The example below defines a custom &lsquo;<samp>Rect</samp>&rsquo; structure to represent a
+geometric rectangle. The example also defines two supporting structures
+called &lsquo;<samp>Size</samp>&rsquo; and &lsquo;<samp>Point</samp>&rsquo;, both of which provide default values of &lsquo;<samp>0.0</samp>&rsquo;
+for all of their properties:
+</p>
+<div class="example">
+<pre class="example">struct Size {
+    var width = 0.0, height = 0.0
+}
+struct Point {
+    var x = 0.0, y = 0.0
+}
+struct Rect {
+    var origin = Point()
+    var size = Size()
+}
+</pre></div>
+
+<p>Because the &lsquo;<samp>Rect</samp>&rsquo; structure provides default values for all of its
+properties, it receives a default initializer and a memberwise
+initializer automatically, as described in
+<a href="Default-Initializers.html#Default-Initializers">Default Initializers</a>. These
+initializers can be used to create new &lsquo;<samp>Rect</samp>&rsquo; instances:
+</p>
+<div class="example">
+<pre class="example">let defaultRect = Rect()
+let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
+                          size: Size(width: 5.0, height: 5.0))
+</pre></div>
+
+<p>You can extend the &lsquo;<samp>Rect</samp>&rsquo; structure to provide an additional initializer
+that takes a specific center point and size:
+</p>
+<div class="example">
+<pre class="example">extension Rect {
+    init(center: Point, size: Size) {
+        let originX = center.x - (size.width / 2)
+        let originY = center.y - (size.height / 2)
+        self.init(origin: Point(x: originX, y: originY), size: size)
+    }
+}
+</pre></div>
+
+<p>This new initializer starts by calculating an appropriate origin point
+based on the provided &lsquo;<samp>center</samp>&rsquo; point and &lsquo;<samp>size</samp>&rsquo; value. The initializer
+then calls the structure&rsquo;s automatic memberwise initializer
+&lsquo;<samp>init(origin:size:)</samp>&rsquo;, which stores the new origin and size values in the
+appropriate properties:
+</p>
+<div class="example">
+<pre class="example">let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
+                      size: Size(width: 3.0, height: 3.0))
+// centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
+</pre></div>
+
+<p>Note
+</p>
+<p>If you provide a new initializer with an extension, you are still
+responsible for making sure that each instance is fully initialized once
+the initializer completes.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Methods-1.html#Methods-1" accesskey="n" rel="next">Methods 1</a>, Previous: <a href="Computed-Properties-1.html#Computed-Properties-1" accesskey="p" rel="prev">Computed Properties 1</a>, Up: <a href="Extensions.html#Extensions" accesskey="u" rel="up">Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Special Kinds of Methods (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Special Kinds of Methods (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Special Kinds of Methods (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Function-Declaration.html#Function-Declaration" rel="up" title="Function Declaration">
+<link href="Throwing-Functions-and-Methods.html#Throwing-Functions-and-Methods" rel="next" title="Throwing Functions and Methods">
+<link href="Special-Kinds-of-Parameters.html#Special-Kinds-of-Parameters" rel="prev" title="Special Kinds of Parameters">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Special-Kinds-of-Methods"></span><div class="header">
+<p>
+Next: <a href="Throwing-Functions-and-Methods.html#Throwing-Functions-and-Methods" accesskey="n" rel="next">Throwing Functions and Methods</a>, Previous: <a href="Special-Kinds-of-Parameters.html#Special-Kinds-of-Parameters" accesskey="p" rel="prev">Special Kinds of Parameters</a>, Up: <a href="Function-Declaration.html#Function-Declaration" accesskey="u" rel="up">Function Declaration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Special-Kinds-of-Methods-1"></span><h4 class="subsection">7.7.4 Special Kinds of Methods</h4>
+
+<span id="index-mutating"></span>
+
+<p>Methods on an enumeration or a structure that modify &lsquo;<samp>self</samp>&rsquo; must be
+marked with the &lsquo;<samp>mutating</samp>&rsquo; declaration modifier.
+</p>
+<p>Methods that override a superclass method must be marked with the
+&lsquo;<samp>override</samp>&rsquo; declaration modifier. It&rsquo;s a compile-time error to override a
+method without the &lsquo;<samp>override</samp>&rsquo; modifier or to use the &lsquo;<samp>override</samp>&rsquo; modifier
+on a method that doesn&rsquo;t override a superclass method.
+</p>
+<p>Methods associated with a type rather than an instance of a type must be
+marked with the &lsquo;<samp>static</samp>&rsquo; declaration modifier for enumerations and
+structures, or with either the &lsquo;<samp>static</samp>&rsquo; or &lsquo;<samp>class</samp>&rsquo; declaration modifier
+for classes. A class type method marked with the &lsquo;<samp>class</samp>&rsquo; declaration
+modifier can be overridden by a subclass implementation; a class type
+method marked with &lsquo;<samp>class final</samp>&rsquo; or &lsquo;<samp>static</samp>&rsquo; can&rsquo;t be overridden.
+</p>
+
+
+
+</body>
+</html>

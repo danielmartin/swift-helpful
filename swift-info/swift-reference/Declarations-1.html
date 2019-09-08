@@ -1,0 +1,1054 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Declarations 1 (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Declarations 1 (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Declarations 1 (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" rel="up" title="Summary of the Grammar">
+<link href="Attributes-1.html#Attributes-1" rel="next" title="Attributes 1">
+<link href="Statements-1.html#Statements-1" rel="prev" title="Statements 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Declarations-1"></span><div class="header">
+<p>
+Next: <a href="Attributes-1.html#Attributes-1" accesskey="n" rel="next">Attributes 1</a>, Previous: <a href="Statements-1.html#Statements-1" accesskey="p" rel="prev">Statements 1</a>, Up: <a href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" accesskey="u" rel="up">Summary of the Grammar</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Declarations-3"></span><h3 class="section">11.5 Declarations</h3>
+
+<p>Grammar of a declaration
+</p>
+<p>declaration →
+import-declaration
+</p>
+<p>declaration →
+constant-declaration
+</p>
+<p>declaration →
+variable-declaration
+</p>
+<p>declaration →
+typealias-declaration
+</p>
+<p>declaration →
+function-declaration
+</p>
+<p>declaration →
+enum-declaration
+</p>
+<p>declaration →
+struct-declaration
+</p>
+<p>declaration →
+class-declaration
+</p>
+<p>declaration →
+protocol-declaration
+</p>
+<p>declaration →
+initializer-declaration
+</p>
+<p>declaration →
+deinitializer-declaration
+</p>
+<p>declaration →
+extension-declaration
+</p>
+<p>declaration →
+subscript-declaration
+</p>
+<p>declaration →
+operator-declaration
+</p>
+<p>declaration →
+precedence-group-declaration
+</p>
+<p>declarations →
+declaration
+declarations
+_{opt}
+</p>
+<p>Grammar of a top-level declaration
+</p>
+<p>top-level-declaration
+→ statements
+_{opt}
+</p>
+<p>Grammar of a code block
+</p>
+<p>code-block → &lsquo;<samp>{</samp>&rsquo;
+statements
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>Grammar of an import declaration
+</p>
+<p>import-declaration
+→ attributes
+_{opt} &lsquo;<samp>import</samp>&rsquo;
+import-kind
+_{opt}
+import-path
+</p>
+<p>import-kind →
+&lsquo;<samp>typealias</samp>&rsquo; | &lsquo;<samp>struct</samp>&rsquo; | &lsquo;<samp>class</samp>&rsquo; | &lsquo;<samp>enum</samp>&rsquo; | &lsquo;<samp>protocol</samp>&rsquo; | &lsquo;<samp>let</samp>&rsquo; | &lsquo;<samp>var</samp>&rsquo; |
+&lsquo;<samp>func</samp>&rsquo;
+</p>
+<p>import-path →
+import-path-identifier
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>import-path-identifier
+&lsquo;<samp>.</samp>&rsquo;
+import-path
+</p>
+<p>import-path-identifier
+→
+identifier
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>operator
+</p>
+<p>Grammar of a constant declaration
+</p>
+<p>constant-declaration
+→ attributes
+_{opt}
+declaration-modifiers
+_{opt} &lsquo;<samp>let</samp>&rsquo;
+pattern-initializer-list
+</p>
+<p>pattern-initializer-list
+→
+pattern-initializer
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>pattern-initializer
+&lsquo;<samp>,</samp>&rsquo;
+pattern-initializer-list
+</p>
+<p>pattern-initializer
+→ pattern
+initializer
+_{opt}
+</p>
+<p>initializer →
+&lsquo;<samp>=</samp>&rsquo;
+expression
+</p>
+<p>Grammar of a variable declaration
+</p>
+<p>variable-declaration
+→
+variable-declaration-head
+pattern-initializer-list
+</p>
+<p>variable-declaration
+→
+variable-declaration-head
+variable-name
+type-annotation
+code-block
+</p>
+<p>variable-declaration
+→
+variable-declaration-head
+variable-name
+type-annotation
+getter-setter-block
+</p>
+<p>variable-declaration
+→
+variable-declaration-head
+variable-name
+type-annotation
+getter-setter-keyword-block
+</p>
+<p>variable-declaration
+→
+variable-declaration-head
+variable-name
+initializer
+willSet-didSet-block
+</p>
+<p>variable-declaration
+→
+variable-declaration-head
+variable-name
+type-annotation
+initializer
+_{opt}
+willSet-didSet-block
+</p>
+<p>variable-declaration-head
+→ attributes
+_{opt}
+declaration-modifiers
+_{opt} &lsquo;<samp>var</samp>&rsquo;
+</p>
+<p>variable-name
+→
+identifier
+</p>
+<p>getter-setter-block
+→
+code-block
+</p>
+<p>getter-setter-block
+→ &lsquo;<samp>{</samp>&rsquo;
+getter-clause
+setter-clause
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>getter-setter-block
+→ &lsquo;<samp>{</samp>&rsquo;
+setter-clause
+getter-clause
+&lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>getter-clause
+→ attributes
+_{opt}
+mutation-modifier
+_{opt} &lsquo;<samp>get</samp>&rsquo;
+code-block
+</p>
+<p>setter-clause
+→ attributes
+_{opt}
+mutation-modifier
+_{opt} &lsquo;<samp>set</samp>&rsquo;
+setter-name
+_{opt}
+code-block
+</p>
+<p>setter-name →
+&lsquo;<samp>(</samp>&rsquo;
+identifier
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>getter-setter-keyword-block
+→ &lsquo;<samp>{</samp>&rsquo;
+getter-keyword-clause
+setter-keyword-clause
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>getter-setter-keyword-block
+→ &lsquo;<samp>{</samp>&rsquo;
+setter-keyword-clause
+getter-keyword-clause
+&lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>getter-keyword-clause
+→ attributes
+_{opt}
+mutation-modifier
+_{opt} &lsquo;<samp>get</samp>&rsquo;
+</p>
+<p>setter-keyword-clause
+→ attributes
+_{opt}
+mutation-modifier
+_{opt} &lsquo;<samp>set</samp>&rsquo;
+</p>
+<p>willSet-didSet-block
+→ &lsquo;<samp>{</samp>&rsquo;
+willSet-clause
+didSet-clause
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>willSet-didSet-block
+→ &lsquo;<samp>{</samp>&rsquo;
+didSet-clause
+willSet-clause
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>willSet-clause
+→ attributes
+_{opt} &lsquo;<samp>willSet</samp>&rsquo;
+setter-name
+_{opt}
+code-block
+</p>
+<p>didSet-clause
+→ attributes
+_{opt} &lsquo;<samp>didSet</samp>&rsquo;
+setter-name
+_{opt}
+code-block
+</p>
+<p>Grammar of a type alias declaration
+</p>
+<p>typealias-declaration
+→ attributes
+_{opt}
+access-level-modifier
+_{opt} &lsquo;<samp>typealias</samp>&rsquo;
+typealias-name
+generic-parameter-clause
+_{opt}
+typealias-assignment
+</p>
+<p>typealias-name
+→
+identifier
+</p>
+<p>typealias-assignment
+→ &lsquo;<samp>=</samp>&rsquo; type
+</p>
+<p>Grammar of a function declaration
+</p>
+<p>function-declaration
+→
+function-head
+function-name
+generic-parameter-clause
+_{opt}
+function-signature
+generic-where-clause
+_{opt}
+function-body
+_{opt}
+</p>
+<p>function-head
+→ attributes
+_{opt}
+declaration-modifiers
+_{opt} &lsquo;<samp>func</samp>&rsquo;
+</p>
+<p>function-name
+→
+identifier
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>operator
+</p>
+<p>function-signature
+→
+parameter-clause
+=throws=<em>_opt</em>
+function-result
+_{opt}
+</p>
+<p>function-signature
+→
+parameter-clause
+&lsquo;<samp>rethrows</samp>&rsquo;
+function-result
+_{opt}
+</p>
+<p>function-result
+→ &lsquo;<samp>-&gt;</samp>&rsquo;
+attributes
+_{opt} type
+</p>
+<p>function-body
+→
+code-block
+</p>
+<p>parameter-clause
+→ &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo; | &lsquo;<samp>(</samp>&rsquo;
+parameter-list
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>parameter-list
+→ parameter
+</p><table>
+<tr><td>parameter</td></tr>
+</table>
+<p>&lsquo;<samp>,</samp>&rsquo;
+parameter-list
+</p>
+<p>parameter →
+external-parameter-name
+_{opt}
+local-parameter-name
+type-annotation
+default-argument-clause
+_{opt}
+</p>
+<p>parameter →
+external-parameter-name
+_{opt}
+local-parameter-name
+type-annotation
+</p>
+<p>parameter →
+external-parameter-name
+_{opt}
+local-parameter-name
+type-annotation
+&lsquo;<samp>...</samp>&rsquo;
+</p>
+<p>external-parameter-name
+→
+identifier
+</p>
+<p>local-parameter-name
+→
+identifier
+</p>
+<p>default-argument-clause
+→ &lsquo;<samp>=</samp>&rsquo;
+expression
+</p>
+<p>Grammar of an enumeration declaration
+</p>
+<p>enum-declaration
+→ attributes
+_{opt}
+access-level-modifier
+_{opt}
+union-style-enum
+</p>
+<p>enum-declaration
+→ attributes
+_{opt}
+access-level-modifier
+_{opt}
+raw-value-style-enum
+</p>
+<p>union-style-enum
+→ &lsquo;<samp>indirect=_{opt} =enum</samp>&rsquo;
+enum-name
+generic-parameter-clause
+_{opt}
+type-inheritance-clause
+_{opt}
+generic-where-clause
+_{opt} &lsquo;<samp>{</samp>&rsquo;
+union-style-enum-members
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>union-style-enum-members
+→
+union-style-enum-member
+union-style-enum-members
+_{opt}
+</p>
+<p>union-style-enum-member
+→
+declaration
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>union-style-enum-case-clause
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>compiler-control-statement
+</p>
+<p>union-style-enum-case-clause
+→ attributes
+_{opt} &lsquo;<samp>indirect=_{opt} =case</samp>&rsquo;
+union-style-enum-case-list
+</p>
+<p>union-style-enum-case-list
+→
+union-style-enum-case
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>union-style-enum-case
+&lsquo;<samp>,</samp>&rsquo;
+union-style-enum-case-list
+</p>
+<p>union-style-enum-case
+→
+enum-case-name
+tuple-type _{opt}
+</p>
+<p>enum-name →
+identifier
+</p>
+<p>enum-case-name
+→
+identifier
+</p>
+<p>raw-value-style-enum
+→ &lsquo;<samp>enum</samp>&rsquo;
+enum-name
+generic-parameter-clause
+_{opt}
+type-inheritance-clause
+generic-where-clause
+_{opt} &lsquo;<samp>{</samp>&rsquo;
+raw-value-style-enum-members
+&lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>raw-value-style-enum-members
+→
+raw-value-style-enum-member
+raw-value-style-enum-members
+_{opt}
+</p>
+<p>raw-value-style-enum-member
+→
+declaration
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>raw-value-style-enum-case-clause
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>compiler-control-statement
+</p>
+<p>raw-value-style-enum-case-clause
+→ attributes
+_{opt} &lsquo;<samp>case</samp>&rsquo;
+raw-value-style-enum-case-list
+</p>
+<p>raw-value-style-enum-case-list
+→
+raw-value-style-enum-case
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>raw-value-style-enum-case
+&lsquo;<samp>,</samp>&rsquo;
+raw-value-style-enum-case-list
+</p>
+<p>raw-value-style-enum-case
+→
+enum-case-name
+raw-value-assignment
+_{opt}
+</p>
+<p>raw-value-assignment
+→ &lsquo;<samp>=</samp>&rsquo;
+raw-value-literal
+</p>
+<p>raw-value-literal
+→
+numeric-literal
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>static-string-literal
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>boolean-literal
+</p>
+<p>Grammar of a structure declaration
+</p>
+<p>struct-declaration
+→ attributes
+_{opt}
+access-level-modifier
+_{opt} &lsquo;<samp>struct</samp>&rsquo;
+struct-name
+generic-parameter-clause
+_{opt}
+type-inheritance-clause
+_{opt}
+generic-where-clause
+_{opt}
+struct-body
+</p>
+<p>struct-name →
+identifier
+</p>
+<p>struct-body →
+&lsquo;<samp>{</samp>&rsquo;
+struct-members
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>struct-members
+→
+struct-member
+struct-members
+_{opt}
+</p>
+<p>struct-member
+→
+declaration
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>compiler-control-statement
+</p>
+<p>Grammar of a class declaration
+</p>
+<p>class-declaration
+→ attributes
+_{opt}
+access-level-modifier
+_{opt} &lsquo;<samp>final=_{opt} =class</samp>&rsquo;
+class-name
+generic-parameter-clause
+_{opt}
+type-inheritance-clause
+_{opt}
+generic-where-clause
+_{opt}
+class-body
+</p>
+<p>class-declaration
+→ attributes
+_{opt} &lsquo;<samp>final</samp>&rsquo;
+access-level-modifier
+_{opt} &lsquo;<samp>class</samp>&rsquo;
+class-name
+generic-parameter-clause
+_{opt}
+type-inheritance-clause
+_{opt}
+generic-where-clause
+_{opt}
+class-body
+</p>
+<p>class-name →
+identifier
+</p>
+<p>class-body → &lsquo;<samp>{</samp>&rsquo;
+class-members
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>class-members
+→
+class-member
+class-members
+_{opt}
+</p>
+<p>class-member →
+declaration
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>compiler-control-statement
+</p>
+<p>Grammar of a protocol declaration
+</p>
+<p>protocol-declaration
+→ attributes
+_{opt}
+access-level-modifier
+_{opt} &lsquo;<samp>protocol</samp>&rsquo;
+protocol-name
+type-inheritance-clause
+_{opt}
+generic-where-clause
+_{opt}
+protocol-body
+</p>
+<p>protocol-name
+→
+identifier
+</p>
+<p>protocol-body
+→ &lsquo;<samp>{</samp>&rsquo;
+protocol-members
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>protocol-members
+→
+protocol-member
+protocol-members
+_{opt}
+</p>
+<p>protocol-member
+→
+protocol-member-declaration
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>compiler-control-statement
+</p>
+<p>protocol-member-declaration
+→
+protocol-property-declaration
+</p>
+<p>protocol-member-declaration
+→
+protocol-method-declaration
+</p>
+<p>protocol-member-declaration
+→
+protocol-initializer-declaration
+</p>
+<p>protocol-member-declaration
+→
+protocol-subscript-declaration
+</p>
+<p>protocol-member-declaration
+→
+protocol-associated-type-declaration
+</p>
+<p>protocol-member-declaration
+→
+typealias-declaration
+</p>
+<p>Grammar of a protocol property declaration
+</p>
+<p>protocol-property-declaration
+→
+variable-declaration-head
+variable-name
+type-annotation
+getter-setter-keyword-block
+</p>
+<p>Grammar of a protocol method declaration
+</p>
+<p>protocol-method-declaration
+→
+function-head
+function-name
+generic-parameter-clause
+_{opt}
+function-signature
+generic-where-clause
+_{opt}
+</p>
+<p>Grammar of a protocol initializer declaration
+</p>
+<p>protocol-initializer-declaration
+→
+initializer-head
+generic-parameter-clause
+_{opt}
+parameter-clause
+=throws=<em>_opt</em>
+generic-where-clause
+_{opt}
+</p>
+<p>protocol-initializer-declaration
+→
+initializer-head
+generic-parameter-clause
+_{opt}
+parameter-clause
+&lsquo;<samp>rethrows</samp>&rsquo;
+generic-where-clause
+_{opt}
+</p>
+<p>Grammar of a protocol subscript declaration
+</p>
+<p>protocol-subscript-declaration
+→
+subscript-head
+subscript-result
+generic-where-clause
+_{opt}
+getter-setter-keyword-block
+</p>
+<p>Grammar of a protocol associated type declaration
+</p>
+<p>protocol-associated-type-declaration
+→ attributes
+_{opt}
+access-level-modifier
+_{opt} &lsquo;<samp>associatedtype</samp>&rsquo;
+typealias-name
+type-inheritance-clause
+_{opt}
+typealias-assignment
+_{opt}
+generic-where-clause
+_{opt}
+</p>
+<p>Grammar of an initializer declaration
+</p>
+<p>initializer-declaration
+→
+initializer-head
+generic-parameter-clause
+_{opt}
+parameter-clause
+=throws=<em>_opt</em>
+generic-where-clause
+_{opt}
+initializer-body
+</p>
+<p>initializer-declaration
+→
+initializer-head
+generic-parameter-clause
+_{opt}
+parameter-clause
+&lsquo;<samp>rethrows</samp>&rsquo;
+generic-where-clause
+_{opt}
+initializer-body
+</p>
+<p>initializer-head
+→ attributes
+_{opt}
+declaration-modifiers
+_{opt} &lsquo;<samp>init</samp>&rsquo;
+</p>
+<p>initializer-head
+→ attributes
+_{opt}
+declaration-modifiers
+_{opt} &lsquo;<samp>init</samp>&rsquo; &lsquo;<samp>?</samp>&rsquo;
+</p>
+<p>initializer-head
+→ attributes
+_{opt}
+declaration-modifiers
+_{opt} &lsquo;<samp>init</samp>&rsquo; &lsquo;<samp>!</samp>&rsquo;
+</p>
+<p>initializer-body
+→
+code-block
+</p>
+<p>Grammar of a deinitializer declaration
+</p>
+<p>deinitializer-declaration
+→ attributes
+_{opt} &lsquo;<samp>deinit</samp>&rsquo;
+code-block
+</p>
+<p>Grammar of an extension declaration
+</p>
+<p>extension-declaration
+→ attributes
+_{opt}
+access-level-modifier
+_{opt} &lsquo;<samp>extension</samp>&rsquo;
+type-identifier
+type-inheritance-clause
+_{opt}
+generic-where-clause
+_{opt}
+extension-body
+</p>
+<p>extension-body
+→ &lsquo;<samp>{</samp>&rsquo;
+extension-members
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>extension-members
+→
+extension-member
+extension-members
+_{opt}
+</p>
+<p>extension-member
+→
+declaration
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>compiler-control-statement
+</p>
+<p>Grammar of a subscript declaration
+</p>
+<p>subscript-declaration
+→
+subscript-head
+subscript-result
+generic-where-clause
+_{opt}
+code-block
+</p>
+<p>subscript-declaration
+→
+subscript-head
+subscript-result
+generic-where-clause
+_{opt}
+getter-setter-block
+</p>
+<p>subscript-declaration
+→
+subscript-head
+subscript-result
+generic-where-clause
+_{opt}
+getter-setter-keyword-block
+</p>
+<p>subscript-head
+→ attributes
+_{opt}
+declaration-modifiers
+_{opt} &lsquo;<samp>subscript</samp>&rsquo;
+generic-parameter-clause
+_{opt}
+parameter-clause
+</p>
+<p>subscript-result
+→ &lsquo;<samp>-&gt;</samp>&rsquo;
+attributes
+_{opt} type
+</p>
+<p>Grammar of an operator declaration
+</p>
+<p>operator-declaration
+→
+prefix-operator-declaration
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>postfix-operator-declaration
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>infix-operator-declaration
+</p>
+<p>prefix-operator-declaration
+→ &lsquo;<samp>prefix</samp>&rsquo; &lsquo;<samp>operator</samp>&rsquo;
+operator
+</p>
+<p>postfix-operator-declaration
+→ &lsquo;<samp>postfix</samp>&rsquo; &lsquo;<samp>operator</samp>&rsquo;
+operator
+</p>
+<p>infix-operator-declaration
+→ &lsquo;<samp>infix</samp>&rsquo; &lsquo;<samp>operator</samp>&rsquo;
+operator
+infix-operator-group
+_{opt}
+</p>
+<p>infix-operator-group
+→ &lsquo;<samp>:</samp>&rsquo;
+precedence-group-name
+</p>
+<p>Grammar of a precedence group declaration
+</p>
+<p>precedence-group-declaration
+→ &lsquo;<samp>precedencegroup</samp>&rsquo;
+precedence-group-name
+&lsquo;<samp>{</samp>&rsquo;
+precedence-group-attributes
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>precedence-group-attributes
+→
+precedence-group-attribute
+precedence-group-attributes
+_{opt}
+</p>
+<p>precedence-group-attribute
+→
+precedence-group-relation
+</p>
+<p>precedence-group-attribute
+→
+precedence-group-assignment
+</p>
+<p>precedence-group-attribute
+→
+precedence-group-associativity
+</p>
+<p>precedence-group-relation
+→ &lsquo;<samp>higherThan</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo;
+precedence-group-names
+</p>
+<p>precedence-group-relation
+→ &lsquo;<samp>lowerThan</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo;
+precedence-group-names
+</p>
+<p>precedence-group-assignment
+→ &lsquo;<samp>assignment</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo;
+boolean-literal
+</p>
+<p>precedence-group-associativity
+→ &lsquo;<samp>associativity</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo; &lsquo;<samp>left</samp>&rsquo;
+</p>
+<p>precedence-group-associativity
+→ &lsquo;<samp>associativity</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo; &lsquo;<samp>right</samp>&rsquo;
+</p>
+<p>precedence-group-associativity
+→ &lsquo;<samp>associativity</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo; &lsquo;<samp>none</samp>&rsquo;
+</p>
+<p>precedence-group-names
+→
+precedence-group-name
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>precedence-group-name
+&lsquo;<samp>,</samp>&rsquo;
+precedence-group-names
+</p>
+<p>precedence-group-name
+→
+identifier
+</p>
+<p>Grammar of a declaration modifier
+</p>
+<p>declaration-modifier
+→ &lsquo;<samp>class</samp>&rsquo; | &lsquo;<samp>convenience</samp>&rsquo; | &lsquo;<samp>dynamic</samp>&rsquo; | &lsquo;<samp>final</samp>&rsquo; | &lsquo;<samp>infix</samp>&rsquo; | &lsquo;<samp>lazy</samp>&rsquo; |
+&lsquo;<samp>optional</samp>&rsquo; | &lsquo;<samp>override</samp>&rsquo; | &lsquo;<samp>postfix</samp>&rsquo; | &lsquo;<samp>prefix</samp>&rsquo; | &lsquo;<samp>required</samp>&rsquo; | &lsquo;<samp>static</samp>&rsquo; |
+&lsquo;<samp>unowned</samp>&rsquo; | &lsquo;<samp>unowned</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>safe</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo; | &lsquo;<samp>unowned</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>unsafe</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo; |
+&lsquo;<samp>weak</samp>&rsquo;
+</p>
+<p>declaration-modifier
+→
+access-level-modifier
+</p>
+<p>declaration-modifier
+→
+mutation-modifier
+</p>
+<p>declaration-modifiers
+→
+declaration-modifier
+declaration-modifiers
+_{opt}
+</p>
+<p>access-level-modifier
+→ &lsquo;<samp>private</samp>&rsquo; | &lsquo;<samp>private</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>set</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>access-level-modifier
+→ &lsquo;<samp>fileprivate</samp>&rsquo; | &lsquo;<samp>fileprivate</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>set</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>access-level-modifier
+→ &lsquo;<samp>internal</samp>&rsquo; | &lsquo;<samp>internal</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>set</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>access-level-modifier
+→ &lsquo;<samp>public</samp>&rsquo; | &lsquo;<samp>public</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>set</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>access-level-modifier
+→ &lsquo;<samp>open</samp>&rsquo; | &lsquo;<samp>open</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>set</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>mutation-modifier
+→ &lsquo;<samp>mutating</samp>&rsquo; | &lsquo;<samp>nonmutating</samp>&rsquo;
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Attributes-1.html#Attributes-1" accesskey="n" rel="next">Attributes 1</a>, Previous: <a href="Statements-1.html#Statements-1" accesskey="p" rel="prev">Statements 1</a>, Up: <a href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" accesskey="u" rel="up">Summary of the Grammar</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

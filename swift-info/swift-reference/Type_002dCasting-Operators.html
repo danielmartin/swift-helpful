@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Type-Casting Operators (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Type-Casting Operators (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Type-Casting Operators (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Binary-Expressions.html#Binary-Expressions" rel="up" title="Binary Expressions">
+<link href="Primary-Expressions.html#Primary-Expressions" rel="next" title="Primary Expressions">
+<link href="Assignment-Operator.html#Assignment-Operator" rel="prev" title="Assignment Operator">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Type_002dCasting-Operators"></span><div class="header">
+<p>
+Previous: <a href="Assignment-Operator.html#Assignment-Operator" accesskey="p" rel="prev">Assignment Operator</a>, Up: <a href="Binary-Expressions.html#Binary-Expressions" accesskey="u" rel="up">Binary Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Type_002dCasting-Operators-1"></span><h4 class="subsection">5.2.2 Type-Casting Operators</h4>
+
+<p>There are four type-casting operators: the &lsquo;<samp>is</samp>&rsquo; operator, the &lsquo;<samp>as</samp>&rsquo;
+operator, the &lsquo;<samp>as?</samp>&rsquo; operator, and the &lsquo;<samp>as!</samp>&rsquo; operator.
+</p>
+<p>They have the following form:
+</p>
+<ol>
+<li> expression is type
+</li><li> expression as type
+</li><li> expression as? type
+</li><li> expression as! type
+</li></ol>
+
+<p>The &lsquo;<samp>is</samp>&rsquo; operator checks at runtime whether the <em>expression</em> can be cast
+to the specified <em>type</em>. It returns &lsquo;<samp>true</samp>&rsquo; if the <em>expression</em> can be
+cast to the specified <em>type</em>; otherwise, it returns &lsquo;<samp>false</samp>&rsquo;.
+</p>
+<p>The &lsquo;<samp>as</samp>&rsquo; operator performs a cast when it is known at compile time that
+the cast always succeeds, such as upcasting or bridging. Upcasting lets
+you use an expression as an instance of its type&rsquo;s supertype, without
+using an intermediate variable. The following approaches are equivalent:
+</p>
+<ol>
+<li> func f(_ any: Any) { print(&quot;Function for Any&quot;) }
+</li><li> func f(_ int: Int) { print(&quot;Function for Int&quot;) }
+</li><li> let x = 10
+</li><li> f(x)
+</li><li> // Prints &quot;Function for Int&quot;
+</li><li> let y: Any = x
+</li><li> f(y)
+</li><li> // Prints &quot;Function for Any&quot;
+</li><li> f(x as Any)
+</li><li> // Prints &quot;Function for Any&quot;
+</li></ol>
+
+<p>Bridging lets you use an expression of a Swift standard library type
+such as &lsquo;<samp>String</samp>&rsquo; as its corresponding Foundation type such as &lsquo;<samp>NSString</samp>&rsquo;
+without needing to create a new instance. For more information on
+bridging, see
+<a href="https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types">Working
+with Foundation Types</a>
+[<a href="https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types">https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types</a>].
+</p>
+<p>The &lsquo;<samp>as?</samp>&rsquo; operator performs a conditional cast of the <em>expression</em> to
+the specified <em>type</em>. The &lsquo;<samp>as?</samp>&rsquo; operator returns an optional of the
+specified <em>type</em>. At runtime, if the cast succeeds, the value of
+<em>expression</em> is wrapped in an optional and returned; otherwise, the
+value returned is &lsquo;<samp>nil</samp>&rsquo;. If casting to the specified <em>type</em> is
+guaranteed to fail or is guaranteed to succeed, a compile-time error is
+raised.
+</p>
+<p>The &lsquo;<samp>as!</samp>&rsquo; operator performs a forced cast of the <em>expression</em> to the
+specified <em>type</em>. The &lsquo;<samp>as!</samp>&rsquo; operator returns a value of the specified
+<em>type</em>, not an optional type. If the cast fails, a runtime error is
+raised. The behavior of &lsquo;<samp>x as! T</samp>&rsquo; is the same as the behavior of
+&lsquo;<samp>(x as? T)!</samp>&rsquo;.
+</p>
+<p>For more information about type casting and to see examples that use the
+type-casting operators, see <a href="../swift/Type-Casting.html#Type-Casting">(swift)Type
+Casting</a>.
+</p>
+<p>Grammar of a type-casting operator
+</p>
+<p>type-casting-operator
+→ &lsquo;<samp>is</samp>&rsquo; type
+</p>
+<p>type-casting-operator
+→ &lsquo;<samp>as</samp>&rsquo; type
+</p>
+<p>type-casting-operator
+→ &lsquo;<samp>as</samp>&rsquo; &lsquo;<samp>?</samp>&rsquo; type
+</p>
+<p>type-casting-operator
+→ &lsquo;<samp>as</samp>&rsquo; &lsquo;<samp>!</samp>&rsquo; type
+</p>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Assignment-Operator.html#Assignment-Operator" accesskey="p" rel="prev">Assignment Operator</a>, Up: <a href="Binary-Expressions.html#Binary-Expressions" accesskey="u" rel="up">Binary Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

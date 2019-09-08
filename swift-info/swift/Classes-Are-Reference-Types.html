@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Classes Are Reference Types (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Classes Are Reference Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Classes Are Reference Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Structures-and-Classes.html#Structures-and-Classes" rel="up" title="Structures and Classes">
+<link href="Identity-Operators.html#Identity-Operators" rel="next" title="Identity Operators">
+<link href="Structures-and-Enumerations-Are-Value-Types.html#Structures-and-Enumerations-Are-Value-Types" rel="prev" title="Structures and Enumerations Are Value Types">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Classes-Are-Reference-Types"></span><div class="header">
+<p>
+Previous: <a href="Structures-and-Enumerations-Are-Value-Types.html#Structures-and-Enumerations-Are-Value-Types" accesskey="p" rel="prev">Structures and Enumerations Are Value Types</a>, Up: <a href="Structures-and-Classes.html#Structures-and-Classes" accesskey="u" rel="up">Structures and Classes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Classes-Are-Reference-Types-1"></span><h3 class="section">14.3 Classes Are Reference Types</h3>
+
+<p>Unlike value types, <em>reference types</em> are <em>not</em> copied when they are
+assigned to a variable or constant, or when they are passed to a
+function. Rather than a copy, a reference to the same existing instance
+is used.
+</p>
+<p>Here&rsquo;s an example, using the &lsquo;<samp>VideoMode</samp>&rsquo; class defined above:
+</p>
+<div class="example">
+<pre class="example">let tenEighty = VideoMode()
+tenEighty.resolution = hd
+tenEighty.interlaced = true
+tenEighty.name = &quot;1080i&quot;
+tenEighty.frameRate = 25.0
+</pre></div>
+
+<p>This example declares a new constant called &lsquo;<samp>tenEighty</samp>&rsquo; and sets it to
+refer to a new instance of the &lsquo;<samp>VideoMode</samp>&rsquo; class. The video mode is
+assigned a copy of the HD resolution of &lsquo;<samp>1920</samp>&rsquo; by &lsquo;<samp>1080</samp>&rsquo; from before.
+It&rsquo;s set to be interlaced, its name is set to &lsquo;<samp>&quot;1080i&quot;</samp>&rsquo;, and its frame
+rate is set to &lsquo;<samp>25.0</samp>&rsquo; frames per second.
+</p>
+<p>Next, &lsquo;<samp>tenEighty</samp>&rsquo; is assigned to a new constant, called &lsquo;<samp>alsoTenEighty</samp>&rsquo;,
+and the frame rate of &lsquo;<samp>alsoTenEighty</samp>&rsquo; is modified:
+</p>
+<div class="example">
+<pre class="example">let alsoTenEighty = tenEighty
+alsoTenEighty.frameRate = 30.0
+</pre></div>
+
+<p>Because classes are reference types, &lsquo;<samp>tenEighty</samp>&rsquo; and &lsquo;<samp>alsoTenEighty</samp>&rsquo;
+actually both refer to the <em>same</em> &lsquo;<samp>VideoMode</samp>&rsquo; instance. Effectively,
+they are just two different names for the same single instance, as shown
+in the figure below:
+</p>
+<img src="_images/sharedStateClass_2x.png" alt="_images/sharedStateClass_2x">
+<p>Checking the &lsquo;<samp>frameRate</samp>&rsquo; property of &lsquo;<samp>tenEighty</samp>&rsquo; shows that it correctly
+reports the new frame rate of &lsquo;<samp>30.0</samp>&rsquo; from the underlying &lsquo;<samp>VideoMode</samp>&rsquo;
+instance:
+</p>
+<div class="example">
+<pre class="example">print(&quot;The frameRate property of tenEighty is now n\(tenEighty.frameRate)&quot;)
+ // Prints &quot;The frameRate property of tenEighty is now 30.0&quot;
+</pre></div>
+
+<p>This example also shows how reference types can be harder to reason
+about. If &lsquo;<samp>tenEighty</samp>&rsquo; and &lsquo;<samp>alsoTenEighty</samp>&rsquo; were far apart in your
+program&rsquo;s code, it could be difficult to find all the ways that the
+video mode is changed. Wherever you use &lsquo;<samp>tenEighty</samp>&rsquo;, you also have to
+think about the code that uses &lsquo;<samp>alsoTenEighty</samp>&rsquo;, and vice versa. In
+contrast, value types are easier to reason about because all of the code
+that interacts with the same value is close together in your source
+files.
+</p>
+<p>Note that &lsquo;<samp>tenEighty</samp>&rsquo; and &lsquo;<samp>alsoTenEighty</samp>&rsquo; are declared as <em>constants</em>,
+rather than variables. However, you can still change
+&lsquo;<samp>tenEighty.frameRate</samp>&rsquo; and &lsquo;<samp>alsoTenEighty.frameRate</samp>&rsquo; because the values
+of the &lsquo;<samp>tenEighty</samp>&rsquo; and &lsquo;<samp>alsoTenEighty</samp>&rsquo; constants themselves don&rsquo;t
+actually change. &lsquo;<samp>tenEighty</samp>&rsquo; and &lsquo;<samp>alsoTenEighty</samp>&rsquo; themselves don&rsquo;t
+“store” the &lsquo;<samp>VideoMode</samp>&rsquo; instance&mdash;instead, they both <em>refer</em> to a
+&lsquo;<samp>VideoMode</samp>&rsquo; instance behind the scenes. It&rsquo;s the &lsquo;<samp>frameRate</samp>&rsquo; property of
+the underlying &lsquo;<samp>VideoMode</samp>&rsquo; that is changed, not the values of the
+constant references to that &lsquo;<samp>VideoMode</samp>&rsquo;.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Identity-Operators.html#Identity-Operators" accesskey="1">Identity Operators</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Pointers.html#Pointers" accesskey="2">Pointers</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Structures-and-Enumerations-Are-Value-Types.html#Structures-and-Enumerations-Are-Value-Types" accesskey="p" rel="prev">Structures and Enumerations Are Value Types</a>, Up: <a href="Structures-and-Classes.html#Structures-and-Classes" accesskey="u" rel="up">Structures and Classes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

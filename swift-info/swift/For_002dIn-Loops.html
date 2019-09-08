@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>For-In Loops (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="For-In Loops (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="For-In Loops (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Control-Flow-1.html#Control-Flow-1" rel="up" title="Control Flow 1">
+<link href="While-Loops.html#While-Loops" rel="next" title="While Loops">
+<link href="Control-Flow-1.html#Control-Flow-1" rel="prev" title="Control Flow 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="For_002dIn-Loops"></span><div class="header">
+<p>
+Next: <a href="While-Loops.html#While-Loops" accesskey="n" rel="next">While Loops</a>, Up: <a href="Control-Flow-1.html#Control-Flow-1" accesskey="u" rel="up">Control Flow 1</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="For_002dIn-Loops-1"></span><h3 class="section">10.1 For-In Loops</h3>
+
+<span id="index-for"></span>
+<span id="index-in"></span>
+
+<p>You use the &lsquo;<samp>for</samp>&rsquo;-&lsquo;<samp>in</samp>&rsquo; loop to iterate over a sequence, such as items in
+an array, ranges of numbers, or characters in a string.
+</p>
+<p>This example uses a &lsquo;<samp>for</samp>&rsquo;-&lsquo;<samp>in</samp>&rsquo; loop to iterate over the items in an
+array:
+</p>
+<div class="example">
+<pre class="example">let names = [&quot;Anna&quot;, &quot;Alex&quot;, &quot;Brian&quot;, &quot;Jack&quot;]
+for name in names {
+    print(&quot;Hello, \(name)!&quot;)
+}
+// Hello, Anna!
+// Hello, Alex!
+// Hello, Brian!
+// Hello, Jack!
+</pre></div>
+
+<p>You can also iterate over a dictionary to access its key-value pairs.
+Each item in the dictionary is returned as a &lsquo;<samp>(key, value)</samp>&rsquo; tuple when
+the dictionary is iterated, and you can decompose the &lsquo;<samp>(key, value)</samp>&rsquo;
+tuple&rsquo;s members as explicitly named constants for use within the body of
+the &lsquo;<samp>for</samp>&rsquo;-&lsquo;<samp>in</samp>&rsquo; loop. In the code example below, the dictionary&rsquo;s keys
+are decomposed into a constant called &lsquo;<samp>animalName</samp>&rsquo;, and the dictionary&rsquo;s
+values are decomposed into a constant called &lsquo;<samp>legCount</samp>&rsquo;.
+</p>
+<div class="example">
+<pre class="example">let numberOfLegs = [&quot;spider&quot;: 8, &quot;ant&quot;: 6, &quot;cat&quot;: 4]
+for (animalName, legCount) in numberOfLegs {
+    print(&quot;\(animalName)s have \(legCount) legs&quot;)
+}
+// cats have 4 legs
+// ants have 6 legs
+// spiders have 8 legs
+</pre></div>
+
+<p>The contents of a &lsquo;<samp>Dictionary</samp>&rsquo; are inherently unordered, and iterating
+over them does not guarantee the order in which they will be retrieved.
+In particular, the order you insert items into a &lsquo;<samp>Dictionary</samp>&rsquo; doesn&rsquo;t
+define the order they are iterated. For more about arrays and
+dictionaries, see <a href="Collection-Types.html#Collection-Types">Collection Types</a>.
+</p>
+<p>You can also use &lsquo;<samp>for</samp>&rsquo;-&lsquo;<samp>in</samp>&rsquo; loops with numeric ranges. This example
+prints the first few entries in a five-times table:
+</p>
+<div class="example">
+<pre class="example">for index in 1...5 {
+    print(&quot;\(index) times 5 is \(index * 5)&quot;)
+}
+// 1 times 5 is 5
+// 2 times 5 is 10
+// 3 times 5 is 15
+// 4 times 5 is 20
+// 5 times 5 is 25
+</pre></div>
+
+<p>The sequence being iterated over is a range of numbers from &lsquo;<samp>1</samp>&rsquo; to &lsquo;<samp>5</samp>&rsquo;,
+inclusive, as indicated by the use of the closed range operator (&lsquo;<samp>...</samp>&rsquo;).
+The value of &lsquo;<samp>index</samp>&rsquo; is set to the first number in the range (&lsquo;<samp>1</samp>&rsquo;), and
+the statements inside the loop are executed. In this case, the loop
+contains only one statement, which prints an entry from the five-times
+table for the current value of &lsquo;<samp>index</samp>&rsquo;. After the statement is executed,
+the value of &lsquo;<samp>index</samp>&rsquo; is updated to contain the second value in the range
+(&lsquo;<samp>2</samp>&rsquo;), and the &lsquo;<samp>print(_:separator:terminator:)</samp>&rsquo; function is called
+again. This process continues until the end of the range is reached.
+</p>
+<p>In the example above, &lsquo;<samp>index</samp>&rsquo; is a constant whose value is automatically
+set at the start of each iteration of the loop. As such, &lsquo;<samp>index</samp>&rsquo; does
+not have to be declared before it is used. It is implicitly declared
+simply by its inclusion in the loop declaration, without the need for a
+&lsquo;<samp>let</samp>&rsquo; declaration keyword.
+</p>
+<p>If you don&rsquo;t need each value from a sequence, you can ignore the values
+by using an underscore in place of a variable name.
+</p>
+<div class="example">
+<pre class="example">let base = 3
+let power = 10
+var answer = 1
+for _ in 1...power {
+    answer *= base
+}
+print(&quot;\(base) to the power of \(power) is \(answer)&quot;)
+// Prints &quot;3 to the power of 10 is 59049&quot;
+</pre></div>
+
+<p>The example above calculates the value of one number to the power of
+another (in this case, &lsquo;<samp>3</samp>&rsquo; to the power of &lsquo;<samp>10</samp>&rsquo;). It multiplies a
+starting value of &lsquo;<samp>1</samp>&rsquo; (that is, &lsquo;<samp>3</samp>&rsquo; to the power of &lsquo;<samp>0</samp>&rsquo;) by &lsquo;<samp>3</samp>&rsquo;, ten
+times, using a closed range that starts with &lsquo;<samp>1</samp>&rsquo; and ends with &lsquo;<samp>10</samp>&rsquo;. For
+this calculation, the individual counter values each time through the
+loop are unnecessary&mdash;the code simply executes the loop the correct
+number of times. The underscore character (&lsquo;<samp>_</samp>&rsquo;) used in place of a loop
+variable causes the individual values to be ignored and does not provide
+access to the current value during each iteration of the loop.
+</p>
+<p>In some situations, you might not want to use closed ranges, which
+include both endpoints. Consider drawing the tick marks for every minute
+on a watch face. You want to draw &lsquo;<samp>60</samp>&rsquo; tick marks, starting with the &lsquo;<samp>0</samp>&rsquo;
+minute. Use the half-open range operator (&lsquo;<samp>..&lt;</samp>&rsquo;) to include the lower
+bound but not the upper bound. For more about ranges, see
+<a href="Range-Operators.html#Range-Operators">Range Operators</a>.
+</p>
+<div class="example">
+<pre class="example">let minutes = 60
+for tickMark in 0..&lt;minutes {
+    // render the tick mark each minute (60 times)
+}
+</pre></div>
+
+<p>Some users might want fewer tick marks in their UI. They could prefer
+one mark every &lsquo;<samp>5</samp>&rsquo; minutes instead. Use the &lsquo;<samp>stride(from:to:by:)</samp>&rsquo;
+function to skip the unwanted marks.
+</p>
+<div class="example">
+<pre class="example">let minuteInterval = 5
+for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
+    // render the tick mark every 5 minutes (0, 5, 10, 15 ... 45, 50, 55)
+}
+</pre></div>
+
+<p>Closed ranges are also available, by using &lsquo;<samp>stride(from:through:by:)</samp>&rsquo;
+instead:
+</p>
+<div class="example">
+<pre class="example">let hours = 12
+let hourInterval = 3
+for tickMark in stride(from: 3, through: hours, by: hourInterval) {
+    // render the tick mark every 3 hours (3, 6, 9, 12)
+}
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="While-Loops.html#While-Loops" accesskey="n" rel="next">While Loops</a>, Up: <a href="Control-Flow-1.html#Control-Flow-1" accesskey="u" rel="up">Control Flow 1</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

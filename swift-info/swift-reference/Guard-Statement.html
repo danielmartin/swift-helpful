@@ -1,0 +1,342 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Guard Statement (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Guard Statement (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Guard Statement (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Loop-Statements.html#Loop-Statements" rel="up" title="Loop Statements">
+<link href="Labeled-Statement.html#Labeled-Statement" rel="next" title="Labeled Statement">
+<link href="If-Statement.html#If-Statement" rel="prev" title="If Statement">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Guard-Statement"></span><div class="header">
+<p>
+Previous: <a href="If-Statement.html#If-Statement" accesskey="p" rel="prev">If Statement</a>, Up: <a href="Loop-Statements.html#Loop-Statements" accesskey="u" rel="up">Loop Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Guard-Statement-1"></span><h4 class="subsection">6.1.6 Guard Statement</h4>
+
+<p>A &lsquo;<samp>guard</samp>&rsquo; statement is used to transfer program control out of a scope
+if one or more conditions aren&rsquo;t met.
+</p>
+<p>A &lsquo;<samp>guard</samp>&rsquo; statement has the following form:
+</p>
+<ol>
+<li> guard condition else {
+</li><li> statements
+</li><li> }
+</li></ol>
+
+<p>The value of any condition in a &lsquo;<samp>guard</samp>&rsquo; statement must be of type &lsquo;<samp>Bool</samp>&rsquo;
+or a type bridged to &lsquo;<samp>Bool</samp>&rsquo;. The condition can also be an optional
+binding declaration, as discussed in
+<a href="../swift/Optional-Binding.html#Optional-Binding">(swift)Optional Binding</a>.
+</p>
+<p>Any constants or variables assigned a value from an optional binding
+declaration in a &lsquo;<samp>guard</samp>&rsquo; statement condition can be used for the rest of
+the guard statement&rsquo;s enclosing scope.
+</p>
+<p>The &lsquo;<samp>else</samp>&rsquo; clause of a &lsquo;<samp>guard</samp>&rsquo; statement is required, and must either
+call a function with the &lsquo;<samp>Never</samp>&rsquo; return type or transfer program control
+outside the guard statement&rsquo;s enclosing scope using one of the following
+statements:
+</p>
+<ul>
+<li> &lsquo;<samp>return</samp>&rsquo;
+
+</li><li> &lsquo;<samp>break</samp>&rsquo;
+
+</li><li> &lsquo;<samp>continue</samp>&rsquo;
+
+</li><li> &lsquo;<samp>throw</samp>&rsquo;
+</li></ul>
+
+<p>Control transfer statements are discussed in
+<a href="Control-Transfer-Statements.html#Control-Transfer-Statements">Control Transfer Statements</a> below. For more
+information on functions with the &lsquo;<samp>Never</samp>&rsquo; return type, see
+<a href="Functions-that-Never-Return.html#Functions-that-Never-Return">Functions that Never Return</a>.
+</p>
+<p>Grammar of a guard statement
+</p>
+<p>guard-statement → &lsquo;<samp>guard</samp>&rsquo;
+condition-list
+&lsquo;<samp>else</samp>&rsquo;
+code-block
+</p>
+<ol>
+<li> Switch Statement
+
+
+<p>A &lsquo;<samp>switch</samp>&rsquo; statement allows certain blocks of code to be executed
+depending on the value of a control expression.
+</p>
+<p>A &lsquo;<samp>switch</samp>&rsquo; statement has the following form:
+</p>
+<ol>
+<li> switch control expression {
+</li><li> case pattern 1:
+</li><li> statements
+</li><li> case pattern 2 where condition:
+</li><li> statements
+</li><li> case pattern 3 where condition,
+</li><li> pattern 4 where condition:
+</li><li> statements
+</li><li> default:
+</li><li> statements
+</li><li> }
+</li></ol>
+
+<p>The <em>control expression</em> of the &lsquo;<samp>switch</samp>&rsquo; statement is evaluated and then
+compared with the patterns specified in each case. If a match is found,
+the program executes the <em>statements</em> listed within the scope of that
+case. The scope of each case can&rsquo;t be empty. As a result, you must
+include at least one statement following the colon (&lsquo;<samp>:</samp>&rsquo;) of each case
+label. Use a single &lsquo;<samp>break</samp>&rsquo; statement if you don&rsquo;t intend to execute any
+code in the body of a matched case.
+</p>
+<p>The values of expressions your code can branch on are very flexible. For
+example, in addition to the values of scalar types, such as integers and
+characters, your code can branch on the values of any type, including
+floating-point numbers, strings, tuples, instances of custom classes,
+and optionals. The value of the <em>control expression</em> can even be matched
+to the value of a case in an enumeration and checked for inclusion in a
+specified range of values. For examples of how to use these various
+types of values in &lsquo;<samp>switch</samp>&rsquo; statements, see
+<a href="../swift/Switch.html#Switch">(swift)Switch</a> in
+<a href="../swift/Control-Flow.html#Control-Flow">(swift)Control Flow</a>.
+</p>
+<p>A &lsquo;<samp>switch</samp>&rsquo; case can optionally contain a &lsquo;<samp>where</samp>&rsquo; clause after each
+pattern. A <em>where clause</em> is introduced by the &lsquo;<samp>where</samp>&rsquo; keyword followed
+by an expression, and is used to provide an additional condition before
+a pattern in a case is considered matched to the <em>control expression</em>.
+If a &lsquo;<samp>where</samp>&rsquo; clause is present, the <em>statements</em> within the relevant
+case are executed only if the value of the <em>control expression</em> matches
+one of the patterns of the case and the expression of the &lsquo;<samp>where</samp>&rsquo; clause
+evaluates to &lsquo;<samp>true</samp>&rsquo;. For example, a <em>control expression</em> matches the
+case in the example below only if it is a tuple that contains two
+elements of the same value, such as &lsquo;<samp>(1, 1)</samp>&rsquo;.
+</p>
+<ol>
+<li> case let (x, y) where x == y:
+</li></ol>
+
+<p>As the above example shows, patterns in a case can also bind constants
+using the &lsquo;<samp>let</samp>&rsquo; keyword (they can also bind variables using the &lsquo;<samp>var</samp>&rsquo;
+keyword). These constants (or variables) can then be referenced in a
+corresponding &lsquo;<samp>where</samp>&rsquo; clause and throughout the rest of the code within
+the scope of the case. If the case contains multiple patterns that match
+the control expression, all of the patterns must contain the same
+constant or variable bindings, and each bound variable or constant must
+have the same type in all of the case&rsquo;s patterns.
+</p>
+<p>A &lsquo;<samp>switch</samp>&rsquo; statement can also include a default case, introduced by the
+&lsquo;<samp>default</samp>&rsquo; keyword. The code within a default case is executed only if no
+other cases match the control expression. A &lsquo;<samp>switch</samp>&rsquo; statement can
+include only one default case, which must appear at the end of the
+&lsquo;<samp>switch</samp>&rsquo; statement.
+</p>
+<p>Although the actual execution order of pattern-matching operations, and
+in particular the evaluation order of patterns in cases, is unspecified,
+pattern matching in a &lsquo;<samp>switch</samp>&rsquo; statement behaves as if the evaluation is
+performed in source order&mdash;that is, the order in which they appear in
+source code. As a result, if multiple cases contain patterns that
+evaluate to the same value, and thus can match the value of the control
+expression, the program executes only the code within the first matching
+case in source order.
+</p>
+</li><li> Switch Statements Must Be Exhaustive
+
+
+<p>In Swift, every possible value of the control expression&rsquo;s type must
+match the value of at least one pattern of a case. When this simply
+isn&rsquo;t feasible (for example, when the control expression&rsquo;s type is
+&lsquo;<samp>Int</samp>&rsquo;), you can include a default case to satisfy the requirement.
+</p>
+<ol>
+<li> Switching Over Future Enumeration Cases
+
+
+<span id="index-_0040unknown"></span>
+
+<p>A <em>nonfrozen enumeration</em> is a special kind of enumeration that may gain
+new enumeration cases in the future&mdash;even after you compile and ship an
+app. Switching over a nonfrozen enumeration requires extra
+consideration. When a library&rsquo;s authors mark an enumeration as
+nonfrozen, they reserve the right to add new enumeration cases, and any
+code that interacts with that enumeration <em>must</em> be able to handle those
+future cases without being recompiled. Only the standard library, Swift
+overlays for Apple frameworks, and C and Objective-C code can declare
+nonfrozen enumerations. Enumerations you declare in Swift can&rsquo;t be
+nonfrozen.
+</p>
+<p>When switching over a nonfrozen enumeration value, you always need to
+include a default case, even if every case of the enumeration already
+has a corresponding switch case. You can apply the &lsquo;<samp>@unknown</samp>&rsquo; attribute
+to the default case, which indicates that the default case should match
+only enumeration cases that are added in the future. Swift produces a
+warning if the default case matches any enumeration case that is known
+at compiler time. This future warning informs you that the library
+author added a new case to the enumeration that doesn&rsquo;t have a
+corresponding switch case.
+</p>
+<p>The following example switches over all three existing cases of the
+standard library&rsquo;s
+<a href="https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation">&lsquo;<samp>Mirror.AncestorRepresentation</samp>&rsquo;</a>
+[<a href="https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation">https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation</a>]
+enumeration. If you add additional cases in the future, the compiler
+generates a warning to indicate that you need to update the switch
+statement to take the new cases into account.
+</p>
+<div class="example">
+<pre class="example">let representation: Mirror.AncestorRepresentation = .generated
+switch representation {
+case .customized:
+    print(&quot;Use the nearest ancestor's implementation.&quot;)
+case .generated:
+    print(&quot;Generate a default mirror for all ancestor classes.&quot;)
+case .suppressed:
+    print(&quot;Suppress the representation of all ancestor classes.&quot;)
+@unknown default:
+    print(&quot;Use a representation that was unknown when this code was compiled.&quot;)
+}
+// Prints &quot;Generate a default mirror for all ancestor classes.&quot;
+</pre></div>
+</li></ol>
+
+</li><li> Execution Does Not Fall Through Cases Implicitly
+
+
+<p>After the code within a matched case has finished executing, the program
+exits from the &lsquo;<samp>switch</samp>&rsquo; statement. Program execution does not continue
+or “fall through” to the next case or default case. That said, if you
+want execution to continue from one case to the next, explicitly include
+a &lsquo;<samp>fallthrough</samp>&rsquo; statement, which simply consists of the &lsquo;<samp>fallthrough</samp>&rsquo;
+keyword, in the case from which you want execution to continue. For more
+information about the &lsquo;<samp>fallthrough</samp>&rsquo; statement, see
+<a href="Fallthrough-Statement.html#Fallthrough-Statement">Fallthrough Statement</a> below.
+</p>
+<p>Grammar of a switch statement
+</p>
+<p>switch-statement → &lsquo;<samp>switch</samp>&rsquo;
+expression
+&lsquo;<samp>{</samp>&rsquo;
+switch-cases
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>switch-cases →
+switch-case
+switch-cases
+_{opt}
+</p>
+<p>switch-case →
+case-label
+statements
+</p>
+<p>switch-case →
+default-label
+statements
+</p>
+<p>switch-case →
+conditional-switch-case
+</p>
+<p>case-label →
+attributes
+_{opt} &lsquo;<samp>case</samp>&rsquo;
+case-item-list
+&lsquo;<samp>:</samp>&rsquo;
+</p>
+<p>case-item-list →
+pattern
+where-clause
+_{opt} | pattern
+where-clause
+_{opt} &lsquo;<samp>,</samp>&rsquo;
+case-item-list
+</p>
+<p>default-label →
+attributes
+_{opt} &lsquo;<samp>default</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo;
+</p>
+<p>where-clause → &lsquo;<samp>where</samp>&rsquo;
+where-expression
+</p>
+<p>where-expression →
+expression
+</p>
+<p>conditional-switch-case
+→
+switch-if-directive-clause
+switch-elseif-directive-clauses
+_{opt}
+switch-else-directive-clause
+_{opt}
+endif-directive
+</p>
+<p>switch-if-directive-clause
+→
+if-directive
+compilation-condition
+switch-cases
+_{opt}
+</p>
+<p>switch-elseif-directive-clauses
+→
+elseif-directive-clause
+switch-elseif-directive-clauses
+_{opt}
+</p>
+<p>switch-elseif-directive-clause
+→
+elseif-directive
+compilation-condition
+switch-cases
+_{opt}
+</p>
+<p>switch-else-directive-clause
+→
+else-directive
+switch-cases
+_{opt}
+</p></li></ol>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="If-Statement.html#If-Statement" accesskey="p" rel="prev">If Statement</a>, Up: <a href="Loop-Statements.html#Loop-Statements" accesskey="u" rel="up">Loop Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

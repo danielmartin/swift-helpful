@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Optional Chaining (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Optional Chaining (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Optional Chaining (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping.html#Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping" rel="next" title="Optional Chaining as an Alternative to Forced Unwrapping">
+<link href="Deinitializers-in-Action.html#Deinitializers-in-Action" rel="prev" title="Deinitializers in Action">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Optional-Chaining"></span><div class="header">
+<p>
+Next: <a href="Error-Handling-2.html#Error-Handling-2" accesskey="n" rel="next">Error Handling 2</a>, Previous: <a href="Deinitialization.html#Deinitialization" accesskey="p" rel="prev">Deinitialization</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Optional-Chaining-1"></span><h2 class="chapter">21 Optional Chaining</h2>
+
+<p><em>Optional chaining</em> is a process for querying and calling properties,
+methods, and subscripts on an optional that might currently be &lsquo;<samp>nil</samp>&rsquo;. If
+the optional contains a value, the property, method, or subscript call
+succeeds; if the optional is &lsquo;<samp>nil</samp>&rsquo;, the property, method, or subscript
+call returns &lsquo;<samp>nil</samp>&rsquo;. Multiple queries can be chained together, and the
+entire chain fails gracefully if any link in the chain is &lsquo;<samp>nil</samp>&rsquo;.
+</p>
+<p>Note
+</p>
+<p>Optional chaining in Swift is similar to messaging &lsquo;<samp>nil</samp>&rsquo; in Objective-C,
+but in a way that works for any type, and that can be checked for
+success or failure.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping.html#Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping" accesskey="1">Optional Chaining as an Alternative to Forced Unwrapping</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Defining-Model-Classes-for-Optional-Chaining.html#Defining-Model-Classes-for-Optional-Chaining" accesskey="2">Defining Model Classes for Optional Chaining</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Accessing-Properties-Through-Optional-Chaining.html#Accessing-Properties-Through-Optional-Chaining" accesskey="3">Accessing Properties Through Optional Chaining</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Calling-Methods-Through-Optional-Chaining.html#Calling-Methods-Through-Optional-Chaining" accesskey="4">Calling Methods Through Optional Chaining</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Accessing-Subscripts-Through-Optional-Chaining.html#Accessing-Subscripts-Through-Optional-Chaining" accesskey="5">Accessing Subscripts Through Optional Chaining</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Linking-Multiple-Levels-of-Chaining.html#Linking-Multiple-Levels-of-Chaining" accesskey="6">Linking Multiple Levels of Chaining</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Chaining-on-Methods-with-Optional-Return-Values.html#Chaining-on-Methods-with-Optional-Return-Values" accesskey="7">Chaining on Methods with Optional Return Values</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

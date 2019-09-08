@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>One-Sided Ranges (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="One-Sided Ranges (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="One-Sided Ranges (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Range-Operators.html#Range-Operators" rel="up" title="Range Operators">
+<link href="Logical-Operators.html#Logical-Operators" rel="next" title="Logical Operators">
+<link href="Half_002dOpen-Range-Operator.html#Half_002dOpen-Range-Operator" rel="prev" title="Half-Open Range Operator">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="One_002dSided-Ranges"></span><div class="header">
+<p>
+Previous: <a href="Half_002dOpen-Range-Operator.html#Half_002dOpen-Range-Operator" accesskey="p" rel="prev">Half-Open Range Operator</a>, Up: <a href="Range-Operators.html#Range-Operators" accesskey="u" rel="up">Range Operators</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="One_002dSided-Ranges-1"></span><h4 class="subsection">7.8.3 One-Sided Ranges</h4>
+
+<p>The closed range operator has an alternative form for ranges that
+continue as far as possible in one direction&mdash;for example, a range that
+includes all the elements of an array from index 2 to the end of the
+array. In these cases, you can omit the value from one side of the range
+operator. This kind of range is called a <em>one-sided range</em> because the
+operator has a value on only one side. For example:
+</p>
+<div class="example">
+<pre class="example">for name in names[2...] {
+    print(name)
+}
+// Brian
+// Jack
+
+for name in names[...2] {
+    print(name)
+}
+// Anna
+// Alex
+// Brian
+</pre></div>
+
+<p>The half-open range operator also has a one-sided form that&rsquo;s written
+with only its final value. Just like when you include a value on both
+sides, the final value isn&rsquo;t part of the range. For example:
+</p>
+<div class="example">
+<pre class="example">for name in names[..&lt;2] {
+    print(name)
+}
+// Anna
+// Alex
+</pre></div>
+
+<p>One-sided ranges can be used in other contexts, not just in subscripts.
+You can&rsquo;t iterate over a one-sided range that omits a first value,
+because it isn&rsquo;t clear where iteration should begin. You <em>can</em> iterate
+over a one-sided range that omits its final value; however, because the
+range continues indefinitely, make sure you add an explicit end
+condition for the loop. You can also check whether a one-sided range
+contains a particular value, as shown in the code below.
+</p>
+<div class="example">
+<pre class="example">let range = ...5
+range.contains(7) // false
+range.contains(4) // true
+range.contains(-1) // true
+</pre></div>
+
+
+
+
+</body>
+</html>

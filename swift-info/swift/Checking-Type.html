@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Checking Type (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Checking Type (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Checking Type (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Type-Casting.html#Type-Casting" rel="up" title="Type Casting">
+<link href="Downcasting.html#Downcasting" rel="next" title="Downcasting">
+<link href="Defining-a-Class-Hierarchy-for-Type-Casting.html#Defining-a-Class-Hierarchy-for-Type-Casting" rel="prev" title="Defining a Class Hierarchy for Type Casting">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Checking-Type"></span><div class="header">
+<p>
+Next: <a href="Downcasting.html#Downcasting" accesskey="n" rel="next">Downcasting</a>, Previous: <a href="Defining-a-Class-Hierarchy-for-Type-Casting.html#Defining-a-Class-Hierarchy-for-Type-Casting" accesskey="p" rel="prev">Defining a Class Hierarchy for Type Casting</a>, Up: <a href="Type-Casting.html#Type-Casting" accesskey="u" rel="up">Type Casting</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Checking-Type-1"></span><h3 class="section">23.2 Checking Type</h3>
+
+<span id="index-is"></span>
+
+<p>Use the <em>type check operator</em> (&lsquo;<samp>is</samp>&rsquo;) to check whether an instance is of
+a certain subclass type. The type check operator returns &lsquo;<samp>true</samp>&rsquo; if the
+instance is of that subclass type and &lsquo;<samp>false</samp>&rsquo; if it is not.
+</p>
+<p>The example below defines two variables, &lsquo;<samp>movieCount</samp>&rsquo; and &lsquo;<samp>songCount</samp>&rsquo;,
+which count the number of &lsquo;<samp>Movie</samp>&rsquo; and &lsquo;<samp>Song</samp>&rsquo; instances in the &lsquo;<samp>library</samp>&rsquo;
+array:
+</p>
+<div class="example">
+<pre class="example">var movieCount = 0
+var songCount = 0
+
+for item in library {
+    if item is Movie {
+        movieCount += 1
+    } else if item is Song {
+        songCount += 1
+    }
+}
+
+print(&quot;Media library contains \(movieCount) movies and \(songCount) songs&quot;)
+// Prints &quot;Media library contains 2 movies and 3 songs&quot;
+</pre></div>
+
+<p>This example iterates through all items in the &lsquo;<samp>library</samp>&rsquo; array. On each
+pass, the &lsquo;<samp>for</samp>&rsquo;-&lsquo;<samp>in</samp>&rsquo; loop sets the &lsquo;<samp>item</samp>&rsquo; constant to the next
+&lsquo;<samp>MediaItem</samp>&rsquo; in the array.
+</p>
+<p>&lsquo;<samp>item is Movie</samp>&rsquo; returns &lsquo;<samp>true</samp>&rsquo; if the current &lsquo;<samp>MediaItem</samp>&rsquo; is a &lsquo;<samp>Movie</samp>&rsquo;
+instance and &lsquo;<samp>false</samp>&rsquo; if it is not. Similarly, &lsquo;<samp>item is Song</samp>&rsquo; checks
+whether the item is a &lsquo;<samp>Song</samp>&rsquo; instance. At the end of the &lsquo;<samp>for</samp>&rsquo;-&lsquo;<samp>in</samp>&rsquo;
+loop, the values of &lsquo;<samp>movieCount</samp>&rsquo; and &lsquo;<samp>songCount</samp>&rsquo; contain a count of how
+many &lsquo;<samp>MediaItem</samp>&rsquo; instances were found of each type.
+</p>
+
+
+
+</body>
+</html>

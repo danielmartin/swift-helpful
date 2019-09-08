@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>If (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="If (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="If (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Conditional-Statements.html#Conditional-Statements" rel="up" title="Conditional Statements">
+<link href="Switch.html#Switch" rel="next" title="Switch">
+<link href="Conditional-Statements.html#Conditional-Statements" rel="prev" title="Conditional Statements">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="If"></span><div class="header">
+<p>
+Next: <a href="Switch.html#Switch" accesskey="n" rel="next">Switch</a>, Up: <a href="Conditional-Statements.html#Conditional-Statements" accesskey="u" rel="up">Conditional Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="If-1"></span><h4 class="subsection">10.3.1 If</h4>
+
+<span id="index-if"></span>
+
+<p>In its simplest form, the &lsquo;<samp>if</samp>&rsquo; statement has a single &lsquo;<samp>if</samp>&rsquo; condition. It
+executes a set of statements only if that condition is &lsquo;<samp>true</samp>&rsquo;.
+</p>
+<div class="example">
+<pre class="example">var temperatureInFahrenheit = 30
+if temperatureInFahrenheit &lt;= 32 {
+    print(&quot;It's very cold. Consider wearing a scarf.&quot;)
+}
+// Prints &quot;It's very cold. Consider wearing a scarf.&quot;
+</pre></div>
+
+<p>The example above checks whether the temperature is less than or equal
+to 32 degrees Fahrenheit (the freezing point of water). If it is, a
+message is printed. Otherwise, no message is printed, and code execution
+continues after the &lsquo;<samp>if</samp>&rsquo; statement&rsquo;s closing brace.
+</p>
+<span id="index-else"></span>
+
+<p>The &lsquo;<samp>if</samp>&rsquo; statement can provide an alternative set of statements, known
+as an <em>else clause</em>, for situations when the &lsquo;<samp>if</samp>&rsquo; condition is &lsquo;<samp>false</samp>&rsquo;.
+These statements are indicated by the &lsquo;<samp>else</samp>&rsquo; keyword.
+</p>
+<div class="example">
+<pre class="example">temperatureInFahrenheit = 40
+if temperatureInFahrenheit &lt;= 32 {
+    print(&quot;It's very cold. Consider wearing a scarf.&quot;)
+} else {
+    print(&quot;It's not that cold. Wear a t-shirt.&quot;)
+}
+// Prints &quot;It's not that cold. Wear a t-shirt.&quot;
+</pre></div>
+
+<p>One of these two branches is always executed. Because the temperature
+has increased to &lsquo;<samp>40</samp>&rsquo; degrees Fahrenheit, it is no longer cold enough to
+advise wearing a scarf and so the &lsquo;<samp>else</samp>&rsquo; branch is triggered instead.
+</p>
+<p>You can chain multiple &lsquo;<samp>if</samp>&rsquo; statements together to consider additional
+clauses.
+</p>
+<div class="example">
+<pre class="example">temperatureInFahrenheit = 90
+if temperatureInFahrenheit &lt;= 32 {
+    print(&quot;It's very cold. Consider wearing a scarf.&quot;)
+} else if temperatureInFahrenheit &gt;= 86 {
+    print(&quot;It's really warm. Don't forget to wear sunscreen.&quot;)
+} else {
+    print(&quot;It's not that cold. Wear a t-shirt.&quot;)
+}
+// Prints &quot;It's really warm. Don't forget to wear sunscreen.&quot;
+</pre></div>
+
+<p>Here, an additional &lsquo;<samp>if</samp>&rsquo; statement was added to respond to particularly
+warm temperatures. The final &lsquo;<samp>else</samp>&rsquo; clause remains, and it prints a
+response for any temperatures that are neither too warm nor too cold.
+</p>
+<p>The final &lsquo;<samp>else</samp>&rsquo; clause is optional, however, and can be excluded if the
+set of conditions does not need to be complete.
+</p>
+<div class="example">
+<pre class="example">temperatureInFahrenheit = 72
+if temperatureInFahrenheit &lt;= 32 {
+    print(&quot;It's very cold. Consider wearing a scarf.&quot;)
+} else if temperatureInFahrenheit &gt;= 86 {
+    print(&quot;It's really warm. Don't forget to wear sunscreen.&quot;)
+}
+</pre></div>
+
+<p>Because the temperature is neither too cold nor too warm to trigger the
+&lsquo;<samp>if</samp>&rsquo; or &lsquo;<samp>else if</samp>&rsquo; conditions, no message is printed.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Switch.html#Switch" accesskey="n" rel="next">Switch</a>, Up: <a href="Conditional-Statements.html#Conditional-Statements" accesskey="u" rel="up">Conditional Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

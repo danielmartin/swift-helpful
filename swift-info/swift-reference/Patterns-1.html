@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Patterns 1 (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Patterns 1 (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Patterns 1 (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" rel="up" title="Summary of the Grammar">
+<link href="Generic-Parameters-and-Arguments-1.html#Generic-Parameters-and-Arguments-1" rel="next" title="Generic Parameters and Arguments 1">
+<link href="Attributes-1.html#Attributes-1" rel="prev" title="Attributes 1">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Patterns-1"></span><div class="header">
+<p>
+Next: <a href="Generic-Parameters-and-Arguments-1.html#Generic-Parameters-and-Arguments-1" accesskey="n" rel="next">Generic Parameters and Arguments 1</a>, Previous: <a href="Attributes-1.html#Attributes-1" accesskey="p" rel="prev">Attributes 1</a>, Up: <a href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" accesskey="u" rel="up">Summary of the Grammar</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Patterns-3"></span><h3 class="section">11.7 Patterns</h3>
+
+<p>Grammar of a pattern
+</p>
+<p>pattern →
+wildcard-pattern
+type-annotation
+_{opt}
+</p>
+<p>pattern →
+identifier-pattern
+type-annotation
+_{opt}
+</p>
+<p>pattern →
+value-binding-pattern
+</p>
+<p>pattern →
+tuple-pattern
+type-annotation
+_{opt}
+</p>
+<p>pattern →
+enum-case-pattern
+</p>
+<p>pattern →
+optional-pattern
+</p>
+<p>pattern →
+type-casting-pattern
+</p>
+<p>pattern →
+expression-pattern
+</p>
+<p>Grammar of a wildcard pattern
+</p>
+<p>wildcard-pattern
+→ &lsquo;<samp>_</samp>&rsquo;
+</p>
+<p>Grammar of an identifier pattern
+</p>
+<p>identifier-pattern
+→
+identifier
+</p>
+<p>Grammar of a value-binding pattern
+</p>
+<p>value-binding-pattern
+→ &lsquo;<samp>var</samp>&rsquo; pattern |
+&lsquo;<samp>let</samp>&rsquo; pattern
+</p>
+<p>Grammar of a tuple pattern
+</p>
+<p>tuple-pattern
+→ &lsquo;<samp>(</samp>&rsquo;
+tuple-pattern-element-list
+_{opt} &lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>tuple-pattern-element-list
+→
+tuple-pattern-element
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>tuple-pattern-element
+&lsquo;<samp>,</samp>&rsquo;
+tuple-pattern-element-list
+</p>
+<p>tuple-pattern-element
+→ pattern |
+identifier
+&lsquo;<samp>:</samp>&rsquo; pattern
+</p>
+<p>Grammar of an enumeration case pattern
+</p>
+<p>enum-case-pattern
+→
+type-identifier
+_{opt} &lsquo;<samp>.</samp>&rsquo;
+enum-case-name
+tuple-pattern
+_{opt}
+</p>
+<p>Grammar of an optional pattern
+</p>
+<p>optional-pattern
+→
+identifier-pattern
+&lsquo;<samp>?</samp>&rsquo;
+</p>
+<p>Grammar of a type casting pattern
+</p>
+<p>type-casting-pattern
+→ is-pattern |
+as-pattern
+</p>
+<p>is-pattern → &lsquo;<samp>is</samp>&rsquo;
+type
+</p>
+<p>as-pattern →
+pattern &lsquo;<samp>as</samp>&rsquo;
+type
+</p>
+<p>Grammar of an expression pattern
+</p>
+<p>expression-pattern
+→
+expression
+</p>
+
+
+
+</body>
+</html>

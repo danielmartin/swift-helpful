@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Providing Default Implementations (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Providing Default Implementations (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Providing Default Implementations (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Protocol-Extensions.html#Protocol-Extensions" rel="up" title="Protocol Extensions">
+<link href="Adding-Constraints-to-Protocol-Extensions.html#Adding-Constraints-to-Protocol-Extensions" rel="next" title="Adding Constraints to Protocol Extensions">
+<link href="Protocol-Extensions.html#Protocol-Extensions" rel="prev" title="Protocol Extensions">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Providing-Default-Implementations"></span><div class="header">
+<p>
+Next: <a href="Adding-Constraints-to-Protocol-Extensions.html#Adding-Constraints-to-Protocol-Extensions" accesskey="n" rel="next">Adding Constraints to Protocol Extensions</a>, Up: <a href="Protocol-Extensions.html#Protocol-Extensions" accesskey="u" rel="up">Protocol Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Providing-Default-Implementations-1"></span><h4 class="subsection">26.15.1 Providing Default Implementations</h4>
+
+<p>You can use protocol extensions to provide a default implementation to
+any method or computed property requirement of that protocol. If a
+conforming type provides its own implementation of a required method or
+property, that implementation will be used instead of the one provided
+by the extension.
+</p>
+<p>Note
+</p>
+<p>Protocol requirements with default implementations provided by
+extensions are distinct from optional protocol requirements. Although
+conforming types don&rsquo;t have to provide their own implementation of
+either, requirements with default implementations can be called without
+optional chaining.
+</p>
+<p>For example, the &lsquo;<samp>PrettyTextRepresentable</samp>&rsquo; protocol, which inherits the
+&lsquo;<samp>TextRepresentable</samp>&rsquo; protocol can provide a default implementation of its
+required &lsquo;<samp>prettyTextualDescription</samp>&rsquo; property to simply return the result
+of accessing the &lsquo;<samp>textualDescription</samp>&rsquo; property:
+</p>
+<div class="example">
+<pre class="example">extension PrettyTextRepresentable {
+    var prettyTextualDescription: String {
+        return textualDescription
+    }
+}
+</pre></div>
+
+
+
+
+</body>
+</html>

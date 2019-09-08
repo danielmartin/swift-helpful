@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Downcasting (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Downcasting (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Downcasting (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Type-Casting.html#Type-Casting" rel="up" title="Type Casting">
+<link href="Type-Casting-for-Any-and-AnyObject.html#Type-Casting-for-Any-and-AnyObject" rel="next" title="Type Casting for Any and AnyObject">
+<link href="Checking-Type.html#Checking-Type" rel="prev" title="Checking Type">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Downcasting"></span><div class="header">
+<p>
+Next: <a href="Type-Casting-for-Any-and-AnyObject.html#Type-Casting-for-Any-and-AnyObject" accesskey="n" rel="next">Type Casting for Any and AnyObject</a>, Previous: <a href="Checking-Type.html#Checking-Type" accesskey="p" rel="prev">Checking Type</a>, Up: <a href="Type-Casting.html#Type-Casting" accesskey="u" rel="up">Type Casting</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Downcasting-1"></span><h3 class="section">23.3 Downcasting</h3>
+
+<span id="index-as"></span>
+
+<p>A constant or variable of a certain class type may actually refer to an
+instance of a subclass behind the scenes. Where you believe this is the
+case, you can try to <em>downcast</em> to the subclass type with a <em>type cast
+operator</em> (&lsquo;<samp>as?</samp>&rsquo; or &lsquo;<samp>as!</samp>&rsquo;).
+</p>
+<p>Because downcasting can fail, the type cast operator comes in two
+different forms. The conditional form, &lsquo;<samp>as?</samp>&rsquo;, returns an optional value
+of the type you are trying to downcast to. The forced form, &lsquo;<samp>as!</samp>&rsquo;,
+attempts the downcast and force-unwraps the result as a single compound
+action.
+</p>
+<p>Use the conditional form of the type cast operator (&lsquo;<samp>as?</samp>&rsquo;) when you are
+not sure if the downcast will succeed. This form of the operator will
+always return an optional value, and the value will be &lsquo;<samp>nil</samp>&rsquo; if the
+downcast was not possible. This enables you to check for a successful
+downcast.
+</p>
+<p>Use the forced form of the type cast operator (&lsquo;<samp>as!</samp>&rsquo;) only when you are
+sure that the downcast will always succeed. This form of the operator
+will trigger a runtime error if you try to downcast to an incorrect
+class type.
+</p>
+<p>The example below iterates over each &lsquo;<samp>MediaItem</samp>&rsquo; in &lsquo;<samp>library</samp>&rsquo;, and
+prints an appropriate description for each item. To do this, it needs to
+access each item as a true &lsquo;<samp>Movie</samp>&rsquo; or &lsquo;<samp>Song</samp>&rsquo;, and not just as a
+&lsquo;<samp>MediaItem</samp>&rsquo;. This is necessary in order for it to be able to access the
+&lsquo;<samp>director</samp>&rsquo; or &lsquo;<samp>artist</samp>&rsquo; property of a &lsquo;<samp>Movie</samp>&rsquo; or &lsquo;<samp>Song</samp>&rsquo; for use in the
+description.
+</p>
+<p>In this example, each item in the array might be a &lsquo;<samp>Movie</samp>&rsquo;, or it might
+be a &lsquo;<samp>Song</samp>&rsquo;. You don&rsquo;t know in advance which actual class to use for
+each item, and so it is appropriate to use the conditional form of the
+type cast operator (&lsquo;<samp>as?</samp>&rsquo;) to check the downcast each time through the
+loop:
+</p>
+<div class="example">
+<pre class="example">for item in library {
+    if let movie = item as? Movie {
+        print(&quot;Movie: \(movie.name), dir. \(movie.director)&quot;)
+    } else if let song = item as? Song {
+        print(&quot;Song: \(song.name), by \(song.artist)&quot;)
+    }
+}
+
+// Movie: Casablanca, dir. Michael Curtiz
+// Song: Blue Suede Shoes, by Elvis Presley
+// Movie: Citizen Kane, dir. Orson Welles
+// Song: The One And Only, by Chesney Hawkes
+// Song: Never Gonna Give You Up, by Rick Astley
+</pre></div>
+
+<p>The example starts by trying to downcast the current &lsquo;<samp>item</samp>&rsquo; as a
+&lsquo;<samp>Movie</samp>&rsquo;. Because &lsquo;<samp>item</samp>&rsquo; is a &lsquo;<samp>MediaItem</samp>&rsquo; instance, it&rsquo;s possible that it
+<em>might</em> be a &lsquo;<samp>Movie</samp>&rsquo;; equally, it&rsquo;s also possible that it might be a
+&lsquo;<samp>Song</samp>&rsquo;, or even just a base &lsquo;<samp>MediaItem</samp>&rsquo;. Because of this uncertainty,
+the &lsquo;<samp>as?</samp>&rsquo; form of the type cast operator returns an <em>optional</em> value
+when attempting to downcast to a subclass type. The result of
+&lsquo;<samp>item as? Movie</samp>&rsquo; is of type &lsquo;<samp>Movie?</samp>&rsquo;, or “optional =Movie=”.
+</p>
+<p>Downcasting to &lsquo;<samp>Movie</samp>&rsquo; fails when applied to the &lsquo;<samp>Song</samp>&rsquo; instances in the
+library array. To cope with this, the example above uses optional
+binding to check whether the optional &lsquo;<samp>Movie</samp>&rsquo; actually contains a value
+(that is, to find out whether the downcast succeeded.) This optional
+binding is written “=if let movie = item as? Movie=”, which can be read
+as:
+</p>
+<p>“Try to access &lsquo;<samp>item</samp>&rsquo; as a &lsquo;<samp>Movie</samp>&rsquo;. If this is successful, set a new
+temporary constant called &lsquo;<samp>movie</samp>&rsquo; to the value stored in the returned
+optional &lsquo;<samp>Movie</samp>&rsquo;.”
+</p>
+<p>If the downcasting succeeds, the properties of &lsquo;<samp>movie</samp>&rsquo; are then used to
+print a description for that &lsquo;<samp>Movie</samp>&rsquo; instance, including the name of its
+&lsquo;<samp>director</samp>&rsquo;. A similar principle is used to check for &lsquo;<samp>Song</samp>&rsquo; instances,
+and to print an appropriate description (including &lsquo;<samp>artist</samp>&rsquo; name)
+whenever a &lsquo;<samp>Song</samp>&rsquo; is found in the library.
+</p>
+<p>Note
+</p>
+<p>Casting does not actually modify the instance or change its values. The
+underlying instance remains the same; it is simply treated and accessed
+as an instance of the type to which it has been cast.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Type-Casting-for-Any-and-AnyObject.html#Type-Casting-for-Any-and-AnyObject" accesskey="n" rel="next">Type Casting for Any and AnyObject</a>, Previous: <a href="Checking-Type.html#Checking-Type" accesskey="p" rel="prev">Checking Type</a>, Up: <a href="Type-Casting.html#Type-Casting" accesskey="u" rel="up">Type Casting</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

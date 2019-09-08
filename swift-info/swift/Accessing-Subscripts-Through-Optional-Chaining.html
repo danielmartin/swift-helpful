@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Accessing Subscripts Through Optional Chaining (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Accessing Subscripts Through Optional Chaining (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Accessing Subscripts Through Optional Chaining (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Optional-Chaining.html#Optional-Chaining" rel="up" title="Optional Chaining">
+<link href="Accessing-Subscripts-of-Optional-Type.html#Accessing-Subscripts-of-Optional-Type" rel="next" title="Accessing Subscripts of Optional Type">
+<link href="Calling-Methods-Through-Optional-Chaining.html#Calling-Methods-Through-Optional-Chaining" rel="prev" title="Calling Methods Through Optional Chaining">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Accessing-Subscripts-Through-Optional-Chaining"></span><div class="header">
+<p>
+Next: <a href="Linking-Multiple-Levels-of-Chaining.html#Linking-Multiple-Levels-of-Chaining" accesskey="n" rel="next">Linking Multiple Levels of Chaining</a>, Previous: <a href="Calling-Methods-Through-Optional-Chaining.html#Calling-Methods-Through-Optional-Chaining" accesskey="p" rel="prev">Calling Methods Through Optional Chaining</a>, Up: <a href="Optional-Chaining.html#Optional-Chaining" accesskey="u" rel="up">Optional Chaining</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Accessing-Subscripts-Through-Optional-Chaining-1"></span><h3 class="section">21.5 Accessing Subscripts Through Optional Chaining</h3>
+
+<p>You can use optional chaining to try to retrieve and set a value from a
+subscript on an optional value, and to check whether that subscript call
+is successful.
+</p>
+<p>Note
+</p>
+<p>When you access a subscript on an optional value through optional
+chaining, you place the question mark <em>before</em> the subscript&rsquo;s brackets,
+not after. The optional chaining question mark always follows
+immediately after the part of the expression that is optional.
+</p>
+<p>The example below tries to retrieve the name of the first room in the
+&lsquo;<samp>rooms</samp>&rsquo; array of the &lsquo;<samp>john.residence</samp>&rsquo; property using the subscript
+defined on the &lsquo;<samp>Residence</samp>&rsquo; class. Because &lsquo;<samp>john.residence</samp>&rsquo; is currently
+&lsquo;<samp>nil</samp>&rsquo;, the subscript call fails:
+</p>
+<div class="example">
+<pre class="example">if let firstRoomName = john.residence?[0].name {
+    print(&quot;The first room name is \(firstRoomName).&quot;)
+} else {
+    print(&quot;Unable to retrieve the first room name.&quot;)
+}
+// Prints &quot;Unable to retrieve the first room name.&quot;
+</pre></div>
+
+<p>The optional chaining question mark in this subscript call is placed
+immediately after &lsquo;<samp>john.residence</samp>&rsquo;, before the subscript brackets,
+because &lsquo;<samp>john.residence</samp>&rsquo; is the optional value on which optional
+chaining is being attempted.
+</p>
+<p>Similarly, you can try to set a new value through a subscript with
+optional chaining:
+</p>
+<div class="example">
+<pre class="example">john.residence?[0] = Room(name: &quot;Bathroom&quot;)
+</pre></div>
+
+<p>This subscript setting attempt also fails, because &lsquo;<samp>residence</samp>&rsquo; is
+currently &lsquo;<samp>nil</samp>&rsquo;.
+</p>
+<p>If you create and assign an actual &lsquo;<samp>Residence</samp>&rsquo; instance to
+&lsquo;<samp>john.residence</samp>&rsquo;, with one or more &lsquo;<samp>Room</samp>&rsquo; instances in its &lsquo;<samp>rooms</samp>&rsquo;
+array, you can use the &lsquo;<samp>Residence</samp>&rsquo; subscript to access the actual items
+in the &lsquo;<samp>rooms</samp>&rsquo; array through optional chaining:
+</p>
+<div class="example">
+<pre class="example">let johnsHouse = Residence()
+johnsHouse.rooms.append(Room(name: &quot;Living Room&quot;))
+johnsHouse.rooms.append(Room(name: &quot;Kitchen&quot;))
+john.residence = johnsHouse
+
+if let firstRoomName = john.residence?[0].name {
+    print(&quot;The first room name is \(firstRoomName).&quot;)
+} else {
+    print(&quot;Unable to retrieve the first room name.&quot;)
+}
+// Prints &quot;The first room name is Living Room.&quot;
+</pre></div>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Accessing-Subscripts-of-Optional-Type.html#Accessing-Subscripts-of-Optional-Type" accesskey="1">Accessing Subscripts of Optional Type</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Linking-Multiple-Levels-of-Chaining.html#Linking-Multiple-Levels-of-Chaining" accesskey="n" rel="next">Linking Multiple Levels of Chaining</a>, Previous: <a href="Calling-Methods-Through-Optional-Chaining.html#Calling-Methods-Through-Optional-Chaining" accesskey="p" rel="prev">Calling Methods Through Optional Chaining</a>, Up: <a href="Optional-Chaining.html#Optional-Chaining" accesskey="u" rel="up">Optional Chaining</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

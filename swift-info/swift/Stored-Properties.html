@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Stored Properties (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Stored Properties (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Stored Properties (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Properties.html#Properties" rel="up" title="Properties">
+<link href="Stored-Properties-of-Constant-Structure-Instances.html#Stored-Properties-of-Constant-Structure-Instances" rel="next" title="Stored Properties of Constant Structure Instances">
+<link href="Properties.html#Properties" rel="prev" title="Properties">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Stored-Properties"></span><div class="header">
+<p>
+Next: <a href="Computed-Properties.html#Computed-Properties" accesskey="n" rel="next">Computed Properties</a>, Up: <a href="Properties.html#Properties" accesskey="u" rel="up">Properties</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Stored-Properties-1"></span><h3 class="section">15.1 Stored Properties</h3>
+
+<p>In its simplest form, a stored property is a constant or variable that
+is stored as part of an instance of a particular class or structure.
+Stored properties can be either <em>variable stored properties</em> (introduced
+by the &lsquo;<samp>var</samp>&rsquo; keyword) or <em>constant stored properties</em> (introduced by the
+&lsquo;<samp>let</samp>&rsquo; keyword).
+</p>
+<p>You can provide a default value for a stored property as part of its
+definition, as described in <a href="Default-Property-Values.html#Default-Property-Values">Default
+Property Values</a>. You can also set and modify the initial value for a
+stored property during initialization. This is true even for constant
+stored properties, as described in
+<a href="Assigning-Constant-Properties-During-Initialization.html#Assigning-Constant-Properties-During-Initialization">Assigning Constant Properties During
+Initialization</a>.
+</p>
+<p>The example below defines a structure called &lsquo;<samp>FixedLengthRange</samp>&rsquo;, which
+describes a range of integers whose range length cannot be changed after
+it is created:
+</p>
+<div class="example">
+<pre class="example">struct FixedLengthRange {
+    var firstValue: Int
+    let length: Int
+}
+var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
+// the range represents integer values 0, 1, and 2
+rangeOfThreeItems.firstValue = 6
+// the range now represents integer values 6, 7, and 8
+</pre></div>
+
+<p>Instances of &lsquo;<samp>FixedLengthRange</samp>&rsquo; have a variable stored property called
+&lsquo;<samp>firstValue</samp>&rsquo; and a constant stored property called &lsquo;<samp>length</samp>&rsquo;. In the
+example above, &lsquo;<samp>length</samp>&rsquo; is initialized when the new range is created and
+cannot be changed thereafter, because it is a constant property.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Stored-Properties-of-Constant-Structure-Instances.html#Stored-Properties-of-Constant-Structure-Instances" accesskey="1">Stored Properties of Constant Structure Instances</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Lazy-Stored-Properties.html#Lazy-Stored-Properties" accesskey="2">Lazy Stored Properties</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Stored-Properties-and-Instance-Variables.html#Stored-Properties-and-Instance-Variables" accesskey="3">Stored Properties and Instance Variables</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

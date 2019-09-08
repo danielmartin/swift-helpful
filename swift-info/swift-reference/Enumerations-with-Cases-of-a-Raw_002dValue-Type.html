@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Enumerations with Cases of a Raw-Value Type (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Enumerations with Cases of a Raw-Value Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Enumerations with Cases of a Raw-Value Type (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Enumeration-Declaration.html#Enumeration-Declaration" rel="up" title="Enumeration Declaration">
+<link href="Accessing-Enumeration-Cases.html#Accessing-Enumeration-Cases" rel="next" title="Accessing Enumeration Cases">
+<link href="Enumerations-with-Cases-of-Any-Type.html#Enumerations-with-Cases-of-Any-Type" rel="prev" title="Enumerations with Cases of Any Type">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Enumerations-with-Cases-of-a-Raw_002dValue-Type"></span><div class="header">
+<p>
+Next: <a href="Accessing-Enumeration-Cases.html#Accessing-Enumeration-Cases" accesskey="n" rel="next">Accessing Enumeration Cases</a>, Previous: <a href="Enumerations-with-Cases-of-Any-Type.html#Enumerations-with-Cases-of-Any-Type" accesskey="p" rel="prev">Enumerations with Cases of Any Type</a>, Up: <a href="Enumeration-Declaration.html#Enumeration-Declaration" accesskey="u" rel="up">Enumeration Declaration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Enumerations-with-Cases-of-a-Raw_002dValue-Type-1"></span><h4 class="subsection">7.8.2 Enumerations with Cases of a Raw-Value Type</h4>
+
+<p>The following form declares an enumeration type that contains
+enumeration cases of the same basic type:
+</p>
+<ol>
+<li> enum enumeration name: raw-value type, adopted protocols {
+</li><li> case enumeration case 1 = raw value 1
+</li><li> case enumeration case 2 = raw value 2
+</li><li> }
+</li></ol>
+
+<p>In this form, each case block consists of the &lsquo;<samp>case</samp>&rsquo; keyword, followed
+by one or more enumeration cases, separated by commas. Unlike the cases
+in the first form, each case has an underlying value, called a <em>raw
+value</em>, of the same basic type. The type of these values is specified in
+the <em>raw-value type</em> and must represent an integer, floating-point
+number, string, or single character. In particular, the <em>raw-value type</em>
+must conform to the &lsquo;<samp>Equatable</samp>&rsquo; protocol and one of the following
+protocols: &lsquo;<samp>ExpressibleByIntegerLiteral</samp>&rsquo; for integer literals,
+&lsquo;<samp>ExpressibleByFloatLiteral</samp>&rsquo; for floating-point literals,
+&lsquo;<samp>ExpressibleByStringLiteral</samp>&rsquo; for string literals that contain any number
+of characters, and &lsquo;<samp>ExpressibleByUnicodeScalarLiteral</samp>&rsquo; or
+&lsquo;<samp>ExpressibleByExtendedGraphemeClusterLiteral</samp>&rsquo; for string literals that
+contain only a single character. Each case must have a unique name and
+be assigned a unique raw value.
+</p>
+<p>If the raw-value type is specified as &lsquo;<samp>Int</samp>&rsquo; and you don&rsquo;t assign a value
+to the cases explicitly, they are implicitly assigned the values &lsquo;<samp>0</samp>&rsquo;,
+&lsquo;<samp>1</samp>&rsquo;, &lsquo;<samp>2</samp>&rsquo;, and so on. Each unassigned case of type &lsquo;<samp>Int</samp>&rsquo; is implicitly
+assigned a raw value that is automatically incremented from the raw
+value of the previous case.
+</p>
+<ol>
+<li> enum ExampleEnum: Int {
+</li><li> case a, b, c = 5, d
+</li><li> }
+</li></ol>
+
+<p>In the above example, the raw value of &lsquo;<samp>ExampleEnum.a</samp>&rsquo; is &lsquo;<samp>0</samp>&rsquo; and the
+value of &lsquo;<samp>ExampleEnum.b</samp>&rsquo; is &lsquo;<samp>1</samp>&rsquo;. And because the value of
+&lsquo;<samp>ExampleEnum.c</samp>&rsquo; is explicitly set to &lsquo;<samp>5</samp>&rsquo;, the value of &lsquo;<samp>ExampleEnum.d</samp>&rsquo;
+is automatically incremented from &lsquo;<samp>5</samp>&rsquo; and is therefore &lsquo;<samp>6</samp>&rsquo;.
+</p>
+<p>If the raw-value type is specified as &lsquo;<samp>String</samp>&rsquo; and you don&rsquo;t assign
+values to the cases explicitly, each unassigned case is implicitly
+assigned a string with the same text as the name of that case.
+</p>
+<ol>
+<li> enum GamePlayMode: String {
+</li><li> case cooperative, individual, competitive
+</li><li> }
+</li></ol>
+
+<p>In the above example, the raw value of &lsquo;<samp>GamePlayMode.cooperative</samp>&rsquo; is
+&lsquo;<samp>&quot;cooperative&quot;</samp>&rsquo;, the raw value of &lsquo;<samp>GamePlayMode.individual</samp>&rsquo; is
+&lsquo;<samp>&quot;individual&quot;</samp>&rsquo;, and the raw value of &lsquo;<samp>GamePlayMode.competitive</samp>&rsquo; is
+&lsquo;<samp>&quot;competitive&quot;</samp>&rsquo;.
+</p>
+<p>Enumerations that have cases of a raw-value type implicitly conform to
+the &lsquo;<samp>RawRepresentable</samp>&rsquo; protocol, defined in the Swift standard library.
+As a result, they have a &lsquo;<samp>rawValue</samp>&rsquo; property and a failable initializer
+with the signature &lsquo;<samp>init?(rawValue: RawValue)</samp>&rsquo;. You can use the
+&lsquo;<samp>rawValue</samp>&rsquo; property to access the raw value of an enumeration case, as
+in &lsquo;<samp>ExampleEnum.b.rawValue</samp>&rsquo;. You can also use a raw value to find a
+corresponding case, if there is one, by calling the enumeration&rsquo;s
+failable initializer, as in &lsquo;<samp>ExampleEnum(rawValue: 5)</samp>&rsquo;, which returns an
+optional case. For more information and to see examples of cases with
+raw-value types, see <a href="../swift/Raw-Values.html#Raw-Values">(swift)Raw
+Values</a>.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Accessing-Enumeration-Cases.html#Accessing-Enumeration-Cases" accesskey="n" rel="next">Accessing Enumeration Cases</a>, Previous: <a href="Enumerations-with-Cases-of-Any-Type.html#Enumerations-with-Cases-of-Any-Type" accesskey="p" rel="prev">Enumerations with Cases of Any Type</a>, Up: <a href="Enumeration-Declaration.html#Enumeration-Declaration" accesskey="u" rel="up">Enumeration Declaration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

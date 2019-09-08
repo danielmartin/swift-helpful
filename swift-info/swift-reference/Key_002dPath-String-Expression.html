@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Key-Path String Expression (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Key-Path String Expression (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Key-Path String Expression (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Primary-Expressions.html#Primary-Expressions" rel="up" title="Primary Expressions">
+<link href="Postfix-Expressions.html#Postfix-Expressions" rel="next" title="Postfix Expressions">
+<link href="Selector-Expression.html#Selector-Expression" rel="prev" title="Selector Expression">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Key_002dPath-String-Expression"></span><div class="header">
+<p>
+Previous: <a href="Selector-Expression.html#Selector-Expression" accesskey="p" rel="prev">Selector Expression</a>, Up: <a href="Primary-Expressions.html#Primary-Expressions" accesskey="u" rel="up">Primary Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Key_002dPath-String-Expression-1"></span><h4 class="subsection">5.3.11 Key-Path String Expression</h4>
+
+<p>A key-path string expression lets you access the string used to refer to
+a property in Objective-C, for use in key-value coding and key-value
+observing APIs. It has the following form:
+</p>
+<ol>
+<li> #keyPath(property name)
+</li></ol>
+
+<p>The <em>property name</em> must be a reference to a property that is available
+in the Objective-C runtime. At compile time, the key-path string
+expression is replaced by a string literal. For example:
+</p>
+<ol>
+<li> class SomeClass: NSObject {
+</li><li> @objc var someProperty: Int
+</li><li> init(someProperty: Int) {
+</li><li> self.someProperty = someProperty
+</li><li> }
+</li><li> }
+</li><li> let c = SomeClass(someProperty: 12)
+</li><li> let keyPath = #keyPath(SomeClass.someProperty)
+</li><li> if let value = c.value(forKey: keyPath) {
+</li><li> print(value)
+</li><li> }
+</li><li> // Prints &quot;12&quot;
+</li></ol>
+
+<p>When you use a key-path string expression within a class, you can refer
+to a property of that class by writing just the property name, without
+the class name.
+</p>
+<ol>
+<li> extension SomeClass {
+</li><li> func getSomeKeyPath() -&gt; String {
+</li><li> return #keyPath(someProperty)
+</li><li> }
+</li><li> }
+</li><li> print(keyPath == c.getSomeKeyPath())
+</li><li> // Prints &quot;true&quot;
+</li></ol>
+
+<p>Because the key path string is created at compile time, not at runtime,
+the compiler can check that the property exists and that the property is
+exposed to the Objective-C runtime.
+</p>
+<p>For more information about using key paths in Swift code that interacts
+with Objective-C APIs, see
+<a href="https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift">Using
+Objective-C Runtime Features in Swift</a>
+[<a href="https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift">https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift</a>].
+For information about key-value coding and key-value observing, see
+<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i">Key-Value
+Coding Programming Guide</a>
+[<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i">https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i</a>]
+and
+<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i">Key-Value
+Observing Programming Guide</a>
+[<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i">https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i</a>].
+</p>
+<p>Note
+</p>
+<p>Although the <em>property name</em> is an expression, it is never evaluated.
+</p>
+<p>Grammar of a key-path string expression
+</p>
+<p>key-path-string-expression
+→ &lsquo;<samp>#keyPath</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo;
+expression
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Selector-Expression.html#Selector-Expression" accesskey="p" rel="prev">Selector Expression</a>, Up: <a href="Primary-Expressions.html#Primary-Expressions" accesskey="u" rel="up">Primary Expressions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

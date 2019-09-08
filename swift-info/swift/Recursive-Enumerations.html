@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Recursive Enumerations (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Recursive Enumerations (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Recursive Enumerations (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Enumeration.html#Enumeration" rel="up" title="Enumeration">
+<link href="Structures-and-Classes.html#Structures-and-Classes" rel="next" title="Structures and Classes">
+<link href="Initializing-from-a-Raw-Value.html#Initializing-from-a-Raw-Value" rel="prev" title="Initializing from a Raw Value">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Recursive-Enumerations"></span><div class="header">
+<p>
+Previous: <a href="Raw-Values.html#Raw-Values" accesskey="p" rel="prev">Raw Values</a>, Up: <a href="Enumeration.html#Enumeration" accesskey="u" rel="up">Enumeration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Recursive-Enumerations-1"></span><h3 class="section">13.6 Recursive Enumerations</h3>
+
+<span id="index-indirect"></span>
+
+<p>A <em>recursive enumeration</em> is an enumeration that has another instance of
+the enumeration as the associated value for one or more of the
+enumeration cases. You indicate that an enumeration case is recursive by
+writing &lsquo;<samp>indirect</samp>&rsquo; before it, which tells the compiler to insert the
+necessary layer of indirection.
+</p>
+<p>For example, here is an enumeration that stores simple arithmetic
+expressions:
+</p>
+<div class="example">
+<pre class="example">enum ArithmeticExpression {
+    case number(Int)
+    indirect case addition(ArithmeticExpression, ArithmeticExpression)
+    indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
+}
+</pre></div>
+
+<p>You can also write &lsquo;<samp>indirect</samp>&rsquo; before the beginning of the enumeration to
+enable indirection for all of the enumeration&rsquo;s cases that have an
+associated value:
+</p>
+<div class="example">
+<pre class="example">indirect enum ArithmeticExpression {
+    case number(Int)
+    case addition(ArithmeticExpression, ArithmeticExpression)
+    case multiplication(ArithmeticExpression, ArithmeticExpression)
+}
+</pre></div>
+
+<p>This enumeration can store three kinds of arithmetic expressions: a
+plain number, the addition of two expressions, and the multiplication of
+two expressions. The &lsquo;<samp>addition</samp>&rsquo; and &lsquo;<samp>multiplication</samp>&rsquo; cases have
+associated values that are also arithmetic expressions&mdash;these
+associated values make it possible to nest expressions. For example, the
+expression &lsquo;<samp>(5 + 4) * 2</samp>&rsquo; has a number on the right-hand side of the
+multiplication and another expression on the left-hand side of the
+multiplication. Because the data is nested, the enumeration used to
+store the data also needs to support nesting&mdash;this means the
+enumeration needs to be recursive. The code below shows the
+&lsquo;<samp>ArithmeticExpression</samp>&rsquo; recursive enumeration being created for
+&lsquo;<samp>(5 + 4) * 2</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">let five = ArithmeticExpression.number(5)
+let four = ArithmeticExpression.number(4)
+let sum = ArithmeticExpression.addition(five, four)
+let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
+</pre></div>
+
+<p>A recursive function is a straightforward way to work with data that has
+a recursive structure. For example, here&rsquo;s a function that evaluates an
+arithmetic expression:
+</p>
+<div class="example">
+<pre class="example">func evaluate(_ expression: ArithmeticExpression) -&gt; Int {
+    switch expression {
+    case let .number(value):
+        return value
+    case let .addition(left, right):
+        return evaluate(left) + evaluate(right)
+    case let .multiplication(left, right):
+        return evaluate(left) * evaluate(right)
+    }
+}
+
+print(evaluate(product))
+// Prints &quot;18&quot;
+</pre></div>
+
+<p>This function evaluates a plain number by simply returning the
+associated value. It evaluates an addition or multiplication by
+evaluating the expression on the left-hand side, evaluating the
+expression on the right-hand side, and then adding them or multiplying
+them.
+</p>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Raw-Values.html#Raw-Values" accesskey="p" rel="prev">Raw Values</a>, Up: <a href="Enumeration.html#Enumeration" accesskey="u" rel="up">Enumeration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Accessing and Modifying an Array (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Accessing and Modifying an Array (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Accessing and Modifying an Array (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Arrays.html#Arrays" rel="up" title="Arrays">
+<link href="Iterating-Over-an-Array.html#Iterating-Over-an-Array" rel="next" title="Iterating Over an Array">
+<link href="Creating-an-Array-with-an-Array-Literal.html#Creating-an-Array-with-an-Array-Literal" rel="prev" title="Creating an Array with an Array Literal">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Accessing-and-Modifying-an-Array"></span><div class="header">
+<p>
+Next: <a href="Iterating-Over-an-Array.html#Iterating-Over-an-Array" accesskey="n" rel="next">Iterating Over an Array</a>, Previous: <a href="Creating-an-Array-with-an-Array-Literal.html#Creating-an-Array-with-an-Array-Literal" accesskey="p" rel="prev">Creating an Array with an Array Literal</a>, Up: <a href="Arrays.html#Arrays" accesskey="u" rel="up">Arrays</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Accessing-and-Modifying-an-Array-1"></span><h4 class="subsection">9.2.6 Accessing and Modifying an Array</h4>
+
+<p>You access and modify an array through its methods and properties, or by
+using subscript syntax.
+</p>
+<p>To find out the number of items in an array, check its read-only &lsquo;<samp>count</samp>&rsquo;
+property:
+</p>
+<div class="example">
+<pre class="example">print(&quot;The shopping list contains \(shoppingList.count) items.&quot;)
+// Prints &quot;The shopping list contains 2 items.&quot;
+</pre></div>
+
+<p>Use the Boolean &lsquo;<samp>isEmpty</samp>&rsquo; property as a shortcut for checking whether
+the &lsquo;<samp>count</samp>&rsquo; property is equal to &lsquo;<samp>0</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">if shoppingList.isEmpty {
+    print(&quot;The shopping list is empty.&quot;)
+} else {
+    print(&quot;The shopping list is not empty.&quot;)
+}
+// Prints &quot;The shopping list is not empty.&quot;
+</pre></div>
+
+<p>You can add a new item to the end of an array by calling the array&rsquo;s
+&lsquo;<samp>append(_:)</samp>&rsquo; method:
+</p>
+<div class="example">
+<pre class="example">shoppingList.append(&quot;Flour&quot;)
+// shoppingList now contains 3 items, and someone is making pancakes
+</pre></div>
+
+<p>Alternatively, append an array of one or more compatible items with the
+addition assignment operator (&lsquo;<samp>+=</samp>&rsquo;):
+</p>
+<div class="example">
+<pre class="example">shoppingList += [&quot;Baking Powder&quot;]
+// shoppingList now contains 4 items
+shoppingList += [&quot;Chocolate Spread&quot;, &quot;Cheese&quot;, &quot;Butter&quot;]
+// shoppingList now contains 7 items
+</pre></div>
+
+<p>Retrieve a value from the array by using <em>subscript syntax</em>, passing the
+index of the value you want to retrieve within square brackets
+immediately after the name of the array:
+</p>
+<div class="example">
+<pre class="example">var firstItem = shoppingList[0]
+// firstItem is equal to &quot;Eggs&quot;
+</pre></div>
+
+<p>Note
+</p>
+<p>The first item in the array has an index of &lsquo;<samp>0</samp>&rsquo;, not &lsquo;<samp>1</samp>&rsquo;. Arrays in
+Swift are always zero-indexed.
+</p>
+<p>You can use subscript syntax to change an existing value at a given
+index:
+</p>
+<div class="example">
+<pre class="example">shoppingList[0] = &quot;Six eggs&quot;
+// the first item in the list is now equal to &quot;Six eggs&quot; rather than &quot;Eggs&quot;
+</pre></div>
+
+<p>When you use subscript syntax, the index you specify needs to be valid.
+For example, writing &lsquo;<samp>shoppingList[shoppingList.count] = &quot;Salt&quot;</samp>&rsquo; to try
+to append an item to the end of the array results in a runtime error.
+</p>
+<p>You can also use subscript syntax to change a range of values at once,
+even if the replacement set of values has a different length than the
+range you are replacing. The following example replaces
+&lsquo;<samp>&quot;Chocolate Spread&quot;</samp>&rsquo;, &lsquo;<samp>&quot;Cheese&quot;</samp>&rsquo;, and &lsquo;<samp>&quot;Butter&quot;</samp>&rsquo; with &lsquo;<samp>&quot;Bananas&quot;</samp>&rsquo; and
+&lsquo;<samp>&quot;Apples&quot;</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">shoppingList[4...6] = [&quot;Bananas&quot;, &quot;Apples&quot;]
+// shoppingList now contains 6 items
+</pre></div>
+
+<p>To insert an item into the array at a specified index, call the array&rsquo;s
+&lsquo;<samp>insert(_:at:)</samp>&rsquo; method:
+</p>
+<div class="example">
+<pre class="example">shoppingList.insert(&quot;Maple Syrup&quot;, at: 0)
+ // shoppingList now contains 7 items
+// &quot;Maple Syrup&quot; is now the first item in the list
+</pre></div>
+
+<p>This call to the &lsquo;<samp>insert(_:at:)</samp>&rsquo; method inserts a new item with a value
+of &lsquo;<samp>&quot;Maple Syrup&quot;</samp>&rsquo; at the very beginning of the shopping list, indicated
+by an index of &lsquo;<samp>0</samp>&rsquo;.
+</p>
+<p>Similarly, you remove an item from the array with the &lsquo;<samp>remove(at:)</samp>&rsquo;
+method. This method removes the item at the specified index and returns
+the removed item (although you can ignore the returned value if you do
+not need it):
+</p>
+<div class="example">
+<pre class="example">let mapleSyrup = shoppingList.remove(at: 0)
+// the item that was at index 0 has just been removed
+// shoppingList now contains 6 items, and no Maple Syrup
+// the mapleSyrup constant is now equal to the removed &quot;Maple Syrup&quot; string
+</pre></div>
+
+<p>Note
+</p>
+<p>If you try to access or modify a value for an index that is outside of
+an array&rsquo;s existing bounds, you will trigger a runtime error. You can
+check that an index is valid before using it by comparing it to the
+array&rsquo;s &lsquo;<samp>count</samp>&rsquo; property. The largest valid index in an array is
+&lsquo;<samp>count - 1</samp>&rsquo; because arrays are indexed from zero&mdash;however, when &lsquo;<samp>count</samp>&rsquo;
+is &lsquo;<samp>0</samp>&rsquo; (meaning the array is empty), there are no valid indexes.
+</p>
+<p>Any gaps in an array are closed when an item is removed, and so the
+value at index &lsquo;<samp>0</samp>&rsquo; is once again equal to &lsquo;<samp>&quot;Six eggs&quot;</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">firstItem = shoppingList[0]
+// firstItem is now equal to &quot;Six eggs&quot;
+</pre></div>
+
+<p>If you want to remove the final item from an array, use the
+&lsquo;<samp>removeLast()</samp>&rsquo; method rather than the &lsquo;<samp>remove(at:)</samp>&rsquo; method to avoid the
+need to query the array&rsquo;s &lsquo;<samp>count</samp>&rsquo; property. Like the &lsquo;<samp>remove(at:)</samp>&rsquo;
+method, &lsquo;<samp>removeLast()</samp>&rsquo; returns the removed item:
+</p>
+<div class="example">
+<pre class="example">let apples = shoppingList.removeLast()
+// the last item in the array has just been removed
+// shoppingList now contains 5 items, and no apples
+// the apples constant is now equal to the removed &quot;Apples&quot; string
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Iterating-Over-an-Array.html#Iterating-Over-an-Array" accesskey="n" rel="next">Iterating Over an Array</a>, Previous: <a href="Creating-an-Array-with-an-Array-Literal.html#Creating-an-Array-with-an-Array-Literal" accesskey="p" rel="prev">Creating an Array with an Array Literal</a>, Up: <a href="Arrays.html#Arrays" accesskey="u" rel="up">Arrays</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

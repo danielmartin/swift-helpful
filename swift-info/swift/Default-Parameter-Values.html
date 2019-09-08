@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Default Parameter Values (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Default Parameter Values (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Default Parameter Values (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Function-Argument-Labels-and-Parameter-Names.html#Function-Argument-Labels-and-Parameter-Names" rel="up" title="Function Argument Labels and Parameter Names">
+<link href="Variadic-Parameters.html#Variadic-Parameters" rel="next" title="Variadic Parameters">
+<link href="Omitting-Argument-Labels.html#Omitting-Argument-Labels" rel="prev" title="Omitting Argument Labels">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Default-Parameter-Values"></span><div class="header">
+<p>
+Next: <a href="Variadic-Parameters.html#Variadic-Parameters" accesskey="n" rel="next">Variadic Parameters</a>, Previous: <a href="Omitting-Argument-Labels.html#Omitting-Argument-Labels" accesskey="p" rel="prev">Omitting Argument Labels</a>, Up: <a href="Function-Argument-Labels-and-Parameter-Names.html#Function-Argument-Labels-and-Parameter-Names" accesskey="u" rel="up">Function Argument Labels and Parameter Names</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Default-Parameter-Values-1"></span><h4 class="subsection">11.3.3 Default Parameter Values</h4>
+
+<p>You can define a <em>default value</em> for any parameter in a function by
+assigning a value to the parameter after that parameter&rsquo;s type. If a
+default value is defined, you can omit that parameter when calling the
+function.
+</p>
+<div class="example">
+<pre class="example">func someFunction(parameterWithoutDefault: Int, parameterWithDefault: Int = 12) {
+    // If you omit the second argument when calling this function, then
+    // the value of parameterWithDefault is 12 inside the function body.
+}
+someFunction(parameterWithoutDefault: 3, parameterWithDefault: 6) // parameterWithDefault is 6
+someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
+</pre></div>
+
+<p>Place parameters that don&rsquo;t have default values at the beginning of a
+function&rsquo;s parameter list, before the parameters that have default
+values. Parameters that don&rsquo;t have default values are usually more
+important to the function&rsquo;s meaning&mdash;writing them first makes it easier
+to recognize that the same function is being called, regardless of
+whether any default parameters are omitted.
+</p>
+
+
+
+</body>
+</html>

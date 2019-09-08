@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Type Aliases 1 (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Type Aliases 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Type Aliases 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Access-Control.html#Access-Control" rel="up" title="Access Control">
+<link href="Advanced-Operators.html#Advanced-Operators" rel="next" title="Advanced Operators">
+<link href="Generics-2.html#Generics-2" rel="prev" title="Generics 2">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Type-Aliases-1"></span><div class="header">
+<p>
+Previous: <a href="Generics-2.html#Generics-2" accesskey="p" rel="prev">Generics 2</a>, Up: <a href="Access-Control.html#Access-Control" accesskey="u" rel="up">Access Control</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Type-Aliases-3"></span><h3 class="section">31.11 Type Aliases</h3>
+
+<p>Any type aliases you define are treated as distinct types for the
+purposes of access control. A type alias can have an access level less
+than or equal to the access level of the type it aliases. For example, a
+private type alias can alias a private, file-private, internal, public,
+or open type, but a public type alias can&rsquo;t alias an internal,
+file-private, or private type.
+</p>
+<p>Note
+</p>
+<p>This rule also applies to type aliases for associated types used to
+satisfy protocol conformances.
+</p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Type Variable Properties (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Type Variable Properties (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Type Variable Properties (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Variable-Declaration.html#Variable-Declaration" rel="up" title="Variable Declaration">
+<link href="Type-Alias-Declaration.html#Type-Alias-Declaration" rel="next" title="Type Alias Declaration">
+<link href="Stored-Variable-Observers-and-Property-Observers.html#Stored-Variable-Observers-and-Property-Observers" rel="prev" title="Stored Variable Observers and Property Observers">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Type-Variable-Properties"></span><div class="header">
+<p>
+Previous: <a href="Stored-Variable-Observers-and-Property-Observers.html#Stored-Variable-Observers-and-Property-Observers" accesskey="p" rel="prev">Stored Variable Observers and Property Observers</a>, Up: <a href="Variable-Declaration.html#Variable-Declaration" accesskey="u" rel="up">Variable Declaration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Type-Variable-Properties-1"></span><h4 class="subsection">7.5.4 Type Variable Properties</h4>
+
+<p>To declare a type variable property, mark the declaration with the
+&lsquo;<samp>static</samp>&rsquo; declaration modifier. Classes can mark type computed properties
+with the &lsquo;<samp>class</samp>&rsquo; declaration modifier instead to allow subclasses to
+override the superclass&rsquo;s implementation. Type properties are discussed
+in <a href="../swift/Type-Properties.html#Type-Properties">(swift)Type Properties</a>.
+</p>
+<p>Note
+</p>
+<p>In a class declaration, the &lsquo;<samp>static</samp>&rsquo; keyword has the same effect as
+marking the declaration with both the &lsquo;<samp>class</samp>&rsquo; and &lsquo;<samp>final</samp>&rsquo; declaration
+modifiers.
+</p>
+<p>Grammar of a variable declaration
+</p>
+<p>variable-declaration
+→
+variable-declaration-head
+pattern-initializer-list
+</p>
+<p>variable-declaration
+→
+variable-declaration-head
+variable-name
+type-annotation
+code-block
+</p>
+<p>variable-declaration
+→
+variable-declaration-head
+variable-name
+type-annotation
+getter-setter-block
+</p>
+<p>variable-declaration
+→
+variable-declaration-head
+variable-name
+type-annotation
+getter-setter-keyword-block
+</p>
+<p>variable-declaration
+→
+variable-declaration-head
+variable-name
+initializer
+willSet-didSet-block
+</p>
+<p>variable-declaration
+→
+variable-declaration-head
+variable-name
+type-annotation
+initializer
+_{opt}
+willSet-didSet-block
+</p>
+<p>variable-declaration-head
+→ attributes
+_{opt}
+declaration-modifiers
+_{opt} &lsquo;<samp>var</samp>&rsquo;
+</p>
+<p>variable-name →
+identifier
+</p>
+<p>getter-setter-block →
+code-block
+</p>
+<p>getter-setter-block
+→ &lsquo;<samp>{</samp>&rsquo;
+getter-clause
+setter-clause
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>getter-setter-block
+→ &lsquo;<samp>{</samp>&rsquo;
+setter-clause
+getter-clause
+&lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>getter-clause →
+attributes
+_{opt}
+mutation-modifier
+_{opt} &lsquo;<samp>get</samp>&rsquo;
+code-block
+</p>
+<p>setter-clause →
+attributes
+_{opt}
+mutation-modifier
+_{opt} &lsquo;<samp>set</samp>&rsquo;
+setter-name
+_{opt}
+code-block
+</p>
+<p>setter-name → &lsquo;<samp>(</samp>&rsquo;
+identifier
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>getter-setter-keyword-block
+→ &lsquo;<samp>{</samp>&rsquo;
+getter-keyword-clause
+setter-keyword-clause
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>getter-setter-keyword-block
+→ &lsquo;<samp>{</samp>&rsquo;
+setter-keyword-clause
+getter-keyword-clause
+&lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>getter-keyword-clause
+→ attributes
+_{opt}
+mutation-modifier
+_{opt} &lsquo;<samp>get</samp>&rsquo;
+</p>
+<p>setter-keyword-clause
+→ attributes
+_{opt}
+mutation-modifier
+_{opt} &lsquo;<samp>set</samp>&rsquo;
+</p>
+<p>willSet-didSet-block
+→ &lsquo;<samp>{</samp>&rsquo;
+willSet-clause
+didSet-clause
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>willSet-didSet-block
+→ &lsquo;<samp>{</samp>&rsquo;
+didSet-clause
+willSet-clause
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>willSet-clause →
+attributes
+_{opt} &lsquo;<samp>willSet</samp>&rsquo;
+setter-name
+_{opt}
+code-block
+</p>
+<p>didSet-clause →
+attributes
+_{opt} &lsquo;<samp>didSet</samp>&rsquo;
+setter-name
+_{opt}
+code-block
+</p>
+
+
+
+</body>
+</html>

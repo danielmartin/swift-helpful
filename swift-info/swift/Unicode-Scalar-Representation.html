@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Unicode Scalar Representation (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Unicode Scalar Representation (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Unicode Scalar Representation (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Unicode-Representations-of-Strings.html#Unicode-Representations-of-Strings" rel="up" title="Unicode Representations of Strings">
+<link href="Collection-Types.html#Collection-Types" rel="next" title="Collection Types">
+<link href="UTF_002d16-Representation.html#UTF_002d16-Representation" rel="prev" title="UTF-16 Representation">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Unicode-Scalar-Representation"></span><div class="header">
+<p>
+Previous: <a href="UTF_002d16-Representation.html#UTF_002d16-Representation" accesskey="p" rel="prev">UTF-16 Representation</a>, Up: <a href="Unicode-Representations-of-Strings.html#Unicode-Representations-of-Strings" accesskey="u" rel="up">Unicode Representations of Strings</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Unicode-Scalar-Representation-1"></span><h4 class="subsection">8.13.3 Unicode Scalar Representation</h4>
+
+<p>You can access a Unicode scalar representation of a &lsquo;<samp>String</samp>&rsquo; value by
+iterating over its &lsquo;<samp>unicodeScalars</samp>&rsquo; property. This property is of type
+&lsquo;<samp>UnicodeScalarView</samp>&rsquo;, which is a collection of values of type
+&lsquo;<samp>UnicodeScalar</samp>&rsquo;.
+</p>
+<p>Each &lsquo;<samp>UnicodeScalar</samp>&rsquo; has a &lsquo;<samp>value</samp>&rsquo; property that returns the scalar&rsquo;s
+21-bit value, represented within a &lsquo;<samp>UInt32</samp>&rsquo; value:
+</p>
+<img src="_images/UnicodeScalar_2x.png" alt="_images/UnicodeScalar_2x">
+
+<div class="example">
+<pre class="example">for scalar in dogString.unicodeScalars {
+    print(&quot;\(scalar.value) &quot;, terminator: &quot;&quot;)
+}
+print(&quot;&quot;)
+// Prints &quot;68 111 103 8252 128054 &quot;
+</pre></div>
+
+<p>The &lsquo;<samp>value</samp>&rsquo; properties for the first three &lsquo;<samp>UnicodeScalar</samp>&rsquo; values (&lsquo;<samp>68</samp>&rsquo;,
+&lsquo;<samp>111</samp>&rsquo;, &lsquo;<samp>103</samp>&rsquo;) once again represent the characters &lsquo;<samp>D</samp>&rsquo;, &lsquo;<samp>o</samp>&rsquo;, and &lsquo;<samp>g</samp>&rsquo;.
+</p>
+<p>The fourth &lsquo;<samp>codeUnit</samp>&rsquo; value (&lsquo;<samp>8252</samp>&rsquo;) is again a decimal equivalent of
+the hexadecimal value &lsquo;<samp>203C</samp>&rsquo;, which represents the Unicode scalar
+&lsquo;<samp>U+203C</samp>&rsquo; for the &lsquo;<samp>DOUBLE EXCLAMATION MARK</samp>&rsquo; character.
+</p>
+<p>The &lsquo;<samp>value</samp>&rsquo; property of the fifth and final &lsquo;<samp>UnicodeScalar</samp>&rsquo;, &lsquo;<samp>128054</samp>&rsquo;,
+is a decimal equivalent of the hexadecimal value &lsquo;<samp>1F436</samp>&rsquo;, which
+represents the Unicode scalar &lsquo;<samp>U+1F436</samp>&rsquo; for the &lsquo;<samp>DOG FACE</samp>&rsquo; character.
+</p>
+<p>As an alternative to querying their &lsquo;<samp>value</samp>&rsquo; properties, each
+&lsquo;<samp>UnicodeScalar</samp>&rsquo; value can also be used to construct a new &lsquo;<samp>String</samp>&rsquo;
+value, such as with string interpolation:
+</p>
+<div class="example">
+<pre class="example">for scalar in dogString.unicodeScalars {
+    print(&quot;\(scalar) &quot;)
+}
+// D
+// o
+// g
+// ‼
+// 🐶
+</pre></div>
+
+
+
+
+</body>
+</html>

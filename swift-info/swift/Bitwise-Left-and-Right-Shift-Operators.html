@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Bitwise Left and Right Shift Operators (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Bitwise Left and Right Shift Operators (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Bitwise Left and Right Shift Operators (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Bitwise-Operators.html#Bitwise-Operators" rel="up" title="Bitwise Operators">
+<link href="Overflow-Operators.html#Overflow-Operators" rel="next" title="Overflow Operators">
+<link href="Bitwise-XOR-Operator.html#Bitwise-XOR-Operator" rel="prev" title="Bitwise XOR Operator">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Bitwise-Left-and-Right-Shift-Operators"></span><div class="header">
+<p>
+Previous: <a href="Bitwise-XOR-Operator.html#Bitwise-XOR-Operator" accesskey="p" rel="prev">Bitwise XOR Operator</a>, Up: <a href="Bitwise-Operators.html#Bitwise-Operators" accesskey="u" rel="up">Bitwise Operators</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Bitwise-Left-and-Right-Shift-Operators-1"></span><h4 class="subsection">32.1.5 Bitwise Left and Right Shift Operators</h4>
+
+<p>The <em>bitwise left shift operator</em> (&lsquo;<samp>&lt;&lt;</samp>&rsquo;) and <em>bitwise right shift
+operator</em> (&lsquo;<samp>&gt;&gt;</samp>&rsquo;) move all bits in a number to the left or the right by a
+certain number of places, according to the rules defined below.
+</p>
+<p>Bitwise left and right shifts have the effect of multiplying or dividing
+an integer by a factor of two. Shifting an integer&rsquo;s bits to the left by
+one position doubles its value, whereas shifting it to the right by one
+position halves its value.
+</p>
+<ol>
+<li> Shifting Behavior for Unsigned Integers
+
+
+<p>The bit-shifting behavior for unsigned integers is as follows:
+</p>
+<ol>
+<li> Existing bits are moved to the left or right by the requested number
+of places.
+
+</li><li> Any bits that are moved beyond the bounds of the integer&rsquo;s storage
+are discarded.
+
+</li><li> Zeros are inserted in the spaces left behind after the original bits
+are moved to the left or right.
+</li></ol>
+
+<p>This approach is known as a <em>logical shift</em>.
+</p>
+<p>The illustration below shows the results of &lsquo;<samp>11111111 &lt;&lt; 1</samp>&rsquo; (which is
+&lsquo;<samp>11111111</samp>&rsquo; shifted to the left by &lsquo;<samp>1</samp>&rsquo; place), and &lsquo;<samp>11111111 &gt;&gt; 1</samp>&rsquo; (which
+is &lsquo;<samp>11111111</samp>&rsquo; shifted to the right by &lsquo;<samp>1</samp>&rsquo; place). Blue numbers are
+shifted, gray numbers are discarded, and orange zeros are inserted:
+</p>
+<img src="_images/bitshiftUnsigned_2x.png" alt="_images/bitshiftUnsigned_2x">
+<p>Here&rsquo;s how bit shifting looks in Swift code:
+</p>
+<div class="example">
+<pre class="example">let shiftBits: UInt8 = 4 // 00000100 in binary
+shiftBits &lt;&lt; 1 // 00001000
+shiftBits &lt;&lt; 2 // 00010000
+shiftBits &lt;&lt; 5 // 10000000
+shiftBits &lt;&lt; 6 // 00000000
+shiftBits &gt;&gt; 2 // 00000001
+</pre></div>
+
+<p>You can use bit shifting to encode and decode values within other data
+types:
+</p>
+<div class="example">
+<pre class="example">let pink: UInt32 = 0xCC6699
+let redComponent = (pink &amp; 0xFF0000) &gt;&gt; 16 // redComponent is 0xCC, or 204
+let greenComponent = (pink &amp; 0x00FF00) &gt;&gt; 8 // greenComponent is 0x66, or 102
+let blueComponent = pink &amp; 0x0000FF // blueComponent is 0x99, or 153
+</pre></div>
+
+<p>This example uses a &lsquo;<samp>UInt32</samp>&rsquo; constant called &lsquo;<samp>pink</samp>&rsquo; to store a Cascading
+Style Sheets color value for the color pink. The CSS color value
+&lsquo;<samp>#CC6699</samp>&rsquo; is written as &lsquo;<samp>0xCC6699</samp>&rsquo; in Swift&rsquo;s hexadecimal number
+representation. This color is then decomposed into its red (&lsquo;<samp>CC</samp>&rsquo;), green
+(&lsquo;<samp>66</samp>&rsquo;), and blue (&lsquo;<samp>99</samp>&rsquo;) components by the bitwise AND operator (&lsquo;<samp>&amp;</samp>&rsquo;) and
+the bitwise right shift operator (&lsquo;<samp>&gt;&gt;</samp>&rsquo;).
+</p>
+<p>The red component is obtained by performing a bitwise AND between the
+numbers &lsquo;<samp>0xCC6699</samp>&rsquo; and &lsquo;<samp>0xFF0000</samp>&rsquo;. The zeros in &lsquo;<samp>0xFF0000</samp>&rsquo; effectively
+“mask” the second and third bytes of &lsquo;<samp>0xCC6699</samp>&rsquo;, causing the &lsquo;<samp>6699</samp>&rsquo; to
+be ignored and leaving &lsquo;<samp>0xCC0000</samp>&rsquo; as the result.
+</p>
+<p>This number is then shifted 16 places to the right (&lsquo;<samp>&gt;&gt; 16</samp>&rsquo;). Each pair
+of characters in a hexadecimal number uses 8 bits, so a move 16 places
+to the right will convert &lsquo;<samp>0xCC0000</samp>&rsquo; into &lsquo;<samp>0x0000CC</samp>&rsquo;. This is the same
+as &lsquo;<samp>0xCC</samp>&rsquo;, which has a decimal value of &lsquo;<samp>204</samp>&rsquo;.
+</p>
+<p>Similarly, the green component is obtained by performing a bitwise AND
+between the numbers &lsquo;<samp>0xCC6699</samp>&rsquo; and &lsquo;<samp>0x00FF00</samp>&rsquo;, which gives an output
+value of &lsquo;<samp>0x006600</samp>&rsquo;. This output value is then shifted eight places to
+the right, giving a value of &lsquo;<samp>0x66</samp>&rsquo;, which has a decimal value of &lsquo;<samp>102</samp>&rsquo;.
+</p>
+<p>Finally, the blue component is obtained by performing a bitwise AND
+between the numbers &lsquo;<samp>0xCC6699</samp>&rsquo; and &lsquo;<samp>0x0000FF</samp>&rsquo;, which gives an output
+value of &lsquo;<samp>0x000099</samp>&rsquo;. There&rsquo;s no need to shift this to the right, as
+&lsquo;<samp>0x000099</samp>&rsquo; already equals &lsquo;<samp>0x99</samp>&rsquo;, which has a decimal value of &lsquo;<samp>153</samp>&rsquo;.
+</p>
+</li><li> Shifting Behavior for Signed Integers
+
+
+<p>The shifting behavior is more complex for signed integers than for
+unsigned integers, because of the way signed integers are represented in
+binary. (The examples below are based on 8-bit signed integers for
+simplicity, but the same principles apply for signed integers of any
+size.)
+</p>
+<p>Signed integers use their first bit (known as the <em>sign bit</em>) to
+indicate whether the integer is positive or negative. A sign bit of &lsquo;<samp>0</samp>&rsquo;
+means positive, and a sign bit of &lsquo;<samp>1</samp>&rsquo; means negative.
+</p>
+<p>The remaining bits (known as the <em>value bits</em>) store the actual value.
+Positive numbers are stored in exactly the same way as for unsigned
+integers, counting upwards from &lsquo;<samp>0</samp>&rsquo;. Here&rsquo;s how the bits inside an
+&lsquo;<samp>Int8</samp>&rsquo; look for the number &lsquo;<samp>4</samp>&rsquo;:
+</p>
+<img src="_images/bitshiftSignedFour_2x.png" alt="_images/bitshiftSignedFour_2x">
+<p>The sign bit is &lsquo;<samp>0</samp>&rsquo; (meaning “positive”), and the seven value bits are
+just the number &lsquo;<samp>4</samp>&rsquo;, written in binary notation.
+</p>
+<p>Negative numbers, however, are stored differently. They are stored by
+subtracting their absolute value from &lsquo;<samp>2</samp>&rsquo; to the power of &lsquo;<samp>n</samp>&rsquo;, where &lsquo;<samp>n</samp>&rsquo;
+is the number of value bits. An eight-bit number has seven value bits,
+so this means &lsquo;<samp>2</samp>&rsquo; to the power of &lsquo;<samp>7</samp>&rsquo;, or &lsquo;<samp>128</samp>&rsquo;.
+</p>
+<p>Here&rsquo;s how the bits inside an &lsquo;<samp>Int8</samp>&rsquo; look for the number &lsquo;<samp>-4</samp>&rsquo;:
+</p>
+<img src="_images/bitshiftSignedMinusFour_2x.png" alt="_images/bitshiftSignedMinusFour_2x">
+<p>This time, the sign bit is &lsquo;<samp>1</samp>&rsquo; (meaning “negative”), and the seven value
+bits have a binary value of &lsquo;<samp>124</samp>&rsquo; (which is &lsquo;<samp>128 - 4</samp>&rsquo;):
+</p>
+<img src="_images/bitshiftSignedMinusFourValue_2x.png" alt="_images/bitshiftSignedMinusFourValue_2x">
+<p>This encoding for negative numbers is known as a <em>two&rsquo;s complement</em>
+representation. It may seem an unusual way to represent negative
+numbers, but it has several advantages.
+</p>
+<p>First, you can add &lsquo;<samp>-1</samp>&rsquo; to &lsquo;<samp>-4</samp>&rsquo;, simply by performing a standard binary
+addition of all eight bits (including the sign bit), and discarding
+anything that doesn&rsquo;t fit in the eight bits once you&rsquo;re done:
+</p>
+<img src="_images/bitshiftSignedAddition_2x.png" alt="_images/bitshiftSignedAddition_2x">
+<p>Second, the two&rsquo;s complement representation also lets you shift the bits
+of negative numbers to the left and right like positive numbers, and
+still end up doubling them for every shift you make to the left, or
+halving them for every shift you make to the right. To achieve this, an
+extra rule is used when signed integers are shifted to the right: When
+you shift signed integers to the right, apply the same rules as for
+unsigned integers, but fill any empty bits on the left with the <em>sign
+bit</em>, rather than with a zero.
+</p>
+<img src="_images/bitshiftSigned_2x.png" alt="_images/bitshiftSigned_2x">
+<p>This action ensures that signed integers have the same sign after they
+are shifted to the right, and is known as an <em>arithmetic shift</em>.
+</p>
+<p>Because of the special way that positive and negative numbers are
+stored, shifting either of them to the right moves them closer to zero.
+Keeping the sign bit the same during this shift means that negative
+integers remain negative as their value moves closer to zero.
+</p></li></ol>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Bitwise-XOR-Operator.html#Bitwise-XOR-Operator" accesskey="p" rel="prev">Bitwise XOR Operator</a>, Up: <a href="Bitwise-Operators.html#Bitwise-Operators" accesskey="u" rel="up">Bitwise Operators</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

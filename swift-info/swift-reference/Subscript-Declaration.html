@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Subscript Declaration (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Subscript Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Subscript Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Declarations.html#Declarations" rel="up" title="Declarations">
+<link href="Operator-Declaration.html#Operator-Declaration" rel="next" title="Operator Declaration">
+<link href="Protocol-Conformance-Must-Not-Be-Redundant.html#Protocol-Conformance-Must-Not-Be-Redundant" rel="prev" title="Protocol Conformance Must Not Be Redundant">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Subscript-Declaration"></span><div class="header">
+<p>
+Next: <a href="Operator-Declaration.html#Operator-Declaration" accesskey="n" rel="next">Operator Declaration</a>, Previous: <a href="Extension-Declaration.html#Extension-Declaration" accesskey="p" rel="prev">Extension Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Subscript-Declaration-1"></span><h3 class="section">7.15 Subscript Declaration</h3>
+
+<p>A <em>subscript</em> declaration allows you to add subscripting support for
+objects of a particular type and are typically used to provide a
+convenient syntax for accessing the elements in a collection, list, or
+sequence. Subscript declarations are declared using the &lsquo;<samp>subscript</samp>&rsquo;
+keyword and have the following form:
+</p>
+<ol>
+<li> subscript (parameters) -&gt; return type {
+</li><li> get {
+</li><li> statements
+</li><li> }
+</li><li> set(setter name) {
+</li><li> statements
+</li><li> }
+</li><li> }
+</li></ol>
+
+<p>Subscript declarations can appear only in the context of a class,
+structure, enumeration, extension, or protocol declaration.
+</p>
+<p>The <em>parameters</em> specify one or more indexes used to access elements of
+the corresponding type in a subscript expression (for example, the &lsquo;<samp>i</samp>&rsquo;
+in the expression &lsquo;<samp>object[i]</samp>&rsquo;). Although the indexes used to access the
+elements can be of any type, each parameter must include a type
+annotation to specify the type of each index. The <em>return type</em>
+specifies the type of the element being accessed.
+</p>
+<p>As with computed properties, subscript declarations support reading and
+writing the value of the accessed elements. The getter is used to read
+the value, and the setter is used to write the value. The setter clause
+is optional, and when only a getter is needed, you can omit both clauses
+and simply return the requested value directly. That said, if you
+provide a setter clause, you must also provide a getter clause.
+</p>
+<p>The <em>setter name</em> and enclosing parentheses are optional. If you provide
+a setter name, it is used as the name of the parameter to the setter. If
+you do not provide a setter name, the default parameter name to the
+setter is &lsquo;<samp>value</samp>&rsquo;. The type of the parameter to the setter is the same
+as the <em>return type</em>.
+</p>
+<p>You can overload a subscript declaration in the type in which it is
+declared, as long as the <em>parameters</em> or the <em>return type</em> differ from
+the one you&rsquo;re overloading. You can also override a subscript
+declaration inherited from a superclass. When you do so, you must mark
+the overridden subscript declaration with the &lsquo;<samp>override</samp>&rsquo; declaration
+modifier.
+</p>
+<p>Subscript parameters follow the same rules as function parameters, with
+two exceptions. By default, the parameters used in subscripting don&rsquo;t
+have argument labels, unlike functions, methods, and initializers.
+However, you can provide explicit argument labels using the same syntax
+that functions, methods, and initializers use. In addition, subscripts
+can&rsquo;t have in-out parameters.
+</p>
+<p>You can also declare subscripts in the context of a protocol
+declaration, as described in <a href="Protocol-Subscript-Declaration.html#Protocol-Subscript-Declaration">Protocol
+Subscript Declaration</a>.
+</p>
+<p>For more information about subscripting and to see examples of subscript
+declarations, see <a href="../swift/Subscripts.html#Subscripts">(swift)Subscripts</a>.
+</p>
+<p>Grammar of a subscript declaration
+</p>
+<p>subscript-declaration
+→
+subscript-head
+subscript-result
+generic-where-clause
+_{opt}
+code-block
+</p>
+<p>subscript-declaration
+→
+subscript-head
+subscript-result
+generic-where-clause
+_{opt}
+getter-setter-block
+</p>
+<p>subscript-declaration
+→
+subscript-head
+subscript-result
+generic-where-clause
+_{opt}
+getter-setter-keyword-block
+</p>
+<p>subscript-head →
+attributes
+_{opt}
+declaration-modifiers
+_{opt} &lsquo;<samp>subscript</samp>&rsquo;
+generic-parameter-clause
+_{opt}
+parameter-clause
+</p>
+<p>subscript-result → &lsquo;<samp>-&gt;</samp>&rsquo;
+attributes
+_{opt} type
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Operator-Declaration.html#Operator-Declaration" accesskey="n" rel="next">Operator Declaration</a>, Previous: <a href="Extension-Declaration.html#Extension-Declaration" accesskey="p" rel="prev">Extension Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

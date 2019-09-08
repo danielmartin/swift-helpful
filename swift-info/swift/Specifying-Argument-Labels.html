@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Specifying Argument Labels (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Specifying Argument Labels (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Specifying Argument Labels (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Function-Argument-Labels-and-Parameter-Names.html#Function-Argument-Labels-and-Parameter-Names" rel="up" title="Function Argument Labels and Parameter Names">
+<link href="Omitting-Argument-Labels.html#Omitting-Argument-Labels" rel="next" title="Omitting Argument Labels">
+<link href="Function-Argument-Labels-and-Parameter-Names.html#Function-Argument-Labels-and-Parameter-Names" rel="prev" title="Function Argument Labels and Parameter Names">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Specifying-Argument-Labels"></span><div class="header">
+<p>
+Next: <a href="Omitting-Argument-Labels.html#Omitting-Argument-Labels" accesskey="n" rel="next">Omitting Argument Labels</a>, Up: <a href="Function-Argument-Labels-and-Parameter-Names.html#Function-Argument-Labels-and-Parameter-Names" accesskey="u" rel="up">Function Argument Labels and Parameter Names</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Specifying-Argument-Labels-1"></span><h4 class="subsection">11.3.1 Specifying Argument Labels</h4>
+
+<p>You write an argument label before the parameter name, separated by a
+space:
+</p>
+<div class="example">
+<pre class="example">func someFunction(argumentLabel parameterName: Int) {
+    // In the function body, parameterName refers to the argument value
+    // for that parameter.
+}
+</pre></div>
+
+<p>Here&rsquo;s a variation of the &lsquo;<samp>greet(person:)</samp>&rsquo; function that takes a
+person&rsquo;s name and hometown and returns a greeting:
+</p>
+<div class="example">
+<pre class="example">func greet(person: String, from hometown: String) -&gt; String {
+    return &quot;Hello \(person)! Glad you could visit from \(hometown).&quot;
+}
+print(greet(person: &quot;Bill&quot;, from: &quot;Cupertino&quot;))
+// Prints &quot;Hello Bill! Glad you could visit from Cupertino.&quot;
+</pre></div>
+
+<p>The use of argument labels can allow a function to be called in an
+expressive, sentence-like manner, while still providing a function body
+that is readable and clear in intent.
+</p>
+
+
+
+</body>
+</html>

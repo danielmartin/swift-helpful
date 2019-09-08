@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Generic Argument Clause (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Generic Argument Clause (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Generic Argument Clause (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Generic-Parameters-and-Arguments.html#Generic-Parameters-and-Arguments" rel="up" title="Generic Parameters and Arguments">
+<link href="Summary-of-the-Grammar.html#Summary-of-the-Grammar" rel="next" title="Summary of the Grammar">
+<link href="Generic-Where-Clauses.html#Generic-Where-Clauses" rel="prev" title="Generic Where Clauses">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Generic-Argument-Clause"></span><div class="header">
+<p>
+Previous: <a href="Generic-Parameter-Clause.html#Generic-Parameter-Clause" accesskey="p" rel="prev">Generic Parameter Clause</a>, Up: <a href="Generic-Parameters-and-Arguments.html#Generic-Parameters-and-Arguments" accesskey="u" rel="up">Generic Parameters and Arguments</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Generic-Argument-Clause-1"></span><h3 class="section">10.2 Generic Argument Clause</h3>
+
+<p>A <em>generic argument clause</em> specifies the type arguments of a generic
+type. A generic argument clause is enclosed in angle brackets (&lt;&gt;) and
+has the following form:
+</p>
+<ol>
+<li> &lt;generic argument list&gt;
+</li></ol>
+
+<p>The <em>generic argument list</em> is a comma-separated list of type arguments.
+A <em>type argument</em> is the name of an actual concrete type that replaces a
+corresponding type parameter in the generic parameter clause of a
+generic type. The result is a specialized version of that generic type.
+The example below shows a simplified version of the Swift standard
+library&rsquo;s generic dictionary type.
+</p>
+<ol>
+<li> struct Dictionary&lt;Key: Hashable, Value&gt;: Collection,
+ExpressibleByDictionaryLiteral {
+</li><li> <em>* &hellip; *</em>
+</li><li> }
+</li></ol>
+
+<p>The specialized version of the generic &lsquo;<samp>Dictionary</samp>&rsquo; type,
+&lsquo;<samp>Dictionary&lt;String, Int&gt;</samp>&rsquo; is formed by replacing the generic parameters
+&lsquo;<samp>Key: Hashable</samp>&rsquo; and &lsquo;<samp>Value</samp>&rsquo; with the concrete type arguments &lsquo;<samp>String</samp>&rsquo;
+and &lsquo;<samp>Int</samp>&rsquo;. Each type argument must satisfy all the constraints of the
+generic parameter it replaces, including any additional requirements
+specified in a generic &lsquo;<samp>where</samp>&rsquo; clause. In the example above, the &lsquo;<samp>Key</samp>&rsquo;
+type parameter is constrained to conform to the &lsquo;<samp>Hashable</samp>&rsquo; protocol and
+therefore &lsquo;<samp>String</samp>&rsquo; must also conform to the &lsquo;<samp>Hashable</samp>&rsquo; protocol.
+</p>
+<p>You can also replace a type parameter with a type argument that is
+itself a specialized version of a generic type (provided it satisfies
+the appropriate constraints and requirements). For example, you can
+replace the type parameter &lsquo;<samp>Element</samp>&rsquo; in &lsquo;<samp>Array&lt;Element&gt;</samp>&rsquo; with a
+specialized version of an array, &lsquo;<samp>Array&lt;Int&gt;</samp>&rsquo;, to form an array whose
+elements are themselves arrays of integers.
+</p>
+<ol>
+<li> let arrayOfArrays: Array&lt;Array&lt;Int&gt;&gt; = [[1, 2, 3], [4, 5, 6], [7, 8,
+9]]
+</li></ol>
+
+<p>As mentioned in <a href="Generic-Parameter-Clause.html#Generic-Parameter-Clause">Generic
+Parameter Clause</a>, you don&rsquo;t use a generic argument clause to specify
+the type arguments of a generic function or initializer.
+</p>
+<p>Grammar of a generic argument clause
+</p>
+<p>generic-argument-clause
+→ &lsquo;<samp>&lt;</samp>&rsquo;
+generic-argument-list
+&lsquo;<samp>&gt;</samp>&rsquo;
+</p>
+<p>generic-argument-list
+→
+generic-argument
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>generic-argument
+&lsquo;<samp>,</samp>&rsquo;
+generic-argument-list
+</p>
+<p>generic-argument
+→ type
+</p>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Generic-Parameter-Clause.html#Generic-Parameter-Clause" accesskey="p" rel="prev">Generic Parameter Clause</a>, Up: <a href="Generic-Parameters-and-Arguments.html#Generic-Parameters-and-Arguments" accesskey="u" rel="up">Generic Parameters and Arguments</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

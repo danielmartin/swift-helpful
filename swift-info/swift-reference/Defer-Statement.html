@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Defer Statement (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Defer Statement (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Defer Statement (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Statements.html#Statements" rel="up" title="Statements">
+<link href="Do-Statement.html#Do-Statement" rel="next" title="Do Statement">
+<link href="Throw-Statement.html#Throw-Statement" rel="prev" title="Throw Statement">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Defer-Statement"></span><div class="header">
+<p>
+Next: <a href="Do-Statement.html#Do-Statement" accesskey="n" rel="next">Do Statement</a>, Previous: <a href="Control-Transfer-Statements.html#Control-Transfer-Statements" accesskey="p" rel="prev">Control Transfer Statements</a>, Up: <a href="Statements.html#Statements" accesskey="u" rel="up">Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Defer-Statement-1"></span><h3 class="section">6.4 Defer Statement</h3>
+
+<p>A &lsquo;<samp>defer</samp>&rsquo; statement is used for executing code just before transferring
+program control outside of the scope that the &lsquo;<samp>defer</samp>&rsquo; statement appears
+in.
+</p>
+<p>A &lsquo;<samp>defer</samp>&rsquo; statement has the following form:
+</p>
+<ol>
+<li> defer {
+</li><li> statements
+</li><li> }
+</li></ol>
+
+<p>The statements within the &lsquo;<samp>defer</samp>&rsquo; statement are executed no matter how
+program control is transferred. This means that a &lsquo;<samp>defer</samp>&rsquo; statement can
+be used, for example, to perform manual resource management such as
+closing file descriptors, and to perform actions that need to happen
+even if an error is thrown.
+</p>
+<p>If multiple &lsquo;<samp>defer</samp>&rsquo; statements appear in the same scope, the order they
+appear is the reverse of the order they are executed. Executing the last
+&lsquo;<samp>defer</samp>&rsquo; statement in a given scope first means that statements inside
+that last &lsquo;<samp>defer</samp>&rsquo; statement can refer to resources that will be cleaned
+up by other &lsquo;<samp>defer</samp>&rsquo; statements.
+</p>
+<ol>
+<li> func f() {
+</li><li> defer { print(&quot;First defer&quot;) }
+</li><li> defer { print(&quot;Second defer&quot;) }
+</li><li> print(&quot;End of function&quot;)
+</li><li> }
+</li><li> f()
+</li><li> // Prints &quot;End of function&quot;
+</li><li> // Prints &quot;Second defer&quot;
+</li><li> // Prints &quot;First defer&quot;
+</li></ol>
+
+<p>The statements in the &lsquo;<samp>defer</samp>&rsquo; statement can&rsquo;t transfer program control
+outside of the &lsquo;<samp>defer</samp>&rsquo; statement.
+</p>
+<p>Grammar of a defer statement
+</p>
+<p>defer-statement → &lsquo;<samp>defer</samp>&rsquo;
+code-block
+</p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Precedence Group Declaration (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Precedence Group Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Precedence Group Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Declarations.html#Declarations" rel="up" title="Declarations">
+<link href="Declaration-Modifiers.html#Declaration-Modifiers" rel="next" title="Declaration Modifiers">
+<link href="Operator-Declaration.html#Operator-Declaration" rel="prev" title="Operator Declaration">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Precedence-Group-Declaration"></span><div class="header">
+<p>
+Next: <a href="Declaration-Modifiers.html#Declaration-Modifiers" accesskey="n" rel="next">Declaration Modifiers</a>, Previous: <a href="Operator-Declaration.html#Operator-Declaration" accesskey="p" rel="prev">Operator Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Precedence-Group-Declaration-1"></span><h3 class="section">7.17 Precedence Group Declaration</h3>
+
+<p>A <em>precedence group declaration</em> introduces a new grouping for infix
+operator precedence into your program. The precedence of an operator
+specifies how tightly the operator binds to its operands, in the absence
+of grouping parentheses.
+</p>
+<p>A precedence group declaration has the following form:
+</p>
+<ol>
+<li> precedencegroup precedence group name {
+</li><li> higherThan: lower group names
+</li><li> lowerThan: higher group names
+</li><li> associativity: associativity
+</li><li> assignment: assignment
+</li><li> }
+</li></ol>
+
+<p>The <em>lower group names</em> and <em>higher group names</em> lists specify the new
+precedence group&rsquo;s relation to existing precedence groups. The
+&lsquo;<samp>lowerThan</samp>&rsquo; precedence group attribute may only be used to refer to
+precedence groups declared outside of the current module. When two
+operators compete with each other for their operands, such as in the
+expression &lsquo;<samp>2 + 3 * 5</samp>&rsquo;, the operator with the higher relative precedence
+binds more tightly to its operands.
+</p>
+<p>Note
+</p>
+<p>Precedence groups related to each other using <em>lower group names</em> and
+<em>higher group names</em> must fit into a single relational hierarchy, but
+they <em>don&rsquo;t</em> have to form a linear hierarchy. This means it is possible
+to have precedence groups with undefined relative precedence. Operators
+from those precedence groups can&rsquo;t be used next to each other without
+grouping parentheses.
+</p>
+<p>Swift defines numerous precedence groups to go along with the operators
+provided by the standard library. For example, the addition (&lsquo;<samp>+</samp>&rsquo;) and
+subtraction (&lsquo;<samp>-</samp>&rsquo;) operators belong to the &lsquo;<samp>AdditionPrecedence</samp>&rsquo; group,
+and the multiplication (&lsquo;<samp>*</samp>&rsquo;) and division (&lsquo;<samp>/</samp>&rsquo;) operators belong to the
+&lsquo;<samp>MultiplicationPrecedence</samp>&rsquo; group. For a complete list of precedence
+groups provided by the Swift standard library, see
+<a href="https://developer.apple.com/documentation/swift/operator_declarations">Operator
+Declarations</a>
+[<a href="https://developer.apple.com/documentation/swift/operator_declarations">https://developer.apple.com/documentation/swift/operator_declarations</a>].
+</p>
+<span id="index-associativity"></span>
+
+<p>The <em>associativity</em> of an operator specifies how a sequence of operators
+with the same precedence level are grouped together in the absence of
+grouping parentheses. You specify the associativity of an operator by
+writing one of the context-sensitive keywords &lsquo;<samp>left</samp>&rsquo;, &lsquo;<samp>right</samp>&rsquo;, or
+&lsquo;<samp>none</samp>&rsquo;&mdash;if your omit the associativity, the default is &lsquo;<samp>none</samp>&rsquo;.
+Operators that are left-associative group left-to-right. For example,
+the subtraction operator (&lsquo;<samp>-</samp>&rsquo;) is left-associative, so the expression
+&lsquo;<samp>4 - 5 - 6</samp>&rsquo; is grouped as &lsquo;<samp>(4 - 5) - 6</samp>&rsquo; and evaluates to &lsquo;<samp>-7</samp>&rsquo;. Operators
+that are right-associative group right-to-left, and operators that are
+specified with an associativity of &lsquo;<samp>none</samp>&rsquo; don&rsquo;t associate at all.
+Nonassociative operators of the same precedence level can&rsquo;t appear
+adjacent to each to other. For example, the &lsquo;<samp>&lt;</samp>&rsquo; operator has an
+associativity of &lsquo;<samp>none</samp>&rsquo;, which means &lsquo;<samp>1 &lt; 2 &lt; 3</samp>&rsquo; is not a valid
+expression.
+</p>
+<p>The <em>assignment</em> of a precedence group specifies the precedence of an
+operator when used in an operation that includes optional chaining. When
+set to &lsquo;<samp>true</samp>&rsquo;, an operator in the corresponding precedence group uses
+the same grouping rules during optional chaining as the assignment
+operators from the standard library. Otherwise, when set to &lsquo;<samp>false</samp>&rsquo; or
+omitted, operators in the precedence group follows the same optional
+chaining rules as operators that don&rsquo;t perform assignment.
+</p>
+<p>Grammar of a precedence group declaration
+</p>
+<p>precedence-group-declaration
+→ &lsquo;<samp>precedencegroup</samp>&rsquo;
+precedence-group-name
+&lsquo;<samp>{</samp>&rsquo;
+precedence-group-attributes
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>precedence-group-attributes
+→
+precedence-group-attribute
+precedence-group-attributes
+_{opt}
+</p>
+<p>precedence-group-attribute
+→
+precedence-group-relation
+</p>
+<p>precedence-group-attribute
+→
+precedence-group-assignment
+</p>
+<p>precedence-group-attribute
+→
+precedence-group-associativity
+</p>
+<p>precedence-group-relation
+→ &lsquo;<samp>higherThan</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo;
+precedence-group-names
+</p>
+<p>precedence-group-relation
+→ &lsquo;<samp>lowerThan</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo;
+precedence-group-names
+</p>
+<p>precedence-group-assignment
+→ &lsquo;<samp>assignment</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo;
+boolean-literal
+</p>
+<p>precedence-group-associativity
+→ &lsquo;<samp>associativity</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo; &lsquo;<samp>left</samp>&rsquo;
+</p>
+<p>precedence-group-associativity
+→ &lsquo;<samp>associativity</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo; &lsquo;<samp>right</samp>&rsquo;
+</p>
+<p>precedence-group-associativity
+→ &lsquo;<samp>associativity</samp>&rsquo; &lsquo;<samp>:</samp>&rsquo; &lsquo;<samp>none</samp>&rsquo;
+</p>
+<p>precedence-group-names
+→
+precedence-group-name
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>precedence-group-name
+&lsquo;<samp>,</samp>&rsquo;
+precedence-group-names
+</p>
+<p>precedence-group-name
+→
+identifier
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Declaration-Modifiers.html#Declaration-Modifiers" accesskey="n" rel="next">Declaration Modifiers</a>, Previous: <a href="Operator-Declaration.html#Operator-Declaration" accesskey="p" rel="prev">Operator Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Half-Open Range Operator (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Half-Open Range Operator (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Half-Open Range Operator (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Range-Operators.html#Range-Operators" rel="up" title="Range Operators">
+<link href="One_002dSided-Ranges.html#One_002dSided-Ranges" rel="next" title="One-Sided Ranges">
+<link href="Closed-Range-Operator.html#Closed-Range-Operator" rel="prev" title="Closed Range Operator">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Half_002dOpen-Range-Operator"></span><div class="header">
+<p>
+Next: <a href="One_002dSided-Ranges.html#One_002dSided-Ranges" accesskey="n" rel="next">One-Sided Ranges</a>, Previous: <a href="Closed-Range-Operator.html#Closed-Range-Operator" accesskey="p" rel="prev">Closed Range Operator</a>, Up: <a href="Range-Operators.html#Range-Operators" accesskey="u" rel="up">Range Operators</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Half_002dOpen-Range-Operator-1"></span><h4 class="subsection">7.8.2 Half-Open Range Operator</h4>
+
+<p>The <em>half-open range operator</em> (&lsquo;<samp>a..&lt;b</samp>&rsquo;) defines a range that runs from
+&lsquo;<samp>a</samp>&rsquo; to &lsquo;<samp>b</samp>&rsquo;, but doesn&rsquo;t include &lsquo;<samp>b</samp>&rsquo;. It&rsquo;s said to be <em>half-open</em> because
+it contains its first value, but not its final value. As with the closed
+range operator, the value of &lsquo;<samp>a</samp>&rsquo; must not be greater than &lsquo;<samp>b</samp>&rsquo;. If the
+value of &lsquo;<samp>a</samp>&rsquo; is equal to &lsquo;<samp>b</samp>&rsquo;, then the resulting range will be empty.
+</p>
+<p>Half-open ranges are particularly useful when you work with zero-based
+lists such as arrays, where it&rsquo;s useful to count up to (but not
+including) the length of the list:
+</p>
+<div class="example">
+<pre class="example">let names = [&quot;Anna&quot;, &quot;Alex&quot;, &quot;Brian&quot;, &quot;Jack&quot;]
+let count = names.count
+for i in 0..&lt;count {
+    print(&quot;Person \(i + 1) is called \(names[i])&quot;)
+}
+// Person 1 is called Anna
+// Person 2 is called Alex
+// Person 3 is called Brian
+// Person 4 is called Jack
+</pre></div>
+
+<p>Note that the array contains four items, but &lsquo;<samp>0..&lt;count</samp>&rsquo; only counts as
+far as &lsquo;<samp>3</samp>&rsquo; (the index of the last item in the array), because it&rsquo;s a
+half-open range. For more about arrays, see
+<a href="Arrays.html#Arrays">Arrays</a>.
+</p>
+
+
+
+</body>
+</html>

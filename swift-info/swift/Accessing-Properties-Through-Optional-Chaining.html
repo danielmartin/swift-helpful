@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Accessing Properties Through Optional Chaining (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Accessing Properties Through Optional Chaining (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Accessing Properties Through Optional Chaining (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Optional-Chaining.html#Optional-Chaining" rel="up" title="Optional Chaining">
+<link href="Calling-Methods-Through-Optional-Chaining.html#Calling-Methods-Through-Optional-Chaining" rel="next" title="Calling Methods Through Optional Chaining">
+<link href="Defining-Model-Classes-for-Optional-Chaining.html#Defining-Model-Classes-for-Optional-Chaining" rel="prev" title="Defining Model Classes for Optional Chaining">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Accessing-Properties-Through-Optional-Chaining"></span><div class="header">
+<p>
+Next: <a href="Calling-Methods-Through-Optional-Chaining.html#Calling-Methods-Through-Optional-Chaining" accesskey="n" rel="next">Calling Methods Through Optional Chaining</a>, Previous: <a href="Defining-Model-Classes-for-Optional-Chaining.html#Defining-Model-Classes-for-Optional-Chaining" accesskey="p" rel="prev">Defining Model Classes for Optional Chaining</a>, Up: <a href="Optional-Chaining.html#Optional-Chaining" accesskey="u" rel="up">Optional Chaining</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Accessing-Properties-Through-Optional-Chaining-1"></span><h3 class="section">21.3 Accessing Properties Through Optional Chaining</h3>
+
+<p>As demonstrated in <a href="Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping.html#Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping">Optional Chaining as
+an Alternative to Forced Unwrapping</a>, you can use optional chaining to
+access a property on an optional value, and to check if that property
+access is successful.
+</p>
+<p>Use the classes defined above to create a new &lsquo;<samp>Person</samp>&rsquo; instance, and try
+to access its &lsquo;<samp>numberOfRooms</samp>&rsquo; property as before:
+</p>
+<div class="example">
+<pre class="example">let john = Person()
+if let roomCount = john.residence?.numberOfRooms {
+    print(&quot;John's residence has \(roomCount) room(s).&quot;)
+} else {
+    print(&quot;Unable to retrieve the number of rooms.&quot;)
+}
+// Prints &quot;Unable to retrieve the number of rooms.&quot;
+</pre></div>
+
+<p>Because &lsquo;<samp>john.residence</samp>&rsquo; is &lsquo;<samp>nil</samp>&rsquo;, this optional chaining call fails in
+the same way as before.
+</p>
+<p>You can also attempt to set a property&rsquo;s value through optional
+chaining:
+</p>
+<div class="example">
+<pre class="example">let someAddress = Address()
+someAddress.buildingNumber = &quot;29&quot;
+someAddress.street = &quot;Acacia Road&quot;
+john.residence?.address = someAddress
+</pre></div>
+
+<p>In this example, the attempt to set the &lsquo;<samp>address</samp>&rsquo; property of
+&lsquo;<samp>john.residence</samp>&rsquo; will fail, because &lsquo;<samp>john.residence</samp>&rsquo; is currently &lsquo;<samp>nil</samp>&rsquo;.
+</p>
+<p>The assignment is part of the optional chaining, which means none of the
+code on the right-hand side of the &lsquo;<samp>=</samp>&rsquo; operator is evaluated. In the
+previous example, it&rsquo;s not easy to see that &lsquo;<samp>someAddress</samp>&rsquo; is never
+evaluated, because accessing a constant doesn&rsquo;t have any side effects.
+The listing below does the same assignment, but it uses a function to
+create the address. The function prints “Function was called” before
+returning a value, which lets you see whether the right-hand side of the
+&lsquo;<samp>=</samp>&rsquo; operator was evaluated.
+</p>
+<div class="example">
+<pre class="example">func createAddress() -&gt; Address {
+    print(&quot;Function was called.&quot;)
+
+    let someAddress = Address()
+    someAddress.buildingNumber = &quot;29&quot;
+    someAddress.street = &quot;Acacia Road&quot;
+
+    return someAddress
+}
+john.residence?.address = createAddress()
+</pre></div>
+
+<p>You can tell that the &lsquo;<samp>createAddress()</samp>&rsquo; function isn&rsquo;t called, because
+nothing is printed.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Calling-Methods-Through-Optional-Chaining.html#Calling-Methods-Through-Optional-Chaining" accesskey="n" rel="next">Calling Methods Through Optional Chaining</a>, Previous: <a href="Defining-Model-Classes-for-Optional-Chaining.html#Defining-Model-Classes-for-Optional-Chaining" accesskey="p" rel="prev">Defining Model Classes for Optional Chaining</a>, Up: <a href="Optional-Chaining.html#Optional-Chaining" accesskey="u" rel="up">Optional Chaining</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

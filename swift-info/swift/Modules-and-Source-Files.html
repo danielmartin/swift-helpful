@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Modules and Source Files (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Modules and Source Files (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Modules and Source Files (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Access-Control.html#Access-Control" rel="up" title="Access Control">
+<link href="Access-Levels.html#Access-Levels" rel="next" title="Access Levels">
+<link href="Access-Control.html#Access-Control" rel="prev" title="Access Control">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Modules-and-Source-Files"></span><div class="header">
+<p>
+Next: <a href="Access-Levels.html#Access-Levels" accesskey="n" rel="next">Access Levels</a>, Up: <a href="Access-Control.html#Access-Control" accesskey="u" rel="up">Access Control</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Modules-and-Source-Files-1"></span><h3 class="section">31.1 Modules and Source Files</h3>
+
+<p>Swift&rsquo;s access control model is based on the concept of modules and
+source files.
+</p>
+<span id="index-import"></span>
+<p>A <em>module</em> is a single unit of code distribution&mdash;a framework or
+application that is built and shipped as a single unit and that can be
+imported by another module with Swift&rsquo;s &lsquo;<samp>import</samp>&rsquo; keyword.
+</p>
+<p>Each build target (such as an app bundle or framework) in Xcode is
+treated as a separate module in Swift. If you group together aspects of
+your app&rsquo;s code as a stand-alone framework&mdash;perhaps to encapsulate and
+reuse that code across multiple applications&mdash;then everything you
+define within that framework will be part of a separate module when it&rsquo;s
+imported and used within an app, or when it&rsquo;s used within another
+framework.
+</p>
+<p>A <em>source file</em> is a single Swift source code file within a module (in
+effect, a single file within an app or framework). Although it&rsquo;s common
+to define individual types in separate source files, a single source
+file can contain definitions for multiple types, functions, and so on.
+</p>
+
+
+
+</body>
+</html>

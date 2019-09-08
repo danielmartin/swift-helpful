@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Closures Are Reference Types (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Closures Are Reference Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Closures Are Reference Types (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Closures.html#Closures" rel="up" title="Closures">
+<link href="Escaping-Closures.html#Escaping-Closures" rel="next" title="Escaping Closures">
+<link href="Capturing-Values.html#Capturing-Values" rel="prev" title="Capturing Values">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Closures-Are-Reference-Types"></span><div class="header">
+<p>
+Next: <a href="Escaping-Closures.html#Escaping-Closures" accesskey="n" rel="next">Escaping Closures</a>, Previous: <a href="Capturing-Values.html#Capturing-Values" accesskey="p" rel="prev">Capturing Values</a>, Up: <a href="Closures.html#Closures" accesskey="u" rel="up">Closures</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Closures-Are-Reference-Types-1"></span><h3 class="section">12.4 Closures Are Reference Types</h3>
+
+<p>In the example above, &lsquo;<samp>incrementBySeven</samp>&rsquo; and &lsquo;<samp>incrementByTen</samp>&rsquo; are
+constants, but the closures these constants refer to are still able to
+increment the &lsquo;<samp>runningTotal</samp>&rsquo; variables that they have captured. This is
+because functions and closures are <em>reference types</em>.
+</p>
+<p>Whenever you assign a function or a closure to a constant or a variable,
+you are actually setting that constant or variable to be a <em>reference</em>
+to the function or closure. In the example above, it is the choice of
+closure that &lsquo;<samp>incrementByTen</samp>&rsquo; <em>refers to</em> that is constant, and not the
+contents of the closure itself.
+</p>
+<p>This also means that if you assign a closure to two different constants
+or variables, both of those constants or variables refer to the same
+closure.
+</p>
+<div class="example">
+<pre class="example">let alsoIncrementByTen = incrementByTen
+alsoIncrementByTen()
+// returns a value of 50
+
+incrementByTen()
+// returns a value of 60
+</pre></div>
+
+<p>The example above shows that calling &lsquo;<samp>alsoIncrementByTen</samp>&rsquo; is the same as
+calling &lsquo;<samp>incrementByTen</samp>&rsquo;. Because both of them refer to the same
+closure, they both increment and return the same running total.
+</p>
+
+
+
+</body>
+</html>

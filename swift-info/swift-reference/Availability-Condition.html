@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Availability Condition (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Availability Condition (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Availability Condition (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Statements.html#Statements" rel="up" title="Statements">
+<link href="Declarations.html#Declarations" rel="next" title="Declarations">
+<link href="Compile_002dTime-Diagnostic-Statement.html#Compile_002dTime-Diagnostic-Statement" rel="prev" title="Compile-Time Diagnostic Statement">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Availability-Condition"></span><div class="header">
+<p>
+Previous: <a href="Compiler-Control-Statements.html#Compiler-Control-Statements" accesskey="p" rel="prev">Compiler Control Statements</a>, Up: <a href="Statements.html#Statements" accesskey="u" rel="up">Statements</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Availability-Condition-1"></span><h3 class="section">6.7 Availability Condition</h3>
+
+<p>An <em>availability condition</em> is used as a condition of an &lsquo;<samp>if</samp>&rsquo;, &lsquo;<samp>while</samp>&rsquo;,
+and &lsquo;<samp>guard</samp>&rsquo; statement to query the availability of APIs at runtime,
+based on specified platforms arguments.
+</p>
+<p>An availability condition has the following form:
+</p>
+<ol>
+<li> if #available(platform name version, &hellip;, *) {
+</li><li> statements to execute if the APIs are available
+</li><li> } else {
+</li><li> fallback statements to execute if the APIs are unavailable
+</li><li> }
+</li></ol>
+
+<p>You use an availability condition to execute a block of code, depending
+on whether the APIs you want to use are available at runtime. The
+compiler uses the information from the availability condition when it
+verifies that the APIs in that block of code are available.
+</p>
+<p>The availability condition takes a comma-separated list of platform
+names and versions. Use &lsquo;<samp>iOS</samp>&rsquo;, &lsquo;<samp>macOS</samp>&rsquo;, &lsquo;<samp>watchOS</samp>&rsquo;, and &lsquo;<samp>tvOS</samp>&rsquo; for the
+platform names, and include the corresponding version numbers. The &lsquo;<samp>*</samp>&rsquo;
+argument is required and specifies that on any other platform, the body
+of the code block guarded by the availability condition executes on the
+minimum deployment target specified by your target.
+</p>
+<p>Unlike Boolean conditions, you can&rsquo;t combine availability conditions
+using logical operators such as &lsquo;<samp>&amp;&amp;</samp>&rsquo; and &lsquo;<samp>||</samp>&rsquo;.
+</p>
+<p>Grammar of an availability condition
+</p>
+<p>availability-condition
+→ &lsquo;<samp>#available</samp>&rsquo; &lsquo;<samp>(</samp>&rsquo;
+availability-arguments
+&lsquo;<samp>)</samp>&rsquo;
+</p>
+<p>availability-arguments
+→
+availability-argument
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>availability-argument
+&lsquo;<samp>,</samp>&rsquo;
+availability-arguments
+</p>
+<p>availability-argument
+→
+platform-name
+platform-version
+</p>
+<p>availability-argument
+→ &lsquo;<samp>*</samp>&rsquo;
+</p>
+<p>platform-name → &lsquo;<samp>iOS</samp>&rsquo; |
+&lsquo;<samp>iOSApplicationExtension</samp>&rsquo;
+</p>
+<p>platform-name → &lsquo;<samp>macOS</samp>&rsquo; |
+&lsquo;<samp>macOSApplicationExtension</samp>&rsquo;
+</p>
+<p>platform-name → &lsquo;<samp>watchOS</samp>&rsquo;
+</p>
+<p>platform-name → &lsquo;<samp>tvOS</samp>&rsquo;
+</p>
+<p>platform-version →
+decimal-digits
+</p>
+<p>platform-version →
+decimal-digits
+&lsquo;<samp>.</samp>&rsquo;
+decimal-digits
+</p>
+<p>platform-version →
+decimal-digits
+&lsquo;<samp>.</samp>&rsquo;
+decimal-digits
+&lsquo;<samp>.</samp>&rsquo;
+decimal-digits
+</p>
+
+
+
+</body>
+</html>

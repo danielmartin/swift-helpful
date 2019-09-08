@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Subclassing 1 (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Subclassing 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Subclassing 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Access-Control.html#Access-Control" rel="up" title="Access Control">
+<link href="Constants-Variables-Properties-and-Subscripts.html#Constants-Variables-Properties-and-Subscripts" rel="next" title="Constants Variables Properties and Subscripts">
+<link href="Nested-Types-2.html#Nested-Types-2" rel="prev" title="Nested Types 2">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Subclassing-1"></span><div class="header">
+<p>
+Next: <a href="Constants-Variables-Properties-and-Subscripts.html#Constants-Variables-Properties-and-Subscripts" accesskey="n" rel="next">Constants Variables Properties and Subscripts</a>, Previous: <a href="Custom-Types.html#Custom-Types" accesskey="p" rel="prev">Custom Types</a>, Up: <a href="Access-Control.html#Access-Control" accesskey="u" rel="up">Access Control</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Subclassing-3"></span><h3 class="section">31.5 Subclassing</h3>
+
+<p>You can subclass any class that can be accessed in the current access
+context. A subclass can&rsquo;t have a higher access level than its
+superclass&mdash;for example, you can&rsquo;t write a public subclass of an
+internal superclass.
+</p>
+<p>In addition, you can override any class member (method, property,
+initializer, or subscript) that is visible in a certain access context.
+</p>
+<p>An override can make an inherited class member more accessible than its
+superclass version. In the example below, class &lsquo;<samp>A</samp>&rsquo; is a public class
+with a file-private method called &lsquo;<samp>someMethod()</samp>&rsquo;. Class &lsquo;<samp>B</samp>&rsquo; is a
+subclass of &lsquo;<samp>A</samp>&rsquo;, with a reduced access level of “internal”. Nonetheless,
+class &lsquo;<samp>B</samp>&rsquo; provides an override of &lsquo;<samp>someMethod()</samp>&rsquo; with an access level of
+“internal”, which is <em>higher</em> than the original implementation of
+&lsquo;<samp>someMethod()</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">public class A {
+    fileprivate func someMethod() {}
+}
+
+internal class B: A {
+    override internal func someMethod() {}
+}
+</pre></div>
+
+<p>It&rsquo;s even valid for a subclass member to call a superclass member that
+has lower access permissions than the subclass member, as long as the
+call to the superclass&rsquo;s member takes place within an allowed access
+level context (that is, within the same source file as the superclass
+for a file-private member call, or within the same module as the
+superclass for an internal member call):
+</p>
+<div class="example">
+<pre class="example">public class A {
+    fileprivate func someMethod() {}
+}
+
+internal class B: A {
+    override internal func someMethod() {
+        super.someMethod()
+    }
+}
+</pre></div>
+
+<p>Because superclass &lsquo;<samp>A</samp>&rsquo; and subclass &lsquo;<samp>B</samp>&rsquo; are defined in the same source
+file, it&rsquo;s valid for the &lsquo;<samp>B</samp>&rsquo; implementation of &lsquo;<samp>someMethod()</samp>&rsquo; to call
+&lsquo;<samp>super.someMethod()</samp>&rsquo;.
+</p>
+
+
+
+</body>
+</html>

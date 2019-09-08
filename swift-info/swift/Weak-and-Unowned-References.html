@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Weak and Unowned References (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Weak and Unowned References (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Weak and Unowned References (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Resolving-Strong-Reference-Cycles-for-Closures.html#Resolving-Strong-Reference-Cycles-for-Closures" rel="up" title="Resolving Strong Reference Cycles for Closures">
+<link href="Memory-Safety.html#Memory-Safety" rel="next" title="Memory Safety">
+<link href="Defining-a-Capture-List.html#Defining-a-Capture-List" rel="prev" title="Defining a Capture List">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Weak-and-Unowned-References"></span><div class="header">
+<p>
+Previous: <a href="Defining-a-Capture-List.html#Defining-a-Capture-List" accesskey="p" rel="prev">Defining a Capture List</a>, Up: <a href="Resolving-Strong-Reference-Cycles-for-Closures.html#Resolving-Strong-Reference-Cycles-for-Closures" accesskey="u" rel="up">Resolving Strong Reference Cycles for Closures</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Weak-and-Unowned-References-1"></span><h4 class="subsection">29.6.2 Weak and Unowned References</h4>
+
+<p>Define a capture in a closure as an unowned reference when the closure
+and the instance it captures will always refer to each other, and will
+always be deallocated at the same time.
+</p>
+<p>Conversely, define a capture as a weak reference when the captured
+reference may become &lsquo;<samp>nil</samp>&rsquo; at some point in the future. Weak references
+are always of an optional type, and automatically become &lsquo;<samp>nil</samp>&rsquo; when the
+instance they reference is deallocated. This enables you to check for
+their existence within the closure&rsquo;s body.
+</p>
+<p>Note
+</p>
+<p>If the captured reference will never become &lsquo;<samp>nil</samp>&rsquo;, it should always be
+captured as an unowned reference, rather than a weak reference.
+</p>
+<p>An unowned reference is the appropriate capture method to use to resolve
+the strong reference cycle in the &lsquo;<samp>HTMLElement</samp>&rsquo; example from
+<a href="Strong-Reference-Cycles-for-Closures.html#Strong-Reference-Cycles-for-Closures">Strong Reference Cycles for
+Closures</a> above. Here&rsquo;s how you write the &lsquo;<samp>HTMLElement</samp>&rsquo; class to avoid
+the cycle:
+</p>
+<div class="example">
+<pre class="example">class HTMLElement {
+
+    let name: String
+    let text: String?
+
+    lazy var asHTML: () -&gt; String = {
+        [unowned self] in
+        if let text = self.text {
+            return &quot;&lt;\(self.name)&gt;\(text)&lt;/\(self.name)&gt;&quot;
+        } else {
+            return &quot;&lt;\(self.name) /&gt;&quot;
+        }
+    }
+
+    init(name: String, text: String? = nil) {
+        self.name = name
+        self.text = text
+    }
+
+    deinit {
+        print(&quot;\(name) is being deinitialized&quot;)
+    }
+
+}
+</pre></div>
+
+<p>This implementation of &lsquo;<samp>HTMLElement</samp>&rsquo; is identical to the previous
+implementation, apart from the addition of a capture list within the
+&lsquo;<samp>asHTML</samp>&rsquo; closure. In this case, the capture list is &lsquo;<samp>[unowned self]</samp>&rsquo;,
+which means “capture self as an unowned reference rather than a strong
+reference”.
+</p>
+<p>You can create and print an &lsquo;<samp>HTMLElement</samp>&rsquo; instance as before:
+</p>
+<div class="example">
+<pre class="example">var paragraph: HTMLElement? = HTMLElement(name: &quot;p&quot;, text: &quot;hello, world&quot;)
+print(paragraph!.asHTML())
+// Prints &quot;&lt;p&gt;hello, world&lt;/p&gt;&quot;
+</pre></div>
+
+<p>Here&rsquo;s how the references look with the capture list in place:
+</p>
+<img src="_images/closureReferenceCycle02_2x.png" alt="_images/closureReferenceCycle02_2x">
+<p>This time, the capture of &lsquo;<samp>self</samp>&rsquo; by the closure is an unowned reference,
+and does not keep a strong hold on the &lsquo;<samp>HTMLElement</samp>&rsquo; instance it has
+captured. If you set the strong reference from the &lsquo;<samp>paragraph</samp>&rsquo; variable
+to &lsquo;<samp>nil</samp>&rsquo;, the &lsquo;<samp>HTMLElement</samp>&rsquo; instance is deallocated, as can be seen from
+the printing of its deinitializer message in the example below:
+</p>
+<div class="example">
+<pre class="example">paragraph = nil
+// Prints &quot;p is being deinitialized&quot;
+</pre></div>
+
+<p>For more information about capture lists, see Capture Lists.
+</p>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Defining-a-Capture-List.html#Defining-a-Capture-List" accesskey="p" rel="prev">Defining a Capture List</a>, Up: <a href="Resolving-Strong-Reference-Cycles-for-Closures.html#Resolving-Strong-Reference-Cycles-for-Closures" accesskey="u" rel="up">Resolving Strong Reference Cycles for Closures</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

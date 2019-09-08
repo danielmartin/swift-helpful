@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Protocol Associated Type Declaration (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Protocol Associated Type Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Protocol Associated Type Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Protocol-Declaration.html#Protocol-Declaration" rel="up" title="Protocol Declaration">
+<link href="Initializer-Declaration.html#Initializer-Declaration" rel="next" title="Initializer Declaration">
+<link href="Protocol-Subscript-Declaration.html#Protocol-Subscript-Declaration" rel="prev" title="Protocol Subscript Declaration">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Protocol-Associated-Type-Declaration"></span><div class="header">
+<p>
+Previous: <a href="Protocol-Subscript-Declaration.html#Protocol-Subscript-Declaration" accesskey="p" rel="prev">Protocol Subscript Declaration</a>, Up: <a href="Protocol-Declaration.html#Protocol-Declaration" accesskey="u" rel="up">Protocol Declaration</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Protocol-Associated-Type-Declaration-1"></span><h4 class="subsection">7.11.5 Protocol Associated Type Declaration</h4>
+
+<span id="index-associatedtype"></span>
+<span id="index-Self"></span>
+
+<p>Protocols declare associated types using the &lsquo;<samp>associatedtype</samp>&rsquo; keyword.
+An associated type provides an alias for a type that is used as part of
+a protocol&rsquo;s declaration. Associated types are similar to type
+parameters in generic parameter clauses, but they&rsquo;re associated with
+&lsquo;<samp>Self</samp>&rsquo; in the protocol in which they&rsquo;re declared. In that context,
+&lsquo;<samp>Self</samp>&rsquo; refers to the eventual type that conforms to the protocol. For
+more information and examples, see
+<a href="../swift/Associated-Types.html#Associated-Types">(swift)Associated Types</a>.
+</p>
+<span id="index-where"></span>
+
+<p>You use a generic &lsquo;<samp>where</samp>&rsquo; clause in a protocol declaration to add
+constraints to an associated types inherited from another protocol,
+without redeclaring the associated types. For example, the declarations
+of &lsquo;<samp>SubProtocol</samp>&rsquo; below are equivalent:
+</p>
+<ol>
+<li> protocol SomeProtocol {
+</li><li> associatedtype SomeType
+</li><li> }
+</li><li> protocol SubProtocolA: SomeProtocol {
+</li><li> // This syntax produces a warning.
+</li><li> associatedtype SomeType: Equatable
+</li><li> }
+</li><li> // This syntax is preferred.
+</li><li> protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
+</li></ol>
+
+<p>See also <a href="Type-Alias-Declaration.html#Type-Alias-Declaration">Type Alias Declaration</a>.
+</p>
+<p>Grammar of a protocol associated type declaration
+</p>
+<p>protocol-associated-type-declaration
+→ attributes
+_{opt}
+access-level-modifier
+_{opt} &lsquo;<samp>associatedtype</samp>&rsquo;
+typealias-name
+type-inheritance-clause
+_{opt}
+typealias-assignment
+_{opt}
+generic-where-clause
+_{opt}
+</p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Special Characters in String Literals (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Special Characters in String Literals (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Special Characters in String Literals (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="String-Literals.html#String-Literals" rel="up" title="String Literals">
+<link href="Extended-String-Delimiters.html#Extended-String-Delimiters" rel="next" title="Extended String Delimiters">
+<link href="Multiline-String-Literals.html#Multiline-String-Literals" rel="prev" title="Multiline String Literals">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Special-Characters-in-String-Literals"></span><div class="header">
+<p>
+Next: <a href="Extended-String-Delimiters.html#Extended-String-Delimiters" accesskey="n" rel="next">Extended String Delimiters</a>, Previous: <a href="Multiline-String-Literals.html#Multiline-String-Literals" accesskey="p" rel="prev">Multiline String Literals</a>, Up: <a href="String-Literals.html#String-Literals" accesskey="u" rel="up">String Literals</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Special-Characters-in-String-Literals-1"></span><h4 class="subsection">8.1.2 Special Characters in String Literals</h4>
+
+<p>String literals can include the following special characters:
+</p>
+<ul>
+<li> The escaped special characters &lsquo;<samp>\0</samp>&rsquo; (null character), &lsquo;<samp>\\</samp>&rsquo;
+(backslash), &lsquo;<samp>\t</samp>&rsquo; (horizontal tab), &lsquo;<samp>\n</samp>&rsquo; (line feed), &lsquo;<samp>\r</samp>&rsquo; (carriage
+return), &lsquo;<samp>\&quot;</samp>&rsquo; (double quotation mark) and &lsquo;<samp>\'</samp>&rsquo; (single quotation mark)
+
+</li><li> An arbitrary Unicode scalar value, written as &lsquo;<samp>\u{=/n/</samp>&rsquo;}=, where <em>n</em>
+is a 1&ndash;8 digit hexadecimal number (Unicode is discussed in
+<a href="Unicode.html#Unicode">Unicode</a> below)
+</li></ul>
+
+<p>The code below shows four examples of these special characters. The
+&lsquo;<samp>wiseWords</samp>&rsquo; constant contains two escaped double quotation marks. The
+&lsquo;<samp>dollarSign</samp>&rsquo;, &lsquo;<samp>blackHeart</samp>&rsquo;, and &lsquo;<samp>sparklingHeart</samp>&rsquo; constants demonstrate
+the Unicode scalar format:
+</p>
+<div class="example">
+<pre class="example">let wiseWords = &quot;\&quot;Imagination is more important than knowledge\&quot; - Einstein&quot;
+// &quot;Imagination is more important than knowledge&quot; - Einstein
+let dollarSign = &quot;\u{24}&quot; // $, Unicode scalar U+0024
+let blackHeart = &quot;\u{2665}&quot; // ♥, Unicode scalar U+2665
+let sparklingHeart = &quot;\u{1F496}&quot; // 💖, Unicode scalar U+1F496
+</pre></div>
+
+<p>Because multiline string literals use three double quotation marks
+instead of just one, you can include a double quotation mark (&lsquo;<samp>&quot;</samp>&rsquo;)
+inside of a multiline string literal without escaping it. To include the
+text &lsquo;<samp>&quot;&quot;&quot;</samp>&rsquo; in a multiline string, escape at least one of the quotation
+marks. For example:
+</p>
+<div class="example">
+<pre class="example">let threeDoubleQuotationMarks = &quot;&quot;&quot;
+  Escaping the first quotation mark \&quot;&quot;&quot;
+  Escaping all three quotation marks \&quot;\&quot;\&quot;
+  &quot;&quot;&quot;
+</pre></div>
+
+
+
+
+</body>
+</html>

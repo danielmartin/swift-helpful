@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Type Alias Declaration (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="Type Alias Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="Type Alias Declaration (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Declarations.html#Declarations" rel="up" title="Declarations">
+<link href="Function-Declaration.html#Function-Declaration" rel="next" title="Function Declaration">
+<link href="Type-Variable-Properties.html#Type-Variable-Properties" rel="prev" title="Type Variable Properties">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Type-Alias-Declaration"></span><div class="header">
+<p>
+Next: <a href="Function-Declaration.html#Function-Declaration" accesskey="n" rel="next">Function Declaration</a>, Previous: <a href="Variable-Declaration.html#Variable-Declaration" accesskey="p" rel="prev">Variable Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Type-Alias-Declaration-1"></span><h3 class="section">7.6 Type Alias Declaration</h3>
+
+<p>A <em>type alias declaration</em> introduces a named alias of an existing type
+into your program. Type alias declarations are declared using the
+&lsquo;<samp>typealias</samp>&rsquo; keyword and have the following form:
+</p>
+<ol>
+<li> typealias name = existing type
+</li></ol>
+
+<p>After a type alias is declared, the aliased <em>name</em> can be used instead
+of the <em>existing type</em> everywhere in your program. The <em>existing type</em>
+can be a named type or a compound type. Type aliases do not create new
+types; they simply allow a name to refer to an existing type.
+</p>
+<p>A type alias declaration can use generic parameters to give a name to an
+existing generic type. The type alias can provide concrete types for
+some or all of the generic parameters of the existing type. For example:
+</p>
+<ol>
+<li> typealias StringDictionary&lt;Value&gt; = Dictionary&lt;String, Value&gt;
+</li><li> // The following dictionaries have the same type.
+</li><li> var dictionary1: StringDictionary&lt;Int&gt; = [:]
+</li><li> var dictionary2: Dictionary&lt;String, Int&gt; = [:]
+</li></ol>
+
+<p>When a type alias is declared with generic parameters, the constraints
+on those parameters must match exactly the constraints on the existing
+type&rsquo;s generic parameters. For example:
+</p>
+<ol>
+<li> typealias DictionaryOfInts&lt;Key: Hashable&gt; = Dictionary&lt;Key, Int&gt;
+</li></ol>
+
+<p>Because the type alias and the existing type can be used
+interchangeably, the type alias can&rsquo;t introduce additional generic
+constraints.
+</p>
+<p>A type alias can forward an existing type&rsquo;s generic parameters by
+omitting all generic parameters from the declaration. For example, the
+&lsquo;<samp>Diccionario</samp>&rsquo; type alias declared here has the same generic parameters
+and constraints as &lsquo;<samp>Dictionary</samp>&rsquo;.
+</p>
+<ol>
+<li> typealias Diccionario = Dictionary
+</li></ol>
+
+<p>Inside a protocol declaration, a type alias can give a shorter and more
+convenient name to a type that is used frequently. For example:
+</p>
+<ol>
+<li> protocol Sequence {
+</li><li> associatedtype Iterator: IteratorProtocol
+</li><li> typealias Element = Iterator.Element
+</li><li> }
+</li><li> func sum&lt;T: Sequence&gt;(_ sequence: T) -&gt; Int where T.Element == Int {
+</li><li> // &hellip;
+</li><li> }
+</li></ol>
+
+<p>Without this type alias, the &lsquo;<samp>sum</samp>&rsquo; function would have to refer to the
+associated type as &lsquo;<samp>T.Iterator.Element</samp>&rsquo; instead of &lsquo;<samp>T.Element</samp>&rsquo;.
+</p>
+<p>See also <a href="Protocol-Associated-Type-Declaration.html#Protocol-Associated-Type-Declaration">Protocol Associated Type
+Declaration</a>.
+</p>
+<p>Grammar of a type alias declaration
+</p>
+<p>typealias-declaration
+→ attributes
+_{opt}
+access-level-modifier
+_{opt} &lsquo;<samp>typealias</samp>&rsquo;
+typealias-name
+generic-parameter-clause
+_{opt}
+typealias-assignment
+</p>
+<p>typealias-name →
+identifier
+</p>
+<p>typealias-assignment
+→ &lsquo;<samp>=</samp>&rsquo; type
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Function-Declaration.html#Function-Declaration" accesskey="n" rel="next">Function Declaration</a>, Previous: <a href="Variable-Declaration.html#Variable-Declaration" accesskey="p" rel="prev">Variable Declaration</a>, Up: <a href="Declarations.html#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Function Types 1 (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Function Types 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Function Types 1 (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Custom-Types.html#Custom-Types" rel="up" title="Custom Types">
+<link href="Enumeration-Types.html#Enumeration-Types" rel="next" title="Enumeration Types">
+<link href="Tuple-Types.html#Tuple-Types" rel="prev" title="Tuple Types">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Function-Types-1"></span><div class="header">
+<p>
+Next: <a href="Enumeration-Types.html#Enumeration-Types" accesskey="n" rel="next">Enumeration Types</a>, Previous: <a href="Tuple-Types.html#Tuple-Types" accesskey="p" rel="prev">Tuple Types</a>, Up: <a href="Custom-Types.html#Custom-Types" accesskey="u" rel="up">Custom Types</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Function-Types-3"></span><h4 class="subsection">31.4.2 Function Types</h4>
+
+<p>The access level for a function type is calculated as the most
+restrictive access level of the function&rsquo;s parameter types and return
+type. You must specify the access level explicitly as part of the
+function&rsquo;s definition if the function&rsquo;s calculated access level doesn&rsquo;t
+match the contextual default.
+</p>
+<p>The example below defines a global function called &lsquo;<samp>someFunction()</samp>&rsquo;,
+without providing a specific access-level modifier for the function
+itself. You might expect this function to have the default access level
+of “internal”, but this isn&rsquo;t the case. In fact, &lsquo;<samp>someFunction()</samp>&rsquo; won&rsquo;t
+compile as written below:
+</p>
+<div class="example">
+<pre class="example">func someFunction() -&gt; (SomeInternalClass, SomePrivateClass) {
+    // function implementation goes here
+}
+</pre></div>
+
+<p>The function&rsquo;s return type is a tuple type composed from two of the
+custom classes defined above in <a href="Custom-Types.html#Custom-Types">Custom
+Types</a>. One of these classes is defined as internal, and the other is
+defined as private. Therefore, the overall access level of the compound
+tuple type is private (the minimum access level of the tuple&rsquo;s
+constituent types).
+</p>
+<p>Because the function&rsquo;s return type is private, you must mark the
+function&rsquo;s overall access level with the &lsquo;<samp>private</samp>&rsquo; modifier for the
+function declaration to be valid:
+</p>
+<div class="example">
+<pre class="example">private func someFunction() -&gt; (SomeInternalClass, SomePrivateClass) {
+    // function implementation goes here
+}
+</pre></div>
+
+<p>It&rsquo;s not valid to mark the definition of &lsquo;<samp>someFunction()</samp>&rsquo; with the
+&lsquo;<samp>public</samp>&rsquo; or &lsquo;<samp>internal</samp>&rsquo; modifiers, or to use the default setting of
+internal, because public or internal users of the function might not
+have appropriate access to the private class used in the function&rsquo;s
+return type.
+</p>
+
+
+
+</body>
+</html>

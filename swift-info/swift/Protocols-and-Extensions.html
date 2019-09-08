@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Protocols and Extensions (The Swift Programming Language Guide (Swift 5.1))</title>
+
+<meta name="description" content="Protocols and Extensions (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="keywords" content="Protocols and Extensions (The Swift Programming Language Guide (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="A-Swift-Tour.html#A-Swift-Tour" rel="up" title="A Swift Tour">
+<link href="Error-Handling.html#Error-Handling" rel="next" title="Error Handling">
+<link href="Enumerations-and-Structures.html#Enumerations-and-Structures" rel="prev" title="Enumerations and Structures">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="Protocols-and-Extensions"></span><div class="header">
+<p>
+Next: <a href="Error-Handling.html#Error-Handling" accesskey="n" rel="next">Error Handling</a>, Previous: <a href="Enumerations-and-Structures.html#Enumerations-and-Structures" accesskey="p" rel="prev">Enumerations and Structures</a>, Up: <a href="A-Swift-Tour.html#A-Swift-Tour" accesskey="u" rel="up">A Swift Tour</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Protocols-and-Extensions-1"></span><h3 class="section">4.6 Protocols and Extensions</h3>
+
+<p>Use &lsquo;<samp>protocol</samp>&rsquo; to declare a protocol.
+</p>
+<div class="example">
+<pre class="example">protocol ExampleProtocol {
+    var simpleDescription: String { get }
+    mutating func adjust()
+}
+</pre></div>
+
+<p>Classes, enumerations, and structs can all adopt protocols.
+</p>
+<div class="example">
+<pre class="example">class SimpleClass: ExampleProtocol {
+    var simpleDescription: String = &quot;A very simple class.&quot;
+    var anotherProperty: Int = 69105
+    func adjust() {
+        simpleDescription += &quot; Now 100% adjusted.&quot;
+    }
+}
+var a = SimpleClass()
+a.adjust()
+let aDescription = a.simpleDescription
+
+struct SimpleStructure: ExampleProtocol {
+    var simpleDescription: String = &quot;A simple structure&quot;
+    mutating func adjust() {
+        simpleDescription += &quot; (adjusted)&quot;
+    }
+}
+var b = SimpleStructure()
+b.adjust()
+let bDescription = b.simpleDescription
+</pre></div>
+
+<p>Experiment
+</p>
+<p>Add another requirement to &lsquo;<samp>ExampleProtocol</samp>&rsquo;. What changes do you need
+to make to &lsquo;<samp>SimpleClass</samp>&rsquo; and &lsquo;<samp>SimpleStructure</samp>&rsquo; so that they still
+conform to the protocol?
+</p>
+<span id="index-mutating"></span>
+
+<p>Notice the use of the &lsquo;<samp>mutating</samp>&rsquo; keyword in the declaration of
+&lsquo;<samp>SimpleStructure</samp>&rsquo; to mark a method that modifies the structure. The
+declaration of &lsquo;<samp>SimpleClass</samp>&rsquo; doesn&rsquo;t need any of its methods marked as
+mutating because methods on a class can always modify the class.
+</p>
+<span id="index-extension"></span>
+
+<p>Use &lsquo;<samp>extension</samp>&rsquo; to add functionality to an existing type, such as new
+methods and computed properties. You can use an extension to add
+protocol conformance to a type that is declared elsewhere, or even to a
+type that you imported from a library or framework.
+</p>
+<div class="example">
+<pre class="example">extension Int: ExampleProtocol {
+    var simpleDescription: String {
+        return &quot;The number \(self)&quot;
+    }
+    mutating func adjust() {
+        self += 42
+    }
+}
+print(7.simpleDescription)
+// Prints &quot;The number 7&quot;
+</pre></div>
+
+<p>Experiment
+</p>
+<p>Write an extension for the &lsquo;<samp>Double</samp>&rsquo; type that adds an &lsquo;<samp>absoluteValue</samp>&rsquo;
+property.
+</p>
+<p>You can use a protocol name just like any other named type&mdash;for
+example, to create a collection of objects that have different types but
+that all conform to a single protocol. When you work with values whose
+type is a protocol type, methods outside the protocol definition are not
+available.
+</p>
+<div class="example">
+<pre class="example">let protocolValue: ExampleProtocol = a
+print(protocolValue.simpleDescription)
+// Prints &quot;A very simple class. Now 100% adjusted.&quot;
+// print(protocolValue.anotherProperty) // Uncomment to see the error
+</pre></div>
+
+<p>Even though the variable &lsquo;<samp>protocolValue</samp>&rsquo; has a runtime type of
+&lsquo;<samp>SimpleClass</samp>&rsquo;, the compiler treats it as the given type of
+&lsquo;<samp>ExampleProtocol</samp>&rsquo;. This means that you can&rsquo;t accidentally access methods
+or properties that the class implements in addition to its protocol
+conformance.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Error-Handling.html#Error-Handling" accesskey="n" rel="next">Error Handling</a>, Previous: <a href="Enumerations-and-Structures.html#Enumerations-and-Structures" accesskey="p" rel="prev">Enumerations and Structures</a>, Up: <a href="A-Swift-Tour.html#A-Swift-Tour" accesskey="u" rel="up">A Swift Tour</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

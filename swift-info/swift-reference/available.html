@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>available (The Swift Programming Reference (Swift 5.1))</title>
+
+<meta name="description" content="available (The Swift Programming Reference (Swift 5.1))">
+<meta name="keywords" content="available (The Swift Programming Reference (Swift 5.1))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Declaration-Attributes.html#Declaration-Attributes" rel="up" title="Declaration Attributes">
+<link href="discardableResult.html#discardableResult" rel="next" title="discardableResult">
+<link href="Declaration-Attributes.html#Declaration-Attributes" rel="prev" title="Declaration Attributes">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gnu.org/software/emacs/manual.css">
+
+
+</head>
+
+<body lang="en">
+<span id="available"></span><div class="header">
+<p>
+Next: <a href="discardableResult.html#discardableResult" accesskey="n" rel="next">discardableResult</a>, Up: <a href="Declaration-Attributes.html#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="available-1"></span><h4 class="subsection">8.1.1 available</h4>
+
+<p>Apply this attribute to indicate a declaration&rsquo;s life cycle relative to
+certain Swift language versions or certain platforms and operating
+system versions.
+</p>
+<p>The &lsquo;<samp>available</samp>&rsquo; attribute always appears with a list of two or more
+comma-separated attribute arguments. These arguments begin with one of
+the following platform or language names:
+</p>
+<ul>
+<li> &lsquo;<samp>iOS</samp>&rsquo;
+
+</li><li> &lsquo;<samp>iOSApplicationExtension</samp>&rsquo;
+
+</li><li> &lsquo;<samp>macOS</samp>&rsquo;
+
+</li><li> &lsquo;<samp>macOSApplicationExtension</samp>&rsquo;
+
+</li><li> &lsquo;<samp>watchOS</samp>&rsquo;
+
+</li><li> &lsquo;<samp>watchOSApplicationExtension</samp>&rsquo;
+
+</li><li> &lsquo;<samp>tvOS</samp>&rsquo;
+
+</li><li> &lsquo;<samp>tvOSApplicationExtension</samp>&rsquo;
+
+</li><li> &lsquo;<samp>swift</samp>&rsquo;
+</li></ul>
+
+<p>You can also use an asterisk (&lsquo;<samp>*</samp>&rsquo;) to indicate the availability of the
+declaration on all of the platform names listed above. An &lsquo;<samp>available</samp>&rsquo;
+attribute that specifies availability using a Swift version number can&rsquo;t
+use the asterisk.
+</p>
+<p>The remaining arguments can appear in any order and specify additional
+information about the declaration&rsquo;s life cycle, including important
+milestones.
+</p>
+<ul>
+<li> The &lsquo;<samp>unavailable</samp>&rsquo; argument indicates that the declaration isn&rsquo;t
+available on the specified platform. This argument can&rsquo;t be used when
+specifying Swift version availability.
+
+</li><li> The &lsquo;<samp>introduced</samp>&rsquo; argument indicates the first version of the specified
+platform or language in which the declaration was introduced. It has
+the following form:
+
+<ol>
+<li> introduced: version number
+</li></ol>
+
+<p>The <em>version number</em> consists of one to three positive integers,
+separated by periods.
+</p>
+</li><li> The &lsquo;<samp>deprecated</samp>&rsquo; argument indicates the first version of the specified
+platform or language in which the declaration was deprecated. It has
+the following form:
+
+<ol>
+<li> deprecated: version number
+</li></ol>
+
+<p>The optional <em>version number</em> consists of one to three positive
+integers, separated by periods. Omitting the version number indicates
+that the declaration is currently deprecated, without giving any
+information about when the deprecation occurred. If you omit the
+version number, omit the colon (&lsquo;<samp>:</samp>&rsquo;) as well.
+</p>
+</li><li> The &lsquo;<samp>obsoleted</samp>&rsquo; argument indicates the first version of the specified
+platform or language in which the declaration was obsoleted. When a
+declaration is obsoleted, it&rsquo;s removed from the specified platform or
+language and can no longer be used. It has the following form:
+
+<ol>
+<li> obsoleted: version number
+</li></ol>
+
+<p>The <em>version number</em> consists of one to three positive integers,
+separated by periods.
+</p>
+</li><li> The &lsquo;<samp>message</samp>&rsquo; argument provides a textual message that the compiler
+displays when emitting a warning or error about the use of a
+deprecated or obsoleted declaration. It has the following form:
+
+<ol>
+<li> message: message
+</li></ol>
+
+<p>The <em>message</em> consists of a string literal.
+</p>
+</li><li> The &lsquo;<samp>renamed</samp>&rsquo; argument provides a textual message that indicates the
+new name for a declaration that&rsquo;s been renamed. The compiler displays
+the new name when emitting an error about the use of a renamed
+declaration. It has the following form:
+
+<ol>
+<li> renamed: new name
+</li></ol>
+
+<p>The <em>new name</em> consists of a string literal.
+</p>
+<p>You can apply the &lsquo;<samp>available</samp>&rsquo; attribute with the &lsquo;<samp>renamed</samp>&rsquo; and
+&lsquo;<samp>unavailable</samp>&rsquo; arguments to a type alias declaration, as shown below,
+to indicate that the name of a declaration changed between releases of
+a framework or library. This combination results in a compile-time
+error that the declaration has been renamed.
+</p>
+<ol>
+<li> // First release
+</li><li> protocol MyProtocol {
+</li><li> // protocol definition
+</li><li> }
+
+</li><li> // Subsequent release renames MyProtocol
+</li><li> protocol MyRenamedProtocol {
+</li><li> // protocol definition
+</li><li> }
+</li><li> @available(*, unavailable, renamed: &quot;MyRenamedProtocol&quot;)
+</li><li> typealias MyProtocol = MyRenamedProtocol
+</li></ol>
+</li></ul>
+
+<p>You can apply multiple &lsquo;<samp>available</samp>&rsquo; attributes on a single declaration to
+specify the declaration&rsquo;s availability on different platforms and
+different versions of Swift. The declaration that the &lsquo;<samp>available</samp>&rsquo;
+attribute applies to is ignored if the attribute specifies a platform or
+language version that doesn&rsquo;t match the current target. If you use
+multiple &lsquo;<samp>available</samp>&rsquo; attributes, the effective availability is the
+combination of the platform and Swift availabilities.
+</p>
+<p>If an &lsquo;<samp>available</samp>&rsquo; attribute only specifies an &lsquo;<samp>introduced</samp>&rsquo; argument in
+addition to a platform or language name argument, you can use the
+following shorthand syntax instead:
+</p>
+<ol>
+<li> @available(platform name version number, *)
+</li><li> @available(swift version number)
+</li></ol>
+
+<p>The shorthand syntax for &lsquo;<samp>available</samp>&rsquo; attributes concisely expresses
+availability for multiple platforms. Although the two forms are
+functionally equivalent, the shorthand form is preferred whenever
+possible.
+</p>
+<ol>
+<li> @available(iOS 10.0, macOS 10.12, *)
+</li><li> class MyClass {
+</li><li> // class definition
+</li><li> }
+</li></ol>
+
+<p>An &lsquo;<samp>available</samp>&rsquo; attribute that specifies availability using a Swift
+version number can&rsquo;t additionally specify a declaration&rsquo;s platform
+availability. Instead, use separate &lsquo;<samp>available</samp>&rsquo; attributes to specify a
+Swift version availability and one or more platform availabilities.
+</p>
+<ol>
+<li> @available(swift 3.0.2)
+</li><li> @available(macOS 10.12, *)
+</li><li> struct MyStruct {
+</li><li> // struct definition
+</li><li> }
+</li></ol>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="discardableResult.html#discardableResult" accesskey="n" rel="next">discardableResult</a>, Up: <a href="Declaration-Attributes.html#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>
