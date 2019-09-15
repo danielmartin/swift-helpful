@@ -31,18 +31,15 @@ Addition of this package to MELPA is planned.
 
 *** Usage
 
-Once installed, run ~swift-helpful-configure-manuals~ to prepare Emacs so that the Swift manuals can be queried by ~swift-helpful~.
-
 Main entry point is the ~swift-helpful~ command, which should be executed with the point placed in some Swift code.
 
 ** Features
 
 *** Contextual information about Swift keywords and attributes
 
-If you have configured the Swift manuals by calling the ~swift-helpful-configure-manuals~ command, ~swift-helpful~ will
-show you information about any Swift keyword or attribute. Let's say you see ~import~ in a Swift program and you want to
-know more about how importing modules in Swift works. Simply place the point on top of "import" and invoke
-~swift-helpful~ with ~M-x swift-helpful~. The tool will show you a brief snippet of documentation about Swift
+~swift-helpful~ shows information about any Swift keyword or attribute. Let's say you see ~import~ in a Swift program
+and you want to know more about how importing modules in Swift works. Simply place the point on top of "import" and
+invoke ~swift-helpful~ with ~M-x swift-helpful~. The tool will show you a brief snippet of documentation about Swift
 modules. In many cases, the keyword will be highlighted to focus your attention on where it is mentioned in the
 documentation. Pressing the "Read more in manual" button opens the Swift manual section in an Info buffer so that you
 can read the definitive discussion about that topic.
