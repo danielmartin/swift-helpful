@@ -81,6 +81,9 @@ the platform conditions listed in the table below.
 <tr><td>&lsquo;<samp>targetEnvironment()</samp>&rsquo;</td><td>&lsquo;<samp>simulator</samp>&rsquo;</td></tr>
 </table>
 
+<span id="index-swift"></span>
+<span id="index-compiler"></span>
+
 <p>The version number for the &lsquo;<samp>swift()</samp>&rsquo; and &lsquo;<samp>compiler()</samp>&rsquo; platform
 conditions consists of a major number, optional minor number, optional
 patch number, and so on, with a dot (&lsquo;<samp>.</samp>&rsquo;) separating each part of the
@@ -110,17 +113,23 @@ earlier than 5&quot;)
 mode earlier than 5&quot;
 </li></ol>
 
+<span id="index-canImport"></span>
+
 <p>The argument for the &lsquo;<samp>canImport()</samp>&rsquo; platform condition is the name of a
 module that may not be present on all platforms. This condition tests
 whether it&rsquo;s possible to import the module, but doesn&rsquo;t actually import
 it. If the module is present, the platform condition returns &lsquo;<samp>true</samp>&rsquo;;
 otherwise, it returns &lsquo;<samp>false</samp>&rsquo;.
 </p>
+<span id="index-targetEnvironment"></span>
+
 <p>The &lsquo;<samp>targetEnvironment()</samp>&rsquo; platform condition returns &lsquo;<samp>true</samp>&rsquo; when code is
 compiled for a simulator; otherwise, it returns &lsquo;<samp>false</samp>&rsquo;.
 </p>
 <p>Note
 </p>
+<span id="index-arch"></span>
+
 <p>The &lsquo;<samp>arch(arm)</samp>&rsquo; platform condition does not return &lsquo;<samp>true</samp>&rsquo; for ARM 64
 devices. The &lsquo;<samp>arch(i386)</samp>&rsquo; platform condition returns &lsquo;<samp>true</samp>&rsquo; when code is
 compiled for the 32&ndash;bit iOS simulator.

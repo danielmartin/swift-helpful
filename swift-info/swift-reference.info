@@ -10301,10 +10301,16 @@ Index
 * @usableFromInline:                     usableFromInline.    (line   6)
 * @warn_unqualified_access:              warn_unqualified_access.
                                                               (line   6)
+* arch:                                  Conditional Compilation Block.
+                                                              (line  73)
 * associatedtype:                        Protocol Associated Type Declaration.
                                                               (line   6)
 * associativity:                         Precedence Group Declaration.
                                                               (line  47)
+* canImport:                             Conditional Compilation Block.
+                                                              (line  62)
+* compiler:                              Conditional Compilation Block.
+                                                              (line  35)
 * deinit:                                Deinitializer Declaration.
                                                               (line   6)
 * enum:                                  Enumeration Declaration.
@@ -10328,6 +10334,10 @@ Index
                                                               (line   6)
 * Self:                                  Protocol Associated Type Declaration.
                                                               (line   6)
+* swift:                                 Conditional Compilation Block.
+                                                              (line  35)
+* targetEnvironment:                     Conditional Compilation Block.
+                                                              (line  68)
 * where:                                 Protocol Associated Type Declaration.
                                                               (line  15)
 

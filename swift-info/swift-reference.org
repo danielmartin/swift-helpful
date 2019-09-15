@@ -4566,6 +4566,9 @@ the platform conditions listed in the table below.
 | =canImport()=           | A module name                                |
 | =targetEnvironment()=   | =simulator=                                  |
 
+#+FINDEX: swift
+#+FINDEX: compiler
+
 The version number for the =swift()= and =compiler()= platform
 conditions consists of a major number, optional minor number, optional
 patch number, and so on, with a dot (=.=) separating each part of the
@@ -4593,16 +4596,22 @@ messages:
 12. // Prints "Compiled with the Swift 5 compiler or later in a Swift
     mode earlier than 5"
 
+#+FINDEX: canImport
+
 The argument for the =canImport()= platform condition is the name of a
 module that may not be present on all platforms. This condition tests
 whether it's possible to import the module, but doesn't actually import
 it. If the module is present, the platform condition returns =true=;
 otherwise, it returns =false=.
 
+#+FINDEX: targetEnvironment
+
 The =targetEnvironment()= platform condition returns =true= when code is
 compiled for a simulator; otherwise, it returns =false=.
 
 Note
+
+#+FINDEX: arch
 
 The =arch(arm)= platform condition does not return =true= for ARM 64
 devices. The =arch(i386)= platform condition returns =true= when code is

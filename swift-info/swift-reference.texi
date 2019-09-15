@@ -5876,6 +5876,9 @@ the platform conditions listed in the table below.
 @tab @samp{simulator}
 @end multitable
 
+@findex swift
+@findex compiler
+
 The version number for the @samp{swift()} and @samp{compiler()} platform
 conditions consists of a major number, optional minor number, optional
 patch number, and so on, with a dot (@samp{.}) separating each part of the
@@ -5917,16 +5920,22 @@ earlier than 5")
 mode earlier than 5"
 @end enumerate
 
+@findex canImport
+
 The argument for the @samp{canImport()} platform condition is the name of a
 module that may not be present on all platforms. This condition tests
 whether it's possible to import the module, but doesn't actually import
 it. If the module is present, the platform condition returns @samp{true};
 otherwise, it returns @samp{false}.
 
+@findex targetEnvironment
+
 The @samp{targetEnvironment()} platform condition returns @samp{true} when code is
 compiled for a simulator; otherwise, it returns @samp{false}.
 
 Note
+
+@findex arch
 
 The @samp{arch(arm)} platform condition does not return @samp{true} for ARM 64
 devices. The @samp{arch(i386)} platform condition returns @samp{true} when code is
