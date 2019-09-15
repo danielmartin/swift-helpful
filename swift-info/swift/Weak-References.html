@@ -109,7 +109,7 @@ unit4A!.tenant = john
 <p>Here&rsquo;s how the references look now that you&rsquo;ve linked the two instances
 together:
 </p>
-<img src="_images/weakReference01_2x.png" alt="_images/weakReference01_2x">
+<img src="images/weakReference01_2x.png" alt="images/weakReference01_2x">
 <p>The &lsquo;<samp>Person</samp>&rsquo; instance still has a strong reference to the &lsquo;<samp>Apartment</samp>&rsquo;
 instance, but the &lsquo;<samp>Apartment</samp>&rsquo; instance now has a <em>weak</em> reference to the
 &lsquo;<samp>Person</samp>&rsquo; instance. This means that when you break the strong reference
@@ -124,7 +124,7 @@ strong references to the &lsquo;<samp>Person</samp>&rsquo; instance:
 <p>Because there are no more strong references to the &lsquo;<samp>Person</samp>&rsquo; instance,
 it&rsquo;s deallocated and the &lsquo;<samp>tenant</samp>&rsquo; property is set to &lsquo;<samp>nil</samp>&rsquo;:
 </p>
-<img src="_images/weakReference02_2x.png" alt="_images/weakReference02_2x">
+<img src="images/weakReference02_2x.png" alt="images/weakReference02_2x">
 <p>The only remaining strong reference to the &lsquo;<samp>Apartment</samp>&rsquo; instance is from
 the &lsquo;<samp>unit4A</samp>&rsquo; variable. If you break <em>that</em> strong reference, there are
 no more strong references to the &lsquo;<samp>Apartment</samp>&rsquo; instance:
@@ -137,7 +137,7 @@ no more strong references to the &lsquo;<samp>Apartment</samp>&rsquo; instance:
 <p>Because there are no more strong references to the &lsquo;<samp>Apartment</samp>&rsquo; instance,
 it too is deallocated:
 </p>
-<img src="_images/weakReference03_2x.png" alt="_images/weakReference03_2x">
+<img src="images/weakReference03_2x.png" alt="images/weakReference03_2x">
 
 <p>Note
 </p>

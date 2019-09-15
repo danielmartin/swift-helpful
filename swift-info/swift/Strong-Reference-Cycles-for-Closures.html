@@ -175,7 +175,7 @@ presence of a strong reference cycle.
 strong reference cycle between an &lsquo;<samp>HTMLElement</samp>&rsquo; instance and the closure
 used for its default &lsquo;<samp>asHTML</samp>&rsquo; value. Here&rsquo;s how the cycle looks:
 </p>
-<img src="_images/closureReferenceCycle01_2x.png" alt="_images/closureReferenceCycle01_2x">
+<img src="images/closureReferenceCycle01_2x.png" alt="images/closureReferenceCycle01_2x">
 <p>The instance&rsquo;s &lsquo;<samp>asHTML</samp>&rsquo; property holds a strong reference to its
 closure. However, because the closure refers to &lsquo;<samp>self</samp>&rsquo; within its body
 (as a way to reference &lsquo;<samp>self.name</samp>&rsquo; and &lsquo;<samp>self.text</samp>&rsquo;), the closure

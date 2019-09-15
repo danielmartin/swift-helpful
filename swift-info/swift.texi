@@ -37,7 +37,7 @@
 * Basic Operators::
 * Strings and Characters::
 * Collection Types::
-* Control Flow: Control Flow 1. 
+* Control Flow: Control Flow 1.
 * Functions::
 * Closures::
 * Enumeration::
@@ -49,12 +49,12 @@
 * Initialization::
 * Deinitialization::
 * Optional Chaining::
-* Error Handling: Error Handling 2. 
+* Error Handling: Error Handling 2.
 * Type Casting::
 * Nested Types::
 * Extensions::
 * Protocols::
-* Generics: Generics 1. 
+* Generics: Generics 1.
 * Opaque Types::
 * Automatic Reference Counting::
 * Memory Safety::
@@ -90,7 +90,7 @@ The Basics
 * Booleans::
 * Tuples::
 * Optionals::
-* Error Handling: Error Handling 1. 
+* Error Handling: Error Handling 1.
 * Assertions and Preconditions::
 
 Constants and Variables
@@ -396,7 +396,7 @@ Inheritance
 
 Overriding
 
-* Accessing Superclass Methods, Properties, and Subscripts: Accessing Superclass Methods Properties and Subscripts. 
+* Accessing Superclass Methods, Properties, and Subscripts: Accessing Superclass Methods Properties and Subscripts.
 * Overriding Methods::
 * Overriding Properties::
 
@@ -426,7 +426,7 @@ Customizing Initialization
 
 Default Initializers
 
-* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types 1. 
+* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types 1.
 
 Class Inheritance and Initialization
 
@@ -493,11 +493,11 @@ Nested Types
 Extensions
 
 * Extension Syntax::
-* Computed Properties: Computed Properties 1. 
-* Initializers: Initializers 1. 
-* Methods: Methods 1. 
-* Subscripts: Subscripts 1. 
-* Nested Types: Nested Types 1. 
+* Computed Properties: Computed Properties 1.
+* Initializers: Initializers 1.
+* Methods: Methods 1.
+* Subscripts: Subscripts 1.
+* Nested Types: Nested Types 1.
 
 Methods
 
@@ -606,13 +606,13 @@ Access Control
 * Access Levels::
 * Access Control Syntax::
 * Custom Types::
-* Subclassing: Subclassing 1. 
-* Constants, Variables, Properties, and Subscripts: Constants Variables Properties and Subscripts. 
-* Initializers: Initializers 2. 
-* Protocols: Protocols 1. 
-* Extensions: Extensions 1. 
-* Generics: Generics 2. 
-* Type Aliases: Type Aliases 1. 
+* Subclassing: Subclassing 1.
+* Constants, Variables, Properties, and Subscripts: Constants Variables Properties and Subscripts.
+* Initializers: Initializers 2.
+* Protocols: Protocols 1.
+* Extensions: Extensions 1.
+* Generics: Generics 2.
+* Type Aliases: Type Aliases 1.
 
 Access Levels
 
@@ -625,9 +625,9 @@ Access Levels
 Custom Types
 
 * Tuple Types::
-* Function Types: Function Types 1. 
+* Function Types: Function Types 1.
 * Enumeration Types::
-* Nested Types: Nested Types 2. 
+* Nested Types: Nested Types 2.
 
 Constants, Variables, Properties, and Subscripts
 
@@ -635,12 +635,12 @@ Constants, Variables, Properties, and Subscripts
 
 Initializers
 
-* Default Initializers: Default Initializers 1. 
+* Default Initializers: Default Initializers 1.
 * Default Memberwise Initializers for Structure Types::
 
 Protocols
 
-* Protocol Inheritance: Protocol Inheritance 1. 
+* Protocol Inheritance: Protocol Inheritance 1.
 * Protocol Conformance::
 
 Extensions
@@ -652,7 +652,7 @@ Advanced Operators
 * Bitwise Operators::
 * Overflow Operators::
 * Precedence and Associativity::
-* Operator Methods: Operator Methods 1. 
+* Operator Methods: Operator Methods 1.
 * Custom Operators::
 
 Bitwise Operators
@@ -670,7 +670,7 @@ Overflow Operators
 Operator Methods
 
 * Prefix and Postfix Operators::
-* Compound Assignment Operators: Compound Assignment Operators 1. 
+* Compound Assignment Operators: Compound Assignment Operators 1.
 * Equivalence Operators::
 
 Custom Operators
@@ -1972,7 +1972,7 @@ errors as early as possible in the development process.
 * Booleans::
 * Tuples::
 * Optionals::
-* Error Handling: Error Handling 1. 
+* Error Handling: Error Handling 1.
 * Assertions and Preconditions::
 @end menu
 
@@ -3417,7 +3417,8 @@ operation.
 Here's how the remainder operator works. To calculate @samp{9 % 4}, you first
 work out how many @samp{4=s will fit inside =9}:
 
-@image{_images/remainderInteger_2x,,,,png}
+@image{images/remainderInteger_2x,1in,,,png}
+
 You can fit two @samp{4=s inside =9}, and the remainder is @samp{1} (shown in
 orange).
 
@@ -4144,7 +4145,7 @@ whitespace to ignore before all of the other lines. However, if you
 write whitespace at the beginning of a line in addition to what's before
 the closing quotation marks, that whitespace @emph{is} included.
 
-@image{_images/multilineStringWhitespace_2x,,,,png}
+@image{images/multilineStringWhitespace_2x,,,,png}
 In the example above, even though the entire multiline string literal is
 indented, the first and last lines in the string don't begin with any
 whitespace. The middle line has more indentation than the closing
@@ -4752,7 +4753,7 @@ memory that @samp{greeting} uses. In contrast, @samp{newString} is a string---wh
 it's created from the substring, it has its own storage. The figure
 below shows these relationships:
 
-@image{_images/stringSubstring_2x,,,,png}
+@image{images/stringSubstring_2x,,,,png}
 
 Note
 
@@ -4958,7 +4959,7 @@ its @samp{utf8} property. This property is of type @samp{String.UTF8View}, which
 is a collection of unsigned 8-bit (@samp{UInt8}) values, one for each byte in
 the string's UTF-8 representation:
 
-@image{_images/UTF8_2x,,,,png}
+@image{images/UTF8_2x,,,,png}
 
 @example
 for codeUnit in dogString.utf8 @{
@@ -4984,7 +4985,7 @@ its @samp{utf16} property. This property is of type @samp{String.UTF16View}, whi
 is a collection of unsigned 16-bit (@samp{UInt16}) values, one for each
 16-bit code unit in the string's UTF-16 representation:
 
-@image{_images/UTF16_2x,,,,png}
+@image{images/UTF16_2x,,,,png}
 
 @example
 for codeUnit in dogString.utf16 @{
@@ -5020,7 +5021,7 @@ iterating over its @samp{unicodeScalars} property. This property is of type
 Each @samp{UnicodeScalar} has a @samp{value} property that returns the scalar's
 21-bit value, represented within a @samp{UInt32} value:
 
-@image{_images/UnicodeScalar_2x,,,,png}
+@image{images/UnicodeScalar_2x,,,,png}
 
 @example
 for scalar in dogString.unicodeScalars @{
@@ -5064,7 +5065,7 @@ and dictionaries, for storing collections of values. Arrays are ordered
 collections of values. Sets are unordered collections of unique values.
 Dictionaries are unordered collections of key-value associations.
 
-@image{_images/CollectionTypes_intro_2x,,,,png}
+@image{images/CollectionTypes_intro_2x,,,,png}
 Arrays, sets, and dictionaries in Swift are always clear about the types
 of values and keys that they can store. This means that you cannot
 insert a value of the wrong type into a collection by mistake. It also
@@ -5674,7 +5675,7 @@ the same values.
 The illustration below depicts two sets---@samp{a} and @samp{b}---with the results
 of various set operations represented by the shaded regions.
 
-@image{_images/setVennDiagram_2x,,,,png}
+@image{images/setVennDiagram_2x,,,,png}
 
 @itemize
 @item
@@ -5719,7 +5720,7 @@ Conversely, set @samp{b} is a @emph{subset} of set @samp{a}, because all element
 @samp{b} are also contained by @samp{a}. Set @samp{b} and set @samp{c} are @emph{disjoint} with
 one another, because they share no elements in common.
 
-@image{_images/setEulerDiagram_2x,,,,png}
+@image{images/setEulerDiagram_2x,,,,png}
 
 @itemize
 @item
@@ -6259,7 +6260,7 @@ while condition @{
 This example plays a simple game of @emph{Snakes and Ladders} (also known as
 @emph{Chutes and Ladders}):
 
-@image{_images/snakesAndLadders_2x,,,,png}
+@image{images/snakesAndLadders_2x,,,,png}
 The rules of the game are as follows:
 
 @itemize
@@ -6736,7 +6737,7 @@ default:
 // Prints "(1, 1) is inside the box"
 @end example
 
-@image{_images/coordinateGraphSimple_2x,,,,png}
+@image{images/coordinateGraphSimple_2x,,,,png}
 The @samp{switch} statement determines whether the point is at the origin (0,
 0), on the red x-axis, on the orange y-axis, inside the blue 4-by-4 box
 centered on the origin, or outside of the box.
@@ -6772,7 +6773,7 @@ case let (x, y):
 // Prints "on the x-axis with an x value of 2"
 @end example
 
-@image{_images/coordinateGraphMedium_2x,,,,png}
+@image{images/coordinateGraphMedium_2x,,,,png}
 The @samp{switch} statement determines whether the point is on the red
 x-axis, on the orange y-axis, or elsewhere (on neither axis).
 
@@ -6816,7 +6817,7 @@ case let (x, y):
 // Prints "(1, -1) is on the line x == -y"
 @end example
 
-@image{_images/coordinateGraphComplex_2x,,,,png}
+@image{images/coordinateGraphComplex_2x,,,,png}
 The @samp{switch} statement determines whether the point is on the green
 diagonal line where @samp{x =} y=, on the purple diagonal line where
 @samp{x =} -y=, or neither.
@@ -7151,7 +7152,7 @@ again until you roll the exact number needed to land on square 25.
 
 The game board is the same as before.
 
-@image{_images/snakesAndLadders_2x,,,,png}
+@image{images/snakesAndLadders_2x,,,,png}
 The values of @samp{finalSquare}, @samp{board}, @samp{square}, and @samp{diceRoll} are
 initialized in the same way as before:
 
@@ -9119,12 +9120,12 @@ barcode has a number system digit, followed by five manufacturer code
 digits and five product code digits. These are followed by a check digit
 to verify that the code has been scanned correctly:
 
-@image{_images/barcode_UPC_2x,,,,png}
+@image{images/barcode_UPC_2x,,,,png}
 Other products are labeled with 2D barcodes in QR code format, which can
 use any ISO 8859-1 character and can encode a string up to 2,953
 characters long:
 
-@image{_images/barcode_QR_2x,,,,png}
+@image{images/barcode_QR_2x,,,,png}
 It's convenient for an inventory tracking system to store UPC barcodes
 as a tuple of four integers, and QR code barcodes as a string of any
 length.
@@ -9742,7 +9743,7 @@ values. However, because they are separate instances, setting the width
 of @samp{cinema} to @samp{2048} doesn't affect the width stored in @samp{hd}, as shown
 in the figure below:
 
-@image{_images/sharedStateStruct_2x,,,,png}
+@image{images/sharedStateStruct_2x,,,,png}
 The same behavior applies to enumerations:
 
 @example
@@ -9804,7 +9805,7 @@ actually both refer to the @emph{same} @samp{VideoMode} instance. Effectively,
 they are just two different names for the same single instance, as shown
 in the figure below:
 
-@image{_images/sharedStateClass_2x,,,,png}
+@image{images/sharedStateClass_2x,,,,png}
 Checking the @samp{frameRate} property of @samp{tenEighty} shows that it correctly
 reports the new frame rate of @samp{30.0} from the underlying @samp{VideoMode}
 instance:
@@ -10173,7 +10174,7 @@ orange square in the diagram below. Setting the @samp{center} property calls
 the setter for @samp{center}, which modifies the @samp{x} and @samp{y} values of the
 stored @samp{origin} property, and moves the square to its new position.
 
-@image{_images/computedProperties_2x,,,,png}
+@image{images/computedProperties_2x,,,,png}
 
 @menu
 * Shorthand Setter Declaration::
@@ -10538,7 +10539,7 @@ audio level is @samp{10}, all of the lights for that channel are lit. In this
 figure, the left channel has a current level of @samp{9}, and the right
 channel has a current level of @samp{7}:
 
-@image{_images/staticPropertiesVUMeter_2x,,,,png}
+@image{images/staticPropertiesVUMeter_2x,,,,png}
 The audio channels described above are represented by instances of the
 @samp{AudioChannel} structure:
 
@@ -11240,7 +11241,7 @@ The example above creates a new @samp{Matrix} instance with two rows and two
 columns. The @samp{grid} array for this @samp{Matrix} instance is effectively a
 flattened version of the matrix, as read from top left to bottom right:
 
-@image{_images/subscriptMatrix01_2x,,,,png}
+@image{images/subscriptMatrix01_2x,,,,png}
 Values in the matrix can be set by passing row and column values into
 the subscript, separated by a comma:
 
@@ -11254,7 +11255,7 @@ in the top right position of the matrix (where @samp{row} is @samp{0} and @samp{
 is @samp{1}), and @samp{3.2} in the bottom left position (where @samp{row} is @samp{1} and
 @samp{column} is @samp{0}):
 
-@image{_images/subscriptMatrix02_2x,,,,png}
+@image{images/subscriptMatrix02_2x,,,,png}
 The @samp{Matrix} subscript's getter and setter both contain an assertion to
 check that the subscript's @samp{row} and @samp{column} values are valid. To
 assist with these assertions, @samp{Matrix} includes a convenience method
@@ -11482,7 +11483,7 @@ declaration that matches the one you provided for the override. This
 check ensures that your overriding definition is correct.
 
 @menu
-* Accessing Superclass Methods, Properties, and Subscripts: Accessing Superclass Methods Properties and Subscripts. 
+* Accessing Superclass Methods, Properties, and Subscripts: Accessing Superclass Methods Properties and Subscripts.
 * Overriding Methods::
 * Overriding Properties::
 @end menu
@@ -12062,7 +12063,7 @@ create a new instance of the class with initializer syntax, written as
 @samp{item}.
 
 @menu
-* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types 1. 
+* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types 1.
 @end menu
 
 @node Memberwise Initializers for Structure Types 1
@@ -12345,7 +12346,7 @@ Convenience initializers must always delegate @emph{across}.
 
 These rules are illustrated in the figure below:
 
-@image{_images/initializerDelegation01_2x,,,,png}
+@image{images/initializerDelegation01_2x,,,,png}
 Here, the superclass has a single designated initializer and two
 convenience initializers. One convenience initializer calls another
 convenience initializer, which in turn calls the single designated
@@ -12371,7 +12372,7 @@ It illustrates how the designated initializers in this hierarchy act as
 “funnel” points for class initialization, simplifying the
 interrelationships among classes in the chain:
 
-@image{_images/initializerDelegation02_2x,,,,png}
+@image{images/initializerDelegation02_2x,448px,,,png}
 
 @node Two-Phase Initialization
 @subsection Two-Phase Initialization
@@ -12489,7 +12490,7 @@ customize the instance and to work with @samp{self}.
 Here's how phase 1 looks for an initialization call for a hypothetical
 subclass and superclass:
 
-@image{_images/twoPhaseInitialization01_2x,,,,png}
+@image{images/twoPhaseInitialization01_2x,,,,png}
 In this example, initialization begins with a call to a convenience
 initializer on the subclass. This convenience initializer cannot yet
 modify any properties. It delegates across to a designated initializer
@@ -12509,7 +12510,7 @@ memory is considered fully initialized, and phase 1 is complete.
 
 Here's how phase 2 looks for the same initialization call:
 
-@image{_images/twoPhaseInitialization02_2x,,,,png}
+@image{images/twoPhaseInitialization02_2x,,,,png}
 The superclass's designated initializer now has an opportunity to
 customize the instance further (although it does not have to).
 
@@ -12732,7 +12733,7 @@ class Food @{
 
 The figure below shows the initializer chain for the @samp{Food} class:
 
-@image{_images/initializersExample01_2x,,,,png}
+@image{images/initializersExample01_2x,,,,png}
 Classes do not have a default memberwise initializer, and so the @samp{Food}
 class provides a designated initializer that takes a single argument
 called @samp{name}. This initializer can be used to create a new @samp{Food}
@@ -12782,7 +12783,7 @@ class RecipeIngredient: Food @{
 The figure below shows the initializer chain for the @samp{RecipeIngredient}
 class:
 
-@image{_images/initializersExample02_2x,,,,png}
+@image{images/initializersExample02_2x,,,,png}
 The @samp{RecipeIngredient} class has a single designated initializer,
 @samp{init(name: String, quantity: Int)}, which can be used to populate all
 of the properties of a new @samp{RecipeIngredient} instance. This initializer
@@ -12869,7 +12870,7 @@ convenience initializers from its superclass.
 The figure below shows the overall initializer chain for all three
 classes:
 
-@image{_images/initializersExample03_2x,,,,png}
+@image{images/initializersExample03_2x,,,,png}
 You can use all three of the inherited initializers to create a new
 @samp{ShoppingListItem} instance:
 
@@ -13362,7 +13363,7 @@ The example below defines a structure called @samp{Chessboard}, which models
 a board for the game of chess. Chess is played on an 8 x 8 board, with
 alternating black and white squares.
 
-@image{_images/chessBoard_2x,,,,png}
+@image{images/chessBoard_2x,,,,png}
 To represent this game board, the @samp{Chessboard} structure has a single
 property called @samp{boardColors}, which is an array of 64 @samp{Bool} values. A
 value of @samp{true} in the array represents a black square and a value of
@@ -15096,11 +15097,11 @@ existing functionality.
 
 @menu
 * Extension Syntax::
-* Computed Properties: Computed Properties 1. 
-* Initializers: Initializers 1. 
-* Methods: Methods 1. 
-* Subscripts: Subscripts 1. 
-* Nested Types: Nested Types 1. 
+* Computed Properties: Computed Properties 1.
+* Initializers: Initializers 1.
+* Methods: Methods 1.
+* Subscripts: Subscripts 1.
+* Nested Types: Nested Types 1.
 @end menu
 
 @node Extension Syntax
@@ -17146,7 +17147,7 @@ managing a collection.
 
 The illustration below shows the push and pop behavior for a stack:
 
-@image{_images/stackPushPop_2x,,,,png}
+@image{images/stackPushPop_2x,,,,png}
 
 @enumerate
 @item
@@ -17248,7 +17249,7 @@ stackOfStrings.push("cuatro")
 Here's how @samp{stackOfStrings} looks after pushing these four values on to
 the stack:
 
-@image{_images/stackPushedFourStrings_2x,,,,png}
+@image{images/stackPushedFourStrings_2x,,,,png}
 Popping a value from the stack removes and returns the top value,
 @samp{"cuatro"}:
 
@@ -17259,7 +17260,7 @@ let fromTheTop = stackOfStrings.pop()
 
 Here's how the stack looks after popping its top value:
 
-@image{_images/stackPoppedOneString_2x,,,,png}
+@image{images/stackPoppedOneString_2x,,,,png}
 
 @node Extending a Generic Type
 @section Extending a Generic Type
@@ -18694,7 +18695,7 @@ two instances. The @samp{john} variable now has a strong reference to the new
 @samp{Person} instance, and the @samp{unit4A} variable has a strong reference to
 the new @samp{Apartment} instance:
 
-@image{_images/referenceCycle01_2x,,,,png}
+@image{images/referenceCycle01_2x,,,,png}
 You can now link the two instances together so that the person has an
 apartment, and the apartment has a tenant. Note that an exclamation mark
 (@samp{!}) is used to unwrap and access the instances stored inside the
@@ -18709,7 +18710,7 @@ unit4A!.tenant = john
 Here's how the strong references look after you link the two instances
 together:
 
-@image{_images/referenceCycle02_2x,,,,png}
+@image{images/referenceCycle02_2x,,,,png}
 Unfortunately, linking these two instances creates a strong reference
 cycle between them. The @samp{Person} instance now has a strong reference to
 the @samp{Apartment} instance, and the @samp{Apartment} instance has a strong
@@ -18731,7 +18732,7 @@ in your app.
 Here's how the strong references look after you set the @samp{john} and
 @samp{unit4A} variables to @samp{nil}:
 
-@image{_images/referenceCycle03_2x,,,,png}
+@image{images/referenceCycle03_2x,,,,png}
 The strong references between the @samp{Person} instance and the @samp{Apartment}
 instance remain and cannot be broken.
 
@@ -18825,7 +18826,7 @@ unit4A!.tenant = john
 Here's how the references look now that you've linked the two instances
 together:
 
-@image{_images/weakReference01_2x,,,,png}
+@image{images/weakReference01_2x,,,,png}
 The @samp{Person} instance still has a strong reference to the @samp{Apartment}
 instance, but the @samp{Apartment} instance now has a @emph{weak} reference to the
 @samp{Person} instance. This means that when you break the strong reference
@@ -18840,7 +18841,7 @@ john = nil
 Because there are no more strong references to the @samp{Person} instance,
 it's deallocated and the @samp{tenant} property is set to @samp{nil}:
 
-@image{_images/weakReference02_2x,,,,png}
+@image{images/weakReference02_2x,,,,png}
 The only remaining strong reference to the @samp{Apartment} instance is from
 the @samp{unit4A} variable. If you break @emph{that} strong reference, there are
 no more strong references to the @samp{Apartment} instance:
@@ -18853,7 +18854,7 @@ unit4A = nil
 Because there are no more strong references to the @samp{Apartment} instance,
 it too is deallocated:
 
-@image{_images/weakReference03_2x,,,,png}
+@image{images/weakReference03_2x,,,,png}
 
 Note
 
@@ -18962,7 +18963,7 @@ john!.card = CreditCard(number: 1234@math{_5678}@math{_9012}@math{_3456}, custom
 Here's how the references look, now that you've linked the two
 instances:
 
-@image{_images/unownedReference01_2x,,,,png}
+@image{images/unownedReference01_2x,,,,png}
 The @samp{Customer} instance now has a strong reference to the @samp{CreditCard}
 instance, and the @samp{CreditCard} instance has an unowned reference to the
 @samp{Customer} instance.
@@ -18971,7 +18972,7 @@ Because of the unowned @samp{customer} reference, when you break the strong
 reference held by the @samp{john} variable, there are no more strong
 references to the @samp{Customer} instance:
 
-@image{_images/unownedReference02_2x,,,,png}
+@image{images/unownedReference02_2x,,,,png}
 Because there are no more strong references to the @samp{Customer} instance,
 it's deallocated. After this happens, there are no more strong
 references to the @samp{CreditCard} instance, and it too is deallocated:
@@ -19229,7 +19230,7 @@ Unfortunately, the @samp{HTMLElement} class, as written above, creates a
 strong reference cycle between an @samp{HTMLElement} instance and the closure
 used for its default @samp{asHTML} value. Here's how the cycle looks:
 
-@image{_images/closureReferenceCycle01_2x,,,,png}
+@image{images/closureReferenceCycle01_2x,,,,png}
 The instance's @samp{asHTML} property holds a strong reference to its
 closure. However, because the closure refers to @samp{self} within its body
 (as a way to reference @samp{self.name} and @samp{self.text}), the closure
@@ -19377,7 +19378,7 @@ print(paragraph!.asHTML())
 
 Here's how the references look with the capture list in place:
 
-@image{_images/closureReferenceCycle02_2x,,,,png}
+@image{images/closureReferenceCycle02_2x,,,,png}
 This time, the capture of @samp{self} by the closure is an unowned reference,
 and does not keep a strong hold on the @samp{HTMLElement} instance it has
 captured. If you set the strong reference from the @samp{paragraph} variable
@@ -19444,7 +19445,7 @@ the total amount to reflect the items currently on the list. Before and
 after the update, you can read any information from the budget and get a
 correct answer, as shown in the figure below.
 
-@image{_images/memory_shopping_2x,,,,png}
+@image{images/memory_shopping_2x,,,,png}
 While you're adding items to the budget, it's in a temporary, invalid
 state because the total amount hasn't been updated to reflect the newly
 added items. Reading the total amount during the process of adding an
@@ -19564,7 +19565,7 @@ figure below, both @samp{number} and @samp{stepSize} refer to the same location 
 memory. The read and write accesses refer to the same memory and they
 overlap, producing a conflict.
 
-@image{_images/memory_increment_2x,,,,png}
+@image{images/memory_increment_2x,,,,png}
 One way to solve this conflict is to make an explicit copy of
 @samp{stepSize}:
 
@@ -19665,7 +19666,7 @@ passed as an in-out parameter. As shown in the figure below, they access
 different locations in memory. Even though the two write accesses
 overlap in time, they don't conflict.
 
-@image{_images/memory_share_health_maria_2x,,,,png}
+@image{images/memory_share_health_maria_2x,,,,png}
 However, if you pass @samp{oscar} as the argument to @samp{shareHealth(with:)},
 there's a conflict:
 
@@ -19681,7 +19682,7 @@ to the same location in memory---as shown in the figure below. The two
 write accesses refer to the same memory and they overlap, producing a
 conflict.
 
-@image{_images/memory_share_health_oscar_2x,,,,png}
+@image{images/memory_share_health_oscar_2x,,,,png}
 
 @node Conflicting Access to Properties
 @section Conflicting Access to Properties
@@ -19794,13 +19795,13 @@ them (properties, types, functions, and so on) are referred to as
 * Access Levels::
 * Access Control Syntax::
 * Custom Types::
-* Subclassing: Subclassing 1. 
-* Constants, Variables, Properties, and Subscripts: Constants Variables Properties and Subscripts. 
-* Initializers: Initializers 2. 
-* Protocols: Protocols 1. 
-* Extensions: Extensions 1. 
-* Generics: Generics 2. 
-* Type Aliases: Type Aliases 1. 
+* Subclassing: Subclassing 1.
+* Constants, Variables, Properties, and Subscripts: Constants Variables Properties and Subscripts.
+* Initializers: Initializers 2.
+* Protocols: Protocols 1.
+* Extensions: Extensions 1.
+* Generics: Generics 2.
+* Type Aliases: Type Aliases 1.
 @end menu
 
 @node Modules and Source Files
@@ -20080,9 +20081,9 @@ private class SomePrivateClass @{ // explicitly private class
 
 @menu
 * Tuple Types::
-* Function Types: Function Types 1. 
+* Function Types: Function Types 1.
 * Enumeration Types::
-* Nested Types: Nested Types 2. 
+* Nested Types: Nested Types 2.
 @end menu
 
 @node Tuple Types
@@ -20368,7 +20369,7 @@ parameters can't be more private than the initializer's own access
 level.
 
 @menu
-* Default Initializers: Default Initializers 1. 
+* Default Initializers: Default Initializers 1.
 * Default Memberwise Initializers for Structure Types::
 @end menu
 
@@ -20424,7 +20425,7 @@ This behavior is different from other types, where a public type
 definition implies an access level of internal for the type's members.
 
 @menu
-* Protocol Inheritance: Protocol Inheritance 1. 
+* Protocol Inheritance: Protocol Inheritance 1.
 * Protocol Conformance::
 @end menu
 
@@ -20589,7 +20590,7 @@ the custom operators you define.
 * Bitwise Operators::
 * Overflow Operators::
 * Precedence and Associativity::
-* Operator Methods: Operator Methods 1. 
+* Operator Methods: Operator Methods 1.
 * Custom Operators::
 @end menu
 
@@ -20619,7 +20620,7 @@ below.
 
 The @emph{bitwise NOT operator} (@samp{~}) inverts all bits in a number:
 
-@image{_images/bitwiseNOT_2x,,,,png}
+@image{images/bitwiseNOT_2x,,,,png}
 The bitwise NOT operator is a prefix operator, and appears immediately
 before the value it operates on, without any white space:
 
@@ -20648,7 +20649,7 @@ The @emph{bitwise AND operator} (@samp{&}) combines the bits of two numbers. It
 returns a new number whose bits are set to @samp{1} only if the bits were
 equal to @samp{1} in @emph{both} input numbers:
 
-@image{_images/bitwiseAND_2x,,,,png}
+@image{images/bitwiseAND_2x,,,,png}
 In the example below, the values of @samp{firstSixBits} and @samp{lastSixBits}
 both have four middle bits equal to @samp{1}. The bitwise AND operator
 combines them to make the number @samp{00111100}, which is equal to an
@@ -20667,7 +20668,7 @@ The @emph{bitwise OR operator} (@samp{|}) compares the bits of two numbers. The
 operator returns a new number whose bits are set to @samp{1} if the bits are
 equal to @samp{1} in @emph{either} input number:
 
-@image{_images/bitwiseOR_2x,,,,png}
+@image{images/bitwiseOR_2x,,,,png}
 In the example below, the values of @samp{someBits} and @samp{moreBits} have
 different bits set to @samp{1}. The bitwise OR operator combines them to make
 the number @samp{11111110}, which equals an unsigned decimal of @samp{254}:
@@ -20686,7 +20687,7 @@ the bits of two numbers. The operator returns a new number whose bits
 are set to @samp{1} where the input bits are different and are set to @samp{0}
 where the input bits are the same:
 
-@image{_images/bitwiseXOR_2x,,,,png}
+@image{images/bitwiseXOR_2x,,,,png}
 In the example below, the values of @samp{firstBits} and @samp{otherBits} each
 have a bit set to @samp{1} in a location that the other does not. The bitwise
 XOR operator sets both of these bits to @samp{1} in its output value. All of
@@ -20739,7 +20740,7 @@ The illustration below shows the results of @samp{11111111 << 1} (which is
 is @samp{11111111} shifted to the right by @samp{1} place). Blue numbers are
 shifted, gray numbers are discarded, and orange zeros are inserted:
 
-@image{_images/bitshiftUnsigned_2x,,,,png}
+@image{images/bitshiftUnsigned_2x,,,,png}
 Here's how bit shifting looks in Swift code:
 
 @example
@@ -20807,7 +20808,7 @@ Positive numbers are stored in exactly the same way as for unsigned
 integers, counting upwards from @samp{0}. Here's how the bits inside an
 @samp{Int8} look for the number @samp{4}:
 
-@image{_images/bitshiftSignedFour_2x,,,,png}
+@image{images/bitshiftSignedFour_2x,,,,png}
 The sign bit is @samp{0} (meaning “positive”), and the seven value bits are
 just the number @samp{4}, written in binary notation.
 
@@ -20818,11 +20819,11 @@ so this means @samp{2} to the power of @samp{7}, or @samp{128}.
 
 Here's how the bits inside an @samp{Int8} look for the number @samp{-4}:
 
-@image{_images/bitshiftSignedMinusFour_2x,,,,png}
+@image{images/bitshiftSignedMinusFour_2x,,,,png}
 This time, the sign bit is @samp{1} (meaning “negative”), and the seven value
 bits have a binary value of @samp{124} (which is @samp{128 - 4}):
 
-@image{_images/bitshiftSignedMinusFourValue_2x,,,,png}
+@image{images/bitshiftSignedMinusFourValue_2x,,,,png}
 This encoding for negative numbers is known as a @emph{two's complement}
 representation. It may seem an unusual way to represent negative
 numbers, but it has several advantages.
@@ -20831,7 +20832,7 @@ First, you can add @samp{-1} to @samp{-4}, simply by performing a standard binar
 addition of all eight bits (including the sign bit), and discarding
 anything that doesn't fit in the eight bits once you're done:
 
-@image{_images/bitshiftSignedAddition_2x,,,,png}
+@image{images/bitshiftSignedAddition_2x,,,,png}
 Second, the two's complement representation also lets you shift the bits
 of negative numbers to the left and right like positive numbers, and
 still end up doubling them for every shift you make to the left, or
@@ -20841,7 +20842,7 @@ you shift signed integers to the right, apply the same rules as for
 unsigned integers, but fill any empty bits on the left with the @emph{sign
 bit}, rather than with a zero.
 
-@image{_images/bitshiftSigned_2x,,,,png}
+@image{images/bitshiftSigned_2x,,,,png}
 This action ensures that signed integers have the same sign after they
 are shifted to the right, and is known as an @emph{arithmetic shift}.
 
@@ -20918,7 +20919,7 @@ hold, causing it to overflow beyond its bounds, as shown in the diagram
 below. The value that remains within the bounds of the @samp{UInt8} after the
 overflow addition is @samp{00000000}, or zero.
 
-@image{_images/overflowAddition_2x,,,,png}
+@image{images/overflowAddition_2x,,,,png}
 Something similar happens when an unsigned integer is allowed to
 overflow in the negative direction. Here's an example using the overflow
 subtraction operator (@samp{&-}):
@@ -20935,7 +20936,7 @@ binary. If you subtract @samp{1} from @samp{00000000} using the overflow
 subtraction operator (@samp{&-}), the number will overflow and wrap around to
 @samp{11111111}, or @samp{255} in decimal.
 
-@image{_images/overflowUnsignedSubtraction_2x,,,,png}
+@image{images/overflowUnsignedSubtraction_2x,,,,png}
 Overflow also occurs for signed integers. All addition and subtraction
 for signed integers is performed in bitwise fashion, with the sign bit
 included as part of the numbers being added or subtracted, as described
@@ -20955,7 +20956,7 @@ operator gives a binary value of @samp{01111111}, which toggles the sign bit
 and gives positive @samp{127}, the maximum positive value that an @samp{Int8} can
 hold.
 
-@image{_images/overflowSignedSubtraction_2x,,,,png}
+@image{images/overflowSignedSubtraction_2x,,,,png}
 For both signed and unsigned integers, overflow in the positive
 direction wraps around from the maximum valid integer value back to the
 minimum, and overflow in the negative direction wraps around from the
@@ -21101,11 +21102,11 @@ let combinedVector = vector + anotherVector
 This example adds together the vectors @samp{(3.0, 1.0)} and @samp{(2.0, 4.0)} to
 make the vector @samp{(5.0, 5.0)}, as illustrated below.
 
-@image{_images/vectorAddition_2x,,,,png}
+@image{images/vectorAddition_2x,,,,png}
 
 @menu
 * Prefix and Postfix Operators::
-* Compound Assignment Operators: Compound Assignment Operators 1. 
+* Compound Assignment Operators: Compound Assignment Operators 1.
 * Equivalence Operators::
 @end menu
 

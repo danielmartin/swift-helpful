@@ -2533,7 +2533,9 @@ operation.
 Here's how the remainder operator works. To calculate =9 % 4=, you first
 work out how many =4=s will fit inside =9=:
 
-[[file:_images/remainderInteger_2x.png]]
+#+ATTR_TEXINFO: :width 1in
+[[file:images/remainderInteger_2x.png]]
+
 You can fit two =4=s inside =9=, and the remainder is =1= (shown in
 orange).
 
@@ -3192,7 +3194,7 @@ whitespace to ignore before all of the other lines. However, if you
 write whitespace at the beginning of a line in addition to what's before
 the closing quotation marks, that whitespace /is/ included.
 
-[[file:_images/multilineStringWhitespace_2x.png]]
+[[file:images/multilineStringWhitespace_2x.png]]
 In the example above, even though the entire multiline string literal is
 indented, the first and last lines in the string don't begin with any
 whitespace. The middle line has more indentation than the closing
@@ -3770,7 +3772,7 @@ memory that =greeting= uses. In contrast, =newString= is a string---when
 it's created from the substring, it has its own storage. The figure
 below shows these relationships:
 
-[[file:_images/stringSubstring_2x.png]]
+[[file:images/stringSubstring_2x.png]]
 
 Note
 
@@ -3955,7 +3957,7 @@ its =utf8= property. This property is of type =String.UTF8View=, which
 is a collection of unsigned 8-bit (=UInt8=) values, one for each byte in
 the string's UTF-8 representation:
 
-[[file:_images/UTF8_2x.png]]
+[[file:images/UTF8_2x.png]]
 
 #+BEGIN_SRC swift
   for codeUnit in dogString.utf8 {
@@ -3980,7 +3982,7 @@ its =utf16= property. This property is of type =String.UTF16View=, which
 is a collection of unsigned 16-bit (=UInt16=) values, one for each
 16-bit code unit in the string's UTF-16 representation:
 
-[[file:_images/UTF16_2x.png]]
+[[file:images/UTF16_2x.png]]
 
 #+BEGIN_SRC swift
   for codeUnit in dogString.utf16 {
@@ -4015,7 +4017,7 @@ iterating over its =unicodeScalars= property. This property is of type
 Each =UnicodeScalar= has a =value= property that returns the scalar's
 21-bit value, represented within a =UInt32= value:
 
-[[file:_images/UnicodeScalar_2x.png]]
+[[file:images/UnicodeScalar_2x.png]]
 
 #+BEGIN_SRC swift
   for scalar in dogString.unicodeScalars {
@@ -4058,7 +4060,7 @@ and dictionaries, for storing collections of values. Arrays are ordered
 collections of values. Sets are unordered collections of unique values.
 Dictionaries are unordered collections of key-value associations.
 
-[[file:_images/CollectionTypes_intro_2x.png]]
+[[file:images/CollectionTypes_intro_2x.png]]
 Arrays, sets, and dictionaries in Swift are always clear about the types
 of values and keys that they can store. This means that you cannot
 insert a value of the wrong type into a collection by mistake. It also
@@ -4613,7 +4615,7 @@ the same values.
 The illustration below depicts two sets---=a= and =b=---with the results
 of various set operations represented by the shaded regions.
 
-[[file:_images/setVennDiagram_2x.png]]
+[[file:images/setVennDiagram_2x.png]]
 
 - Use the =intersection(_:)= method to create a new set with only the
   values common to both sets.
@@ -4651,7 +4653,7 @@ Conversely, set =b= is a /subset/ of set =a=, because all elements in
 =b= are also contained by =a=. Set =b= and set =c= are /disjoint/ with
 one another, because they share no elements in common.
 
-[[file:_images/setEulerDiagram_2x.png]]
+[[file:images/setEulerDiagram_2x.png]]
 
 - Use the “is equal” operator (====) to determine whether two sets
   contain all of the same values.
@@ -5148,7 +5150,7 @@ Here's the general form of a =while= loop:
 This example plays a simple game of /Snakes and Ladders/ (also known as
 /Chutes and Ladders/):
 
-[[file:_images/snakesAndLadders_2x.png]]
+[[file:images/snakesAndLadders_2x.png]]
 The rules of the game are as follows:
 
 - The board has 25 squares, and the aim is to land on or beyond square
@@ -5604,7 +5606,7 @@ example.
   // Prints "(1, 1) is inside the box"
 #+END_SRC
 
-[[file:_images/coordinateGraphSimple_2x.png]]
+[[file:images/coordinateGraphSimple_2x.png]]
 The =switch= statement determines whether the point is at the origin (0,
 0), on the red x-axis, on the orange y-axis, inside the blue 4-by-4 box
 centered on the origin, or outside of the box.
@@ -5638,7 +5640,7 @@ The example below takes an (x, y) point, expressed as a tuple of type
   // Prints "on the x-axis with an x value of 2"
 #+END_SRC
 
-[[file:_images/coordinateGraphMedium_2x.png]]
+[[file:images/coordinateGraphMedium_2x.png]]
 The =switch= statement determines whether the point is on the red
 x-axis, on the orange y-axis, or elsewhere (on neither axis).
 
@@ -5680,7 +5682,7 @@ The example below categorizes an (x, y) point on the following graph:
   // Prints "(1, -1) is on the line x == -y"
 #+END_SRC
 
-[[file:_images/coordinateGraphComplex_2x.png]]
+[[file:images/coordinateGraphComplex_2x.png]]
 The =switch= statement determines whether the point is on the green
 diagonal line where =x == y=, on the purple diagonal line where
 =x == -y=, or neither.
@@ -5984,7 +5986,7 @@ again until you roll the exact number needed to land on square 25.
 
 The game board is the same as before.
 
-[[file:_images/snakesAndLadders_2x.png]]
+[[file:images/snakesAndLadders_2x.png]]
 The values of =finalSquare=, =board=, =square=, and =diceRoll= are
 initialized in the same way as before:
 
@@ -7836,12 +7838,12 @@ barcode has a number system digit, followed by five manufacturer code
 digits and five product code digits. These are followed by a check digit
 to verify that the code has been scanned correctly:
 
-[[file:_images/barcode_UPC_2x.png]]
+[[file:images/barcode_UPC_2x.png]]
 Other products are labeled with 2D barcodes in QR code format, which can
 use any ISO 8859-1 character and can encode a string up to 2,953
 characters long:
 
-[[file:_images/barcode_QR_2x.png]]
+[[file:images/barcode_QR_2x.png]]
 It's convenient for an inventory tracking system to store UPC barcodes
 as a tuple of four integers, and QR code barcodes as a string of any
 length.
@@ -8416,7 +8418,7 @@ values. However, because they are separate instances, setting the width
 of =cinema= to =2048= doesn't affect the width stored in =hd=, as shown
 in the figure below:
 
-[[file:_images/sharedStateStruct_2x.png]]
+[[file:images/sharedStateStruct_2x.png]]
 The same behavior applies to enumerations:
 
 #+BEGIN_SRC swift
@@ -8477,7 +8479,7 @@ actually both refer to the /same/ =VideoMode= instance. Effectively,
 they are just two different names for the same single instance, as shown
 in the figure below:
 
-[[file:_images/sharedStateClass_2x.png]]
+[[file:images/sharedStateClass_2x.png]]
 Checking the =frameRate= property of =tenEighty= shows that it correctly
 reports the new frame rate of =30.0= from the underlying =VideoMode=
 instance:
@@ -8810,7 +8812,7 @@ orange square in the diagram below. Setting the =center= property calls
 the setter for =center=, which modifies the =x= and =y= values of the
 stored =origin= property, and moves the square to its new position.
 
-[[file:_images/computedProperties_2x.png]]
+[[file:images/computedProperties_2x.png]]
 
 *** Shorthand Setter Declaration
 
@@ -9152,7 +9154,7 @@ audio level is =10=, all of the lights for that channel are lit. In this
 figure, the left channel has a current level of =9=, and the right
 channel has a current level of =7=:
 
-[[file:_images/staticPropertiesVUMeter_2x.png]]
+[[file:images/staticPropertiesVUMeter_2x.png]]
 The audio channels described above are represented by instances of the
 =AudioChannel= structure:
 
@@ -9817,7 +9819,7 @@ The example above creates a new =Matrix= instance with two rows and two
 columns. The =grid= array for this =Matrix= instance is effectively a
 flattened version of the matrix, as read from top left to bottom right:
 
-[[file:_images/subscriptMatrix01_2x.png]]
+[[file:images/subscriptMatrix01_2x.png]]
 Values in the matrix can be set by passing row and column values into
 the subscript, separated by a comma:
 
@@ -9831,7 +9833,7 @@ in the top right position of the matrix (where =row= is =0= and =column=
 is =1=), and =3.2= in the bottom left position (where =row= is =1= and
 =column= is =0=):
 
-[[file:_images/subscriptMatrix02_2x.png]]
+[[file:images/subscriptMatrix02_2x.png]]
 The =Matrix= subscript's getter and setter both contain an assertion to
 check that the subscript's =row= and =column= values are valid. To
 assist with these assertions, =Matrix= includes a convenience method
@@ -10827,7 +10829,7 @@ A simple way to remember this is:
 
 These rules are illustrated in the figure below:
 
-[[file:_images/initializerDelegation01_2x.png]]
+[[file:images/initializerDelegation01_2x.png]]
 Here, the superclass has a single designated initializer and two
 convenience initializers. One convenience initializer calls another
 convenience initializer, which in turn calls the single designated
@@ -10853,7 +10855,8 @@ It illustrates how the designated initializers in this hierarchy act as
 “funnel” points for class initialization, simplifying the
 interrelationships among classes in the chain:
 
-[[file:_images/initializerDelegation02_2x.png]]
+#+ATTR_TEXINFO: :width 448px
+[[file:images/initializerDelegation02_2x.png]]
 
 *** Two-Phase Initialization
 
@@ -10950,7 +10953,7 @@ checks above:
 Here's how phase 1 looks for an initialization call for a hypothetical
 subclass and superclass:
 
-[[file:_images/twoPhaseInitialization01_2x.png]]
+[[file:images/twoPhaseInitialization01_2x.png]]
 In this example, initialization begins with a call to a convenience
 initializer on the subclass. This convenience initializer cannot yet
 modify any properties. It delegates across to a designated initializer
@@ -10970,7 +10973,7 @@ memory is considered fully initialized, and phase 1 is complete.
 
 Here's how phase 2 looks for the same initialization call:
 
-[[file:_images/twoPhaseInitialization02_2x.png]]
+[[file:images/twoPhaseInitialization02_2x.png]]
 The superclass's designated initializer now has an opportunity to
 customize the instance further (although it does not have to).
 
@@ -11186,7 +11189,7 @@ initializers for creating =Food= instances:
 
 The figure below shows the initializer chain for the =Food= class:
 
-[[file:_images/initializersExample01_2x.png]]
+[[file:images/initializersExample01_2x.png]]
 Classes do not have a default memberwise initializer, and so the =Food=
 class provides a designated initializer that takes a single argument
 called =name=. This initializer can be used to create a new =Food=
@@ -11236,7 +11239,7 @@ initializers for creating =RecipeIngredient= instances:
 The figure below shows the initializer chain for the =RecipeIngredient=
 class:
 
-[[file:_images/initializersExample02_2x.png]]
+[[file:images/initializersExample02_2x.png]]
 The =RecipeIngredient= class has a single designated initializer,
 =init(name: String, quantity: Int)=, which can be used to populate all
 of the properties of a new =RecipeIngredient= instance. This initializer
@@ -11323,7 +11326,7 @@ convenience initializers from its superclass.
 The figure below shows the overall initializer chain for all three
 classes:
 
-[[file:_images/initializersExample03_2x.png]]
+[[file:images/initializersExample03_2x.png]]
 You can use all three of the inherited initializers to create a new
 =ShoppingListItem= instance:
 
@@ -11800,7 +11803,7 @@ The example below defines a structure called =Chessboard=, which models
 a board for the game of chess. Chess is played on an 8 x 8 board, with
 alternating black and white squares.
 
-[[file:_images/chessBoard_2x.png]]
+[[file:images/chessBoard_2x.png]]
 To represent this game board, the =Chessboard= structure has a single
 property called =boardColors=, which is an array of 64 =Bool= values. A
 value of =true= in the array represents a black square and a value of
@@ -15372,7 +15375,7 @@ managing a collection.
 
 The illustration below shows the push and pop behavior for a stack:
 
-[[file:_images/stackPushPop_2x.png]]
+[[file:images/stackPushPop_2x.png]]
 
 1. There are currently three values on the stack.
 
@@ -15462,7 +15465,7 @@ strings, you write =Stack<String>()=:
 Here's how =stackOfStrings= looks after pushing these four values on to
 the stack:
 
-[[file:_images/stackPushedFourStrings_2x.png]]
+[[file:images/stackPushedFourStrings_2x.png]]
 Popping a value from the stack removes and returns the top value,
 ="cuatro"=:
 
@@ -15473,7 +15476,7 @@ Popping a value from the stack removes and returns the top value,
 
 Here's how the stack looks after popping its top value:
 
-[[file:_images/stackPoppedOneString_2x.png]]
+[[file:images/stackPoppedOneString_2x.png]]
 
 ** Extending a Generic Type
 
@@ -16838,7 +16841,7 @@ two instances. The =john= variable now has a strong reference to the new
 =Person= instance, and the =unit4A= variable has a strong reference to
 the new =Apartment= instance:
 
-[[file:_images/referenceCycle01_2x.png]]
+[[file:images/referenceCycle01_2x.png]]
 You can now link the two instances together so that the person has an
 apartment, and the apartment has a tenant. Note that an exclamation mark
 (=!=) is used to unwrap and access the instances stored inside the
@@ -16853,7 +16856,7 @@ instances can be set:
 Here's how the strong references look after you link the two instances
 together:
 
-[[file:_images/referenceCycle02_2x.png]]
+[[file:images/referenceCycle02_2x.png]]
 Unfortunately, linking these two instances creates a strong reference
 cycle between them. The =Person= instance now has a strong reference to
 the =Apartment= instance, and the =Apartment= instance has a strong
@@ -16875,7 +16878,7 @@ in your app.
 Here's how the strong references look after you set the =john= and
 =unit4A= variables to =nil=:
 
-[[file:_images/referenceCycle03_2x.png]]
+[[file:images/referenceCycle03_2x.png]]
 The strong references between the =Person= instance and the =Apartment=
 instance remain and cannot be broken.
 
@@ -16961,7 +16964,7 @@ the links between the two instances are created as before:
 Here's how the references look now that you've linked the two instances
 together:
 
-[[file:_images/weakReference01_2x.png]]
+[[file:images/weakReference01_2x.png]]
 The =Person= instance still has a strong reference to the =Apartment=
 instance, but the =Apartment= instance now has a /weak/ reference to the
 =Person= instance. This means that when you break the strong reference
@@ -16976,7 +16979,7 @@ strong references to the =Person= instance:
 Because there are no more strong references to the =Person= instance,
 it's deallocated and the =tenant= property is set to =nil=:
 
-[[file:_images/weakReference02_2x.png]]
+[[file:images/weakReference02_2x.png]]
 The only remaining strong reference to the =Apartment= instance is from
 the =unit4A= variable. If you break /that/ strong reference, there are
 no more strong references to the =Apartment= instance:
@@ -16989,7 +16992,7 @@ no more strong references to the =Apartment= instance:
 Because there are no more strong references to the =Apartment= instance,
 it too is deallocated:
 
-[[file:_images/weakReference03_2x.png]]
+[[file:images/weakReference03_2x.png]]
 
 Note
 
@@ -17090,7 +17093,7 @@ assign a new =CreditCard= instance as that customer's =card= property:
 Here's how the references look, now that you've linked the two
 instances:
 
-[[file:_images/unownedReference01_2x.png]]
+[[file:images/unownedReference01_2x.png]]
 The =Customer= instance now has a strong reference to the =CreditCard=
 instance, and the =CreditCard= instance has an unowned reference to the
 =Customer= instance.
@@ -17099,7 +17102,7 @@ Because of the unowned =customer= reference, when you break the strong
 reference held by the =john= variable, there are no more strong
 references to the =Customer= instance:
 
-[[file:_images/unownedReference02_2x.png]]
+[[file:images/unownedReference02_2x.png]]
 Because there are no more strong references to the =Customer= instance,
 it's deallocated. After this happens, there are no more strong
 references to the =CreditCard= instance, and it too is deallocated:
@@ -17355,7 +17358,7 @@ Unfortunately, the =HTMLElement= class, as written above, creates a
 strong reference cycle between an =HTMLElement= instance and the closure
 used for its default =asHTML= value. Here's how the cycle looks:
 
-[[file:_images/closureReferenceCycle01_2x.png]]
+[[file:images/closureReferenceCycle01_2x.png]]
 The instance's =asHTML= property holds a strong reference to its
 closure. However, because the closure refers to =self= within its body
 (as a way to reference =self.name= and =self.text=), the closure
@@ -17495,7 +17498,7 @@ You can create and print an =HTMLElement= instance as before:
 
 Here's how the references look with the capture list in place:
 
-[[file:_images/closureReferenceCycle02_2x.png]]
+[[file:images/closureReferenceCycle02_2x.png]]
 This time, the capture of =self= by the closure is an unowned reference,
 and does not keep a strong hold on the =HTMLElement= instance it has
 captured. If you set the strong reference from the =paragraph= variable
@@ -17553,7 +17556,7 @@ the total amount to reflect the items currently on the list. Before and
 after the update, you can read any information from the budget and get a
 correct answer, as shown in the figure below.
 
-[[file:_images/memory_shopping_2x.png]]
+[[file:images/memory_shopping_2x.png]]
 While you're adding items to the budget, it's in a temporary, invalid
 state because the total amount hasn't been updated to reflect the newly
 added items. Reading the total amount during the process of adding an
@@ -17662,7 +17665,7 @@ figure below, both =number= and =stepSize= refer to the same location in
 memory. The read and write accesses refer to the same memory and they
 overlap, producing a conflict.
 
-[[file:_images/memory_increment_2x.png]]
+[[file:images/memory_increment_2x.png]]
 One way to solve this conflict is to make an explicit copy of
 =stepSize=:
 
@@ -17762,7 +17765,7 @@ passed as an in-out parameter. As shown in the figure below, they access
 different locations in memory. Even though the two write accesses
 overlap in time, they don't conflict.
 
-[[file:_images/memory_share_health_maria_2x.png]]
+[[file:images/memory_share_health_maria_2x.png]]
 However, if you pass =oscar= as the argument to =shareHealth(with:)=,
 there's a conflict:
 
@@ -17778,7 +17781,7 @@ to the same location in memory---as shown in the figure below. The two
 write accesses refer to the same memory and they overlap, producing a
 conflict.
 
-[[file:_images/memory_share_health_oscar_2x.png]]
+[[file:images/memory_share_health_oscar_2x.png]]
 
 ** Conflicting Access to Properties
 
@@ -18588,7 +18591,7 @@ below.
 
 The /bitwise NOT operator/ (=~=) inverts all bits in a number:
 
-[[file:_images/bitwiseNOT_2x.png]]
+[[file:images/bitwiseNOT_2x.png]]
 The bitwise NOT operator is a prefix operator, and appears immediately
 before the value it operates on, without any white space:
 
@@ -18612,7 +18615,7 @@ The /bitwise AND operator/ (=&=) combines the bits of two numbers. It
 returns a new number whose bits are set to =1= only if the bits were
 equal to =1= in /both/ input numbers:
 
-[[file:_images/bitwiseAND_2x.png]]
+[[file:images/bitwiseAND_2x.png]]
 In the example below, the values of =firstSixBits= and =lastSixBits=
 both have four middle bits equal to =1=. The bitwise AND operator
 combines them to make the number =00111100=, which is equal to an
@@ -18630,7 +18633,7 @@ The /bitwise OR operator/ (=|=) compares the bits of two numbers. The
 operator returns a new number whose bits are set to =1= if the bits are
 equal to =1= in /either/ input number:
 
-[[file:_images/bitwiseOR_2x.png]]
+[[file:images/bitwiseOR_2x.png]]
 In the example below, the values of =someBits= and =moreBits= have
 different bits set to =1=. The bitwise OR operator combines them to make
 the number =11111110=, which equals an unsigned decimal of =254=:
@@ -18648,7 +18651,7 @@ the bits of two numbers. The operator returns a new number whose bits
 are set to =1= where the input bits are different and are set to =0=
 where the input bits are the same:
 
-[[file:_images/bitwiseXOR_2x.png]]
+[[file:images/bitwiseXOR_2x.png]]
 In the example below, the values of =firstBits= and =otherBits= each
 have a bit set to =1= in a location that the other does not. The bitwise
 XOR operator sets both of these bits to =1= in its output value. All of
@@ -18692,7 +18695,7 @@ The illustration below shows the results of =11111111 << 1= (which is
 is =11111111= shifted to the right by =1= place). Blue numbers are
 shifted, gray numbers are discarded, and orange zeros are inserted:
 
-[[file:_images/bitshiftUnsigned_2x.png]]
+[[file:images/bitshiftUnsigned_2x.png]]
 Here's how bit shifting looks in Swift code:
 
 #+BEGIN_SRC swift
@@ -18758,7 +18761,7 @@ Positive numbers are stored in exactly the same way as for unsigned
 integers, counting upwards from =0=. Here's how the bits inside an
 =Int8= look for the number =4=:
 
-[[file:_images/bitshiftSignedFour_2x.png]]
+[[file:images/bitshiftSignedFour_2x.png]]
 The sign bit is =0= (meaning “positive”), and the seven value bits are
 just the number =4=, written in binary notation.
 
@@ -18769,11 +18772,11 @@ so this means =2= to the power of =7=, or =128=.
 
 Here's how the bits inside an =Int8= look for the number =-4=:
 
-[[file:_images/bitshiftSignedMinusFour_2x.png]]
+[[file:images/bitshiftSignedMinusFour_2x.png]]
 This time, the sign bit is =1= (meaning “negative”), and the seven value
 bits have a binary value of =124= (which is =128 - 4=):
 
-[[file:_images/bitshiftSignedMinusFourValue_2x.png]]
+[[file:images/bitshiftSignedMinusFourValue_2x.png]]
 This encoding for negative numbers is known as a /two's complement/
 representation. It may seem an unusual way to represent negative
 numbers, but it has several advantages.
@@ -18782,7 +18785,7 @@ First, you can add =-1= to =-4=, simply by performing a standard binary
 addition of all eight bits (including the sign bit), and discarding
 anything that doesn't fit in the eight bits once you're done:
 
-[[file:_images/bitshiftSignedAddition_2x.png]]
+[[file:images/bitshiftSignedAddition_2x.png]]
 Second, the two's complement representation also lets you shift the bits
 of negative numbers to the left and right like positive numbers, and
 still end up doubling them for every shift you make to the left, or
@@ -18792,7 +18795,7 @@ you shift signed integers to the right, apply the same rules as for
 unsigned integers, but fill any empty bits on the left with the /sign
 bit/, rather than with a zero.
 
-[[file:_images/bitshiftSigned_2x.png]]
+[[file:images/bitshiftSigned_2x.png]]
 This action ensures that signed integers have the same sign after they
 are shifted to the right, and is known as an /arithmetic shift/.
 
@@ -18857,7 +18860,7 @@ hold, causing it to overflow beyond its bounds, as shown in the diagram
 below. The value that remains within the bounds of the =UInt8= after the
 overflow addition is =00000000=, or zero.
 
-[[file:_images/overflowAddition_2x.png]]
+[[file:images/overflowAddition_2x.png]]
 Something similar happens when an unsigned integer is allowed to
 overflow in the negative direction. Here's an example using the overflow
 subtraction operator (=&-=):
@@ -18874,7 +18877,7 @@ binary. If you subtract =1= from =00000000= using the overflow
 subtraction operator (=&-=), the number will overflow and wrap around to
 =11111111=, or =255= in decimal.
 
-[[file:_images/overflowUnsignedSubtraction_2x.png]]
+[[file:images/overflowUnsignedSubtraction_2x.png]]
 Overflow also occurs for signed integers. All addition and subtraction
 for signed integers is performed in bitwise fashion, with the sign bit
 included as part of the numbers being added or subtracted, as described
@@ -18894,7 +18897,7 @@ operator gives a binary value of =01111111=, which toggles the sign bit
 and gives positive =127=, the maximum positive value that an =Int8= can
 hold.
 
-[[file:_images/overflowSignedSubtraction_2x.png]]
+[[file:images/overflowSignedSubtraction_2x.png]]
 For both signed and unsigned integers, overflow in the positive
 direction wraps around from the maximum valid integer value back to the
 minimum, and overflow in the negative direction wraps around from the
@@ -19033,7 +19036,7 @@ The type method can be used as an infix operator between existing
 This example adds together the vectors =(3.0, 1.0)= and =(2.0, 4.0)= to
 make the vector =(5.0, 5.0)=, as illustrated below.
 
-[[file:_images/vectorAddition_2x.png]]
+[[file:images/vectorAddition_2x.png]]
 
 *** Prefix and Postfix Operators
 

@@ -3228,7 +3228,9 @@ operation.
    Here’s how the remainder operator works.  To calculate ‘9 % 4’, you
 first work out how many ‘4=s will fit inside =9’:
 
-[_images/remainderInteger_2x]   You can fit two ‘4=s inside =9’, and the remainder is ‘1’ (shown in
+ [image src="images/remainderInteger_2x.png" ]
+
+   You can fit two ‘4=s inside =9’, and the remainder is ‘1’ (shown in
 orange).
 
    In Swift, this would be written as:
@@ -3939,7 +3941,8 @@ what whitespace to ignore before all of the other lines.  However, if
 you write whitespace at the beginning of a line in addition to what’s
 before the closing quotation marks, that whitespace _is_ included.
 
-[_images/multilineStringWhitespace_2x]   In the example above, even though the entire multiline string literal
+ [image src="images/multilineStringWhitespace_2x.png" ]
+   In the example above, even though the entire multiline string literal
 is indented, the first and last lines in the string don’t begin with any
 whitespace.  The middle line has more indentation than the closing
 quotation marks, so it starts with that extra four-space indentation.
@@ -4532,7 +4535,8 @@ memory that ‘greeting’ uses.  In contrast, ‘newString’ is a string—whe
 it’s created from the substring, it has its own storage.  The figure
 below shows these relationships:
 
-[_images/stringSubstring_2x]
+ [image src="images/stringSubstring_2x.png" ]
+
    Note
 
    Both ‘String’ and ‘Substring’ conform to the ‘StringProtocol’
@@ -4734,7 +4738,8 @@ its ‘utf8’ property.  This property is of type ‘String.UTF8View’, which
 is a collection of unsigned 8-bit (‘UInt8’) values, one for each byte in
 the string’s UTF-8 representation:
 
-[_images/UTF8_2x]
+ [image src="images/UTF8_2x.png" ]
+
      for codeUnit in dogString.utf8 {
          print("\(codeUnit) ", terminator: "")
      }
@@ -4760,7 +4765,8 @@ its ‘utf16’ property.  This property is of type ‘String.UTF16View’,
 which is a collection of unsigned 16-bit (‘UInt16’) values, one for each
 16-bit code unit in the string’s UTF-16 representation:
 
-[_images/UTF16_2x]
+ [image src="images/UTF16_2x.png" ]
+
      for codeUnit in dogString.utf16 {
          print("\(codeUnit) ", terminator: "")
      }
@@ -4796,7 +4802,8 @@ iterating over its ‘unicodeScalars’ property.  This property is of type
    Each ‘UnicodeScalar’ has a ‘value’ property that returns the scalar’s
 21-bit value, represented within a ‘UInt32’ value:
 
-[_images/UnicodeScalar_2x]
+ [image src="images/UnicodeScalar_2x.png" ]
+
      for scalar in dogString.unicodeScalars {
          print("\(scalar.value) ", terminator: "")
      }
@@ -4840,7 +4847,8 @@ and dictionaries, for storing collections of values.  Arrays are ordered
 collections of values.  Sets are unordered collections of unique values.
 Dictionaries are unordered collections of key-value associations.
 
-[_images/CollectionTypes_intro_2x]   Arrays, sets, and dictionaries in Swift are always clear about the
+ [image src="images/CollectionTypes_intro_2x.png" ]
+   Arrays, sets, and dictionaries in Swift are always clear about the
 types of values and keys that they can store.  This means that you
 cannot insert a value of the wrong type into a collection by mistake.
 It also means you can be confident about the type of values you will
@@ -5436,7 +5444,8 @@ File: swift.info,  Node: Fundamental Set Operations,  Next: Set Membership and E
 The illustration below depicts two sets—‘a’ and ‘b’—with the results of
 various set operations represented by the shaded regions.
 
-[_images/setVennDiagram_2x]
+ [image src="images/setVennDiagram_2x.png" ]
+
    • Use the ‘intersection(_:)’ method to create a new set with only the
      values common to both sets.
 
@@ -5475,7 +5484,8 @@ Conversely, set ‘b’ is a _subset_ of set ‘a’, because all elements in
 ‘b’ are also contained by ‘a’.  Set ‘b’ and set ‘c’ are _disjoint_ with
 one another, because they share no elements in common.
 
-[_images/setEulerDiagram_2x]
+ [image src="images/setEulerDiagram_2x.png" ]
+
    • Use the “is equal” operator (‘==’) to determine whether two sets
      contain all of the same values.
 
@@ -5977,7 +5987,8 @@ becomes ‘false’.
    This example plays a simple game of _Snakes and Ladders_ (also known
 as _Chutes and Ladders_):
 
-[_images/snakesAndLadders_2x]   The rules of the game are as follows:
+ [image src="images/snakesAndLadders_2x.png" ]
+   The rules of the game are as follows:
 
    • The board has 25 squares, and the aim is to land on or beyond
      square
@@ -6410,7 +6421,8 @@ provision ensures that the ‘switch’ statement is exhaustive.
           }
           // Prints "(1, 1) is inside the box"
 
-[_images/coordinateGraphSimple_2x]     The ‘switch’ statement determines whether the point is at the
+ [image src="images/coordinateGraphSimple_2x.png" ]
+     The ‘switch’ statement determines whether the point is at the
      origin (0, 0), on the red x-axis, on the orange y-axis, inside the
      blue 4-by-4 box centered on the origin, or outside of the box.
 
@@ -6442,7 +6454,8 @@ provision ensures that the ‘switch’ statement is exhaustive.
           }
           // Prints "on the x-axis with an x value of 2"
 
-[_images/coordinateGraphMedium_2x]     The ‘switch’ statement determines whether the point is on the red
+ [image src="images/coordinateGraphMedium_2x.png" ]
+     The ‘switch’ statement determines whether the point is on the red
      x-axis, on the orange y-axis, or elsewhere (on neither axis).
 
      The three ‘switch’ cases declare placeholder constants ‘x’ and ‘y’,
@@ -6483,7 +6496,8 @@ provision ensures that the ‘switch’ statement is exhaustive.
           }
           // Prints "(1, -1) is on the line x == -y"
 
-[_images/coordinateGraphComplex_2x]     The ‘switch’ statement determines whether the point is on the green
+ [image src="images/coordinateGraphComplex_2x.png" ]
+     The ‘switch’ statement determines whether the point is on the green
      diagonal line where ‘x =’ y=, on the purple diagonal line where ‘x
      =’ -y=, or neither.
 
@@ -6799,7 +6813,8 @@ roll again until you roll the exact number needed to land on square 25.
 
    The game board is the same as before.
 
-[_images/snakesAndLadders_2x]   The values of ‘finalSquare’, ‘board’, ‘square’, and ‘diceRoll’ are
+ [image src="images/snakesAndLadders_2x.png" ]
+   The values of ‘finalSquare’, ‘board’, ‘square’, and ‘diceRoll’ are
 initialized in the same way as before:
 
      let finalSquare = 25
@@ -8707,11 +8722,13 @@ barcode has a number system digit, followed by five manufacturer code
 digits and five product code digits.  These are followed by a check
 digit to verify that the code has been scanned correctly:
 
-[_images/barcode_UPC_2x]   Other products are labeled with 2D barcodes in QR code format, which
+ [image src="images/barcode_UPC_2x.png" ]
+   Other products are labeled with 2D barcodes in QR code format, which
 can use any ISO 8859-1 character and can encode a string up to 2,953
 characters long:
 
-[_images/barcode_QR_2x]   It’s convenient for an inventory tracking system to store UPC
+ [image src="images/barcode_QR_2x.png" ]
+   It’s convenient for an inventory tracking system to store UPC
 barcodes as a tuple of four integers, and QR code barcodes as a string
 of any length.
 
@@ -9292,7 +9309,8 @@ numeric values.  However, because they are separate instances, setting
 the width of ‘cinema’ to ‘2048’ doesn’t affect the width stored in ‘hd’,
 as shown in the figure below:
 
-[_images/sharedStateStruct_2x]   The same behavior applies to enumerations:
+ [image src="images/sharedStateStruct_2x.png" ]
+   The same behavior applies to enumerations:
 
      enum CompassPoint {
          case north, south, east, west
@@ -9350,7 +9368,8 @@ actually both refer to the _same_ ‘VideoMode’ instance.  Effectively,
 they are just two different names for the same single instance, as shown
 in the figure below:
 
-[_images/sharedStateClass_2x]   Checking the ‘frameRate’ property of ‘tenEighty’ shows that it
+ [image src="images/sharedStateClass_2x.png" ]
+   Checking the ‘frameRate’ property of ‘tenEighty’ shows that it
 correctly reports the new frame rate of ‘30.0’ from the underlying
 ‘VideoMode’ instance:
 
@@ -9721,7 +9740,8 @@ orange square in the diagram below.  Setting the ‘center’ property calls
 the setter for ‘center’, which modifies the ‘x’ and ‘y’ values of the
 stored ‘origin’ property, and moves the square to its new position.
 
-[_images/computedProperties_2x]
+ [image src="images/computedProperties_2x.png" ]
+
 * Menu:
 
 * Shorthand Setter Declaration::
@@ -10085,7 +10105,8 @@ audio level is ‘10’, all of the lights for that channel are lit.  In
 this figure, the left channel has a current level of ‘9’, and the right
 channel has a current level of ‘7’:
 
-[_images/staticPropertiesVUMeter_2x]   The audio channels described above are represented by instances of
+ [image src="images/staticPropertiesVUMeter_2x.png" ]
+   The audio channels described above are represented by instances of
 the ‘AudioChannel’ structure:
 
      struct AudioChannel {
@@ -10764,7 +10785,8 @@ two columns.  The ‘grid’ array for this ‘Matrix’ instance is effectively
 a flattened version of the matrix, as read from top left to bottom
 right:
 
-[_images/subscriptMatrix01_2x]   Values in the matrix can be set by passing row and column values into
+ [image src="images/subscriptMatrix01_2x.png" ]
+   Values in the matrix can be set by passing row and column values into
 the subscript, separated by a comma:
 
      matrix[0, 1] = 1.5
@@ -10775,7 +10797,8 @@ the subscript, separated by a comma:
 ‘column’ is ‘1’), and ‘3.2’ in the bottom left position (where ‘row’ is
 ‘1’ and ‘column’ is ‘0’):
 
-[_images/subscriptMatrix02_2x]   The ‘Matrix’ subscript’s getter and setter both contain an assertion
+ [image src="images/subscriptMatrix02_2x.png" ]
+   The ‘Matrix’ subscript’s getter and setter both contain an assertion
 to check that the subscript’s ‘row’ and ‘column’ values are valid.  To
 assist with these assertions, ‘Matrix’ includes a convenience method
 called ‘indexIsValid(row:column:)’, which checks whether the requested
@@ -11850,7 +11873,8 @@ calls between initializers:
 
    These rules are illustrated in the figure below:
 
-[_images/initializerDelegation01_2x]   Here, the superclass has a single designated initializer and two
+ [image src="images/initializerDelegation01_2x.png" ]
+   Here, the superclass has a single designated initializer and two
 convenience initializers.  One convenience initializer calls another
 convenience initializer, which in turn calls the single designated
 initializer.  This satisfies rules 2 and 3 from above.  The superclass
@@ -11876,7 +11900,8 @@ classes.  It illustrates how the designated initializers in this
 hierarchy act as “funnel” points for class initialization, simplifying
 the interrelationships among classes in the chain:
 
-[_images/initializerDelegation02_2x]
+ [image src="images/initializerDelegation02_2x.png" ]
+
 
 File: swift.info,  Node: Two-Phase Initialization,  Next: Initializer Inheritance and Overriding,  Prev: Initializer Delegation for Class Types,  Up: Class Inheritance and Initialization
 
@@ -11979,7 +12004,8 @@ safety checks above:
    Here’s how phase 1 looks for an initialization call for a
 hypothetical subclass and superclass:
 
-[_images/twoPhaseInitialization01_2x]   In this example, initialization begins with a call to a convenience
+ [image src="images/twoPhaseInitialization01_2x.png" ]
+   In this example, initialization begins with a call to a convenience
 initializer on the subclass.  This convenience initializer cannot yet
 modify any properties.  It delegates across to a designated initializer
 from the same class.
@@ -11998,7 +12024,8 @@ its memory is considered fully initialized, and phase 1 is complete.
 
    Here’s how phase 2 looks for the same initialization call:
 
-[_images/twoPhaseInitialization02_2x]   The superclass’s designated initializer now has an opportunity to
+ [image src="images/twoPhaseInitialization02_2x.png" ]
+   The superclass’s designated initializer now has an opportunity to
 customize the instance further (although it does not have to).
 
    Once the superclass’s designated initializer is finished, the
@@ -12211,7 +12238,8 @@ initializers for creating ‘Food’ instances:
 
    The figure below shows the initializer chain for the ‘Food’ class:
 
-[_images/initializersExample01_2x]   Classes do not have a default memberwise initializer, and so the
+ [image src="images/initializersExample01_2x.png" ]
+   Classes do not have a default memberwise initializer, and so the
 ‘Food’ class provides a designated initializer that takes a single
 argument called ‘name’.  This initializer can be used to create a new
 ‘Food’ instance with a specific name:
@@ -12254,7 +12282,8 @@ two initializers for creating ‘RecipeIngredient’ instances:
    The figure below shows the initializer chain for the
 ‘RecipeIngredient’ class:
 
-[_images/initializersExample02_2x]   The ‘RecipeIngredient’ class has a single designated initializer,
+ [image src="images/initializersExample02_2x.png" ]
+   The ‘RecipeIngredient’ class has a single designated initializer,
 ‘init(name: String, quantity: Int)’, which can be used to populate all
 of the properties of a new ‘RecipeIngredient’ instance.  This
 initializer starts by assigning the passed ‘quantity’ argument to the
@@ -12336,7 +12365,8 @@ convenience initializers from its superclass.
    The figure below shows the overall initializer chain for all three
 classes:
 
-[_images/initializersExample03_2x]   You can use all three of the inherited initializers to create a new
+ [image src="images/initializersExample03_2x.png" ]
+   You can use all three of the inherited initializers to create a new
 ‘ShoppingListItem’ instance:
 
      var breakfastList = [
@@ -12817,7 +12847,8 @@ call any of the instance’s methods.
 models a board for the game of chess.  Chess is played on an 8 x 8
 board, with alternating black and white squares.
 
-[_images/chessBoard_2x]   To represent this game board, the ‘Chessboard’ structure has a single
+ [image src="images/chessBoard_2x.png" ]
+   To represent this game board, the ‘Chessboard’ structure has a single
 property called ‘boardColors’, which is an array of 64 ‘Bool’ values.  A
 value of ‘true’ in the array represents a black square and a value of
 ‘false’ represents a white square.  The first item in the array
@@ -16460,7 +16491,8 @@ managing a collection.
 
    The illustration below shows the push and pop behavior for a stack:
 
-[_images/stackPushPop_2x]
+ [image src="images/stackPushPop_2x.png" ]
+
   1. There are currently three values on the stack.
 
   2. A fourth value is pushed onto the top of the stack.
@@ -16545,7 +16577,8 @@ strings, you write ‘Stack<String>()’:
    Here’s how ‘stackOfStrings’ looks after pushing these four values on
 to the stack:
 
-[_images/stackPushedFourStrings_2x]   Popping a value from the stack removes and returns the top value,
+ [image src="images/stackPushedFourStrings_2x.png" ]
+   Popping a value from the stack removes and returns the top value,
 ‘"cuatro"’:
 
      let fromTheTop = stackOfStrings.pop()
@@ -16553,7 +16586,8 @@ to the stack:
 
    Here’s how the stack looks after popping its top value:
 
-[_images/stackPoppedOneString_2x]
+ [image src="images/stackPoppedOneString_2x.png" ]
+
 
 File: swift.info,  Node: Extending a Generic Type,  Next: Type Constraints,  Prev: Generic Types,  Up: Generics 1
 
@@ -17925,7 +17959,8 @@ these two instances.  The ‘john’ variable now has a strong reference to
 the new ‘Person’ instance, and the ‘unit4A’ variable has a strong
 reference to the new ‘Apartment’ instance:
 
-[_images/referenceCycle01_2x]   You can now link the two instances together so that the person has an
+ [image src="images/referenceCycle01_2x.png" ]
+   You can now link the two instances together so that the person has an
 apartment, and the apartment has a tenant.  Note that an exclamation
 mark (‘!’) is used to unwrap and access the instances stored inside the
 ‘john’ and ‘unit4A’ optional variables, so that the properties of those
@@ -17937,7 +17972,8 @@ instances can be set:
    Here’s how the strong references look after you link the two
 instances together:
 
-[_images/referenceCycle02_2x]   Unfortunately, linking these two instances creates a strong reference
+ [image src="images/referenceCycle02_2x.png" ]
+   Unfortunately, linking these two instances creates a strong reference
 cycle between them.  The ‘Person’ instance now has a strong reference to
 the ‘Apartment’ instance, and the ‘Apartment’ instance has a strong
 reference to the ‘Person’ instance.  Therefore, when you break the
@@ -17956,7 +17992,8 @@ leak in your app.
    Here’s how the strong references look after you set the ‘john’ and
 ‘unit4A’ variables to ‘nil’:
 
-[_images/referenceCycle03_2x]   The strong references between the ‘Person’ instance and the
+ [image src="images/referenceCycle03_2x.png" ]
+   The strong references between the ‘Person’ instance and the
 ‘Apartment’ instance remain and cannot be broken.
 
 
@@ -18051,7 +18088,8 @@ and the links between the two instances are created as before:
    Here’s how the references look now that you’ve linked the two
 instances together:
 
-[_images/weakReference01_2x]   The ‘Person’ instance still has a strong reference to the ‘Apartment’
+ [image src="images/weakReference01_2x.png" ]
+   The ‘Person’ instance still has a strong reference to the ‘Apartment’
 instance, but the ‘Apartment’ instance now has a _weak_ reference to the
 ‘Person’ instance.  This means that when you break the strong reference
 held by the ‘john’ variable by setting it to ‘nil’, there are no more
@@ -18063,7 +18101,8 @@ strong references to the ‘Person’ instance:
    Because there are no more strong references to the ‘Person’ instance,
 it’s deallocated and the ‘tenant’ property is set to ‘nil’:
 
-[_images/weakReference02_2x]   The only remaining strong reference to the ‘Apartment’ instance is
+ [image src="images/weakReference02_2x.png" ]
+   The only remaining strong reference to the ‘Apartment’ instance is
 from the ‘unit4A’ variable.  If you break _that_ strong reference, there
 are no more strong references to the ‘Apartment’ instance:
 
@@ -18073,7 +18112,8 @@ are no more strong references to the ‘Apartment’ instance:
    Because there are no more strong references to the ‘Apartment’
 instance, it too is deallocated:
 
-[_images/weakReference03_2x]
+ [image src="images/weakReference03_2x.png" ]
+
    Note
 
    In systems that use garbage collection, weak pointers are sometimes
@@ -18175,7 +18215,8 @@ property:
    Here’s how the references look, now that you’ve linked the two
 instances:
 
-[_images/unownedReference01_2x]   The ‘Customer’ instance now has a strong reference to the
+ [image src="images/unownedReference01_2x.png" ]
+   The ‘Customer’ instance now has a strong reference to the
 ‘CreditCard’ instance, and the ‘CreditCard’ instance has an unowned
 reference to the ‘Customer’ instance.
 
@@ -18183,7 +18224,8 @@ reference to the ‘Customer’ instance.
 strong reference held by the ‘john’ variable, there are no more strong
 references to the ‘Customer’ instance:
 
-[_images/unownedReference02_2x]   Because there are no more strong references to the ‘Customer’
+ [image src="images/unownedReference02_2x.png" ]
+   Because there are no more strong references to the ‘Customer’
 instance, it’s deallocated.  After this happens, there are no more
 strong references to the ‘CreditCard’ instance, and it too is
 deallocated:
@@ -18436,7 +18478,8 @@ presence of a strong reference cycle.
 strong reference cycle between an ‘HTMLElement’ instance and the closure
 used for its default ‘asHTML’ value.  Here’s how the cycle looks:
 
-[_images/closureReferenceCycle01_2x]   The instance’s ‘asHTML’ property holds a strong reference to its
+ [image src="images/closureReferenceCycle01_2x.png" ]
+   The instance’s ‘asHTML’ property holds a strong reference to its
 closure.  However, because the closure refers to ‘self’ within its body
 (as a way to reference ‘self.name’ and ‘self.text’), the closure
 _captures_ self, which means that it holds a strong reference back to
@@ -18582,7 +18625,8 @@ reference”.
 
    Here’s how the references look with the capture list in place:
 
-[_images/closureReferenceCycle02_2x]   This time, the capture of ‘self’ by the closure is an unowned
+ [image src="images/closureReferenceCycle02_2x.png" ]
+   This time, the capture of ‘self’ by the closure is an unowned
 reference, and does not keep a strong hold on the ‘HTMLElement’ instance
 it has captured.  If you set the strong reference from the ‘paragraph’
 variable to ‘nil’, the ‘HTMLElement’ instance is deallocated, as can be
@@ -18651,7 +18695,8 @@ you change the total amount to reflect the items currently on the list.
 Before and after the update, you can read any information from the
 budget and get a correct answer, as shown in the figure below.
 
-[_images/memory_shopping_2x]   While you’re adding items to the budget, it’s in a temporary, invalid
+ [image src="images/memory_shopping_2x.png" ]
+   While you’re adding items to the budget, it’s in a temporary, invalid
 state because the total amount hasn’t been updated to reflect the newly
 added items.  Reading the total amount during the process of adding an
 item gives you incorrect information.
@@ -18767,7 +18812,8 @@ shown in the figure below, both ‘number’ and ‘stepSize’ refer to the
 same location in memory.  The read and write accesses refer to the same
 memory and they overlap, producing a conflict.
 
-[_images/memory_increment_2x]   One way to solve this conflict is to make an explicit copy of
+ [image src="images/memory_increment_2x.png" ]
+   One way to solve this conflict is to make an explicit copy of
 ‘stepSize’:
 
      // Make an explicit copy.
@@ -18864,7 +18910,8 @@ passed as an in-out parameter.  As shown in the figure below, they
 access different locations in memory.  Even though the two write
 accesses overlap in time, they don’t conflict.
 
-[_images/memory_share_health_maria_2x]   However, if you pass ‘oscar’ as the argument to ‘shareHealth(with:)’,
+ [image src="images/memory_share_health_maria_2x.png" ]
+   However, if you pass ‘oscar’ as the argument to ‘shareHealth(with:)’,
 there’s a conflict:
 
      oscar.shareHealth(with: &oscar)
@@ -18877,7 +18924,8 @@ refer to the same location in memory—as shown in the figure below.  The
 two write accesses refer to the same memory and they overlap, producing
 a conflict.
 
-[_images/memory_share_health_oscar_2x]
+ [image src="images/memory_share_health_oscar_2x.png" ]
+
 
 File: swift.info,  Node: Conflicting Access to Properties,  Prev: Conflicting Access to self in Methods,  Up: Memory Safety
 
@@ -19829,7 +19877,8 @@ File: swift.info,  Node: Bitwise NOT Operator,  Next: Bitwise AND Operator,  Up:
 
 The _bitwise NOT operator_ (‘~’) inverts all bits in a number:
 
-[_images/bitwiseNOT_2x]   The bitwise NOT operator is a prefix operator, and appears
+ [image src="images/bitwiseNOT_2x.png" ]
+   The bitwise NOT operator is a prefix operator, and appears
 immediately before the value it operates on, without any white space:
 
   1. let initialBits: UInt8 = 0b00001111
@@ -19857,7 +19906,8 @@ The _bitwise AND operator_ (‘&’) combines the bits of two numbers.  It
 returns a new number whose bits are set to ‘1’ only if the bits were
 equal to ‘1’ in _both_ input numbers:
 
-[_images/bitwiseAND_2x]   In the example below, the values of ‘firstSixBits’ and ‘lastSixBits’
+ [image src="images/bitwiseAND_2x.png" ]
+   In the example below, the values of ‘firstSixBits’ and ‘lastSixBits’
 both have four middle bits equal to ‘1’.  The bitwise AND operator
 combines them to make the number ‘00111100’, which is equal to an
 unsigned decimal value of ‘60’:
@@ -19876,7 +19926,8 @@ The _bitwise OR operator_ (‘|’) compares the bits of two numbers.  The
 operator returns a new number whose bits are set to ‘1’ if the bits are
 equal to ‘1’ in _either_ input number:
 
-[_images/bitwiseOR_2x]   In the example below, the values of ‘someBits’ and ‘moreBits’ have
+ [image src="images/bitwiseOR_2x.png" ]
+   In the example below, the values of ‘someBits’ and ‘moreBits’ have
 different bits set to ‘1’.  The bitwise OR operator combines them to
 make the number ‘11111110’, which equals an unsigned decimal of ‘254’:
 
@@ -19895,7 +19946,8 @@ the bits of two numbers.  The operator returns a new number whose bits
 are set to ‘1’ where the input bits are different and are set to ‘0’
 where the input bits are the same:
 
-[_images/bitwiseXOR_2x]   In the example below, the values of ‘firstBits’ and ‘otherBits’ each
+ [image src="images/bitwiseXOR_2x.png" ]
+   In the example below, the values of ‘firstBits’ and ‘otherBits’ each
 have a bit set to ‘1’ in a location that the other does not.  The
 bitwise XOR operator sets both of these bits to ‘1’ in its output value.
 All of the other bits in ‘firstBits’ and ‘otherBits’ match and are set
@@ -19941,7 +19993,8 @@ right by one position halves its value.
      numbers are shifted, gray numbers are discarded, and orange zeros
      are inserted:
 
-[_images/bitshiftUnsigned_2x]     Here’s how bit shifting looks in Swift code:
+ [image src="images/bitshiftUnsigned_2x.png" ]
+     Here’s how bit shifting looks in Swift code:
 
           let shiftBits: UInt8 = 4 // 00000100 in binary
           shiftBits << 1 // 00001000
@@ -20006,7 +20059,8 @@ right by one position halves its value.
      unsigned integers, counting upwards from ‘0’.  Here’s how the bits
      inside an ‘Int8’ look for the number ‘4’:
 
-[_images/bitshiftSignedFour_2x]     The sign bit is ‘0’ (meaning “positive”), and the seven value bits
+ [image src="images/bitshiftSignedFour_2x.png" ]
+     The sign bit is ‘0’ (meaning “positive”), and the seven value bits
      are just the number ‘4’, written in binary notation.
 
      Negative numbers, however, are stored differently.  They are stored
@@ -20016,10 +20070,12 @@ right by one position halves its value.
 
      Here’s how the bits inside an ‘Int8’ look for the number ‘-4’:
 
-[_images/bitshiftSignedMinusFour_2x]     This time, the sign bit is ‘1’ (meaning “negative”), and the seven
+ [image src="images/bitshiftSignedMinusFour_2x.png" ]
+     This time, the sign bit is ‘1’ (meaning “negative”), and the seven
      value bits have a binary value of ‘124’ (which is ‘128 - 4’):
 
-[_images/bitshiftSignedMinusFourValue_2x]     This encoding for negative numbers is known as a _two’s complement_
+ [image src="images/bitshiftSignedMinusFourValue_2x.png" ]
+     This encoding for negative numbers is known as a _two’s complement_
      representation.  It may seem an unusual way to represent negative
      numbers, but it has several advantages.
 
@@ -20028,7 +20084,8 @@ right by one position halves its value.
      discarding anything that doesn’t fit in the eight bits once you’re
      done:
 
-[_images/bitshiftSignedAddition_2x]     Second, the two’s complement representation also lets you shift the
+ [image src="images/bitshiftSignedAddition_2x.png" ]
+     Second, the two’s complement representation also lets you shift the
      bits of negative numbers to the left and right like positive
      numbers, and still end up doubling them for every shift you make to
      the left, or halving them for every shift you make to the right.
@@ -20037,7 +20094,8 @@ right by one position halves its value.
      apply the same rules as for unsigned integers, but fill any empty
      bits on the left with the _sign bit_, rather than with a zero.
 
-[_images/bitshiftSigned_2x]     This action ensures that signed integers have the same sign after
+ [image src="images/bitshiftSigned_2x.png" ]
+     This action ensures that signed integers have the same sign after
      they are shifted to the right, and is known as an _arithmetic
      shift_.
 
@@ -20111,7 +20169,8 @@ hold, causing it to overflow beyond its bounds, as shown in the diagram
 below.  The value that remains within the bounds of the ‘UInt8’ after
 the overflow addition is ‘00000000’, or zero.
 
-[_images/overflowAddition_2x]   Something similar happens when an unsigned integer is allowed to
+ [image src="images/overflowAddition_2x.png" ]
+   Something similar happens when an unsigned integer is allowed to
 overflow in the negative direction.  Here’s an example using the
 overflow subtraction operator (‘&-’):
 
@@ -20125,7 +20184,8 @@ binary.  If you subtract ‘1’ from ‘00000000’ using the overflow
 subtraction operator (‘&-’), the number will overflow and wrap around to
 ‘11111111’, or ‘255’ in decimal.
 
-[_images/overflowUnsignedSubtraction_2x]   Overflow also occurs for signed integers.  All addition and
+ [image src="images/overflowUnsignedSubtraction_2x.png" ]
+   Overflow also occurs for signed integers.  All addition and
 subtraction for signed integers is performed in bitwise fashion, with
 the sign bit included as part of the numbers being added or subtracted,
 as described in *note Bitwise Left and Right Shift Operators: Bitwise
@@ -20142,7 +20202,8 @@ operator gives a binary value of ‘01111111’, which toggles the sign bit
 and gives positive ‘127’, the maximum positive value that an ‘Int8’ can
 hold.
 
-[_images/overflowSignedSubtraction_2x]   For both signed and unsigned integers, overflow in the positive
+ [image src="images/overflowSignedSubtraction_2x.png" ]
+   For both signed and unsigned integers, overflow in the positive
 direction wraps around from the maximum valid integer value back to the
 minimum, and overflow in the negative direction wraps around from the
 minimum value to the maximum.
@@ -20272,7 +20333,8 @@ that are added together.
    This example adds together the vectors ‘(3.0, 1.0)’ and ‘(2.0, 4.0)’
 to make the vector ‘(5.0, 5.0)’, as illustrated below.
 
-[_images/vectorAddition_2x]
+ [image src="images/vectorAddition_2x.png" ]
+
 * Menu:
 
 * Prefix and Postfix Operators::
@@ -20701,345 +20763,345 @@ Node: Terminology107161
 Node: Assignment Operator108074
 Node: Arithmetic Operators109146
 Node: Remainder Operator110111
-Node: Unary Minus Operator111824
-Node: Unary Plus Operator112388
-Node: Compound Assignment Operators112928
-Node: Comparison Operators113932
-Node: Ternary Conditional Operator117591
-Node: Nil-Coalescing Operator119530
-Node: Range Operators121892
-Node: Closed Range Operator122240
-Node: Half-Open Range Operator123040
-Node: One-Sided Ranges124322
-Node: Logical Operators125962
-Node: Logical NOT Operator126513
-Node: Logical AND Operator127520
-Node: Logical OR Operator128490
-Node: Combining Logical Operators129693
-Node: Explicit Parentheses131075
-Node: Strings and Characters132076
-Node: String Literals134356
-Node: Multiline String Literals135065
-Node: Special Characters in String Literals137656
-Node: Extended String Delimiters139450
-Node: Initializing an Empty String140760
-Node: String Mutability141573
-Node: Strings Are Value Types142471
-Node: Working with Characters143690
-Node: Concatenating Strings and Characters144741
-Node: String Interpolation146851
-Node: Unicode148994
-Node: Unicode Scalar Values149630
-Node: Extended Grapheme Clusters150425
-Node: Counting Characters152992
-Node: Accessing and Modifying a String155401
-Node: String Indices155769
-Node: Inserting and Removing158321
-Node: Substrings159740
-Node: Comparing Strings162542
-Node: String and Character Equality162924
-Node: Prefix and Suffix Equality165359
-Node: Unicode Representations of Strings167695
-Node: UTF-8 Representation169572
-Node: UTF-16 Representation170750
-Node: Unicode Scalar Representation172297
-Node: Collection Types174014
-Node: Mutability of Collections175060
-Node: Arrays175895
-Node: Array Type Shorthand Syntax176774
-Node: Creating an Empty Array177324
-Node: Creating an Array with a Default Value178306
-Node: Creating an Array by Adding Two Arrays Together179020
-Node: Creating an Array with an Array Literal179810
-Node: Accessing and Modifying an Array181992
-Node: Iterating Over an Array186651
-Node: Sets187845
-Node: Hash Values for Set Types188725
-Node: Set Type Syntax190580
-Node: Creating and Initializing an Empty Set190949
-Node: Creating a Set with an Array Literal191933
-Node: Accessing and Modifying a Set193803
-Node: Iterating Over a Set195600
-Node: Performing Set Operations196378
-Node: Fundamental Set Operations196846
-Node: Set Membership and Equality198092
-Node: Dictionaries199769
-Node: Dictionary Type Shorthand Syntax200995
-Node: Creating an Empty Dictionary201794
-Node: Creating a Dictionary with a Dictionary Literal202840
-Node: Accessing and Modifying a Dictionary205605
-Node: Iterating Over a Dictionary209632
-Node: Control Flow 1211381
-Node: For-In Loops212594
-Node: While Loops217765
-Node: While218397
-Node: Repeat-While222930
-Node: Conditional Statements225656
-Node: If226591
-Node: Switch229250
-Node: Control Transfer Statements243069
-Node: Continue243881
-Node: Break244935
-Node: Fallthrough249181
-Node: Labeled Statements251943
-Node: Early Exit257116
-Node: Checking API Availability259427
-Node: Functions261455
-Node: Defining and Calling Functions262759
-Node: Function Parameters and Return Values266428
-Node: Functions Without Parameters267133
-Node: Functions With Multiple Parameters267885
-Node: Functions Without Return Values269258
-Node: Functions with Multiple Return Values271430
-Node: Functions With an Implicit Return275759
-Node: Function Argument Labels and Parameter Names277098
-Node: Specifying Argument Labels278344
-Node: Omitting Argument Labels279383
-Node: Default Parameter Values280151
-Node: Variadic Parameters281430
-Node: In-Out Parameters282920
-Node: Function Types286117
-Node: Using Function Types287436
-Node: Function Types as Parameter Types288899
-Node: Function Types as Return Types290739
-Node: Nested Functions293140
-Node: Closures294530
-Node: Closure Expressions296262
-Node: The Sorted Method297479
-Node: Closure Expression Syntax300030
-Node: Inferring Type From Context301879
-Node: Implicit Returns from Single-Expression Closures303499
-Node: Shorthand Argument Names304361
-Node: Operator Methods305292
-Node: Trailing Closures306061
-Node: Capturing Values312144
-Node: Closures Are Reference Types317178
-Node: Escaping Closures318498
-Node: Autoclosures320800
-Node: Enumeration325669
-Node: Enumeration Syntax327581
-Node: Matching Enumeration Values with a Switch Statement329722
-Node: Iterating over Enumeration Cases331457
-Node: Associated Values333079
-Node: Raw Values337533
-Node: Implicitly Assigned Raw Values339139
-Node: Initializing from a Raw Value340850
-Node: Recursive Enumerations342968
-Node: Structures and Classes346004
-Node: Comparing Structures and Classes347249
-Node: Definition Syntax349426
-Node: Structure and Class Instances351848
-Node: Accessing Properties352981
-Node: Memberwise Initializers for Structure Types354213
-Node: Structures and Enumerations Are Value Types355043
-Node: Classes Are Reference Types359100
-Node: Identity Operators362115
-Node: Pointers363872
-Node: Properties364841
-Node: Stored Properties365956
-Node: Stored Properties of Constant Structure Instances367753
-Node: Lazy Stored Properties368973
-Node: Stored Properties and Instance Variables372704
-Node: Computed Properties373720
-Node: Shorthand Setter Declaration377082
-Node: Shorthand Getter Declaration378008
-Node: Read-Only Computed Properties379180
-Node: Property Observers381090
-Node: Global and Local Variables385859
-Node: Type Properties387198
-Node: Type Property Syntax388872
-Node: Querying and Setting Type Properties390474
-Node: Methods395370
-Node: Instance Methods396273
-Node: The self Property398735
-Node: Modifying Value Types from Within Instance Methods400712
-Node: Assigning to self Within a Mutating Method402852
-Node: Type Methods404565
-Node: Subscripts411117
-Node: Subscript Syntax412079
-Node: Subscript Usage414703
-Node: Subscript Options416593
-Node: Type Subscripts420768
-Node: Inheritance421790
-Node: Defining a Base Class422961
-Node: Subclassing424901
-Node: Overriding427542
-Node: Accessing Superclass Methods Properties and Subscripts428764
-Node: Overriding Methods430063
-Node: Overriding Properties430947
-Node: Preventing Overrides436237
-Node: Initialization437169
-Node: Setting Initial Values for Stored Properties438527
-Node: Initializers439448
-Node: Default Property Values440597
-Node: Customizing Initialization441860
-Node: Initialization Parameters442494
-Node: Parameter Names and Argument Labels444302
-Node: Initializer Parameters Without Argument Labels446653
-Node: Optional Property Types448135
-Node: Assigning Constant Properties During Initialization449731
-Node: Default Initializers451200
-Node: Memberwise Initializers for Structure Types 1452832
-Node: Initializer Delegation for Value Types454715
-Node: Class Inheritance and Initialization460208
-Node: Designated Initializers and Convenience Initializers461147
-Node: Syntax for Designated and Convenience Initializers462908
-Node: Initializer Delegation for Class Types463636
-Node: Two-Phase Initialization466005
-Node: Initializer Inheritance and Overriding472000
-Node: Automatic Initializer Inheritance478070
-Node: Designated and Convenience Initializers in Action479579
-Node: Failable Initializers487799
-Node: Failable Initializers for Enumerations492320
-Node: Failable Initializers for Enumerations with Raw Values494184
-Node: Propagation of Initialization Failure495615
-Node: Overriding a Failable Initializer498882
-Node: The init! Failable Initializer502463
-Node: Required Initializers503384
-Node: Setting a Default Property Value with a Closure or Function504510
-Node: Deinitialization508415
-Node: How Deinitialization Works508887
-Node: Deinitializers in Action510599
-Node: Optional Chaining515547
-Node: Optional Chaining as an Alternative to Forced Unwrapping516670
-Node: Defining Model Classes for Optional Chaining521633
-Node: Accessing Properties Through Optional Chaining525652
-Node: Calling Methods Through Optional Chaining528073
-Node: Accessing Subscripts Through Optional Chaining530693
-Node: Accessing Subscripts of Optional Type533174
-Node: Linking Multiple Levels of Chaining534474
-Node: Chaining on Methods with Optional Return Values537657
-Node: Error Handling 2539480
-Node: Representing and Throwing Errors541084
-Node: Handling Errors542281
-Node: Propagating Errors Using Throwing Functions544054
-Node: Handling Errors Using Do-Catch548290
-Node: Converting Errors to Optional Values552232
-Node: Disabling Error Propagation553785
-Node: Specifying Cleanup Actions554709
-Node: Type Casting556668
-Node: Defining a Class Hierarchy for Type Casting557447
-Node: Checking Type560515
-Node: Downcasting562005
-Node: Type Casting for Any and AnyObject566119
-Node: Nested Types569777
-Node: Nested Types in Action570537
-Node: Referring to Nested Types574895
-Node: Extensions575483
-Node: Extension Syntax576783
-Node: Computed Properties 1578070
-Node: Initializers 1580555
-Node: Methods 1583940
-Node: Mutating Instance Methods584851
-Node: Subscripts 1585572
-Node: Nested Types 1586704
-Node: Protocols588759
-Node: Protocol Syntax589905
-Node: Property Requirements590777
-Node: Method Requirements594768
-Node: Mutating Method Requirements597371
-Node: Initializer Requirements600165
-Node: Class Implementations of Protocol Initializer Requirements600795
-Node: Failable Initializer Requirements602753
-Node: Protocols as Types603393
-Node: Delegation607175
-Node: Adding Protocol Conformance with an Extension614905
-Node: Conditionally Conforming to a Protocol617281
-Node: Declaring Protocol Adoption with an Extension618597
-Node: Collections of Protocol Types619747
-Node: Protocol Inheritance621002
-Node: Class-Only Protocols624382
-Node: Protocol Composition625451
-Node: Checking for Protocol Conformance629390
-Node: Optional Protocol Requirements633333
-Node: Protocol Extensions641450
-Node: Providing Default Implementations642965
-Node: Adding Constraints to Protocol Extensions644229
-Node: Generics 1646366
-Node: The Problem That Generics Solve647696
-Node: Generic Functions650164
-Node: Type Parameters653140
-Node: Naming Type Parameters654305
-Node: Generic Types655165
-Node: Extending a Generic Type660183
-Node: Type Constraints662081
-Node: Type Constraint Syntax663957
-Node: Type Constraints in Action664850
-Node: Associated Types669010
-Node: Associated Types in Action669776
-Node: Extending an Existing Type to Specify an Associated Type675233
-Node: Adding Constraints to an Associated Type676629
-Node: Using a Protocol in Its Associated Type's Constraints677525
-Node: Generic Where Clauses680441
-Node: Extensions with a Generic Where Clause686309
-Node: Associated Types with a Generic Where Clause690290
-Node: Generic Subscripts691791
-Node: Opaque Types693418
-Node: The Problem That Opaque Types Solve694383
-Node: Returning an Opaque Type697355
-Node: Differences Between Opaque Types and Protocol Types704018
-Node: Automatic Reference Counting710131
-Node: How ARC Works711704
-Node: ARC in Action713288
-Node: Strong Reference Cycles Between Class Instances716186
-Node: Resolving Strong Reference Cycles Between Class Instances721133
-Node: Weak References722441
-Node: Unowned References726259
-Node: Unowned References and Implicitly Unwrapped Optional Properties731755
-Node: Strong Reference Cycles for Closures736493
-Node: Resolving Strong Reference Cycles for Closures743357
-Node: Defining a Capture List744519
-Node: Weak and Unowned References745741
-Node: Memory Safety748632
-Node: Understanding Conflicting Access to Memory749762
-Node: Characteristics of Memory Access752709
-Node: Conflicting Access to In-Out Parameters754811
-Node: Conflicting Access to self in Methods758222
-Node: Conflicting Access to Properties760984
-Node: Access Control764353
-Node: Modules and Source Files765926
-Node: Access Levels767102
-Node: Guiding Principle of Access Levels770019
-Node: Default Access Levels770945
-Node: Access Levels for Single-Target Apps771451
-Node: Access Levels for Frameworks772178
-Node: Access Levels for Unit Test Targets773064
-Node: Access Control Syntax773697
-Node: Custom Types774800
-Node: Tuple Types777503
-Node: Function Types 1778164
-Node: Enumeration Types780055
-Node: Nested Types 2781105
-Node: Subclassing 1781654
-Node: Constants Variables Properties and Subscripts783606
-Node: Getters and Setters784351
-Node: Initializers 2788695
-Node: Default Initializers 1789446
-Node: Default Memberwise Initializers for Structure Types790329
-Node: Protocols 1791138
-Node: Protocol Inheritance 1792207
-Node: Protocol Conformance792614
-Node: Extensions 1793866
-Node: Private Members in Extensions795223
-Node: Generics 2796486
-Node: Type Aliases 1796821
-Node: Advanced Operators797436
-Node: Bitwise Operators799102
-Node: Bitwise NOT Operator799848
-Node: Bitwise AND Operator800969
-Node: Bitwise OR Operator801784
-Node: Bitwise XOR Operator802557
-Node: Bitwise Left and Right Shift Operators803529
-Node: Overflow Operators810620
-Node: Value Overflow812112
-Node: Precedence and Associativity815001
-Node: Operator Methods 1817779
-Node: Prefix and Postfix Operators820407
-Node: Compound Assignment Operators 1822032
-Node: Equivalence Operators823584
-Node: Custom Operators826720
-Node: Precedence for Custom Infix Operators828270
-Node: Index830601
+Node: Unary Minus Operator111845
+Node: Unary Plus Operator112409
+Node: Compound Assignment Operators112949
+Node: Comparison Operators113953
+Node: Ternary Conditional Operator117612
+Node: Nil-Coalescing Operator119551
+Node: Range Operators121913
+Node: Closed Range Operator122261
+Node: Half-Open Range Operator123061
+Node: One-Sided Ranges124343
+Node: Logical Operators125983
+Node: Logical NOT Operator126534
+Node: Logical AND Operator127541
+Node: Logical OR Operator128511
+Node: Combining Logical Operators129714
+Node: Explicit Parentheses131096
+Node: Strings and Characters132097
+Node: String Literals134377
+Node: Multiline String Literals135086
+Node: Special Characters in String Literals137697
+Node: Extended String Delimiters139491
+Node: Initializing an Empty String140801
+Node: String Mutability141614
+Node: Strings Are Value Types142512
+Node: Working with Characters143731
+Node: Concatenating Strings and Characters144782
+Node: String Interpolation146892
+Node: Unicode149035
+Node: Unicode Scalar Values149671
+Node: Extended Grapheme Clusters150466
+Node: Counting Characters153033
+Node: Accessing and Modifying a String155442
+Node: String Indices155810
+Node: Inserting and Removing158362
+Node: Substrings159781
+Node: Comparing Strings162603
+Node: String and Character Equality162985
+Node: Prefix and Suffix Equality165420
+Node: Unicode Representations of Strings167756
+Node: UTF-8 Representation169633
+Node: UTF-16 Representation170831
+Node: Unicode Scalar Representation172398
+Node: Collection Types174135
+Node: Mutability of Collections175201
+Node: Arrays176036
+Node: Array Type Shorthand Syntax176915
+Node: Creating an Empty Array177465
+Node: Creating an Array with a Default Value178447
+Node: Creating an Array by Adding Two Arrays Together179161
+Node: Creating an Array with an Array Literal179951
+Node: Accessing and Modifying an Array182133
+Node: Iterating Over an Array186792
+Node: Sets187986
+Node: Hash Values for Set Types188866
+Node: Set Type Syntax190721
+Node: Creating and Initializing an Empty Set191090
+Node: Creating a Set with an Array Literal192074
+Node: Accessing and Modifying a Set193944
+Node: Iterating Over a Set195741
+Node: Performing Set Operations196519
+Node: Fundamental Set Operations196987
+Node: Set Membership and Equality198253
+Node: Dictionaries199950
+Node: Dictionary Type Shorthand Syntax201176
+Node: Creating an Empty Dictionary201975
+Node: Creating a Dictionary with a Dictionary Literal203021
+Node: Accessing and Modifying a Dictionary205786
+Node: Iterating Over a Dictionary209813
+Node: Control Flow 1211562
+Node: For-In Loops212775
+Node: While Loops217946
+Node: While218578
+Node: Repeat-While223131
+Node: Conditional Statements225857
+Node: If226792
+Node: Switch229451
+Node: Control Transfer Statements243330
+Node: Continue244142
+Node: Break245196
+Node: Fallthrough249442
+Node: Labeled Statements252204
+Node: Early Exit257397
+Node: Checking API Availability259708
+Node: Functions261736
+Node: Defining and Calling Functions263040
+Node: Function Parameters and Return Values266709
+Node: Functions Without Parameters267414
+Node: Functions With Multiple Parameters268166
+Node: Functions Without Return Values269539
+Node: Functions with Multiple Return Values271711
+Node: Functions With an Implicit Return276040
+Node: Function Argument Labels and Parameter Names277379
+Node: Specifying Argument Labels278625
+Node: Omitting Argument Labels279664
+Node: Default Parameter Values280432
+Node: Variadic Parameters281711
+Node: In-Out Parameters283201
+Node: Function Types286398
+Node: Using Function Types287717
+Node: Function Types as Parameter Types289180
+Node: Function Types as Return Types291020
+Node: Nested Functions293421
+Node: Closures294811
+Node: Closure Expressions296543
+Node: The Sorted Method297760
+Node: Closure Expression Syntax300311
+Node: Inferring Type From Context302160
+Node: Implicit Returns from Single-Expression Closures303780
+Node: Shorthand Argument Names304642
+Node: Operator Methods305573
+Node: Trailing Closures306342
+Node: Capturing Values312425
+Node: Closures Are Reference Types317459
+Node: Escaping Closures318779
+Node: Autoclosures321081
+Node: Enumeration325950
+Node: Enumeration Syntax327862
+Node: Matching Enumeration Values with a Switch Statement330003
+Node: Iterating over Enumeration Cases331738
+Node: Associated Values333360
+Node: Raw Values337854
+Node: Implicitly Assigned Raw Values339460
+Node: Initializing from a Raw Value341171
+Node: Recursive Enumerations343289
+Node: Structures and Classes346325
+Node: Comparing Structures and Classes347570
+Node: Definition Syntax349747
+Node: Structure and Class Instances352169
+Node: Accessing Properties353302
+Node: Memberwise Initializers for Structure Types354534
+Node: Structures and Enumerations Are Value Types355364
+Node: Classes Are Reference Types359441
+Node: Identity Operators362476
+Node: Pointers364233
+Node: Properties365202
+Node: Stored Properties366317
+Node: Stored Properties of Constant Structure Instances368114
+Node: Lazy Stored Properties369334
+Node: Stored Properties and Instance Variables373065
+Node: Computed Properties374081
+Node: Shorthand Setter Declaration377463
+Node: Shorthand Getter Declaration378389
+Node: Read-Only Computed Properties379561
+Node: Property Observers381471
+Node: Global and Local Variables386240
+Node: Type Properties387579
+Node: Type Property Syntax389253
+Node: Querying and Setting Type Properties390855
+Node: Methods395771
+Node: Instance Methods396674
+Node: The self Property399136
+Node: Modifying Value Types from Within Instance Methods401113
+Node: Assigning to self Within a Mutating Method403253
+Node: Type Methods404966
+Node: Subscripts411518
+Node: Subscript Syntax412480
+Node: Subscript Usage415104
+Node: Subscript Options416994
+Node: Type Subscripts421209
+Node: Inheritance422231
+Node: Defining a Base Class423402
+Node: Subclassing425342
+Node: Overriding427983
+Node: Accessing Superclass Methods Properties and Subscripts429205
+Node: Overriding Methods430504
+Node: Overriding Properties431388
+Node: Preventing Overrides436678
+Node: Initialization437610
+Node: Setting Initial Values for Stored Properties438968
+Node: Initializers439889
+Node: Default Property Values441038
+Node: Customizing Initialization442301
+Node: Initialization Parameters442935
+Node: Parameter Names and Argument Labels444743
+Node: Initializer Parameters Without Argument Labels447094
+Node: Optional Property Types448576
+Node: Assigning Constant Properties During Initialization450172
+Node: Default Initializers451641
+Node: Memberwise Initializers for Structure Types 1453273
+Node: Initializer Delegation for Value Types455156
+Node: Class Inheritance and Initialization460649
+Node: Designated Initializers and Convenience Initializers461588
+Node: Syntax for Designated and Convenience Initializers463349
+Node: Initializer Delegation for Class Types464077
+Node: Two-Phase Initialization466486
+Node: Initializer Inheritance and Overriding472521
+Node: Automatic Initializer Inheritance478591
+Node: Designated and Convenience Initializers in Action480100
+Node: Failable Initializers488380
+Node: Failable Initializers for Enumerations492901
+Node: Failable Initializers for Enumerations with Raw Values494765
+Node: Propagation of Initialization Failure496196
+Node: Overriding a Failable Initializer499463
+Node: The init! Failable Initializer503044
+Node: Required Initializers503965
+Node: Setting a Default Property Value with a Closure or Function505091
+Node: Deinitialization509016
+Node: How Deinitialization Works509488
+Node: Deinitializers in Action511200
+Node: Optional Chaining516148
+Node: Optional Chaining as an Alternative to Forced Unwrapping517271
+Node: Defining Model Classes for Optional Chaining522234
+Node: Accessing Properties Through Optional Chaining526253
+Node: Calling Methods Through Optional Chaining528674
+Node: Accessing Subscripts Through Optional Chaining531294
+Node: Accessing Subscripts of Optional Type533775
+Node: Linking Multiple Levels of Chaining535075
+Node: Chaining on Methods with Optional Return Values538258
+Node: Error Handling 2540081
+Node: Representing and Throwing Errors541685
+Node: Handling Errors542882
+Node: Propagating Errors Using Throwing Functions544655
+Node: Handling Errors Using Do-Catch548891
+Node: Converting Errors to Optional Values552833
+Node: Disabling Error Propagation554386
+Node: Specifying Cleanup Actions555310
+Node: Type Casting557269
+Node: Defining a Class Hierarchy for Type Casting558048
+Node: Checking Type561116
+Node: Downcasting562606
+Node: Type Casting for Any and AnyObject566720
+Node: Nested Types570378
+Node: Nested Types in Action571138
+Node: Referring to Nested Types575496
+Node: Extensions576084
+Node: Extension Syntax577384
+Node: Computed Properties 1578671
+Node: Initializers 1581156
+Node: Methods 1584541
+Node: Mutating Instance Methods585452
+Node: Subscripts 1586173
+Node: Nested Types 1587305
+Node: Protocols589360
+Node: Protocol Syntax590506
+Node: Property Requirements591378
+Node: Method Requirements595369
+Node: Mutating Method Requirements597972
+Node: Initializer Requirements600766
+Node: Class Implementations of Protocol Initializer Requirements601396
+Node: Failable Initializer Requirements603354
+Node: Protocols as Types603994
+Node: Delegation607776
+Node: Adding Protocol Conformance with an Extension615506
+Node: Conditionally Conforming to a Protocol617882
+Node: Declaring Protocol Adoption with an Extension619198
+Node: Collections of Protocol Types620348
+Node: Protocol Inheritance621603
+Node: Class-Only Protocols624983
+Node: Protocol Composition626052
+Node: Checking for Protocol Conformance629991
+Node: Optional Protocol Requirements633934
+Node: Protocol Extensions642051
+Node: Providing Default Implementations643566
+Node: Adding Constraints to Protocol Extensions644830
+Node: Generics 1646967
+Node: The Problem That Generics Solve648297
+Node: Generic Functions650765
+Node: Type Parameters653741
+Node: Naming Type Parameters654906
+Node: Generic Types655766
+Node: Extending a Generic Type660844
+Node: Type Constraints662742
+Node: Type Constraint Syntax664618
+Node: Type Constraints in Action665511
+Node: Associated Types669671
+Node: Associated Types in Action670437
+Node: Extending an Existing Type to Specify an Associated Type675894
+Node: Adding Constraints to an Associated Type677290
+Node: Using a Protocol in Its Associated Type's Constraints678186
+Node: Generic Where Clauses681102
+Node: Extensions with a Generic Where Clause686970
+Node: Associated Types with a Generic Where Clause690951
+Node: Generic Subscripts692452
+Node: Opaque Types694079
+Node: The Problem That Opaque Types Solve695044
+Node: Returning an Opaque Type698016
+Node: Differences Between Opaque Types and Protocol Types704679
+Node: Automatic Reference Counting710792
+Node: How ARC Works712365
+Node: ARC in Action713949
+Node: Strong Reference Cycles Between Class Instances716847
+Node: Resolving Strong Reference Cycles Between Class Instances721854
+Node: Weak References723162
+Node: Unowned References727040
+Node: Unowned References and Implicitly Unwrapped Optional Properties732576
+Node: Strong Reference Cycles for Closures737314
+Node: Resolving Strong Reference Cycles for Closures744198
+Node: Defining a Capture List745360
+Node: Weak and Unowned References746582
+Node: Memory Safety749493
+Node: Understanding Conflicting Access to Memory750623
+Node: Characteristics of Memory Access753590
+Node: Conflicting Access to In-Out Parameters755692
+Node: Conflicting Access to self in Methods759123
+Node: Conflicting Access to Properties761925
+Node: Access Control765294
+Node: Modules and Source Files766867
+Node: Access Levels768043
+Node: Guiding Principle of Access Levels770960
+Node: Default Access Levels771886
+Node: Access Levels for Single-Target Apps772392
+Node: Access Levels for Frameworks773119
+Node: Access Levels for Unit Test Targets774005
+Node: Access Control Syntax774638
+Node: Custom Types775741
+Node: Tuple Types778444
+Node: Function Types 1779105
+Node: Enumeration Types780996
+Node: Nested Types 2782046
+Node: Subclassing 1782595
+Node: Constants Variables Properties and Subscripts784547
+Node: Getters and Setters785292
+Node: Initializers 2789636
+Node: Default Initializers 1790387
+Node: Default Memberwise Initializers for Structure Types791270
+Node: Protocols 1792079
+Node: Protocol Inheritance 1793148
+Node: Protocol Conformance793555
+Node: Extensions 1794807
+Node: Private Members in Extensions796164
+Node: Generics 2797427
+Node: Type Aliases 1797762
+Node: Advanced Operators798377
+Node: Bitwise Operators800043
+Node: Bitwise NOT Operator800789
+Node: Bitwise AND Operator801930
+Node: Bitwise OR Operator802765
+Node: Bitwise XOR Operator803558
+Node: Bitwise Left and Right Shift Operators804550
+Node: Overflow Operators811761
+Node: Value Overflow813253
+Node: Precedence and Associativity816202
+Node: Operator Methods 1818980
+Node: Prefix and Postfix Operators821628
+Node: Compound Assignment Operators 1823253
+Node: Equivalence Operators824805
+Node: Custom Operators827941
+Node: Precedence for Custom Infix Operators829491
+Node: Index831822
 
 End Tag Table
 

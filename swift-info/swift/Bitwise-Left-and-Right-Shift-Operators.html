@@ -80,7 +80,7 @@ are moved to the left or right.
 is &lsquo;<samp>11111111</samp>&rsquo; shifted to the right by &lsquo;<samp>1</samp>&rsquo; place). Blue numbers are
 shifted, gray numbers are discarded, and orange zeros are inserted:
 </p>
-<img src="_images/bitshiftUnsigned_2x.png" alt="_images/bitshiftUnsigned_2x">
+<img src="images/bitshiftUnsigned_2x.png" alt="images/bitshiftUnsigned_2x">
 <p>Here&rsquo;s how bit shifting looks in Swift code:
 </p>
 <div class="example">
@@ -147,7 +147,7 @@ Positive numbers are stored in exactly the same way as for unsigned
 integers, counting upwards from &lsquo;<samp>0</samp>&rsquo;. Here&rsquo;s how the bits inside an
 &lsquo;<samp>Int8</samp>&rsquo; look for the number &lsquo;<samp>4</samp>&rsquo;:
 </p>
-<img src="_images/bitshiftSignedFour_2x.png" alt="_images/bitshiftSignedFour_2x">
+<img src="images/bitshiftSignedFour_2x.png" alt="images/bitshiftSignedFour_2x">
 <p>The sign bit is &lsquo;<samp>0</samp>&rsquo; (meaning “positive”), and the seven value bits are
 just the number &lsquo;<samp>4</samp>&rsquo;, written in binary notation.
 </p>
@@ -158,11 +158,11 @@ so this means &lsquo;<samp>2</samp>&rsquo; to the power of &lsquo;<samp>7</samp>
 </p>
 <p>Here&rsquo;s how the bits inside an &lsquo;<samp>Int8</samp>&rsquo; look for the number &lsquo;<samp>-4</samp>&rsquo;:
 </p>
-<img src="_images/bitshiftSignedMinusFour_2x.png" alt="_images/bitshiftSignedMinusFour_2x">
+<img src="images/bitshiftSignedMinusFour_2x.png" alt="images/bitshiftSignedMinusFour_2x">
 <p>This time, the sign bit is &lsquo;<samp>1</samp>&rsquo; (meaning “negative”), and the seven value
 bits have a binary value of &lsquo;<samp>124</samp>&rsquo; (which is &lsquo;<samp>128 - 4</samp>&rsquo;):
 </p>
-<img src="_images/bitshiftSignedMinusFourValue_2x.png" alt="_images/bitshiftSignedMinusFourValue_2x">
+<img src="images/bitshiftSignedMinusFourValue_2x.png" alt="images/bitshiftSignedMinusFourValue_2x">
 <p>This encoding for negative numbers is known as a <em>two&rsquo;s complement</em>
 representation. It may seem an unusual way to represent negative
 numbers, but it has several advantages.
@@ -171,7 +171,7 @@ numbers, but it has several advantages.
 addition of all eight bits (including the sign bit), and discarding
 anything that doesn&rsquo;t fit in the eight bits once you&rsquo;re done:
 </p>
-<img src="_images/bitshiftSignedAddition_2x.png" alt="_images/bitshiftSignedAddition_2x">
+<img src="images/bitshiftSignedAddition_2x.png" alt="images/bitshiftSignedAddition_2x">
 <p>Second, the two&rsquo;s complement representation also lets you shift the bits
 of negative numbers to the left and right like positive numbers, and
 still end up doubling them for every shift you make to the left, or
@@ -181,7 +181,7 @@ you shift signed integers to the right, apply the same rules as for
 unsigned integers, but fill any empty bits on the left with the <em>sign
 bit</em>, rather than with a zero.
 </p>
-<img src="_images/bitshiftSigned_2x.png" alt="_images/bitshiftSigned_2x">
+<img src="images/bitshiftSigned_2x.png" alt="images/bitshiftSigned_2x">
 <p>This action ensures that signed integers have the same sign after they
 are shifted to the right, and is known as an <em>arithmetic shift</em>.
 </p>

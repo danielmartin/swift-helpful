@@ -93,7 +93,7 @@ passed as an in-out parameter. As shown in the figure below, they access
 different locations in memory. Even though the two write accesses
 overlap in time, they don&rsquo;t conflict.
 </p>
-<img src="_images/memory_share_health_maria_2x.png" alt="_images/memory_share_health_maria_2x">
+<img src="images/memory_share_health_maria_2x.png" alt="images/memory_share_health_maria_2x">
 <p>However, if you pass &lsquo;<samp>oscar</samp>&rsquo; as the argument to &lsquo;<samp>shareHealth(with:)</samp>&rsquo;,
 there&rsquo;s a conflict:
 </p>
@@ -109,7 +109,7 @@ to the same location in memory&mdash;as shown in the figure below. The two
 write accesses refer to the same memory and they overlap, producing a
 conflict.
 </p>
-<img src="_images/memory_share_health_oscar_2x.png" alt="_images/memory_share_health_oscar_2x">
+<img src="images/memory_share_health_oscar_2x.png" alt="images/memory_share_health_oscar_2x">
 
 <hr>
 <div class="header">

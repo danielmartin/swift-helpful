@@ -156,7 +156,7 @@ customize the instance and to work with &lsquo;<samp>self</samp>&rsquo;.
 <p>Here&rsquo;s how phase 1 looks for an initialization call for a hypothetical
 subclass and superclass:
 </p>
-<img src="_images/twoPhaseInitialization01_2x.png" alt="_images/twoPhaseInitialization01_2x">
+<img src="images/twoPhaseInitialization01_2x.png" alt="images/twoPhaseInitialization01_2x">
 <p>In this example, initialization begins with a call to a convenience
 initializer on the subclass. This convenience initializer cannot yet
 modify any properties. It delegates across to a designated initializer
@@ -176,7 +176,7 @@ memory is considered fully initialized, and phase 1 is complete.
 </p>
 <p>Here&rsquo;s how phase 2 looks for the same initialization call:
 </p>
-<img src="_images/twoPhaseInitialization02_2x.png" alt="_images/twoPhaseInitialization02_2x">
+<img src="images/twoPhaseInitialization02_2x.png" alt="images/twoPhaseInitialization02_2x">
 <p>The superclass&rsquo;s designated initializer now has an opportunity to
 customize the instance further (although it does not have to).
 </p>

@@ -122,7 +122,7 @@ two instances. The &lsquo;<samp>john</samp>&rsquo; variable now has a strong ref
 &lsquo;<samp>Person</samp>&rsquo; instance, and the &lsquo;<samp>unit4A</samp>&rsquo; variable has a strong reference to
 the new &lsquo;<samp>Apartment</samp>&rsquo; instance:
 </p>
-<img src="_images/referenceCycle01_2x.png" alt="_images/referenceCycle01_2x">
+<img src="images/referenceCycle01_2x.png" alt="images/referenceCycle01_2x">
 <p>You can now link the two instances together so that the person has an
 apartment, and the apartment has a tenant. Note that an exclamation mark
 (&lsquo;<samp>!</samp>&rsquo;) is used to unwrap and access the instances stored inside the
@@ -137,7 +137,7 @@ unit4A!.tenant = john
 <p>Here&rsquo;s how the strong references look after you link the two instances
 together:
 </p>
-<img src="_images/referenceCycle02_2x.png" alt="_images/referenceCycle02_2x">
+<img src="images/referenceCycle02_2x.png" alt="images/referenceCycle02_2x">
 <p>Unfortunately, linking these two instances creates a strong reference
 cycle between them. The &lsquo;<samp>Person</samp>&rsquo; instance now has a strong reference to
 the &lsquo;<samp>Apartment</samp>&rsquo; instance, and the &lsquo;<samp>Apartment</samp>&rsquo; instance has a strong
@@ -159,7 +159,7 @@ in your app.
 <p>Here&rsquo;s how the strong references look after you set the &lsquo;<samp>john</samp>&rsquo; and
 &lsquo;<samp>unit4A</samp>&rsquo; variables to &lsquo;<samp>nil</samp>&rsquo;:
 </p>
-<img src="_images/referenceCycle03_2x.png" alt="_images/referenceCycle03_2x">
+<img src="images/referenceCycle03_2x.png" alt="images/referenceCycle03_2x">
 <p>The strong references between the &lsquo;<samp>Person</samp>&rsquo; instance and the &lsquo;<samp>Apartment</samp>&rsquo;
 instance remain and cannot be broken.
 </p>
