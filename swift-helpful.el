@@ -593,7 +593,7 @@ symbol."
   (when swift-helpful-debug-log
     (message msg args)))
 
-(defun swift-helpful--maybe-configure-manuals ()
+(defun swift-helpful-maybe-configure-manuals ()
   "Configure `info-look' so that Swift reference indices can be queried."
   (info-lookup-maybe-add-help
    :mode 'swift-mode
@@ -614,7 +614,7 @@ accessible)."
          (lsp-snippet
           (swift-helpful--generate-lsp-snippet source-buffer)))
     (swift-helpful--log "Symbol under point %s" sym)
-    (swift-helpful--maybe-configure-manuals)
+    (swift-helpful-maybe-configure-manuals)
     (unless sym
       (user-error "There isn't a Swift symbol under point"))
     (unless (or (swift-helpful--lsp-snippet-p lsp-snippet)

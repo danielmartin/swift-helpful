@@ -20,4 +20,4 @@
 
 (add-to-list 'Info-directory-list (format "%s/swift-info" swift-helpful-default-directory))
 
-(swift-helpful-configure-manuals)
+(swift-helpful-maybe-configure-manuals)
