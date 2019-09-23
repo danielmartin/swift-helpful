@@ -117,7 +117,7 @@ code)."
                (if (member str escape-chars)
                    (format "\\%s" str)
                  str))
-             (mapcar 'char-to-string str)
+             (mapcar #'char-to-string str)
              "[\\n \\(__owned\\|@inline(__always)\\|@discardableResult\\|__consuming\\)]*"))
 
 (provide 'swift-helpful-regex)
