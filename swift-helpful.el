@@ -46,7 +46,7 @@
 (defgroup swift-helpful nil
   "Show contextual information about Swift code."
   :link '(url-link "https://github.com/danielmartin/swift-helpful")
-  :group 'help)
+  :group 'swift)
 
 (defcustom swift-helpful-switch-buffer-function
   #'pop-to-buffer
