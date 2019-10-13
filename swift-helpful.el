@@ -310,10 +310,10 @@ variable."
         (lsp-describe-thing-at-point))
       (let ((message (current-message)))
         (when (and
-               (get-buffer "*lsp-help*")
+               (or (get-buffer "*lsp-help*") (get-buffer (help-buffer)))
                (or (not message)
                    (not (string-match "No content at point" message))))
-          (with-current-buffer "*lsp-help*"
+          (with-current-buffer (or (get-buffer "*lsp-help*") (help-buffer))
             (buffer-substring (point-min) (point-max))))))))
 
 (defun swift-helpful--standard-library-identifier-p (source-buffer)
