@@ -1,5 +1,7 @@
 * swift-helpful
 
+[[https://melpa.org/#/swift-helpful][file:https://melpa.org/packages/swift-helpful-badge.svg]]
+
 ** Overview
    Emacs is described as "the extensible, customizable, self-documenting, real-time display editor". Wouldn't you like
    the same self-documenting experience when you are writing Swift code in Emacs? ~swift-helpful~ is a package that,
