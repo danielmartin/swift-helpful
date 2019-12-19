@@ -37,7 +37,7 @@
 * Basic Operators::
 * Strings and Characters::
 * Collection Types::
-* Control Flow: Control Flow 1.
+* Control Flow: Control Flow 1. 
 * Functions::
 * Closures::
 * Enumeration::
@@ -49,12 +49,12 @@
 * Initialization::
 * Deinitialization::
 * Optional Chaining::
-* Error Handling: Error Handling 2.
+* Error Handling: Error Handling 2. 
 * Type Casting::
 * Nested Types::
 * Extensions::
 * Protocols::
-* Generics: Generics 1.
+* Generics: Generics 1. 
 * Opaque Types::
 * Automatic Reference Counting::
 * Memory Safety::
@@ -90,7 +90,7 @@ The Basics
 * Booleans::
 * Tuples::
 * Optionals::
-* Error Handling: Error Handling 1.
+* Error Handling: Error Handling 1. 
 * Assertions and Preconditions::
 
 Constants and Variables
@@ -396,7 +396,7 @@ Inheritance
 
 Overriding
 
-* Accessing Superclass Methods, Properties, and Subscripts: Accessing Superclass Methods Properties and Subscripts.
+* Accessing Superclass Methods, Properties, and Subscripts: Accessing Superclass Methods Properties and Subscripts. 
 * Overriding Methods::
 * Overriding Properties::
 
@@ -426,7 +426,7 @@ Customizing Initialization
 
 Default Initializers
 
-* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types 1.
+* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types 1. 
 
 Class Inheritance and Initialization
 
@@ -493,11 +493,11 @@ Nested Types
 Extensions
 
 * Extension Syntax::
-* Computed Properties: Computed Properties 1.
-* Initializers: Initializers 1.
-* Methods: Methods 1.
-* Subscripts: Subscripts 1.
-* Nested Types: Nested Types 1.
+* Computed Properties: Computed Properties 1. 
+* Initializers: Initializers 1. 
+* Methods: Methods 1. 
+* Subscripts: Subscripts 1. 
+* Nested Types: Nested Types 1. 
 
 Methods
 
@@ -606,13 +606,13 @@ Access Control
 * Access Levels::
 * Access Control Syntax::
 * Custom Types::
-* Subclassing: Subclassing 1.
-* Constants, Variables, Properties, and Subscripts: Constants Variables Properties and Subscripts.
-* Initializers: Initializers 2.
-* Protocols: Protocols 1.
-* Extensions: Extensions 1.
-* Generics: Generics 2.
-* Type Aliases: Type Aliases 1.
+* Subclassing: Subclassing 1. 
+* Constants, Variables, Properties, and Subscripts: Constants Variables Properties and Subscripts. 
+* Initializers: Initializers 2. 
+* Protocols: Protocols 1. 
+* Extensions: Extensions 1. 
+* Generics: Generics 2. 
+* Type Aliases: Type Aliases 1. 
 
 Access Levels
 
@@ -625,9 +625,9 @@ Access Levels
 Custom Types
 
 * Tuple Types::
-* Function Types: Function Types 1.
+* Function Types: Function Types 1. 
 * Enumeration Types::
-* Nested Types: Nested Types 2.
+* Nested Types: Nested Types 2. 
 
 Constants, Variables, Properties, and Subscripts
 
@@ -635,12 +635,12 @@ Constants, Variables, Properties, and Subscripts
 
 Initializers
 
-* Default Initializers: Default Initializers 1.
+* Default Initializers: Default Initializers 1. 
 * Default Memberwise Initializers for Structure Types::
 
 Protocols
 
-* Protocol Inheritance: Protocol Inheritance 1.
+* Protocol Inheritance: Protocol Inheritance 1. 
 * Protocol Conformance::
 
 Extensions
@@ -652,7 +652,7 @@ Advanced Operators
 * Bitwise Operators::
 * Overflow Operators::
 * Precedence and Associativity::
-* Operator Methods: Operator Methods 1.
+* Operator Methods: Operator Methods 1. 
 * Custom Operators::
 
 Bitwise Operators
@@ -670,7 +670,7 @@ Overflow Operators
 Operator Methods
 
 * Prefix and Postfix Operators::
-* Compound Assignment Operators: Compound Assignment Operators 1.
+* Compound Assignment Operators: Compound Assignment Operators 1. 
 * Equivalence Operators::
 
 Custom Operators
@@ -1972,7 +1972,7 @@ errors as early as possible in the development process.
 * Booleans::
 * Tuples::
 * Optionals::
-* Error Handling: Error Handling 1.
+* Error Handling: Error Handling 1. 
 * Assertions and Preconditions::
 @end menu
 
@@ -3052,6 +3052,8 @@ variable.
 @node Error Handling 1
 @section Error Handling
 
+@cindex exception
+
 You use @emph{error handling} to respond to error conditions your program may
 encounter during execution.
 
@@ -4010,6 +4012,9 @@ parentheses where they help to make your intentions clear.
 @node Strings and Characters
 @chapter Strings and Characters
 
+@cindex string
+@cindex character
+
 A @emph{string} is a series of characters, such as @samp{"hello, world"} or
 @samp{"albatross"}. Swift strings are represented by the @samp{String} type. The
 contents of a @samp{String} can be accessed in various ways, including as a
@@ -4154,6 +4159,8 @@ quotation marks, so it starts with that extra four-space indentation.
 @node Special Characters in String Literals
 @subsection Special Characters in String Literals
 
+@cindex Unicode in string literals
+
 String literals can include the following special characters:
 
 @itemize
@@ -4197,6 +4204,8 @@ let threeDoubleQuotationMarks = """
 @node Extended String Delimiters
 @subsection Extended String Delimiters
 
+@cindex ignore special characters in strings
+
 You can place a string literal within @emph{extended delimiters} to include
 special characters in a string without invoking their effect. You place
 your string within quotation marks (@samp{"}) and surround that with number
@@ -4223,6 +4232,8 @@ let threeMoreDoubleQuotationMarks = #"""
 
 @node Initializing an Empty String
 @section Initializing an Empty String
+
+@cindex empty string, create
 
 To create an empty @samp{String} value as the starting point for building a
 longer string, either assign an empty string literal to a variable, or
@@ -4291,6 +4302,8 @@ types.
 
 @node Working with Characters
 @section Working with Characters
+
+@cindex iterate characters in a string
 
 You can access the individual @samp{Character} values for a @samp{String} by
 iterating over the string with a @samp{for}-@samp{in} loop:
@@ -4402,6 +4415,8 @@ lines, as expected.
 
 @node String Interpolation
 @section String Interpolation
+
+@cindex construct string from constants, variables
 
 @emph{String interpolation} is a way to construct a new @samp{String} value from a
 mix of constants, variables, literals, and expressions by including
@@ -5131,6 +5146,8 @@ Between Array and NSArray}
 @node Array Type Shorthand Syntax
 @subsection Array Type Shorthand Syntax
 
+@cindex syntactic sugar to declare an array
+
 The type of a Swift array is written in full as @samp{Array<Element>}, where
 @samp{Element} is the type of values the array is allowed to store. You can
 also write the type of an array in shorthand form as @samp{[Element]}.
@@ -5791,6 +5808,8 @@ Between Dictionary and NSDictionary}
 
 @node Dictionary Type Shorthand Syntax
 @subsection Dictionary Type Shorthand Syntax
+
+@cindex syntactic sugar to declare a dictionary
 
 The type of a Swift dictionary is written in full as
 @samp{Dictionary<Key, Value>}, where @samp{Key} is the type of value that can be
@@ -6891,6 +6910,8 @@ can always access a value for @samp{distance}.
 @node Control Transfer Statements
 @section Control Transfer Statements
 
+@cindex transfer control from one piece of code to another
+
 @emph{Control transfer statements} change the order in which your code is
 executed, by transferring control from one piece of code to another.
 Swift has five control transfer statements:
@@ -7050,6 +7071,8 @@ statement.
 @node Fallthrough
 @subsection Fallthrough
 
+@cindex no need to break in switch statements
+
 In Swift, @samp{switch} statements don't fall through the bottom of each case
 and into the next one. That is, the entire @samp{switch} statement completes
 its execution as soon as the first matching case is completed. By
@@ -7109,6 +7132,8 @@ inside the next case (or @samp{default} case) block, as in C's standard
 
 @node Labeled Statements
 @subsection Labeled Statements
+
+@cindex goto
 
 In Swift, you can nest loops and conditional statements inside other
 loops and conditional statements to create complex control flow
@@ -7234,6 +7259,7 @@ helps make the game's logic clearer to read and understand.
 @node Early Exit
 @section Early Exit
 
+@cindex early return
 @findex guard
 
 A @samp{guard} statement, like an @samp{if} statement, executes statements
@@ -8214,6 +8240,8 @@ Trailing closure syntax
 @node Closure Expressions
 @section Closure Expressions
 
+@cindex define a closure inline
+
 Nested functions, as introduced in @ref{Nested Functions, , Nested
 Functions}, are a convenient means of naming and defining
 self-contained blocks of code as part of a larger function. However, it
@@ -8373,6 +8401,8 @@ values, because it is assisting with the sorting of an array of strings.
 @node Implicit Returns from Single-Expression Closures
 @subsection Implicit Returns from Single-Expression Closures
 
+@cindex no need to return from a closure with a single expression
+
 Single-expression closures can implicitly return the result of their
 single expression by omitting the @samp{return} keyword from their
 declaration, as in this version of the previous example:
@@ -8389,6 +8419,8 @@ omitted.
 
 @node Shorthand Argument Names
 @subsection Shorthand Argument Names
+
+@cindex way to refer to a closure argument
 
 Swift automatically provides shorthand argument names to inline
 closures, which can be used to refer to the values of the closure's
@@ -8428,6 +8460,8 @@ For more about operator method, see
 
 @node Trailing Closures
 @section Trailing Closures
+
+@cindex closures as last argument in a function
 
 If you need to pass a closure expression to a function as the function's
 final argument and the closure expression is long, it can be useful to
@@ -8785,6 +8819,7 @@ print(instance.x)
 @node Autoclosures
 @section Autoclosures
 
+@cindex closures created automatically to wrap expression arguments
 @findex @@autoclosure
 
 An @emph{autoclosure} is a closure that is automatically created to wrap an
@@ -11483,7 +11518,7 @@ declaration that matches the one you provided for the override. This
 check ensures that your overriding definition is correct.
 
 @menu
-* Accessing Superclass Methods, Properties, and Subscripts: Accessing Superclass Methods Properties and Subscripts.
+* Accessing Superclass Methods, Properties, and Subscripts: Accessing Superclass Methods Properties and Subscripts. 
 * Overriding Methods::
 * Overriding Properties::
 @end menu
@@ -12063,7 +12098,7 @@ create a new instance of the class with initializer syntax, written as
 @samp{item}.
 
 @menu
-* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types 1.
+* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types 1. 
 @end menu
 
 @node Memberwise Initializers for Structure Types 1
@@ -15097,11 +15132,11 @@ existing functionality.
 
 @menu
 * Extension Syntax::
-* Computed Properties: Computed Properties 1.
-* Initializers: Initializers 1.
-* Methods: Methods 1.
-* Subscripts: Subscripts 1.
-* Nested Types: Nested Types 1.
+* Computed Properties: Computed Properties 1. 
+* Initializers: Initializers 1. 
+* Methods: Methods 1. 
+* Subscripts: Subscripts 1. 
+* Nested Types: Nested Types 1. 
 @end menu
 
 @node Extension Syntax
@@ -18739,6 +18774,8 @@ instance remain and cannot be broken.
 @node Resolving Strong Reference Cycles Between Class Instances
 @section Resolving Strong Reference Cycles Between Class Instances
 
+@cindex break retain cycle
+
 Swift provides two ways to resolve strong reference cycles when you work
 with properties of class type: weak references and unowned references.
 
@@ -19258,6 +19295,8 @@ which shows that the @samp{HTMLElement} instance is not deallocated.
 
 @node Resolving Strong Reference Cycles for Closures
 @section Resolving Strong Reference Cycles for Closures
+
+@cindex break retain cycle in closures
 
 You resolve a strong reference cycle between a closure and a class
 instance by defining a @emph{capture list} as part of the closure's
@@ -19795,13 +19834,13 @@ them (properties, types, functions, and so on) are referred to as
 * Access Levels::
 * Access Control Syntax::
 * Custom Types::
-* Subclassing: Subclassing 1.
-* Constants, Variables, Properties, and Subscripts: Constants Variables Properties and Subscripts.
-* Initializers: Initializers 2.
-* Protocols: Protocols 1.
-* Extensions: Extensions 1.
-* Generics: Generics 2.
-* Type Aliases: Type Aliases 1.
+* Subclassing: Subclassing 1. 
+* Constants, Variables, Properties, and Subscripts: Constants Variables Properties and Subscripts. 
+* Initializers: Initializers 2. 
+* Protocols: Protocols 1. 
+* Extensions: Extensions 1. 
+* Generics: Generics 2. 
+* Type Aliases: Type Aliases 1. 
 @end menu
 
 @node Modules and Source Files
@@ -20081,9 +20120,9 @@ private class SomePrivateClass @{ // explicitly private class
 
 @menu
 * Tuple Types::
-* Function Types: Function Types 1.
+* Function Types: Function Types 1. 
 * Enumeration Types::
-* Nested Types: Nested Types 2.
+* Nested Types: Nested Types 2. 
 @end menu
 
 @node Tuple Types
@@ -20358,6 +20397,8 @@ public struct TrackedString @{
 @node Initializers 2
 @section Initializers
 
+@cindex constructors
+
 Custom initializers can be assigned an access level less than or equal
 to the type that they initialize. The only exception is for required
 initializers (as defined in @ref{Required Initializers, , Required
@@ -20369,7 +20410,7 @@ parameters can't be more private than the initializer's own access
 level.
 
 @menu
-* Default Initializers: Default Initializers 1.
+* Default Initializers: Default Initializers 1. 
 * Default Memberwise Initializers for Structure Types::
 @end menu
 
@@ -20407,6 +20448,8 @@ yourself as part of the type's definition.
 @node Protocols 1
 @section Protocols
 
+@cindex interface, protocol
+
 If you want to assign an explicit access level to a protocol type, do so
 at the point that you define the protocol. This enables you to create
 protocols that can only be adopted within a certain access context.
@@ -20425,7 +20468,7 @@ This behavior is different from other types, where a public type
 definition implies an access level of internal for the type's members.
 
 @menu
-* Protocol Inheritance: Protocol Inheritance 1.
+* Protocol Inheritance: Protocol Inheritance 1. 
 * Protocol Conformance::
 @end menu
 
@@ -20465,6 +20508,8 @@ within the same program.
 
 @node Extensions 1
 @section Extensions
+
+@cindex categories
 
 You can extend a class, structure, or enumeration in any access context
 in which the class, structure, or enumeration is available. Any type
@@ -20546,6 +20591,8 @@ access level of any type constraints on its type parameters.
 @node Type Aliases 1
 @section Type Aliases
 
+@cindex typedef
+
 Any type aliases you define are treated as distinct types for the
 purposes of access control. A type alias can have an access level less
 than or equal to the access level of the type it aliases. For example, a
@@ -20590,7 +20637,7 @@ the custom operators you define.
 * Bitwise Operators::
 * Overflow Operators::
 * Precedence and Associativity::
-* Operator Methods: Operator Methods 1.
+* Operator Methods: Operator Methods 1. 
 * Custom Operators::
 @end menu
 
@@ -21106,7 +21153,7 @@ make the vector @samp{(5.0, 5.0)}, as illustrated below.
 
 @menu
 * Prefix and Postfix Operators::
-* Compound Assignment Operators: Compound Assignment Operators 1.
+* Compound Assignment Operators: Compound Assignment Operators 1. 
 * Equivalence Operators::
 @end menu
 

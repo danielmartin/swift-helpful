@@ -2210,6 +2210,8 @@ variable.
 
 ** Error Handling
 
+#+CINDEX: exception
+
 You use /error handling/ to respond to error conditions your program may
 encounter during execution.
 
@@ -3083,6 +3085,9 @@ parentheses where they help to make your intentions clear.
 
 * Strings and Characters
 
+#+CINDEX: string
+#+CINDEX: character
+
 A /string/ is a series of characters, such as ="hello, world"= or
 ="albatross"=. Swift strings are represented by the =String= type. The
 contents of a =String= can be accessed in various ways, including as a
@@ -3202,6 +3207,8 @@ quotation marks, so it starts with that extra four-space indentation.
 
 *** Special Characters in String Literals
 
+#+CINDEX: Unicode in string literals
+
 String literals can include the following special characters:
 
 - The escaped special characters =\0= (null character), =\\=
@@ -3240,6 +3247,8 @@ marks. For example:
 
 *** Extended String Delimiters
 
+#+CINDEX: ignore special characters in strings
+
 You can place a string literal within /extended delimiters/ to include
 special characters in a string without invoking their effect. You place
 your string within quotation marks (="=) and surround that with number
@@ -3265,6 +3274,8 @@ the literal. For example:
 #+END_SRC
 
 ** Initializing an Empty String
+
+#+CINDEX: empty string, create
 
 To create an empty =String= value as the starting point for building a
 longer string, either assign an empty string literal to a variable, or
@@ -3330,6 +3341,8 @@ you always get great performance when working with strings as value
 types.
 
 ** Working with Characters
+
+#+CINDEX: iterate characters in a string
 
 You can access the individual =Character= values for a =String= by
 iterating over the string with a =for=-=in= loop:
@@ -3439,6 +3452,8 @@ with a line break, so when it's combined with =end= the result has three
 lines, as expected.
 
 ** String Interpolation
+
+#+CINDEX: construct string from constants, variables
 
 /String interpolation/ is a way to construct a new =String= value from a
 mix of constants, variables, literals, and expressions by including
@@ -4105,6 +4120,8 @@ Between Array and NSArray]]
 
 *** Array Type Shorthand Syntax
 
+#+CINDEX: syntactic sugar to declare an array
+
 The type of a Swift array is written in full as =Array<Element>=, where
 =Element= is the type of values the array is allowed to store. You can
 also write the type of an array in shorthand form as =[Element]=.
@@ -4707,6 +4724,8 @@ Between Dictionary and NSDictionary]]
 [https://developer.apple.com/documentation/swift/dictionary#2846239].
 
 *** Dictionary Type Shorthand Syntax
+
+#+CINDEX: syntactic sugar to declare a dictionary
 
 The type of a Swift dictionary is written in full as
 =Dictionary<Key, Value>=, where =Key= is the type of value that can be
@@ -5752,6 +5771,8 @@ can always access a value for =distance=.
 
 ** Control Transfer Statements
 
+#+CINDEX: transfer control from one piece of code to another
+
 /Control transfer statements/ change the order in which your code is
 executed, by transferring control from one piece of code to another.
 Swift has five control transfer statements:
@@ -5888,6 +5909,8 @@ statement.
 
 *** Fallthrough
 
+#+CINDEX: no need to break in switch statements
+
 In Swift, =switch= statements don't fall through the bottom of each case
 and into the next one. That is, the entire =switch= statement completes
 its execution as soon as the first matching case is completed. By
@@ -5946,6 +5969,8 @@ inside the next case (or =default= case) block, as in C's standard
 =switch= statement behavior.
 
 *** Labeled Statements
+
+#+CINDEX: goto
 
 In Swift, you can nest loops and conditional statements inside other
 loops and conditional statements to create complex control flow
@@ -6062,6 +6087,7 @@ helps make the game's logic clearer to read and understand.
 
 ** Early Exit
 
+#+CINDEX: early return
 #+FINDEX: guard
 
 A =guard= statement, like an =if= statement, executes statements
@@ -6966,6 +6992,8 @@ scenarios. These optimizations include:
 
 ** Closure Expressions
 
+#+CINDEX: define a closure inline
+
 Nested functions, as introduced in [[Nested Functions][Nested
 Functions]], are a convenient means of naming and defining
 self-contained blocks of code as part of a larger function. However, it
@@ -7112,6 +7140,8 @@ values, because it is assisting with the sorting of an array of strings.
 
 *** Implicit Returns from Single-Expression Closures
 
+#+CINDEX: no need to return from a closure with a single expression
+
 Single-expression closures can implicitly return the result of their
 single expression by omitting the =return= keyword from their
 declaration, as in this version of the previous example:
@@ -7127,6 +7157,8 @@ closure's body contains a single expression (=s1 > s2=) that returns a
 omitted.
 
 *** Shorthand Argument Names
+
+#+CINDEX: way to refer to a closure argument
 
 Swift automatically provides shorthand argument names to inline
 closures, which can be used to refer to the values of the closure's
@@ -7164,6 +7196,8 @@ For more about operator method, see
 [[Operator Methods][Operator Methods]].
 
 ** Trailing Closures
+
+#+CINDEX: closures as last argument in a function
 
 If you need to pass a closure expression to a function as the function's
 final argument and the closure expression is long, it can be useful to
@@ -7517,6 +7551,7 @@ is a nonescaping closure, which means it can refer to =self= implicitly.
 
 ** Autoclosures
 
+#+CINDEX: closures created automatically to wrap expression arguments
 #+FINDEX: @@autoclosure
 
 An /autoclosure/ is a closure that is automatically created to wrap an
@@ -16884,6 +16919,8 @@ instance remain and cannot be broken.
 
 ** Resolving Strong Reference Cycles Between Class Instances
 
+#+CINDEX: break retain cycle
+
 Swift provides two ways to resolve strong reference cycles when you work
 with properties of class type: weak references and unowned references.
 
@@ -17385,6 +17422,8 @@ Note that the message in the =HTMLElement= deinitializer is not printed,
 which shows that the =HTMLElement= instance is not deallocated.
 
 ** Resolving Strong Reference Cycles for Closures
+
+#+CINDEX: break retain cycle in closures
 
 You resolve a strong reference cycle between a closure and a class
 instance by defining a /capture list/ as part of the closure's
@@ -18376,6 +18415,8 @@ public, and its property setter private, by combining the =public= and
 
 ** Initializers
 
+#+CINDEX: constructors
+
 Custom initializers can be assigned an access level less than or equal
 to the type that they initialize. The only exception is for required
 initializers (as defined in [[Required Initializers][Required
@@ -18416,6 +18457,8 @@ another module, you must provide a public memberwise initializer
 yourself as part of the type's definition.
 
 ** Protocols
+
+#+CINDEX: interface, protocol
 
 If you want to assign an explicit access level to a protocol type, do so
 at the point that you define the protocol. This enables you to create
@@ -18467,6 +18510,8 @@ possible for a type to conform to a protocol in two different ways
 within the same program.
 
 ** Extensions
+
+#+CINDEX: categories
 
 You can extend a class, structure, or enumeration in any access context
 in which the class, structure, or enumeration is available. Any type
@@ -18535,6 +18580,8 @@ of the access level of the generic type or function itself and the
 access level of any type constraints on its type parameters.
 
 ** Type Aliases
+
+#+CINDEX: typedef
 
 Any type aliases you define are treated as distinct types for the
 purposes of access control. A type alias can have an access level less

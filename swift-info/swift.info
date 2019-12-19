@@ -20610,26 +20610,44 @@ Index
 * as:                                    Downcasting.         (line   6)
 * associatedtype:                        Associated Types.    (line   6)
 * break:                                 Break.               (line   6)
+* break retain cycle:                    Resolving Strong Reference Cycles Between Class Instances.
+                                                              (line   6)
+* break retain cycle in closures:        Resolving Strong Reference Cycles for Closures.
+                                                              (line   6)
 * case:                                  Switch.              (line  25)
 * catch:                                 Handling Errors Using Do-Catch.
+                                                              (line   6)
+* categories:                            Extensions 1.        (line   6)
+* character:                             Strings and Characters.
                                                               (line   6)
 * class:                                 Objects and Classes. (line   6)
 * class <1>:                             Definition Syntax.   (line   6)
 * class <2>:                             Type Property Syntax.
                                                               (line  12)
+* closures as last argument in a function: Trailing Closures. (line   6)
+* closures created automatically to wrap expression arguments: Autoclosures.
+                                                              (line   6)
+* construct string from constants, variables: String Interpolation.
+                                                              (line   6)
+* constructors:                          Initializers 2.      (line   6)
 * continue:                              Continue.            (line   6)
 * convenience:                           Designated Initializers and Convenience Initializers.
                                                               (line  21)
 * default:                               Switch.              (line  36)
 * defer:                                 Specifying Cleanup Actions.
                                                               (line   6)
+* define a closure inline:               Closure Expressions. (line   6)
 * deinit:                                Deinitialization.    (line   6)
 * didSet:                                Property Observers.  (line  78)
 * do:                                    Handling Errors Using Do-Catch.
                                                               (line   6)
+* early return:                          Early Exit.          (line   6)
 * else:                                  If.                  (line  20)
+* empty string, create:                  Initializing an Empty String.
+                                                              (line   6)
 * enum:                                  Enumerations and Structures.
                                                               (line   6)
+* exception:                             Error Handling 1.    (line   6)
 * extension:                             Protocols and Extensions.
                                                               (line  47)
 * extension <1>:                         Extensions.          (line   6)
@@ -20644,8 +20662,11 @@ Index
                                                               (line   6)
 * get:                                   Computed Properties 1.
                                                               (line  42)
+* goto:                                  Labeled Statements.  (line   6)
 * guard:                                 Early Exit.          (line   6)
 * if:                                    If.                  (line   6)
+* ignore special characters in strings:  Extended String Delimiters.
+                                                              (line   6)
 * import:                                Modules and Source Files.
                                                               (line   9)
 * in:                                    For-In Loops.        (line   6)
@@ -20654,10 +20675,13 @@ Index
 * infix:                                 Custom Operators.    (line  10)
 * init:                                  Initializers.        (line   6)
 * inout:                                 In-Out Parameters.   (line  14)
+* interface, protocol:                   Protocols 1.         (line   6)
 * internal:                              Access Levels.       (line  18)
 * internal <1>:                          Access Control Syntax.
                                                               (line   6)
 * is:                                    Checking Type.       (line   6)
+* iterate characters in a string:        Working with Characters.
+                                                              (line   6)
 * lazy:                                  Lazy Stored Properties.
                                                               (line   6)
 * left:                                  Operator Methods 1.  (line  37)
@@ -20665,6 +20689,9 @@ Index
                                                               (line   6)
 * mutating:                              Protocols and Extensions.
                                                               (line  42)
+* no need to break in switch statements: Fallthrough.         (line   6)
+* no need to return from a closure with a single expression: Implicit Returns from Single-Expression Closures.
+                                                              (line   6)
 * open:                                  Access Levels.       (line  11)
 * override:                              Overriding.          (line  11)
 * postfix:                               Custom Operators.    (line  10)
@@ -20688,23 +20715,36 @@ Index
                                                               (line  53)
 * static:                                Type Property Syntax.
                                                               (line  12)
+* string:                                Strings and Characters.
+                                                              (line   6)
 * struct:                                Definition Syntax.   (line   6)
 * subscript:                             Subscripts.          (line   6)
 * super:                                 Accessing Superclass Methods Properties and Subscripts.
                                                               (line  12)
 * switch:                                Switch.              (line   6)
+* syntactic sugar to declare a dictionary: Dictionary Type Shorthand Syntax.
+                                                              (line   6)
+* syntactic sugar to declare an array:   Array Type Shorthand Syntax.
+                                                              (line   6)
 * throw:                                 Representing and Throwing Errors.
                                                               (line  22)
 * throws:                                Error Handling 1.    (line  22)
+* transfer control from one piece of code to another: Control Transfer Statements.
+                                                              (line   6)
 * try:                                   Handling Errors.     (line  17)
 * try!:                                  Disabling Error Propagation.
                                                               (line   6)
 * try?:                                  Converting Errors to Optional Values.
                                                               (line   6)
 * typealias:                             Type Aliases.        (line   6)
+* typedef:                               Type Aliases 1.      (line   6)
+* Unicode in string literals:            Special Characters in String Literals.
+                                                              (line   6)
 * unowned:                               Unowned References.  (line   6)
 * var:                                   Constants and Variables.
                                                               (line  12)
+* way to refer to a closure argument:    Shorthand Argument Names.
+                                                              (line   6)
 * weak:                                  Weak References.     (line   6)
 * where:                                 Extensions with a Generic Where Clause.
                                                               (line   6)
