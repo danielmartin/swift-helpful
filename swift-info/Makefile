@@ -10,7 +10,7 @@ swift.info: swift.texi
 	makeinfo --no-split $^
 
 swift.html: swift.texi
-	makeinfo --html --css-ref=https://gnu.org/software/emacs/manual.css $^
+	makeinfo --no-split --html --css-ref=https://gnu.org/software/emacs/manual.css $^
 
 # Swift reference manual
 
@@ -21,6 +21,6 @@ swift-reference.info: swift-reference.texi
 	makeinfo --no-split $^
 
 swift-reference.html: swift-reference.texi
-	makeinfo --html --css-ref=https://gnu.org/software/emacs/manual.css $^
+	makeinfo --no-split --html --css-ref=https://gnu.org/software/emacs/manual.css $^
 
 .PHONY: all
