@@ -17,6 +17,10 @@
 
 ** Install and Configuration
 
+*** MELPA
+
+You can install ~swift-helpful~ via MELPA by just doing ~M-x package-install RET swift-helpful~.
+
 *** Quelpa
 
 You can install ~swift-helpful~ via Quelpa (https://framagit.org/steckerhalter/quelpa):
@@ -26,10 +30,6 @@ You can install ~swift-helpful~ via Quelpa (https://framagit.org/steckerhalter/q
                           :fetcher github
                           :files ("*.el" "swift-info/*.info")))
 #+END_SRC
-
-*** MELPA
-
-You can install ~swift-helpful~ via MELPA by just doing ~M-x package-install RET swift-helpful~.
 
 *** Usage
 
