@@ -88,3 +88,24 @@ In its simplest form, the ‘if’ statement has a single ‘if’ condition.
       (should (equal (swift-helpful--stdlib-grep (swift-helpful-test-contents
                                                   "contains-type-signature.txt"))
                      (swift-helpful-test-contents "contains-definition.txt"))))))
+
+(ert-deftest swift-helpful--update-no-information-from-stdlib ()
+  "No Swift standard library info means no Source Code section."
+  (with-temp-buffer
+    (cl-letf (((symbol-function #'swift-helpful--type-signature-to-grep)
+               #'swift-helpful--type-signature-to-grep-mock)
+              ((symbol-function #'swift-helpful--standard-library-identifier-p)
+               #'swift-helpful--standard-library-identifier-mock-p))
+      (swift-helpful--update "Int" (current-buffer) "Sample LSP Snippet")
+      (should (equal (buffer-substring-no-properties (point-min) (point-max))
+                     "Int
+
+Signature Information (from LSP)
+
+Sample LSP Snippet
+
+Cross-references (from LSP)
+
+Search references Go to definition
+
+")))))

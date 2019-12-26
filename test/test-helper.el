@@ -50,4 +50,15 @@ created when the display supports color, and this is not the case
 when Emacs runs in batch mode."
   t)
 
+(defun swift-helpful--type-signature-to-grep-mock (signature)
+  "Mock `swift-helpful--type-signature-to-grep' to simulate a no results
+  status for a stdlib search for SIGNATURE."
+  "")
+
+(defun swift-helpful--standard-library-identifier-mock-p (source-buffer)
+  "Mock `swift-helpful--standard-library-identifier-p' to
+  simulate that the symbol at point at SOURCE-BUFFER comes from
+  the Swift standard library."
+  t)
+
 ;;; test-helper.el ends here

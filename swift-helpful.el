@@ -546,12 +546,14 @@ a checkout of the Swift standard library and that the
 `swift-helpful-ripgrep-executable' variable points to a recent
 version of the rg command line
 tool (https://github.com/BurntSushi/ripgrep)."
-  (insert
-   (swift-helpful--section-title "Source Code")
-   "\n"
-   (swift-helpful--stdlib-grep (substring-no-properties
-                                (swift-helpful--type-signature-to-grep
-                                 lsp-snippet)))))
+  (let ((swift-helpful--stdlib-grep (substring-no-properties
+                                     (swift-helpful--type-signature-to-grep
+                                      lsp-snippet))))
+    (unless (string-blank-p swift-helpful--stdlib-grep)
+      (insert
+       (swift-helpful--section-title "Source Code")
+       "\n"
+       swift-helpful--stdlib-grep))))
 
 (defun swift-helpful--update (sym source-buffer lsp-snippet)
   "Update the *swift-helpful* buffer to document SYM from SOURCE-BUFFER.
@@ -576,7 +578,11 @@ symbol."
     (when (swift-helpful--in-manual-p sym)
       (swift-helpful--insert-manuals sym))
     ;; Standard library source code.
-    (when (and standard-library-p (swift-helpful--lsp-snippet-p lsp-snippet))
+    (when (and (and swift-helpful-stdlib-path
+                    (file-exists-p swift-helpful-stdlib-path))
+               (executable-find swift-helpful-ripgrep-executable)
+               standard-library-p
+               (swift-helpful--lsp-snippet-p lsp-snippet))
       (swift-helpful--insert-library-source-code lsp-snippet))
     ;; Position the point at the beginning of the buffer when
     ;; everything is in place.
