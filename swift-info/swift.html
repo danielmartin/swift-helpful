@@ -1,19 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>The Swift Programming Language Guide (Swift 5.1)</title>
+<title>The Swift Programming Language Guide (Swift 5.2)</title>
 
-<meta name="description" content="The Swift Programming Language Guide (Swift 5.1)">
-<meta name="keywords" content="The Swift Programming Language Guide (Swift 5.1)">
+<meta name="description" content="The Swift Programming Language Guide (Swift 5.2)">
+<meta name="keywords" content="The Swift Programming Language Guide (Swift 5.2)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
 <link href="#Top" rel="start" title="Top">
 <link href="#Index" rel="index" title="Index">
 <link href="#SEC_Contents" rel="contents" title="Table of Contents">
-<link href="dir.html#Top" rel="up" title="(dir)">
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
@@ -38,7 +37,7 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<h1 class="settitle" align="center">The Swift Programming Language Guide (Swift 5.1)</h1>
+<h1 class="settitle" align="center">The Swift Programming Language Guide (Swift 5.2)</h1>
 
 
 
@@ -275,7 +274,7 @@ ul.no-bullet {list-style: none}
     <li><a id="toc-Escaping-Closures-1" href="#Escaping-Closures">12.5 Escaping Closures</a></li>
     <li><a id="toc-Autoclosures-1" href="#Autoclosures">12.6 Autoclosures</a></li>
   </ul></li>
-  <li><a id="toc-Enumeration-1" href="#Enumeration">13 Enumeration</a>
+  <li><a id="toc-Enumerations-1" href="#Enumerations">13 Enumerations</a>
   <ul class="no-bullet">
     <li><a id="toc-Enumeration-Syntax-1" href="#Enumeration-Syntax">13.1 Enumeration Syntax</a></li>
     <li><a id="toc-Matching-Enumeration-Values-with-a-Switch-Statement-1" href="#Matching-Enumeration-Values-with-a-Switch-Statement">13.2 Matching Enumeration Values with a Switch Statement</a></li>
@@ -319,11 +318,16 @@ ul.no-bullet {list-style: none}
       <li><a id="toc-Read_002dOnly-Computed-Properties-1" href="#Read_002dOnly-Computed-Properties">15.2.3 Read-Only Computed Properties</a></li>
     </ul></li>
     <li><a id="toc-Property-Observers-1" href="#Property-Observers">15.3 Property Observers</a></li>
-    <li><a id="toc-Global-and-Local-Variables-1" href="#Global-and-Local-Variables">15.4 Global and Local Variables</a></li>
-    <li><a id="toc-Type-Properties-1" href="#Type-Properties">15.5 Type Properties</a>
+    <li><a id="toc-Property-Wrappers-1" href="#Property-Wrappers">15.4 Property Wrappers</a>
     <ul class="no-bullet">
-      <li><a id="toc-Type-Property-Syntax-1" href="#Type-Property-Syntax">15.5.1 Type Property Syntax</a></li>
-      <li><a id="toc-Querying-and-Setting-Type-Properties-1" href="#Querying-and-Setting-Type-Properties">15.5.2 Querying and Setting Type Properties</a></li>
+      <li><a id="toc-Setting-Initial-Values-for-Wrapped-Properties-1" href="#Setting-Initial-Values-for-Wrapped-Properties">15.4.1 Setting Initial Values for Wrapped Properties</a></li>
+      <li><a id="toc-Projecting-a-Value-From-a-Property-Wrapper-1" href="#Projecting-a-Value-From-a-Property-Wrapper">15.4.2 Projecting a Value From a Property Wrapper</a></li>
+    </ul></li>
+    <li><a id="toc-Global-and-Local-Variables-1" href="#Global-and-Local-Variables">15.5 Global and Local Variables</a></li>
+    <li><a id="toc-Type-Properties-1" href="#Type-Properties">15.6 Type Properties</a>
+    <ul class="no-bullet">
+      <li><a id="toc-Type-Property-Syntax-1" href="#Type-Property-Syntax">15.6.1 Type Property Syntax</a></li>
+      <li><a id="toc-Querying-and-Setting-Type-Properties-1" href="#Querying-and-Setting-Type-Properties">15.6.2 Querying and Setting Type Properties</a></li>
     </ul></li>
   </ul></li>
   <li><a id="toc-Methods-2" href="#Methods">16 Methods</a>
@@ -606,16 +610,16 @@ ul.no-bullet {list-style: none}
       <li><a id="toc-Precedence-for-Custom-Infix-Operators-1" href="#Precedence-for-Custom-Infix-Operators">32.5.1 Precedence for Custom Infix Operators</a></li>
     </ul></li>
   </ul></li>
-  <li><a id="toc-Index-1" href="#Index">Index</a></li>
+  <li><a id="toc-Index-1" href="#Index" rel="index">Index</a></li>
 </ul>
 </div>
 
 
 <span id="Top"></span><div class="header">
 <p>
-Next: <a href="#Welcome-to-Swift" accesskey="n" rel="next">Welcome to Swift</a>, Up: <a href="dir.html#Top" accesskey="u" rel="up">(dir)</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Welcome-to-Swift" accesskey="n" rel="next">Welcome to Swift</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="The-Swift-Programming-Language-Guide-_0028Swift-5_002e1_0029"></span><h1 class="top">The Swift Programming Language Guide (Swift 5.1)</h1>
+<span id="The-Swift-Programming-Language-Guide-_0028Swift-5_002e2_0029"></span><h1 class="top">The Swift Programming Language Guide (Swift 5.2)</h1>
 
 <table class="menu" border="0" cellspacing="0">
 <tr><td align="left" valign="top">&bull; <a href="#Welcome-to-Swift" accesskey="1">Welcome to Swift</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -642,7 +646,7 @@ Next: <a href="#Welcome-to-Swift" accesskey="n" rel="next">Welcome to Swift</a>,
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Closures">Closures</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Enumeration">Enumeration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#Enumerations">Enumerations</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Structures-and-Classes">Structures and Classes</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
@@ -682,7 +686,7 @@ Next: <a href="#Welcome-to-Swift" accesskey="n" rel="next">Welcome to Swift</a>,
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Advanced-Operators">Advanced Operators</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Index">Index</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#Index" rel="index">Index</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
 
@@ -1118,7 +1122,7 @@ Closure Expressions
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
 
-Enumeration
+Enumerations
 
 </pre></th></tr><tr><td align="left" valign="top">&bull; <a href="#Enumeration-Syntax">Enumeration Syntax</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
@@ -1180,6 +1184,8 @@ Properties
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Property-Observers">Property Observers</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Property-Wrappers">Property Wrappers</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Global-and-Local-Variables">Global and Local Variables</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Type-Properties">Type Properties</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -1203,6 +1209,14 @@ Computed Properties
 <tr><td align="left" valign="top">&bull; <a href="#Shorthand-Getter-Declaration">Shorthand Getter Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Read_002dOnly-Computed-Properties">Read-Only Computed Properties</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+Property Wrappers
+
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="#Setting-Initial-Values-for-Wrapped-Properties">Setting Initial Values for Wrapped Properties</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Projecting-a-Value-From-a-Property-Wrapper">Projecting a Value From a Property Wrapper</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
 
@@ -1816,13 +1830,13 @@ Next: <a href="#A-Swift-Tour" accesskey="n" rel="next">A Swift Tour</a>, Previou
 </div>
 <span id="Version-Compatibility-1"></span><h2 class="chapter">3 Version Compatibility</h2>
 
-<p>This book describes Swift 5.1, the default version of Swift that&rsquo;s
-included in Xcode 11. You can use Xcode 11 to build targets that are
-written in either Swift 5.1, Swift 4.2, or Swift 4.
+<p>This book describes Swift 5.2, the default version of Swift that&rsquo;s
+included in Xcode 11.4. You can use Xcode 11 to build targets that are
+written in either Swift 5.2, Swift 4.2, or Swift 4.
 </p>
-<p>When you use Xcode 11 to build Swift 4 and Swift 4.2 code, most Swift
-5.1 functionality is available. That said, the following changes are
-available only to code that uses Swift 5.1 or later:
+<p>When you use Xcode 11.4 to build Swift 4 and Swift 4.2 code, most Swift
+5.2 functionality is available. That said, the following changes are
+available only to code that uses Swift 5.2 or later:
 </p>
 <ul>
 <li> Functions that return an opaque type require the Swift 5.1 runtime.
@@ -1835,10 +1849,10 @@ the correct integer type. For example, &lsquo;<samp>UInt64(0xffff_ffff_ffff_ffff
 evaluates to the correct value rather than overflowing.
 </li></ul>
 
-<p>A target written in Swift 5.1 can depend on a target that&rsquo;s written in
+<p>A target written in Swift 5.2 can depend on a target that&rsquo;s written in
 Swift 4.2 or Swift 4, and vice versa. This means, if you have a large
 project that&rsquo;s divided into multiple frameworks, you can migrate your
-code from Swift 4 to Swift 5.1 one framework at a time.
+code from Swift 4 to Swift 5.2 one framework at a time.
 </p>
 <hr>
 <span id="A-Swift-Tour"></span><div class="header">
@@ -2977,7 +2991,7 @@ Next: <a href="#The-Basics" accesskey="n" rel="next">The Basics</a>, Previous: <
 </li><li> <a href="#Control-Flow">Control Flow</a>
 </li><li> <a href="#Functions">Functions</a>
 </li><li> <a href="#Closures">Closures</a>
-</li><li> <a href="#Enumeration">Enumeration</a>
+</li><li> <a href="#Enumerations">Enumerations</a>
 </li><li> <a href="#Structures-and-Classes">Structures and Classes</a>
 </li><li> <a href="#Properties">Properties</a>
 </li><li> <a href="#Methods">Methods</a>
@@ -6968,7 +6982,7 @@ equally, such that if &lsquo;<samp>a =</samp>&rsquo; b=, it follows that
 <p>All of Swift&rsquo;s basic types (such as &lsquo;<samp>String</samp>&rsquo;, &lsquo;<samp>Int</samp>&rsquo;, &lsquo;<samp>Double</samp>&rsquo;, and
 &lsquo;<samp>Bool</samp>&rsquo;) are hashable by default, and can be used as set value types or
 dictionary key types. Enumeration case values without associated values
-(as described in <a href="#Enumeration">Enumeration</a>) are also hashable
+(as described in <a href="#Enumerations">Enumerations</a>) are also hashable
 by default.
 </p>
 <p>Note
@@ -9862,7 +9876,7 @@ print(&quot;zero!&quot;)
 <hr>
 <span id="Closures"></span><div class="header">
 <p>
-Next: <a href="#Enumeration" accesskey="n" rel="next">Enumeration</a>, Previous: <a href="#Functions" accesskey="p" rel="prev">Functions</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Enumerations" accesskey="n" rel="next">Enumerations</a>, Previous: <a href="#Functions" accesskey="p" rel="prev">Functions</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Closures-1"></span><h2 class="chapter">12 Closures</h2>
 
@@ -10676,11 +10690,11 @@ value of the &lsquo;<samp>customerProvider</samp>&rsquo; argument must be allowe
 function&rsquo;s scope.
 </p>
 <hr>
-<span id="Enumeration"></span><div class="header">
+<span id="Enumerations"></span><div class="header">
 <p>
 Next: <a href="#Structures-and-Classes" accesskey="n" rel="next">Structures and Classes</a>, Previous: <a href="#Closures" accesskey="p" rel="prev">Closures</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Enumeration-1"></span><h2 class="chapter">13 Enumeration</h2>
+<span id="Enumerations-1"></span><h2 class="chapter">13 Enumerations</h2>
 
 <p>An <em>enumeration</em> defines a common type for a group of related values and
 enables you to work with those values in a type-safe way within your
@@ -10732,7 +10746,7 @@ standard functionality.
 <hr>
 <span id="Enumeration-Syntax"></span><div class="header">
 <p>
-Next: <a href="#Matching-Enumeration-Values-with-a-Switch-Statement" accesskey="n" rel="next">Matching Enumeration Values with a Switch Statement</a>, Up: <a href="#Enumeration" accesskey="u" rel="up">Enumeration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Matching-Enumeration-Values-with-a-Switch-Statement" accesskey="n" rel="next">Matching Enumeration Values with a Switch Statement</a>, Up: <a href="#Enumerations" accesskey="u" rel="up">Enumerations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Enumeration-Syntax-1"></span><h3 class="section">13.1 Enumeration Syntax</h3>
 
@@ -10801,7 +10815,7 @@ working with explicitly typed enumeration values.
 <hr>
 <span id="Matching-Enumeration-Values-with-a-Switch-Statement"></span><div class="header">
 <p>
-Next: <a href="#Iterating-over-Enumeration-Cases" accesskey="n" rel="next">Iterating over Enumeration Cases</a>, Previous: <a href="#Enumeration-Syntax" accesskey="p" rel="prev">Enumeration Syntax</a>, Up: <a href="#Enumeration" accesskey="u" rel="up">Enumeration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Iterating-over-Enumeration-Cases" accesskey="n" rel="next">Iterating over Enumeration Cases</a>, Previous: <a href="#Enumeration-Syntax" accesskey="p" rel="prev">Enumeration Syntax</a>, Up: <a href="#Enumerations" accesskey="u" rel="up">Enumerations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Matching-Enumeration-Values-with-a-Switch-Statement-1"></span><h3 class="section">13.2 Matching Enumeration Values with a Switch Statement</h3>
 
@@ -10855,7 +10869,7 @@ default:
 <hr>
 <span id="Iterating-over-Enumeration-Cases"></span><div class="header">
 <p>
-Next: <a href="#Associated-Values" accesskey="n" rel="next">Associated Values</a>, Previous: <a href="#Matching-Enumeration-Values-with-a-Switch-Statement" accesskey="p" rel="prev">Matching Enumeration Values with a Switch Statement</a>, Up: <a href="#Enumeration" accesskey="u" rel="up">Enumeration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Associated-Values" accesskey="n" rel="next">Associated Values</a>, Previous: <a href="#Matching-Enumeration-Values-with-a-Switch-Statement" accesskey="p" rel="prev">Matching Enumeration Values with a Switch Statement</a>, Up: <a href="#Enumerations" accesskey="u" rel="up">Enumerations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Iterating-over-Enumeration-Cases-1"></span><h3 class="section">13.3 Iterating over Enumeration Cases</h3>
 
@@ -10898,7 +10912,7 @@ For information about protocols, see <a href="#Protocols">Protocols</a>.
 <hr>
 <span id="Associated-Values"></span><div class="header">
 <p>
-Next: <a href="#Raw-Values" accesskey="n" rel="next">Raw Values</a>, Previous: <a href="#Iterating-over-Enumeration-Cases" accesskey="p" rel="prev">Iterating over Enumeration Cases</a>, Up: <a href="#Enumeration" accesskey="u" rel="up">Enumeration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Raw-Values" accesskey="n" rel="next">Raw Values</a>, Previous: <a href="#Iterating-over-Enumeration-Cases" accesskey="p" rel="prev">Iterating over Enumeration Cases</a>, Up: <a href="#Enumerations" accesskey="u" rel="up">Enumerations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Associated-Values-1"></span><h3 class="section">13.4 Associated Values</h3>
 
@@ -11012,7 +11026,7 @@ case let .qrCode(productCode):
 <hr>
 <span id="Raw-Values"></span><div class="header">
 <p>
-Next: <a href="#Recursive-Enumerations" accesskey="n" rel="next">Recursive Enumerations</a>, Previous: <a href="#Associated-Values" accesskey="p" rel="prev">Associated Values</a>, Up: <a href="#Enumeration" accesskey="u" rel="up">Enumeration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Recursive-Enumerations" accesskey="n" rel="next">Recursive Enumerations</a>, Previous: <a href="#Associated-Values" accesskey="p" rel="prev">Associated Values</a>, Up: <a href="#Enumerations" accesskey="u" rel="up">Enumerations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Raw-Values-1"></span><h3 class="section">13.5 Raw Values</h3>
 
@@ -11171,7 +11185,7 @@ branch is executed instead.
 <hr>
 <span id="Recursive-Enumerations"></span><div class="header">
 <p>
-Previous: <a href="#Raw-Values" accesskey="p" rel="prev">Raw Values</a>, Up: <a href="#Enumeration" accesskey="u" rel="up">Enumeration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Previous: <a href="#Raw-Values" accesskey="p" rel="prev">Raw Values</a>, Up: <a href="#Enumerations" accesskey="u" rel="up">Enumerations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Recursive-Enumerations-1"></span><h3 class="section">13.6 Recursive Enumerations</h3>
 
@@ -11255,7 +11269,7 @@ them.
 <hr>
 <span id="Structures-and-Classes"></span><div class="header">
 <p>
-Next: <a href="#Properties" accesskey="n" rel="next">Properties</a>, Previous: <a href="#Enumeration" accesskey="p" rel="prev">Enumeration</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Properties" accesskey="n" rel="next">Properties</a>, Previous: <a href="#Enumerations" accesskey="p" rel="prev">Enumerations</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Structures-and-Classes-1"></span><h2 class="chapter">14 Structures and Classes</h2>
 
@@ -11779,6 +11793,9 @@ property&rsquo;s value, which you can respond to with custom actions. Property
 observers can be added to stored properties you define yourself, and
 also to properties that a subclass inherits from its superclass.
 </p>
+<p>You can also use a property wrapper to reuse code in the getter and
+setter of multiple properties.
+</p>
 <table class="menu" border="0" cellspacing="0">
 <tr><td align="left" valign="top">&bull; <a href="#Stored-Properties" accesskey="1">Stored Properties</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
@@ -11786,9 +11803,11 @@ also to properties that a subclass inherits from its superclass.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Property-Observers" accesskey="3">Property Observers</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Global-and-Local-Variables" accesskey="4">Global and Local Variables</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#Property-Wrappers" accesskey="4">Property Wrappers</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Type-Properties" accesskey="5">Type Properties</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#Global-and-Local-Variables" accesskey="5">Global and Local Variables</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Type-Properties" accesskey="6">Type Properties</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 </table>
 
@@ -12185,7 +12204,7 @@ discover its current calculated volume.
 <hr>
 <span id="Property-Observers"></span><div class="header">
 <p>
-Next: <a href="#Global-and-Local-Variables" accesskey="n" rel="next">Global and Local Variables</a>, Previous: <a href="#Computed-Properties" accesskey="p" rel="prev">Computed Properties</a>, Up: <a href="#Properties" accesskey="u" rel="up">Properties</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Property-Wrappers" accesskey="n" rel="next">Property Wrappers</a>, Previous: <a href="#Computed-Properties" accesskey="p" rel="prev">Computed Properties</a>, Up: <a href="#Properties" accesskey="u" rel="up">Properties</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Property-Observers-1"></span><h3 class="section">15.3 Property Observers</h3>
 
@@ -12299,11 +12318,404 @@ parameters, see <a href="#In_002dOut-Parameters">In-Out
 Parameters</a>.
 </p>
 <hr>
+<span id="Property-Wrappers"></span><div class="header">
+<p>
+Next: <a href="#Global-and-Local-Variables" accesskey="n" rel="next">Global and Local Variables</a>, Previous: <a href="#Property-Observers" accesskey="p" rel="prev">Property Observers</a>, Up: <a href="#Properties" accesskey="u" rel="up">Properties</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Property-Wrappers-1"></span><h3 class="section">15.4 Property Wrappers</h3>
+
+<p>A property wrapper adds a layer of separation between code that manages
+how a property is stored and the code that defines a property. For
+example, if you have properties that provide thread-safety checks or
+store their underlying data in a database, you have to write that code
+on every property. When you use a property wrapper, you write the
+management code once when you define the wrapper, and then reuse that
+management code by applying it to multiple properties.
+</p>
+<p>To define a property wrapper, you make a structure, enumeration, or
+class that defines a &lsquo;<samp>wrappedValue</samp>&rsquo; property. In the code below, the
+&lsquo;<samp>TwelveOrLess</samp>&rsquo; structure ensures that the value it wraps always contains
+a number less than or equal to 12. If you ask it to store a larger
+number, it stores 12 instead.
+</p>
+<div class="example">
+<pre class="example">@propertyWrapper
+struct TwelveOrLess {
+    private var number: Int
+    init() { self.number = 0 }
+    var wrappedValue: Int {
+        get { return number }
+        set { number = min(newValue, 12) }
+    }
+}
+</pre></div>
+
+<p>The setter ensures that new values are less than 12, and the getter
+returns the stored value.
+</p>
+<p>Note
+</p>
+<p>The declaration for &lsquo;<samp>number</samp>&rsquo; in the example above marks the variable as
+&lsquo;<samp>private</samp>&rsquo;, which ensures &lsquo;<samp>number</samp>&rsquo; is used only in the implementation of
+&lsquo;<samp>TwelveOrLess</samp>&rsquo;. Code that&rsquo;s written anywhere else accesses the value
+using the getter and setter for &lsquo;<samp>wrappedValue</samp>&rsquo;, and can&rsquo;t use &lsquo;<samp>number</samp>&rsquo;
+directly. For information about &lsquo;<samp>private</samp>&rsquo;, see
+<a href="#Access-Control">Access Control</a>.
+</p>
+<p>You apply a wrapper to a property by writing the wrapper&rsquo;s name before
+the property as an attribute. Here&rsquo;s a structure that stores a small
+rectangle, using the same (rather arbitrary) definition of “small”
+that&rsquo;s implemented by the &lsquo;<samp>TwelveOrLess</samp>&rsquo; property wrapper:
+</p>
+<div class="example">
+<pre class="example">struct SmallRectangle {
+    @TwelveOrLess var height: Int
+    @TwelveOrLess var width: Int
+}
+</pre></div>
+
+<div class="example">
+<pre class="example">var rectangle = SmallRectangle()
+print(rectangle.height)
+// Prints &quot;0&quot;
+</pre></div>
+
+<div class="example">
+<pre class="example">rectangle.height = 10
+print(rectangle.height)
+// Prints &quot;10&quot;
+</pre></div>
+
+<div class="example">
+<pre class="example">rectangle.height = 24
+print(rectangle.height)
+// Prints &quot;12&quot;
+</pre></div>
+
+<p>The &lsquo;<samp>height</samp>&rsquo; and &lsquo;<samp>width</samp>&rsquo; properties get their initial values from the
+definition of &lsquo;<samp>TwelveOrLess</samp>&rsquo;, which sets &lsquo;<samp>TwelveOrLess.number</samp>&rsquo; to zero.
+Storing the number 10 into &lsquo;<samp>rectangle.height</samp>&rsquo; succeeds because it&rsquo;s a
+small number. Trying to store 24 actually stores a value of 12 instead,
+because 24 is too large for the property setter&rsquo;s rule.
+</p>
+<p>When you apply a wrapper to a property, the compiler synthesizes code
+that provides storage for the wrapper and code that provides access to
+the property through the wrapper. (The property wrapper is responsible
+for storing the wrapped value, so there&rsquo;s no synthesized code for that.)
+You could write code that uses the behavior of a property wrapper,
+without taking advantage of the special attribute syntax. For example,
+here&rsquo;s a version of &lsquo;<samp>SmallRectangle</samp>&rsquo; from the previous code listing that
+wraps its properties in the &lsquo;<samp>TwelveOrLess</samp>&rsquo; structure explicitly, instead
+of writing &lsquo;<samp>@TwelveOrLess</samp>&rsquo; as an attribute:
+</p>
+<div class="example">
+<pre class="example">struct SmallRectangle {
+    private var _height = TwelveOrLess()
+    private var _width = TwelveOrLess()
+    var height: Int {
+        get { return _height.wrappedValue }
+        set { _height.wrappedValue = newValue }
+    }
+    var width: Int {
+        get { return _width.wrappedValue }
+        set { _width.wrappedValue = newValue }
+    }
+}
+</pre></div>
+
+<p>The &lsquo;<samp>_height</samp>&rsquo; and &lsquo;<samp>_width</samp>&rsquo; properties store an instance of the property
+wrapper, &lsquo;<samp>TwelveOrLess</samp>&rsquo;. The getter and setter for &lsquo;<samp>height</samp>&rsquo; and &lsquo;<samp>width</samp>&rsquo;
+wrap access to the &lsquo;<samp>wrappedValue</samp>&rsquo; property.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="#Setting-Initial-Values-for-Wrapped-Properties" accesskey="1">Setting Initial Values for Wrapped Properties</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Projecting-a-Value-From-a-Property-Wrapper" accesskey="2">Projecting a Value From a Property Wrapper</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<span id="Setting-Initial-Values-for-Wrapped-Properties"></span><div class="header">
+<p>
+Next: <a href="#Projecting-a-Value-From-a-Property-Wrapper" accesskey="n" rel="next">Projecting a Value From a Property Wrapper</a>, Up: <a href="#Property-Wrappers" accesskey="u" rel="up">Property Wrappers</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Setting-Initial-Values-for-Wrapped-Properties-1"></span><h4 class="subsection">15.4.1 Setting Initial Values for Wrapped Properties</h4>
+
+<p>The code in the examples above sets the initial value for the wrapped
+property by giving &lsquo;<samp>number</samp>&rsquo; an initial value in the definition of
+&lsquo;<samp>TwelveOrLess</samp>&rsquo;. Code that uses this property wrapper, can&rsquo;t specify a
+different initial value for a property that&rsquo;s wrapped by
+&lsquo;<samp>TwelveOrLess</samp>&rsquo;&mdash;for example, the definition of &lsquo;<samp>SmallRectangle</samp>&rsquo; can&rsquo;t
+give &lsquo;<samp>height</samp>&rsquo; or &lsquo;<samp>width</samp>&rsquo; initial values. To support setting an initial
+value or other customization, the property wrapper needs to add an
+initializer. Here&rsquo;s an expanded version of &lsquo;<samp>TwelveOrLess</samp>&rsquo; called
+&lsquo;<samp>SmallNumber</samp>&rsquo; that defines initializers that set the wrapped and maximum
+value:
+</p>
+<div class="example">
+<pre class="example">@propertyWrapper
+struct SmallNumber {
+    private var maximum: Int
+    private var number: Int
+
+
+    var wrappedValue: Int {
+        get { return number }
+        set { number = min(newValue, maximum) }
+    }
+
+
+    init() {
+        maximum = 12
+        number = 0
+    }
+    init(wrappedValue: Int) {
+        maximum = 12
+        number = min(wrappedValue, maximum)
+    }
+    init(wrappedValue: Int, maximum: Int) {
+        self.maximum = maximum
+        number = min(wrappedValue, maximum)
+    }
+}
+</pre></div>
+
+<p>The definition of &lsquo;<samp>SmallNumber</samp>&rsquo; includes three initializers&mdash;&lsquo;<samp>init()</samp>&rsquo;,
+&lsquo;<samp>init(wrappedValue:)</samp>&rsquo;, and &lsquo;<samp>init(wrappedValue:maximum:)</samp>&rsquo;&mdash;which the
+examples below use to set the wrapped value and the maximum value. For
+information about initialization and initializer syntax, see
+<a href="#Initialization">Initialization</a>.
+</p>
+<p>When you apply a wrapper to a property and you don&rsquo;t specify an initial
+value, Swift uses the &lsquo;<samp>init()</samp>&rsquo; initializer to set up the wrapper. For
+example:
+</p>
+<div class="example">
+<pre class="example">struct ZeroRectangle {
+    @SmallNumber var height: Int
+    @SmallNumber var width: Int
+}
+
+
+var zeroRectangle = ZeroRectangle()
+print(zeroRectangle.height, zeroRectangle.width)
+// Prints &quot;0 0&quot;
+</pre></div>
+
+<p>The instances of &lsquo;<samp>SmallNumber</samp>&rsquo; that wrap &lsquo;<samp>height</samp>&rsquo; and &lsquo;<samp>width</samp>&rsquo; are
+created by calling &lsquo;<samp>SmallNumber()</samp>&rsquo;. The code inside that initializer
+sets the initial wrapped value and the initial maximum value, using the
+default values of zero and 12. The property wrapper still provides all
+of the initial values, like the earlier example that used &lsquo;<samp>TwelveOrLess</samp>&rsquo;
+in &lsquo;<samp>SmallRectangle</samp>&rsquo;. Unlike that example, &lsquo;<samp>SmallNumber</samp>&rsquo; also supports
+writing those initial values as part of declaring the property.
+</p>
+<p>When you specify an initial value for the property, Swift uses the
+&lsquo;<samp>init(wrappedValue:)</samp>&rsquo; initializer to set up the wrapper. For example:
+</p>
+<div class="example">
+<pre class="example">struct UnitRectangle {
+    @SmallNumber var height: Int = 1
+    @SmallNumber var width: Int = 1
+}
+
+
+var unitRectangle = UnitRectangle()
+print(unitRectangle.height, unitRectangle.width)
+// Prints &quot;1 1&quot;
+</pre></div>
+
+<p>When you write &lsquo;<samp>= 1</samp>&rsquo; on a property with a wrapper, that&rsquo;s translated
+into a call to the &lsquo;<samp>init(wrappedValue:)</samp>&rsquo; initializer. The instances of
+&lsquo;<samp>SmallNumber</samp>&rsquo; that wrap &lsquo;<samp>height</samp>&rsquo; and &lsquo;<samp>width</samp>&rsquo; are created by calling
+&lsquo;<samp>SmallNumber(wrappedValue: 1)</samp>&rsquo;. The initializer uses the wrapped value
+that&rsquo;s specified here, and it uses the default maximum value of 12.
+</p>
+<p>When you write arguments in parentheses after the custom attribute,
+Swift uses the initializer that accepts those arguments to set up the
+wrapper. For example, if you provide an initial value and a maximum
+value, Swift uses the &lsquo;<samp>init(wrappedValue:maximum:)</samp>&rsquo; initializer:
+</p>
+<div class="example">
+<pre class="example">struct NarrowRectangle {
+    @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
+    @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
+}
+
+
+var narrowRectangle = NarrowRectangle()
+print(narrowRectangle.height, narrowRectangle.width)
+// Prints &quot;2 3&quot;
+
+
+narrowRectangle.height = 100
+narrowRectangle.width = 100
+print(narrowRectangle.height, narrowRectangle.width)
+// Prints &quot;5 4&quot;
+</pre></div>
+
+<p>The instance of &lsquo;<samp>SmallNumber</samp>&rsquo; that wraps &lsquo;<samp>height</samp>&rsquo; is created by calling
+&lsquo;<samp>SmallNumber(wrappedValue: 2, maximum: 5)</samp>&rsquo;, and the instance that wraps
+&lsquo;<samp>width</samp>&rsquo; is created by calling
+&lsquo;<samp>SmallNumber(wrappedValue: 3, maximum: 4)</samp>&rsquo;.
+</p>
+<p>By including arguments to the property wrapper, you can set up the
+initial state in the wrapper or pass other options to the wrapper when
+it&rsquo;s created. This syntax is the most general way to use a property
+wrapper. You can provide whatever arguments you need to the attribute,
+and they&rsquo;re passed to the initializer.
+</p>
+<p>When you include property wrapper arguments, you can also specify an
+initial value using assignment. Swift treats the assignment like a
+&lsquo;<samp>wrappedValue</samp>&rsquo; argument and uses the initializer that accepts the
+arguments you include. For example:
+</p>
+<div class="example">
+<pre class="example">struct MixedRectangle {
+    @SmallNumber var height: Int = 1
+    @SmallNumber(maximum: 9) var width: Int = 2
+}
+
+
+var mixedRectangle = MixedRectangle()
+print(mixedRectangle.height)
+// Prints &quot;1&quot;
+
+
+mixedRectangle.height = 20
+print(mixedRectangle.height)
+// Prints &quot;12&quot;
+</pre></div>
+
+<p>The instance of &lsquo;<samp>SmallNumber</samp>&rsquo; that wraps &lsquo;<samp>height</samp>&rsquo; is created by calling
+&lsquo;<samp>SmallNumber(wrappedValue: 1)</samp>&rsquo;, which uses the default maximum value of
+</p><ol>
+<li> The instance that wraps &lsquo;<samp>width</samp>&rsquo; is created by calling
+</li></ol>
+<p>&lsquo;<samp>SmallNumber(wrappedValue: 2, maximum: 9)</samp>&rsquo;.
+</p>
+<hr>
+<span id="Projecting-a-Value-From-a-Property-Wrapper"></span><div class="header">
+<p>
+Previous: <a href="#Setting-Initial-Values-for-Wrapped-Properties" accesskey="p" rel="prev">Setting Initial Values for Wrapped Properties</a>, Up: <a href="#Property-Wrappers" accesskey="u" rel="up">Property Wrappers</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Projecting-a-Value-From-a-Property-Wrapper-1"></span><h4 class="subsection">15.4.2 Projecting a Value From a Property Wrapper</h4>
+
+<p>In addition to the wrapped value, a property wrapper can expose
+additional functionality by defining a <em>projected value</em>&mdash;for example,
+a property wrapper that manages access to a database can expose a
+&lsquo;<samp>flushDatabaseConnection()</samp>&rsquo; method on its projected value. The name of
+the projected value is the same as the wrapped value, except it begins
+with a dollar sign (&lsquo;<samp>$</samp>&rsquo;). Because your code can&rsquo;t define properties that
+start with &lsquo;<samp>$</samp>&rsquo; the projected value never interferes with properties you
+define.
+</p>
+<p>In the &lsquo;<samp>SmallNumber</samp>&rsquo; example above, if you try to set the property to a
+number that&rsquo;s too large, the property wrapper adjusts the number before
+storing it. The code below adds a &lsquo;<samp>projectedValue</samp>&rsquo; property to the
+&lsquo;<samp>SmallNumber</samp>&rsquo; structure to keep track of whether the property wrapper
+adjusted the new value for the property before storing that new value.
+</p>
+<div class="example">
+<pre class="example">@propertyWrapper
+struct SmallNumber {
+    private var number: Int
+    var projectedValue: Bool
+    init() {
+        self.number = 0
+        self.projectedValue = false
+    }
+    var wrappedValue: Int {
+        get { return number }
+        set {
+            if newValue &gt; 12 {
+                number = 12
+                projectedValue = true
+            } else {
+                number = newValue
+                projectedValue = false
+            }
+        }
+    }
+}
+struct SomeStructure {
+    @SmallNumber var someNumber: Int
+}
+var someStructure = SomeStructure()
+
+
+someStructure.someNumber = 4
+print(someStructure.$someNumber)
+// Prints &quot;false&quot;
+
+
+someStructure.someNumber = 55
+print(someStructure.$someNumber)
+// Prints &quot;true&quot;
+</pre></div>
+
+<p>Writing &lsquo;<samp>someStructure.$someNumber</samp>&rsquo; accesses the wrapper&rsquo;s projected
+value. After storing a small number like four, the value of
+&lsquo;<samp>someStructure.$someNumber</samp>&rsquo; is &lsquo;<samp>false</samp>&rsquo;. However, the projected value is
+&lsquo;<samp>true</samp>&rsquo; after trying to store a number that&rsquo;s too large, like 55.
+</p>
+<p>A property wrapper can return a value of any type as its projected
+value. In this example, the property wrapper exposes only one piece of
+information&mdash;whether the number was adjusted&mdash;so it exposes that
+Boolean value as its projected value. A wrapper that needs to expose
+more information can return an instance of some other data type, or it
+can return &lsquo;<samp>self</samp>&rsquo; to expose the instance of the wrapper as its projected
+value.
+</p>
+<p>When you access a projected value from code that&rsquo;s part of the type,
+like a property getter or an instance method, you can omit &lsquo;<samp>self.</samp>&rsquo;
+before the property name, just like accessing other properties. The code
+in the following example refers to the projected value of the wrapper
+around &lsquo;<samp>height</samp>&rsquo; and &lsquo;<samp>width</samp>&rsquo; as &lsquo;<samp>$height</samp>&rsquo; and &lsquo;<samp>$width</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">enum Size {
+    case small, large
+}
+
+
+struct SizedRectangle {
+    @SmallNumber var height: Int
+    @SmallNumber var width: Int
+
+
+    mutating func resize(to size: Size) -&gt; Bool {
+        switch size {
+        case .small:
+            height = 10
+            width = 20
+        case .large:
+            height = 100
+            width = 100
+        }
+        return $height || $width
+    }
+}
+</pre></div>
+
+<p>Because property wrapper syntax is just syntactic sugar for a property
+with a getter and a setter, accessing &lsquo;<samp>height</samp>&rsquo; and &lsquo;<samp>width</samp>&rsquo; behaves the
+same as accessing any other property. For example, the code in
+&lsquo;<samp>resize(to:)</samp>&rsquo; accesses &lsquo;<samp>height</samp>&rsquo; and &lsquo;<samp>width</samp>&rsquo; using their property
+wrapper. If you call &lsquo;<samp>resize(to: .large)</samp>&rsquo;, the switch case for &lsquo;<samp>.large</samp>&rsquo;
+sets the rectangle&rsquo;s height and width to 100. The wrapper prevents the
+value of those properties from being larger than 12, and it sets the
+projected value to &lsquo;<samp>true</samp>&rsquo;, to record the fact that it adjusted their
+values. At the end of &lsquo;<samp>resize(to:)</samp>&rsquo;, the return statement checks
+&lsquo;<samp>$height</samp>&rsquo; and &lsquo;<samp>$width</samp>&rsquo; to determine whether the property wrapper
+adjusted either &lsquo;<samp>height</samp>&rsquo; or &lsquo;<samp>width</samp>&rsquo;.
+</p>
+<hr>
 <span id="Global-and-Local-Variables"></span><div class="header">
 <p>
-Next: <a href="#Type-Properties" accesskey="n" rel="next">Type Properties</a>, Previous: <a href="#Property-Observers" accesskey="p" rel="prev">Property Observers</a>, Up: <a href="#Properties" accesskey="u" rel="up">Properties</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Type-Properties" accesskey="n" rel="next">Type Properties</a>, Previous: <a href="#Property-Wrappers" accesskey="p" rel="prev">Property Wrappers</a>, Up: <a href="#Properties" accesskey="u" rel="up">Properties</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Global-and-Local-Variables-1"></span><h3 class="section">15.4 Global and Local Variables</h3>
+<span id="Global-and-Local-Variables-1"></span><h3 class="section">15.5 Global and Local Variables</h3>
 
 <p>The capabilities described above for computing and observing properties
 are also available to <em>global variables</em> and <em>local variables</em>. Global
@@ -12335,7 +12747,7 @@ marked with the &lsquo;<samp>lazy</samp>&rsquo; modifier.
 <p>
 Previous: <a href="#Global-and-Local-Variables" accesskey="p" rel="prev">Global and Local Variables</a>, Up: <a href="#Properties" accesskey="u" rel="up">Properties</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Type-Properties-1"></span><h3 class="section">15.5 Type Properties</h3>
+<span id="Type-Properties-1"></span><h3 class="section">15.6 Type Properties</h3>
 
 <p>Instance properties are properties that belong to an instance of a
 particular type. Every time you create a new instance of that type, it
@@ -12380,7 +12792,7 @@ the &lsquo;<samp>lazy</samp>&rsquo; modifier.
 <p>
 Next: <a href="#Querying-and-Setting-Type-Properties" accesskey="n" rel="next">Querying and Setting Type Properties</a>, Up: <a href="#Type-Properties" accesskey="u" rel="up">Type Properties</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Type-Property-Syntax-1"></span><h4 class="subsection">15.5.1 Type Property Syntax</h4>
+<span id="Type-Property-Syntax-1"></span><h4 class="subsection">15.6.1 Type Property Syntax</h4>
 
 <p>In C and Objective-C, you define static constants and variables
 associated with a type as <em>global</em> static variables. In Swift, however,
@@ -12431,7 +12843,7 @@ properties with the same syntax as for computed instance properties.
 <p>
 Previous: <a href="#Type-Property-Syntax" accesskey="p" rel="prev">Type Property Syntax</a>, Up: <a href="#Type-Properties" accesskey="u" rel="up">Type Properties</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Querying-and-Setting-Type-Properties-1"></span><h4 class="subsection">15.5.2 Querying and Setting Type Properties</h4>
+<span id="Querying-and-Setting-Type-Properties-1"></span><h4 class="subsection">15.6.2 Querying and Setting Type Properties</h4>
 
 <p>Type properties are queried and set with dot syntax, just like instance
 properties. However, type properties are queried and set on the <em>type</em>,
@@ -13145,9 +13557,13 @@ Next: <a href="#Type-Subscripts" accesskey="n" rel="next">Type Subscripts</a>, P
 <span id="Subscript-Options-1"></span><h3 class="section">17.3 Subscript Options</h3>
 
 <p>Subscripts can take any number of input parameters, and these input
-parameters can be of any type. Subscripts can also return any type.
-Subscripts can use variadic parameters and provide default parameter
-values, but they can&rsquo;t use in-out parameters.
+parameters can be of any type. Subscripts can also return a value of any
+type.
+</p>
+<p>Like functions, subscripts can take a varying number of parameters and
+provide default values for their parameters, as discussed in
+<a href="#Variadic-Parameters">Variadic Parameters</a> and <a href="#Default-Parameter-Values">Default Parameter Values</a>. However, unlike functions,
+they can&rsquo;t use in-out parameters.
 </p>
 <p>A class or structure can provide as many subscript implementations as it
 needs, and the appropriate subscript to be used will be inferred based
@@ -16676,10 +17092,11 @@ remaining statements in the &lsquo;<samp>do</samp>&rsquo; statement are executed
 code in the &lsquo;<samp>do</samp>&rsquo; clause can throw. If none of the &lsquo;<samp>catch</samp>&rsquo; clauses handle
 the error, the error propagates to the surrounding scope. However, the
 propagated error must be handled by <em>some</em> surrounding scope. In a
-nonthrowing function, an enclosing &lsquo;<samp>do</samp>&rsquo;-&lsquo;<samp>catch</samp>&rsquo; clause must handle the
-error. In a throwing function, either an enclosing &lsquo;<samp>do</samp>&rsquo;-&lsquo;<samp>catch</samp>&rsquo; clause
-or the caller must handle the error. If the error propagates to the
-top-level scope without being handled, you&rsquo;ll get a runtime error.
+nonthrowing function, an enclosing &lsquo;<samp>do</samp>&rsquo;-&lsquo;<samp>catch</samp>&rsquo; statement must handle
+the error. In a throwing function, either an enclosing &lsquo;<samp>do</samp>&rsquo;-&lsquo;<samp>catch</samp>&rsquo;
+statement or the caller must handle the error. If the error propagates
+to the top-level scope without being handled, you&rsquo;ll get a runtime
+error.
 </p>
 <p>For example, the above example can be written so any error that isn&rsquo;t a
 &lsquo;<samp>VendingMachineError</samp>&rsquo; is instead caught by the calling function:
@@ -18335,7 +18752,7 @@ as weak references. For information about weak references, see
 Between Class Instances</a>. Marking the protocol as class-only lets the
 &lsquo;<samp>SnakesAndLadders</samp>&rsquo; class later in this chapter declare that its delegate
 must use a weak reference. A class-only protocol is marked by its
-inheritance from &lsquo;<samp>AnyObject</samp>&rsquo; as discussed in
+inheritance from &lsquo;<samp>AnyObject</samp>&rsquo;, as discussed in
 <a href="#Class_002dOnly-Protocols">Class-Only Protocols</a>.
 </p>
 <p>Here&rsquo;s a version of the <em>Snakes and Ladders</em> game originally introduced
@@ -20844,8 +21261,8 @@ protocol. Generally speaking, protocol types give you more flexibility
 about the underlying types of the values they store, and opaque types
 let you make stronger guarantees about those underlying types.
 </p>
-<p>For example, here&rsquo;s a version of &lsquo;<samp>flip(_:)</samp>&rsquo; that returns a value of
-protocol type instead of using an opaque return type:
+<p>For example, here&rsquo;s a version of &lsquo;<samp>flip(_:)</samp>&rsquo; that uses a protocol type as
+its return type instead of an opaque return type:
 </p>
 <div class="example">
 <pre class="example">func protoFlip&lt;T: Shape&gt;(_ shape: T) -&gt; Shape {
@@ -20930,8 +21347,8 @@ extension Array: Container { }
 </pre></div>
 
 <p>You can&rsquo;t use &lsquo;<samp>Container</samp>&rsquo; as the return type of a function because that
-protocol has an associated type. You also can&rsquo;t use it as constraint a
-generic return type because there isn&rsquo;t enough information outside the
+protocol has an associated type. You also can&rsquo;t use it as constraint in
+a generic return type because there isn&rsquo;t enough information outside the
 function body to infer what the generic type needs to be.
 </p>
 <div class="example">
@@ -21838,15 +22255,15 @@ Next: <a href="#Weak-and-Unowned-References" accesskey="n" rel="next">Weak and U
 <p>Each item in a capture list is a pairing of the &lsquo;<samp>weak</samp>&rsquo; or &lsquo;<samp>unowned</samp>&rsquo;
 keyword with a reference to a class instance (such as &lsquo;<samp>self</samp>&rsquo;) or a
 variable initialized with some value (such as
-&lsquo;<samp>delegate = self.delegate!</samp>&rsquo;). These pairings are written within a pair
+&lsquo;<samp>delegate = self.delegate</samp>&rsquo;). These pairings are written within a pair
 of square braces, separated by commas.
 </p>
 <p>Place the capture list before a closure&rsquo;s parameter list and return type
 if they are provided:
 </p>
 <div class="example">
-<pre class="example">lazy var someClosure: (Int, String) -&gt; String = {
-    [unowned self, weak delegate = self.delegate!] (index: Int,
+<pre class="example">lazy var someClosure: {
+    [unowned self, weak delegate = self.delegate] (index: Int,
                                                     stringToProcess: String) -&gt; String in
     // closure body goes here
 }
@@ -21857,8 +22274,8 @@ they can be inferred from context, place the capture list at the very
 start of the closure, followed by the &lsquo;<samp>in</samp>&rsquo; keyword:
 </p>
 <div class="example">
-<pre class="example">lazy var someClosure: () -&gt; String = {
-    [unowned self, weak delegate = self.delegate!] in
+<pre class="example">lazy var someClosure {
+    [unowned self, weak delegate = self.delegate] in
     // closure body goes here
 }
 </pre></div>
@@ -22478,28 +22895,12 @@ within a single declaration.
 access is the lowest (most restrictive) access level.
 </p>
 <p>Open access applies only to classes and class members, and it differs
-from public access as follows:
-</p>
-<ul>
-<li> Classes with public access, or any more restrictive access level, can
-be subclassed only within the module where they&rsquo;re defined.
-
-</li><li> Class members with public access, or any more restrictive access
-level, can be overridden by subclasses only within the module where
-they&rsquo;re defined.
-
-</li><li> Open classes can be subclassed within the module where they&rsquo;re
-defined, and within any module that imports the module where they&rsquo;re
-defined.
-
-</li><li> Open class members can be overridden by subclasses within the module
-where they&rsquo;re defined, and within any module that imports the module
-where they&rsquo;re defined.
-</li></ul>
-
-<p>Marking a class as open explicitly indicates that you&rsquo;ve considered the
-impact of code from other modules using that class as a superclass, and
-that you&rsquo;ve designed your class&rsquo;s code accordingly.
+from public access by allowing code outside the module to subclass and
+override, as discussed below in
+<a href="#Subclassing">Subclassing</a>. Marking a class as open
+explicitly indicates that you&rsquo;ve considered the impact of code from
+other modules using that class as a superclass, and that you&rsquo;ve designed
+your class&rsquo;s code accordingly.
 </p>
 <table class="menu" border="0" cellspacing="0">
 <tr><td align="left" valign="top">&bull; <a href="#Guiding-Principle-of-Access-Levels" accesskey="1">Guiding Principle of Access Levels</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -22616,8 +23017,8 @@ Next: <a href="#Custom-Types" accesskey="n" rel="next">Custom Types</a>, Previou
 <span id="index-private"></span>
 
 <p>Define the access level for an entity by placing one of the &lsquo;<samp>open</samp>&rsquo;,
-&lsquo;<samp>public</samp>&rsquo;, &lsquo;<samp>internal</samp>&rsquo;, &lsquo;<samp>fileprivate</samp>&rsquo;, or &lsquo;<samp>private</samp>&rsquo; modifiers before the
-entity&rsquo;s introducer:
+&lsquo;<samp>public</samp>&rsquo;, &lsquo;<samp>internal</samp>&rsquo;, &lsquo;<samp>fileprivate</samp>&rsquo;, or &lsquo;<samp>private</samp>&rsquo; modifiers at the
+beginning of the entity&rsquo;s declaration:
 </p>
 <div class="example">
 <pre class="example">public class SomePublicClass {}
@@ -22731,8 +23132,8 @@ access, the access level for that compound tuple type will be private.
 </p>
 <p>Tuple types don&rsquo;t have a standalone definition in the way that classes,
 structures, enumerations, and functions do. A tuple type&rsquo;s access level
-is deduced automatically when the tuple type is used, and can&rsquo;t be
-specified explicitly.
+is determined automatically from the types that make up the tuple type,
+and can&rsquo;t be specified explicitly.
 </p>
 <hr>
 <span id="Function-Types-1"></span><div class="header">
@@ -22812,9 +23213,8 @@ and &lsquo;<samp>west</samp>&rsquo; therefore also have an access level of publi
 
 <p>The types used for any raw values or associated values in an enumeration
 definition must have an access level at least as high as the
-enumeration&rsquo;s access level. You can&rsquo;t use a private type as the
-raw-value type of an enumeration with an internal access level, for
-example.
+enumeration&rsquo;s access level. For example, you can&rsquo;t use a private type as
+the raw-value type of an enumeration with an internal access level.
 </p></li></ol>
 
 <hr>
@@ -22824,12 +23224,11 @@ Previous: <a href="#Enumeration-Types" accesskey="p" rel="prev">Enumeration Type
 </div>
 <span id="Nested-Types-5"></span><h4 class="subsection">31.4.4 Nested Types</h4>
 
-<p>Nested types defined within a private type have an automatic access
-level of private. Nested types defined within a file-private type have
-an automatic access level of file private. Nested types defined within a
-public type or an internal type have an automatic access level of
-internal. If you want a nested type within a public type to be publicly
-available, you must explicitly declare the nested type as public.
+<p>The access level of a nested type is the same as its containing type,
+unless the containing type is public. Nested types defined within a
+public type have an automatic access level of internal. If you want a
+nested type within a public type to be publicly available, you must
+explicitly declare the nested type as public.
 </p>
 <hr>
 <span id="Subclassing-1"></span><div class="header">
@@ -22839,12 +23238,15 @@ Next: <a href="#Constants-Variables-Properties-and-Subscripts" accesskey="n" rel
 <span id="Subclassing-3"></span><h3 class="section">31.5 Subclassing</h3>
 
 <p>You can subclass any class that can be accessed in the current access
-context. A subclass can&rsquo;t have a higher access level than its
-superclass&mdash;for example, you can&rsquo;t write a public subclass of an
-internal superclass.
+context and that&rsquo;s defined in the same module as the subclass. You can
+also subclass any open class that&rsquo;s defined in a different module. A
+subclass can&rsquo;t have a higher access level than its superclass&mdash;for
+example, you can&rsquo;t write a public subclass of an internal superclass.
 </p>
-<p>In addition, you can override any class member (method, property,
-initializer, or subscript) that is visible in a certain access context.
+<p>In addition, for classes that are defined in the same module, you can
+override any class member (method, property, initializer, or subscript)
+that&rsquo;s visible in a certain access context. For classes that are defined
+in another module, you can override any open class member.
 </p>
 <p>An override can make an inherited class member more accessible than its
 superclass version. In the example below, class &lsquo;<samp>A</samp>&rsquo; is a public class
@@ -23119,8 +23521,8 @@ Next: <a href="#Protocol-Conformance" accesskey="n" rel="next">Protocol Conforma
 
 <p>If you define a new protocol that inherits from an existing protocol,
 the new protocol can have at most the same access level as the protocol
-it inherits from. You can&rsquo;t write a public protocol that inherits from
-an internal protocol, for example.
+it inherits from. For example, you can&rsquo;t write a public protocol that
+inherits from an internal protocol.
 </p>
 <hr>
 <span id="Protocol-Conformance"></span><div class="header">
@@ -23135,16 +23537,16 @@ other modules, but whose conformance to an internal protocol can only be
 used within the internal protocol&rsquo;s defining module.
 </p>
 <p>The context in which a type conforms to a particular protocol is the
-minimum of the type&rsquo;s access level and the protocol&rsquo;s access level. If a
-type is public, but a protocol it conforms to is internal, the type&rsquo;s
-conformance to that protocol is also internal.
+minimum of the type&rsquo;s access level and the protocol&rsquo;s access level. For
+example, if a type is public, but a protocol it conforms to is internal,
+the type&rsquo;s conformance to that protocol is also internal.
 </p>
 <p>When you write or extend a type to conform to a protocol, you must
 ensure that the type&rsquo;s implementation of each protocol requirement has
 at least the same access level as the type&rsquo;s conformance to that
 protocol. For example, if a public type conforms to an internal
 protocol, the type&rsquo;s implementation of each protocol requirement must be
-at least “internal”.
+at least internal.
 </p>
 <p>Note
 </p>
@@ -23172,9 +23574,9 @@ extend a private type, any new type members you add have a default
 access level of private.
 </p>
 <p>Alternatively, you can mark an extension with an explicit access-level
-modifier (for example, &lsquo;<samp>private extension</samp>&rsquo;) to set a new default access
-level for all members defined within the extension. This new default can
-still be overridden within the extension for individual type members.
+modifier (for example, &lsquo;<samp>private</samp>&rsquo;) to set a new default access level for
+all members defined within the extension. This new default can still be
+overridden within the extension for individual type members.
 </p>
 <p>You can&rsquo;t provide an explicit access-level modifier for an extension if
 you&rsquo;re using that extension to add protocol conformance. Instead, the

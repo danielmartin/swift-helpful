@@ -1,4 +1,4 @@
-This is swift.info, produced by makeinfo version 6.6 from swift.texi.
+This is swift.info, produced by makeinfo version 6.7 from swift.texi.
 
 INFO-DIR-SECTION Emacs
 START-INFO-DIR-ENTRY
@@ -8,7 +8,7 @@ END-INFO-DIR-ENTRY
 
 File: swift.info,  Node: Top,  Next: Welcome to Swift,  Up: (dir)
 
-The Swift Programming Language Guide (Swift 5.1)
+The Swift Programming Language Guide (Swift 5.2)
 ************************************************
 
 * Menu:
@@ -25,7 +25,7 @@ The Swift Programming Language Guide (Swift 5.1)
 * Control Flow: Control Flow 1.
 * Functions::
 * Closures::
-* Enumeration::
+* Enumerations::
 * Structures and Classes::
 * Properties::
 * Methods::
@@ -296,7 +296,7 @@ Closure Expressions
 * Shorthand Argument Names::
 * Operator Methods::
 
-Enumeration
+Enumerations
 
 * Enumeration Syntax::
 * Matching Enumeration Values with a Switch Statement::
@@ -333,6 +333,7 @@ Properties
 * Stored Properties::
 * Computed Properties::
 * Property Observers::
+* Property Wrappers::
 * Global and Local Variables::
 * Type Properties::
 
@@ -347,6 +348,11 @@ Computed Properties
 * Shorthand Setter Declaration::
 * Shorthand Getter Declaration::
 * Read-Only Computed Properties::
+
+Property Wrappers
+
+* Setting Initial Values for Wrapped Properties::
+* Projecting a Value From a Property Wrapper::
 
 Type Properties
 
@@ -729,13 +735,13 @@ File: swift.info,  Node: Version Compatibility,  Next: A Swift Tour,  Prev: Abou
 3 Version Compatibility
 ***********************
 
-This book describes Swift 5.1, the default version of Swift that’s
-included in Xcode 11.  You can use Xcode 11 to build targets that are
-written in either Swift 5.1, Swift 4.2, or Swift 4.
+This book describes Swift 5.2, the default version of Swift that’s
+included in Xcode 11.4.  You can use Xcode 11 to build targets that are
+written in either Swift 5.2, Swift 4.2, or Swift 4.
 
-   When you use Xcode 11 to build Swift 4 and Swift 4.2 code, most Swift
-5.1 functionality is available.  That said, the following changes are
-available only to code that uses Swift 5.1 or later:
+   When you use Xcode 11.4 to build Swift 4 and Swift 4.2 code, most
+Swift 5.2 functionality is available.  That said, the following changes
+are available only to code that uses Swift 5.2 or later:
 
    • Functions that return an opaque type require the Swift 5.1 runtime.
 
@@ -747,10 +753,10 @@ available only to code that uses Swift 5.1 or later:
      ‘UInt64(0xffff_ffff_ffff_ffff)’ evaluates to the correct value
      rather than overflowing.
 
-   A target written in Swift 5.1 can depend on a target that’s written
+   A target written in Swift 5.2 can depend on a target that’s written
 in Swift 4.2 or Swift 4, and vice versa.  This means, if you have a
 large project that’s divided into multiple frameworks, you can migrate
-your code from Swift 4 to Swift 5.1 one framework at a time.
+your code from Swift 4 to Swift 5.2 one framework at a time.
 
 
 File: swift.info,  Node: A Swift Tour,  Next: Language Guide,  Prev: Version Compatibility,  Up: Top
@@ -1761,7 +1767,7 @@ File: swift.info,  Node: Language Guide,  Next: The Basics,  Prev: A Swift Tour,
    • *note Control Flow::
    • *note Functions::
    • *note Closures::
-   • *note Enumeration::
+   • *note Enumerations::
    • *note Structures and Classes::
    • *note Properties::
    • *note Methods::
@@ -5232,7 +5238,7 @@ b.hashValue=.
    All of Swift’s basic types (such as ‘String’, ‘Int’, ‘Double’, and
 ‘Bool’) are hashable by default, and can be used as set value types or
 dictionary key types.  Enumeration case values without associated values
-(as described in *note Enumeration::) are also hashable by default.
+(as described in *note Enumerations::) are also hashable by default.
 
    Note
 
@@ -7786,7 +7792,7 @@ use and return nested functions:
      // zero!
 
 
-File: swift.info,  Node: Closures,  Next: Enumeration,  Prev: Functions,  Up: Top
+File: swift.info,  Node: Closures,  Next: Enumerations,  Prev: Functions,  Up: Top
 
 12 Closures
 ***********
@@ -8505,10 +8511,10 @@ value of the ‘customerProvider’ argument must be allowed to escape the
 function’s scope.
 
 
-File: swift.info,  Node: Enumeration,  Next: Structures and Classes,  Prev: Closures,  Up: Top
+File: swift.info,  Node: Enumerations,  Next: Structures and Classes,  Prev: Closures,  Up: Top
 
-13 Enumeration
-**************
+13 Enumerations
+***************
 
 An _enumeration_ defines a common type for a group of related values and
 enables you to work with those values in a type-safe way within your
@@ -8551,7 +8557,7 @@ Protocols::.
 * Recursive Enumerations::
 
 
-File: swift.info,  Node: Enumeration Syntax,  Next: Matching Enumeration Values with a Switch Statement,  Up: Enumeration
+File: swift.info,  Node: Enumeration Syntax,  Next: Matching Enumeration Values with a Switch Statement,  Up: Enumerations
 
 13.1 Enumeration Syntax
 =======================
@@ -8609,7 +8615,7 @@ the type when setting its value.  This makes for highly readable code
 when working with explicitly typed enumeration values.
 
 
-File: swift.info,  Node: Matching Enumeration Values with a Switch Statement,  Next: Iterating over Enumeration Cases,  Prev: Enumeration Syntax,  Up: Enumeration
+File: swift.info,  Node: Matching Enumeration Values with a Switch Statement,  Next: Iterating over Enumeration Cases,  Prev: Enumeration Syntax,  Up: Enumerations
 
 13.2 Matching Enumeration Values with a Switch Statement
 ========================================================
@@ -8658,7 +8664,7 @@ addressed explicitly:
      // Prints "Mostly harmless"
 
 
-File: swift.info,  Node: Iterating over Enumeration Cases,  Next: Associated Values,  Prev: Matching Enumeration Values with a Switch Statement,  Up: Enumeration
+File: swift.info,  Node: Iterating over Enumeration Cases,  Next: Associated Values,  Prev: Matching Enumeration Values with a Switch Statement,  Up: Enumerations
 
 13.3 Iterating over Enumeration Cases
 =====================================
@@ -8696,7 +8702,7 @@ conforming to the ‘CaseIterable’
 protocol.  For information about protocols, see *note Protocols::.
 
 
-File: swift.info,  Node: Associated Values,  Next: Raw Values,  Prev: Iterating over Enumeration Cases,  Up: Enumeration
+File: swift.info,  Node: Associated Values,  Next: Raw Values,  Prev: Iterating over Enumeration Cases,  Up: Enumerations
 
 13.4 Associated Values
 ======================
@@ -8799,7 +8805,7 @@ single ‘var’ or ‘let’ annotation before the case name, for brevity:
      // Prints "QR code: ABCDEFGHIJKLMNOP."
 
 
-File: swift.info,  Node: Raw Values,  Next: Recursive Enumerations,  Prev: Associated Values,  Up: Enumeration
+File: swift.info,  Node: Raw Values,  Next: Recursive Enumerations,  Prev: Associated Values,  Up: Enumerations
 
 13.5 Raw Values
 ===============
@@ -8941,7 +8947,7 @@ possible to retrieve a planet with a position of ‘11’, and so the ‘else’
 branch is executed instead.
 
 
-File: swift.info,  Node: Recursive Enumerations,  Prev: Raw Values,  Up: Enumeration
+File: swift.info,  Node: Recursive Enumerations,  Prev: Raw Values,  Up: Enumerations
 
 13.6 Recursive Enumerations
 ===========================
@@ -9013,7 +9019,7 @@ expression on the right-hand side, and then adding them or multiplying
 them.
 
 
-File: swift.info,  Node: Structures and Classes,  Next: Properties,  Prev: Enumeration,  Up: Top
+File: swift.info,  Node: Structures and Classes,  Next: Properties,  Prev: Enumerations,  Up: Top
 
 14 Structures and Classes
 *************************
@@ -9482,11 +9488,15 @@ Property observers can be added to stored properties you define
 yourself, and also to properties that a subclass inherits from its
 superclass.
 
+   You can also use a property wrapper to reuse code in the getter and
+setter of multiple properties.
+
 * Menu:
 
 * Stored Properties::
 * Computed Properties::
 * Property Observers::
+* Property Wrappers::
 * Global and Local Variables::
 * Type Properties::
 
@@ -9851,7 +9861,7 @@ useful for a ‘Cuboid’ to provide a read-only computed property to enable
 external users to discover its current calculated volume.
 
 
-File: swift.info,  Node: Property Observers,  Next: Global and Local Variables,  Prev: Computed Properties,  Up: Properties
+File: swift.info,  Node: Property Observers,  Next: Property Wrappers,  Prev: Computed Properties,  Up: Properties
 
 15.3 Property Observers
 =======================
@@ -9956,9 +9966,370 @@ function.  For a detailed discussion of the behavior of in-out
 parameters, see *note In-Out Parameters: In-Out Parameters.
 
 
-File: swift.info,  Node: Global and Local Variables,  Next: Type Properties,  Prev: Property Observers,  Up: Properties
+File: swift.info,  Node: Property Wrappers,  Next: Global and Local Variables,  Prev: Property Observers,  Up: Properties
 
-15.4 Global and Local Variables
+15.4 Property Wrappers
+======================
+
+A property wrapper adds a layer of separation between code that manages
+how a property is stored and the code that defines a property.  For
+example, if you have properties that provide thread-safety checks or
+store their underlying data in a database, you have to write that code
+on every property.  When you use a property wrapper, you write the
+management code once when you define the wrapper, and then reuse that
+management code by applying it to multiple properties.
+
+   To define a property wrapper, you make a structure, enumeration, or
+class that defines a ‘wrappedValue’ property.  In the code below, the
+‘TwelveOrLess’ structure ensures that the value it wraps always contains
+a number less than or equal to 12.  If you ask it to store a larger
+number, it stores 12 instead.
+
+     @propertyWrapper
+     struct TwelveOrLess {
+         private var number: Int
+         init() { self.number = 0 }
+         var wrappedValue: Int {
+             get { return number }
+             set { number = min(newValue, 12) }
+         }
+     }
+
+   The setter ensures that new values are less than 12, and the getter
+returns the stored value.
+
+   Note
+
+   The declaration for ‘number’ in the example above marks the variable
+as ‘private’, which ensures ‘number’ is used only in the implementation
+of ‘TwelveOrLess’.  Code that’s written anywhere else accesses the value
+using the getter and setter for ‘wrappedValue’, and can’t use ‘number’
+directly.  For information about ‘private’, see *note Access Control::.
+
+   You apply a wrapper to a property by writing the wrapper’s name
+before the property as an attribute.  Here’s a structure that stores a
+small rectangle, using the same (rather arbitrary) definition of “small”
+that’s implemented by the ‘TwelveOrLess’ property wrapper:
+
+     struct SmallRectangle {
+         @TwelveOrLess var height: Int
+         @TwelveOrLess var width: Int
+     }
+
+     var rectangle = SmallRectangle()
+     print(rectangle.height)
+     // Prints "0"
+
+     rectangle.height = 10
+     print(rectangle.height)
+     // Prints "10"
+
+     rectangle.height = 24
+     print(rectangle.height)
+     // Prints "12"
+
+   The ‘height’ and ‘width’ properties get their initial values from the
+definition of ‘TwelveOrLess’, which sets ‘TwelveOrLess.number’ to zero.
+Storing the number 10 into ‘rectangle.height’ succeeds because it’s a
+small number.  Trying to store 24 actually stores a value of 12 instead,
+because 24 is too large for the property setter’s rule.
+
+   When you apply a wrapper to a property, the compiler synthesizes code
+that provides storage for the wrapper and code that provides access to
+the property through the wrapper.  (The property wrapper is responsible
+for storing the wrapped value, so there’s no synthesized code for that.)
+You could write code that uses the behavior of a property wrapper,
+without taking advantage of the special attribute syntax.  For example,
+here’s a version of ‘SmallRectangle’ from the previous code listing that
+wraps its properties in the ‘TwelveOrLess’ structure explicitly, instead
+of writing ‘@TwelveOrLess’ as an attribute:
+
+     struct SmallRectangle {
+         private var _height = TwelveOrLess()
+         private var _width = TwelveOrLess()
+         var height: Int {
+             get { return _height.wrappedValue }
+             set { _height.wrappedValue = newValue }
+         }
+         var width: Int {
+             get { return _width.wrappedValue }
+             set { _width.wrappedValue = newValue }
+         }
+     }
+
+   The ‘_height’ and ‘_width’ properties store an instance of the
+property wrapper, ‘TwelveOrLess’.  The getter and setter for ‘height’
+and ‘width’ wrap access to the ‘wrappedValue’ property.
+
+* Menu:
+
+* Setting Initial Values for Wrapped Properties::
+* Projecting a Value From a Property Wrapper::
+
+
+File: swift.info,  Node: Setting Initial Values for Wrapped Properties,  Next: Projecting a Value From a Property Wrapper,  Up: Property Wrappers
+
+15.4.1 Setting Initial Values for Wrapped Properties
+----------------------------------------------------
+
+The code in the examples above sets the initial value for the wrapped
+property by giving ‘number’ an initial value in the definition of
+‘TwelveOrLess’.  Code that uses this property wrapper, can’t specify a
+different initial value for a property that’s wrapped by
+‘TwelveOrLess’—for example, the definition of ‘SmallRectangle’ can’t
+give ‘height’ or ‘width’ initial values.  To support setting an initial
+value or other customization, the property wrapper needs to add an
+initializer.  Here’s an expanded version of ‘TwelveOrLess’ called
+‘SmallNumber’ that defines initializers that set the wrapped and maximum
+value:
+
+     @propertyWrapper
+     struct SmallNumber {
+         private var maximum: Int
+         private var number: Int
+
+
+         var wrappedValue: Int {
+             get { return number }
+             set { number = min(newValue, maximum) }
+         }
+
+
+         init() {
+             maximum = 12
+             number = 0
+         }
+         init(wrappedValue: Int) {
+             maximum = 12
+             number = min(wrappedValue, maximum)
+         }
+         init(wrappedValue: Int, maximum: Int) {
+             self.maximum = maximum
+             number = min(wrappedValue, maximum)
+         }
+     }
+
+   The definition of ‘SmallNumber’ includes three initializers—‘init()’,
+‘init(wrappedValue:)’, and ‘init(wrappedValue:maximum:)’—which the
+examples below use to set the wrapped value and the maximum value.  For
+information about initialization and initializer syntax, see *note
+Initialization::.
+
+   When you apply a wrapper to a property and you don’t specify an
+initial value, Swift uses the ‘init()’ initializer to set up the
+wrapper.  For example:
+
+     struct ZeroRectangle {
+         @SmallNumber var height: Int
+         @SmallNumber var width: Int
+     }
+
+
+     var zeroRectangle = ZeroRectangle()
+     print(zeroRectangle.height, zeroRectangle.width)
+     // Prints "0 0"
+
+   The instances of ‘SmallNumber’ that wrap ‘height’ and ‘width’ are
+created by calling ‘SmallNumber()’.  The code inside that initializer
+sets the initial wrapped value and the initial maximum value, using the
+default values of zero and 12.  The property wrapper still provides all
+of the initial values, like the earlier example that used ‘TwelveOrLess’
+in ‘SmallRectangle’.  Unlike that example, ‘SmallNumber’ also supports
+writing those initial values as part of declaring the property.
+
+   When you specify an initial value for the property, Swift uses the
+‘init(wrappedValue:)’ initializer to set up the wrapper.  For example:
+
+     struct UnitRectangle {
+         @SmallNumber var height: Int = 1
+         @SmallNumber var width: Int = 1
+     }
+
+
+     var unitRectangle = UnitRectangle()
+     print(unitRectangle.height, unitRectangle.width)
+     // Prints "1 1"
+
+   When you write ‘= 1’ on a property with a wrapper, that’s translated
+into a call to the ‘init(wrappedValue:)’ initializer.  The instances of
+‘SmallNumber’ that wrap ‘height’ and ‘width’ are created by calling
+‘SmallNumber(wrappedValue: 1)’.  The initializer uses the wrapped value
+that’s specified here, and it uses the default maximum value of 12.
+
+   When you write arguments in parentheses after the custom attribute,
+Swift uses the initializer that accepts those arguments to set up the
+wrapper.  For example, if you provide an initial value and a maximum
+value, Swift uses the ‘init(wrappedValue:maximum:)’ initializer:
+
+     struct NarrowRectangle {
+         @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
+         @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
+     }
+
+
+     var narrowRectangle = NarrowRectangle()
+     print(narrowRectangle.height, narrowRectangle.width)
+     // Prints "2 3"
+
+
+     narrowRectangle.height = 100
+     narrowRectangle.width = 100
+     print(narrowRectangle.height, narrowRectangle.width)
+     // Prints "5 4"
+
+   The instance of ‘SmallNumber’ that wraps ‘height’ is created by
+calling ‘SmallNumber(wrappedValue: 2, maximum: 5)’, and the instance
+that wraps ‘width’ is created by calling ‘SmallNumber(wrappedValue: 3,
+maximum: 4)’.
+
+   By including arguments to the property wrapper, you can set up the
+initial state in the wrapper or pass other options to the wrapper when
+it’s created.  This syntax is the most general way to use a property
+wrapper.  You can provide whatever arguments you need to the attribute,
+and they’re passed to the initializer.
+
+   When you include property wrapper arguments, you can also specify an
+initial value using assignment.  Swift treats the assignment like a
+‘wrappedValue’ argument and uses the initializer that accepts the
+arguments you include.  For example:
+
+     struct MixedRectangle {
+         @SmallNumber var height: Int = 1
+         @SmallNumber(maximum: 9) var width: Int = 2
+     }
+
+
+     var mixedRectangle = MixedRectangle()
+     print(mixedRectangle.height)
+     // Prints "1"
+
+
+     mixedRectangle.height = 20
+     print(mixedRectangle.height)
+     // Prints "12"
+
+   The instance of ‘SmallNumber’ that wraps ‘height’ is created by
+calling ‘SmallNumber(wrappedValue: 1)’, which uses the default maximum
+value of
+  1. The instance that wraps ‘width’ is created by calling
+   ‘SmallNumber(wrappedValue: 2, maximum: 9)’.
+
+
+File: swift.info,  Node: Projecting a Value From a Property Wrapper,  Prev: Setting Initial Values for Wrapped Properties,  Up: Property Wrappers
+
+15.4.2 Projecting a Value From a Property Wrapper
+-------------------------------------------------
+
+In addition to the wrapped value, a property wrapper can expose
+additional functionality by defining a _projected value_—for example, a
+property wrapper that manages access to a database can expose a
+‘flushDatabaseConnection()’ method on its projected value.  The name of
+the projected value is the same as the wrapped value, except it begins
+with a dollar sign (‘$’).  Because your code can’t define properties
+that start with ‘$’ the projected value never interferes with properties
+you define.
+
+   In the ‘SmallNumber’ example above, if you try to set the property to
+a number that’s too large, the property wrapper adjusts the number
+before storing it.  The code below adds a ‘projectedValue’ property to
+the ‘SmallNumber’ structure to keep track of whether the property
+wrapper adjusted the new value for the property before storing that new
+value.
+
+     @propertyWrapper
+     struct SmallNumber {
+         private var number: Int
+         var projectedValue: Bool
+         init() {
+             self.number = 0
+             self.projectedValue = false
+         }
+         var wrappedValue: Int {
+             get { return number }
+             set {
+                 if newValue > 12 {
+                     number = 12
+                     projectedValue = true
+                 } else {
+                     number = newValue
+                     projectedValue = false
+                 }
+             }
+         }
+     }
+     struct SomeStructure {
+         @SmallNumber var someNumber: Int
+     }
+     var someStructure = SomeStructure()
+
+
+     someStructure.someNumber = 4
+     print(someStructure.$someNumber)
+     // Prints "false"
+
+
+     someStructure.someNumber = 55
+     print(someStructure.$someNumber)
+     // Prints "true"
+
+   Writing ‘someStructure.$someNumber’ accesses the wrapper’s projected
+value.  After storing a small number like four, the value of
+‘someStructure.$someNumber’ is ‘false’.  However, the projected value is
+‘true’ after trying to store a number that’s too large, like 55.
+
+   A property wrapper can return a value of any type as its projected
+value.  In this example, the property wrapper exposes only one piece of
+information—whether the number was adjusted—so it exposes that Boolean
+value as its projected value.  A wrapper that needs to expose more
+information can return an instance of some other data type, or it can
+return ‘self’ to expose the instance of the wrapper as its projected
+value.
+
+   When you access a projected value from code that’s part of the type,
+like a property getter or an instance method, you can omit ‘self.’
+before the property name, just like accessing other properties.  The
+code in the following example refers to the projected value of the
+wrapper around ‘height’ and ‘width’ as ‘$height’ and ‘$width’:
+
+     enum Size {
+         case small, large
+     }
+
+
+     struct SizedRectangle {
+         @SmallNumber var height: Int
+         @SmallNumber var width: Int
+
+
+         mutating func resize(to size: Size) -> Bool {
+             switch size {
+             case .small:
+                 height = 10
+                 width = 20
+             case .large:
+                 height = 100
+                 width = 100
+             }
+             return $height || $width
+         }
+     }
+
+   Because property wrapper syntax is just syntactic sugar for a
+property with a getter and a setter, accessing ‘height’ and ‘width’
+behaves the same as accessing any other property.  For example, the code
+in ‘resize(to:)’ accesses ‘height’ and ‘width’ using their property
+wrapper.  If you call ‘resize(to: .large)’, the switch case for ‘.large’
+sets the rectangle’s height and width to 100.  The wrapper prevents the
+value of those properties from being larger than 12, and it sets the
+projected value to ‘true’, to record the fact that it adjusted their
+values.  At the end of ‘resize(to:)’, the return statement checks
+‘$height’ and ‘$width’ to determine whether the property wrapper
+adjusted either ‘height’ or ‘width’.
+
+
+File: swift.info,  Node: Global and Local Variables,  Next: Type Properties,  Prev: Property Wrappers,  Up: Properties
+
+15.5 Global and Local Variables
 ===============================
 
 The capabilities described above for computing and observing properties
@@ -9989,7 +10360,7 @@ the ‘lazy’ modifier.
 
 File: swift.info,  Node: Type Properties,  Prev: Global and Local Variables,  Up: Properties
 
-15.5 Type Properties
+15.6 Type Properties
 ====================
 
 Instance properties are properties that belong to an instance of a
@@ -10031,7 +10402,7 @@ the ‘lazy’ modifier.
 
 File: swift.info,  Node: Type Property Syntax,  Next: Querying and Setting Type Properties,  Up: Type Properties
 
-15.5.1 Type Property Syntax
+15.6.1 Type Property Syntax
 ---------------------------
 
 In C and Objective-C, you define static constants and variables
@@ -10076,7 +10447,7 @@ properties with the same syntax as for computed instance properties.
 
 File: swift.info,  Node: Querying and Setting Type Properties,  Prev: Type Property Syntax,  Up: Type Properties
 
-15.5.2 Querying and Setting Type Properties
+15.6.2 Querying and Setting Type Properties
 -------------------------------------------
 
 Type properties are queried and set with dot syntax, just like instance
@@ -10727,9 +11098,13 @@ File: swift.info,  Node: Subscript Options,  Next: Type Subscripts,  Prev: Subsc
 ======================
 
 Subscripts can take any number of input parameters, and these input
-parameters can be of any type.  Subscripts can also return any type.
-Subscripts can use variadic parameters and provide default parameter
-values, but they can’t use in-out parameters.
+parameters can be of any type.  Subscripts can also return a value of
+any type.
+
+   Like functions, subscripts can take a varying number of parameters
+and provide default values for their parameters, as discussed in *note
+Variadic Parameters:: and *note Default Parameter Values::.  However,
+unlike functions, they can’t use in-out parameters.
 
    A class or structure can provide as many subscript implementations as
 it needs, and the appropriate subscript to be used will be inferred
@@ -13886,11 +14261,11 @@ remaining statements in the ‘do’ statement are executed.
 the code in the ‘do’ clause can throw.  If none of the ‘catch’ clauses
 handle the error, the error propagates to the surrounding scope.
 However, the propagated error must be handled by _some_ surrounding
-scope.  In a nonthrowing function, an enclosing ‘do’-‘catch’ clause must
-handle the error.  In a throwing function, either an enclosing
-‘do’-‘catch’ clause or the caller must handle the error.  If the error
-propagates to the top-level scope without being handled, you’ll get a
-runtime error.
+scope.  In a nonthrowing function, an enclosing ‘do’-‘catch’ statement
+must handle the error.  In a throwing function, either an enclosing
+‘do’-‘catch’ statement or the caller must handle the error.  If the
+error propagates to the top-level scope without being handled, you’ll
+get a runtime error.
 
    For example, the above example can be written so any error that isn’t
 a ‘VendingMachineError’ is instead caught by the calling function:
@@ -15359,7 +15734,7 @@ declared as weak references.  For information about weak references, see
 Cycles Between Class Instances.  Marking the protocol as class-only lets
 the ‘SnakesAndLadders’ class later in this chapter declare that its
 delegate must use a weak reference.  A class-only protocol is marked by
-its inheritance from ‘AnyObject’ as discussed in *note Class-Only
+its inheritance from ‘AnyObject’, as discussed in *note Class-Only
 Protocols::.
 
    Here’s a version of the _Snakes and Ladders_ game originally
@@ -17628,8 +18003,8 @@ protocol.  Generally speaking, protocol types give you more flexibility
 about the underlying types of the values they store, and opaque types
 let you make stronger guarantees about those underlying types.
 
-   For example, here’s a version of ‘flip(_:)’ that returns a value of
-protocol type instead of using an opaque return type:
+   For example, here’s a version of ‘flip(_:)’ that uses a protocol type
+as its return type instead of an opaque return type:
 
      func protoFlip<T: Shape>(_ shape: T) -> Shape {
          return FlippedShape(shape: shape)
@@ -17707,8 +18082,9 @@ value.  For example, here’s a version of the ‘Container’ protocol from
 
    You can’t use ‘Container’ as the return type of a function because
 that protocol has an associated type.  You also can’t use it as
-constraint a generic return type because there isn’t enough information
-outside the function body to infer what the generic type needs to be.
+constraint in a generic return type because there isn’t enough
+information outside the function body to infer what the generic type
+needs to be.
 
      // Error: Protocol with associated types can't be used as a return type.
      func makeProtocolContainer<T>(item: T) -> Container {
@@ -18538,14 +18914,14 @@ File: swift.info,  Node: Defining a Capture List,  Next: Weak and Unowned Refere
 Each item in a capture list is a pairing of the ‘weak’ or ‘unowned’
 keyword with a reference to a class instance (such as ‘self’) or a
 variable initialized with some value (such as ‘delegate =
-self.delegate!’).  These pairings are written within a pair of square
+self.delegate’).  These pairings are written within a pair of square
 braces, separated by commas.
 
    Place the capture list before a closure’s parameter list and return
 type if they are provided:
 
-     lazy var someClosure: (Int, String) -> String = {
-         [unowned self, weak delegate = self.delegate!] (index: Int,
+     lazy var someClosure: {
+         [unowned self, weak delegate = self.delegate] (index: Int,
                                                          stringToProcess: String) -> String in
          // closure body goes here
      }
@@ -18554,8 +18930,8 @@ type if they are provided:
 they can be inferred from context, place the capture list at the very
 start of the closure, followed by the ‘in’ keyword:
 
-     lazy var someClosure: () -> String = {
-         [unowned self, weak delegate = self.delegate!] in
+     lazy var someClosure {
+         [unowned self, weak delegate = self.delegate] in
          // closure body goes here
      }
 
@@ -19107,26 +19483,11 @@ belongs to.
 private access is the lowest (most restrictive) access level.
 
    Open access applies only to classes and class members, and it differs
-from public access as follows:
-
-   • Classes with public access, or any more restrictive access level,
-     can be subclassed only within the module where they’re defined.
-
-   • Class members with public access, or any more restrictive access
-     level, can be overridden by subclasses only within the module where
-     they’re defined.
-
-   • Open classes can be subclassed within the module where they’re
-     defined, and within any module that imports the module where
-     they’re defined.
-
-   • Open class members can be overridden by subclasses within the
-     module where they’re defined, and within any module that imports
-     the module where they’re defined.
-
-   Marking a class as open explicitly indicates that you’ve considered
-the impact of code from other modules using that class as a superclass,
-and that you’ve designed your class’s code accordingly.
+from public access by allowing code outside the module to subclass and
+override, as discussed below in *note Subclassing::.  Marking a class as
+open explicitly indicates that you’ve considered the impact of code from
+other modules using that class as a superclass, and that you’ve designed
+your class’s code accordingly.
 
 * Menu:
 
@@ -19226,8 +19587,8 @@ File: swift.info,  Node: Access Control Syntax,  Next: Custom Types,  Prev: Acce
 ==========================
 
 Define the access level for an entity by placing one of the ‘open’,
-‘public’, ‘internal’, ‘fileprivate’, or ‘private’ modifiers before the
-entity’s introducer:
+‘public’, ‘internal’, ‘fileprivate’, or ‘private’ modifiers at the
+beginning of the entity’s declaration:
 
      public class SomePublicClass {}
      internal class SomeInternalClass {}
@@ -19329,8 +19690,8 @@ access, the access level for that compound tuple type will be private.
 
    Tuple types don’t have a standalone definition in the way that
 classes, structures, enumerations, and functions do.  A tuple type’s
-access level is deduced automatically when the tuple type is used, and
-can’t be specified explicitly.
+access level is determined automatically from the types that make up the
+tuple type, and can’t be specified explicitly.
 
 
 File: swift.info,  Node: Function Types 1,  Next: Enumeration Types,  Prev: Tuple Types,  Up: Custom Types
@@ -19399,9 +19760,9 @@ and ‘west’ therefore also have an access level of public:
 
      The types used for any raw values or associated values in an
      enumeration definition must have an access level at least as high
-     as the enumeration’s access level.  You can’t use a private type as
-     the raw-value type of an enumeration with an internal access level,
-     for example.
+     as the enumeration’s access level.  For example, you can’t use a
+     private type as the raw-value type of an enumeration with an
+     internal access level.
 
 
 File: swift.info,  Node: Nested Types 2,  Prev: Enumeration Types,  Up: Custom Types
@@ -19409,12 +19770,11 @@ File: swift.info,  Node: Nested Types 2,  Prev: Enumeration Types,  Up: Custom T
 31.4.4 Nested Types
 -------------------
 
-Nested types defined within a private type have an automatic access
-level of private.  Nested types defined within a file-private type have
-an automatic access level of file private.  Nested types defined within
-a public type or an internal type have an automatic access level of
-internal.  If you want a nested type within a public type to be publicly
-available, you must explicitly declare the nested type as public.
+The access level of a nested type is the same as its containing type,
+unless the containing type is public.  Nested types defined within a
+public type have an automatic access level of internal.  If you want a
+nested type within a public type to be publicly available, you must
+explicitly declare the nested type as public.
 
 
 File: swift.info,  Node: Subclassing 1,  Next: Constants Variables Properties and Subscripts,  Prev: Custom Types,  Up: Access Control
@@ -19423,12 +19783,15 @@ File: swift.info,  Node: Subclassing 1,  Next: Constants Variables Properties an
 ================
 
 You can subclass any class that can be accessed in the current access
-context.  A subclass can’t have a higher access level than its
-superclass—for example, you can’t write a public subclass of an internal
-superclass.
+context and that’s defined in the same module as the subclass.  You can
+also subclass any open class that’s defined in a different module.  A
+subclass can’t have a higher access level than its superclass—for
+example, you can’t write a public subclass of an internal superclass.
 
-   In addition, you can override any class member (method, property,
-initializer, or subscript) that is visible in a certain access context.
+   In addition, for classes that are defined in the same module, you can
+override any class member (method, property, initializer, or subscript)
+that’s visible in a certain access context.  For classes that are
+defined in another module, you can override any open class member.
 
    An override can make an inherited class member more accessible than
 its superclass version.  In the example below, class ‘A’ is a public
@@ -19675,8 +20038,8 @@ File: swift.info,  Node: Protocol Inheritance 1,  Next: Protocol Conformance,  U
 
 If you define a new protocol that inherits from an existing protocol,
 the new protocol can have at most the same access level as the protocol
-it inherits from.  You can’t write a public protocol that inherits from
-an internal protocol, for example.
+it inherits from.  For example, you can’t write a public protocol that
+inherits from an internal protocol.
 
 
 File: swift.info,  Node: Protocol Conformance,  Prev: Protocol Inheritance 1,  Up: Protocols 1
@@ -19690,16 +20053,16 @@ other modules, but whose conformance to an internal protocol can only be
 used within the internal protocol’s defining module.
 
    The context in which a type conforms to a particular protocol is the
-minimum of the type’s access level and the protocol’s access level.  If
-a type is public, but a protocol it conforms to is internal, the type’s
-conformance to that protocol is also internal.
+minimum of the type’s access level and the protocol’s access level.  For
+example, if a type is public, but a protocol it conforms to is internal,
+the type’s conformance to that protocol is also internal.
 
    When you write or extend a type to conform to a protocol, you must
 ensure that the type’s implementation of each protocol requirement has
 at least the same access level as the type’s conformance to that
 protocol.  For example, if a public type conforms to an internal
 protocol, the type’s implementation of each protocol requirement must be
-at least “internal”.
+at least internal.
 
    Note
 
@@ -19724,10 +20087,10 @@ you extend a private type, any new type members you add have a default
 access level of private.
 
    Alternatively, you can mark an extension with an explicit
-access-level modifier (for example, ‘private extension’) to set a new
-default access level for all members defined within the extension.  This
-new default can still be overridden within the extension for individual
-type members.
+access-level modifier (for example, ‘private’) to set a new default
+access level for all members defined within the extension.  This new
+default can still be overridden within the extension for individual type
+members.
 
    You can’t provide an explicit access-level modifier for an extension
 if you’re using that extension to add protocol conformance.  Instead,
@@ -20755,393 +21118,396 @@ Index
 
 Tag Table:
 Node: Top191
-Node: Welcome to Swift14092
-Node: About Swift14311
-Node: Version Compatibility16493
-Node: A Swift Tour17745
-Node: Simple Values19381
-Node: Control Flow22716
-Node: Functions and Closures27345
-Node: Objects and Classes31827
-Node: Enumerations and Structures38438
-Node: Protocols and Extensions43918
-Node: Error Handling46909
-Node: Generics50241
-Node: Language Guide51918
-Node: The Basics52811
-Node: Constants and Variables55444
-Node: Declaring Constants and Variables56063
-Node: Type Annotations57453
-Node: Naming Constants and Variables59362
-Node: Printing Constants and Variables61132
-Node: Comments62781
-Node: Semicolons64084
-Node: Integers64526
-Node: Integer Bounds65206
-Node: Int65792
-Node: UInt66577
-Node: Floating-Point Numbers67424
-Node: Type Safety and Type Inference68436
-Node: Numeric Literals71223
-Node: Numeric Type Conversion73276
-Node: Integer Conversion74232
-Node: Integer and Floating-Point Conversion76764
-Node: Type Aliases78255
-Node: Booleans79179
-Node: Tuples81256
-Node: Optionals84687
-Node: nil87058
-Node: If Statements and Forced Unwrapping88223
-Node: Optional Binding89758
-Node: Implicitly Unwrapped Optionals93134
-Node: Error Handling 196661
-Node: Assertions and Preconditions99352
-Node: Debugging with Assertions101579
-Node: Enforcing Preconditions103311
-Node: Basic Operators105431
-Node: Terminology107161
-Node: Assignment Operator108074
-Node: Arithmetic Operators109146
-Node: Remainder Operator110111
-Node: Unary Minus Operator111845
-Node: Unary Plus Operator112409
-Node: Compound Assignment Operators112949
-Node: Comparison Operators113953
-Node: Ternary Conditional Operator117612
-Node: Nil-Coalescing Operator119551
-Node: Range Operators121913
-Node: Closed Range Operator122261
-Node: Half-Open Range Operator123061
-Node: One-Sided Ranges124343
-Node: Logical Operators125983
-Node: Logical NOT Operator126534
-Node: Logical AND Operator127541
-Node: Logical OR Operator128511
-Node: Combining Logical Operators129714
-Node: Explicit Parentheses131096
-Node: Strings and Characters132097
-Node: String Literals134377
-Node: Multiline String Literals135086
-Node: Special Characters in String Literals137697
-Node: Extended String Delimiters139491
-Node: Initializing an Empty String140801
-Node: String Mutability141614
-Node: Strings Are Value Types142512
-Node: Working with Characters143731
-Node: Concatenating Strings and Characters144782
-Node: String Interpolation146892
-Node: Unicode149035
-Node: Unicode Scalar Values149671
-Node: Extended Grapheme Clusters150466
-Node: Counting Characters153033
-Node: Accessing and Modifying a String155442
-Node: String Indices155810
-Node: Inserting and Removing158362
-Node: Substrings159781
-Node: Comparing Strings162603
-Node: String and Character Equality162985
-Node: Prefix and Suffix Equality165420
-Node: Unicode Representations of Strings167756
-Node: UTF-8 Representation169633
-Node: UTF-16 Representation170831
-Node: Unicode Scalar Representation172398
-Node: Collection Types174135
-Node: Mutability of Collections175201
-Node: Arrays176036
-Node: Array Type Shorthand Syntax176915
-Node: Creating an Empty Array177465
-Node: Creating an Array with a Default Value178447
-Node: Creating an Array by Adding Two Arrays Together179161
-Node: Creating an Array with an Array Literal179951
-Node: Accessing and Modifying an Array182133
-Node: Iterating Over an Array186792
-Node: Sets187986
-Node: Hash Values for Set Types188866
-Node: Set Type Syntax190721
-Node: Creating and Initializing an Empty Set191090
-Node: Creating a Set with an Array Literal192074
-Node: Accessing and Modifying a Set193944
-Node: Iterating Over a Set195741
-Node: Performing Set Operations196519
-Node: Fundamental Set Operations196987
-Node: Set Membership and Equality198253
-Node: Dictionaries199950
-Node: Dictionary Type Shorthand Syntax201176
-Node: Creating an Empty Dictionary201975
-Node: Creating a Dictionary with a Dictionary Literal203021
-Node: Accessing and Modifying a Dictionary205786
-Node: Iterating Over a Dictionary209813
-Node: Control Flow 1211562
-Node: For-In Loops212775
-Node: While Loops217946
-Node: While218578
-Node: Repeat-While223131
-Node: Conditional Statements225857
-Node: If226792
-Node: Switch229451
-Node: Control Transfer Statements243330
-Node: Continue244142
-Node: Break245196
-Node: Fallthrough249442
-Node: Labeled Statements252204
-Node: Early Exit257397
-Node: Checking API Availability259708
-Node: Functions261736
-Node: Defining and Calling Functions263040
-Node: Function Parameters and Return Values266709
-Node: Functions Without Parameters267414
-Node: Functions With Multiple Parameters268166
-Node: Functions Without Return Values269539
-Node: Functions with Multiple Return Values271711
-Node: Functions With an Implicit Return276040
-Node: Function Argument Labels and Parameter Names277379
-Node: Specifying Argument Labels278625
-Node: Omitting Argument Labels279664
-Node: Default Parameter Values280432
-Node: Variadic Parameters281711
-Node: In-Out Parameters283201
-Node: Function Types286398
-Node: Using Function Types287717
-Node: Function Types as Parameter Types289180
-Node: Function Types as Return Types291020
-Node: Nested Functions293421
-Node: Closures294811
-Node: Closure Expressions296543
-Node: The Sorted Method297760
-Node: Closure Expression Syntax300311
-Node: Inferring Type From Context302160
-Node: Implicit Returns from Single-Expression Closures303780
-Node: Shorthand Argument Names304642
-Node: Operator Methods305573
-Node: Trailing Closures306342
-Node: Capturing Values312425
-Node: Closures Are Reference Types317459
-Node: Escaping Closures318779
-Node: Autoclosures321081
-Node: Enumeration325950
-Node: Enumeration Syntax327862
-Node: Matching Enumeration Values with a Switch Statement330003
-Node: Iterating over Enumeration Cases331738
-Node: Associated Values333360
-Node: Raw Values337854
-Node: Implicitly Assigned Raw Values339460
-Node: Initializing from a Raw Value341171
-Node: Recursive Enumerations343289
-Node: Structures and Classes346325
-Node: Comparing Structures and Classes347570
-Node: Definition Syntax349747
-Node: Structure and Class Instances352169
-Node: Accessing Properties353302
-Node: Memberwise Initializers for Structure Types354534
-Node: Structures and Enumerations Are Value Types355364
-Node: Classes Are Reference Types359441
-Node: Identity Operators362476
-Node: Pointers364233
-Node: Properties365202
-Node: Stored Properties366317
-Node: Stored Properties of Constant Structure Instances368114
-Node: Lazy Stored Properties369334
-Node: Stored Properties and Instance Variables373065
-Node: Computed Properties374081
-Node: Shorthand Setter Declaration377463
-Node: Shorthand Getter Declaration378389
-Node: Read-Only Computed Properties379561
-Node: Property Observers381471
-Node: Global and Local Variables386240
-Node: Type Properties387579
-Node: Type Property Syntax389253
-Node: Querying and Setting Type Properties390855
-Node: Methods395771
-Node: Instance Methods396674
-Node: The self Property399136
-Node: Modifying Value Types from Within Instance Methods401113
-Node: Assigning to self Within a Mutating Method403253
-Node: Type Methods404966
-Node: Subscripts411518
-Node: Subscript Syntax412480
-Node: Subscript Usage415104
-Node: Subscript Options416994
-Node: Type Subscripts421209
-Node: Inheritance422231
-Node: Defining a Base Class423402
-Node: Subclassing425342
-Node: Overriding427983
-Node: Accessing Superclass Methods Properties and Subscripts429205
-Node: Overriding Methods430504
-Node: Overriding Properties431388
-Node: Preventing Overrides436678
-Node: Initialization437610
-Node: Setting Initial Values for Stored Properties438968
-Node: Initializers439889
-Node: Default Property Values441038
-Node: Customizing Initialization442301
-Node: Initialization Parameters442935
-Node: Parameter Names and Argument Labels444743
-Node: Initializer Parameters Without Argument Labels447094
-Node: Optional Property Types448576
-Node: Assigning Constant Properties During Initialization450172
-Node: Default Initializers451641
-Node: Memberwise Initializers for Structure Types 1453273
-Node: Initializer Delegation for Value Types455156
-Node: Class Inheritance and Initialization460649
-Node: Designated Initializers and Convenience Initializers461588
-Node: Syntax for Designated and Convenience Initializers463349
-Node: Initializer Delegation for Class Types464077
-Node: Two-Phase Initialization466486
-Node: Initializer Inheritance and Overriding472521
-Node: Automatic Initializer Inheritance478591
-Node: Designated and Convenience Initializers in Action480100
-Node: Failable Initializers488380
-Node: Failable Initializers for Enumerations492901
-Node: Failable Initializers for Enumerations with Raw Values494765
-Node: Propagation of Initialization Failure496196
-Node: Overriding a Failable Initializer499463
-Node: The init! Failable Initializer503044
-Node: Required Initializers503965
-Node: Setting a Default Property Value with a Closure or Function505091
-Node: Deinitialization509016
-Node: How Deinitialization Works509488
-Node: Deinitializers in Action511200
-Node: Optional Chaining516148
-Node: Optional Chaining as an Alternative to Forced Unwrapping517271
-Node: Defining Model Classes for Optional Chaining522234
-Node: Accessing Properties Through Optional Chaining526253
-Node: Calling Methods Through Optional Chaining528674
-Node: Accessing Subscripts Through Optional Chaining531294
-Node: Accessing Subscripts of Optional Type533775
-Node: Linking Multiple Levels of Chaining535075
-Node: Chaining on Methods with Optional Return Values538258
-Node: Error Handling 2540081
-Node: Representing and Throwing Errors541685
-Node: Handling Errors542882
-Node: Propagating Errors Using Throwing Functions544655
-Node: Handling Errors Using Do-Catch548891
-Node: Converting Errors to Optional Values552833
-Node: Disabling Error Propagation554386
-Node: Specifying Cleanup Actions555310
-Node: Type Casting557269
-Node: Defining a Class Hierarchy for Type Casting558048
-Node: Checking Type561116
-Node: Downcasting562606
-Node: Type Casting for Any and AnyObject566720
-Node: Nested Types570378
-Node: Nested Types in Action571138
-Node: Referring to Nested Types575496
-Node: Extensions576084
-Node: Extension Syntax577384
-Node: Computed Properties 1578671
-Node: Initializers 1581156
-Node: Methods 1584541
-Node: Mutating Instance Methods585452
-Node: Subscripts 1586173
-Node: Nested Types 1587305
-Node: Protocols589360
-Node: Protocol Syntax590506
-Node: Property Requirements591378
-Node: Method Requirements595369
-Node: Mutating Method Requirements597972
-Node: Initializer Requirements600766
-Node: Class Implementations of Protocol Initializer Requirements601396
-Node: Failable Initializer Requirements603354
-Node: Protocols as Types603994
-Node: Delegation607776
-Node: Adding Protocol Conformance with an Extension615506
-Node: Conditionally Conforming to a Protocol617882
-Node: Declaring Protocol Adoption with an Extension619198
-Node: Collections of Protocol Types620348
-Node: Protocol Inheritance621603
-Node: Class-Only Protocols624983
-Node: Protocol Composition626052
-Node: Checking for Protocol Conformance629991
-Node: Optional Protocol Requirements633934
-Node: Protocol Extensions642051
-Node: Providing Default Implementations643566
-Node: Adding Constraints to Protocol Extensions644830
-Node: Generics 1646967
-Node: The Problem That Generics Solve648297
-Node: Generic Functions650765
-Node: Type Parameters653741
-Node: Naming Type Parameters654906
-Node: Generic Types655766
-Node: Extending a Generic Type660844
-Node: Type Constraints662742
-Node: Type Constraint Syntax664618
-Node: Type Constraints in Action665511
-Node: Associated Types669671
-Node: Associated Types in Action670437
-Node: Extending an Existing Type to Specify an Associated Type675894
-Node: Adding Constraints to an Associated Type677290
-Node: Using a Protocol in Its Associated Type's Constraints678186
-Node: Generic Where Clauses681102
-Node: Extensions with a Generic Where Clause686970
-Node: Associated Types with a Generic Where Clause690951
-Node: Generic Subscripts692452
-Node: Opaque Types694079
-Node: The Problem That Opaque Types Solve695044
-Node: Returning an Opaque Type698016
-Node: Differences Between Opaque Types and Protocol Types704679
-Node: Automatic Reference Counting710792
-Node: How ARC Works712365
-Node: ARC in Action713949
-Node: Strong Reference Cycles Between Class Instances716847
-Node: Resolving Strong Reference Cycles Between Class Instances721854
-Node: Weak References723162
-Node: Unowned References727040
-Node: Unowned References and Implicitly Unwrapped Optional Properties732576
-Node: Strong Reference Cycles for Closures737314
-Node: Resolving Strong Reference Cycles for Closures744198
-Node: Defining a Capture List745360
-Node: Weak and Unowned References746582
-Node: Memory Safety749493
-Node: Understanding Conflicting Access to Memory750623
-Node: Characteristics of Memory Access753590
-Node: Conflicting Access to In-Out Parameters755692
-Node: Conflicting Access to self in Methods759123
-Node: Conflicting Access to Properties761925
-Node: Access Control765294
-Node: Modules and Source Files766867
-Node: Access Levels768043
-Node: Guiding Principle of Access Levels770960
-Node: Default Access Levels771886
-Node: Access Levels for Single-Target Apps772392
-Node: Access Levels for Frameworks773119
-Node: Access Levels for Unit Test Targets774005
-Node: Access Control Syntax774638
-Node: Custom Types775741
-Node: Tuple Types778444
-Node: Function Types 1779105
-Node: Enumeration Types780996
-Node: Nested Types 2782046
-Node: Subclassing 1782595
-Node: Constants Variables Properties and Subscripts784547
-Node: Getters and Setters785292
-Node: Initializers 2789636
-Node: Default Initializers 1790387
-Node: Default Memberwise Initializers for Structure Types791270
-Node: Protocols 1792079
-Node: Protocol Inheritance 1793148
-Node: Protocol Conformance793555
-Node: Extensions 1794807
-Node: Private Members in Extensions796164
-Node: Generics 2797427
-Node: Type Aliases 1797762
-Node: Advanced Operators798377
-Node: Bitwise Operators800043
-Node: Bitwise NOT Operator800789
-Node: Bitwise AND Operator801930
-Node: Bitwise OR Operator802765
-Node: Bitwise XOR Operator803558
-Node: Bitwise Left and Right Shift Operators804550
-Node: Overflow Operators811761
-Node: Value Overflow813253
-Node: Precedence and Associativity816202
-Node: Operator Methods 1818980
-Node: Prefix and Postfix Operators821628
-Node: Compound Assignment Operators 1823253
-Node: Equivalence Operators824805
-Node: Custom Operators827941
-Node: Precedence for Custom Infix Operators829491
-Node: Index831822
+Node: Welcome to Swift14233
+Node: About Swift14452
+Node: Version Compatibility16634
+Node: A Swift Tour17890
+Node: Simple Values19526
+Node: Control Flow22861
+Node: Functions and Closures27490
+Node: Objects and Classes31972
+Node: Enumerations and Structures38583
+Node: Protocols and Extensions44063
+Node: Error Handling47054
+Node: Generics50386
+Node: Language Guide52063
+Node: The Basics52957
+Node: Constants and Variables55590
+Node: Declaring Constants and Variables56209
+Node: Type Annotations57599
+Node: Naming Constants and Variables59508
+Node: Printing Constants and Variables61278
+Node: Comments62927
+Node: Semicolons64230
+Node: Integers64672
+Node: Integer Bounds65352
+Node: Int65938
+Node: UInt66723
+Node: Floating-Point Numbers67570
+Node: Type Safety and Type Inference68582
+Node: Numeric Literals71369
+Node: Numeric Type Conversion73422
+Node: Integer Conversion74378
+Node: Integer and Floating-Point Conversion76910
+Node: Type Aliases78401
+Node: Booleans79325
+Node: Tuples81402
+Node: Optionals84833
+Node: nil87204
+Node: If Statements and Forced Unwrapping88369
+Node: Optional Binding89904
+Node: Implicitly Unwrapped Optionals93280
+Node: Error Handling 196807
+Node: Assertions and Preconditions99498
+Node: Debugging with Assertions101725
+Node: Enforcing Preconditions103457
+Node: Basic Operators105577
+Node: Terminology107307
+Node: Assignment Operator108220
+Node: Arithmetic Operators109292
+Node: Remainder Operator110257
+Node: Unary Minus Operator111991
+Node: Unary Plus Operator112555
+Node: Compound Assignment Operators113095
+Node: Comparison Operators114099
+Node: Ternary Conditional Operator117758
+Node: Nil-Coalescing Operator119697
+Node: Range Operators122059
+Node: Closed Range Operator122407
+Node: Half-Open Range Operator123207
+Node: One-Sided Ranges124489
+Node: Logical Operators126129
+Node: Logical NOT Operator126680
+Node: Logical AND Operator127687
+Node: Logical OR Operator128657
+Node: Combining Logical Operators129860
+Node: Explicit Parentheses131242
+Node: Strings and Characters132243
+Node: String Literals134523
+Node: Multiline String Literals135232
+Node: Special Characters in String Literals137843
+Node: Extended String Delimiters139637
+Node: Initializing an Empty String140947
+Node: String Mutability141760
+Node: Strings Are Value Types142658
+Node: Working with Characters143877
+Node: Concatenating Strings and Characters144928
+Node: String Interpolation147038
+Node: Unicode149181
+Node: Unicode Scalar Values149817
+Node: Extended Grapheme Clusters150612
+Node: Counting Characters153179
+Node: Accessing and Modifying a String155588
+Node: String Indices155956
+Node: Inserting and Removing158508
+Node: Substrings159927
+Node: Comparing Strings162749
+Node: String and Character Equality163131
+Node: Prefix and Suffix Equality165566
+Node: Unicode Representations of Strings167902
+Node: UTF-8 Representation169779
+Node: UTF-16 Representation170977
+Node: Unicode Scalar Representation172544
+Node: Collection Types174281
+Node: Mutability of Collections175347
+Node: Arrays176182
+Node: Array Type Shorthand Syntax177061
+Node: Creating an Empty Array177611
+Node: Creating an Array with a Default Value178593
+Node: Creating an Array by Adding Two Arrays Together179307
+Node: Creating an Array with an Array Literal180097
+Node: Accessing and Modifying an Array182279
+Node: Iterating Over an Array186938
+Node: Sets188132
+Node: Hash Values for Set Types189012
+Node: Set Type Syntax190868
+Node: Creating and Initializing an Empty Set191237
+Node: Creating a Set with an Array Literal192221
+Node: Accessing and Modifying a Set194091
+Node: Iterating Over a Set195888
+Node: Performing Set Operations196666
+Node: Fundamental Set Operations197134
+Node: Set Membership and Equality198400
+Node: Dictionaries200097
+Node: Dictionary Type Shorthand Syntax201323
+Node: Creating an Empty Dictionary202122
+Node: Creating a Dictionary with a Dictionary Literal203168
+Node: Accessing and Modifying a Dictionary205933
+Node: Iterating Over a Dictionary209960
+Node: Control Flow 1211709
+Node: For-In Loops212922
+Node: While Loops218093
+Node: While218725
+Node: Repeat-While223278
+Node: Conditional Statements226004
+Node: If226939
+Node: Switch229598
+Node: Control Transfer Statements243477
+Node: Continue244289
+Node: Break245343
+Node: Fallthrough249589
+Node: Labeled Statements252351
+Node: Early Exit257544
+Node: Checking API Availability259855
+Node: Functions261883
+Node: Defining and Calling Functions263187
+Node: Function Parameters and Return Values266856
+Node: Functions Without Parameters267561
+Node: Functions With Multiple Parameters268313
+Node: Functions Without Return Values269686
+Node: Functions with Multiple Return Values271858
+Node: Functions With an Implicit Return276187
+Node: Function Argument Labels and Parameter Names277526
+Node: Specifying Argument Labels278772
+Node: Omitting Argument Labels279811
+Node: Default Parameter Values280579
+Node: Variadic Parameters281858
+Node: In-Out Parameters283348
+Node: Function Types286545
+Node: Using Function Types287864
+Node: Function Types as Parameter Types289327
+Node: Function Types as Return Types291167
+Node: Nested Functions293568
+Node: Closures294958
+Node: Closure Expressions296691
+Node: The Sorted Method297908
+Node: Closure Expression Syntax300459
+Node: Inferring Type From Context302308
+Node: Implicit Returns from Single-Expression Closures303928
+Node: Shorthand Argument Names304790
+Node: Operator Methods305721
+Node: Trailing Closures306490
+Node: Capturing Values312573
+Node: Closures Are Reference Types317607
+Node: Escaping Closures318927
+Node: Autoclosures321229
+Node: Enumerations326098
+Node: Enumeration Syntax328013
+Node: Matching Enumeration Values with a Switch Statement330155
+Node: Iterating over Enumeration Cases331891
+Node: Associated Values333514
+Node: Raw Values338009
+Node: Implicitly Assigned Raw Values339616
+Node: Initializing from a Raw Value341327
+Node: Recursive Enumerations343445
+Node: Structures and Classes346482
+Node: Comparing Structures and Classes347728
+Node: Definition Syntax349905
+Node: Structure and Class Instances352327
+Node: Accessing Properties353460
+Node: Memberwise Initializers for Structure Types354692
+Node: Structures and Enumerations Are Value Types355522
+Node: Classes Are Reference Types359599
+Node: Identity Operators362634
+Node: Pointers364391
+Node: Properties365360
+Node: Stored Properties366600
+Node: Stored Properties of Constant Structure Instances368397
+Node: Lazy Stored Properties369617
+Node: Stored Properties and Instance Variables373348
+Node: Computed Properties374364
+Node: Shorthand Setter Declaration377746
+Node: Shorthand Getter Declaration378672
+Node: Read-Only Computed Properties379844
+Node: Property Observers381754
+Node: Property Wrappers386514
+Node: Setting Initial Values for Wrapped Properties390606
+Node: Projecting a Value From a Property Wrapper396253
+Node: Global and Local Variables400624
+Node: Type Properties401962
+Node: Type Property Syntax403636
+Node: Querying and Setting Type Properties405238
+Node: Methods410154
+Node: Instance Methods411057
+Node: The self Property413519
+Node: Modifying Value Types from Within Instance Methods415496
+Node: Assigning to self Within a Mutating Method417636
+Node: Type Methods419349
+Node: Subscripts425901
+Node: Subscript Syntax426863
+Node: Subscript Usage429487
+Node: Subscript Options431377
+Node: Type Subscripts435752
+Node: Inheritance436774
+Node: Defining a Base Class437945
+Node: Subclassing439885
+Node: Overriding442526
+Node: Accessing Superclass Methods Properties and Subscripts443748
+Node: Overriding Methods445047
+Node: Overriding Properties445931
+Node: Preventing Overrides451221
+Node: Initialization452153
+Node: Setting Initial Values for Stored Properties453511
+Node: Initializers454432
+Node: Default Property Values455581
+Node: Customizing Initialization456844
+Node: Initialization Parameters457478
+Node: Parameter Names and Argument Labels459286
+Node: Initializer Parameters Without Argument Labels461637
+Node: Optional Property Types463119
+Node: Assigning Constant Properties During Initialization464715
+Node: Default Initializers466184
+Node: Memberwise Initializers for Structure Types 1467816
+Node: Initializer Delegation for Value Types469699
+Node: Class Inheritance and Initialization475192
+Node: Designated Initializers and Convenience Initializers476131
+Node: Syntax for Designated and Convenience Initializers477892
+Node: Initializer Delegation for Class Types478620
+Node: Two-Phase Initialization481029
+Node: Initializer Inheritance and Overriding487064
+Node: Automatic Initializer Inheritance493134
+Node: Designated and Convenience Initializers in Action494643
+Node: Failable Initializers502923
+Node: Failable Initializers for Enumerations507444
+Node: Failable Initializers for Enumerations with Raw Values509308
+Node: Propagation of Initialization Failure510739
+Node: Overriding a Failable Initializer514006
+Node: The init! Failable Initializer517587
+Node: Required Initializers518508
+Node: Setting a Default Property Value with a Closure or Function519634
+Node: Deinitialization523559
+Node: How Deinitialization Works524031
+Node: Deinitializers in Action525743
+Node: Optional Chaining530691
+Node: Optional Chaining as an Alternative to Forced Unwrapping531814
+Node: Defining Model Classes for Optional Chaining536777
+Node: Accessing Properties Through Optional Chaining540796
+Node: Calling Methods Through Optional Chaining543217
+Node: Accessing Subscripts Through Optional Chaining545837
+Node: Accessing Subscripts of Optional Type548318
+Node: Linking Multiple Levels of Chaining549618
+Node: Chaining on Methods with Optional Return Values552801
+Node: Error Handling 2554624
+Node: Representing and Throwing Errors556228
+Node: Handling Errors557425
+Node: Propagating Errors Using Throwing Functions559198
+Node: Handling Errors Using Do-Catch563434
+Node: Converting Errors to Optional Values567382
+Node: Disabling Error Propagation568935
+Node: Specifying Cleanup Actions569859
+Node: Type Casting571818
+Node: Defining a Class Hierarchy for Type Casting572597
+Node: Checking Type575665
+Node: Downcasting577155
+Node: Type Casting for Any and AnyObject581269
+Node: Nested Types584927
+Node: Nested Types in Action585687
+Node: Referring to Nested Types590045
+Node: Extensions590633
+Node: Extension Syntax591933
+Node: Computed Properties 1593220
+Node: Initializers 1595705
+Node: Methods 1599090
+Node: Mutating Instance Methods600001
+Node: Subscripts 1600722
+Node: Nested Types 1601854
+Node: Protocols603909
+Node: Protocol Syntax605055
+Node: Property Requirements605927
+Node: Method Requirements609918
+Node: Mutating Method Requirements612521
+Node: Initializer Requirements615315
+Node: Class Implementations of Protocol Initializer Requirements615945
+Node: Failable Initializer Requirements617903
+Node: Protocols as Types618543
+Node: Delegation622325
+Node: Adding Protocol Conformance with an Extension630056
+Node: Conditionally Conforming to a Protocol632432
+Node: Declaring Protocol Adoption with an Extension633748
+Node: Collections of Protocol Types634898
+Node: Protocol Inheritance636153
+Node: Class-Only Protocols639533
+Node: Protocol Composition640602
+Node: Checking for Protocol Conformance644541
+Node: Optional Protocol Requirements648484
+Node: Protocol Extensions656601
+Node: Providing Default Implementations658116
+Node: Adding Constraints to Protocol Extensions659380
+Node: Generics 1661517
+Node: The Problem That Generics Solve662847
+Node: Generic Functions665315
+Node: Type Parameters668291
+Node: Naming Type Parameters669456
+Node: Generic Types670316
+Node: Extending a Generic Type675394
+Node: Type Constraints677292
+Node: Type Constraint Syntax679168
+Node: Type Constraints in Action680061
+Node: Associated Types684221
+Node: Associated Types in Action684987
+Node: Extending an Existing Type to Specify an Associated Type690444
+Node: Adding Constraints to an Associated Type691840
+Node: Using a Protocol in Its Associated Type's Constraints692736
+Node: Generic Where Clauses695652
+Node: Extensions with a Generic Where Clause701520
+Node: Associated Types with a Generic Where Clause705501
+Node: Generic Subscripts707002
+Node: Opaque Types708629
+Node: The Problem That Opaque Types Solve709594
+Node: Returning an Opaque Type712566
+Node: Differences Between Opaque Types and Protocol Types719229
+Node: Automatic Reference Counting725346
+Node: How ARC Works726919
+Node: ARC in Action728503
+Node: Strong Reference Cycles Between Class Instances731401
+Node: Resolving Strong Reference Cycles Between Class Instances736408
+Node: Weak References737716
+Node: Unowned References741594
+Node: Unowned References and Implicitly Unwrapped Optional Properties747130
+Node: Strong Reference Cycles for Closures751868
+Node: Resolving Strong Reference Cycles for Closures758752
+Node: Defining a Capture List759914
+Node: Weak and Unowned References761091
+Node: Memory Safety764002
+Node: Understanding Conflicting Access to Memory765132
+Node: Characteristics of Memory Access768099
+Node: Conflicting Access to In-Out Parameters770201
+Node: Conflicting Access to self in Methods773632
+Node: Conflicting Access to Properties776434
+Node: Access Control779803
+Node: Modules and Source Files781376
+Node: Access Levels782552
+Node: Guiding Principle of Access Levels784898
+Node: Default Access Levels785824
+Node: Access Levels for Single-Target Apps786330
+Node: Access Levels for Frameworks787057
+Node: Access Levels for Unit Test Targets787943
+Node: Access Control Syntax788576
+Node: Custom Types789693
+Node: Tuple Types792396
+Node: Function Types 1793075
+Node: Enumeration Types794966
+Node: Nested Types 2796016
+Node: Subclassing 1796470
+Node: Constants Variables Properties and Subscripts798695
+Node: Getters and Setters799440
+Node: Initializers 2803784
+Node: Default Initializers 1804535
+Node: Default Memberwise Initializers for Structure Types805418
+Node: Protocols 1806227
+Node: Protocol Inheritance 1807296
+Node: Protocol Conformance807703
+Node: Extensions 1808962
+Node: Private Members in Extensions810309
+Node: Generics 2811572
+Node: Type Aliases 1811907
+Node: Advanced Operators812522
+Node: Bitwise Operators814188
+Node: Bitwise NOT Operator814934
+Node: Bitwise AND Operator816075
+Node: Bitwise OR Operator816910
+Node: Bitwise XOR Operator817703
+Node: Bitwise Left and Right Shift Operators818695
+Node: Overflow Operators825906
+Node: Value Overflow827398
+Node: Precedence and Associativity830347
+Node: Operator Methods 1833125
+Node: Prefix and Postfix Operators835773
+Node: Compound Assignment Operators 1837398
+Node: Equivalence Operators838950
+Node: Custom Operators842086
+Node: Precedence for Custom Infix Operators843636
+Node: Index845967
 
 End Tag Table
 

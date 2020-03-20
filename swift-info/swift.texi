@@ -1,7 +1,7 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
 @setfilename swift.info
-@settitle The Swift Programming Language Guide (Swift 5.1)
+@settitle The Swift Programming Language Guide (Swift 5.2)
 @documentencoding UTF-8
 @documentlanguage en
 @syncodeindex vr cp
@@ -16,7 +16,7 @@
 
 @finalout
 @titlepage
-@title The Swift Programming Language Guide (Swift 5.1)
+@title The Swift Programming Language Guide (Swift 5.2)
 @author Apple Inc.
 @end titlepage
 
@@ -24,7 +24,7 @@
 
 @ifnottex
 @node Top
-@top The Swift Programming Language Guide (Swift 5.1)
+@top The Swift Programming Language Guide (Swift 5.2)
 @end ifnottex
 
 @menu
@@ -40,7 +40,7 @@
 * Control Flow: Control Flow 1. 
 * Functions::
 * Closures::
-* Enumeration::
+* Enumerations::
 * Structures and Classes::
 * Properties::
 * Methods::
@@ -312,7 +312,7 @@ Closure Expressions
 * Shorthand Argument Names::
 * Operator Methods::
 
-Enumeration
+Enumerations
 
 * Enumeration Syntax::
 * Matching Enumeration Values with a Switch Statement::
@@ -349,6 +349,7 @@ Properties
 * Stored Properties::
 * Computed Properties::
 * Property Observers::
+* Property Wrappers::
 * Global and Local Variables::
 * Type Properties::
 
@@ -363,6 +364,11 @@ Computed Properties
 * Shorthand Setter Declaration::
 * Shorthand Getter Declaration::
 * Read-Only Computed Properties::
+
+Property Wrappers
+
+* Setting Initial Values for Wrapped Properties::
+* Projecting a Value From a Property Wrapper::
 
 Type Properties
 
@@ -751,13 +757,13 @@ wait to see what you create with it.
 @node Version Compatibility
 @chapter Version Compatibility
 
-This book describes Swift 5.1, the default version of Swift that's
-included in Xcode 11. You can use Xcode 11 to build targets that are
-written in either Swift 5.1, Swift 4.2, or Swift 4.
+This book describes Swift 5.2, the default version of Swift that's
+included in Xcode 11.4. You can use Xcode 11 to build targets that are
+written in either Swift 5.2, Swift 4.2, or Swift 4.
 
-When you use Xcode 11 to build Swift 4 and Swift 4.2 code, most Swift
-5.1 functionality is available. That said, the following changes are
-available only to code that uses Swift 5.1 or later:
+When you use Xcode 11.4 to build Swift 4 and Swift 4.2 code, most Swift
+5.2 functionality is available. That said, the following changes are
+available only to code that uses Swift 5.2 or later:
 
 @itemize
 @item
@@ -773,10 +779,10 @@ the correct integer type. For example, @samp{UInt64(0xffff_ffff_ffff_ffff)}
 evaluates to the correct value rather than overflowing.
 @end itemize
 
-A target written in Swift 5.1 can depend on a target that's written in
+A target written in Swift 5.2 can depend on a target that's written in
 Swift 4.2 or Swift 4, and vice versa. This means, if you have a large
 project that's divided into multiple frameworks, you can migrate your
-code from Swift 4 to Swift 5.1 one framework at a time.
+code from Swift 4 to Swift 5.2 one framework at a time.
 
 @node A Swift Tour
 @chapter A Swift Tour
@@ -1878,7 +1884,7 @@ Writing @samp{<T: Equatable>} is the same as writing
 @item
 @ref{Closures}
 @item
-@ref{Enumeration}
+@ref{Enumerations}
 @item
 @ref{Structures and Classes}
 @item
@@ -5474,7 +5480,7 @@ equally, such that if @samp{a =} b=, it follows that
 All of Swift's basic types (such as @samp{String}, @samp{Int}, @samp{Double}, and
 @samp{Bool}) are hashable by default, and can be used as set value types or
 dictionary key types. Enumeration case values without associated values
-(as described in @ref{Enumeration}) are also hashable
+(as described in @ref{Enumerations}) are also hashable
 by default.
 
 Note
@@ -8933,8 +8939,8 @@ the array can be executed after the function returns. As a result, the
 value of the @samp{customerProvider} argument must be allowed to escape the
 function's scope.
 
-@node Enumeration
-@chapter Enumeration
+@node Enumerations
+@chapter Enumerations
 
 An @emph{enumeration} defines a common type for a group of related values and
 enables you to work with those values in a type-safe way within your
@@ -9952,10 +9958,14 @@ property's value, which you can respond to with custom actions. Property
 observers can be added to stored properties you define yourself, and
 also to properties that a subclass inherits from its superclass.
 
+You can also use a property wrapper to reuse code in the getter and
+setter of multiple properties.
+
 @menu
 * Stored Properties::
 * Computed Properties::
 * Property Observers::
+* Property Wrappers::
 * Global and Local Variables::
 * Type Properties::
 @end menu
@@ -10428,6 +10438,386 @@ The value is always written back to the property at the end of the
 function. For a detailed discussion of the behavior of in-out
 parameters, see @ref{In-Out Parameters, , In-Out
 Parameters}.
+
+@node Property Wrappers
+@section Property Wrappers
+
+A property wrapper adds a layer of separation between code that manages
+how a property is stored and the code that defines a property. For
+example, if you have properties that provide thread-safety checks or
+store their underlying data in a database, you have to write that code
+on every property. When you use a property wrapper, you write the
+management code once when you define the wrapper, and then reuse that
+management code by applying it to multiple properties.
+
+To define a property wrapper, you make a structure, enumeration, or
+class that defines a @samp{wrappedValue} property. In the code below, the
+@samp{TwelveOrLess} structure ensures that the value it wraps always contains
+a number less than or equal to 12. If you ask it to store a larger
+number, it stores 12 instead.
+
+@example
+@@propertyWrapper
+struct TwelveOrLess @{
+    private var number: Int
+    init() @{ self.number = 0 @}
+    var wrappedValue: Int @{
+        get @{ return number @}
+        set @{ number = min(newValue, 12) @}
+    @}
+@}
+@end example
+
+The setter ensures that new values are less than 12, and the getter
+returns the stored value.
+
+Note
+
+The declaration for @samp{number} in the example above marks the variable as
+@samp{private}, which ensures @samp{number} is used only in the implementation of
+@samp{TwelveOrLess}. Code that's written anywhere else accesses the value
+using the getter and setter for @samp{wrappedValue}, and can't use @samp{number}
+directly. For information about @samp{private}, see
+@ref{Access Control}.
+
+You apply a wrapper to a property by writing the wrapper's name before
+the property as an attribute. Here's a structure that stores a small
+rectangle, using the same (rather arbitrary) definition of “small”
+that's implemented by the @samp{TwelveOrLess} property wrapper:
+
+@example
+struct SmallRectangle @{
+    @@TwelveOrLess var height: Int
+    @@TwelveOrLess var width: Int
+@}
+@end example
+
+@example
+var rectangle = SmallRectangle()
+print(rectangle.height)
+// Prints "0"
+@end example
+
+@example
+rectangle.height = 10
+print(rectangle.height)
+// Prints "10"
+@end example
+
+@example
+rectangle.height = 24
+print(rectangle.height)
+// Prints "12"
+@end example
+
+The @samp{height} and @samp{width} properties get their initial values from the
+definition of @samp{TwelveOrLess}, which sets @samp{TwelveOrLess.number} to zero.
+Storing the number 10 into @samp{rectangle.height} succeeds because it's a
+small number. Trying to store 24 actually stores a value of 12 instead,
+because 24 is too large for the property setter's rule.
+
+When you apply a wrapper to a property, the compiler synthesizes code
+that provides storage for the wrapper and code that provides access to
+the property through the wrapper. (The property wrapper is responsible
+for storing the wrapped value, so there's no synthesized code for that.)
+You could write code that uses the behavior of a property wrapper,
+without taking advantage of the special attribute syntax. For example,
+here's a version of @samp{SmallRectangle} from the previous code listing that
+wraps its properties in the @samp{TwelveOrLess} structure explicitly, instead
+of writing @samp{@@TwelveOrLess} as an attribute:
+
+@example
+struct SmallRectangle @{
+    private var _height = TwelveOrLess()
+    private var _width = TwelveOrLess()
+    var height: Int @{
+        get @{ return _height.wrappedValue @}
+        set @{ _height.wrappedValue = newValue @}
+    @}
+    var width: Int @{
+        get @{ return _width.wrappedValue @}
+        set @{ _width.wrappedValue = newValue @}
+    @}
+@}
+@end example
+
+The @samp{_height} and @samp{_width} properties store an instance of the property
+wrapper, @samp{TwelveOrLess}. The getter and setter for @samp{height} and @samp{width}
+wrap access to the @samp{wrappedValue} property.
+
+@menu
+* Setting Initial Values for Wrapped Properties::
+* Projecting a Value From a Property Wrapper::
+@end menu
+
+@node Setting Initial Values for Wrapped Properties
+@subsection Setting Initial Values for Wrapped Properties
+
+The code in the examples above sets the initial value for the wrapped
+property by giving @samp{number} an initial value in the definition of
+@samp{TwelveOrLess}. Code that uses this property wrapper, can't specify a
+different initial value for a property that's wrapped by
+@samp{TwelveOrLess}---for example, the definition of @samp{SmallRectangle} can't
+give @samp{height} or @samp{width} initial values. To support setting an initial
+value or other customization, the property wrapper needs to add an
+initializer. Here's an expanded version of @samp{TwelveOrLess} called
+@samp{SmallNumber} that defines initializers that set the wrapped and maximum
+value:
+
+@example
+@@propertyWrapper
+struct SmallNumber @{
+    private var maximum: Int
+    private var number: Int
+
+
+    var wrappedValue: Int @{
+        get @{ return number @}
+        set @{ number = min(newValue, maximum) @}
+    @}
+
+
+    init() @{
+        maximum = 12
+        number = 0
+    @}
+    init(wrappedValue: Int) @{
+        maximum = 12
+        number = min(wrappedValue, maximum)
+    @}
+    init(wrappedValue: Int, maximum: Int) @{
+        self.maximum = maximum
+        number = min(wrappedValue, maximum)
+    @}
+@}
+@end example
+
+The definition of @samp{SmallNumber} includes three initializers---@samp{init()},
+@samp{init(wrappedValue:)}, and @samp{init(wrappedValue:maximum:)}---which the
+examples below use to set the wrapped value and the maximum value. For
+information about initialization and initializer syntax, see
+@ref{Initialization}.
+
+When you apply a wrapper to a property and you don't specify an initial
+value, Swift uses the @samp{init()} initializer to set up the wrapper. For
+example:
+
+@example
+struct ZeroRectangle @{
+    @@SmallNumber var height: Int
+    @@SmallNumber var width: Int
+@}
+
+
+var zeroRectangle = ZeroRectangle()
+print(zeroRectangle.height, zeroRectangle.width)
+// Prints "0 0"
+@end example
+
+The instances of @samp{SmallNumber} that wrap @samp{height} and @samp{width} are
+created by calling @samp{SmallNumber()}. The code inside that initializer
+sets the initial wrapped value and the initial maximum value, using the
+default values of zero and 12. The property wrapper still provides all
+of the initial values, like the earlier example that used @samp{TwelveOrLess}
+in @samp{SmallRectangle}. Unlike that example, @samp{SmallNumber} also supports
+writing those initial values as part of declaring the property.
+
+When you specify an initial value for the property, Swift uses the
+@samp{init(wrappedValue:)} initializer to set up the wrapper. For example:
+
+@example
+struct UnitRectangle @{
+    @@SmallNumber var height: Int = 1
+    @@SmallNumber var width: Int = 1
+@}
+
+
+var unitRectangle = UnitRectangle()
+print(unitRectangle.height, unitRectangle.width)
+// Prints "1 1"
+@end example
+
+When you write @samp{= 1} on a property with a wrapper, that's translated
+into a call to the @samp{init(wrappedValue:)} initializer. The instances of
+@samp{SmallNumber} that wrap @samp{height} and @samp{width} are created by calling
+@samp{SmallNumber(wrappedValue: 1)}. The initializer uses the wrapped value
+that's specified here, and it uses the default maximum value of 12.
+
+When you write arguments in parentheses after the custom attribute,
+Swift uses the initializer that accepts those arguments to set up the
+wrapper. For example, if you provide an initial value and a maximum
+value, Swift uses the @samp{init(wrappedValue:maximum:)} initializer:
+
+@example
+struct NarrowRectangle @{
+    @@SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
+    @@SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
+@}
+
+
+var narrowRectangle = NarrowRectangle()
+print(narrowRectangle.height, narrowRectangle.width)
+// Prints "2 3"
+
+
+narrowRectangle.height = 100
+narrowRectangle.width = 100
+print(narrowRectangle.height, narrowRectangle.width)
+// Prints "5 4"
+@end example
+
+The instance of @samp{SmallNumber} that wraps @samp{height} is created by calling
+@samp{SmallNumber(wrappedValue: 2, maximum: 5)}, and the instance that wraps
+@samp{width} is created by calling
+@samp{SmallNumber(wrappedValue: 3, maximum: 4)}.
+
+By including arguments to the property wrapper, you can set up the
+initial state in the wrapper or pass other options to the wrapper when
+it's created. This syntax is the most general way to use a property
+wrapper. You can provide whatever arguments you need to the attribute,
+and they're passed to the initializer.
+
+When you include property wrapper arguments, you can also specify an
+initial value using assignment. Swift treats the assignment like a
+@samp{wrappedValue} argument and uses the initializer that accepts the
+arguments you include. For example:
+
+@example
+struct MixedRectangle @{
+    @@SmallNumber var height: Int = 1
+    @@SmallNumber(maximum: 9) var width: Int = 2
+@}
+
+
+var mixedRectangle = MixedRectangle()
+print(mixedRectangle.height)
+// Prints "1"
+
+
+mixedRectangle.height = 20
+print(mixedRectangle.height)
+// Prints "12"
+@end example
+
+The instance of @samp{SmallNumber} that wraps @samp{height} is created by calling
+@samp{SmallNumber(wrappedValue: 1)}, which uses the default maximum value of
+@enumerate
+@item
+The instance that wraps @samp{width} is created by calling
+@end enumerate
+@samp{SmallNumber(wrappedValue: 2, maximum: 9)}.
+
+@node Projecting a Value From a Property Wrapper
+@subsection Projecting a Value From a Property Wrapper
+
+In addition to the wrapped value, a property wrapper can expose
+additional functionality by defining a @emph{projected value}---for example,
+a property wrapper that manages access to a database can expose a
+@samp{flushDatabaseConnection()} method on its projected value. The name of
+the projected value is the same as the wrapped value, except it begins
+with a dollar sign (@samp{$}). Because your code can't define properties that
+start with @samp{$} the projected value never interferes with properties you
+define.
+
+In the @samp{SmallNumber} example above, if you try to set the property to a
+number that's too large, the property wrapper adjusts the number before
+storing it. The code below adds a @samp{projectedValue} property to the
+@samp{SmallNumber} structure to keep track of whether the property wrapper
+adjusted the new value for the property before storing that new value.
+
+@example
+@@propertyWrapper
+struct SmallNumber @{
+    private var number: Int
+    var projectedValue: Bool
+    init() @{
+        self.number = 0
+        self.projectedValue = false
+    @}
+    var wrappedValue: Int @{
+        get @{ return number @}
+        set @{
+            if newValue > 12 @{
+                number = 12
+                projectedValue = true
+            @} else @{
+                number = newValue
+                projectedValue = false
+            @}
+        @}
+    @}
+@}
+struct SomeStructure @{
+    @@SmallNumber var someNumber: Int
+@}
+var someStructure = SomeStructure()
+
+
+someStructure.someNumber = 4
+print(someStructure.$someNumber)
+// Prints "false"
+
+
+someStructure.someNumber = 55
+print(someStructure.$someNumber)
+// Prints "true"
+@end example
+
+Writing @samp{someStructure.$someNumber} accesses the wrapper's projected
+value. After storing a small number like four, the value of
+@samp{someStructure.$someNumber} is @samp{false}. However, the projected value is
+@samp{true} after trying to store a number that's too large, like 55.
+
+A property wrapper can return a value of any type as its projected
+value. In this example, the property wrapper exposes only one piece of
+information---whether the number was adjusted---so it exposes that
+Boolean value as its projected value. A wrapper that needs to expose
+more information can return an instance of some other data type, or it
+can return @samp{self} to expose the instance of the wrapper as its projected
+value.
+
+When you access a projected value from code that's part of the type,
+like a property getter or an instance method, you can omit @samp{self.}
+before the property name, just like accessing other properties. The code
+in the following example refers to the projected value of the wrapper
+around @samp{height} and @samp{width} as @samp{$height} and @samp{$width}:
+
+@example
+enum Size @{
+    case small, large
+@}
+
+
+struct SizedRectangle @{
+    @@SmallNumber var height: Int
+    @@SmallNumber var width: Int
+
+
+    mutating func resize(to size: Size) -> Bool @{
+        switch size @{
+        case .small:
+            height = 10
+            width = 20
+        case .large:
+            height = 100
+            width = 100
+        @}
+        return $height || $width
+    @}
+@}
+@end example
+
+Because property wrapper syntax is just syntactic sugar for a property
+with a getter and a setter, accessing @samp{height} and @samp{width} behaves the
+same as accessing any other property. For example, the code in
+@samp{resize(to:)} accesses @samp{height} and @samp{width} using their property
+wrapper. If you call @samp{resize(to: .large)}, the switch case for @samp{.large}
+sets the rectangle's height and width to 100. The wrapper prevents the
+value of those properties from being larger than 12, and it sets the
+projected value to @samp{true}, to record the fact that it adjusted their
+values. At the end of @samp{resize(to:)}, the return statement checks
+@samp{$height} and @samp{$width} to determine whether the property wrapper
+adjusted either @samp{height} or @samp{width}.
 
 @node Global and Local Variables
 @section Global and Local Variables
@@ -11214,9 +11604,13 @@ assigning a @samp{nil} value for that key.
 @section Subscript Options
 
 Subscripts can take any number of input parameters, and these input
-parameters can be of any type. Subscripts can also return any type.
-Subscripts can use variadic parameters and provide default parameter
-values, but they can't use in-out parameters.
+parameters can be of any type. Subscripts can also return a value of any
+type.
+
+Like functions, subscripts can take a varying number of parameters and
+provide default values for their parameters, as discussed in
+@ref{Variadic Parameters} and @ref{Default Parameter Values}. However, unlike functions,
+they can't use in-out parameters.
 
 A class or structure can provide as many subscript implementations as it
 needs, and the appropriate subscript to be used will be inferred based
@@ -14483,10 +14877,11 @@ The @samp{catch} clauses don't have to handle every possible error that the
 code in the @samp{do} clause can throw. If none of the @samp{catch} clauses handle
 the error, the error propagates to the surrounding scope. However, the
 propagated error must be handled by @emph{some} surrounding scope. In a
-nonthrowing function, an enclosing @samp{do}-@samp{catch} clause must handle the
-error. In a throwing function, either an enclosing @samp{do}-@samp{catch} clause
-or the caller must handle the error. If the error propagates to the
-top-level scope without being handled, you'll get a runtime error.
+nonthrowing function, an enclosing @samp{do}-@samp{catch} statement must handle
+the error. In a throwing function, either an enclosing @samp{do}-@samp{catch}
+statement or the caller must handle the error. If the error propagates
+to the top-level scope without being handled, you'll get a runtime
+error.
 
 For example, the above example can be written so any error that isn't a
 @samp{VendingMachineError} is instead caught by the calling function:
@@ -16011,7 +16406,7 @@ as weak references. For information about weak references, see
 Between Class Instances}. Marking the protocol as class-only lets the
 @samp{SnakesAndLadders} class later in this chapter declare that its delegate
 must use a weak reference. A class-only protocol is marked by its
-inheritance from @samp{AnyObject} as discussed in
+inheritance from @samp{AnyObject}, as discussed in
 @ref{Class-Only Protocols}.
 
 Here's a version of the @emph{Snakes and Ladders} game originally introduced
@@ -18383,8 +18778,8 @@ protocol. Generally speaking, protocol types give you more flexibility
 about the underlying types of the values they store, and opaque types
 let you make stronger guarantees about those underlying types.
 
-For example, here's a version of @samp{flip(_:)} that returns a value of
-protocol type instead of using an opaque return type:
+For example, here's a version of @samp{flip(_:)} that uses a protocol type as
+its return type instead of an opaque return type:
 
 @example
 func protoFlip<T: Shape>(_ shape: T) -> Shape @{
@@ -18469,8 +18864,8 @@ extension Array: Container @{ @}
 @end example
 
 You can't use @samp{Container} as the return type of a function because that
-protocol has an associated type. You also can't use it as constraint a
-generic return type because there isn't enough information outside the
+protocol has an associated type. You also can't use it as constraint in
+a generic return type because there isn't enough information outside the
 function body to infer what the generic type needs to be.
 
 @example
@@ -19325,15 +19720,15 @@ it's possible to capture @samp{self} by accident.
 Each item in a capture list is a pairing of the @samp{weak} or @samp{unowned}
 keyword with a reference to a class instance (such as @samp{self}) or a
 variable initialized with some value (such as
-@samp{delegate = self.delegate!}). These pairings are written within a pair
+@samp{delegate = self.delegate}). These pairings are written within a pair
 of square braces, separated by commas.
 
 Place the capture list before a closure's parameter list and return type
 if they are provided:
 
 @example
-lazy var someClosure: (Int, String) -> String = @{
-    [unowned self, weak delegate = self.delegate!] (index: Int,
+lazy var someClosure: @{
+    [unowned self, weak delegate = self.delegate] (index: Int,
                                                     stringToProcess: String) -> String in
     // closure body goes here
 @}
@@ -19344,8 +19739,8 @@ they can be inferred from context, place the capture list at the very
 start of the closure, followed by the @samp{in} keyword:
 
 @example
-lazy var someClosure: () -> String = @{
-    [unowned self, weak delegate = self.delegate!] in
+lazy var someClosure @{
+    [unowned self, weak delegate = self.delegate] in
     // closure body goes here
 @}
 @end example
@@ -19919,32 +20314,12 @@ Open access is the highest (least restrictive) access level and private
 access is the lowest (most restrictive) access level.
 
 Open access applies only to classes and class members, and it differs
-from public access as follows:
-
-@itemize
-@item
-Classes with public access, or any more restrictive access level, can
-be subclassed only within the module where they're defined.
-
-@item
-Class members with public access, or any more restrictive access
-level, can be overridden by subclasses only within the module where
-they're defined.
-
-@item
-Open classes can be subclassed within the module where they're
-defined, and within any module that imports the module where they're
-defined.
-
-@item
-Open class members can be overridden by subclasses within the module
-where they're defined, and within any module that imports the module
-where they're defined.
-@end itemize
-
-Marking a class as open explicitly indicates that you've considered the
-impact of code from other modules using that class as a superclass, and
-that you've designed your class's code accordingly.
+from public access by allowing code outside the module to subclass and
+override, as discussed below in
+@ref{Subclassing}. Marking a class as open
+explicitly indicates that you've considered the impact of code from
+other modules using that class as a superclass, and that you've designed
+your class's code accordingly.
 
 @menu
 * Guiding Principle of Access Levels::
@@ -20034,8 +20409,8 @@ enabled.
 @findex private
 
 Define the access level for an entity by placing one of the @samp{open},
-@samp{public}, @samp{internal}, @samp{fileprivate}, or @samp{private} modifiers before the
-entity's introducer:
+@samp{public}, @samp{internal}, @samp{fileprivate}, or @samp{private} modifiers at the
+beginning of the entity's declaration:
 
 @example
 public class SomePublicClass @{@}
@@ -20137,8 +20512,8 @@ Note
 
 Tuple types don't have a standalone definition in the way that classes,
 structures, enumerations, and functions do. A tuple type's access level
-is deduced automatically when the tuple type is used, and can't be
-specified explicitly.
+is determined automatically from the types that make up the tuple type,
+and can't be specified explicitly.
 
 @node Function Types 1
 @subsection Function Types
@@ -20211,31 +20586,32 @@ Raw Values and Associated Values
 
 The types used for any raw values or associated values in an enumeration
 definition must have an access level at least as high as the
-enumeration's access level. You can't use a private type as the
-raw-value type of an enumeration with an internal access level, for
-example.
+enumeration's access level. For example, you can't use a private type as
+the raw-value type of an enumeration with an internal access level.
 @end enumerate
 
 @node Nested Types 2
 @subsection Nested Types
 
-Nested types defined within a private type have an automatic access
-level of private. Nested types defined within a file-private type have
-an automatic access level of file private. Nested types defined within a
-public type or an internal type have an automatic access level of
-internal. If you want a nested type within a public type to be publicly
-available, you must explicitly declare the nested type as public.
+The access level of a nested type is the same as its containing type,
+unless the containing type is public. Nested types defined within a
+public type have an automatic access level of internal. If you want a
+nested type within a public type to be publicly available, you must
+explicitly declare the nested type as public.
 
 @node Subclassing 1
 @section Subclassing
 
 You can subclass any class that can be accessed in the current access
-context. A subclass can't have a higher access level than its
-superclass---for example, you can't write a public subclass of an
-internal superclass.
+context and that's defined in the same module as the subclass. You can
+also subclass any open class that's defined in a different module. A
+subclass can't have a higher access level than its superclass---for
+example, you can't write a public subclass of an internal superclass.
 
-In addition, you can override any class member (method, property,
-initializer, or subscript) that is visible in a certain access context.
+In addition, for classes that are defined in the same module, you can
+override any class member (method, property, initializer, or subscript)
+that's visible in a certain access context. For classes that are defined
+in another module, you can override any open class member.
 
 An override can make an inherited class member more accessible than its
 superclass version. In the example below, class @samp{A} is a public class
@@ -20477,8 +20853,8 @@ definition implies an access level of internal for the type's members.
 
 If you define a new protocol that inherits from an existing protocol,
 the new protocol can have at most the same access level as the protocol
-it inherits from. You can't write a public protocol that inherits from
-an internal protocol, for example.
+it inherits from. For example, you can't write a public protocol that
+inherits from an internal protocol.
 
 @node Protocol Conformance
 @subsection Protocol Conformance
@@ -20489,16 +20865,16 @@ other modules, but whose conformance to an internal protocol can only be
 used within the internal protocol's defining module.
 
 The context in which a type conforms to a particular protocol is the
-minimum of the type's access level and the protocol's access level. If a
-type is public, but a protocol it conforms to is internal, the type's
-conformance to that protocol is also internal.
+minimum of the type's access level and the protocol's access level. For
+example, if a type is public, but a protocol it conforms to is internal,
+the type's conformance to that protocol is also internal.
 
 When you write or extend a type to conform to a protocol, you must
 ensure that the type's implementation of each protocol requirement has
 at least the same access level as the type's conformance to that
 protocol. For example, if a public type conforms to an internal
 protocol, the type's implementation of each protocol requirement must be
-at least “internal”.
+at least internal.
 
 Note
 
@@ -20522,9 +20898,9 @@ extend a private type, any new type members you add have a default
 access level of private.
 
 Alternatively, you can mark an extension with an explicit access-level
-modifier (for example, @samp{private extension}) to set a new default access
-level for all members defined within the extension. This new default can
-still be overridden within the extension for individual type members.
+modifier (for example, @samp{private}) to set a new default access level for
+all members defined within the extension. This new default can still be
+overridden within the extension for individual type members.
 
 You can't provide an explicit access-level modifier for an extension if
 you're using that extension to add protocol conformance. Instead, the
