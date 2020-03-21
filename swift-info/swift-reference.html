@@ -1,19 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Created by GNU Texinfo 6.6, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>The Swift Programming Reference (Swift 5.1)</title>
+<title>The Swift Programming Reference (Swift 5.2)</title>
 
-<meta name="description" content="The Swift Programming Reference (Swift 5.1)">
-<meta name="keywords" content="The Swift Programming Reference (Swift 5.1)">
+<meta name="description" content="The Swift Programming Reference (Swift 5.2)">
+<meta name="keywords" content="The Swift Programming Reference (Swift 5.2)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
 <link href="#Top" rel="start" title="Top">
 <link href="#Index" rel="index" title="Index">
 <link href="#SEC_Contents" rel="contents" title="Table of Contents">
-<link href="dir.html#Top" rel="up" title="(dir)">
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
@@ -38,7 +37,7 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<h1 class="settitle" align="center">The Swift Programming Reference (Swift 5.1)</h1>
+<h1 class="settitle" align="center">The Swift Programming Reference (Swift 5.2)</h1>
 
 
 
@@ -172,9 +171,10 @@ ul.no-bullet {list-style: none}
       <li><a id="toc-In_002dOut-Parameters-1" href="#In_002dOut-Parameters">7.7.2 In-Out Parameters</a></li>
       <li><a id="toc-Special-Kinds-of-Parameters-1" href="#Special-Kinds-of-Parameters">7.7.3 Special Kinds of Parameters</a></li>
       <li><a id="toc-Special-Kinds-of-Methods-1" href="#Special-Kinds-of-Methods">7.7.4 Special Kinds of Methods</a></li>
-      <li><a id="toc-Throwing-Functions-and-Methods-1" href="#Throwing-Functions-and-Methods">7.7.5 Throwing Functions and Methods</a></li>
-      <li><a id="toc-Rethrowing-Functions-and-Methods-1" href="#Rethrowing-Functions-and-Methods">7.7.6 Rethrowing Functions and Methods</a></li>
-      <li><a id="toc-Functions-that-Never-Return-1" href="#Functions-that-Never-Return">7.7.7 Functions that Never Return</a></li>
+      <li><a id="toc-Methods-with-Special-Names-1" href="#Methods-with-Special-Names">7.7.5 Methods with Special Names</a></li>
+      <li><a id="toc-Throwing-Functions-and-Methods-1" href="#Throwing-Functions-and-Methods">7.7.6 Throwing Functions and Methods</a></li>
+      <li><a id="toc-Rethrowing-Functions-and-Methods-1" href="#Rethrowing-Functions-and-Methods">7.7.7 Rethrowing Functions and Methods</a></li>
+      <li><a id="toc-Functions-that-Never-Return-1" href="#Functions-that-Never-Return">7.7.8 Functions that Never Return</a></li>
     </ul></li>
     <li><a id="toc-Enumeration-Declaration-1" href="#Enumeration-Declaration">7.8 Enumeration Declaration</a>
     <ul class="no-bullet">
@@ -218,20 +218,22 @@ ul.no-bullet {list-style: none}
       <li><a id="toc-discardableResult-1" href="#discardableResult">8.1.2 discardableResult</a></li>
       <li><a id="toc-dynamicCallable-1" href="#dynamicCallable">8.1.3 dynamicCallable</a></li>
       <li><a id="toc-dynamicMemberLookup-1" href="#dynamicMemberLookup">8.1.4 dynamicMemberLookup</a></li>
-      <li><a id="toc-GKInspectable-1" href="#GKInspectable">8.1.5 GKInspectable</a></li>
-      <li><a id="toc-inlinable-1" href="#inlinable">8.1.6 inlinable</a></li>
-      <li><a id="toc-nonobjc-1" href="#nonobjc">8.1.7 nonobjc</a></li>
-      <li><a id="toc-NSApplicationMain-1" href="#NSApplicationMain">8.1.8 NSApplicationMain</a></li>
-      <li><a id="toc-NSCopying-1" href="#NSCopying">8.1.9 NSCopying</a></li>
-      <li><a id="toc-NSManaged-1" href="#NSManaged">8.1.10 NSManaged</a></li>
-      <li><a id="toc-objc-1" href="#objc">8.1.11 objc</a></li>
-      <li><a id="toc-objcMembers-1" href="#objcMembers">8.1.12 objcMembers</a></li>
-      <li><a id="toc-requires_005fstored_005fproperty_005finits-1" href="#requires_005fstored_005fproperty_005finits">8.1.13 requires<em>_stored</em><em>_property</em><em>_inits</em></a></li>
-      <li><a id="toc-testable-1" href="#testable">8.1.14 testable</a></li>
-      <li><a id="toc-UIApplicationMain-1" href="#UIApplicationMain">8.1.15 UIApplicationMain</a></li>
-      <li><a id="toc-usableFromInline-1" href="#usableFromInline">8.1.16 usableFromInline</a></li>
-      <li><a id="toc-warn_005funqualified_005faccess-1" href="#warn_005funqualified_005faccess">8.1.17 warn<em>_unqualified</em><em>_access</em></a></li>
-      <li><a id="toc-Declaration-Attributes-Used-by-Interface-Builder-1" href="#Declaration-Attributes-Used-by-Interface-Builder">8.1.18 Declaration Attributes Used by Interface Builder</a></li>
+      <li><a id="toc-frozen-1" href="#frozen">8.1.5 frozen</a></li>
+      <li><a id="toc-GKInspectable-1" href="#GKInspectable">8.1.6 GKInspectable</a></li>
+      <li><a id="toc-inlinable-1" href="#inlinable">8.1.7 inlinable</a></li>
+      <li><a id="toc-nonobjc-1" href="#nonobjc">8.1.8 nonobjc</a></li>
+      <li><a id="toc-NSApplicationMain-1" href="#NSApplicationMain">8.1.9 NSApplicationMain</a></li>
+      <li><a id="toc-NSCopying-1" href="#NSCopying">8.1.10 NSCopying</a></li>
+      <li><a id="toc-NSManaged-1" href="#NSManaged">8.1.11 NSManaged</a></li>
+      <li><a id="toc-objc-1" href="#objc">8.1.12 objc</a></li>
+      <li><a id="toc-objcMembers-1" href="#objcMembers">8.1.13 objcMembers</a></li>
+      <li><a id="toc-propertyWrapper-1" href="#propertyWrapper">8.1.14 propertyWrapper</a></li>
+      <li><a id="toc-requires_005fstored_005fproperty_005finits-1" href="#requires_005fstored_005fproperty_005finits">8.1.15 requires<em>_stored</em><em>_property</em><em>_inits</em></a></li>
+      <li><a id="toc-testable-1" href="#testable">8.1.16 testable</a></li>
+      <li><a id="toc-UIApplicationMain-1" href="#UIApplicationMain">8.1.17 UIApplicationMain</a></li>
+      <li><a id="toc-usableFromInline-1" href="#usableFromInline">8.1.18 usableFromInline</a></li>
+      <li><a id="toc-warn_005funqualified_005faccess-1" href="#warn_005funqualified_005faccess">8.1.19 warn<em>_unqualified</em><em>_access</em></a></li>
+      <li><a id="toc-Declaration-Attributes-Used-by-Interface-Builder-1" href="#Declaration-Attributes-Used-by-Interface-Builder">8.1.20 Declaration Attributes Used by Interface Builder</a></li>
     </ul></li>
     <li><a id="toc-Type-Attributes-1" href="#Type-Attributes">8.2 Type Attributes</a>
     <ul class="no-bullet">
@@ -274,16 +276,16 @@ ul.no-bullet {list-style: none}
     <li><a id="toc-Patterns-3" href="#Patterns-1">11.7 Patterns</a></li>
     <li><a id="toc-Generic-Parameters-and-Arguments-3" href="#Generic-Parameters-and-Arguments-1">11.8 Generic Parameters and Arguments</a></li>
   </ul></li>
-  <li><a id="toc-Index-1" href="#Index">Index</a></li>
+  <li><a id="toc-Index-1" href="#Index" rel="index">Index</a></li>
 </ul>
 </div>
 
 
 <span id="Top"></span><div class="header">
 <p>
-Next: <a href="#Language-Reference" accesskey="n" rel="next">Language Reference</a>, Up: <a href="dir.html#Top" accesskey="u" rel="up">(dir)</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Language-Reference" accesskey="n" rel="next">Language Reference</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="The-Swift-Programming-Reference-_0028Swift-5_002e1_0029"></span><h1 class="top">The Swift Programming Reference (Swift 5.1)</h1>
+<span id="The-Swift-Programming-Reference-_0028Swift-5_002e2_0029"></span><h1 class="top">The Swift Programming Reference (Swift 5.2)</h1>
 
 <table class="menu" border="0" cellspacing="0">
 <tr><td align="left" valign="top">&bull; <a href="#Language-Reference" accesskey="1">Language Reference</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -308,7 +310,7 @@ Next: <a href="#Language-Reference" accesskey="n" rel="next">Language Reference<
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Summary-of-the-Grammar">Summary of the Grammar</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Index">Index</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#Index" rel="index">Index</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
 
@@ -572,6 +574,8 @@ Function Declaration
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Special-Kinds-of-Methods">Special Kinds of Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Methods-with-Special-Names">Methods with Special Names</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Throwing-Functions-and-Methods">Throwing Functions and Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Rethrowing-Functions-and-Methods">Rethrowing Functions and Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -644,6 +648,8 @@ Declaration Attributes
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#dynamicMemberLookup">dynamicMemberLookup</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#frozen">frozen</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#GKInspectable">GKInspectable</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#inlinable">inlinable</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -659,6 +665,8 @@ Declaration Attributes
 <tr><td align="left" valign="top">&bull; <a href="#objc">objc</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#objcMembers">objcMembers</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#propertyWrapper">propertyWrapper</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#requires_005fstored_005fproperty_005finits">requires<em>_stored</em><em>_property</em><em>_inits</em></a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
@@ -994,6 +1002,13 @@ and &lsquo;<samp>x</samp>&rsquo; have the same meaning.
 implicitly named &lsquo;<samp>$0</samp>&rsquo;, &lsquo;<samp>$1</samp>&rsquo;, &lsquo;<samp>$2</samp>&rsquo;, and so on. These names are valid
 identifiers within the scope of the closure.
 </p>
+<p>The compiler synthesizes identifiers that begin with a dollar sign ($)
+for properties that have a property wrapper projection. Your code can
+interact with these identifiers, but you can&rsquo;t declare identifiers with
+that prefix. For more information, see the
+<a href="#propertyWrapper">propertyWrapper</a> section of the
+<a href="#Attributes">Attributes</a> chapter.
+</p>
 <p>Grammar of an identifier
 </p>
 <p>identifier →
@@ -1008,6 +1023,9 @@ _{opt} &lsquo;<samp>`</samp>&rsquo;
 </p>
 <p>identifier →
 implicit-parameter-name
+</p>
+<p>identifier →
+property-wrapper-projection
 </p>
 <p>identifier-list →
 identifier
@@ -1090,6 +1108,10 @@ _{opt}
 → &lsquo;<samp>$</samp>&rsquo;
 decimal-digits
 </p>
+<p>property-wrapper-projection
+→ &lsquo;<samp>$</samp>&rsquo;
+identifier-characters
+</p>
 <hr>
 <span id="Keywords-and-Punctuation"></span><div class="header">
 <p>
@@ -1112,14 +1134,15 @@ expression, so they must be escaped with backticks in that context.
 <li> Keywords used in declarations: &lsquo;<samp>associatedtype</samp>&rsquo;, &lsquo;<samp>class</samp>&rsquo;, &lsquo;<samp>deinit</samp>&rsquo;,
 &lsquo;<samp>enum</samp>&rsquo;, &lsquo;<samp>extension</samp>&rsquo;, &lsquo;<samp>fileprivate</samp>&rsquo;, &lsquo;<samp>func</samp>&rsquo;, &lsquo;<samp>import</samp>&rsquo;, &lsquo;<samp>init</samp>&rsquo;, &lsquo;<samp>inout</samp>&rsquo;,
 &lsquo;<samp>internal</samp>&rsquo;, &lsquo;<samp>let</samp>&rsquo;, &lsquo;<samp>open</samp>&rsquo;, &lsquo;<samp>operator</samp>&rsquo;, &lsquo;<samp>private</samp>&rsquo;, &lsquo;<samp>protocol</samp>&rsquo;,
-&lsquo;<samp>public</samp>&rsquo;, &lsquo;<samp>static</samp>&rsquo;, &lsquo;<samp>struct</samp>&rsquo;, &lsquo;<samp>subscript</samp>&rsquo;, &lsquo;<samp>typealias</samp>&rsquo;, and &lsquo;<samp>var</samp>&rsquo;.
+&lsquo;<samp>public</samp>&rsquo;, &lsquo;<samp>rethrows</samp>&rsquo;, &lsquo;<samp>static</samp>&rsquo;, &lsquo;<samp>struct</samp>&rsquo;, &lsquo;<samp>subscript</samp>&rsquo;, &lsquo;<samp>typealias</samp>&rsquo;,
+and &lsquo;<samp>var</samp>&rsquo;.
 
 </li><li> Keywords used in statements: &lsquo;<samp>break</samp>&rsquo;, &lsquo;<samp>case</samp>&rsquo;, &lsquo;<samp>continue</samp>&rsquo;, &lsquo;<samp>default</samp>&rsquo;,
 &lsquo;<samp>defer</samp>&rsquo;, &lsquo;<samp>do</samp>&rsquo;, &lsquo;<samp>else</samp>&rsquo;, &lsquo;<samp>fallthrough</samp>&rsquo;, &lsquo;<samp>for</samp>&rsquo;, &lsquo;<samp>guard</samp>&rsquo;, &lsquo;<samp>if</samp>&rsquo;, &lsquo;<samp>in</samp>&rsquo;,
 &lsquo;<samp>repeat</samp>&rsquo;, &lsquo;<samp>return</samp>&rsquo;, &lsquo;<samp>switch</samp>&rsquo;, &lsquo;<samp>where</samp>&rsquo;, and &lsquo;<samp>while</samp>&rsquo;.
 
 </li><li> Keywords used in expressions and types: &lsquo;<samp>as</samp>&rsquo;, &lsquo;<samp>Any</samp>&rsquo;, &lsquo;<samp>catch</samp>&rsquo;, &lsquo;<samp>false</samp>&rsquo;,
-&lsquo;<samp>is</samp>&rsquo;, &lsquo;<samp>nil</samp>&rsquo;, &lsquo;<samp>rethrows</samp>&rsquo;, &lsquo;<samp>super</samp>&rsquo;, &lsquo;<samp>self</samp>&rsquo;, &lsquo;<samp>Self</samp>&rsquo;, &lsquo;<samp>throw</samp>&rsquo;, &lsquo;<samp>throws</samp>&rsquo;,
+&lsquo;<samp>is</samp>&rsquo;, &lsquo;<samp>nil</samp>&rsquo;, &lsquo;<samp>super</samp>&rsquo;, &lsquo;<samp>self</samp>&rsquo;, &lsquo;<samp>Self</samp>&rsquo;, &lsquo;<samp>throw</samp>&rsquo;, &lsquo;<samp>throws</samp>&rsquo;,
 &lsquo;<samp>true</samp>&rsquo;, and &lsquo;<samp>try</samp>&rsquo;.
 
 </li><li> Keywords used in patterns: &lsquo;<samp>_</samp>&rsquo;.
@@ -2292,15 +2315,11 @@ type &lsquo;<samp>(Int) -&gt; (Int) -&gt; Int</samp>&rsquo; is understood as
 &lsquo;<samp>(Int) -&gt; ((Int) -&gt; Int)</samp>&rsquo;&mdash;that is, a function that takes an &lsquo;<samp>Int</samp>&rsquo; and
 returns another function that takes and returns an &lsquo;<samp>Int</samp>&rsquo;.
 </p>
-<p>Function types that can throw an error must be marked with the &lsquo;<samp>throws</samp>&rsquo;
-keyword, and function types that can rethrow an error must be marked
-with the &lsquo;<samp>rethrows</samp>&rsquo; keyword. The &lsquo;<samp>throws</samp>&rsquo; keyword is part of a
-function&rsquo;s type, and nonthrowing functions are subtypes of throwing
-functions. As a result, you can use a nonthrowing function in the same
-places as a throwing one. Throwing and rethrowing functions are
-described in <a href="#Throwing-Functions-and-Methods">Throwing Functions and
-Methods</a> and <a href="#Rethrowing-Functions-and-Methods">Rethrowing Functions and
-Methods</a>.
+<p>Function types that can throw or rethrow an error must be marked with
+the &lsquo;<samp>throws</samp>&rsquo; keyword. The &lsquo;<samp>throws</samp>&rsquo; keyword is part of a function&rsquo;s type,
+and nonthrowing functions are subtypes of throwing functions. As a
+result, you can use a nonthrowing function in the same places as a
+throwing one. Throwing and rethrowing functions are described in <a href="#Throwing-Functions-and-Methods">Throwing Functions and Methods</a> and <a href="#Rethrowing-Functions-and-Methods">Rethrowing Functions and Methods</a>.
 </p>
 <table class="menu" border="0" cellspacing="0">
 <tr><td align="left" valign="top">&bull; <a href="#Restrictions-for-Nonescaping-Closures" accesskey="1">Restrictions for Nonescaping Closures</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -2363,12 +2382,6 @@ _{opt}
 function-type-argument-clause
 &lsquo;<samp>throws=_{opt} =-&gt;</samp>&rsquo;
 type
-</p>
-<p>function-type →
-attributes
-_{opt}
-function-type-argument-clause
-&lsquo;<samp>rethrows</samp>&rsquo; &lsquo;<samp>-&gt;</samp>&rsquo; type
 </p>
 <p>function-type-argument-clause
 → &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
@@ -2802,10 +2815,20 @@ type refers to the eventual type that conforms to the protocol.
 <p>In a structure, class, or enumeration declaration, the &lsquo;<samp>Self</samp>&rsquo; type
 refers to the type introduced by the declaration. Inside the declaration
 for a member of a type, the &lsquo;<samp>Self</samp>&rsquo; type refers to that type. In the
-members of a class declaration, &lsquo;<samp>Self</samp>&rsquo; can appear as the return type of
-a method and in the body of a method, but not in any other context. For
-example, the code below shows an instance method &lsquo;<samp>f</samp>&rsquo; whose return type
-is &lsquo;<samp>Self</samp>&rsquo;.
+members of a class declaration, &lsquo;<samp>Self</samp>&rsquo; can appear only as follows:
+</p>
+<ul>
+<li> As the return type of a method
+
+</li><li> As the return type of a read-only subscript
+
+</li><li> As the type of a read-only computed property
+
+</li><li> In the body of a method
+</li></ul>
+
+<p>For example, the code below shows an instance method &lsquo;<samp>f</samp>&rsquo; whose return
+type is &lsquo;<samp>Self</samp>&rsquo;.
 </p>
 <ol>
 <li> class Superclass {
@@ -3963,6 +3986,13 @@ form:
 <li> (identifier 1: expression 1, identifier 2: expression 2, &hellip;)
 </li></ol>
 
+<p>Each identifier in a tuple expression must be unique within the scope of
+the tuple expression. In a nested tuple expression, identifiers at the
+same level of nesting must be unique. For example, &lsquo;<samp>(a: 10, a: 20)</samp>&rsquo; is
+invalid because the label &lsquo;<samp>a</samp>&rsquo; appears twice at the same level. However,
+&lsquo;<samp>(a: 10, b: (a: 1, x: 2))</samp>&rsquo; is valid&mdash;although &lsquo;<samp>a</samp>&rsquo; appears twice, it
+appears once in the outer tuple and once in the inner tuple.
+</p>
 <p>A tuple expression can contain zero expressions, or it can contain two
 or more expressions. A single expression inside parentheses is a
 parenthesized expression.
@@ -4070,7 +4100,7 @@ instead of &lsquo;<samp>\SomeClass.someProperty</samp>&rsquo;:
 </p>
 <ol>
 <li> class SomeClass: NSObject {
-</li><li> @objc var someProperty: Int
+</li><li> @objc dynamic var someProperty: Int
 </li><li> init(someProperty: Int) {
 </li><li> self.someProperty = someProperty
 </li><li> }
@@ -4515,6 +4545,10 @@ can be omitted.
 </li><li> myData.someMethod {$0 == 13}
 </li></ol>
 
+<p>A class, structure, or enumeration type can enable syntactic sugar for
+function call syntax by declaring one of several methods, as described
+in <a href="#Methods-with-Special-Names">Methods with Special Names</a>.
+</p>
 <p>Grammar of a function call expression
 </p>
 <p>function-call-expression
@@ -5463,10 +5497,11 @@ app. Switching over a nonfrozen enumeration requires extra
 consideration. When a library&rsquo;s authors mark an enumeration as
 nonfrozen, they reserve the right to add new enumeration cases, and any
 code that interacts with that enumeration <em>must</em> be able to handle those
-future cases without being recompiled. Only the standard library, Swift
-overlays for Apple frameworks, and C and Objective-C code can declare
-nonfrozen enumerations. Enumerations you declare in Swift can&rsquo;t be
-nonfrozen.
+future cases without being recompiled. Code that&rsquo;s compiled in library
+evolution mode, code in the standard library, Swift overlays for Apple
+frameworks, and C and Objective-C code can declare nonfrozen
+enumerations. For information about frozen and nonfrozen enumerations,
+see <a href="#frozen">frozen</a>.
 </p>
 <p>When switching over a nonfrozen enumeration value, you always need to
 include a default case, even if every case of the enumeration already
@@ -6077,7 +6112,7 @@ the platform conditions listed in the table below.
 <tr><td>&lsquo;<samp>swift()</samp>&rsquo;</td><td>&lsquo;<samp>&gt;=</samp>&rsquo; or &lsquo;<samp>&lt;</samp>&rsquo; followed by a version number</td></tr>
 <tr><td>&lsquo;<samp>compiler()</samp>&rsquo;</td><td>&lsquo;<samp>&gt;=</samp>&rsquo; or &lsquo;<samp>&lt;</samp>&rsquo; followed by a version number</td></tr>
 <tr><td>&lsquo;<samp>canImport()</samp>&rsquo;</td><td>A module name</td></tr>
-<tr><td>&lsquo;<samp>targetEnvironment()</samp>&rsquo;</td><td>&lsquo;<samp>simulator</samp>&rsquo;</td></tr>
+<tr><td>&lsquo;<samp>targetEnvironment()</samp>&rsquo;</td><td>&lsquo;<samp>simulator</samp>&rsquo;, &lsquo;<samp>macCatalyst</samp>&rsquo;</td></tr>
 </table>
 
 <span id="index-swift"></span>
@@ -6298,7 +6333,8 @@ _{opt}
 <p>module-name →
 identifier
 </p>
-<p>environment → &lsquo;<samp>simulator</samp>&rsquo;
+<p>environment → &lsquo;<samp>simulator</samp>&rsquo; |
+&lsquo;<samp>macCatalyst</samp>&rsquo;
 </p>
 <hr>
 <span id="Line-Control-Statement"></span><div class="header">
@@ -7279,11 +7315,13 @@ escaping function.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Special-Kinds-of-Methods" accesskey="4">Special Kinds of Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Throwing-Functions-and-Methods" accesskey="5">Throwing Functions and Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#Methods-with-Special-Names" accesskey="5">Methods with Special Names</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Rethrowing-Functions-and-Methods" accesskey="6">Rethrowing Functions and Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#Throwing-Functions-and-Methods" accesskey="6">Throwing Functions and Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Functions-that-Never-Return" accesskey="7">Functions that Never Return</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#Rethrowing-Functions-and-Methods" accesskey="7">Rethrowing Functions and Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Functions-that-Never-Return" accesskey="8">Functions that Never Return</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 </table>
 
@@ -7451,7 +7489,7 @@ omitted when calling the function, the default value is used instead.
 <hr>
 <span id="Special-Kinds-of-Methods"></span><div class="header">
 <p>
-Next: <a href="#Throwing-Functions-and-Methods" accesskey="n" rel="next">Throwing Functions and Methods</a>, Previous: <a href="#Special-Kinds-of-Parameters" accesskey="p" rel="prev">Special Kinds of Parameters</a>, Up: <a href="#Function-Declaration" accesskey="u" rel="up">Function Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Methods-with-Special-Names" accesskey="n" rel="next">Methods with Special Names</a>, Previous: <a href="#Special-Kinds-of-Parameters" accesskey="p" rel="prev">Special Kinds of Parameters</a>, Up: <a href="#Function-Declaration" accesskey="u" rel="up">Function Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Special-Kinds-of-Methods-1"></span><h4 class="subsection">7.7.4 Special Kinds of Methods</h4>
 
@@ -7473,11 +7511,78 @@ modifier can be overridden by a subclass implementation; a class type
 method marked with &lsquo;<samp>class final</samp>&rsquo; or &lsquo;<samp>static</samp>&rsquo; can&rsquo;t be overridden.
 </p>
 <hr>
+<span id="Methods-with-Special-Names"></span><div class="header">
+<p>
+Next: <a href="#Throwing-Functions-and-Methods" accesskey="n" rel="next">Throwing Functions and Methods</a>, Previous: <a href="#Special-Kinds-of-Methods" accesskey="p" rel="prev">Special Kinds of Methods</a>, Up: <a href="#Function-Declaration" accesskey="u" rel="up">Function Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Methods-with-Special-Names-1"></span><h4 class="subsection">7.7.5 Methods with Special Names</h4>
+
+<p>Several methods that have special names enable syntactic sugar for
+function call syntax. If a type defines one of these methods, instances
+of the type can be used in function call syntax. The function call is
+understood to be a call to one of the specially named methods on that
+instance.
+</p>
+<p>A class, structure, or enumeration type can support function call syntax
+by defining a &lsquo;<samp>dynamicallyCall(withArguments:)</samp>&rsquo; method or a
+&lsquo;<samp>dynamicallyCall(withKeywordArguments:)</samp>&rsquo; method, as described in
+<a href="#dynamicCallable">dynamicCallable</a>, or by defining a
+call-as-function method, as described below. If the type defines both a
+call-as-function method and one of the methods used by the
+&lsquo;<samp>dynamicCallable</samp>&rsquo; attribute, the compiler gives preference to the
+call-as-function method in circumstances where either method could be
+used.
+</p>
+<p>The name of a call-as-function method is &lsquo;<samp>callAsFunction()</samp>&rsquo;, or another
+name that begins with &lsquo;<samp>callAsFunction(</samp>&rsquo; and adds labeled or unlabeled
+arguments&mdash;for example, &lsquo;<samp>callAsFunction(_:_:)</samp>&rsquo; and
+&lsquo;<samp>callAsFunction(something:)</samp>&rsquo; are also valid call-as-function method
+names.
+</p>
+<p>The following function calls are equivalent:
+</p>
+<ol>
+<li> struct CallableStruct {
+</li><li> var value: Int
+</li><li> func callAsFunction(_ number: Int, scale: Int) {
+</li><li> print(scale * (number + value))
+</li><li> }
+</li><li> }
+</li><li> let callable = CallableStruct(value: 100)
+</li><li> callable(4, scale: 2)
+</li><li> callable.callAsFunction(4, scale: 2)
+</li><li> // Both function calls print 208.
+</li></ol>
+
+<p>The call-as-function methods and the methods from the &lsquo;<samp>dynamicCallable</samp>&rsquo;
+attribute make different trade-offs between how much information you
+encode into the type system and how much dynamic behavior is possible at
+runtime. When you declare a call-as-function method, you specify the
+number of arguments, and each argument&rsquo;s type and label. The
+&lsquo;<samp>dynamicCallable</samp>&rsquo; attribute&rsquo;s methods specify only the type used to hold
+the array of arguments.
+</p>
+<p>Defining a call-as-function method, or a method from the
+&lsquo;<samp>dynamicCallable</samp>&rsquo; attribute, doesn&rsquo;t let you use an instance of that
+type as if it were a function in any context other than a function call
+expression. For example:
+</p>
+<ol>
+<li> let someFunction1: (Int, Int) -&gt; Void = callable(_:scale:) // Error
+</li><li> let someFunction2: (Int, Int) -&gt; Void =
+callable.callAsFunction(_:scale:)
+</li></ol>
+
+<p>The &lsquo;<samp>subscript(dynamicMemberLookup:)</samp>&rsquo; subscript enables syntactic sugar
+for member lookup, as described in
+<a href="#dynamicMemberLookup">dynamicMemberLookup</a>.
+</p>
+<hr>
 <span id="Throwing-Functions-and-Methods"></span><div class="header">
 <p>
-Next: <a href="#Rethrowing-Functions-and-Methods" accesskey="n" rel="next">Rethrowing Functions and Methods</a>, Previous: <a href="#Special-Kinds-of-Methods" accesskey="p" rel="prev">Special Kinds of Methods</a>, Up: <a href="#Function-Declaration" accesskey="u" rel="up">Function Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Rethrowing-Functions-and-Methods" accesskey="n" rel="next">Rethrowing Functions and Methods</a>, Previous: <a href="#Methods-with-Special-Names" accesskey="p" rel="prev">Methods with Special Names</a>, Up: <a href="#Function-Declaration" accesskey="u" rel="up">Function Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Throwing-Functions-and-Methods-1"></span><h4 class="subsection">7.7.5 Throwing Functions and Methods</h4>
+<span id="Throwing-Functions-and-Methods-1"></span><h4 class="subsection">7.7.6 Throwing Functions and Methods</h4>
 
 <p>Functions and methods that can throw an error must be marked with the
 &lsquo;<samp>throws</samp>&rsquo; keyword. These functions and methods are known as <em>throwing
@@ -7511,7 +7616,7 @@ method.
 <p>
 Next: <a href="#Functions-that-Never-Return" accesskey="n" rel="next">Functions that Never Return</a>, Previous: <a href="#Throwing-Functions-and-Methods" accesskey="p" rel="prev">Throwing Functions and Methods</a>, Up: <a href="#Function-Declaration" accesskey="u" rel="up">Function Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Rethrowing-Functions-and-Methods-1"></span><h4 class="subsection">7.7.6 Rethrowing Functions and Methods</h4>
+<span id="Rethrowing-Functions-and-Methods-1"></span><h4 class="subsection">7.7.7 Rethrowing Functions and Methods</h4>
 
 <span id="index-rethrows"></span>
 
@@ -7529,11 +7634,11 @@ must have at least one throwing function parameter.
 
 <p>A rethrowing function or method can contain a &lsquo;<samp>throw</samp>&rsquo; statement only
 inside a &lsquo;<samp>catch</samp>&rsquo; clause. This lets you call the throwing function inside
-a &lsquo;<samp>do</samp>&rsquo;-&lsquo;<samp>catch</samp>&rsquo; block and handle errors in the &lsquo;<samp>catch</samp>&rsquo; clause by throwing
-a different error. In addition, the &lsquo;<samp>catch</samp>&rsquo; clause must handle only
-errors thrown by one of the rethrowing function&rsquo;s throwing parameters.
-For example, the following is invalid because the &lsquo;<samp>catch</samp>&rsquo; clause would
-handle the error thrown by &lsquo;<samp>alwaysThrows()</samp>&rsquo;.
+a &lsquo;<samp>do</samp>&rsquo;-&lsquo;<samp>catch</samp>&rsquo; statement and handle errors in the &lsquo;<samp>catch</samp>&rsquo; clause by
+throwing a different error. In addition, the &lsquo;<samp>catch</samp>&rsquo; clause must handle
+only errors thrown by one of the rethrowing function&rsquo;s throwing
+parameters. For example, the following is invalid because the &lsquo;<samp>catch</samp>&rsquo;
+clause would handle the error thrown by &lsquo;<samp>alwaysThrows()</samp>&rsquo;.
 </p>
 <ol>
 <li> func alwaysThrows() throws {
@@ -7561,7 +7666,7 @@ method.
 <p>
 Previous: <a href="#Rethrowing-Functions-and-Methods" accesskey="p" rel="prev">Rethrowing Functions and Methods</a>, Up: <a href="#Function-Declaration" accesskey="u" rel="up">Function Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Functions-that-Never-Return-1"></span><h4 class="subsection">7.7.7 Functions that Never Return</h4>
+<span id="Functions-that-Never-Return-1"></span><h4 class="subsection">7.7.8 Functions that Never Return</h4>
 
 <p>Swift defines a &lsquo;<samp>Never</samp>&rsquo; type, which indicates that a function or method
 doesn&rsquo;t return to its caller. Functions and methods with the &lsquo;<samp>Never</samp>&rsquo;
@@ -9256,7 +9361,9 @@ two exceptions. By default, the parameters used in subscripting don&rsquo;t
 have argument labels, unlike functions, methods, and initializers.
 However, you can provide explicit argument labels using the same syntax
 that functions, methods, and initializers use. In addition, subscripts
-can&rsquo;t have in-out parameters.
+can&rsquo;t have in-out parameters. A subscript parameter can have a default
+value, using the syntax described in
+<a href="#Special-Kinds-of-Parameters">Special Kinds of Parameters</a>.
 </p>
 <p>You can also declare subscripts in the context of a protocol
 declaration, as described in <a href="#Protocol-Subscript-Declaration">Protocol
@@ -9859,21 +9966,25 @@ Next: <a href="#Type-Attributes" accesskey="n" rel="next">Type Attributes</a>, U
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#dynamicMemberLookup" accesskey="4">dynamicMemberLookup</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#GKInspectable" accesskey="5">GKInspectable</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#frozen" accesskey="5">frozen</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#inlinable" accesskey="6">inlinable</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#GKInspectable" accesskey="6">GKInspectable</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#nonobjc" accesskey="7">nonobjc</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#inlinable" accesskey="7">inlinable</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#NSApplicationMain" accesskey="8">NSApplicationMain</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#nonobjc" accesskey="8">nonobjc</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#NSCopying" accesskey="9">NSCopying</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#NSApplicationMain" accesskey="9">NSApplicationMain</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#NSCopying">NSCopying</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#NSManaged">NSManaged</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#objc">objc</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#objcMembers">objcMembers</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#propertyWrapper">propertyWrapper</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#requires_005fstored_005fproperty_005finits">requires<em>_stored</em><em>_property</em><em>_inits</em></a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
@@ -10176,7 +10287,7 @@ example doesn&rsquo;t compile because there isn&rsquo;t an implementation of
 <hr>
 <span id="dynamicMemberLookup"></span><div class="header">
 <p>
-Next: <a href="#GKInspectable" accesskey="n" rel="next">GKInspectable</a>, Previous: <a href="#dynamicCallable" accesskey="p" rel="prev">dynamicCallable</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#frozen" accesskey="n" rel="next">frozen</a>, Previous: <a href="#dynamicCallable" accesskey="p" rel="prev">dynamicCallable</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="dynamicMemberLookup-1"></span><h4 class="subsection">8.1.4 dynamicMemberLookup</h4>
 
@@ -10233,11 +10344,64 @@ when bridging data from other languages into Swift. For example:
 </li></ol>
 
 <hr>
+<span id="frozen"></span><div class="header">
+<p>
+Next: <a href="#GKInspectable" accesskey="n" rel="next">GKInspectable</a>, Previous: <a href="#dynamicMemberLookup" accesskey="p" rel="prev">dynamicMemberLookup</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="frozen-1"></span><h4 class="subsection">8.1.5 frozen</h4>
+
+<span id="index-_0040frozen"></span>
+
+<p>Apply this attribute to a structure or enumeration declaration to
+restrict the kinds of changes you can make to the type. This attribute
+is allowed only when compiling in library evolution mode. Future
+versions of the library can&rsquo;t change the declaration by adding,
+removing, or reordering an enumeration&rsquo;s cases or a structure&rsquo;s stored
+instance properties. These changes are allowed on nonfrozen types, but
+they break ABI compatibility for frozen types.
+</p>
+<p>Note
+</p>
+<p>When the compiler isn&rsquo;t in library evolution mode, all structures and
+enumerations are implicitly frozen, and this attribute is ignored.
+</p>
+<p>In library evolution mode, code that interacts with members of nonfrozen
+structures and enumerations is compiled in a way that allows it to
+continue working without recompiling even if a future version of the
+library adds, removes, or reorders some of that type&rsquo;s members. The
+compiler makes this possible using techniques like looking up
+information at runtime and adding a layer of indirection. Marking a
+structure or enumeration as frozen gives up this flexibility to gain
+performance: Future versions of the library can make only limited
+changes to the type, but the compiler can make additional optimizations
+in code that interacts with the type&rsquo;s members.
+</p>
+<p>Frozen types, the types of the stored properties of frozen structures,
+and the associated values of frozen enumeration cases must be public or
+marked with the &lsquo;<samp>usableFromInline</samp>&rsquo; attribute. The properties of a frozen
+structure can&rsquo;t have property observers, and expressions that provide
+the initial value for stored instance properties must follow the same
+restrictions as inlinable functions, as discussed in
+<a href="#inlinable">inlinable</a>.
+</p>
+<p>To enable library evolution mode on the command line, pass the
+&lsquo;<samp>-enable-library-evolution</samp>&rsquo; option to the Swift compiler. To enable it
+in Xcode, set the “Build Libraries for Distribution” build setting
+(&lsquo;<samp>BUILD_LIBRARY_FOR_DISTRIBUTION</samp>&rsquo;) to Yes, as described in
+<a href="https://help.apple.com/xcode/mac/current/#/dev04b3a04ba">Xcode Help</a>
+[<a href="https://help.apple.com/xcode/mac/current/#/dev04b3a04ba">https://help.apple.com/xcode/mac/current/#/dev04b3a04ba</a>].
+</p>
+<p>A switch statement over a frozen enumeration doesn&rsquo;t require a &lsquo;<samp>default</samp>&rsquo;
+case, as discussed in Switching Over Future Enumeration Cases.
+Including a &lsquo;<samp>default</samp>&rsquo; or &lsquo;<samp>@unknown default</samp>&rsquo; case when switching over a frozen
+enumeration produces a warning because that code is never executed.
+</p>
+<hr>
 <span id="GKInspectable"></span><div class="header">
 <p>
-Next: <a href="#inlinable" accesskey="n" rel="next">inlinable</a>, Previous: <a href="#dynamicMemberLookup" accesskey="p" rel="prev">dynamicMemberLookup</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#inlinable" accesskey="n" rel="next">inlinable</a>, Previous: <a href="#frozen" accesskey="p" rel="prev">frozen</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="GKInspectable-1"></span><h4 class="subsection">8.1.5 GKInspectable</h4>
+<span id="GKInspectable-1"></span><h4 class="subsection">8.1.6 GKInspectable</h4>
 
 <span id="index-_0040GKInspectable"></span>
 
@@ -10250,7 +10414,7 @@ to the SpriteKit editor UI. Applying this attribute also implies the
 <p>
 Next: <a href="#nonobjc" accesskey="n" rel="next">nonobjc</a>, Previous: <a href="#GKInspectable" accesskey="p" rel="prev">GKInspectable</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="inlinable-1"></span><h4 class="subsection">8.1.6 inlinable</h4>
+<span id="inlinable-1"></span><h4 class="subsection">8.1.7 inlinable</h4>
 
 <span id="index-_0040inlinable"></span>
 
@@ -10275,7 +10439,7 @@ inlinable, even though they can&rsquo;t be marked with this attribute.
 <p>
 Next: <a href="#NSApplicationMain" accesskey="n" rel="next">NSApplicationMain</a>, Previous: <a href="#inlinable" accesskey="p" rel="prev">inlinable</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="nonobjc-1"></span><h4 class="subsection">8.1.7 nonobjc</h4>
+<span id="nonobjc-1"></span><h4 class="subsection">8.1.8 nonobjc</h4>
 
 <span id="index-_0040nonobjc"></span>
 
@@ -10306,7 +10470,7 @@ attribute.
 <p>
 Next: <a href="#NSCopying" accesskey="n" rel="next">NSCopying</a>, Previous: <a href="#nonobjc" accesskey="p" rel="prev">nonobjc</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="NSApplicationMain-1"></span><h4 class="subsection">8.1.8 NSApplicationMain</h4>
+<span id="NSApplicationMain-1"></span><h4 class="subsection">8.1.9 NSApplicationMain</h4>
 
 <span id="index-_0040NSApplicationMain"></span>
 
@@ -10328,7 +10492,7 @@ follows:
 <p>
 Next: <a href="#NSManaged" accesskey="n" rel="next">NSManaged</a>, Previous: <a href="#NSApplicationMain" accesskey="p" rel="prev">NSApplicationMain</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="NSCopying-1"></span><h4 class="subsection">8.1.9 NSCopying</h4>
+<span id="NSCopying-1"></span><h4 class="subsection">8.1.10 NSCopying</h4>
 
 <span id="index-_0040NSCopying"></span>
 
@@ -10346,7 +10510,7 @@ property must conform to the &lsquo;<samp>NSCopying</samp>&rsquo; protocol.
 <p>
 Next: <a href="#objc" accesskey="n" rel="next">objc</a>, Previous: <a href="#NSCopying" accesskey="p" rel="prev">NSCopying</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="NSManaged-1"></span><h4 class="subsection">8.1.10 NSManaged</h4>
+<span id="NSManaged-1"></span><h4 class="subsection">8.1.11 NSManaged</h4>
 
 <span id="index-_0040dynamicCallable-1"></span>
 
@@ -10362,7 +10526,7 @@ Applying this attribute also implies the &lsquo;<samp>objc</samp>&rsquo; attribu
 <p>
 Next: <a href="#objcMembers" accesskey="n" rel="next">objcMembers</a>, Previous: <a href="#NSManaged" accesskey="p" rel="prev">NSManaged</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="objc-1"></span><h4 class="subsection">8.1.11 objc</h4>
+<span id="objc-1"></span><h4 class="subsection">8.1.12 objc</h4>
 
 <span id="index-_0040objc"></span>
 
@@ -10434,12 +10598,31 @@ the name of the property itself.
 </li><li> }
 </li></ol>
 
+<p>For more information, see
+<a href="https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c">Importing
+Swift into Objective-C</a>
+[<a href="https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c">https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c</a>].
+</p>
+<p>Note
+</p>
+<p>The argument to the &lsquo;<samp>objc</samp>&rsquo; attribute can also change the runtime name
+for that declaration. You use the runtime name when calling functions
+that interact with the Objective-C runtime, like
+<a href="https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring">&lsquo;<samp>NSClassFromString</samp>&rsquo;</a>
+[<a href="https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring">https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring</a>],
+and when specifying class names in an app&rsquo;s Info.plist file. If you
+specify a name by passing an argument, that name is used as the name in
+Objective-C code and as the runtime name. If you omit the argument, the
+name used in Objective-C code matches the name in Swift code, and the
+runtime name follows the normal Swift compiler convention of name
+mangling.
+</p>
 <hr>
 <span id="objcMembers"></span><div class="header">
 <p>
-Next: <a href="#requires_005fstored_005fproperty_005finits" accesskey="n" rel="next">requires<em>_stored</em><em>_property</em><em>_inits</em></a>, Previous: <a href="#objc" accesskey="p" rel="prev">objc</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#propertyWrapper" accesskey="n" rel="next">propertyWrapper</a>, Previous: <a href="#objc" accesskey="p" rel="prev">objc</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="objcMembers-1"></span><h4 class="subsection">8.1.12 objcMembers</h4>
+<span id="objcMembers-1"></span><h4 class="subsection">8.1.13 objcMembers</h4>
 
 <span id="index-_0040objcMembers"></span>
 
@@ -10456,11 +10639,113 @@ the &lsquo;<samp>objc</samp>&rsquo; attribute when it isn&rsquo;t needed can inc
 and adversely affect performance.
 </p>
 <hr>
+<span id="propertyWrapper"></span><div class="header">
+<p>
+Next: <a href="#requires_005fstored_005fproperty_005finits" accesskey="n" rel="next">requires<em>_stored</em><em>_property</em><em>_inits</em></a>, Previous: <a href="#objcMembers" accesskey="p" rel="prev">objcMembers</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="propertyWrapper-1"></span><h4 class="subsection">8.1.14 propertyWrapper</h4>
+
+<span id="index-_0040propertyWrapper"></span>
+
+<p>Apply this attribute to a class, structure, or enumeration declaration
+to use that type as a property wrapper. When you apply this attribute to
+a type, you create a custom attribute with the same name as the type.
+Apply that new attribute to a property of a class, structure, or
+enumeration to wrap access to the property through an instance of the
+wrapper type. Local and global variables can&rsquo;t use property wrappers.
+</p>
+<p>The wrapper must define a &lsquo;<samp>wrappedValue</samp>&rsquo; instance property. The <em>wrapped
+value</em> of the property is the value that the getter and setter for this
+property expose. In most cases, &lsquo;<samp>wrappedValue</samp>&rsquo; is a computed value, but
+it can be a stored value instead. The wrapper is responsible for
+defining and managing any underlying storage needed by its wrapped
+value. The compiler synthesizes storage for the instance of the wrapper
+type by prefixing the name of the wrapped property with an underscore
+(&lsquo;<samp>_</samp>&rsquo;)&mdash;for example, the wrapper for &lsquo;<samp>someProperty</samp>&rsquo; is stored as
+&lsquo;<samp>_someProperty</samp>&rsquo;. The synthesized storage for the wrapper has an access
+control level of &lsquo;<samp>private</samp>&rsquo;.
+</p>
+<p>A property that has a property wrapper can include &lsquo;<samp>willSet</samp>&rsquo; and
+&lsquo;<samp>didSet</samp>&rsquo; blocks, but it can&rsquo;t override the compiler-synthesized &lsquo;<samp>get</samp>&rsquo; or
+&lsquo;<samp>set</samp>&rsquo; blocks.
+</p>
+<p>Swift provides two forms of syntactic sugar for initialization of a
+property wrapper. You can use assignment syntax in the definition of a
+wrapped value to pass the expression on the right-hand side of the
+assignment as the argument to the &lsquo;<samp>wrappedValue</samp>&rsquo; parameter of the
+property wrapper&rsquo;s initializer. You can also provide arguments to the
+attribute when you apply it to a property, and those arguments are
+passed to the property wrapper&rsquo;s initializer. For example, in the code
+below, &lsquo;<samp>SomeStruct</samp>&rsquo; calls each of the initializers that &lsquo;<samp>SomeWrapper</samp>&rsquo;
+defines.
+</p>
+<ol>
+<li> @propertyWrapper
+</li><li> struct SomeWrapper {
+</li><li> var wrappedValue: Int
+</li><li> var someValue: Double
+</li><li> init() {
+</li><li> self.wrappedValue = 100
+</li><li> self.someValue = 12.3
+</li><li> }
+</li><li> init(wrappedValue: Int) {
+</li><li> self.wrappedValue = wrappedValue
+</li><li> self.someValue = 45.6
+</li><li> }
+</li><li> init(wrappedValue value: Int, custom: Double) {
+</li><li> self.wrappedValue = value
+</li><li> self.someValue = custom
+</li><li> }
+</li><li> }
+</li><li> struct SomeStruct {
+</li><li> // Uses init()
+</li><li> @SomeWrapper var a: Int
+</li><li> // Uses init(wrappedValue:)
+</li><li> @SomeWrapper var b = 10
+</li><li> // Both use init(wrappedValue:custom:)
+</li><li> @SomeWrapper(custom: 98.7) var c = 30
+</li><li> @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
+</li><li> }
+</li></ol>
+
+<p>The <em>projected value</em> for a wrapped property is a second value that a
+property wrapper can use to expose additional functionality. The author
+of a property wrapper type is responsible for determining the meaning of
+its projected value and defining the interface that the projected value
+exposes. To project a value from a property wrapper, define a
+&lsquo;<samp>projectedValue</samp>&rsquo; instance property on the wrapper type. The compiler
+synthesizes an identifier for the projected value by prefixing the name
+of the wrapped property with a dollar sign (&lsquo;<samp>$</samp>&rsquo;)&mdash;for example, the
+projected value for &lsquo;<samp>someProperty</samp>&rsquo; is &lsquo;<samp>$someProperty</samp>&rsquo;. The projected
+value has the same access control level as the original wrapped
+property.
+</p>
+<ol>
+<li> @propertyWrapper
+</li><li> struct WrapperWithProjection {
+</li><li> var wrappedValue: Int
+</li><li> var projectedValue: SomeProjection {
+</li><li> return SomeProjection(wrapper: self)
+</li><li> }
+</li><li> }
+</li><li> struct SomeProjection {
+</li><li> var wrapper: WrapperWithProjection
+</li><li> }
+</li><li> struct SomeStruct {
+</li><li> @WrapperWithProjection var x = 123
+</li><li> }
+</li><li> let s = SomeStruct()
+</li><li> s.x // Int value
+</li><li> s.$x // SomeProjection value
+</li><li> s.$x.wrapper // WrapperWithProjection value
+</li></ol>
+
+<hr>
 <span id="requires_005fstored_005fproperty_005finits"></span><div class="header">
 <p>
-Next: <a href="#testable" accesskey="n" rel="next">testable</a>, Previous: <a href="#objcMembers" accesskey="p" rel="prev">objcMembers</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#testable" accesskey="n" rel="next">testable</a>, Previous: <a href="#propertyWrapper" accesskey="p" rel="prev">propertyWrapper</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="requires_005fstored_005fproperty_005finits-1"></span><h4 class="subsection">8.1.13 requires<em>_stored</em><em>_property</em><em>_inits</em></h4>
+<span id="requires_005fstored_005fproperty_005finits-1"></span><h4 class="subsection">8.1.15 requires<em>_stored</em><em>_property</em><em>_inits</em></h4>
 
 <span id="index-_0040requires_005fstored_005fproperty_005finits"></span>
 
@@ -10474,7 +10759,7 @@ definitions. This attribute is inferred for any class that inherits from
 <p>
 Next: <a href="#UIApplicationMain" accesskey="n" rel="next">UIApplicationMain</a>, Previous: <a href="#requires_005fstored_005fproperty_005finits" accesskey="p" rel="prev">requires<em>_stored</em><em>_property</em><em>_inits</em></a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="testable-1"></span><h4 class="subsection">8.1.14 testable</h4>
+<span id="testable-1"></span><h4 class="subsection">8.1.16 testable</h4>
 
 <span id="index-_0040testable"></span>
 
@@ -10492,7 +10777,7 @@ The imported module must be compiled with testing enabled.
 <p>
 Next: <a href="#usableFromInline" accesskey="n" rel="next">usableFromInline</a>, Previous: <a href="#testable" accesskey="p" rel="prev">testable</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="UIApplicationMain-1"></span><h4 class="subsection">8.1.15 UIApplicationMain</h4>
+<span id="UIApplicationMain-1"></span><h4 class="subsection">8.1.17 UIApplicationMain</h4>
 
 <span id="index-_0040UIApplicationMain"></span>
 
@@ -10514,7 +10799,7 @@ function. For example, if your app uses a custom subclass of
 <p>
 Next: <a href="#warn_005funqualified_005faccess" accesskey="n" rel="next">warn<em>_unqualified</em><em>_access</em></a>, Previous: <a href="#UIApplicationMain" accesskey="p" rel="prev">UIApplicationMain</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="usableFromInline-1"></span><h4 class="subsection">8.1.16 usableFromInline</h4>
+<span id="usableFromInline-1"></span><h4 class="subsection">8.1.18 usableFromInline</h4>
 
 <span id="index-_0040usableFromInline"></span>
 
@@ -10522,7 +10807,11 @@ Next: <a href="#warn_005funqualified_005faccess" accesskey="n" rel="next">warn<e
 subscript, initializer, or deinitializer declaration to allow that
 symbol to be used in inlinable code that&rsquo;s defined in the same module as
 the declaration. The declaration must have the &lsquo;<samp>internal</samp>&rsquo; access level
-modifier.
+modifier. A structure or class marked &lsquo;<samp>usableFromInline</samp>&rsquo; can use only
+types that are public or &lsquo;<samp>usableFromInline</samp>&rsquo; for its properties. An
+enumeration marked &lsquo;<samp>usableFromInline</samp>&rsquo; can use only types that are public
+or &lsquo;<samp>usableFromInline</samp>&rsquo; for the raw values and associated values of its
+cases.
 </p>
 <p>Like the &lsquo;<samp>public</samp>&rsquo; access level modifier, this attribute exposes the
 declaration as part of the module&rsquo;s public interface. Unlike &lsquo;<samp>public</samp>&rsquo;,
@@ -10542,7 +10831,7 @@ an error.
 <p>
 Next: <a href="#Declaration-Attributes-Used-by-Interface-Builder" accesskey="n" rel="next">Declaration Attributes Used by Interface Builder</a>, Previous: <a href="#usableFromInline" accesskey="p" rel="prev">usableFromInline</a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="warn_005funqualified_005faccess-1"></span><h4 class="subsection">8.1.17 warn<em>_unqualified</em><em>_access</em></h4>
+<span id="warn_005funqualified_005faccess-1"></span><h4 class="subsection">8.1.19 warn<em>_unqualified</em><em>_access</em></h4>
 
 <span id="index-_0040warn_005funqualified_005faccess"></span>
 
@@ -10569,7 +10858,7 @@ confusion when attempting to use one or the other from within a
 <p>
 Previous: <a href="#warn_005funqualified_005faccess" accesskey="p" rel="prev">warn<em>_unqualified</em><em>_access</em></a>, Up: <a href="#Declaration-Attributes" accesskey="u" rel="up">Declaration Attributes</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Declaration-Attributes-Used-by-Interface-Builder-1"></span><h4 class="subsection">8.1.18 Declaration Attributes Used by Interface Builder</h4>
+<span id="Declaration-Attributes-Used-by-Interface-Builder-1"></span><h4 class="subsection">8.1.20 Declaration Attributes Used by Interface Builder</h4>
 
 <p>Interface Builder attributes are declaration attributes used by
 Interface Builder to synchronize with Xcode. Swift provides the
@@ -10994,6 +11283,26 @@ example that uses a &lsquo;<samp>switch</samp>&rsquo; statement to match enumera
 containing associated values, see
 <a href="swift.html#Associated-Values">(swift)Associated Values</a>.
 </p>
+<p>An enumeration case pattern also matches values of that case wrapped in
+an optional. This simplified syntax lets you omit an optional pattern.
+Note that, because &lsquo;<samp>Optional</samp>&rsquo; is implemented as an enumeration, &lsquo;<samp>.none</samp>&rsquo;
+and &lsquo;<samp>.some</samp>&rsquo; can appear in the same switch as the cases of the
+enumeration type.
+</p>
+<ol>
+<li> enum SomeEnum { case left, right }
+</li><li> let x: SomeEnum? = .left
+</li><li> switch x {
+</li><li> case .left:
+</li><li> print(&quot;Turn left&quot;)
+</li><li> case .right:
+</li><li> print(&quot;Turn right&quot;)
+</li><li> case nil:
+</li><li> print(&quot;Keep going straight&quot;)
+</li><li> }
+</li><li> // Prints &quot;Turn left&quot;
+</li></ol>
+
 <p>Grammar of an enumeration case pattern
 </p>
 <p>enum-case-pattern →
@@ -11538,6 +11847,9 @@ _{opt} &lsquo;<samp>`</samp>&rsquo;
 </p>
 <p>identifier →
 implicit-parameter-name
+</p>
+<p>identifier →
+property-wrapper-projection
 </p>
 <p>identifier-list
 →
@@ -12190,12 +12502,6 @@ _{opt}
 function-type-argument-clause
 &lsquo;<samp>throws=_{opt} =-&gt;</samp>&rsquo;
 type
-</p>
-<p>function-type
-→ attributes
-_{opt}
-function-type-argument-clause
-&lsquo;<samp>rethrows</samp>&rsquo; &lsquo;<samp>-&gt;</samp>&rsquo; type
 </p>
 <p>function-type-argument-clause
 → &lsquo;<samp>(</samp>&rsquo; &lsquo;<samp>)</samp>&rsquo;
@@ -14854,6 +15160,7 @@ Previous: <a href="#Summary-of-the-Grammar" accesskey="p" rel="prev">Summary of 
 <tr><td></td><td valign="top"><a href="#index-_0040dynamicCallable"><code>@dynamicCallable</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#dynamicCallable">dynamicCallable</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-_0040dynamicCallable-1"><code>@dynamicCallable</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#NSManaged">NSManaged</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-_0040dynamicMemberLookup"><code>@dynamicMemberLookup</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#dynamicMemberLookup">dynamicMemberLookup</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-_0040frozen"><code>@frozen</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#frozen">frozen</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-_0040GKInspectable"><code>@GKInspectable</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#GKInspectable">GKInspectable</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-_0040inlinable"><code>@inlinable</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#inlinable">inlinable</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-_0040nonobjc"><code>@nonobjc</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#nonobjc">nonobjc</a></td></tr>
@@ -14861,6 +15168,7 @@ Previous: <a href="#Summary-of-the-Grammar" accesskey="p" rel="prev">Summary of 
 <tr><td></td><td valign="top"><a href="#index-_0040NSCopying"><code>@NSCopying</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#NSCopying">NSCopying</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-_0040objc"><code>@objc</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#objc">objc</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-_0040objcMembers"><code>@objcMembers</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#objcMembers">objcMembers</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-_0040propertyWrapper"><code>@propertyWrapper</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#propertyWrapper">propertyWrapper</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-_0040requires_005fstored_005fproperty_005finits"><code>@requires_stored_property_inits</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#requires_005fstored_005fproperty_005finits">requires<em>_stored</em><em>_property</em><em>_inits</em></a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-_0040testable"><code>@testable</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#testable">testable</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-_0040UIApplicationMain"><code>@UIApplicationMain</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#UIApplicationMain">UIApplicationMain</a></td></tr>

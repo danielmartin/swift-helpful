@@ -1,4 +1,4 @@
-#+TITLE: The Swift Programming Reference (Swift 5.1)
+#+TITLE: The Swift Programming Reference (Swift 5.2)
 
 #+AUTHOR: Apple Inc.
 #+TEXINFO_HEADER: @syncodeindex vr cp
@@ -204,6 +204,13 @@
  implicitly named =$0=, =$1=, =$2=, and so on. These names are valid
  identifiers within the scope of the closure.
 
+ The compiler synthesizes identifiers that begin with a dollar sign ($)
+ for properties that have a property wrapper projection. Your code can
+ interact with these identifiers, but you can't declare identifiers with
+ that prefix. For more information, see the
+ [[propertyWrapper][propertyWrapper]] section of the
+ [[Attributes][Attributes]] chapter.
+
  Grammar of an identifier
 
  identifier →
@@ -218,6 +225,9 @@
 
  identifier →
  implicit-parameter-name
+
+ identifier →
+ property-wrapper-projection
 
  identifier-list →
  identifier
@@ -298,6 +308,10 @@
  → =$=
  decimal-digits
 
+ property-wrapper-projection
+ → =$=
+ identifier-characters
+
 ** Keywords and Punctuation
 
  The following keywords are reserved and can't be used as identifiers,
@@ -314,14 +328,15 @@
  - Keywords used in declarations: =associatedtype=, =class=, =deinit=,
    =enum=, =extension=, =fileprivate=, =func=, =import=, =init=, =inout=,
    =internal=, =let=, =open=, =operator=, =private=, =protocol=,
-   =public=, =static=, =struct=, =subscript=, =typealias=, and =var=.
+   =public=, =rethrows=, =static=, =struct=, =subscript=, =typealias=,
+   and =var=.
 
  - Keywords used in statements: =break=, =case=, =continue=, =default=,
    =defer=, =do=, =else=, =fallthrough=, =for=, =guard=, =if=, =in=,
    =repeat=, =return=, =switch=, =where=, and =while=.
 
  - Keywords used in expressions and types: =as=, =Any=, =catch=, =false=,
-   =is=, =nil=, =rethrows=, =super=, =self=, =Self=, =throw=, =throws=,
+   =is=, =nil=, =super=, =self=, =Self=, =throw=, =throws=,
    =true=, and =try=.
 
  - Keywords used in patterns: =_=.
@@ -1357,15 +1372,12 @@
  =(Int) -> ((Int) -> Int)=---that is, a function that takes an =Int= and
  returns another function that takes and returns an =Int=.
 
- Function types that can throw an error must be marked with the =throws=
- keyword, and function types that can rethrow an error must be marked
- with the =rethrows= keyword. The =throws= keyword is part of a
- function's type, and nonthrowing functions are subtypes of throwing
- functions. As a result, you can use a nonthrowing function in the same
- places as a throwing one. Throwing and rethrowing functions are
- described in [[Throwing Functions and Methods][Throwing Functions and
- Methods]] and [[Rethrowing Functions and Methods][Rethrowing Functions and
- Methods]].
+ Function types that can throw or rethrow an error must be marked with
+ the =throws= keyword. The =throws= keyword is part of a function's type,
+ and nonthrowing functions are subtypes of throwing functions. As a
+ result, you can use a nonthrowing function in the same places as a
+ throwing one. Throwing and rethrowing functions are described in [[Throwing Functions and Methods][
+ Throwing Functions and Methods]] and [[Rethrowing Functions and Methods][Rethrowing Functions and Methods]].
 
 
 *** Restrictions for Nonescaping Closures
@@ -1419,12 +1431,6 @@
  function-type-argument-clause
  =throws=_{opt} =->=
  type
-
- function-type →
- attributes
- _{opt}
- function-type-argument-clause
- =rethrows= =->= type
 
  function-type-argument-clause
  → =(= =)=
@@ -1795,10 +1801,18 @@ type refers to the eventual type that conforms to the protocol.
 In a structure, class, or enumeration declaration, the =Self= type
 refers to the type introduced by the declaration. Inside the declaration
 for a member of a type, the =Self= type refers to that type. In the
-members of a class declaration, =Self= can appear as the return type of
-a method and in the body of a method, but not in any other context. For
-example, the code below shows an instance method =f= whose return type
-is =Self=.
+members of a class declaration, =Self= can appear only as follows:
+
+- As the return type of a method
+
+- As the return type of a read-only subscript
+
+- As the type of a read-only computed property
+
+- In the body of a method
+
+For example, the code below shows an instance method =f= whose return
+type is =Self=.
 
 1.  class Superclass {
 2.  func f() -> Self { return self }
@@ -2769,6 +2783,13 @@ self-type → =Self=
 
  1. (identifier 1: expression 1, identifier 2: expression 2, ...)
 
+ Each identifier in a tuple expression must be unique within the scope of
+ the tuple expression. In a nested tuple expression, identifiers at the
+ same level of nesting must be unique. For example, =(a: 10, a: 20)= is
+ invalid because the label =a= appears twice at the same level. However,
+ =(a: 10, b: (a: 1, x: 2))= is valid---although =a= appears twice, it
+ appears once in the outer tuple and once in the inner tuple.
+
  A tuple expression can contain zero expressions, or it can contain two
  or more expressions. A single expression inside parentheses is a
  parenthesized expression.
@@ -2857,7 +2878,7 @@ self-type → =Self=
  instead of =\SomeClass.someProperty=:
 
  1.  class SomeClass: NSObject {
- 2.  @objc var someProperty: Int
+ 2.  @objc dynamic var someProperty: Int
  3.  init(someProperty: Int) {
  4.  self.someProperty = someProperty
  5.  }
@@ -3243,6 +3264,10 @@ self-type → =Self=
  1. // someMethod takes a closure as its only argument
  2. myData.someMethod() {$0 == 13}
  3. myData.someMethod {$0 == 13}
+
+ A class, structure, or enumeration type can enable syntactic sugar for
+ function call syntax by declaring one of several methods, as described
+ in [[Methods with Special Names][Methods with Special Names]].
 
  Grammar of a function call expression
 
@@ -4034,10 +4059,11 @@ app. Switching over a nonfrozen enumeration requires extra
 consideration. When a library's authors mark an enumeration as
 nonfrozen, they reserve the right to add new enumeration cases, and any
 code that interacts with that enumeration /must/ be able to handle those
-future cases without being recompiled. Only the standard library, Swift
-overlays for Apple frameworks, and C and Objective-C code can declare
-nonfrozen enumerations. Enumerations you declare in Swift can't be
-nonfrozen.
+future cases without being recompiled. Code that's compiled in library
+evolution mode, code in the standard library, Swift overlays for Apple
+frameworks, and C and Objective-C code can declare nonfrozen
+enumerations. For information about frozen and nonfrozen enumerations,
+see [[frozen][frozen]].
 
 When switching over a nonfrozen enumeration value, you always need to
 include a default case, even if every case of the enumeration already
@@ -4564,7 +4590,7 @@ the platform conditions listed in the table below.
 | =swift()=               | =>== or =<= followed by a version number     |
 | =compiler()=            | =>== or =<= followed by a version number     |
 | =canImport()=           | A module name                                |
-| =targetEnvironment()=   | =simulator=                                  |
+| =targetEnvironment()=   | =simulator=, =macCatalyst=                   |
 
 #+FINDEX: swift
 #+FINDEX: compiler
@@ -4778,8 +4804,8 @@ _{opt}
 module-name →
 identifier
 
-environment → =simulator=
-
+environment → =simulator= |
+=macCatalyst=
 
 *** Line Control Statement
 
@@ -5747,6 +5773,64 @@ for classes. A class type method marked with the =class= declaration
 modifier can be overridden by a subclass implementation; a class type
 method marked with =class final= or =static= can't be overridden.
 
+*** Methods with Special Names
+
+Several methods that have special names enable syntactic sugar for
+function call syntax. If a type defines one of these methods, instances
+of the type can be used in function call syntax. The function call is
+understood to be a call to one of the specially named methods on that
+instance.
+
+A class, structure, or enumeration type can support function call syntax
+by defining a =dynamicallyCall(withArguments:)= method or a
+=dynamicallyCall(withKeywordArguments:)= method, as described in
+[[dynamicCallable][dynamicCallable]], or by defining a
+call-as-function method, as described below. If the type defines both a
+call-as-function method and one of the methods used by the
+=dynamicCallable= attribute, the compiler gives preference to the
+call-as-function method in circumstances where either method could be
+used.
+
+The name of a call-as-function method is =callAsFunction()=, or another
+name that begins with =callAsFunction(= and adds labeled or unlabeled
+arguments---for example, =callAsFunction(_:_:)= and
+=callAsFunction(something:)= are also valid call-as-function method
+names.
+
+The following function calls are equivalent:
+
+1.  struct CallableStruct {
+2.  var value: Int
+3.  func callAsFunction(_ number: Int, scale: Int) {
+4.  print(scale * (number + value))
+5.  }
+6.  }
+7.  let callable = CallableStruct(value: 100)
+8.  callable(4, scale: 2)
+9.  callable.callAsFunction(4, scale: 2)
+10. // Both function calls print 208.
+
+The call-as-function methods and the methods from the =dynamicCallable=
+attribute make different trade-offs between how much information you
+encode into the type system and how much dynamic behavior is possible at
+runtime. When you declare a call-as-function method, you specify the
+number of arguments, and each argument's type and label. The
+=dynamicCallable= attribute's methods specify only the type used to hold
+the array of arguments.
+
+Defining a call-as-function method, or a method from the
+=dynamicCallable= attribute, doesn't let you use an instance of that
+type as if it were a function in any context other than a function call
+expression. For example:
+
+1. let someFunction1: (Int, Int) -> Void = callable(_:scale:) // Error
+2. let someFunction2: (Int, Int) -> Void =
+   callable.callAsFunction(_:scale:)
+
+The =subscript(dynamicMemberLookup:)= subscript enables syntactic sugar
+for member lookup, as described in
+[[dynamicMemberLookup][dynamicMemberLookup]].
+
 
 *** Throwing Functions and Methods
 
@@ -5792,11 +5876,11 @@ must have at least one throwing function parameter.
 
 A rethrowing function or method can contain a =throw= statement only
 inside a =catch= clause. This lets you call the throwing function inside
-a =do=-=catch= block and handle errors in the =catch= clause by throwing
-a different error. In addition, the =catch= clause must handle only
-errors thrown by one of the rethrowing function's throwing parameters.
-For example, the following is invalid because the =catch= clause would
-handle the error thrown by =alwaysThrows()=.
+a =do=-=catch= statement and handle errors in the =catch= clause by
+throwing a different error. In addition, the =catch= clause must handle
+only errors thrown by one of the rethrowing function's throwing
+parameters. For example, the following is invalid because the =catch=
+clause would handle the error thrown by =alwaysThrows()=.
 
 1.  func alwaysThrows() throws {
 2.  throw SomeError.error
@@ -7322,7 +7406,9 @@ two exceptions. By default, the parameters used in subscripting don't
 have argument labels, unlike functions, methods, and initializers.
 However, you can provide explicit argument labels using the same syntax
 that functions, methods, and initializers use. In addition, subscripts
-can't have in-out parameters.
+can't have in-out parameters. A subscript parameter can have a default
+value, using the syntax described in
+[[Special Kinds of Parameters][Special Kinds of Parameters]].
 
 You can also declare subscripts in the context of a protocol
 declaration, as described in [[Protocol Subscript Declaration][Protocol
@@ -8122,6 +8208,53 @@ when bridging data from other languages into Swift. For example:
 18. print(dynamic == equivalent)
 19. // Prints "true"
 
+*** frozen
+
+#+FINDEX: @@frozen
+
+Apply this attribute to a structure or enumeration declaration to
+restrict the kinds of changes you can make to the type. This attribute
+is allowed only when compiling in library evolution mode. Future
+versions of the library can't change the declaration by adding,
+removing, or reordering an enumeration's cases or a structure's stored
+instance properties. These changes are allowed on nonfrozen types, but
+they break ABI compatibility for frozen types.
+
+Note
+
+When the compiler isn't in library evolution mode, all structures and
+enumerations are implicitly frozen, and this attribute is ignored.
+
+In library evolution mode, code that interacts with members of nonfrozen
+structures and enumerations is compiled in a way that allows it to
+continue working without recompiling even if a future version of the
+library adds, removes, or reorders some of that type's members. The
+compiler makes this possible using techniques like looking up
+information at runtime and adding a layer of indirection. Marking a
+structure or enumeration as frozen gives up this flexibility to gain
+performance: Future versions of the library can make only limited
+changes to the type, but the compiler can make additional optimizations
+in code that interacts with the type's members.
+
+Frozen types, the types of the stored properties of frozen structures,
+and the associated values of frozen enumeration cases must be public or
+marked with the =usableFromInline= attribute. The properties of a frozen
+structure can't have property observers, and expressions that provide
+the initial value for stored instance properties must follow the same
+restrictions as inlinable functions, as discussed in
+[[inlinable][inlinable]].
+
+To enable library evolution mode on the command line, pass the
+=-enable-library-evolution= option to the Swift compiler. To enable it
+in Xcode, set the “Build Libraries for Distribution” build setting
+(=BUILD_LIBRARY_FOR_DISTRIBUTION=) to Yes, as described in
+[[https://help.apple.com/xcode/mac/current/#/dev04b3a04ba][Xcode Help]]
+[https://help.apple.com/xcode/mac/current/#/dev04b3a04ba].
+
+A switch statement over a frozen enumeration doesn't require a =default=
+case, as discussed in Switching Over Future Enumeration Cases.
+Including a =default= or =@unknown default= case when switching over a frozen
+enumeration produces a warning because that code is never executed.
 
 *** GKInspectable
 
@@ -8130,7 +8263,6 @@ when bridging data from other languages into Swift. For example:
 Apply this attribute to expose a custom GameplayKit component property
 to the SpriteKit editor UI. Applying this attribute also implies the
 =objc= attribute.
-
 
 *** inlinable
 
@@ -8290,6 +8422,24 @@ the name of the property itself.
 6. }
 7. }
 
+For more information, see
+[[https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c][Importing
+Swift into Objective-C]]
+[https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c].
+
+Note
+
+The argument to the =objc= attribute can also change the runtime name
+for that declaration. You use the runtime name when calling functions
+that interact with the Objective-C runtime, like
+[[https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring][=NSClassFromString=]]
+[https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring],
+and when specifying class names in an app's Info.plist file. If you
+specify a name by passing an argument, that name is used as the name in
+Objective-C code and as the runtime name. If you omit the argument, the
+name used in Objective-C code matches the name in Swift code, and the
+runtime name follows the normal Swift compiler convention of name
+mangling.
 
 *** objcMembers
 
@@ -8306,6 +8456,107 @@ you can group them in an extension that has the =objc= attribute. The
 use of the introspection facilities of the Objective-C runtime. Applying
 the =objc= attribute when it isn't needed can increase your binary size
 and adversely affect performance.
+
+*** propertyWrapper
+
+#+FINDEX: @@propertyWrapper
+
+Apply this attribute to a class, structure, or enumeration declaration
+to use that type as a property wrapper. When you apply this attribute to
+a type, you create a custom attribute with the same name as the type.
+Apply that new attribute to a property of a class, structure, or
+enumeration to wrap access to the property through an instance of the
+wrapper type. Local and global variables can't use property wrappers.
+
+The wrapper must define a =wrappedValue= instance property. The /wrapped
+value/ of the property is the value that the getter and setter for this
+property expose. In most cases, =wrappedValue= is a computed value, but
+it can be a stored value instead. The wrapper is responsible for
+defining and managing any underlying storage needed by its wrapped
+value. The compiler synthesizes storage for the instance of the wrapper
+type by prefixing the name of the wrapped property with an underscore
+(=_=)---for example, the wrapper for =someProperty= is stored as
+=_someProperty=. The synthesized storage for the wrapper has an access
+control level of =private=.
+
+A property that has a property wrapper can include =willSet= and
+=didSet= blocks, but it can't override the compiler-synthesized =get= or
+=set= blocks.
+
+Swift provides two forms of syntactic sugar for initialization of a
+property wrapper. You can use assignment syntax in the definition of a
+wrapped value to pass the expression on the right-hand side of the
+assignment as the argument to the =wrappedValue= parameter of the
+property wrapper's initializer. You can also provide arguments to the
+attribute when you apply it to a property, and those arguments are
+passed to the property wrapper's initializer. For example, in the code
+below, =SomeStruct= calls each of the initializers that =SomeWrapper=
+defines.
+
+1.  @propertyWrapper
+2.  struct SomeWrapper {
+3.  var wrappedValue: Int
+4.  var someValue: Double
+5.  init() {
+6.  self.wrappedValue = 100
+7.  self.someValue = 12.3
+8.  }
+9.  init(wrappedValue: Int) {
+10. self.wrappedValue = wrappedValue
+11. self.someValue = 45.6
+12. }
+13. init(wrappedValue value: Int, custom: Double) {
+14. self.wrappedValue = value
+15. self.someValue = custom
+16. }
+17. }
+18.
+
+19. struct SomeStruct {
+20. // Uses init()
+21. @SomeWrapper var a: Int
+22.
+
+23. // Uses init(wrappedValue:)
+24. @SomeWrapper var b = 10
+25.
+
+26. // Both use init(wrappedValue:custom:)
+27. @SomeWrapper(custom: 98.7) var c = 30
+28. @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
+29. }
+
+The /projected value/ for a wrapped property is a second value that a
+property wrapper can use to expose additional functionality. The author
+of a property wrapper type is responsible for determining the meaning of
+its projected value and defining the interface that the projected value
+exposes. To project a value from a property wrapper, define a
+=projectedValue= instance property on the wrapper type. The compiler
+synthesizes an identifier for the projected value by prefixing the name
+of the wrapped property with a dollar sign (=$=)---for example, the
+projected value for =someProperty= is =$someProperty=. The projected
+value has the same access control level as the original wrapped
+property.
+
+1.  @propertyWrapper
+2.  struct WrapperWithProjection {
+3.  var wrappedValue: Int
+4.  var projectedValue: SomeProjection {
+5.  return SomeProjection(wrapper: self)
+6.  }
+7.  }
+8.  struct SomeProjection {
+9.  var wrapper: WrapperWithProjection
+10. }
+11.
+
+12. struct SomeStruct {
+13. @WrapperWithProjection var x = 123
+14. }
+15. let s = SomeStruct()
+16. s.x // Int value
+17. s.$x // SomeProjection value
+18. s.$x.wrapper // WrapperWithProjection value
 
 
 *** requires_stored_property_inits
@@ -8358,7 +8609,11 @@ Apply this attribute to a function, method, computed property,
 subscript, initializer, or deinitializer declaration to allow that
 symbol to be used in inlinable code that's defined in the same module as
 the declaration. The declaration must have the =internal= access level
-modifier.
+modifier. A structure or class marked =usableFromInline= can use only
+types that are public or =usableFromInline= for its properties. An
+enumeration marked =usableFromInline= can use only types that are public
+or =usableFromInline= for the raw values and associated values of its
+cases.
 
 Like the =public= access level modifier, this attribute exposes the
 declaration as part of the module's public interface. Unlike =public=,
@@ -8725,6 +8980,24 @@ pattern that contains one element for each associated value. For an
 example that uses a =switch= statement to match enumeration cases
 containing associated values, see
 [[info:swift#Associated%20Values][Associated Values]].
+
+An enumeration case pattern also matches values of that case wrapped in
+an optional. This simplified syntax lets you omit an optional pattern.
+Note that, because =Optional= is implemented as an enumeration, =.none=
+and =.some= can appear in the same switch as the cases of the
+enumeration type.
+
+1.  enum SomeEnum { case left, right }
+2.  let x: SomeEnum? = .left
+3.  switch x {
+4.  case .left:
+5.  print("Turn left")
+6.  case .right:
+7.  print("Turn right")
+8.  case nil:
+9.  print("Keep going straight")
+10. }
+11. // Prints "Turn left"
 
 Grammar of an enumeration case pattern
 
@@ -9168,6 +9441,9 @@ _{opt} =`=
 
 identifier →
 implicit-parameter-name
+
+identifier →
+property-wrapper-projection
 
 identifier-list
 →
@@ -9790,12 +10066,6 @@ _{opt}
 function-type-argument-clause
 =throws=_{opt} =->=
 type
-
-function-type
-→ attributes
-_{opt}
-function-type-argument-clause
-=rethrows= =->= type
 
 function-type-argument-clause
 → =(= =)=

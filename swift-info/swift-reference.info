@@ -1,4 +1,4 @@
-This is swift-reference.info, produced by makeinfo version 6.6 from
+This is swift-reference.info, produced by makeinfo version 6.7 from
 swift-reference.texi.
 
 INFO-DIR-SECTION Emacs
@@ -9,7 +9,7 @@ END-INFO-DIR-ENTRY
 
 File: swift-reference.info,  Node: Top,  Next: Language Reference,  Up: (dir)
 
-The Swift Programming Reference (Swift 5.1)
+The Swift Programming Reference (Swift 5.2)
 *******************************************
 
 * Menu:
@@ -175,6 +175,7 @@ Function Declaration
 * In-Out Parameters::
 * Special Kinds of Parameters::
 * Special Kinds of Methods::
+* Methods with Special Names::
 * Throwing Functions and Methods::
 * Rethrowing Functions and Methods::
 * Functions that Never Return::
@@ -218,6 +219,7 @@ Declaration Attributes
 * discardableResult::
 * dynamicCallable::
 * dynamicMemberLookup::
+* frozen::
 * GKInspectable::
 * inlinable::
 * nonobjc::
@@ -226,6 +228,7 @@ Declaration Attributes
 * NSManaged::
 * objc::
 * objcMembers::
+* propertyWrapper::
 * requires_stored_property_inits::
 * testable::
 * UIApplicationMain::
@@ -470,6 +473,12 @@ identifier; ‘`x`’ and ‘x’ have the same meaning.
 implicitly named ‘$0’, ‘$1’, ‘$2’, and so on.  These names are valid
 identifiers within the scope of the closure.
 
+   The compiler synthesizes identifiers that begin with a dollar sign
+($) for properties that have a property wrapper projection.  Your code
+can interact with these identifiers, but you can’t declare identifiers
+with that prefix.  For more information, see the *note propertyWrapper::
+section of the *note Attributes:: chapter.
+
    Grammar of an identifier
 
    identifier → identifier-head identifier-characters _{opt}
@@ -477,6 +486,8 @@ identifiers within the scope of the closure.
    identifier → ‘`’ identifier-head identifier-characters _{opt} ‘`’
 
    identifier → implicit-parameter-name
+
+   identifier → property-wrapper-projection
 
    identifier-list → identifier
    identifier ‘,’ identifier-list
@@ -535,6 +546,8 @@ _{opt}
 
    implicit-parameter-name → ‘$’ decimal-digits
 
+   property-wrapper-projection → ‘$’ identifier-characters
+
 
 File: swift-reference.info,  Node: Keywords and Punctuation,  Next: Literals,  Prev: Identifiers,  Up: Lexical Structure
 
@@ -555,16 +568,16 @@ escaped with backticks in that context.
    • Keywords used in declarations: ‘associatedtype’, ‘class’, ‘deinit’,
      ‘enum’, ‘extension’, ‘fileprivate’, ‘func’, ‘import’, ‘init’,
      ‘inout’, ‘internal’, ‘let’, ‘open’, ‘operator’, ‘private’,
-     ‘protocol’, ‘public’, ‘static’, ‘struct’, ‘subscript’, ‘typealias’,
-     and ‘var’.
+     ‘protocol’, ‘public’, ‘rethrows’, ‘static’, ‘struct’, ‘subscript’,
+     ‘typealias’, and ‘var’.
 
    • Keywords used in statements: ‘break’, ‘case’, ‘continue’,
      ‘default’, ‘defer’, ‘do’, ‘else’, ‘fallthrough’, ‘for’, ‘guard’,
      ‘if’, ‘in’, ‘repeat’, ‘return’, ‘switch’, ‘where’, and ‘while’.
 
    • Keywords used in expressions and types: ‘as’, ‘Any’, ‘catch’,
-     ‘false’, ‘is’, ‘nil’, ‘rethrows’, ‘super’, ‘self’, ‘Self’, ‘throw’,
-     ‘throws’, ‘true’, and ‘try’.
+     ‘false’, ‘is’, ‘nil’, ‘super’, ‘self’, ‘Self’, ‘throw’, ‘throws’,
+     ‘true’, and ‘try’.
 
    • Keywords used in patterns: ‘_’.
 
@@ -1434,15 +1447,13 @@ function type ‘(Int) -> (Int) -> Int’ is understood as ‘(Int) -> ((Int)
 -> Int)’—that is, a function that takes an ‘Int’ and returns another
 function that takes and returns an ‘Int’.
 
-   Function types that can throw an error must be marked with the
-‘throws’ keyword, and function types that can rethrow an error must be
-marked with the ‘rethrows’ keyword.  The ‘throws’ keyword is part of a
-function’s type, and nonthrowing functions are subtypes of throwing
-functions.  As a result, you can use a nonthrowing function in the same
-places as a throwing one.  Throwing and rethrowing functions are
-described in *note Throwing Functions and Methods: Throwing Functions
-and Methods. and *note Rethrowing Functions and Methods: Rethrowing
-Functions and Methods.
+   Function types that can throw or rethrow an error must be marked with
+the ‘throws’ keyword.  The ‘throws’ keyword is part of a function’s
+type, and nonthrowing functions are subtypes of throwing functions.  As
+a result, you can use a nonthrowing function in the same places as a
+throwing one.  Throwing and rethrowing functions are described in *note
+Throwing Functions and Methods: Throwing Functions and Methods. and
+*note Rethrowing Functions and Methods::.
 
 * Menu:
 
@@ -1499,9 +1510,6 @@ avoiding conflicting access to memory, see *note Memory Safety:
 
    function-type → attributes _{opt} function-type-argument-clause
 ‘throws=_{opt} =->’ type
-
-   function-type → attributes _{opt} function-type-argument-clause
-‘rethrows’ ‘->’ type
 
    function-type-argument-clause → ‘(’ ‘)’
 
@@ -1870,10 +1878,19 @@ type’s name.
    In a structure, class, or enumeration declaration, the ‘Self’ type
 refers to the type introduced by the declaration.  Inside the
 declaration for a member of a type, the ‘Self’ type refers to that type.
-In the members of a class declaration, ‘Self’ can appear as the return
-type of a method and in the body of a method, but not in any other
-context.  For example, the code below shows an instance method ‘f’ whose
-return type is ‘Self’.
+In the members of a class declaration, ‘Self’ can appear only as
+follows:
+
+   • As the return type of a method
+
+   • As the return type of a read-only subscript
+
+   • As the type of a read-only computed property
+
+   • In the body of a method
+
+   For example, the code below shows an instance method ‘f’ whose return
+type is ‘Self’.
 
   1. class Superclass {
   2. func f() -> Self { return self }
@@ -2756,6 +2773,13 @@ form:
 
   1. (identifier 1: expression 1, identifier 2: expression 2, ...)
 
+   Each identifier in a tuple expression must be unique within the scope
+of the tuple expression.  In a nested tuple expression, identifiers at
+the same level of nesting must be unique.  For example, ‘(a: 10, a: 20)’
+is invalid because the label ‘a’ appears twice at the same level.
+However, ‘(a: 10, b: (a: 1, x: 2))’ is valid—although ‘a’ appears twice,
+it appears once in the outer tuple and once in the inner tuple.
+
    A tuple expression can contain zero expressions, or it can contain
 two or more expressions.  A single expression inside parentheses is a
 parenthesized expression.
@@ -2838,7 +2862,7 @@ determine the implied type.  The following code uses ‘\.someProperty’
 instead of ‘\SomeClass.someProperty’:
 
   1. class SomeClass: NSObject {
-  2. @objc var someProperty: Int
+  2. @objc dynamic var someProperty: Int
   3. init(someProperty: Int) {
   4. self.someProperty = someProperty
   5. }
@@ -3197,6 +3221,10 @@ parentheses can be omitted.
   1. // someMethod takes a closure as its only argument
   2. myData.someMethod() {$0 == 13}
   3. myData.someMethod {$0 == 13}
+
+   A class, structure, or enumeration type can enable syntactic sugar
+for function call syntax by declaring one of several methods, as
+described in *note Methods with Special Names::.
 
    Grammar of a function call expression
 
@@ -3927,10 +3955,11 @@ return type, see *note Functions that Never Return::.
           authors mark an enumeration as nonfrozen, they reserve the
           right to add new enumeration cases, and any code that
           interacts with that enumeration _must_ be able to handle those
-          future cases without being recompiled.  Only the standard
-          library, Swift overlays for Apple frameworks, and C and
-          Objective-C code can declare nonfrozen enumerations.
-          Enumerations you declare in Swift can’t be nonfrozen.
+          future cases without being recompiled.  Code that’s compiled
+          in library evolution mode, code in the standard library, Swift
+          overlays for Apple frameworks, and C and Objective-C code can
+          declare nonfrozen enumerations.  For information about frozen
+          and nonfrozen enumerations, see *note frozen::.
 
           When switching over a nonfrozen enumeration value, you always
           need to include a default case, even if every case of the
@@ -4406,7 +4435,7 @@ Platform condition      Valid arguments
 ‘swift()’               ‘>=’ or ‘<’ followed by a version number
 ‘compiler()’            ‘>=’ or ‘<’ followed by a version number
 ‘canImport()’           A module name
-‘targetEnvironment()’   ‘simulator’
+‘targetEnvironment()’   ‘simulator’, ‘macCatalyst’
 
    The version number for the ‘swift()’ and ‘compiler()’ platform
 conditions consists of a major number, optional minor number, optional
@@ -4547,7 +4576,7 @@ swift-version-continuation _{opt}
 
    module-name → identifier
 
-   environment → ‘simulator’
+   environment → ‘simulator’ | ‘macCatalyst’
 
 
 File: swift-reference.info,  Node: Line Control Statement,  Next: Compile-Time Diagnostic Statement,  Prev: Conditional Compilation Block,  Up: Compiler Control Statements
@@ -5272,6 +5301,7 @@ escaping function.
 * In-Out Parameters::
 * Special Kinds of Parameters::
 * Special Kinds of Methods::
+* Methods with Special Names::
 * Throwing Functions and Methods::
 * Rethrowing Functions and Methods::
 * Functions that Never Return::
@@ -5418,7 +5448,7 @@ used instead.
   4. f(7) // Invalid, missing argument label
 
 
-File: swift-reference.info,  Node: Special Kinds of Methods,  Next: Throwing Functions and Methods,  Prev: Special Kinds of Parameters,  Up: Function Declaration
+File: swift-reference.info,  Node: Special Kinds of Methods,  Next: Methods with Special Names,  Prev: Special Kinds of Parameters,  Up: Function Declaration
 
 7.7.4 Special Kinds of Methods
 ------------------------------
@@ -5439,9 +5469,69 @@ modifier can be overridden by a subclass implementation; a class type
 method marked with ‘class final’ or ‘static’ can’t be overridden.
 
 
-File: swift-reference.info,  Node: Throwing Functions and Methods,  Next: Rethrowing Functions and Methods,  Prev: Special Kinds of Methods,  Up: Function Declaration
+File: swift-reference.info,  Node: Methods with Special Names,  Next: Throwing Functions and Methods,  Prev: Special Kinds of Methods,  Up: Function Declaration
 
-7.7.5 Throwing Functions and Methods
+7.7.5 Methods with Special Names
+--------------------------------
+
+Several methods that have special names enable syntactic sugar for
+function call syntax.  If a type defines one of these methods, instances
+of the type can be used in function call syntax.  The function call is
+understood to be a call to one of the specially named methods on that
+instance.
+
+   A class, structure, or enumeration type can support function call
+syntax by defining a ‘dynamicallyCall(withArguments:)’ method or a
+‘dynamicallyCall(withKeywordArguments:)’ method, as described in *note
+dynamicCallable::, or by defining a call-as-function method, as
+described below.  If the type defines both a call-as-function method and
+one of the methods used by the ‘dynamicCallable’ attribute, the compiler
+gives preference to the call-as-function method in circumstances where
+either method could be used.
+
+   The name of a call-as-function method is ‘callAsFunction()’, or
+another name that begins with ‘callAsFunction(’ and adds labeled or
+unlabeled arguments—for example, ‘callAsFunction(_:_:)’ and
+‘callAsFunction(something:)’ are also valid call-as-function method
+names.
+
+   The following function calls are equivalent:
+
+  1. struct CallableStruct {
+  2. var value: Int
+  3. func callAsFunction(_ number: Int, scale: Int) {
+  4. print(scale * (number + value))
+  5. }
+  6. }
+  7. let callable = CallableStruct(value: 100)
+  8. callable(4, scale: 2)
+  9. callable.callAsFunction(4, scale: 2)
+  10. // Both function calls print 208.
+
+   The call-as-function methods and the methods from the
+‘dynamicCallable’ attribute make different trade-offs between how much
+information you encode into the type system and how much dynamic
+behavior is possible at runtime.  When you declare a call-as-function
+method, you specify the number of arguments, and each argument’s type
+and label.  The ‘dynamicCallable’ attribute’s methods specify only the
+type used to hold the array of arguments.
+
+   Defining a call-as-function method, or a method from the
+‘dynamicCallable’ attribute, doesn’t let you use an instance of that
+type as if it were a function in any context other than a function call
+expression.  For example:
+
+  1. let someFunction1: (Int, Int) -> Void = callable(_:scale:) // Error
+  2. let someFunction2: (Int, Int) -> Void =
+     callable.callAsFunction(_:scale:)
+
+   The ‘subscript(dynamicMemberLookup:)’ subscript enables syntactic
+sugar for member lookup, as described in *note dynamicMemberLookup::.
+
+
+File: swift-reference.info,  Node: Throwing Functions and Methods,  Next: Rethrowing Functions and Methods,  Prev: Methods with Special Names,  Up: Function Declaration
+
+7.7.6 Throwing Functions and Methods
 ------------------------------------
 
 Functions and methods that can throw an error must be marked with the
@@ -5472,7 +5562,7 @@ method.
 
 File: swift-reference.info,  Node: Rethrowing Functions and Methods,  Next: Functions that Never Return,  Prev: Throwing Functions and Methods,  Up: Function Declaration
 
-7.7.6 Rethrowing Functions and Methods
+7.7.7 Rethrowing Functions and Methods
 --------------------------------------
 
 A function or method can be declared with the ‘rethrows’ keyword to
@@ -5487,9 +5577,9 @@ must have at least one throwing function parameter.
 
    A rethrowing function or method can contain a ‘throw’ statement only
 inside a ‘catch’ clause.  This lets you call the throwing function
-inside a ‘do’-‘catch’ block and handle errors in the ‘catch’ clause by
-throwing a different error.  In addition, the ‘catch’ clause must handle
-only errors thrown by one of the rethrowing function’s throwing
+inside a ‘do’-‘catch’ statement and handle errors in the ‘catch’ clause
+by throwing a different error.  In addition, the ‘catch’ clause must
+handle only errors thrown by one of the rethrowing function’s throwing
 parameters.  For example, the following is invalid because the ‘catch’
 clause would handle the error thrown by ‘alwaysThrows()’.
 
@@ -5515,7 +5605,7 @@ method.
 
 File: swift-reference.info,  Node: Functions that Never Return,  Prev: Rethrowing Functions and Methods,  Up: Function Declaration
 
-7.7.7 Functions that Never Return
+7.7.8 Functions that Never Return
 ---------------------------------
 
 Swift defines a ‘Never’ type, which indicates that a function or method
@@ -6822,7 +6912,9 @@ with two exceptions.  By default, the parameters used in subscripting
 don’t have argument labels, unlike functions, methods, and initializers.
 However, you can provide explicit argument labels using the same syntax
 that functions, methods, and initializers use.  In addition, subscripts
-can’t have in-out parameters.
+can’t have in-out parameters.  A subscript parameter can have a default
+value, using the syntax described in *note Special Kinds of
+Parameters::.
 
    You can also declare subscripts in the context of a protocol
 declaration, as described in *note Protocol Subscript Declaration:
@@ -7273,6 +7365,7 @@ You can apply a declaration attribute to declarations only.
 * discardableResult::
 * dynamicCallable::
 * dynamicMemberLookup::
+* frozen::
 * GKInspectable::
 * inlinable::
 * nonobjc::
@@ -7281,6 +7374,7 @@ You can apply a declaration attribute to declarations only.
 * NSManaged::
 * objc::
 * objcMembers::
+* propertyWrapper::
 * requires_stored_property_inits::
 * testable::
 * UIApplicationMain::
@@ -7546,7 +7640,7 @@ String>’.
   1. repeatLabels(a: "four") // Error
 
 
-File: swift-reference.info,  Node: dynamicMemberLookup,  Next: GKInspectable,  Prev: dynamicCallable,  Up: Declaration Attributes
+File: swift-reference.info,  Node: dynamicMemberLookup,  Next: frozen,  Prev: dynamicCallable,  Up: Declaration Attributes
 
 8.1.4 dynamicMemberLookup
 -------------------------
@@ -7604,9 +7698,60 @@ when bridging data from other languages into Swift.  For example:
   19. // Prints "true"
 
 
-File: swift-reference.info,  Node: GKInspectable,  Next: inlinable,  Prev: dynamicMemberLookup,  Up: Declaration Attributes
+File: swift-reference.info,  Node: frozen,  Next: GKInspectable,  Prev: dynamicMemberLookup,  Up: Declaration Attributes
 
-8.1.5 GKInspectable
+8.1.5 frozen
+------------
+
+Apply this attribute to a structure or enumeration declaration to
+restrict the kinds of changes you can make to the type.  This attribute
+is allowed only when compiling in library evolution mode.  Future
+versions of the library can’t change the declaration by adding,
+removing, or reordering an enumeration’s cases or a structure’s stored
+instance properties.  These changes are allowed on nonfrozen types, but
+they break ABI compatibility for frozen types.
+
+   Note
+
+   When the compiler isn’t in library evolution mode, all structures and
+enumerations are implicitly frozen, and this attribute is ignored.
+
+   In library evolution mode, code that interacts with members of
+nonfrozen structures and enumerations is compiled in a way that allows
+it to continue working without recompiling even if a future version of
+the library adds, removes, or reorders some of that type’s members.  The
+compiler makes this possible using techniques like looking up
+information at runtime and adding a layer of indirection.  Marking a
+structure or enumeration as frozen gives up this flexibility to gain
+performance: Future versions of the library can make only limited
+changes to the type, but the compiler can make additional optimizations
+in code that interacts with the type’s members.
+
+   Frozen types, the types of the stored properties of frozen
+structures, and the associated values of frozen enumeration cases must
+be public or marked with the ‘usableFromInline’ attribute.  The
+properties of a frozen structure can’t have property observers, and
+expressions that provide the initial value for stored instance
+properties must follow the same restrictions as inlinable functions, as
+discussed in *note inlinable::.
+
+   To enable library evolution mode on the command line, pass the
+‘-enable-library-evolution’ option to the Swift compiler.  To enable it
+in Xcode, set the “Build Libraries for Distribution” build setting
+(‘BUILD_LIBRARY_FOR_DISTRIBUTION’) to Yes, as described in Xcode Help
+(https://help.apple.com/xcode/mac/current/#/dev04b3a04ba)
+[<https://help.apple.com/xcode/mac/current/#/dev04b3a04ba>].
+
+   A switch statement over a frozen enumeration doesn’t require a
+‘default’ case, as discussed in Switching Over Future Enumeration Cases.
+Including a ‘default’ or ‘@unknown default’ case when switching over a
+frozen enumeration produces a warning because that code is never
+executed.
+
+
+File: swift-reference.info,  Node: GKInspectable,  Next: inlinable,  Prev: frozen,  Up: Declaration Attributes
+
+8.1.6 GKInspectable
 -------------------
 
 Apply this attribute to expose a custom GameplayKit component property
@@ -7616,7 +7761,7 @@ to the SpriteKit editor UI. Applying this attribute also implies the
 
 File: swift-reference.info,  Node: inlinable,  Next: nonobjc,  Prev: GKInspectable,  Up: Declaration Attributes
 
-8.1.6 inlinable
+8.1.7 inlinable
 ---------------
 
 Apply this attribute to a function, method, computed property,
@@ -7639,7 +7784,7 @@ attribute.
 
 File: swift-reference.info,  Node: nonobjc,  Next: NSApplicationMain,  Prev: inlinable,  Up: Declaration Attributes
 
-8.1.7 nonobjc
+8.1.8 nonobjc
 -------------
 
 Apply this attribute to a method, property, subscript, or initializer
@@ -7667,7 +7812,7 @@ attribute.
 
 File: swift-reference.info,  Node: NSApplicationMain,  Next: NSCopying,  Prev: nonobjc,  Up: Declaration Attributes
 
-8.1.8 NSApplicationMain
+8.1.9 NSApplicationMain
 -----------------------
 
 Apply this attribute to a class to indicate that it’s the application
@@ -7684,8 +7829,8 @@ follows:
 
 File: swift-reference.info,  Node: NSCopying,  Next: NSManaged,  Prev: NSApplicationMain,  Up: Declaration Attributes
 
-8.1.9 NSCopying
----------------
+8.1.10 NSCopying
+----------------
 
 Apply this attribute to a stored variable property of a class.  This
 attribute causes the property’s setter to be synthesized with a _copy_
@@ -7699,7 +7844,7 @@ property must conform to the ‘NSCopying’ protocol.
 
 File: swift-reference.info,  Node: NSManaged,  Next: objc,  Prev: NSCopying,  Up: Declaration Attributes
 
-8.1.10 NSManaged
+8.1.11 NSManaged
 ----------------
 
 Apply this attribute to an instance method or stored variable property
@@ -7712,7 +7857,7 @@ Applying this attribute also implies the ‘objc’ attribute.
 
 File: swift-reference.info,  Node: objc,  Next: objcMembers,  Prev: NSManaged,  Up: Declaration Attributes
 
-8.1.11 objc
+8.1.12 objc
 -----------
 
 Apply this attribute to any declaration that can be represented in
@@ -7779,10 +7924,28 @@ the name of the property itself.
   6. }
   7. }
 
-
-File: swift-reference.info,  Node: objcMembers,  Next: requires_stored_property_inits,  Prev: objc,  Up: Declaration Attributes
+   For more information, see Importing Swift into Objective-C
+(https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c)
+[<https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c>].
 
-8.1.12 objcMembers
+   Note
+
+   The argument to the ‘objc’ attribute can also change the runtime name
+for that declaration.  You use the runtime name when calling functions
+that interact with the Objective-C runtime, like ‘NSClassFromString’
+(https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring)
+[<https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring>],
+and when specifying class names in an app’s Info.plist file.  If you
+specify a name by passing an argument, that name is used as the name in
+Objective-C code and as the runtime name.  If you omit the argument, the
+name used in Objective-C code matches the name in Swift code, and the
+runtime name follows the normal Swift compiler convention of name
+mangling.
+
+
+File: swift-reference.info,  Node: objcMembers,  Next: propertyWrapper,  Prev: objc,  Up: Declaration Attributes
+
+8.1.13 objcMembers
 ------------------
 
 Apply this attribute to a class declaration, to implicitly apply the
@@ -7798,9 +7961,108 @@ Applying the ‘objc’ attribute when it isn’t needed can increase your
 binary size and adversely affect performance.
 
 
-File: swift-reference.info,  Node: requires_stored_property_inits,  Next: testable,  Prev: objcMembers,  Up: Declaration Attributes
+File: swift-reference.info,  Node: propertyWrapper,  Next: requires_stored_property_inits,  Prev: objcMembers,  Up: Declaration Attributes
 
-8.1.13 requires_stored_property_inits
+8.1.14 propertyWrapper
+----------------------
+
+Apply this attribute to a class, structure, or enumeration declaration
+to use that type as a property wrapper.  When you apply this attribute
+to a type, you create a custom attribute with the same name as the type.
+Apply that new attribute to a property of a class, structure, or
+enumeration to wrap access to the property through an instance of the
+wrapper type.  Local and global variables can’t use property wrappers.
+
+   The wrapper must define a ‘wrappedValue’ instance property.  The
+_wrapped value_ of the property is the value that the getter and setter
+for this property expose.  In most cases, ‘wrappedValue’ is a computed
+value, but it can be a stored value instead.  The wrapper is responsible
+for defining and managing any underlying storage needed by its wrapped
+value.  The compiler synthesizes storage for the instance of the wrapper
+type by prefixing the name of the wrapped property with an underscore
+(‘_’)—for example, the wrapper for ‘someProperty’ is stored as
+‘_someProperty’.  The synthesized storage for the wrapper has an access
+control level of ‘private’.
+
+   A property that has a property wrapper can include ‘willSet’ and
+‘didSet’ blocks, but it can’t override the compiler-synthesized ‘get’ or
+‘set’ blocks.
+
+   Swift provides two forms of syntactic sugar for initialization of a
+property wrapper.  You can use assignment syntax in the definition of a
+wrapped value to pass the expression on the right-hand side of the
+assignment as the argument to the ‘wrappedValue’ parameter of the
+property wrapper’s initializer.  You can also provide arguments to the
+attribute when you apply it to a property, and those arguments are
+passed to the property wrapper’s initializer.  For example, in the code
+below, ‘SomeStruct’ calls each of the initializers that ‘SomeWrapper’
+defines.
+
+  1. @propertyWrapper
+  2. struct SomeWrapper {
+  3. var wrappedValue: Int
+  4. var someValue: Double
+  5. init() {
+  6. self.wrappedValue = 100
+  7. self.someValue = 12.3
+  8. }
+  9. init(wrappedValue: Int) {
+  10. self.wrappedValue = wrappedValue
+  11. self.someValue = 45.6
+  12. }
+  13. init(wrappedValue value: Int, custom: Double) {
+  14. self.wrappedValue = value
+  15. self.someValue = custom
+  16. }
+  17. }
+  18. 
+  19. struct SomeStruct {
+  20. // Uses init()
+  21. @SomeWrapper var a: Int
+  22. 
+  23. // Uses init(wrappedValue:)
+  24. @SomeWrapper var b = 10
+  25. 
+  26. // Both use init(wrappedValue:custom:)
+  27. @SomeWrapper(custom: 98.7) var c = 30
+  28. @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
+  29. }
+
+   The _projected value_ for a wrapped property is a second value that a
+property wrapper can use to expose additional functionality.  The author
+of a property wrapper type is responsible for determining the meaning of
+its projected value and defining the interface that the projected value
+exposes.  To project a value from a property wrapper, define a
+‘projectedValue’ instance property on the wrapper type.  The compiler
+synthesizes an identifier for the projected value by prefixing the name
+of the wrapped property with a dollar sign (‘$’)—for example, the
+projected value for ‘someProperty’ is ‘$someProperty’.  The projected
+value has the same access control level as the original wrapped
+property.
+
+  1. @propertyWrapper
+  2. struct WrapperWithProjection {
+  3. var wrappedValue: Int
+  4. var projectedValue: SomeProjection {
+  5. return SomeProjection(wrapper: self)
+  6. }
+  7. }
+  8. struct SomeProjection {
+  9. var wrapper: WrapperWithProjection
+  10. }
+  11. 
+  12. struct SomeStruct {
+  13. @WrapperWithProjection var x = 123
+  14. }
+  15. let s = SomeStruct()
+  16. s.x // Int value
+  17. s.$x // SomeProjection value
+  18. s.$x.wrapper // WrapperWithProjection value
+
+
+File: swift-reference.info,  Node: requires_stored_property_inits,  Next: testable,  Prev: propertyWrapper,  Up: Declaration Attributes
+
+8.1.15 requires_stored_property_inits
 -------------------------------------
 
 Apply this attribute to a class declaration to require all stored
@@ -7811,7 +8073,7 @@ from ‘NSManagedObject’.
 
 File: swift-reference.info,  Node: testable,  Next: UIApplicationMain,  Prev: requires_stored_property_inits,  Up: Declaration Attributes
 
-8.1.14 testable
+8.1.16 testable
 ---------------
 
 Apply this attribute to an ‘import’ declaration to import that module
@@ -7826,7 +8088,7 @@ The imported module must be compiled with testing enabled.
 
 File: swift-reference.info,  Node: UIApplicationMain,  Next: usableFromInline,  Prev: testable,  Up: Declaration Attributes
 
-8.1.15 UIApplicationMain
+8.1.17 UIApplicationMain
 ------------------------
 
 Apply this attribute to a class to indicate that it’s the application
@@ -7845,14 +8107,18 @@ function.  For example, if your app uses a custom subclass of
 
 File: swift-reference.info,  Node: usableFromInline,  Next: warn_unqualified_access,  Prev: UIApplicationMain,  Up: Declaration Attributes
 
-8.1.16 usableFromInline
+8.1.18 usableFromInline
 -----------------------
 
 Apply this attribute to a function, method, computed property,
 subscript, initializer, or deinitializer declaration to allow that
 symbol to be used in inlinable code that’s defined in the same module as
 the declaration.  The declaration must have the ‘internal’ access level
-modifier.
+modifier.  A structure or class marked ‘usableFromInline’ can use only
+types that are public or ‘usableFromInline’ for its properties.  An
+enumeration marked ‘usableFromInline’ can use only types that are public
+or ‘usableFromInline’ for the raw values and associated values of its
+cases.
 
    Like the ‘public’ access level modifier, this attribute exposes the
 declaration as part of the module’s public interface.  Unlike ‘public’,
@@ -7870,7 +8136,7 @@ both attributes is an error.
 
 File: swift-reference.info,  Node: warn_unqualified_access,  Next: Declaration Attributes Used by Interface Builder,  Prev: usableFromInline,  Up: Declaration Attributes
 
-8.1.17 warn_unqualified_access
+8.1.19 warn_unqualified_access
 ------------------------------
 
 Apply this attribute to a top-level function, instance method, or class
@@ -7895,7 +8161,7 @@ confusion when attempting to use one or the other from within a
 
 File: swift-reference.info,  Node: Declaration Attributes Used by Interface Builder,  Prev: warn_unqualified_access,  Up: Declaration Attributes
 
-8.1.18 Declaration Attributes Used by Interface Builder
+8.1.20 Declaration Attributes Used by Interface Builder
 -------------------------------------------------------
 
 Interface Builder attributes are declaration attributes used by
@@ -8235,6 +8501,24 @@ pattern that contains one element for each associated value.  For an
 example that uses a ‘switch’ statement to match enumeration cases
 containing associated values, see *note Associated Values:
 (swift)Associated Values.
+
+   An enumeration case pattern also matches values of that case wrapped
+in an optional.  This simplified syntax lets you omit an optional
+pattern.  Note that, because ‘Optional’ is implemented as an
+enumeration, ‘.none’ and ‘.some’ can appear in the same switch as the
+cases of the enumeration type.
+
+  1. enum SomeEnum { case left, right }
+  2. let x: SomeEnum?  = .left
+  3. switch x {
+  4. case .left:
+  5. print("Turn left")
+  6. case .right:
+  7. print("Turn right")
+  8. case nil:
+  9. print("Keep going straight")
+  10. }
+  11. // Prints "Turn left"
 
    Grammar of an enumeration case pattern
 
@@ -8639,6 +8923,8 @@ multiline-comment-text _{opt}
 
    identifier → implicit-parameter-name
 
+   identifier → property-wrapper-projection
+
    identifier-list → identifier
    identifier ‘,’ identifier-list
 
@@ -8993,9 +9279,6 @@ type
 
    function-type → attributes _{opt} function-type-argument-clause
 ‘throws=_{opt} =->’ type
-
-   function-type → attributes _{opt} function-type-argument-clause
-‘rethrows’ ‘->’ type
 
    function-type-argument-clause → ‘(’ ‘)’
 
@@ -10286,6 +10569,7 @@ Index
 * @dynamicCallable:                      dynamicCallable.     (line   6)
 * @dynamicCallable <1>:                  NSManaged.           (line   6)
 * @dynamicMemberLookup:                  dynamicMemberLookup. (line   6)
+* @frozen:                               frozen.              (line   6)
 * @GKInspectable:                        GKInspectable.       (line   6)
 * @inlinable:                            inlinable.           (line   6)
 * @nonobjc:                              nonobjc.             (line   6)
@@ -10293,6 +10577,7 @@ Index
 * @NSCopying:                            NSCopying.           (line   6)
 * @objc:                                 objc.                (line   6)
 * @objcMembers:                          objcMembers.         (line   6)
+* @propertyWrapper:                      propertyWrapper.     (line   6)
 * @requires_stored_property_inits:       requires_stored_property_inits.
                                                               (line   6)
 * @testable:                             testable.            (line   6)
@@ -10345,173 +10630,176 @@ Index
 
 Tag Table:
 Node: Top235
-Node: Language Reference5317
-Node: About the Language Reference5830
-Node: How to Read the Grammar6684
-Node: Lexical Structure8526
-Node: Whitespace and Comments9411
-Node: Identifiers11489
-Node: Keywords and Punctuation14369
-Node: Literals17388
-Node: Integer Literals19922
-Node: Floating-Point Literals22691
-Node: String Literals25670
-Node: Operators33220
-Node: Types39225
-Node: Type Annotation41716
-Node: Type Identifier42556
-Node: Tuple Type44036
-Node: Function Type45549
-Node: Restrictions for Nonescaping Closures49993
-Node: Array Type52632
-Node: Dictionary Type54355
-Node: Optional Type55696
-Node: Implicitly Unwrapped Optional Type57452
-Node: Protocol Composition Type59826
-Node: Opaque Type61910
-Node: Metatype Type63447
-Node: Self Type66062
-Node: Type Inheritance Clause68190
-Node: Type Inference70020
-Node: Expressions71764
-Node: Prefix Expressions72805
-Node: Try Operator74019
-Node: Binary Expressions75981
-Node: Assignment Operator77613
-Node: Type-Casting Operators79184
-Node: Primary Expressions82060
-Node: Literal Expression83385
-Node: Self Expression87969
-Node: Superclass Expression89625
-Node: Closure Expression90805
-Node: Implicit Member Expression98154
-Node: Parenthesized Expression98792
-Node: Tuple Expression99408
-Node: Wildcard Expression100649
-Node: Key-Path Expression101142
-Node: Selector Expression108078
-Node: Key-Path String Expression110703
-Node: Postfix Expressions113442
-Node: Function Call Expression114911
-Node: Initializer Expression117048
-Node: Explicit Member Expression118660
-Node: Postfix Self Expression121417
-Node: Subscript Expression122306
-Node: Forced-Value Expression123169
-Node: Optional-Chaining Expression124193
-Node: Statements126992
-Node: Loop Statements128961
-Node: For-In Statement129835
-Node: While Statement131255
-Node: Repeat-While Statement132764
-Node: Branch Statements134051
-Node: If Statement134925
-Node: Guard Statement136764
-Node: Labeled Statement147125
-Node: Control Transfer Statements148473
-Node: Break Statement149459
-Node: Continue Statement150835
-Node: Fallthrough Statement152383
-Node: Return Statement153582
-Node: Throw Statement155122
-Node: Defer Statement156221
-Node: Do Statement157724
-Node: Compiler Control Statements159678
-Node: Conditional Compilation Block160450
-Node: Line Control Statement167391
-Node: Compile-Time Diagnostic Statement168887
-Node: Availability Condition170002
-Node: Declarations172168
-Node: Top-Level Code174255
-Node: Code Blocks174922
-Node: Import Declaration175488
-Node: Constant Declaration176649
-Node: Variable Declaration179628
-Node: Stored Variables and Stored Variable Properties180856
-Node: Computed Variables and Computed Properties182251
-Node: Stored Variable Observers and Property Observers184219
-Node: Type Variable Properties187580
-Node: Type Alias Declaration190214
-Node: Function Declaration192960
-Node: Parameter Names194715
-Node: In-Out Parameters196245
-Node: Special Kinds of Parameters198921
-Node: Special Kinds of Methods200425
-Node: Throwing Functions and Methods201515
-Node: Rethrowing Functions and Methods202913
-Node: Functions that Never Return204705
-Node: Enumeration Declaration206871
-Node: Enumerations with Cases of Any Type208729
-Node: Enumerations with Cases of a Raw-Value Type211617
-Node: Accessing Enumeration Cases215081
-Node: Structure Declaration217833
-Node: Class Declaration220801
-Node: Protocol Declaration225139
-Node: Protocol Property Declaration230346
-Node: Protocol Method Declaration232053
-Node: Protocol Initializer Declaration233659
-Node: Protocol Subscript Declaration235131
-Node: Protocol Associated Type Declaration236362
-Node: Initializer Declaration237997
-Node: Failable Initializers241681
-Node: Deinitializer Declaration245160
-Node: Extension Declaration246377
-Node: Conditional Conformance248862
-Node: Protocol Conformance Must Not Be Redundant252181
-Node: Subscript Declaration256643
-Node: Operator Declaration260177
-Node: Precedence Group Declaration263575
-Node: Declaration Modifiers268278
-Node: Access Control Levels273989
-Node: Attributes277700
-Node: Declaration Attributes278773
-Node: available279372
-Node: discardableResult284899
-Node: dynamicCallable285251
-Node: dynamicMemberLookup289171
-Node: GKInspectable291710
-Node: inlinable292041
-Node: nonobjc293128
-Node: NSApplicationMain294367
-Node: NSCopying294957
-Node: NSManaged295556
-Node: objc296116
-Node: objcMembers299764
-Node: requires_stored_property_inits300639
-Node: testable301086
-Node: UIApplicationMain301836
-Node: usableFromInline302739
-Node: warn_unqualified_access303929
-Node: Declaration Attributes Used by Interface Builder305157
-Node: Type Attributes306190
-Node: autoclosure306464
-Node: convention307064
-Node: escaping308513
-Node: Switch Case Attributes309107
-Node: unknown309346
-Node: Patterns310399
-Node: Wildcard Pattern312640
-Node: Identifier Pattern313241
-Node: Value-Binding Pattern314054
-Node: Tuple Pattern315294
-Node: Enumeration Case Pattern317017
-Node: Optional Pattern317957
-Node: Type-Casting Patterns319307
-Node: Expression Pattern320744
-Node: Generic Parameters and Arguments322467
-Node: Generic Parameter Clause323267
-Node: Generic Where Clauses325330
-Node: Generic Argument Clause328446
-Node: Summary of the Grammar330857
-Node: Lexical Structure 1331320
-Node: Types 1340544
-Node: Expressions 1343276
-Node: Statements 1351919
-Node: Declarations 1359871
-Node: Attributes 1374278
-Node: Patterns 1375105
-Node: Generic Parameters and Arguments 1376641
-Node: Index377873
+Node: Language Reference5379
+Node: About the Language Reference5892
+Node: How to Read the Grammar6746
+Node: Lexical Structure8588
+Node: Whitespace and Comments9473
+Node: Identifiers11551
+Node: Keywords and Punctuation14875
+Node: Literals17894
+Node: Integer Literals20428
+Node: Floating-Point Literals23197
+Node: String Literals26176
+Node: Operators33726
+Node: Types39731
+Node: Type Annotation42222
+Node: Type Identifier43062
+Node: Tuple Type44542
+Node: Function Type46055
+Node: Restrictions for Nonescaping Closures50385
+Node: Array Type52925
+Node: Dictionary Type54648
+Node: Optional Type55989
+Node: Implicitly Unwrapped Optional Type57745
+Node: Protocol Composition Type60119
+Node: Opaque Type62203
+Node: Metatype Type63740
+Node: Self Type66355
+Node: Type Inheritance Clause68589
+Node: Type Inference70419
+Node: Expressions72163
+Node: Prefix Expressions73204
+Node: Try Operator74418
+Node: Binary Expressions76380
+Node: Assignment Operator78012
+Node: Type-Casting Operators79583
+Node: Primary Expressions82459
+Node: Literal Expression83784
+Node: Self Expression88368
+Node: Superclass Expression90024
+Node: Closure Expression91204
+Node: Implicit Member Expression98553
+Node: Parenthesized Expression99191
+Node: Tuple Expression99807
+Node: Wildcard Expression101487
+Node: Key-Path Expression101980
+Node: Selector Expression108924
+Node: Key-Path String Expression111549
+Node: Postfix Expressions114288
+Node: Function Call Expression115757
+Node: Initializer Expression118079
+Node: Explicit Member Expression119691
+Node: Postfix Self Expression122448
+Node: Subscript Expression123337
+Node: Forced-Value Expression124200
+Node: Optional-Chaining Expression125224
+Node: Statements128023
+Node: Loop Statements129992
+Node: For-In Statement130866
+Node: While Statement132286
+Node: Repeat-While Statement133795
+Node: Branch Statements135082
+Node: If Statement135956
+Node: Guard Statement137795
+Node: Labeled Statement148241
+Node: Control Transfer Statements149589
+Node: Break Statement150575
+Node: Continue Statement151951
+Node: Fallthrough Statement153499
+Node: Return Statement154698
+Node: Throw Statement156238
+Node: Defer Statement157337
+Node: Do Statement158840
+Node: Compiler Control Statements160794
+Node: Conditional Compilation Block161566
+Node: Line Control Statement168546
+Node: Compile-Time Diagnostic Statement170042
+Node: Availability Condition171157
+Node: Declarations173323
+Node: Top-Level Code175410
+Node: Code Blocks176077
+Node: Import Declaration176643
+Node: Constant Declaration177804
+Node: Variable Declaration180783
+Node: Stored Variables and Stored Variable Properties182011
+Node: Computed Variables and Computed Properties183406
+Node: Stored Variable Observers and Property Observers185374
+Node: Type Variable Properties188735
+Node: Type Alias Declaration191369
+Node: Function Declaration194115
+Node: Parameter Names195901
+Node: In-Out Parameters197431
+Node: Special Kinds of Parameters200107
+Node: Special Kinds of Methods201611
+Node: Methods with Special Names202697
+Node: Throwing Functions and Methods205394
+Node: Rethrowing Functions and Methods206794
+Node: Functions that Never Return208590
+Node: Enumeration Declaration210756
+Node: Enumerations with Cases of Any Type212614
+Node: Enumerations with Cases of a Raw-Value Type215502
+Node: Accessing Enumeration Cases218966
+Node: Structure Declaration221718
+Node: Class Declaration224686
+Node: Protocol Declaration229024
+Node: Protocol Property Declaration234231
+Node: Protocol Method Declaration235938
+Node: Protocol Initializer Declaration237544
+Node: Protocol Subscript Declaration239016
+Node: Protocol Associated Type Declaration240247
+Node: Initializer Declaration241882
+Node: Failable Initializers245566
+Node: Deinitializer Declaration249045
+Node: Extension Declaration250262
+Node: Conditional Conformance252747
+Node: Protocol Conformance Must Not Be Redundant256066
+Node: Subscript Declaration260528
+Node: Operator Declaration264178
+Node: Precedence Group Declaration267576
+Node: Declaration Modifiers272279
+Node: Access Control Levels277990
+Node: Attributes281701
+Node: Declaration Attributes282774
+Node: available283404
+Node: discardableResult288931
+Node: dynamicCallable289283
+Node: dynamicMemberLookup293203
+Node: frozen295735
+Node: GKInspectable298321
+Node: inlinable298639
+Node: nonobjc299726
+Node: NSApplicationMain300965
+Node: NSCopying301555
+Node: NSManaged302156
+Node: objc302716
+Node: objcMembers307418
+Node: propertyWrapper308278
+Node: requires_stored_property_inits312272
+Node: testable312723
+Node: UIApplicationMain313473
+Node: usableFromInline314376
+Node: warn_unqualified_access315861
+Node: Declaration Attributes Used by Interface Builder317089
+Node: Type Attributes318122
+Node: autoclosure318396
+Node: convention318996
+Node: escaping320445
+Node: Switch Case Attributes321039
+Node: unknown321278
+Node: Patterns322331
+Node: Wildcard Pattern324572
+Node: Identifier Pattern325173
+Node: Value-Binding Pattern325986
+Node: Tuple Pattern327226
+Node: Enumeration Case Pattern328949
+Node: Optional Pattern330459
+Node: Type-Casting Patterns331809
+Node: Expression Pattern333246
+Node: Generic Parameters and Arguments334969
+Node: Generic Parameter Clause335769
+Node: Generic Where Clauses337832
+Node: Generic Argument Clause340948
+Node: Summary of the Grammar343359
+Node: Lexical Structure 1343822
+Node: Types 1353093
+Node: Expressions 1355726
+Node: Statements 1364369
+Node: Declarations 1372321
+Node: Attributes 1386728
+Node: Patterns 1387555
+Node: Generic Parameters and Arguments 1389091
+Node: Index390323
 
 End Tag Table
 

@@ -1,7 +1,7 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
 @setfilename swift-reference.info
-@settitle The Swift Programming Reference (Swift 5.1)
+@settitle The Swift Programming Reference (Swift 5.2)
 @documentencoding UTF-8
 @documentlanguage en
 @syncodeindex vr cp
@@ -16,7 +16,7 @@
 
 @finalout
 @titlepage
-@title The Swift Programming Reference (Swift 5.1)
+@title The Swift Programming Reference (Swift 5.2)
 @author Apple Inc.
 @end titlepage
 
@@ -24,7 +24,7 @@
 
 @ifnottex
 @node Top
-@top The Swift Programming Reference (Swift 5.1)
+@top The Swift Programming Reference (Swift 5.2)
 @end ifnottex
 
 @menu
@@ -190,6 +190,7 @@ Function Declaration
 * In-Out Parameters::
 * Special Kinds of Parameters::
 * Special Kinds of Methods::
+* Methods with Special Names::
 * Throwing Functions and Methods::
 * Rethrowing Functions and Methods::
 * Functions that Never Return::
@@ -233,6 +234,7 @@ Declaration Attributes
 * discardableResult::
 * dynamicCallable::
 * dynamicMemberLookup::
+* frozen::
 * GKInspectable::
 * inlinable::
 * nonobjc::
@@ -241,6 +243,7 @@ Declaration Attributes
 * NSManaged::
 * objc::
 * objcMembers::
+* propertyWrapper::
 * requires@math{_stored}@math{_property}@math{_inits}::
 * testable::
 * UIApplicationMain::
@@ -526,6 +529,13 @@ Inside a closure with no explicit parameter names, the parameters are
 implicitly named @samp{$0}, @samp{$1}, @samp{$2}, and so on. These names are valid
 identifiers within the scope of the closure.
 
+The compiler synthesizes identifiers that begin with a dollar sign ($)
+for properties that have a property wrapper projection. Your code can
+interact with these identifiers, but you can't declare identifiers with
+that prefix. For more information, see the
+@ref{propertyWrapper} section of the
+@ref{Attributes} chapter.
+
 Grammar of an identifier
 
 identifier →
@@ -540,6 +550,9 @@ _@{opt@} @samp{`}
 
 identifier →
 implicit-parameter-name
+
+identifier →
+property-wrapper-projection
 
 identifier-list →
 identifier
@@ -622,6 +635,10 @@ implicit-parameter-name
 → @samp{$}
 decimal-digits
 
+property-wrapper-projection
+→ @samp{$}
+identifier-characters
+
 @node Keywords and Punctuation
 @section Keywords and Punctuation
 
@@ -641,7 +658,8 @@ expression, so they must be escaped with backticks in that context.
 Keywords used in declarations: @samp{associatedtype}, @samp{class}, @samp{deinit},
 @samp{enum}, @samp{extension}, @samp{fileprivate}, @samp{func}, @samp{import}, @samp{init}, @samp{inout},
 @samp{internal}, @samp{let}, @samp{open}, @samp{operator}, @samp{private}, @samp{protocol},
-@samp{public}, @samp{static}, @samp{struct}, @samp{subscript}, @samp{typealias}, and @samp{var}.
+@samp{public}, @samp{rethrows}, @samp{static}, @samp{struct}, @samp{subscript}, @samp{typealias},
+and @samp{var}.
 
 @item
 Keywords used in statements: @samp{break}, @samp{case}, @samp{continue}, @samp{default},
@@ -650,7 +668,7 @@ Keywords used in statements: @samp{break}, @samp{case}, @samp{continue}, @samp{d
 
 @item
 Keywords used in expressions and types: @samp{as}, @samp{Any}, @samp{catch}, @samp{false},
-@samp{is}, @samp{nil}, @samp{rethrows}, @samp{super}, @samp{self}, @samp{Self}, @samp{throw}, @samp{throws},
+@samp{is}, @samp{nil}, @samp{super}, @samp{self}, @samp{Self}, @samp{throw}, @samp{throws},
 @samp{true}, and @samp{try}.
 
 @item
@@ -1839,15 +1857,12 @@ type @samp{(Int) -> (Int) -> Int} is understood as
 @samp{(Int) -> ((Int) -> Int)}---that is, a function that takes an @samp{Int} and
 returns another function that takes and returns an @samp{Int}.
 
-Function types that can throw an error must be marked with the @samp{throws}
-keyword, and function types that can rethrow an error must be marked
-with the @samp{rethrows} keyword. The @samp{throws} keyword is part of a
-function's type, and nonthrowing functions are subtypes of throwing
-functions. As a result, you can use a nonthrowing function in the same
-places as a throwing one. Throwing and rethrowing functions are
-described in @ref{Throwing Functions and Methods, , Throwing Functions and
-Methods} and @ref{Rethrowing Functions and Methods, , Rethrowing Functions and
-Methods}.
+Function types that can throw or rethrow an error must be marked with
+the @samp{throws} keyword. The @samp{throws} keyword is part of a function's type,
+and nonthrowing functions are subtypes of throwing functions. As a
+result, you can use a nonthrowing function in the same places as a
+throwing one. Throwing and rethrowing functions are described in @ref{Throwing Functions and Methods, , 
+Throwing Functions and Methods} and @ref{Rethrowing Functions and Methods}.
 
 @menu
 * Restrictions for Nonescaping Closures::
@@ -1918,12 +1933,6 @@ _@{opt@}
 function-type-argument-clause
 @samp{throws=_@{opt@} =->}
 type
-
-function-type →
-attributes
-_@{opt@}
-function-type-argument-clause
-@samp{rethrows} @samp{->} type
 
 function-type-argument-clause
 → @samp{(} @samp{)}
@@ -2376,10 +2385,24 @@ type refers to the eventual type that conforms to the protocol.
 In a structure, class, or enumeration declaration, the @samp{Self} type
 refers to the type introduced by the declaration. Inside the declaration
 for a member of a type, the @samp{Self} type refers to that type. In the
-members of a class declaration, @samp{Self} can appear as the return type of
-a method and in the body of a method, but not in any other context. For
-example, the code below shows an instance method @samp{f} whose return type
-is @samp{Self}.
+members of a class declaration, @samp{Self} can appear only as follows:
+
+@itemize
+@item
+As the return type of a method
+
+@item
+As the return type of a read-only subscript
+
+@item
+As the type of a read-only computed property
+
+@item
+In the body of a method
+@end itemize
+
+For example, the code below shows an instance method @samp{f} whose return
+type is @samp{Self}.
 
 @enumerate
 @item
@@ -3602,6 +3625,13 @@ form:
 (identifier 1: expression 1, identifier 2: expression 2, @dots{})
 @end enumerate
 
+Each identifier in a tuple expression must be unique within the scope of
+the tuple expression. In a nested tuple expression, identifiers at the
+same level of nesting must be unique. For example, @samp{(a: 10, a: 20)} is
+invalid because the label @samp{a} appears twice at the same level. However,
+@samp{(a: 10, b: (a: 1, x: 2))} is valid---although @samp{a} appears twice, it
+appears once in the outer tuple and once in the inner tuple.
+
 A tuple expression can contain zero expressions, or it can contain two
 or more expressions. A single expression inside parentheses is a
 parenthesized expression.
@@ -3717,7 +3747,7 @@ instead of @samp{\SomeClass.someProperty}:
 @item
 class SomeClass: NSObject @{
 @item
-@@objc var someProperty: Int
+@@objc dynamic var someProperty: Int
 @item
 init(someProperty: Int) @{
 @item
@@ -4260,6 +4290,10 @@ myData.someMethod() @{$0 == 13@}
 @item
 myData.someMethod @{$0 == 13@}
 @end enumerate
+
+A class, structure, or enumeration type can enable syntactic sugar for
+function call syntax by declaring one of several methods, as described
+in @ref{Methods with Special Names}.
 
 Grammar of a function call expression
 
@@ -5273,10 +5307,11 @@ app. Switching over a nonfrozen enumeration requires extra
 consideration. When a library's authors mark an enumeration as
 nonfrozen, they reserve the right to add new enumeration cases, and any
 code that interacts with that enumeration @emph{must} be able to handle those
-future cases without being recompiled. Only the standard library, Swift
-overlays for Apple frameworks, and C and Objective-C code can declare
-nonfrozen enumerations. Enumerations you declare in Swift can't be
-nonfrozen.
+future cases without being recompiled. Code that's compiled in library
+evolution mode, code in the standard library, Swift overlays for Apple
+frameworks, and C and Objective-C code can declare nonfrozen
+enumerations. For information about frozen and nonfrozen enumerations,
+see @ref{frozen}.
 
 When switching over a nonfrozen enumeration value, you always need to
 include a default case, even if every case of the enumeration already
@@ -5873,7 +5908,7 @@ the platform conditions listed in the table below.
 @item @samp{canImport()}
 @tab A module name
 @item @samp{targetEnvironment()}
-@tab @samp{simulator}
+@tab @samp{simulator}, @samp{macCatalyst}
 @end multitable
 
 @findex swift
@@ -6115,7 +6150,8 @@ _@{opt@}
 module-name →
 identifier
 
-environment → @samp{simulator}
+environment → @samp{simulator} |
+@samp{macCatalyst}
 
 @node Line Control Statement
 @subsection Line Control Statement
@@ -7072,6 +7108,7 @@ For a discussion of nested functions, see
 * In-Out Parameters::
 * Special Kinds of Parameters::
 * Special Kinds of Methods::
+* Methods with Special Names::
 * Throwing Functions and Methods::
 * Rethrowing Functions and Methods::
 * Functions that Never Return::
@@ -7276,6 +7313,81 @@ for classes. A class type method marked with the @samp{class} declaration
 modifier can be overridden by a subclass implementation; a class type
 method marked with @samp{class final} or @samp{static} can't be overridden.
 
+@node Methods with Special Names
+@subsection Methods with Special Names
+
+Several methods that have special names enable syntactic sugar for
+function call syntax. If a type defines one of these methods, instances
+of the type can be used in function call syntax. The function call is
+understood to be a call to one of the specially named methods on that
+instance.
+
+A class, structure, or enumeration type can support function call syntax
+by defining a @samp{dynamicallyCall(withArguments:)} method or a
+@samp{dynamicallyCall(withKeywordArguments:)} method, as described in
+@ref{dynamicCallable}, or by defining a
+call-as-function method, as described below. If the type defines both a
+call-as-function method and one of the methods used by the
+@samp{dynamicCallable} attribute, the compiler gives preference to the
+call-as-function method in circumstances where either method could be
+used.
+
+The name of a call-as-function method is @samp{callAsFunction()}, or another
+name that begins with @samp{callAsFunction(} and adds labeled or unlabeled
+arguments---for example, @samp{callAsFunction(_:_:)} and
+@samp{callAsFunction(something:)} are also valid call-as-function method
+names.
+
+The following function calls are equivalent:
+
+@enumerate
+@item
+struct CallableStruct @{
+@item
+var value: Int
+@item
+func callAsFunction(_ number: Int, scale: Int) @{
+@item
+print(scale * (number + value))
+@item
+@}
+@item
+@}
+@item
+let callable = CallableStruct(value: 100)
+@item
+callable(4, scale: 2)
+@item
+callable.callAsFunction(4, scale: 2)
+@item
+// Both function calls print 208.
+@end enumerate
+
+The call-as-function methods and the methods from the @samp{dynamicCallable}
+attribute make different trade-offs between how much information you
+encode into the type system and how much dynamic behavior is possible at
+runtime. When you declare a call-as-function method, you specify the
+number of arguments, and each argument's type and label. The
+@samp{dynamicCallable} attribute's methods specify only the type used to hold
+the array of arguments.
+
+Defining a call-as-function method, or a method from the
+@samp{dynamicCallable} attribute, doesn't let you use an instance of that
+type as if it were a function in any context other than a function call
+expression. For example:
+
+@enumerate
+@item
+let someFunction1: (Int, Int) -> Void = callable(_:scale:) // Error
+@item
+let someFunction2: (Int, Int) -> Void =
+callable.callAsFunction(_:scale:)
+@end enumerate
+
+The @samp{subscript(dynamicMemberLookup:)} subscript enables syntactic sugar
+for member lookup, as described in
+@ref{dynamicMemberLookup}.
+
 @node Throwing Functions and Methods
 @subsection Throwing Functions and Methods
 
@@ -7331,11 +7443,11 @@ try callback()
 
 A rethrowing function or method can contain a @samp{throw} statement only
 inside a @samp{catch} clause. This lets you call the throwing function inside
-a @samp{do}-@samp{catch} block and handle errors in the @samp{catch} clause by throwing
-a different error. In addition, the @samp{catch} clause must handle only
-errors thrown by one of the rethrowing function's throwing parameters.
-For example, the following is invalid because the @samp{catch} clause would
-handle the error thrown by @samp{alwaysThrows()}.
+a @samp{do}-@samp{catch} statement and handle errors in the @samp{catch} clause by
+throwing a different error. In addition, the @samp{catch} clause must handle
+only errors thrown by one of the rethrowing function's throwing
+parameters. For example, the following is invalid because the @samp{catch}
+clause would handle the error thrown by @samp{alwaysThrows()}.
 
 @enumerate
 @item
@@ -9180,7 +9292,9 @@ two exceptions. By default, the parameters used in subscripting don't
 have argument labels, unlike functions, methods, and initializers.
 However, you can provide explicit argument labels using the same syntax
 that functions, methods, and initializers use. In addition, subscripts
-can't have in-out parameters.
+can't have in-out parameters. A subscript parameter can have a default
+value, using the syntax described in
+@ref{Special Kinds of Parameters}.
 
 You can also declare subscripts in the context of a protocol
 declaration, as described in @ref{Protocol Subscript Declaration, , Protocol
@@ -9746,6 +9860,7 @@ You can apply a declaration attribute to declarations only.
 * discardableResult::
 * dynamicCallable::
 * dynamicMemberLookup::
+* frozen::
 * GKInspectable::
 * inlinable::
 * nonobjc::
@@ -9754,6 +9869,7 @@ You can apply a declaration attribute to declarations only.
 * NSManaged::
 * objc::
 * objcMembers::
+* propertyWrapper::
 * requires@math{_stored}@math{_property}@math{_inits}::
 * testable::
 * UIApplicationMain::
@@ -10199,6 +10315,55 @@ print(dynamic == equivalent)
 // Prints "true"
 @end enumerate
 
+@node frozen
+@subsection frozen
+
+@findex @@frozen
+
+Apply this attribute to a structure or enumeration declaration to
+restrict the kinds of changes you can make to the type. This attribute
+is allowed only when compiling in library evolution mode. Future
+versions of the library can't change the declaration by adding,
+removing, or reordering an enumeration's cases or a structure's stored
+instance properties. These changes are allowed on nonfrozen types, but
+they break ABI compatibility for frozen types.
+
+Note
+
+When the compiler isn't in library evolution mode, all structures and
+enumerations are implicitly frozen, and this attribute is ignored.
+
+In library evolution mode, code that interacts with members of nonfrozen
+structures and enumerations is compiled in a way that allows it to
+continue working without recompiling even if a future version of the
+library adds, removes, or reorders some of that type's members. The
+compiler makes this possible using techniques like looking up
+information at runtime and adding a layer of indirection. Marking a
+structure or enumeration as frozen gives up this flexibility to gain
+performance: Future versions of the library can make only limited
+changes to the type, but the compiler can make additional optimizations
+in code that interacts with the type's members.
+
+Frozen types, the types of the stored properties of frozen structures,
+and the associated values of frozen enumeration cases must be public or
+marked with the @samp{usableFromInline} attribute. The properties of a frozen
+structure can't have property observers, and expressions that provide
+the initial value for stored instance properties must follow the same
+restrictions as inlinable functions, as discussed in
+@ref{inlinable}.
+
+To enable library evolution mode on the command line, pass the
+@samp{-enable-library-evolution} option to the Swift compiler. To enable it
+in Xcode, set the “Build Libraries for Distribution” build setting
+(@samp{BUILD_LIBRARY_FOR_DISTRIBUTION}) to Yes, as described in
+@uref{https://help.apple.com/xcode/mac/current/#/dev04b3a04ba, Xcode Help}
+[@uref{https://help.apple.com/xcode/mac/current/#/dev04b3a04ba}].
+
+A switch statement over a frozen enumeration doesn't require a @samp{default}
+case, as discussed in Switching Over Future Enumeration Cases.
+Including a @samp{default} or @samp{@@unknown default} case when switching over a frozen
+enumeration produces a warning because that code is never executed.
+
 @node GKInspectable
 @subsection GKInspectable
 
@@ -10385,6 +10550,25 @@ class ExampleClass: NSObject @{
 @}
 @end enumerate
 
+For more information, see
+@uref{https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c, Importing
+Swift into Objective-C}
+[@uref{https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c}].
+
+Note
+
+The argument to the @samp{objc} attribute can also change the runtime name
+for that declaration. You use the runtime name when calling functions
+that interact with the Objective-C runtime, like
+@uref{https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring, @samp{NSClassFromString}}
+[@uref{https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring}],
+and when specifying class names in an app's Info.plist file. If you
+specify a name by passing an argument, that name is used as the name in
+Objective-C code and as the runtime name. If you omit the argument, the
+name used in Objective-C code matches the name in Swift code, and the
+runtime name follows the normal Swift compiler convention of name
+mangling.
+
 @node objcMembers
 @subsection objcMembers
 
@@ -10401,6 +10585,159 @@ you can group them in an extension that has the @samp{objc} attribute. The
 use of the introspection facilities of the Objective-C runtime. Applying
 the @samp{objc} attribute when it isn't needed can increase your binary size
 and adversely affect performance.
+
+@node propertyWrapper
+@subsection propertyWrapper
+
+@findex @@propertyWrapper
+
+Apply this attribute to a class, structure, or enumeration declaration
+to use that type as a property wrapper. When you apply this attribute to
+a type, you create a custom attribute with the same name as the type.
+Apply that new attribute to a property of a class, structure, or
+enumeration to wrap access to the property through an instance of the
+wrapper type. Local and global variables can't use property wrappers.
+
+The wrapper must define a @samp{wrappedValue} instance property. The @emph{wrapped
+value} of the property is the value that the getter and setter for this
+property expose. In most cases, @samp{wrappedValue} is a computed value, but
+it can be a stored value instead. The wrapper is responsible for
+defining and managing any underlying storage needed by its wrapped
+value. The compiler synthesizes storage for the instance of the wrapper
+type by prefixing the name of the wrapped property with an underscore
+(@samp{_})---for example, the wrapper for @samp{someProperty} is stored as
+@samp{_someProperty}. The synthesized storage for the wrapper has an access
+control level of @samp{private}.
+
+A property that has a property wrapper can include @samp{willSet} and
+@samp{didSet} blocks, but it can't override the compiler-synthesized @samp{get} or
+@samp{set} blocks.
+
+Swift provides two forms of syntactic sugar for initialization of a
+property wrapper. You can use assignment syntax in the definition of a
+wrapped value to pass the expression on the right-hand side of the
+assignment as the argument to the @samp{wrappedValue} parameter of the
+property wrapper's initializer. You can also provide arguments to the
+attribute when you apply it to a property, and those arguments are
+passed to the property wrapper's initializer. For example, in the code
+below, @samp{SomeStruct} calls each of the initializers that @samp{SomeWrapper}
+defines.
+
+@enumerate
+@item
+@@propertyWrapper
+@item
+struct SomeWrapper @{
+@item
+var wrappedValue: Int
+@item
+var someValue: Double
+@item
+init() @{
+@item
+self.wrappedValue = 100
+@item
+self.someValue = 12.3
+@item
+@}
+@item
+init(wrappedValue: Int) @{
+@item
+self.wrappedValue = wrappedValue
+@item
+self.someValue = 45.6
+@item
+@}
+@item
+init(wrappedValue value: Int, custom: Double) @{
+@item
+self.wrappedValue = value
+@item
+self.someValue = custom
+@item
+@}
+@item
+@}
+@item
+
+
+@item
+struct SomeStruct @{
+@item
+// Uses init()
+@item
+@@SomeWrapper var a: Int
+@item
+
+
+@item
+// Uses init(wrappedValue:)
+@item
+@@SomeWrapper var b = 10
+@item
+
+
+@item
+// Both use init(wrappedValue:custom:)
+@item
+@@SomeWrapper(custom: 98.7) var c = 30
+@item
+@@SomeWrapper(wrappedValue: 30, custom: 98.7) var d
+@item
+@}
+@end enumerate
+
+The @emph{projected value} for a wrapped property is a second value that a
+property wrapper can use to expose additional functionality. The author
+of a property wrapper type is responsible for determining the meaning of
+its projected value and defining the interface that the projected value
+exposes. To project a value from a property wrapper, define a
+@samp{projectedValue} instance property on the wrapper type. The compiler
+synthesizes an identifier for the projected value by prefixing the name
+of the wrapped property with a dollar sign (@samp{$})---for example, the
+projected value for @samp{someProperty} is @samp{$someProperty}. The projected
+value has the same access control level as the original wrapped
+property.
+
+@enumerate
+@item
+@@propertyWrapper
+@item
+struct WrapperWithProjection @{
+@item
+var wrappedValue: Int
+@item
+var projectedValue: SomeProjection @{
+@item
+return SomeProjection(wrapper: self)
+@item
+@}
+@item
+@}
+@item
+struct SomeProjection @{
+@item
+var wrapper: WrapperWithProjection
+@item
+@}
+@item
+
+
+@item
+struct SomeStruct @{
+@item
+@@WrapperWithProjection var x = 123
+@item
+@}
+@item
+let s = SomeStruct()
+@item
+s.x // Int value
+@item
+s.$x // SomeProjection value
+@item
+s.$x.wrapper // WrapperWithProjection value
+@end enumerate
 
 @node requires@math{_stored}@math{_property}@math{_inits}
 @subsection requires@math{_stored}@math{_property}@math{_inits}
@@ -10453,7 +10790,11 @@ Apply this attribute to a function, method, computed property,
 subscript, initializer, or deinitializer declaration to allow that
 symbol to be used in inlinable code that's defined in the same module as
 the declaration. The declaration must have the @samp{internal} access level
-modifier.
+modifier. A structure or class marked @samp{usableFromInline} can use only
+types that are public or @samp{usableFromInline} for its properties. An
+enumeration marked @samp{usableFromInline} can use only types that are public
+or @samp{usableFromInline} for the raw values and associated values of its
+cases.
 
 Like the @samp{public} access level modifier, this attribute exposes the
 declaration as part of the module's public interface. Unlike @samp{public},
@@ -10878,6 +11219,37 @@ pattern that contains one element for each associated value. For an
 example that uses a @samp{switch} statement to match enumeration cases
 containing associated values, see
 @ref{Associated Values,Associated Values,,swift,}.
+
+An enumeration case pattern also matches values of that case wrapped in
+an optional. This simplified syntax lets you omit an optional pattern.
+Note that, because @samp{Optional} is implemented as an enumeration, @samp{.none}
+and @samp{.some} can appear in the same switch as the cases of the
+enumeration type.
+
+@enumerate
+@item
+enum SomeEnum @{ case left, right @}
+@item
+let x: SomeEnum? = .left
+@item
+switch x @{
+@item
+case .left:
+@item
+print("Turn left")
+@item
+case .right:
+@item
+print("Turn right")
+@item
+case nil:
+@item
+print("Keep going straight")
+@item
+@}
+@item
+// Prints "Turn left"
+@end enumerate
 
 Grammar of an enumeration case pattern
 
@@ -11434,6 +11806,9 @@ _@{opt@} @samp{`}
 
 identifier →
 implicit-parameter-name
+
+identifier →
+property-wrapper-projection
 
 identifier-list
 →
@@ -12083,12 +12458,6 @@ _@{opt@}
 function-type-argument-clause
 @samp{throws=_@{opt@} =->}
 type
-
-function-type
-→ attributes
-_@{opt@}
-function-type-argument-clause
-@samp{rethrows} @samp{->} type
 
 function-type-argument-clause
 → @samp{(} @samp{)}
