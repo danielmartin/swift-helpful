@@ -9595,6 +9595,7 @@ declaration modifier by writing the appropriate keyword or
 context-sensitive keyword between a declaration's attributes (if any)
 and the keyword that introduces the declaration.
 
+@findex class
 @table @asis
 @item @samp{class}
 Apply this modifier to a member of a class to indicate that
@@ -9602,7 +9603,10 @@ the member is a member of the class itself, rather than a member of
 instances of the class. Members of a superclass that have this
 modifier and don't have the @samp{final} modifier can be overridden by
 subclasses.
+@end table
 
+@findex dynamic
+@table @asis
 @item @samp{dynamic}
 Apply this modifier to any member of a class that can be
 represented by Objective-C. When you mark a member declaration with
@@ -9613,7 +9617,10 @@ never inlined or devirtualized by the compiler.
 Because declarations marked with the @samp{dynamic} modifier are dispatched
 using the Objective-C runtime, they must be marked with the @samp{objc}
 attribute.
+@end table
 
+@findex final
+@table @asis
 @item @samp{final}
 Apply this modifier to a class or to a property, method, or
 subscript member of a class. It's applied to a class to indicate that
@@ -9622,14 +9629,20 @@ subscript of a class to indicate that a class member can't be
 overridden in any subclass. For an example of how to use the @samp{final}
 attribute, see @ref{Preventing Overrides,Preventing
 Overrides,,swift,}.
+@end table
 
+@findex lazy
+@table @asis
 @item @samp{lazy}
 Apply this modifier to a stored variable property of a class
 or structure to indicate that the property's initial value is
 calculated and stored at most once, when the property is first
 accessed. For an example of how to use the @samp{lazy} modifier, see
 @ref{Lazy Stored Properties,Lazy Stored Properties,,swift,}.
+@end table
 
+@findex optional
+@table @asis
 @item @samp{optional}
 Apply this modifier to a protocol's property, method, or
 subscript members to indicate that a conforming type isn't required to
@@ -9644,13 +9657,19 @@ members---for example, when you're not sure whether a conforming type
 implements them---see
 @ref{Optional Protocol Requirements,Optional Protocol
 Requirements,,swift,}.
+@end table
 
+@findex required
+@table @asis
 @item @samp{required}
 Apply this modifier to a designated or convenience
 initializer of a class to indicate that every subclass must implement
 that initializer. The subclass's implementation of that initializer
 must also be marked with the @samp{required} modifier.
+@end table
 
+@findex static
+@table @asis
 @item @samp{static}
 Apply this modifier to a member of a structure, class,
 enumeration, or protocol to indicate that the member is a member of
@@ -9661,7 +9680,10 @@ modifiers on that member declaration. However, constant type
 properties of a class are an exception: @samp{static} has its normal,
 nonclass meaning there because you can't write @samp{class} or @samp{final} on
 those declarations.
+@end table
 
+@findex unowned
+@table @asis
 @item @samp{unowned}
 Apply this modifier to a stored variable, constant, or
 stored property to indicate that the variable or property has an
@@ -9689,7 +9711,10 @@ reference, the type is non-optional. For an example and more
 information about the @samp{unowned} modifier, see
 @ref{Unowned References,Unowned
 References,,swift,}.
+@end table
 
+@findex weak
+@table @asis
 @item @samp{weak}
 Apply this modifier to a stored variable or stored variable
 property to indicate that the variable or property has a weak

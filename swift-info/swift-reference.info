@@ -10594,35 +10594,53 @@ Index
                                                               (line  47)
 * canImport:                             Conditional Compilation Block.
                                                               (line  62)
+* class:                                 Declaration Modifiers.
+                                                              (line  12)
 * compiler:                              Conditional Compilation Block.
                                                               (line  35)
 * deinit:                                Deinitializer Declaration.
                                                               (line   6)
+* dynamic:                               Declaration Modifiers.
+                                                              (line  19)
 * enum:                                  Enumeration Declaration.
                                                               (line   9)
 * extension:                             Extension Declaration.
                                                               (line   6)
 * fileprivate:                           Access Control Levels.
                                                               (line  32)
+* final:                                 Declaration Modifiers.
+                                                              (line  30)
 * inout:                                 In-Out Parameters.   (line   6)
 * internal:                              Access Control Levels.
                                                               (line  26)
+* lazy:                                  Declaration Modifiers.
+                                                              (line  39)
 * mutating:                              Special Kinds of Methods.
                                                               (line   6)
 * open:                                  Access Control Levels.
                                                               (line  12)
+* optional:                              Declaration Modifiers.
+                                                              (line  46)
 * private:                               Access Control Levels.
                                                               (line  37)
 * public:                                Access Control Levels.
                                                               (line  19)
+* required:                              Declaration Modifiers.
+                                                              (line  60)
 * rethrows:                              Rethrowing Functions and Methods.
                                                               (line   6)
 * Self:                                  Protocol Associated Type Declaration.
                                                               (line   6)
+* static:                                Declaration Modifiers.
+                                                              (line  66)
 * swift:                                 Conditional Compilation Block.
                                                               (line  35)
 * targetEnvironment:                     Conditional Compilation Block.
                                                               (line  68)
+* unowned:                               Declaration Modifiers.
+                                                              (line  77)
+* weak:                                  Declaration Modifiers.
+                                                              (line 103)
 * where:                                 Protocol Associated Type Declaration.
                                                               (line  15)
 

@@ -7686,12 +7686,14 @@ declaration modifier by writing the appropriate keyword or
 context-sensitive keyword between a declaration's attributes (if any)
 and the keyword that introduces the declaration.
 
+#+FINDEX: class
 - =class= :: Apply this modifier to a member of a class to indicate that
   the member is a member of the class itself, rather than a member of
   instances of the class. Members of a superclass that have this
   modifier and don't have the =final= modifier can be overridden by
   subclasses.
 
+#+FINDEX: dynamic
 - =dynamic= :: Apply this modifier to any member of a class that can be
   represented by Objective-C. When you mark a member declaration with
   the =dynamic= modifier, access to that member is always dynamically
@@ -7702,6 +7704,7 @@ and the keyword that introduces the declaration.
   using the Objective-C runtime, they must be marked with the =objc=
   attribute.
 
+#+FINDEX: final
 - =final= :: Apply this modifier to a class or to a property, method, or
   subscript member of a class. It's applied to a class to indicate that
   the class can't be subclassed. It's applied to a property, method, or
@@ -7710,12 +7713,14 @@ and the keyword that introduces the declaration.
   attribute, see [[info:swift#Preventing%20Overrides][Preventing
   Overrides]].
 
+#+FINDEX: lazy
 - =lazy= :: Apply this modifier to a stored variable property of a class
   or structure to indicate that the property's initial value is
   calculated and stored at most once, when the property is first
   accessed. For an example of how to use the =lazy= modifier, see
   [[info:swift#Lazy%20Stored%20Properties][Lazy Stored Properties]].
 
+#+FINDEX: optional
 - =optional= :: Apply this modifier to a protocol's property, method, or
   subscript members to indicate that a conforming type isn't required to
   implement those members.
@@ -7730,11 +7735,13 @@ and the keyword that introduces the declaration.
   [[info:swift#Optional%20Protocol%20Requirements][Optional Protocol
   Requirements]].
 
+#+FINDEX: required
 - =required= :: Apply this modifier to a designated or convenience
   initializer of a class to indicate that every subclass must implement
   that initializer. The subclass's implementation of that initializer
   must also be marked with the =required= modifier.
 
+#+FINDEX: static
 - =static= :: Apply this modifier to a member of a structure, class,
   enumeration, or protocol to indicate that the member is a member of
   the type, rather than a member of instances of that type. In the scope
@@ -7745,6 +7752,7 @@ and the keyword that introduces the declaration.
   nonclass meaning there because you can't write =class= or =final= on
   those declarations.
 
+#+FINDEX: unowned
 - =unowned= :: Apply this modifier to a stored variable, constant, or
   stored property to indicate that the variable or property has an
   unowned reference to the object stored as its value. If you try to
@@ -7770,6 +7778,7 @@ and the keyword that introduces the declaration.
   [[info:swift#Unowned%20References][Unowned
   References]].
 
+#+FINDEX: weak
 - =weak= :: Apply this modifier to a stored variable or stored variable
   property to indicate that the variable or property has a weak
   reference to the object stored as its value. The type of the variable

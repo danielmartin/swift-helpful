@@ -9667,6 +9667,7 @@ declaration modifier by writing the appropriate keyword or
 context-sensitive keyword between a declaration&rsquo;s attributes (if any)
 and the keyword that introduces the declaration.
 </p>
+<span id="index-class"></span>
 <dl compact="compact">
 <dt>&lsquo;<samp>class</samp>&rsquo;</dt>
 <dd><p>Apply this modifier to a member of a class to indicate that
@@ -9674,8 +9675,11 @@ the member is a member of the class itself, rather than a member of
 instances of the class. Members of a superclass that have this
 modifier and don&rsquo;t have the &lsquo;<samp>final</samp>&rsquo; modifier can be overridden by
 subclasses.
-</p>
-</dd>
+</p></dd>
+</dl>
+
+<span id="index-dynamic"></span>
+<dl compact="compact">
 <dt>&lsquo;<samp>dynamic</samp>&rsquo;</dt>
 <dd><p>Apply this modifier to any member of a class that can be
 represented by Objective-C. When you mark a member declaration with
@@ -9686,8 +9690,11 @@ never inlined or devirtualized by the compiler.
 <p>Because declarations marked with the &lsquo;<samp>dynamic</samp>&rsquo; modifier are dispatched
 using the Objective-C runtime, they must be marked with the &lsquo;<samp>objc</samp>&rsquo;
 attribute.
-</p>
-</dd>
+</p></dd>
+</dl>
+
+<span id="index-final"></span>
+<dl compact="compact">
 <dt>&lsquo;<samp>final</samp>&rsquo;</dt>
 <dd><p>Apply this modifier to a class or to a property, method, or
 subscript member of a class. It&rsquo;s applied to a class to indicate that
@@ -9696,16 +9703,22 @@ subscript of a class to indicate that a class member can&rsquo;t be
 overridden in any subclass. For an example of how to use the &lsquo;<samp>final</samp>&rsquo;
 attribute, see <a href="swift.html#Preventing-Overrides">(swift)Preventing
 Overrides</a>.
-</p>
-</dd>
+</p></dd>
+</dl>
+
+<span id="index-lazy"></span>
+<dl compact="compact">
 <dt>&lsquo;<samp>lazy</samp>&rsquo;</dt>
 <dd><p>Apply this modifier to a stored variable property of a class
 or structure to indicate that the property&rsquo;s initial value is
 calculated and stored at most once, when the property is first
 accessed. For an example of how to use the &lsquo;<samp>lazy</samp>&rsquo; modifier, see
 <a href="swift.html#Lazy-Stored-Properties">(swift)Lazy Stored Properties</a>.
-</p>
-</dd>
+</p></dd>
+</dl>
+
+<span id="index-optional"></span>
+<dl compact="compact">
 <dt>&lsquo;<samp>optional</samp>&rsquo;</dt>
 <dd><p>Apply this modifier to a protocol&rsquo;s property, method, or
 subscript members to indicate that a conforming type isn&rsquo;t required to
@@ -9720,15 +9733,21 @@ members&mdash;for example, when you&rsquo;re not sure whether a conforming type
 implements them&mdash;see
 <a href="swift.html#Optional-Protocol-Requirements">(swift)Optional Protocol
 Requirements</a>.
-</p>
-</dd>
+</p></dd>
+</dl>
+
+<span id="index-required"></span>
+<dl compact="compact">
 <dt>&lsquo;<samp>required</samp>&rsquo;</dt>
 <dd><p>Apply this modifier to a designated or convenience
 initializer of a class to indicate that every subclass must implement
 that initializer. The subclass&rsquo;s implementation of that initializer
 must also be marked with the &lsquo;<samp>required</samp>&rsquo; modifier.
-</p>
-</dd>
+</p></dd>
+</dl>
+
+<span id="index-static"></span>
+<dl compact="compact">
 <dt>&lsquo;<samp>static</samp>&rsquo;</dt>
 <dd><p>Apply this modifier to a member of a structure, class,
 enumeration, or protocol to indicate that the member is a member of
@@ -9739,8 +9758,11 @@ modifiers on that member declaration. However, constant type
 properties of a class are an exception: &lsquo;<samp>static</samp>&rsquo; has its normal,
 nonclass meaning there because you can&rsquo;t write &lsquo;<samp>class</samp>&rsquo; or &lsquo;<samp>final</samp>&rsquo; on
 those declarations.
-</p>
-</dd>
+</p></dd>
+</dl>
+
+<span id="index-unowned"></span>
+<dl compact="compact">
 <dt>&lsquo;<samp>unowned</samp>&rsquo;</dt>
 <dd><p>Apply this modifier to a stored variable, constant, or
 stored property to indicate that the variable or property has an
@@ -9770,8 +9792,11 @@ reference, the type is non-optional. For an example and more
 information about the &lsquo;<samp>unowned</samp>&rsquo; modifier, see
 <a href="swift.html#Unowned-References">(swift)Unowned
 References</a>.
-</p>
-</dd>
+</p></dd>
+</dl>
+
+<span id="index-weak"></span>
+<dl compact="compact">
 <dt>&lsquo;<samp>weak</samp>&rsquo;</dt>
 <dd><p>Apply this modifier to a stored variable or stored variable
 property to indicate that the variable or property has a weak
@@ -15123,6 +15148,8 @@ Previous: <a href="#Summary-of-the-Grammar" accesskey="p" rel="prev">Summary of 
  &nbsp; 
 <a class="summary-letter" href="#Index_cp_letter-I"><b>I</b></a>
  &nbsp; 
+<a class="summary-letter" href="#Index_cp_letter-L"><b>L</b></a>
+ &nbsp; 
 <a class="summary-letter" href="#Index_cp_letter-M"><b>M</b></a>
  &nbsp; 
 <a class="summary-letter" href="#Index_cp_letter-O"><b>O</b></a>
@@ -15134,6 +15161,8 @@ Previous: <a href="#Summary-of-the-Grammar" accesskey="p" rel="prev">Summary of 
 <a class="summary-letter" href="#Index_cp_letter-S"><b>S</b></a>
  &nbsp; 
 <a class="summary-letter" href="#Index_cp_letter-T"><b>T</b></a>
+ &nbsp; 
+<a class="summary-letter" href="#Index_cp_letter-U"><b>U</b></a>
  &nbsp; 
 <a class="summary-letter" href="#Index_cp_letter-W"><b>W</b></a>
  &nbsp; 
@@ -15183,10 +15212,12 @@ Previous: <a href="#Summary-of-the-Grammar" accesskey="p" rel="prev">Summary of 
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-C">C</th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-canImport"><code>canImport</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Conditional-Compilation-Block">Conditional Compilation Block</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-class"><code>class</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declaration-Modifiers">Declaration Modifiers</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-compiler"><code>compiler</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Conditional-Compilation-Block">Conditional Compilation Block</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-D">D</th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-deinit"><code>deinit</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Deinitializer-Declaration">Deinitializer Declaration</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-dynamic"><code>dynamic</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declaration-Modifiers">Declaration Modifiers</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-E">E</th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-enum"><code>enum</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Enumeration-Declaration">Enumeration Declaration</a></td></tr>
@@ -15194,32 +15225,43 @@ Previous: <a href="#Summary-of-the-Grammar" accesskey="p" rel="prev">Summary of 
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-F">F</th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-fileprivate"><code>fileprivate</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Access-Control-Levels">Access Control Levels</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-final"><code>final</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declaration-Modifiers">Declaration Modifiers</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-I">I</th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-inout"><code>inout</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#In_002dOut-Parameters">In-Out Parameters</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-internal"><code>internal</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Access-Control-Levels">Access Control Levels</a></td></tr>
+<tr><td colspan="4"> <hr></td></tr>
+<tr><th id="Index_cp_letter-L">L</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-lazy"><code>lazy</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declaration-Modifiers">Declaration Modifiers</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-M">M</th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-mutating"><code>mutating</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Special-Kinds-of-Methods">Special Kinds of Methods</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-O">O</th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-open"><code>open</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Access-Control-Levels">Access Control Levels</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-optional"><code>optional</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declaration-Modifiers">Declaration Modifiers</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-P">P</th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-private"><code>private</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Access-Control-Levels">Access Control Levels</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-public"><code>public</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Access-Control-Levels">Access Control Levels</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-R">R</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-required"><code>required</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declaration-Modifiers">Declaration Modifiers</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-rethrows"><code>rethrows</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Rethrowing-Functions-and-Methods">Rethrowing Functions and Methods</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-S">S</th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-Self"><code>Self</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Protocol-Associated-Type-Declaration">Protocol Associated Type Declaration</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-static"><code>static</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declaration-Modifiers">Declaration Modifiers</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-swift"><code>swift</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Conditional-Compilation-Block">Conditional Compilation Block</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-T">T</th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-targetEnvironment"><code>targetEnvironment</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Conditional-Compilation-Block">Conditional Compilation Block</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
+<tr><th id="Index_cp_letter-U">U</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-unowned"><code>unowned</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declaration-Modifiers">Declaration Modifiers</a></td></tr>
+<tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-W">W</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-weak"><code>weak</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Declaration-Modifiers">Declaration Modifiers</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-where"><code>where</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Protocol-Associated-Type-Declaration">Protocol Associated Type Declaration</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 </table>
@@ -15240,6 +15282,8 @@ Previous: <a href="#Summary-of-the-Grammar" accesskey="p" rel="prev">Summary of 
  &nbsp; 
 <a class="summary-letter" href="#Index_cp_letter-I"><b>I</b></a>
  &nbsp; 
+<a class="summary-letter" href="#Index_cp_letter-L"><b>L</b></a>
+ &nbsp; 
 <a class="summary-letter" href="#Index_cp_letter-M"><b>M</b></a>
  &nbsp; 
 <a class="summary-letter" href="#Index_cp_letter-O"><b>O</b></a>
@@ -15251,6 +15295,8 @@ Previous: <a href="#Summary-of-the-Grammar" accesskey="p" rel="prev">Summary of 
 <a class="summary-letter" href="#Index_cp_letter-S"><b>S</b></a>
  &nbsp; 
 <a class="summary-letter" href="#Index_cp_letter-T"><b>T</b></a>
+ &nbsp; 
+<a class="summary-letter" href="#Index_cp_letter-U"><b>U</b></a>
  &nbsp; 
 <a class="summary-letter" href="#Index_cp_letter-W"><b>W</b></a>
  &nbsp; 
