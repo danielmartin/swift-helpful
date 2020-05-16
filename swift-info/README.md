@@ -4,7 +4,7 @@
 
 (Work in progress.)
 
-Curated Swift 5.1 documentation and reference in GNU Info format, with cross-references and indices for concepts and keywords.
+Curated Swift 5.2 documentation and reference in GNU Info format, with cross-references and indices for concepts and keywords.
 
 If you use macOS, I recommend you install a newer version of GNU texinfo:
 
@@ -18,7 +18,7 @@ You can export the documentation by making the `all` target:
 make all
 ```
 
-This will generate up to date `.info` and `.texi` files from `swift.org` and `swift-reference.org`.
+This will generate up to date `.info`, `.texi` and `.html` files from `swift.org` and `swift-reference.org`.
 
 You can also export the documentation to HTML (the CSS used is the same one used by the Emacs manuals):
 
