@@ -1,4 +1,4 @@
-#+TITLE: The Swift Programming Reference (Swift 5.2)
+#+TITLE: The Swift Programming Reference (Swift 5.3)
 
 #+AUTHOR: Apple Inc.
 #+TEXINFO_HEADER: @syncodeindex vr cp
