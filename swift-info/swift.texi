@@ -1,7 +1,7 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
 @setfilename swift.info
-@settitle The Swift Programming Language Guide (Swift 5.2)
+@settitle The Swift Programming Language Guide (Swift 5.3)
 @documentencoding UTF-8
 @documentlanguage en
 @syncodeindex vr cp
@@ -16,7 +16,7 @@
 
 @finalout
 @titlepage
-@title The Swift Programming Language Guide (Swift 5.2)
+@title The Swift Programming Language Guide (Swift 5.3)
 @author Apple Inc.
 @end titlepage
 
@@ -24,7 +24,7 @@
 
 @ifnottex
 @node Top
-@top The Swift Programming Language Guide (Swift 5.2)
+@top The Swift Programming Language Guide (Swift 5.3)
 @end ifnottex
 
 @menu
@@ -519,6 +519,7 @@ Protocols
 * Protocols as Types::
 * Delegation::
 * Adding Protocol Conformance with an Extension::
+* Adopting a Protocol Using a Synthesized Implementation::
 * Collections of Protocol Types::
 * Protocol Inheritance::
 * Class-Only Protocols::
@@ -554,6 +555,7 @@ Generics
 * Associated Types::
 * Generic Where Clauses::
 * Extensions with a Generic Where Clause::
+* Contextual Where Clauses::
 * Associated Types with a Generic Where Clause::
 * Generic Subscripts::
 
@@ -588,6 +590,7 @@ Resolving Strong Reference Cycles Between Class Instances
 
 * Weak References::
 * Unowned References::
+* Unowned Optional References::
 * Unowned References and Implicitly Unwrapped Optional Properties::
 
 Resolving Strong Reference Cycles for Closures
@@ -757,13 +760,13 @@ wait to see what you create with it.
 @node Version Compatibility
 @chapter Version Compatibility
 
-This book describes Swift 5.2, the default version of Swift that's
-included in Xcode 11.4. You can use Xcode 11 to build targets that are
-written in either Swift 5.2, Swift 4.2, or Swift 4.
+This book describes Swift 5.3, the default version of Swift that's
+included in Xcode 12. You can use Xcode 12 to build targets that are
+written in either Swift 5.3, Swift 4.2, or Swift 4.
 
-When you use Xcode 11.4 to build Swift 4 and Swift 4.2 code, most Swift
-5.2 functionality is available. That said, the following changes are
-available only to code that uses Swift 5.2 or later:
+When you use Xcode 12 to build Swift 4 and Swift 4.2 code, most Swift
+5.3 functionality is available. That said, the following changes are
+available only to code that uses Swift 5.3 or later:
 
 @itemize
 @item
@@ -779,10 +782,10 @@ the correct integer type. For example, @samp{UInt64(0xffff_ffff_ffff_ffff)}
 evaluates to the correct value rather than overflowing.
 @end itemize
 
-A target written in Swift 5.2 can depend on a target that's written in
+A target written in Swift 5.3 can depend on a target that's written in
 Swift 4.2 or Swift 4, and vice versa. This means, if you have a large
 project that's divided into multiple frameworks, you can migrate your
-code from Swift 4 to Swift 5.2 one framework at a time.
+code from Swift 4 to Swift 5.3 one framework at a time.
 
 @node A Swift Tour
 @chapter A Swift Tour
@@ -1914,6 +1917,8 @@ Writing @samp{<T: Equatable>} is the same as writing
 @item
 @ref{Generics}
 @item
+@ref{Opaque Types}
+@item
 @ref{Automatic Reference Counting}
 @item
 @ref{Memory Safety}
@@ -2870,8 +2875,8 @@ if convertedNumber != nil @{
 @end example
 
 Once you're sure that the optional @emph{does} contain a value, you can
-access its underlying value by adding an exclamation mark (@samp{!}) to the
-end of the optional's name. The exclamation mark effectively says, “I
+access its underlying value by adding an exclamation point (@samp{!}) to the
+end of the optional's name. The exclamation point effectively says, “I
 know that this optional definitely has a value; please use it.” This is
 known as @emph{forced unwrapping} of the optional's value:
 
@@ -2989,8 +2994,10 @@ value all of the time.
 
 These kinds of optionals are defined as @emph{implicitly unwrapped
 optionals}. You write an implicitly unwrapped optional by placing an
-exclamation mark (@samp{String!}) rather than a question mark (@samp{String?})
-after the type that you want to make optional.
+exclamation point (@samp{String!}) rather than a question mark (@samp{String?})
+after the type that you want to make optional. Rather than placing an
+exclamation point after the optional's name when you use it, you place
+an exclamation point after the optional's type when you declare it.
 
 Implicitly unwrapped optionals are useful when an optional's value is
 confirmed to exist immediately after the optional is first defined and
@@ -3009,27 +3016,35 @@ as an explicit @samp{String}:
 
 @example
 let possibleString: String? = "An optional string."
-let forcedString: String = possibleString! // requires an exclamation mark
+let forcedString: String = possibleString! // requires an exclamation point
 
 let assumedString: String! = "An implicitly unwrapped optional string."
-let implicitString: String = assumedString // no need for an exclamation mark
+let implicitString: String = assumedString // no need for an exclamation point
 @end example
 
 You can think of an implicitly unwrapped optional as giving permission
-for the optional to be unwrapped automatically whenever it's used.
-Rather than placing an exclamation mark after the optional's name each
-time you use it, you place an exclamation mark after the optional's type
-when you declare it.
+for the optional to be force-unwrapped if needed. When you use an
+implicitly unwrapped optional value, Swift first tries to use it as an
+ordinary optional value; if it can't be used as an optional, Swift
+force-unwraps the value. In the code above, the optional value
+@samp{assumedString} is force-unwrapped before assigning its value to
+@samp{implicitString} because @samp{implicitString} has an explicit, non-optional
+type of @samp{String}. In code below, @samp{optionalString} doesn't have an
+explicit type so it's an ordinary optional.
 
-Note
+@example
+let optionalString = assumedString
+// The type of optionalString is "String?" and assumedString isn't
+force-unwrapped.
+@end example
 
 If an implicitly unwrapped optional is @samp{nil} and you try to access its
 wrapped value, you'll trigger a runtime error. The result is exactly the
-same as if you place an exclamation mark after a normal optional that
+same as if you place an exclamation point after a normal optional that
 doesn't contain a value.
 
-You can still treat an implicitly unwrapped optional like a normal
-optional, to check if it contains a value:
+You can check whether an implicitly unwrapped optional is @samp{nil} the same
+way you check a normal optional:
 
 @example
 if assumedString != nil @{
@@ -3272,15 +3287,15 @@ two numbers, as in @samp{let i = 1 + 2}, and the logical AND operator (@samp{&&}
 combines two Boolean values, as in
 @samp{if enteredDoorCode && passedRetinaScan}.
 
-Swift supports most standard C operators and improves several
-capabilities to eliminate common coding errors. The assignment operator
-(@samp{=}) doesn't return a value, to prevent it from being mistakenly used
-when the equal to operator (@samp{==}) is intended. Arithmetic operators
-(@samp{+}, @samp{-}, @samp{*}, @samp{/}, @samp{%} and so forth) detect and disallow value
-overflow, to avoid unexpected results when working with numbers that
-become larger or smaller than the allowed value range of the type that
-stores them. You can opt in to value overflow behavior by using Swift's
-overflow operators, as described in
+Swift supports the operators you may already know from languages like C
+and improves several capabilities to eliminate common coding errors. The
+assignment operator (@samp{=}) doesn't return a value, to prevent it from
+being mistakenly used when the equal to operator (@samp{==}) is intended.
+Arithmetic operators (@samp{+}, @samp{-}, @samp{*}, @samp{/}, @samp{%} and so forth) detect and
+disallow value overflow, to avoid unexpected results when working with
+numbers that become larger or smaller than the allowed value range of
+the type that stores them. You can opt in to value overflow behavior by
+ using Swift's overflow operators, as described in
 @ref{Overflow Operators}.
 
 Swift also provides range operators that aren't found in C, such as
@@ -3525,7 +3540,7 @@ Declarations}
 @node Comparison Operators
 @section Comparison Operators
 
-Swift supports all standard C @emph{comparison operators}:
+Swift supports the following comparison operators:
 
 @itemize
 @item
@@ -7255,9 +7270,9 @@ Using the @samp{gameLoop} label makes it clear which control statement should
 be terminated.
 
 It is not strictly necessary to use the @samp{gameLoop} label when calling
-@samp{continue gameLoop} to jump to the next iteration of the loop. There is
+@samp{continue gameLoop} to jump to the next iteration of the loop. There's
 only one loop in the game, and therefore no ambiguity as to which loop
-the @samp{continue} statement will affect. However, there is no harm in using
+the @samp{continue} statement will affect. However, there's no harm in using
 the @samp{gameLoop} label with the @samp{continue} statement. Doing so is
 consistent with the label's use alongside the @samp{break} statement and
 helps make the game's logic clearer to read and understand.
@@ -8204,7 +8219,7 @@ Closures take one of three forms:
 
 @itemize
 @item
-Global functions are closures that have a name and do not capture any
+Global functions are closures that have a name and don't capture any
 values.
 
 @item
@@ -8382,7 +8397,7 @@ can infer the types of its parameters and the type of the value it
 returns. The @samp{sorted(by:)} method is being called on an array of
 strings, so its argument must be a function of type
 @samp{(String, String) -> Bool}. This means that the @samp{(String, String)} and
-@samp{Bool} types do not need to be written as part of the closure
+@samp{Bool} types don't need to be written as part of the closure
 expression's definition. Because all of the types can be inferred, the
 return arrow (@samp{->}) and the parentheses around the names of the
 parameters can also be omitted:
@@ -8420,7 +8435,7 @@ reversedNames = names.sorted(by: @{ s1, s2 in s1 > s2 @} )
 Here, the function type of the @samp{sorted(by:)} method's argument makes it
 clear that a @samp{Bool} value must be returned by the closure. Because the
 closure's body contains a single expression (@samp{s1 > s2}) that returns a
-@samp{Bool} value, there is no ambiguity, and the @samp{return} keyword can be
+@samp{Bool} value, there's no ambiguity, and the @samp{return} keyword can be
 omitted.
 
 @node Shorthand Argument Names
@@ -8461,7 +8476,7 @@ that you want to use its string-specific implementation:
 reversedNames = names.sorted(by: >)
 @end example
 
-For more about operator method, see
+For more about operator methods, see
 @ref{Operator Methods}.
 
 @node Trailing Closures
@@ -8471,11 +8486,13 @@ For more about operator method, see
 
 If you need to pass a closure expression to a function as the function's
 final argument and the closure expression is long, it can be useful to
-write it as a @emph{trailing closure} instead. A trailing closure is written
-after the function call's parentheses, even though it is still an
-argument to the function. When you use the trailing closure syntax, you
-don't write the argument label for the closure as part of the function
-call.
+write it as a @emph{trailing closure} instead. You write a trailing closure
+after the function call's parentheses, even though the trailing closure
+is still an argument to the function. When you use the trailing closure
+syntax, you don't write the argument label for the first closure as part
+of the function call. A function call can include multiple trailing
+closures; however, the first few examples below use a single trailing
+closure.
 
 @example
 func someFunctionThatTakesAClosure(closure: () -> Void) @{
@@ -8501,9 +8518,9 @@ Expression Syntax} section above can be written outside of the
 reversedNames = names.sorted() @{ $0 > $1 @}
 @end example
 
-If a closure expression is provided as the function or method's only
-argument and you provide that expression as a trailing closure, you do
-not need to write a pair of parentheses @samp{()} after the function or
+If a closure expression is provided as the function's or method's only
+argument and you provide that expression as a trailing closure, you
+don't need to write a pair of parentheses @samp{()} after the function or
 method's name when you call the function:
 
 @example
@@ -8512,11 +8529,12 @@ reversedNames = names.sorted @{ $0 > $1 @}
 
 Trailing closures are most useful when the closure is sufficiently long
 that it is not possible to write it inline on a single line. As an
-example, Swift's @samp{Array} type has a @samp{map(_:)} method which takes a
+example, Swift's @samp{Array} type has a @samp{map(_:)} method, which takes a
 closure expression as its single argument. The closure is called once
 for each item in the array, and returns an alternative mapped value
-(possibly of some other type) for that item. The nature of the mapping
-and the type of the returned value is left up to the closure to specify.
+(possibly of some other type) for that item. You specify the nature of
+the mapping and the type of the returned value by writing code in the
+closure that you pass to @samp{map(_:)}.
 
 After applying the provided closure to each array element, the @samp{map(_:)}
 method returns a new array containing all of the new mapped values, in
@@ -8558,7 +8576,7 @@ let strings = numbers.map @{ (number) -> String in
 @end example
 
 The @samp{map(_:)} method calls the closure expression once for each item in
-the array. You do not need to specify the type of the closure's input
+the array. You don't need to specify the type of the closure's input
 parameter, @samp{number}, because the type can be inferred from the values in
 the array to be mapped.
 
@@ -8578,11 +8596,11 @@ a string representation of any integer greater than zero.
 Note
 
 The call to the @samp{digitNames} dictionary's subscript is followed by an
-exclamation mark (@samp{!}), because dictionary subscripts return an optional
+exclamation point (@samp{!}), because dictionary subscripts return an optional
 value to indicate that the dictionary lookup can fail if the key does
 not exist. In the example above, it is guaranteed that @samp{number % 10}
 will always be a valid subscript key for the @samp{digitNames} dictionary,
-and so an exclamation mark is used to force-unwrap the @samp{String} value
+and so an exclamation point is used to force-unwrap the @samp{String} value
 stored in the subscript's optional return value.
 
 The string retrieved from the @samp{digitNames} dictionary is added to the
@@ -8602,6 +8620,45 @@ The use of trailing closure syntax in the example above neatly
 encapsulates the closure's functionality immediately after the function
 that closure supports, without needing to wrap the entire closure within
 the @samp{map(_:)} method's outer parentheses.
+
+@cindex multiple trailing closures
+
+If a function takes multiple closures, you omit the argument label for
+the first trailing closure and you label the remaining trailing
+closures. For example, the function below loads a picture for a photo
+gallery:
+
+@example
+func loadPicture(from server: Server, completion: (Picture) -> Void,
+                 onFailure: () -> Void) @{
+    if let picture = download("photo.jpg", from: server) @{
+        completion(picture)
+    @} else @{
+        onFailure()
+    @}
+@}
+@end example
+
+When you call this function to load a picture, you provide two closures.
+The first closure is a completion handler that displays a picture after
+a successful download. The second closure is an error handler that
+displays an error to the user.
+
+@example
+loadPicture(from: someServer) @{ picture in
+    someView.currentPicture = picture
+@} onFailure: @{
+    print("Couldn't download the next picture.")
+@}
+@end example
+
+In this example, the @samp{loadPicture(from:completion:onFailure:)} function
+dispatches its network task into the background, and calls one of the
+two completion handlers when the network task finishes. Writing the
+function this way lets you cleanly separate the code that's responsible
+for handling a network failure from the code that updates the user
+interface after a successful download, instead of using just one closure
+that handles both circumstances.
 
 @node Capturing Values
 @section Capturing Values
@@ -8669,7 +8726,7 @@ The @samp{incrementer()} function doesn't have any parameters, and yet it
 refers to @samp{runningTotal} and @samp{amount} from within its function body. It
 does this by capturing a @emph{reference} to @samp{runningTotal} and @samp{amount} from
 the surrounding function and using them within its own function body.
-Capturing by reference ensures that @samp{runningTotal} and @samp{amount} do not
+Capturing by reference ensures that @samp{runningTotal} and @samp{amount} don't
 disappear when the call to @samp{makeIncrementer} ends, and also ensures that
 @samp{runningTotal} is available the next time the @samp{incrementer} function is
 called.
@@ -8773,8 +8830,8 @@ When you declare a function that takes a closure as one of its
 parameters, you can write @samp{@@escaping} before the parameter's type to
 indicate that the closure is allowed to escape.
 
-One way that a closure can escape is by being stored in a variable that
-is defined outside the function. As an example, many functions that
+One way that a closure can escape is by being stored in a variable
+that's defined outside the function. As an example, many functions that
 start an asynchronous operation take a closure argument as a completion
 handler. The function returns after it starts the operation, but the
 closure isn't called until the operation is completed---the closure
@@ -8792,17 +8849,30 @@ its argument and adds it to an array that's declared outside the
 function. If you didn't mark the parameter of this function with
 @samp{@@escaping}, you would get a compile-time error.
 
-Marking a closure with @samp{@@escaping} means you have to refer to @samp{self}
-explicitly within the closure. For example, in the code below, the
-closure passed to @samp{someFunctionWithEscapingClosure(_:)} is an escaping
-closure, which means it needs to refer to @samp{self} explicitly. In
-contrast, the closure passed to @samp{someFunctionWithNonescapingClosure(_:)}
-is a nonescaping closure, which means it can refer to @samp{self} implicitly.
+@cindex self references in closures
+
+An escaping closure that refers to @samp{self} needs special consideration if
+@samp{self} refers to an instance of a class. Capturing @samp{self} in an escaping
+closure makes it easy to accidentally create a strong reference cycle.
+For information about reference cycles, see
+@ref{Automatic Reference Counting}.
+
+Normally, a closure captures variables implicitly by using them in the
+body of the closure, but in this case you need to be explicit. If you
+want to capture @samp{self}, write @samp{self} explicitly when you use it, or
+include @samp{self} in the closure's capture list. Writing @samp{self} explicitly
+lets you express your intent, and reminds you to confirm that there
+isn't a reference cycle. For example, in the code below, the closure
+passed to @samp{someFunctionWithEscapingClosure(_:)} refers to @samp{self}
+explicitly. In contrast, the closure passed to
+@samp{someFunctionWithNonescapingClosure(_:)} is a nonescaping closure, which
+means it can refer to @samp{self} implicitly.
 
 @example
 func someFunctionWithNonescapingClosure(closure: () -> Void) @{
     closure()
 @}
+
 
 class SomeClass @{
     var x = 10
@@ -8812,15 +8882,55 @@ class SomeClass @{
     @}
 @}
 
+@end example
+
+@example
 let instance = SomeClass()
 instance.doSomething()
 print(instance.x)
 // Prints "200"
 
+
 completionHandlers.first?()
 print(instance.x)
 // Prints "100"
 @end example
+
+Here's a version of @samp{doSomething()} that captures @samp{self} by including it
+in the closure's capture list, and then refers to @samp{self} implicitly:
+
+@example
+class SomeOtherClass @{
+    var x = 10
+    func doSomething() @{
+        someFunctionWithEscapingClosure @{ [self] in x = 100 @}
+        someFunctionWithNonescapingClosure @{ x = 200 @}
+    @}
+@}
+@end example
+
+If @samp{self} is an instance of a structure or an enumeration, you can
+always refer to @samp{self} implicitly. However, an escaping closure can't
+capture a mutable reference to @samp{self} when @samp{self} is an instance of a
+structure or an enumeration. Structures and enumerations don't allow
+shared mutability, as discussed in
+@ref{Structures and Enumerations Are Value Types, , Structures and Enumerations Are
+Value Types}.
+
+@example
+struct SomeStruct @{
+    var x = 10
+    mutating func doSomething() @{
+        someFunctionWithNonescapingClosure @{ x = 200 @} // Ok
+        someFunctionWithEscapingClosure @{ x = 100 @} // Error
+    @}
+@}
+@end example
+
+The call to the @samp{someFunctionWithEscapingClosure} function in the
+example above is an error because it's inside a mutating method, so
+@samp{self} is mutable. That violates the rule that escaping closures can't
+capture a mutable reference to @samp{self} for structures.
 
 @node Autoclosures
 @section Autoclosures
@@ -10124,7 +10234,7 @@ Note
 
 If a property marked with the @samp{lazy} modifier is accessed by multiple
 threads simultaneously and the property has not yet been initialized,
-there is no guarantee that the property will be initialized only once.
+there's no guarantee that the property will be initialized only once.
 
 @node Stored Properties and Instance Variables
 @subsection Stored Properties and Instance Variables
@@ -10332,14 +10442,24 @@ Property observers observe and respond to changes in a property's value.
 Property observers are called every time a property's value is set, even
 if the new value is the same as the property's current value.
 
-You can add property observers to any stored properties you define,
-except for lazy stored properties. You can also add property observers
-to any inherited property (whether stored or computed) by overriding the
-property within a subclass. You don't need to define property observers
-for nonoverridden computed properties, because you can observe and
-respond to changes to their value in the computed property's setter.
-Property overriding is described in
-@ref{Overriding}.
+You can add property observers in the following places:
+
+@itemize
+@item
+Stored properties that you define
+
+@item
+Stored properties that you inherit
+
+@item
+Computed properties that you inherit
+@end itemize
+
+For an inherited property, you add a property observer by overriding
+that property in a subclass. For a computed property that you define,
+use the property's setter to observe and respond to value changes,
+instead of trying to create an observer. Overriding properties is
+described in @ref{Overriding}.
 
 You have the option to define either or both of these observers on a
 property:
@@ -10700,11 +10820,8 @@ print(mixedRectangle.height)
 @end example
 
 The instance of @samp{SmallNumber} that wraps @samp{height} is created by calling
-@samp{SmallNumber(wrappedValue: 1)}, which uses the default maximum value of
-@enumerate
-@item
-The instance that wraps @samp{width} is created by calling
-@end enumerate
+@samp{SmallNumber(wrappedValue: 1)}, which uses the default maximum value
+of 12. The instance that wraps @samp{width} is created by calling
 @samp{SmallNumber(wrappedValue: 2, maximum: 9)}.
 
 @node Projecting a Value From a Property Wrapper
@@ -11610,7 +11727,7 @@ type.
 Like functions, subscripts can take a varying number of parameters and
 provide default values for their parameters, as discussed in
 @ref{Variadic Parameters} and @ref{Default Parameter Values}. However, unlike functions,
-they can't use in-out parameters.
+subscripts can't use in-out parameters.
 
 A class or structure can provide as many subscript implementations as it
 needs, and the appropriate subscript to be used will be inferred based
@@ -13702,7 +13819,7 @@ You typically define a failable initializer that creates an optional
 instance of the appropriate type by placing a question mark after the
 @samp{init} keyword (@samp{init?}). Alternatively, you can define a failable
 initializer that creates an implicitly unwrapped optional instance of
-the appropriate type. Do this by placing an exclamation mark after the
+the appropriate type. Do this by placing an exclamation point after the
 @samp{init} keyword (@samp{init!}) instead of a question mark.
 
 You can delegate from @samp{init?} to @samp{init!} and vice versa, and you can
@@ -13972,7 +14089,7 @@ A new @samp{Player} instance is created, with a request for 100 coins if they
 are available. This @samp{Player} instance is stored in an optional @samp{Player}
 variable called @samp{playerOne}. An optional variable is used here, because
 players can leave the game at any point. The optional lets you track
-whether there is currently a player in the game.
+whether there's currently a player in the game.
 
 Because @samp{playerOne} is an optional, it is qualified with an exclamation
 mark (@samp{!}) when its @samp{coinsInPurse} property is accessed to print its
@@ -14038,7 +14155,7 @@ success or failure.
 You specify optional chaining by placing a question mark (@samp{?}) after the
 optional value on which you wish to call a property, method or subscript
 if the optional is non-@samp{nil}. This is very similar to placing an
-exclamation mark (@samp{!}) after an optional value to force the unwrapping
+exclamation point (@samp{!}) after an optional value to force the unwrapping
 of its value. The main difference is that optional chaining fails
 gracefully when the optional is @samp{nil}, whereas forced unwrapping
 triggers a runtime error when the optional is @samp{nil}.
@@ -14084,7 +14201,7 @@ let john = Person()
 @end example
 
 If you try to access the @samp{numberOfRooms} property of this person's
-@samp{residence}, by placing an exclamation mark after @samp{residence} to force
+@samp{residence}, by placing an exclamation point after @samp{residence} to force
 the unwrapping of its value, you trigger a runtime error, because there
 is no @samp{residence} value to unwrap:
 
@@ -14100,7 +14217,7 @@ of rooms. However, this code always triggers a runtime error when
 
 Optional chaining provides an alternative way to access the value of
 @samp{numberOfRooms}. To use optional chaining, use a question mark in place
-of the exclamation mark:
+of the exclamation point:
 
 @example
 if let roomCount = john.residence?.numberOfRooms @{
@@ -14833,6 +14950,8 @@ do @{
     statements
 @} catch pattern 2 where condition @{
     statements
+@} catch pattern 3, pattern 4 where condition @{
+    statements
 @} catch @{
     statements
 @}
@@ -14891,7 +15010,7 @@ func nourish(with item: String) throws @{
     do @{
         try vendingMachine.vend(itemNamed: item)
     @} catch is VendingMachineError @{
-        print("Invalid selection, out of stock, or not enough money.")
+        print("Couldn't buy that from the vending machine.")
     @}
 @}
 
@@ -14900,7 +15019,7 @@ do @{
 @} catch @{
     print("Unexpected non-vending-machine-related error: \(error)")
 @}
-// Prints "Invalid selection, out of stock, or not enough money."
+// Prints "Couldn't buy that from the vending machine."
 @end example
 
 In the @samp{nourish(with:)} function, if @samp{vend(itemNamed:)} throws an error
@@ -15444,7 +15563,7 @@ The @samp{BlackjackCard} structure itself has two properties---@samp{rank} and
 @samp{suit}. It also defines a computed property called @samp{description}, which
 uses the values stored in @samp{rank} and @samp{suit} to build a description of
 the name and value of the card. The @samp{description} property uses optional
-binding to check whether there is a second value to display, and if so,
+binding to check whether there's a second value to display, and if so,
 inserts additional description detail for that second value.
 
 Because @samp{BlackjackCard} is a structure with no custom initializers, it
@@ -15915,6 +16034,7 @@ types can take advantage of.
 * Protocols as Types::
 * Delegation::
 * Adding Protocol Conformance with an Extension::
+* Adopting a Protocol Using a Synthesized Implementation::
 * Collections of Protocol Types::
 * Protocol Inheritance::
 * Class-Only Protocols::
@@ -16673,6 +16793,107 @@ Types don't automatically adopt a protocol just by satisfying its
 requirements. They must always explicitly declare their adoption of the
 protocol.
 
+@node Adopting a Protocol Using a Synthesized Implementation
+@section Adopting a Protocol Using a Synthesized Implementation
+
+@cindex automatic conformance for Equatable, Hashable, Comparable
+
+Swift can automatically provide the protocol conformance for
+@samp{Equatable}, @samp{Hashable}, and @samp{Comparable} in many simple cases. Using
+this synthesized implementation means you don't have to write repetitive
+boilerplate code to implement the protocol requirements yourself.
+
+Swift provides a synthesized implementation of @samp{Equatable} for the
+following kinds of custom types:
+
+@itemize
+@item
+Structures that have only stored properties that conform to the
+@samp{Equatable} protocol
+
+@item
+Enumerations that have only associated types that conform to the
+@samp{Equatable} protocol
+
+@item
+Enumerations that have no associated types
+@end itemize
+
+To receive a synthesized implementation of @samp{==}, declare conformance to
+@samp{Equatable} in the file that contains the original declaration, without
+implementing an @samp{==} operator yourself. The @samp{Equatable} protocol
+provides a default implementation of @samp{!=}.
+
+The example below defines a @samp{Vector3D} structure for a three-dimensional
+position vector @samp{(x, y, z)}, similar to the @samp{Vector2D} structure.
+Because the @samp{x}, @samp{y}, and @samp{z} properties are all of an @samp{Equatable} type,
+@samp{Vector3D} receives synthesized implementations of the equivalence
+operators.
+
+@example
+struct Vector3D: Equatable @{
+    var x = 0.0, y = 0.0, z = 0.0
+@}
+
+
+let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+if twoThreeFour == anotherTwoThreeFour @{
+    print("These two vectors are also equivalent.")
+@}
+// Prints "These two vectors are also equivalent."
+@end example
+
+Swift provides a synthesized implementation of @samp{Hashable} for the
+following kinds of custom types:
+
+@itemize
+@item
+Structures that have only stored properties that conform to the
+@samp{Hashable} protocol
+
+@item
+Enumerations that have only associated types that conform to the
+@samp{Hashable} protocol
+
+@item
+Enumerations that have no associated types
+@end itemize
+
+To receive a synthesized implementation of @samp{hash(into:)}, declare
+conformance to @samp{Hashable} in the file that contains the original
+declaration, without implementing a @samp{hash(into:)} method yourself.
+
+Swift provides a synthesized implementation of @samp{Comparable} for
+enumerations that don't have a raw value. If the enumeration has
+associated types, they must all conform to the @samp{Comparable} protocol. To
+receive a synthesized implementation of @samp{<}, declare conformance to
+@samp{Comparable} in the file that contains the original enumeration
+declaration, without implementing a @samp{<} operator yourself. The
+@samp{Comparable} protocol's default implementation of @samp{<=}, @samp{>}, and @samp{>=}
+provides the remaining comparison operators.
+
+The example below defines a @samp{SkillLevel} enumeration with cases for
+beginners, intermediates, and experts. Experts are additionally ranked
+by the number of stars they have.
+
+@example
+enum SkillLevel: Comparable @{
+    case beginner
+    case intermediate
+    case expert(stars: Int)
+@}
+var levels = [SkillLevel.intermediate, SkillLevel.beginner,
+              SkillLevel.expert(stars: 5), SkillLevel.expert(stars: 3)]
+for level in levels.sorted() @{
+    print(level)
+@}
+// Prints "beginner"
+// Prints "intermediate"
+// Prints "expert(stars: 3)"
+// Prints "expert(stars: 5)"
+@end example
+
 @node Collections of Protocol Types
 @section Collections of Protocol Types
 
@@ -17370,6 +17591,7 @@ limitations on what that type can be.
 * Associated Types::
 * Generic Where Clauses::
 * Extensions with a Generic Where Clause::
+* Contextual Where Clauses::
 * Associated Types with a Generic Where Clause::
 * Generic Subscripts::
 @end menu
@@ -17762,7 +17984,11 @@ This requirement is enforced by a type constraint on the key type for
 @samp{Dictionary}, which specifies that the key type must conform to the
 @samp{Hashable} protocol, a special protocol defined in the Swift standard
 library. All of Swift's basic types (such as @samp{String}, @samp{Int}, @samp{Double},
-and @samp{Bool}) are hashable by default.
+and @samp{Bool}) are hashable by default. For information about making your
+own custom types conform to the @samp{Hashable} protocol, see
+@uref{https://developer.apple.com/documentation/swift/hashable#2849490, Conforming
+to the Hashable Protocol}
+[@uref{https://developer.apple.com/documentation/swift/hashable#2849490}].
 
 You can define your own type constraints when creating custom generic
 types, and these constraints provide much of the power of generic
@@ -17903,7 +18129,7 @@ let stringIndex = findIndex(of: "Andrea", in: ["Mike", "Malcolm", "Andrea"])
 @findex associatedtype
 
 When defining a protocol, it's sometimes useful to declare one or more
-associated types as part of the protocol's definition. An @samp{associated
+associated types as part of the protocol's definition. An @emph{associated
 type} gives a placeholder name to a type that is used as part of the
 protocol. The actual type to use for that associated type isn't
 specified until the protocol is adopted. Associated types are specified
@@ -18123,9 +18349,8 @@ is discussed in @ref{Associated Types with a Generic Where Clause, , Associated 
 Where Clause} below.
 
 Here's an extension of the @samp{Stack} type from
-@ref{Strong Reference Cycles for Closures, , Strong Reference Cycles for
-Closures} above that adds conformance to the @samp{SuffixableContainer}
-protocol:
+@ref{Generic Types} above that adds conformance to
+the @samp{SuffixableContainer} protocol:
 
 @example
 extension Stack: SuffixableContainer @{
@@ -18422,6 +18647,75 @@ You can include multiple requirements in a generic @samp{where} clause that
 is part of an extension, just like you can for a generic @samp{where} clause
 that you write elsewhere. Separate each requirement in the list with a
 comma.
+
+@node Contextual Where Clauses
+@section Contextual Where Clauses
+
+@cindex restrict extension declarations to particular types
+
+You can write a generic @samp{where} clause as part of a declaration that
+doesn't have its own generic type constraints, when you're already
+working in the context of generic types. For example, you can write a
+generic @samp{where} clause on a subscript of a generic type or on a method
+in an extension to a generic type. The @samp{Container} structure is generic,
+and the @samp{where} clauses in the example below specify what type
+constraints have to be satisfied to make these new methods available on
+a container.
+
+@example
+extension Container @{
+    func average() -> Double where Item == Int @{
+        var sum = 0.0
+        for index in 0..<count @{
+            sum += Double(self[index])
+        @}
+        return sum / Double(count)
+    @}
+    func endsWith(_ item: Item) -> Bool where Item: Equatable @{
+        return count >= 1 && self[count-1] == item
+    @}
+@}
+let numbers = [1260, 1200, 98, 37]
+print(numbers.average())
+// Prints "648.75"
+print(numbers.endsWith(37))
+// Prints "true"
+@end example
+
+This example adds an @samp{average()} method to @samp{Container} when the items
+are integers, and it adds an @samp{endsWith(_:)} method when the items are
+equatable. Both functions include a generic @samp{where} clause that adds
+type constraints to the generic @samp{Item} type parameter from the original
+declaration of @samp{Container}.
+
+If you want to write this code without using contextual @samp{where} clauses,
+you write two extensions, one for each generic @samp{where} clause. The
+example above and the example below have the same behavior.
+
+@example
+extension Container where Item == Int @{
+    func average() -> Double @{
+        var sum = 0.0
+        for index in 0..<count @{
+            sum += Double(self[index])
+        @}
+        return sum / Double(count)
+    @}
+@}
+extension Container where Item: Equatable @{
+    func endsWith(_ item: Item) -> Bool @{
+        return count >= 1 && self[count-1] == item
+    @}
+@}
+@end example
+
+In the version of this example that uses contextual @samp{where} clauses, the
+implementation of @samp{average()} and @samp{endsWith(_:)} are both in the same
+extension because each method's generic @samp{where} clause states the
+requirements that need to be satisfied to make that method available.
+Moving those requirements to the extensions' generic @samp{where} clauses
+makes the methods available in the same situations, but requires one
+extension per requirement.
 
 @node Associated Types with a Generic Where Clause
 @section Associated Types with a Generic Where Clause
@@ -19014,8 +19308,8 @@ at the point that you call the @samp{Person} class's initializer. This
 confirms that initialization has taken place.
 
 Because the new @samp{Person} instance has been assigned to the @samp{reference1}
-variable, there is now a strong reference from @samp{reference1} to the new
-@samp{Person} instance. Because there is at least one strong reference, ARC
+variable, there's now a strong reference from @samp{reference1} to the new
+@samp{Person} instance. Because there's at least one strong reference, ARC
 makes sure that this @samp{Person} is kept in memory and is not deallocated.
 
 If you assign the same @samp{Person} instance to two more variables, two more
@@ -19127,8 +19421,8 @@ the new @samp{Apartment} instance:
 
 @image{images/referenceCycle01_2x,,,,png}
 You can now link the two instances together so that the person has an
-apartment, and the apartment has a tenant. Note that an exclamation mark
-(@samp{!}) is used to unwrap and access the instances stored inside the
+apartment, and the apartment has a tenant. Note that an exclamation
+point (@samp{!}) is used to unwrap and access the instances stored inside the
 @samp{john} and @samp{unit4A} optional variables, so that the properties of those
 instances can be set:
 
@@ -19190,6 +19484,7 @@ the same lifetime or a longer lifetime.
 @menu
 * Weak References::
 * Unowned References::
+* Unowned Optional References::
 * Unowned References and Implicitly Unwrapped Optional Properties::
 @end menu
 
@@ -19308,9 +19603,9 @@ unowned reference is used when the other instance has the same lifetime
 or a longer lifetime. You indicate an unowned reference by placing the
 @samp{unowned} keyword before a property or variable declaration.
 
-An unowned reference is expected to always have a value. As a result,
-ARC never sets an unowned reference's value to @samp{nil}, which means that
-unowned references are defined using non-optional types.
+Unlike a weak reference, an unowned reference is expected to always have
+a value. As a result, marking a value as unowned doesn't make it
+optional, and ARC never sets an unowned reference's value to @samp{nil}.
 
 Important
 
@@ -19377,20 +19672,17 @@ This next code snippet defines an optional @samp{Customer} variable called
 @samp{john}, which will be used to store a reference to a specific customer.
 This variable has an initial value of nil, by virtue of being optional:
 
-@enumerate
-@item
+@example
 var john: Customer?
-@end enumerate
+@end example
 
 You can now create a @samp{Customer} instance, and use it to initialize and
 assign a new @samp{CreditCard} instance as that customer's @samp{card} property:
 
-@enumerate
-@item
+@example
 john = Customer(name: "John Appleseed")
-@item
-john!.card = CreditCard(number: 1234@math{_5678}@math{_9012}@math{_3456}, customer: john!)
-@end enumerate
+john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
+@end example
 
 Here's how the references look, now that you've linked the two
 instances:
@@ -19432,6 +19724,94 @@ If you try to access an unsafe unowned reference after the instance that
 it refers to is deallocated, your program will try to access the memory
 location where the instance used to be, which is an unsafe operation.
 
+@node Unowned Optional References
+@subsection Unowned Optional References
+
+You can mark an optional reference to a class as unowned. In terms of
+the ARC ownership model, an unowned optional reference and a weak
+reference can both be used in the same contexts. The difference is that
+when you use an unowned optional reference, you're responsible for
+making sure it always refers to a valid object or is set to @samp{nil}.
+
+Here's an example that keeps track of the courses offered by a
+particular department at a school:
+
+@example
+class Department @{
+    var name: String
+    var courses: [Course]
+    init(name: String) @{
+        self.name = name
+        self.courses = []
+    @}
+@}
+
+
+class Course @{
+    var name: String
+    unowned var department: Department
+    unowned var nextCourse: Course?
+    init(name: String, in department: Department) @{
+        self.name = name
+        self.department = department
+        self.nextCourse = nil
+    @}
+@}
+@end example
+
+@samp{Department} maintains a strong reference to each course that the
+department offers. In the ARC ownership model, a department owns its
+courses. @samp{Course} has two unowned references, one to the department and
+one to the next course a student should take; a course doesn't own
+either of these objects. Every course is part of some department so the
+@samp{department} property isn't an optional. However, because some courses
+don't have a recommended follow-on course, the @samp{nextCourse} property is
+an optional.
+
+Here's an example of using these classes:
+
+@example
+let department = Department(name: "Horticulture")
+
+
+let intro = Course(name: "Survey of Plants", in: department)
+let intermediate = Course(name: "Growing Common Herbs", in:
+                                                          department)
+let advanced = Course(name: "Caring for Tropical Plants", in:
+                                                            department)
+
+
+intro.nextCourse = intermediate
+intermediate.nextCourse = advanced
+department.courses = [intro, intermediate, advanced]
+@end example
+
+The code above creates a department and its three courses. The intro and
+intermediate courses both have a suggested next course stored in their
+@samp{nextCourse} property, which maintains an unowned optional reference to
+the course a student should take after after completing this one.
+
+@image{images/unownedOptionalReference_2x,,,,png}
+An unowned optional reference doesn't keep a strong hold on the instance
+of the class that it wraps, and so it doesn't prevent ARC from
+deallocating the instance. It behaves the same as an unowned reference
+does under ARC, except that an unowned optional reference can be @samp{nil}.
+
+Like non-optional unowned references, you're responsible for ensuring
+that @samp{nextCourse} always refers to a course that hasn't been
+deallocated. In this case, for example, when you delete a course from
+@samp{department.courses} you also need to remove any references to it that
+other courses might have.
+
+Note
+
+The underlying type of an optional value is @samp{Optional}, which is an
+enumeration in the Swift standard library. However, optionals are an
+exception to the rule that value types can't be marked with @samp{unowned}.
+
+The optional that wraps the class doesn't use reference counting, so you
+don't need to maintain a strong reference to the optional.
+
 @node Unowned References and Implicitly Unwrapped Optional Properties
 @subsection Unowned References and Implicitly Unwrapped Optional Properties
 
@@ -19449,7 +19829,7 @@ property that is allowed to be @samp{nil} and another property that cannot be
 @samp{nil} have the potential to cause a strong reference cycle. This
 scenario is best resolved with an unowned reference.
 
-However, there is a third scenario, in which @emph{both} properties should
+However, there's a third scenario, in which @emph{both} properties should
 always have a value, and neither property should ever be @samp{nil} once
 initialization is complete. In this scenario, it's useful to combine an
 unowned property on one class with an implicitly unwrapped optional
@@ -19499,7 +19879,7 @@ Initialization}.
 
 To cope with this requirement, you declare the @samp{capitalCity} property of
 @samp{Country} as an implicitly unwrapped optional property, indicated by the
-exclamation mark at the end of its type annotation (@samp{City!}). This means
+exclamation point at the end of its type annotation (@samp{City!}). This means
 that the @samp{capitalCity} property has a default value of @samp{nil}, like any
 other optional, but can be accessed without the need to unwrap its value
 as described in @ref{Implicitly Unwrapped Optionals, , Implicitly Unwrapped
@@ -19517,7 +19897,7 @@ own @samp{capitalCity} property.
 All of this means that you can create the @samp{Country} and @samp{City} instances
 in a single statement, without creating a strong reference cycle, and
 the @samp{capitalCity} property can be accessed directly, without needing to
-use an exclamation mark to unwrap its optional value:
+use an exclamation point to unwrap its optional value:
 
 @example
 var country = Country(name: "Canada", capitalName: "Ottawa")
@@ -20410,7 +20790,7 @@ enabled.
 
 Define the access level for an entity by placing one of the @samp{open},
 @samp{public}, @samp{internal}, @samp{fileprivate}, or @samp{private} modifiers at the
-beginning of the entity's declaration:
+beginning of the entity's declaration.
 
 @example
 public class SomePublicClass @{@}
@@ -21654,44 +22034,9 @@ if twoThree == anotherTwoThree @{
 @end example
 
 In many simple cases, you can ask Swift to provide synthesized
-implementations of the equivalence operators for you. Swift provides
-synthesized implementations for the following kinds of custom types:
-
-@itemize
-@item
-Structures that have only stored properties that conform to the
-@samp{Equatable} protocol
-
-@item
-Enumerations that have only associated types that conform to the
-@samp{Equatable} protocol
-
-@item
-Enumerations that have no associated types
-@end itemize
-
-To receive a synthesized implementation of @samp{==}, declare @samp{Equatable}
-conformance in the file that contains the original declaration, without
-implementing an @samp{==} operator yourself.
-
-The example below defines a @samp{Vector3D} structure for a three-dimensional
-position vector @samp{(x, y, z)}, similar to the @samp{Vector2D} structure.
-Because the @samp{x}, @samp{y}, and @samp{z} properties are all of an @samp{Equatable} type,
-@samp{Vector3D} receives synthesized implementations of the equivalence
-operators.
-
-@example
-struct Vector3D: Equatable @{
-    var x = 0.0, y = 0.0, z = 0.0
-@}
-
-let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
-let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
-if twoThreeFour == anotherTwoThreeFour @{
-    print("These two vectors are also equivalent.")
-@}
-// Prints "These two vectors are also equivalent."
-@end example
+implementations of the equivalence operators for you, as described in
+@ref{Adopting a Protocol Using a Synthesized Implementation, , Adopting a Protocol Using a Synthesized
+Implementation}.
 
 @node Custom Operators
 @section Custom Operators
@@ -21708,10 +22053,9 @@ New operators are declared at a global level using the @samp{operator}
 keyword, and are marked with the @samp{prefix}, @samp{infix} or @samp{postfix}
 modifiers:
 
-@enumerate
-@item
-prefix operator +
-@end enumerate
+@example
+prefix operator +++
+@end example
 
 The example above defines a new prefix operator called @samp{+++}. This
 operator does not have an existing meaning in Swift, and so it is given

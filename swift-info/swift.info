@@ -8,7 +8,7 @@ END-INFO-DIR-ENTRY
 
 File: swift.info,  Node: Top,  Next: Welcome to Swift,  Up: (dir)
 
-The Swift Programming Language Guide (Swift 5.2)
+The Swift Programming Language Guide (Swift 5.3)
 ************************************************
 
 * Menu:
@@ -503,6 +503,7 @@ Protocols
 * Protocols as Types::
 * Delegation::
 * Adding Protocol Conformance with an Extension::
+* Adopting a Protocol Using a Synthesized Implementation::
 * Collections of Protocol Types::
 * Protocol Inheritance::
 * Class-Only Protocols::
@@ -538,6 +539,7 @@ Generics
 * Associated Types::
 * Generic Where Clauses::
 * Extensions with a Generic Where Clause::
+* Contextual Where Clauses::
 * Associated Types with a Generic Where Clause::
 * Generic Subscripts::
 
@@ -572,6 +574,7 @@ Resolving Strong Reference Cycles Between Class Instances
 
 * Weak References::
 * Unowned References::
+* Unowned Optional References::
 * Unowned References and Implicitly Unwrapped Optional Properties::
 
 Resolving Strong Reference Cycles for Closures
@@ -735,13 +738,13 @@ File: swift.info,  Node: Version Compatibility,  Next: A Swift Tour,  Prev: Abou
 3 Version Compatibility
 ***********************
 
-This book describes Swift 5.2, the default version of Swift that’s
-included in Xcode 11.4.  You can use Xcode 11 to build targets that are
-written in either Swift 5.2, Swift 4.2, or Swift 4.
+This book describes Swift 5.3, the default version of Swift that’s
+included in Xcode 12.  You can use Xcode 12 to build targets that are
+written in either Swift 5.3, Swift 4.2, or Swift 4.
 
-   When you use Xcode 11.4 to build Swift 4 and Swift 4.2 code, most
-Swift 5.2 functionality is available.  That said, the following changes
-are available only to code that uses Swift 5.2 or later:
+   When you use Xcode 12 to build Swift 4 and Swift 4.2 code, most Swift
+5.3 functionality is available.  That said, the following changes are
+available only to code that uses Swift 5.3 or later:
 
    • Functions that return an opaque type require the Swift 5.1 runtime.
 
@@ -753,10 +756,10 @@ are available only to code that uses Swift 5.2 or later:
      ‘UInt64(0xffff_ffff_ffff_ffff)’ evaluates to the correct value
      rather than overflowing.
 
-   A target written in Swift 5.2 can depend on a target that’s written
+   A target written in Swift 5.3 can depend on a target that’s written
 in Swift 4.2 or Swift 4, and vice versa.  This means, if you have a
 large project that’s divided into multiple frameworks, you can migrate
-your code from Swift 4 to Swift 5.2 one framework at a time.
+your code from Swift 4 to Swift 5.3 one framework at a time.
 
 
 File: swift.info,  Node: A Swift Tour,  Next: Language Guide,  Prev: Version Compatibility,  Up: Top
@@ -1782,6 +1785,7 @@ File: swift.info,  Node: Language Guide,  Next: The Basics,  Prev: A Swift Tour,
    • *note Extensions::
    • *note Protocols::
    • *note Generics::
+   • *note Opaque Types::
    • *note Automatic Reference Counting::
    • *note Memory Safety::
    • *note Access Control::
@@ -2698,8 +2702,8 @@ operator (‘!=’).
      // Prints "convertedNumber contains some integer value."
 
    Once you’re sure that the optional _does_ contain a value, you can
-access its underlying value by adding an exclamation mark (‘!’) to the
-end of the optional’s name.  The exclamation mark effectively says, “I
+access its underlying value by adding an exclamation point (‘!’) to the
+end of the optional’s name.  The exclamation point effectively says, “I
 know that this optional definitely has a value; please use it.” This is
 known as _forced unwrapping_ of the optional’s value:
 
@@ -2814,8 +2818,10 @@ value all of the time.
 
    These kinds of optionals are defined as _implicitly unwrapped
 optionals_.  You write an implicitly unwrapped optional by placing an
-exclamation mark (‘String!’) rather than a question mark (‘String?’)
-after the type that you want to make optional.
+exclamation point (‘String!’) rather than a question mark (‘String?’)
+after the type that you want to make optional.  Rather than placing an
+exclamation point after the optional’s name when you use it, you place
+an exclamation point after the optional’s type when you declare it.
 
    Implicitly unwrapped optionals are useful when an optional’s value is
 confirmed to exist immediately after the optional is first defined and
@@ -2833,26 +2839,32 @@ an implicitly unwrapped optional string when accessing their wrapped
 value as an explicit ‘String’:
 
      let possibleString: String? = "An optional string."
-     let forcedString: String = possibleString! // requires an exclamation mark
+     let forcedString: String = possibleString! // requires an exclamation point
 
      let assumedString: String! = "An implicitly unwrapped optional string."
-     let implicitString: String = assumedString // no need for an exclamation mark
+     let implicitString: String = assumedString // no need for an exclamation point
 
    You can think of an implicitly unwrapped optional as giving
-permission for the optional to be unwrapped automatically whenever it’s
-used.  Rather than placing an exclamation mark after the optional’s name
-each time you use it, you place an exclamation mark after the optional’s
-type when you declare it.
+permission for the optional to be force-unwrapped if needed.  When you
+use an implicitly unwrapped optional value, Swift first tries to use it
+as an ordinary optional value; if it can’t be used as an optional, Swift
+force-unwraps the value.  In the code above, the optional value
+‘assumedString’ is force-unwrapped before assigning its value to
+‘implicitString’ because ‘implicitString’ has an explicit, non-optional
+type of ‘String’.  In code below, ‘optionalString’ doesn’t have an
+explicit type so it’s an ordinary optional.
 
-   Note
+     let optionalString = assumedString
+     // The type of optionalString is "String?" and assumedString isn't
+     force-unwrapped.
 
    If an implicitly unwrapped optional is ‘nil’ and you try to access
 its wrapped value, you’ll trigger a runtime error.  The result is
-exactly the same as if you place an exclamation mark after a normal
+exactly the same as if you place an exclamation point after a normal
 optional that doesn’t contain a value.
 
-   You can still treat an implicitly unwrapped optional like a normal
-optional, to check if it contains a value:
+   You can check whether an implicitly unwrapped optional is ‘nil’ the
+same way you check a normal optional:
 
      if assumedString != nil {
          print(assumedString!)
@@ -3089,15 +3101,16 @@ adds two numbers, as in ‘let i = 1 + 2’, and the logical AND operator
 (‘&&’) combines two Boolean values, as in ‘if enteredDoorCode &&
 passedRetinaScan’.
 
-   Swift supports most standard C operators and improves several
-capabilities to eliminate common coding errors.  The assignment operator
-(‘=’) doesn’t return a value, to prevent it from being mistakenly used
-when the equal to operator (‘==’) is intended.  Arithmetic operators
-(‘+’, ‘-’, ‘*’, ‘/’, ‘%’ and so forth) detect and disallow value
-overflow, to avoid unexpected results when working with numbers that
-become larger or smaller than the allowed value range of the type that
-stores them.  You can opt in to value overflow behavior by using Swift’s
-overflow operators, as described in *note Overflow Operators::.
+   Swift supports the operators you may already know from languages like
+C and improves several capabilities to eliminate common coding errors.
+The assignment operator (‘=’) doesn’t return a value, to prevent it from
+being mistakenly used when the equal to operator (‘==’) is intended.
+Arithmetic operators (‘+’, ‘-’, ‘*’, ‘/’, ‘%’ and so forth) detect and
+disallow value overflow, to avoid unexpected results when working with
+numbers that become larger or smaller than the allowed value range of
+the type that stores them.  You can opt in to value overflow behavior by
+using Swift’s overflow operators, as described in *note Overflow
+Operators::.
 
    Swift also provides range operators that aren’t found in C, such as
 ‘a..<b’ and ‘a...b’, as a shortcut for expressing a range of values.
@@ -3335,7 +3348,7 @@ File: swift.info,  Node: Comparison Operators,  Next: Ternary Conditional Operat
 7.5 Comparison Operators
 ========================
 
-Swift supports all standard C _comparison operators_:
+Swift supports the following comparison operators:
 
    • Equal to (‘a =’ b=)
 
@@ -6883,10 +6896,10 @@ Using the ‘gameLoop’ label makes it clear which control statement should
 be terminated.
 
    It is not strictly necessary to use the ‘gameLoop’ label when calling
-‘continue gameLoop’ to jump to the next iteration of the loop.  There is
+‘continue gameLoop’ to jump to the next iteration of the loop.  There’s
 only one loop in the game, and therefore no ambiguity as to which loop
-the ‘continue’ statement will affect.  However, there is no harm in
-using the ‘gameLoop’ label with the ‘continue’ statement.  Doing so is
+the ‘continue’ statement will affect.  However, there’s no harm in using
+the ‘gameLoop’ label with the ‘continue’ statement.  Doing so is
 consistent with the label’s use alongside the ‘break’ statement and
 helps make the game’s logic clearer to read and understand.
 
@@ -7815,7 +7828,7 @@ Values.
    Global and nested functions, as introduced in *note Functions::, are
 actually special cases of closures.  Closures take one of three forms:
 
-   • Global functions are closures that have a name and do not capture
+   • Global functions are closures that have a name and don’t capture
      any values.
 
    • Nested functions are closures that have a name and can capture
@@ -7985,7 +7998,7 @@ Because the sorting closure is passed as an argument to a method, Swift
 can infer the types of its parameters and the type of the value it
 returns.  The ‘sorted(by:)’ method is being called on an array of
 strings, so its argument must be a function of type ‘(String, String) ->
-Bool’.  This means that the ‘(String, String)’ and ‘Bool’ types do not
+Bool’.  This means that the ‘(String, String)’ and ‘Bool’ types don’t
 need to be written as part of the closure expression’s definition.
 Because all of the types can be inferred, the return arrow (‘->’) and
 the parentheses around the names of the parameters can also be omitted:
@@ -8020,7 +8033,7 @@ declaration, as in this version of the previous example:
    Here, the function type of the ‘sorted(by:)’ method’s argument makes
 it clear that a ‘Bool’ value must be returned by the closure.  Because
 the closure’s body contains a single expression (‘s1 > s2’) that returns
-a ‘Bool’ value, there is no ambiguity, and the ‘return’ keyword can be
+a ‘Bool’ value, there’s no ambiguity, and the ‘return’ keyword can be
 omitted.
 
 
@@ -8061,7 +8074,7 @@ that you want to use its string-specific implementation:
 
      reversedNames = names.sorted(by: >)
 
-   For more about operator method, see *note Operator Methods::.
+   For more about operator methods, see *note Operator Methods::.
 
 
 File: swift.info,  Node: Trailing Closures,  Next: Capturing Values,  Prev: Closure Expressions,  Up: Closures
@@ -8071,11 +8084,13 @@ File: swift.info,  Node: Trailing Closures,  Next: Capturing Values,  Prev: Clos
 
 If you need to pass a closure expression to a function as the function’s
 final argument and the closure expression is long, it can be useful to
-write it as a _trailing closure_ instead.  A trailing closure is written
-after the function call’s parentheses, even though it is still an
-argument to the function.  When you use the trailing closure syntax, you
-don’t write the argument label for the closure as part of the function
-call.
+write it as a _trailing closure_ instead.  You write a trailing closure
+after the function call’s parentheses, even though the trailing closure
+is still an argument to the function.  When you use the trailing closure
+syntax, you don’t write the argument label for the first closure as part
+of the function call.  A function call can include multiple trailing
+closures; however, the first few examples below use a single trailing
+closure.
 
      func someFunctionThatTakesAClosure(closure: () -> Void) {
          // function body goes here
@@ -8097,20 +8112,21 @@ Closure Expression Syntax. section above can be written outside of the
 
      reversedNames = names.sorted() { $0 > $1 }
 
-   If a closure expression is provided as the function or method’s only
-argument and you provide that expression as a trailing closure, you do
-not need to write a pair of parentheses ‘()’ after the function or
+   If a closure expression is provided as the function’s or method’s
+only argument and you provide that expression as a trailing closure, you
+don’t need to write a pair of parentheses ‘()’ after the function or
 method’s name when you call the function:
 
      reversedNames = names.sorted { $0 > $1 }
 
    Trailing closures are most useful when the closure is sufficiently
 long that it is not possible to write it inline on a single line.  As an
-example, Swift’s ‘Array’ type has a ‘map(_:)’ method which takes a
+example, Swift’s ‘Array’ type has a ‘map(_:)’ method, which takes a
 closure expression as its single argument.  The closure is called once
 for each item in the array, and returns an alternative mapped value
-(possibly of some other type) for that item.  The nature of the mapping
-and the type of the returned value is left up to the closure to specify.
+(possibly of some other type) for that item.  You specify the nature of
+the mapping and the type of the returned value by writing code in the
+closure that you pass to ‘map(_:)’.
 
    After applying the provided closure to each array element, the
 ‘map(_:)’ method returns a new array containing all of the new mapped
@@ -8149,9 +8165,9 @@ as a trailing closure:
      // its value is ["OneSix", "FiveEight", "FiveOneZero"]
 
    The ‘map(_:)’ method calls the closure expression once for each item
-in the array.  You do not need to specify the type of the closure’s
-input parameter, ‘number’, because the type can be inferred from the
-values in the array to be mapped.
+in the array.  You don’t need to specify the type of the closure’s input
+parameter, ‘number’, because the type can be inferred from the values in
+the array to be mapped.
 
    In this example, the variable ‘number’ is initialized with the value
 of the closure’s ‘number’ parameter, so that the value can be modified
@@ -8169,12 +8185,12 @@ used to create a string representation of any integer greater than zero.
    Note
 
    The call to the ‘digitNames’ dictionary’s subscript is followed by an
-exclamation mark (‘!’), because dictionary subscripts return an optional
-value to indicate that the dictionary lookup can fail if the key does
-not exist.  In the example above, it is guaranteed that ‘number % 10’
-will always be a valid subscript key for the ‘digitNames’ dictionary,
-and so an exclamation mark is used to force-unwrap the ‘String’ value
-stored in the subscript’s optional return value.
+exclamation point (‘!’), because dictionary subscripts return an
+optional value to indicate that the dictionary lookup can fail if the
+key does not exist.  In the example above, it is guaranteed that ‘number
+% 10’ will always be a valid subscript key for the ‘digitNames’
+dictionary, and so an exclamation point is used to force-unwrap the
+‘String’ value stored in the subscript’s optional return value.
 
    The string retrieved from the ‘digitNames’ dictionary is added to the
 _front_ of ‘output’, effectively building a string version of the number
@@ -8193,6 +8209,39 @@ the output array by the ‘map(_:)’ method.
 encapsulates the closure’s functionality immediately after the function
 that closure supports, without needing to wrap the entire closure within
 the ‘map(_:)’ method’s outer parentheses.
+
+   If a function takes multiple closures, you omit the argument label
+for the first trailing closure and you label the remaining trailing
+closures.  For example, the function below loads a picture for a photo
+gallery:
+
+     func loadPicture(from server: Server, completion: (Picture) -> Void,
+                      onFailure: () -> Void) {
+         if let picture = download("photo.jpg", from: server) {
+             completion(picture)
+         } else {
+             onFailure()
+         }
+     }
+
+   When you call this function to load a picture, you provide two
+closures.  The first closure is a completion handler that displays a
+picture after a successful download.  The second closure is an error
+handler that displays an error to the user.
+
+     loadPicture(from: someServer) { picture in
+         someView.currentPicture = picture
+     } onFailure: {
+         print("Couldn't download the next picture.")
+     }
+
+   In this example, the ‘loadPicture(from:completion:onFailure:)’
+function dispatches its network task into the background, and calls one
+of the two completion handlers when the network task finishes.  Writing
+the function this way lets you cleanly separate the code that’s
+responsible for handling a network failure from the code that updates
+the user interface after a successful download, instead of using just
+one closure that handles both circumstances.
 
 
 File: swift.info,  Node: Capturing Values,  Next: Closures Are Reference Types,  Prev: Trailing Closures,  Up: Closures
@@ -8259,7 +8308,7 @@ might seem unusual:
 refers to ‘runningTotal’ and ‘amount’ from within its function body.  It
 does this by capturing a _reference_ to ‘runningTotal’ and ‘amount’ from
 the surrounding function and using them within its own function body.
-Capturing by reference ensures that ‘runningTotal’ and ‘amount’ do not
+Capturing by reference ensures that ‘runningTotal’ and ‘amount’ don’t
 disappear when the call to ‘makeIncrementer’ ends, and also ensures that
 ‘runningTotal’ is available the next time the ‘incrementer’ function is
 called.
@@ -8357,11 +8406,11 @@ parameters, you can write ‘@escaping’ before the parameter’s type to
 indicate that the closure is allowed to escape.
 
    One way that a closure can escape is by being stored in a variable
-that is defined outside the function.  As an example, many functions
-that start an asynchronous operation take a closure argument as a
-completion handler.  The function returns after it starts the operation,
-but the closure isn’t called until the operation is completed—the
-closure needs to escape, to be called later.  For example:
+that’s defined outside the function.  As an example, many functions that
+start an asynchronous operation take a closure argument as a completion
+handler.  The function returns after it starts the operation, but the
+closure isn’t called until the operation is completed—the closure needs
+to escape, to be called later.  For example:
 
      var completionHandlers: [() -> Void] = []
      func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
@@ -8373,16 +8422,27 @@ its argument and adds it to an array that’s declared outside the
 function.  If you didn’t mark the parameter of this function with
 ‘@escaping’, you would get a compile-time error.
 
-   Marking a closure with ‘@escaping’ means you have to refer to ‘self’
-explicitly within the closure.  For example, in the code below, the
-closure passed to ‘someFunctionWithEscapingClosure(_:)’ is an escaping
-closure, which means it needs to refer to ‘self’ explicitly.  In
-contrast, the closure passed to ‘someFunctionWithNonescapingClosure(_:)’
-is a nonescaping closure, which means it can refer to ‘self’ implicitly.
+   An escaping closure that refers to ‘self’ needs special consideration
+if ‘self’ refers to an instance of a class.  Capturing ‘self’ in an
+escaping closure makes it easy to accidentally create a strong reference
+cycle.  For information about reference cycles, see *note Automatic
+Reference Counting::.
+
+   Normally, a closure captures variables implicitly by using them in
+the body of the closure, but in this case you need to be explicit.  If
+you want to capture ‘self’, write ‘self’ explicitly when you use it, or
+include ‘self’ in the closure’s capture list.  Writing ‘self’ explicitly
+lets you express your intent, and reminds you to confirm that there
+isn’t a reference cycle.  For example, in the code below, the closure
+passed to ‘someFunctionWithEscapingClosure(_:)’ refers to ‘self’
+explicitly.  In contrast, the closure passed to
+‘someFunctionWithNonescapingClosure(_:)’ is a nonescaping closure, which
+means it can refer to ‘self’ implicitly.
 
      func someFunctionWithNonescapingClosure(closure: () -> Void) {
          closure()
      }
+
 
      class SomeClass {
          var x = 10
@@ -8392,14 +8452,47 @@ is a nonescaping closure, which means it can refer to ‘self’ implicitly.
          }
      }
 
+
      let instance = SomeClass()
      instance.doSomething()
      print(instance.x)
      // Prints "200"
 
+
      completionHandlers.first?()
      print(instance.x)
      // Prints "100"
+
+   Here’s a version of ‘doSomething()’ that captures ‘self’ by including
+it in the closure’s capture list, and then refers to ‘self’ implicitly:
+
+     class SomeOtherClass {
+         var x = 10
+         func doSomething() {
+             someFunctionWithEscapingClosure { [self] in x = 100 }
+             someFunctionWithNonescapingClosure { x = 200 }
+         }
+     }
+
+   If ‘self’ is an instance of a structure or an enumeration, you can
+always refer to ‘self’ implicitly.  However, an escaping closure can’t
+capture a mutable reference to ‘self’ when ‘self’ is an instance of a
+structure or an enumeration.  Structures and enumerations don’t allow
+shared mutability, as discussed in *note Structures and Enumerations Are
+Value Types: Structures and Enumerations Are Value Types.
+
+     struct SomeStruct {
+         var x = 10
+         mutating func doSomething() {
+             someFunctionWithNonescapingClosure { x = 200 } // Ok
+             someFunctionWithEscapingClosure { x = 100 } // Error
+         }
+     }
+
+   The call to the ‘someFunctionWithEscapingClosure’ function in the
+example above is an error because it’s inside a mutating method, so
+‘self’ is mutable.  That violates the rule that escaping closures can’t
+capture a mutable reference to ‘self’ for structures.
 
 
 File: swift.info,  Node: Autoclosures,  Prev: Escaping Closures,  Up: Closures
@@ -9654,7 +9747,7 @@ queried:
 
    If a property marked with the ‘lazy’ modifier is accessed by multiple
 threads simultaneously and the property has not yet been initialized,
-there is no guarantee that the property will be initialized only once.
+there’s no guarantee that the property will be initialized only once.
 
 
 File: swift.info,  Node: Stored Properties and Instance Variables,  Prev: Lazy Stored Properties,  Up: Stored Properties
@@ -9870,13 +9963,19 @@ Property observers observe and respond to changes in a property’s value.
 Property observers are called every time a property’s value is set, even
 if the new value is the same as the property’s current value.
 
-   You can add property observers to any stored properties you define,
-except for lazy stored properties.  You can also add property observers
-to any inherited property (whether stored or computed) by overriding the
-property within a subclass.  You don’t need to define property observers
-for nonoverridden computed properties, because you can observe and
-respond to changes to their value in the computed property’s setter.
-Property overriding is described in *note Overriding::.
+   You can add property observers in the following places:
+
+   • Stored properties that you define
+
+   • Stored properties that you inherit
+
+   • Computed properties that you inherit
+
+   For an inherited property, you add a property observer by overriding
+that property in a subclass.  For a computed property that you define,
+use the property’s setter to observe and respond to value changes,
+instead of trying to create an observer.  Overriding properties is
+described in *note Overriding::.
 
    You have the option to define either or both of these observers on a
 property:
@@ -10210,9 +10309,8 @@ arguments you include.  For example:
 
    The instance of ‘SmallNumber’ that wraps ‘height’ is created by
 calling ‘SmallNumber(wrappedValue: 1)’, which uses the default maximum
-value of
-  1. The instance that wraps ‘width’ is created by calling
-   ‘SmallNumber(wrappedValue: 2, maximum: 9)’.
+value of 12.  The instance that wraps ‘width’ is created by calling
+‘SmallNumber(wrappedValue: 2, maximum: 9)’.
 
 
 File: swift.info,  Node: Projecting a Value From a Property Wrapper,  Prev: Setting Initial Values for Wrapped Properties,  Up: Property Wrappers
@@ -11104,7 +11202,7 @@ any type.
    Like functions, subscripts can take a varying number of parameters
 and provide default values for their parameters, as discussed in *note
 Variadic Parameters:: and *note Default Parameter Values::.  However,
-unlike functions, they can’t use in-out parameters.
+unlike functions, subscripts can’t use in-out parameters.
 
    A class or structure can provide as many subscript implementations as
 it needs, and the appropriate subscript to be used will be inferred
@@ -13133,7 +13231,7 @@ You typically define a failable initializer that creates an optional
 instance of the appropriate type by placing a question mark after the
 ‘init’ keyword (‘init?’).  Alternatively, you can define a failable
 initializer that creates an implicitly unwrapped optional instance of
-the appropriate type.  Do this by placing an exclamation mark after the
+the appropriate type.  Do this by placing an exclamation point after the
 ‘init’ keyword (‘init!’) instead of a question mark.
 
    You can delegate from ‘init?’ to ‘init!’ and vice versa, and you can
@@ -13396,7 +13494,7 @@ deinitializer simply returns all of the player’s coins to the bank:
 they are available.  This ‘Player’ instance is stored in an optional
 ‘Player’ variable called ‘playerOne’.  An optional variable is used
 here, because players can leave the game at any point.  The optional
-lets you track whether there is currently a player in the game.
+lets you track whether there’s currently a player in the game.
 
    Because ‘playerOne’ is an optional, it is qualified with an
 exclamation mark (‘!’) when its ‘coinsInPurse’ property is accessed to
@@ -13465,7 +13563,7 @@ File: swift.info,  Node: Optional Chaining as an Alternative to Forced Unwrappin
 You specify optional chaining by placing a question mark (‘?’) after the
 optional value on which you wish to call a property, method or subscript
 if the optional is non-‘nil’.  This is very similar to placing an
-exclamation mark (‘!’) after an optional value to force the unwrapping
+exclamation point (‘!’) after an optional value to force the unwrapping
 of its value.  The main difference is that optional chaining fails
 gracefully when the optional is ‘nil’, whereas forced unwrapping
 triggers a runtime error when the optional is ‘nil’.
@@ -13507,7 +13605,7 @@ below, ‘john’ has a ‘residence’ property value of ‘nil’:
      let john = Person()
 
    If you try to access the ‘numberOfRooms’ property of this person’s
-‘residence’, by placing an exclamation mark after ‘residence’ to force
+‘residence’, by placing an exclamation point after ‘residence’ to force
 the unwrapping of its value, you trigger a runtime error, because there
 is no ‘residence’ value to unwrap:
 
@@ -13521,7 +13619,7 @@ when ‘residence’ is ‘nil’, as illustrated above.
 
    Optional chaining provides an alternative way to access the value of
 ‘numberOfRooms’.  To use optional chaining, use a question mark in place
-of the exclamation mark:
+of the exclamation point:
 
      if let roomCount = john.residence?.numberOfRooms {
          print("John's residence has \(roomCount) room(s).")
@@ -14220,6 +14318,8 @@ handle the error.
          statements
      } catch pattern 2 where condition {
          statements
+     } catch pattern 3, pattern 4 where condition {
+         statements
      } catch {
          statements
      }
@@ -14274,7 +14374,7 @@ a ‘VendingMachineError’ is instead caught by the calling function:
          do {
              try vendingMachine.vend(itemNamed: item)
          } catch is VendingMachineError {
-             print("Invalid selection, out of stock, or not enough money.")
+             print("Couldn't buy that from the vending machine.")
          }
      }
 
@@ -14283,7 +14383,7 @@ a ‘VendingMachineError’ is instead caught by the calling function:
      } catch {
          print("Unexpected non-vending-machine-related error: \(error)")
      }
-     // Prints "Invalid selection, out of stock, or not enough money."
+     // Prints "Couldn't buy that from the vending machine."
 
    In the ‘nourish(with:)’ function, if ‘vend(itemNamed:)’ throws an
 error that’s one of the cases of the ‘VendingMachineError’ enumeration,
@@ -14810,8 +14910,8 @@ rank’s raw ‘Int’ value.
 ‘suit’.  It also defines a computed property called ‘description’, which
 uses the values stored in ‘rank’ and ‘suit’ to build a description of
 the name and value of the card.  The ‘description’ property uses
-optional binding to check whether there is a second value to display,
-and if so, inserts additional description detail for that second value.
+optional binding to check whether there’s a second value to display, and
+if so, inserts additional description detail for that second value.
 
    Because ‘BlackjackCard’ is a structure with no custom initializers,
 it has an implicit memberwise initializer, as described in *note
@@ -15260,6 +15360,7 @@ types can take advantage of.
 * Protocols as Types::
 * Delegation::
 * Adding Protocol Conformance with an Extension::
+* Adopting a Protocol Using a Synthesized Implementation::
 * Collections of Protocol Types::
 * Protocol Inheritance::
 * Class-Only Protocols::
@@ -15866,7 +15967,7 @@ the ‘gameDidStart(_:)’ method is able to access and print the dice’s
      // The game lasted for 4 turns
 
 
-File: swift.info,  Node: Adding Protocol Conformance with an Extension,  Next: Collections of Protocol Types,  Prev: Delegation,  Up: Protocols
+File: swift.info,  Node: Adding Protocol Conformance with an Extension,  Next: Adopting a Protocol Using a Synthesized Implementation,  Prev: Delegation,  Up: Protocols
 
 26.8 Adding Protocol Conformance with an Extension
 ==================================================
@@ -15990,10 +16091,98 @@ requirements.  They must always explicitly declare their adoption of the
 protocol.
 
 
-File: swift.info,  Node: Collections of Protocol Types,  Next: Protocol Inheritance,  Prev: Adding Protocol Conformance with an Extension,  Up: Protocols
+File: swift.info,  Node: Adopting a Protocol Using a Synthesized Implementation,  Next: Collections of Protocol Types,  Prev: Adding Protocol Conformance with an Extension,  Up: Protocols
 
-26.9 Collections of Protocol Types
-==================================
+26.9 Adopting a Protocol Using a Synthesized Implementation
+===========================================================
+
+Swift can automatically provide the protocol conformance for
+‘Equatable’, ‘Hashable’, and ‘Comparable’ in many simple cases.  Using
+this synthesized implementation means you don’t have to write repetitive
+boilerplate code to implement the protocol requirements yourself.
+
+   Swift provides a synthesized implementation of ‘Equatable’ for the
+following kinds of custom types:
+
+   • Structures that have only stored properties that conform to the
+     ‘Equatable’ protocol
+
+   • Enumerations that have only associated types that conform to the
+     ‘Equatable’ protocol
+
+   • Enumerations that have no associated types
+
+   To receive a synthesized implementation of ‘==’, declare conformance
+to ‘Equatable’ in the file that contains the original declaration,
+without implementing an ‘==’ operator yourself.  The ‘Equatable’
+protocol provides a default implementation of ‘!=’.
+
+   The example below defines a ‘Vector3D’ structure for a
+three-dimensional position vector ‘(x, y, z)’, similar to the ‘Vector2D’
+structure.  Because the ‘x’, ‘y’, and ‘z’ properties are all of an
+‘Equatable’ type, ‘Vector3D’ receives synthesized implementations of the
+equivalence operators.
+
+     struct Vector3D: Equatable {
+         var x = 0.0, y = 0.0, z = 0.0
+     }
+
+
+     let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+     let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+     if twoThreeFour == anotherTwoThreeFour {
+         print("These two vectors are also equivalent.")
+     }
+     // Prints "These two vectors are also equivalent."
+
+   Swift provides a synthesized implementation of ‘Hashable’ for the
+following kinds of custom types:
+
+   • Structures that have only stored properties that conform to the
+     ‘Hashable’ protocol
+
+   • Enumerations that have only associated types that conform to the
+     ‘Hashable’ protocol
+
+   • Enumerations that have no associated types
+
+   To receive a synthesized implementation of ‘hash(into:)’, declare
+conformance to ‘Hashable’ in the file that contains the original
+declaration, without implementing a ‘hash(into:)’ method yourself.
+
+   Swift provides a synthesized implementation of ‘Comparable’ for
+enumerations that don’t have a raw value.  If the enumeration has
+associated types, they must all conform to the ‘Comparable’ protocol.
+To receive a synthesized implementation of ‘<’, declare conformance to
+‘Comparable’ in the file that contains the original enumeration
+declaration, without implementing a ‘<’ operator yourself.  The
+‘Comparable’ protocol’s default implementation of ‘<=’, ‘>’, and ‘>=’
+provides the remaining comparison operators.
+
+   The example below defines a ‘SkillLevel’ enumeration with cases for
+beginners, intermediates, and experts.  Experts are additionally ranked
+by the number of stars they have.
+
+     enum SkillLevel: Comparable {
+         case beginner
+         case intermediate
+         case expert(stars: Int)
+     }
+     var levels = [SkillLevel.intermediate, SkillLevel.beginner,
+                   SkillLevel.expert(stars: 5), SkillLevel.expert(stars: 3)]
+     for level in levels.sorted() {
+         print(level)
+     }
+     // Prints "beginner"
+     // Prints "intermediate"
+     // Prints "expert(stars: 3)"
+     // Prints "expert(stars: 5)"
+
+
+File: swift.info,  Node: Collections of Protocol Types,  Next: Protocol Inheritance,  Prev: Adopting a Protocol Using a Synthesized Implementation,  Up: Protocols
+
+26.10 Collections of Protocol Types
+===================================
 
 A protocol can be used as the type to be stored in a collection such as
 an array or a dictionary, as mentioned in *note Protocols as Types::.
@@ -16022,7 +16211,7 @@ loop.
 
 File: swift.info,  Node: Protocol Inheritance,  Next: Class-Only Protocols,  Prev: Collections of Protocol Types,  Up: Protocols
 
-26.10 Protocol Inheritance
+26.11 Protocol Inheritance
 ==========================
 
 A protocol can _inherit_ one or more other protocols and can add further
@@ -16101,7 +16290,7 @@ pretty text description of any ‘SnakesAndLadders’ instance:
 
 File: swift.info,  Node: Class-Only Protocols,  Next: Protocol Composition,  Prev: Protocol Inheritance,  Up: Protocols
 
-26.11 Class-Only Protocols
+26.12 Class-Only Protocols
 ==========================
 
 You can limit protocol adoption to class types (and not structures or
@@ -16128,7 +16317,7 @@ Classes Are Reference Types::.
 
 File: swift.info,  Node: Protocol Composition,  Next: Checking for Protocol Conformance,  Prev: Class-Only Protocols,  Up: Protocols
 
-26.12 Protocol Composition
+26.13 Protocol Composition
 ==========================
 
 It can be useful to require a type to conform to multiple protocols at
@@ -16222,7 +16411,7 @@ also invalid.
 
 File: swift.info,  Node: Checking for Protocol Conformance,  Next: Optional Protocol Requirements,  Prev: Protocol Composition,  Up: Protocols
 
-26.13 Checking for Protocol Conformance
+26.14 Checking for Protocol Conformance
 =======================================
 
 You can use the ‘is’ and ‘as’ operators described in *note Type
@@ -16320,7 +16509,7 @@ constant, they’re only known to be of type ‘HasArea’, and so only their
 
 File: swift.info,  Node: Optional Protocol Requirements,  Next: Protocol Extensions,  Prev: Checking for Protocol Conformance,  Up: Protocols
 
-26.14 Optional Protocol Requirements
+26.15 Optional Protocol Requirements
 ====================================
 
 You can define _optional requirements_ for protocols.  These
@@ -16500,7 +16689,7 @@ zero, no more counting takes place:
 
 File: swift.info,  Node: Protocol Extensions,  Prev: Optional Protocol Requirements,  Up: Protocols
 
-26.15 Protocol Extensions
+26.16 Protocol Extensions
 =========================
 
 Protocols can be extended to provide method, initializer, subscript, and
@@ -16540,7 +16729,7 @@ inheritance is always specified in the protocol declaration itself.
 
 File: swift.info,  Node: Providing Default Implementations,  Next: Adding Constraints to Protocol Extensions,  Up: Protocol Extensions
 
-26.15.1 Providing Default Implementations
+26.16.1 Providing Default Implementations
 -----------------------------------------
 
 You can use protocol extensions to provide a default implementation to
@@ -16571,7 +16760,7 @@ result of accessing the ‘textualDescription’ property:
 
 File: swift.info,  Node: Adding Constraints to Protocol Extensions,  Prev: Providing Default Implementations,  Up: Protocol Extensions
 
-26.15.2 Adding Constraints to Protocol Extensions
+26.16.2 Adding Constraints to Protocol Extensions
 -------------------------------------------------
 
 When you define a protocol extension, you can specify constraints that
@@ -16656,6 +16845,7 @@ limitations on what that type can be.
 * Associated Types::
 * Generic Where Clauses::
 * Extensions with a Generic Where Clause::
+* Contextual Where Clauses::
 * Associated Types with a Generic Where Clause::
 * Generic Subscripts::
 
@@ -17034,7 +17224,11 @@ value for a given key that is already in the dictionary.
 ‘Dictionary’, which specifies that the key type must conform to the
 ‘Hashable’ protocol, a special protocol defined in the Swift standard
 library.  All of Swift’s basic types (such as ‘String’, ‘Int’, ‘Double’,
-and ‘Bool’) are hashable by default.
+and ‘Bool’) are hashable by default.  For information about making your
+own custom types conform to the ‘Hashable’ protocol, see Conforming to
+the Hashable Protocol
+(https://developer.apple.com/documentation/swift/hashable#2849490)
+[<https://developer.apple.com/documentation/swift/hashable#2849490>].
 
    You can define your own type constraints when creating custom generic
 types, and these constraints provide much of the power of generic
@@ -17170,8 +17364,8 @@ File: swift.info,  Node: Associated Types,  Next: Generic Where Clauses,  Prev: 
 =====================
 
 When defining a protocol, it’s sometimes useful to declare one or more
-associated types as part of the protocol’s definition.  An ‘associated
-type’ gives a placeholder name to a type that is used as part of the
+associated types as part of the protocol’s definition.  An _associated
+type_ gives a placeholder name to a type that is used as part of the
 protocol.  The actual type to use for that associated type isn’t
 specified until the protocol is adopted.  Associated types are specified
 with the ‘associatedtype’ keyword.
@@ -17385,9 +17579,8 @@ container’s ‘Item’ type.  The constraint on ‘Item’ is a generic ‘whe
 clause, which is discussed in *note Associated Types with a Generic
 Where Clause: Associated Types with a Generic Where Clause. below.
 
-   Here’s an extension of the ‘Stack’ type from *note Strong Reference
-Cycles for Closures: Strong Reference Cycles for Closures. above that
-adds conformance to the ‘SuffixableContainer’ protocol:
+   Here’s an extension of the ‘Stack’ type from *note Generic Types::
+above that adds conformance to the ‘SuffixableContainer’ protocol:
 
      extension Stack: SuffixableContainer {
          func suffix(_ size: Int) -> Stack {
@@ -17563,7 +17756,7 @@ arguments.  In the example above, the ‘allItemsMatch(_:_:)’ function
 correctly reports that all of the items in the two containers match.
 
 
-File: swift.info,  Node: Extensions with a Generic Where Clause,  Next: Associated Types with a Generic Where Clause,  Prev: Generic Where Clauses,  Up: Generics 1
+File: swift.info,  Node: Extensions with a Generic Where Clause,  Next: Contextual Where Clauses,  Prev: Generic Where Clauses,  Up: Generics 1
 
 27.10 Extensions with a Generic Where Clause
 ============================================
@@ -17661,9 +17854,75 @@ clause that you write elsewhere.  Separate each requirement in the list
 with a comma.
 
 
-File: swift.info,  Node: Associated Types with a Generic Where Clause,  Next: Generic Subscripts,  Prev: Extensions with a Generic Where Clause,  Up: Generics 1
+File: swift.info,  Node: Contextual Where Clauses,  Next: Associated Types with a Generic Where Clause,  Prev: Extensions with a Generic Where Clause,  Up: Generics 1
 
-27.11 Associated Types with a Generic Where Clause
+27.11 Contextual Where Clauses
+==============================
+
+You can write a generic ‘where’ clause as part of a declaration that
+doesn’t have its own generic type constraints, when you’re already
+working in the context of generic types.  For example, you can write a
+generic ‘where’ clause on a subscript of a generic type or on a method
+in an extension to a generic type.  The ‘Container’ structure is
+generic, and the ‘where’ clauses in the example below specify what type
+constraints have to be satisfied to make these new methods available on
+a container.
+
+     extension Container {
+         func average() -> Double where Item == Int {
+             var sum = 0.0
+             for index in 0..<count {
+                 sum += Double(self[index])
+             }
+             return sum / Double(count)
+         }
+         func endsWith(_ item: Item) -> Bool where Item: Equatable {
+             return count >= 1 && self[count-1] == item
+         }
+     }
+     let numbers = [1260, 1200, 98, 37]
+     print(numbers.average())
+     // Prints "648.75"
+     print(numbers.endsWith(37))
+     // Prints "true"
+
+   This example adds an ‘average()’ method to ‘Container’ when the items
+are integers, and it adds an ‘endsWith(_:)’ method when the items are
+equatable.  Both functions include a generic ‘where’ clause that adds
+type constraints to the generic ‘Item’ type parameter from the original
+declaration of ‘Container’.
+
+   If you want to write this code without using contextual ‘where’
+clauses, you write two extensions, one for each generic ‘where’ clause.
+The example above and the example below have the same behavior.
+
+     extension Container where Item == Int {
+         func average() -> Double {
+             var sum = 0.0
+             for index in 0..<count {
+                 sum += Double(self[index])
+             }
+             return sum / Double(count)
+         }
+     }
+     extension Container where Item: Equatable {
+         func endsWith(_ item: Item) -> Bool {
+             return count >= 1 && self[count-1] == item
+         }
+     }
+
+   In the version of this example that uses contextual ‘where’ clauses,
+the implementation of ‘average()’ and ‘endsWith(_:)’ are both in the
+same extension because each method’s generic ‘where’ clause states the
+requirements that need to be satisfied to make that method available.
+Moving those requirements to the extensions’ generic ‘where’ clauses
+makes the methods available in the same situations, but requires one
+extension per requirement.
+
+
+File: swift.info,  Node: Associated Types with a Generic Where Clause,  Next: Generic Subscripts,  Prev: Contextual Where Clauses,  Up: Generics 1
+
+27.12 Associated Types with a Generic Where Clause
 ==================================================
 
 You can include a generic ‘where’ clause on an associated type.  For
@@ -17697,7 +17956,7 @@ conform to ‘Comparable’:
 
 File: swift.info,  Node: Generic Subscripts,  Prev: Associated Types with a Generic Where Clause,  Up: Generics 1
 
-27.12 Generic Subscripts
+27.13 Generic Subscripts
 ========================
 
 Subscripts can be generic, and they can include generic ‘where’ clauses.
@@ -18231,8 +18490,8 @@ printed at the point that you call the ‘Person’ class’s initializer.
 This confirms that initialization has taken place.
 
    Because the new ‘Person’ instance has been assigned to the
-‘reference1’ variable, there is now a strong reference from ‘reference1’
-to the new ‘Person’ instance.  Because there is at least one strong
+‘reference1’ variable, there’s now a strong reference from ‘reference1’
+to the new ‘Person’ instance.  Because there’s at least one strong
 reference, ARC makes sure that this ‘Person’ is kept in memory and is
 not deallocated.
 
@@ -18338,7 +18597,7 @@ reference to the new ‘Apartment’ instance:
  [image src="images/referenceCycle01_2x.png" ]
    You can now link the two instances together so that the person has an
 apartment, and the apartment has a tenant.  Note that an exclamation
-mark (‘!’) is used to unwrap and access the instances stored inside the
+point (‘!’) is used to unwrap and access the instances stored inside the
 ‘john’ and ‘unit4A’ optional variables, so that the properties of those
 instances can be set:
 
@@ -18398,6 +18657,7 @@ the same lifetime or a longer lifetime.
 
 * Weak References::
 * Unowned References::
+* Unowned Optional References::
 * Unowned References and Implicitly Unwrapped Optional Properties::
 
 
@@ -18500,7 +18760,7 @@ as their last strong reference is removed, making weak references
 unsuitable for such a purpose.
 
 
-File: swift.info,  Node: Unowned References,  Next: Unowned References and Implicitly Unwrapped Optional Properties,  Prev: Weak References,  Up: Resolving Strong Reference Cycles Between Class Instances
+File: swift.info,  Node: Unowned References,  Next: Unowned Optional References,  Prev: Weak References,  Up: Resolving Strong Reference Cycles Between Class Instances
 
 29.4.2 Unowned References
 -------------------------
@@ -18511,9 +18771,9 @@ unowned reference is used when the other instance has the same lifetime
 or a longer lifetime.  You indicate an unowned reference by placing the
 ‘unowned’ keyword before a property or variable declaration.
 
-   An unowned reference is expected to always have a value.  As a
-result, ARC never sets an unowned reference’s value to ‘nil’, which
-means that unowned references are defined using non-optional types.
+   Unlike a weak reference, an unowned reference is expected to always
+have a value.  As a result, marking a value as unowned doesn’t make it
+optional, and ARC never sets an unowned reference’s value to ‘nil’.
 
    Important
 
@@ -18578,15 +18838,14 @@ both 32-bit and 64-bit systems.
 ‘john’, which will be used to store a reference to a specific customer.
 This variable has an initial value of nil, by virtue of being optional:
 
-  1. var john: Customer?
+     var john: Customer?
 
    You can now create a ‘Customer’ instance, and use it to initialize
 and assign a new ‘CreditCard’ instance as that customer’s ‘card’
 property:
 
-  1. john = Customer(name: "John Appleseed")
-  2. john!.card = CreditCard(number: 1234_5678_9012_3456, customer:
-     john!)
+     john = Customer(name: "John Appleseed")
+     john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 
    Here’s how the references look, now that you’ve linked the two
 instances:
@@ -18629,9 +18888,97 @@ try to access the memory location where the instance used to be, which
 is an unsafe operation.
 
 
-File: swift.info,  Node: Unowned References and Implicitly Unwrapped Optional Properties,  Prev: Unowned References,  Up: Resolving Strong Reference Cycles Between Class Instances
+File: swift.info,  Node: Unowned Optional References,  Next: Unowned References and Implicitly Unwrapped Optional Properties,  Prev: Unowned References,  Up: Resolving Strong Reference Cycles Between Class Instances
 
-29.4.3 Unowned References and Implicitly Unwrapped Optional Properties
+29.4.3 Unowned Optional References
+----------------------------------
+
+You can mark an optional reference to a class as unowned.  In terms of
+the ARC ownership model, an unowned optional reference and a weak
+reference can both be used in the same contexts.  The difference is that
+when you use an unowned optional reference, you’re responsible for
+making sure it always refers to a valid object or is set to ‘nil’.
+
+   Here’s an example that keeps track of the courses offered by a
+particular department at a school:
+
+     class Department {
+         var name: String
+         var courses: [Course]
+         init(name: String) {
+             self.name = name
+             self.courses = []
+         }
+     }
+
+
+     class Course {
+         var name: String
+         unowned var department: Department
+         unowned var nextCourse: Course?
+         init(name: String, in department: Department) {
+             self.name = name
+             self.department = department
+             self.nextCourse = nil
+         }
+     }
+
+   ‘Department’ maintains a strong reference to each course that the
+department offers.  In the ARC ownership model, a department owns its
+courses.  ‘Course’ has two unowned references, one to the department and
+one to the next course a student should take; a course doesn’t own
+either of these objects.  Every course is part of some department so the
+‘department’ property isn’t an optional.  However, because some courses
+don’t have a recommended follow-on course, the ‘nextCourse’ property is
+an optional.
+
+   Here’s an example of using these classes:
+
+     let department = Department(name: "Horticulture")
+
+
+     let intro = Course(name: "Survey of Plants", in: department)
+     let intermediate = Course(name: "Growing Common Herbs", in:
+                                                               department)
+     let advanced = Course(name: "Caring for Tropical Plants", in:
+                                                                 department)
+
+
+     intro.nextCourse = intermediate
+     intermediate.nextCourse = advanced
+     department.courses = [intro, intermediate, advanced]
+
+   The code above creates a department and its three courses.  The intro
+and intermediate courses both have a suggested next course stored in
+their ‘nextCourse’ property, which maintains an unowned optional
+reference to the course a student should take after after completing
+this one.
+
+ [image src="images/unownedOptionalReference_2x.png" ]
+   An unowned optional reference doesn’t keep a strong hold on the
+instance of the class that it wraps, and so it doesn’t prevent ARC from
+deallocating the instance.  It behaves the same as an unowned reference
+does under ARC, except that an unowned optional reference can be ‘nil’.
+
+   Like non-optional unowned references, you’re responsible for ensuring
+that ‘nextCourse’ always refers to a course that hasn’t been
+deallocated.  In this case, for example, when you delete a course from
+‘department.courses’ you also need to remove any references to it that
+other courses might have.
+
+   Note
+
+   The underlying type of an optional value is ‘Optional’, which is an
+enumeration in the Swift standard library.  However, optionals are an
+exception to the rule that value types can’t be marked with ‘unowned’.
+
+   The optional that wraps the class doesn’t use reference counting, so
+you don’t need to maintain a strong reference to the optional.
+
+
+File: swift.info,  Node: Unowned References and Implicitly Unwrapped Optional Properties,  Prev: Unowned Optional References,  Up: Resolving Strong Reference Cycles Between Class Instances
+
+29.4.4 Unowned References and Implicitly Unwrapped Optional Properties
 ----------------------------------------------------------------------
 
 The examples for weak and unowned references above cover two of the more
@@ -18648,7 +18995,7 @@ property that is allowed to be ‘nil’ and another property that cannot be
 ‘nil’ have the potential to cause a strong reference cycle.  This
 scenario is best resolved with an unowned reference.
 
-   However, there is a third scenario, in which _both_ properties should
+   However, there’s a third scenario, in which _both_ properties should
 always have a value, and neither property should ever be ‘nil’ once
 initialization is complete.  In this scenario, it’s useful to combine an
 unowned property on one class with an implicitly unwrapped optional
@@ -18696,7 +19043,7 @@ Initialization.
 
    To cope with this requirement, you declare the ‘capitalCity’ property
 of ‘Country’ as an implicitly unwrapped optional property, indicated by
-the exclamation mark at the end of its type annotation (‘City!’).  This
+the exclamation point at the end of its type annotation (‘City!’).  This
 means that the ‘capitalCity’ property has a default value of ‘nil’, like
 any other optional, but can be accessed without the need to unwrap its
 value as described in *note Implicitly Unwrapped Optionals: Implicitly
@@ -18714,7 +19061,7 @@ own ‘capitalCity’ property.
    All of this means that you can create the ‘Country’ and ‘City’
 instances in a single statement, without creating a strong reference
 cycle, and the ‘capitalCity’ property can be accessed directly, without
-needing to use an exclamation mark to unwrap its optional value:
+needing to use an exclamation point to unwrap its optional value:
 
      var country = Country(name: "Canada", capitalName: "Ottawa")
      print("\(country.name)'s capital city is called \(country.capitalCity.name)")
@@ -19588,7 +19935,7 @@ File: swift.info,  Node: Access Control Syntax,  Next: Custom Types,  Prev: Acce
 
 Define the access level for an entity by placing one of the ‘open’,
 ‘public’, ‘internal’, ‘fileprivate’, or ‘private’ modifiers at the
-beginning of the entity’s declaration:
+beginning of the entity’s declaration.
 
      public class SomePublicClass {}
      internal class SomeInternalClass {}
@@ -20822,37 +21169,9 @@ instances are equivalent:
      // Prints "These two vectors are equivalent."
 
    In many simple cases, you can ask Swift to provide synthesized
-implementations of the equivalence operators for you.  Swift provides
-synthesized implementations for the following kinds of custom types:
-
-   • Structures that have only stored properties that conform to the
-     ‘Equatable’ protocol
-
-   • Enumerations that have only associated types that conform to the
-     ‘Equatable’ protocol
-
-   • Enumerations that have no associated types
-
-   To receive a synthesized implementation of ‘==’, declare ‘Equatable’
-conformance in the file that contains the original declaration, without
-implementing an ‘==’ operator yourself.
-
-   The example below defines a ‘Vector3D’ structure for a
-three-dimensional position vector ‘(x, y, z)’, similar to the ‘Vector2D’
-structure.  Because the ‘x’, ‘y’, and ‘z’ properties are all of an
-‘Equatable’ type, ‘Vector3D’ receives synthesized implementations of the
-equivalence operators.
-
-     struct Vector3D: Equatable {
-         var x = 0.0, y = 0.0, z = 0.0
-     }
-
-     let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
-     let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
-     if twoThreeFour == anotherTwoThreeFour {
-         print("These two vectors are also equivalent.")
-     }
-     // Prints "These two vectors are also equivalent."
+implementations of the equivalence operators for you, as described in
+*note Adopting a Protocol Using a Synthesized Implementation: Adopting a
+Protocol Using a Synthesized Implementation.
 
 
 File: swift.info,  Node: Custom Operators,  Prev: Operator Methods 1,  Up: Advanced Operators
@@ -20868,7 +21187,7 @@ can be used to define custom operators, see Operators.
 keyword, and are marked with the ‘prefix’, ‘infix’ or ‘postfix’
 modifiers:
 
-  1. prefix operator +
+     prefix operator +++
 
    The example above defines a new prefix operator called ‘+++’.  This
 operator does not have an existing meaning in Swift, and so it is given
@@ -20972,6 +21291,8 @@ Index
                                                               (line   6)
 * as:                                    Downcasting.         (line   6)
 * associatedtype:                        Associated Types.    (line   6)
+* automatic conformance for Equatable, Hashable, Comparable: Adopting a Protocol Using a Synthesized Implementation.
+                                                              (line   6)
 * break:                                 Break.               (line   6)
 * break retain cycle:                    Resolving Strong Reference Cycles Between Class Instances.
                                                               (line   6)
@@ -21001,7 +21322,7 @@ Index
                                                               (line   6)
 * define a closure inline:               Closure Expressions. (line   6)
 * deinit:                                Deinitialization.    (line   6)
-* didSet:                                Property Observers.  (line  78)
+* didSet:                                Property Observers.  (line  84)
 * do:                                    Handling Errors Using Do-Catch.
                                                               (line   6)
 * early return:                          Early Exit.          (line   6)
@@ -21050,6 +21371,7 @@ Index
 * left:                                  Operator Methods 1.  (line  37)
 * let:                                   Constants and Variables.
                                                               (line   6)
+* multiple trailing closures:            Trailing Closures.   (line 134)
 * mutating:                              Protocols and Extensions.
                                                               (line  42)
 * no need to break in switch statements: Fallthrough.         (line   6)
@@ -21070,10 +21392,13 @@ Index
 * repeat:                                Repeat-While.        (line   6)
 * required:                              Required Initializers.
                                                               (line   6)
+* restrict extension declarations to particular types: Contextual Where Clauses.
+                                                              (line   6)
 * return:                                Function Parameters and Return Values.
                                                               (line   6)
 * right:                                 Operator Methods 1.  (line  37)
 * self:                                  The self Property.   (line   6)
+* self references in closures:           Escaping Closures.   (line  29)
 * some:                                  Returning an Opaque Type.
                                                               (line  53)
 * static:                                Type Property Syntax.
@@ -21112,402 +21437,405 @@ Index
 * where:                                 Extensions with a Generic Where Clause.
                                                               (line   6)
 * while:                                 While.               (line   6)
-* willSet:                               Property Observers.  (line  78)
+* willSet:                               Property Observers.  (line  84)
 
 
 
 Tag Table:
 Node: Top191
-Node: Welcome to Swift14233
-Node: About Swift14452
-Node: Version Compatibility16634
-Node: A Swift Tour17890
-Node: Simple Values19526
-Node: Control Flow22861
-Node: Functions and Closures27490
-Node: Objects and Classes31972
-Node: Enumerations and Structures38583
-Node: Protocols and Extensions44063
-Node: Error Handling47054
-Node: Generics50386
-Node: Language Guide52063
-Node: The Basics52957
-Node: Constants and Variables55590
-Node: Declaring Constants and Variables56209
-Node: Type Annotations57599
-Node: Naming Constants and Variables59508
-Node: Printing Constants and Variables61278
-Node: Comments62927
-Node: Semicolons64230
-Node: Integers64672
-Node: Integer Bounds65352
-Node: Int65938
-Node: UInt66723
-Node: Floating-Point Numbers67570
-Node: Type Safety and Type Inference68582
-Node: Numeric Literals71369
-Node: Numeric Type Conversion73422
-Node: Integer Conversion74378
-Node: Integer and Floating-Point Conversion76910
-Node: Type Aliases78401
-Node: Booleans79325
-Node: Tuples81402
-Node: Optionals84833
-Node: nil87204
-Node: If Statements and Forced Unwrapping88369
-Node: Optional Binding89904
-Node: Implicitly Unwrapped Optionals93280
-Node: Error Handling 196807
-Node: Assertions and Preconditions99498
-Node: Debugging with Assertions101725
-Node: Enforcing Preconditions103457
-Node: Basic Operators105577
-Node: Terminology107307
-Node: Assignment Operator108220
-Node: Arithmetic Operators109292
-Node: Remainder Operator110257
-Node: Unary Minus Operator111991
-Node: Unary Plus Operator112555
-Node: Compound Assignment Operators113095
-Node: Comparison Operators114099
-Node: Ternary Conditional Operator117758
-Node: Nil-Coalescing Operator119697
-Node: Range Operators122059
-Node: Closed Range Operator122407
-Node: Half-Open Range Operator123207
-Node: One-Sided Ranges124489
-Node: Logical Operators126129
-Node: Logical NOT Operator126680
-Node: Logical AND Operator127687
-Node: Logical OR Operator128657
-Node: Combining Logical Operators129860
-Node: Explicit Parentheses131242
-Node: Strings and Characters132243
-Node: String Literals134523
-Node: Multiline String Literals135232
-Node: Special Characters in String Literals137843
-Node: Extended String Delimiters139637
-Node: Initializing an Empty String140947
-Node: String Mutability141760
-Node: Strings Are Value Types142658
-Node: Working with Characters143877
-Node: Concatenating Strings and Characters144928
-Node: String Interpolation147038
-Node: Unicode149181
-Node: Unicode Scalar Values149817
-Node: Extended Grapheme Clusters150612
-Node: Counting Characters153179
-Node: Accessing and Modifying a String155588
-Node: String Indices155956
-Node: Inserting and Removing158508
-Node: Substrings159927
-Node: Comparing Strings162749
-Node: String and Character Equality163131
-Node: Prefix and Suffix Equality165566
-Node: Unicode Representations of Strings167902
-Node: UTF-8 Representation169779
-Node: UTF-16 Representation170977
-Node: Unicode Scalar Representation172544
-Node: Collection Types174281
-Node: Mutability of Collections175347
-Node: Arrays176182
-Node: Array Type Shorthand Syntax177061
-Node: Creating an Empty Array177611
-Node: Creating an Array with a Default Value178593
-Node: Creating an Array by Adding Two Arrays Together179307
-Node: Creating an Array with an Array Literal180097
-Node: Accessing and Modifying an Array182279
-Node: Iterating Over an Array186938
-Node: Sets188132
-Node: Hash Values for Set Types189012
-Node: Set Type Syntax190868
-Node: Creating and Initializing an Empty Set191237
-Node: Creating a Set with an Array Literal192221
-Node: Accessing and Modifying a Set194091
-Node: Iterating Over a Set195888
-Node: Performing Set Operations196666
-Node: Fundamental Set Operations197134
-Node: Set Membership and Equality198400
-Node: Dictionaries200097
-Node: Dictionary Type Shorthand Syntax201323
-Node: Creating an Empty Dictionary202122
-Node: Creating a Dictionary with a Dictionary Literal203168
-Node: Accessing and Modifying a Dictionary205933
-Node: Iterating Over a Dictionary209960
-Node: Control Flow 1211709
-Node: For-In Loops212922
-Node: While Loops218093
-Node: While218725
-Node: Repeat-While223278
-Node: Conditional Statements226004
-Node: If226939
-Node: Switch229598
-Node: Control Transfer Statements243477
-Node: Continue244289
-Node: Break245343
-Node: Fallthrough249589
-Node: Labeled Statements252351
-Node: Early Exit257544
-Node: Checking API Availability259855
-Node: Functions261883
-Node: Defining and Calling Functions263187
-Node: Function Parameters and Return Values266856
-Node: Functions Without Parameters267561
-Node: Functions With Multiple Parameters268313
-Node: Functions Without Return Values269686
-Node: Functions with Multiple Return Values271858
-Node: Functions With an Implicit Return276187
-Node: Function Argument Labels and Parameter Names277526
-Node: Specifying Argument Labels278772
-Node: Omitting Argument Labels279811
-Node: Default Parameter Values280579
-Node: Variadic Parameters281858
-Node: In-Out Parameters283348
-Node: Function Types286545
-Node: Using Function Types287864
-Node: Function Types as Parameter Types289327
-Node: Function Types as Return Types291167
-Node: Nested Functions293568
-Node: Closures294958
-Node: Closure Expressions296691
-Node: The Sorted Method297908
-Node: Closure Expression Syntax300459
-Node: Inferring Type From Context302308
-Node: Implicit Returns from Single-Expression Closures303928
-Node: Shorthand Argument Names304790
-Node: Operator Methods305721
-Node: Trailing Closures306490
-Node: Capturing Values312573
-Node: Closures Are Reference Types317607
-Node: Escaping Closures318927
-Node: Autoclosures321229
-Node: Enumerations326098
-Node: Enumeration Syntax328013
-Node: Matching Enumeration Values with a Switch Statement330155
-Node: Iterating over Enumeration Cases331891
-Node: Associated Values333514
-Node: Raw Values338009
-Node: Implicitly Assigned Raw Values339616
-Node: Initializing from a Raw Value341327
-Node: Recursive Enumerations343445
-Node: Structures and Classes346482
-Node: Comparing Structures and Classes347728
-Node: Definition Syntax349905
-Node: Structure and Class Instances352327
-Node: Accessing Properties353460
-Node: Memberwise Initializers for Structure Types354692
-Node: Structures and Enumerations Are Value Types355522
-Node: Classes Are Reference Types359599
-Node: Identity Operators362634
-Node: Pointers364391
-Node: Properties365360
-Node: Stored Properties366600
-Node: Stored Properties of Constant Structure Instances368397
-Node: Lazy Stored Properties369617
-Node: Stored Properties and Instance Variables373348
-Node: Computed Properties374364
-Node: Shorthand Setter Declaration377746
-Node: Shorthand Getter Declaration378672
-Node: Read-Only Computed Properties379844
-Node: Property Observers381754
-Node: Property Wrappers386514
-Node: Setting Initial Values for Wrapped Properties390606
-Node: Projecting a Value From a Property Wrapper396253
-Node: Global and Local Variables400624
-Node: Type Properties401962
-Node: Type Property Syntax403636
-Node: Querying and Setting Type Properties405238
-Node: Methods410154
-Node: Instance Methods411057
-Node: The self Property413519
-Node: Modifying Value Types from Within Instance Methods415496
-Node: Assigning to self Within a Mutating Method417636
-Node: Type Methods419349
-Node: Subscripts425901
-Node: Subscript Syntax426863
-Node: Subscript Usage429487
-Node: Subscript Options431377
-Node: Type Subscripts435752
-Node: Inheritance436774
-Node: Defining a Base Class437945
-Node: Subclassing439885
-Node: Overriding442526
-Node: Accessing Superclass Methods Properties and Subscripts443748
-Node: Overriding Methods445047
-Node: Overriding Properties445931
-Node: Preventing Overrides451221
-Node: Initialization452153
-Node: Setting Initial Values for Stored Properties453511
-Node: Initializers454432
-Node: Default Property Values455581
-Node: Customizing Initialization456844
-Node: Initialization Parameters457478
-Node: Parameter Names and Argument Labels459286
-Node: Initializer Parameters Without Argument Labels461637
-Node: Optional Property Types463119
-Node: Assigning Constant Properties During Initialization464715
-Node: Default Initializers466184
-Node: Memberwise Initializers for Structure Types 1467816
-Node: Initializer Delegation for Value Types469699
-Node: Class Inheritance and Initialization475192
-Node: Designated Initializers and Convenience Initializers476131
-Node: Syntax for Designated and Convenience Initializers477892
-Node: Initializer Delegation for Class Types478620
-Node: Two-Phase Initialization481029
-Node: Initializer Inheritance and Overriding487064
-Node: Automatic Initializer Inheritance493134
-Node: Designated and Convenience Initializers in Action494643
-Node: Failable Initializers502923
-Node: Failable Initializers for Enumerations507444
-Node: Failable Initializers for Enumerations with Raw Values509308
-Node: Propagation of Initialization Failure510739
-Node: Overriding a Failable Initializer514006
-Node: The init! Failable Initializer517587
-Node: Required Initializers518508
-Node: Setting a Default Property Value with a Closure or Function519634
-Node: Deinitialization523559
-Node: How Deinitialization Works524031
-Node: Deinitializers in Action525743
-Node: Optional Chaining530691
-Node: Optional Chaining as an Alternative to Forced Unwrapping531814
-Node: Defining Model Classes for Optional Chaining536777
-Node: Accessing Properties Through Optional Chaining540796
-Node: Calling Methods Through Optional Chaining543217
-Node: Accessing Subscripts Through Optional Chaining545837
-Node: Accessing Subscripts of Optional Type548318
-Node: Linking Multiple Levels of Chaining549618
-Node: Chaining on Methods with Optional Return Values552801
-Node: Error Handling 2554624
-Node: Representing and Throwing Errors556228
-Node: Handling Errors557425
-Node: Propagating Errors Using Throwing Functions559198
-Node: Handling Errors Using Do-Catch563434
-Node: Converting Errors to Optional Values567382
-Node: Disabling Error Propagation568935
-Node: Specifying Cleanup Actions569859
-Node: Type Casting571818
-Node: Defining a Class Hierarchy for Type Casting572597
-Node: Checking Type575665
-Node: Downcasting577155
-Node: Type Casting for Any and AnyObject581269
-Node: Nested Types584927
-Node: Nested Types in Action585687
-Node: Referring to Nested Types590045
-Node: Extensions590633
-Node: Extension Syntax591933
-Node: Computed Properties 1593220
-Node: Initializers 1595705
-Node: Methods 1599090
-Node: Mutating Instance Methods600001
-Node: Subscripts 1600722
-Node: Nested Types 1601854
-Node: Protocols603909
-Node: Protocol Syntax605055
-Node: Property Requirements605927
-Node: Method Requirements609918
-Node: Mutating Method Requirements612521
-Node: Initializer Requirements615315
-Node: Class Implementations of Protocol Initializer Requirements615945
-Node: Failable Initializer Requirements617903
-Node: Protocols as Types618543
-Node: Delegation622325
-Node: Adding Protocol Conformance with an Extension630056
-Node: Conditionally Conforming to a Protocol632432
-Node: Declaring Protocol Adoption with an Extension633748
-Node: Collections of Protocol Types634898
-Node: Protocol Inheritance636153
-Node: Class-Only Protocols639533
-Node: Protocol Composition640602
-Node: Checking for Protocol Conformance644541
-Node: Optional Protocol Requirements648484
-Node: Protocol Extensions656601
-Node: Providing Default Implementations658116
-Node: Adding Constraints to Protocol Extensions659380
-Node: Generics 1661517
-Node: The Problem That Generics Solve662847
-Node: Generic Functions665315
-Node: Type Parameters668291
-Node: Naming Type Parameters669456
-Node: Generic Types670316
-Node: Extending a Generic Type675394
-Node: Type Constraints677292
-Node: Type Constraint Syntax679168
-Node: Type Constraints in Action680061
-Node: Associated Types684221
-Node: Associated Types in Action684987
-Node: Extending an Existing Type to Specify an Associated Type690444
-Node: Adding Constraints to an Associated Type691840
-Node: Using a Protocol in Its Associated Type's Constraints692736
-Node: Generic Where Clauses695652
-Node: Extensions with a Generic Where Clause701520
-Node: Associated Types with a Generic Where Clause705501
-Node: Generic Subscripts707002
-Node: Opaque Types708629
-Node: The Problem That Opaque Types Solve709594
-Node: Returning an Opaque Type712566
-Node: Differences Between Opaque Types and Protocol Types719229
-Node: Automatic Reference Counting725346
-Node: How ARC Works726919
-Node: ARC in Action728503
-Node: Strong Reference Cycles Between Class Instances731401
-Node: Resolving Strong Reference Cycles Between Class Instances736408
-Node: Weak References737716
-Node: Unowned References741594
-Node: Unowned References and Implicitly Unwrapped Optional Properties747130
-Node: Strong Reference Cycles for Closures751868
-Node: Resolving Strong Reference Cycles for Closures758752
-Node: Defining a Capture List759914
-Node: Weak and Unowned References761091
-Node: Memory Safety764002
-Node: Understanding Conflicting Access to Memory765132
-Node: Characteristics of Memory Access768099
-Node: Conflicting Access to In-Out Parameters770201
-Node: Conflicting Access to self in Methods773632
-Node: Conflicting Access to Properties776434
-Node: Access Control779803
-Node: Modules and Source Files781376
-Node: Access Levels782552
-Node: Guiding Principle of Access Levels784898
-Node: Default Access Levels785824
-Node: Access Levels for Single-Target Apps786330
-Node: Access Levels for Frameworks787057
-Node: Access Levels for Unit Test Targets787943
-Node: Access Control Syntax788576
-Node: Custom Types789693
-Node: Tuple Types792396
-Node: Function Types 1793075
-Node: Enumeration Types794966
-Node: Nested Types 2796016
-Node: Subclassing 1796470
-Node: Constants Variables Properties and Subscripts798695
-Node: Getters and Setters799440
-Node: Initializers 2803784
-Node: Default Initializers 1804535
-Node: Default Memberwise Initializers for Structure Types805418
-Node: Protocols 1806227
-Node: Protocol Inheritance 1807296
-Node: Protocol Conformance807703
-Node: Extensions 1808962
-Node: Private Members in Extensions810309
-Node: Generics 2811572
-Node: Type Aliases 1811907
-Node: Advanced Operators812522
-Node: Bitwise Operators814188
-Node: Bitwise NOT Operator814934
-Node: Bitwise AND Operator816075
-Node: Bitwise OR Operator816910
-Node: Bitwise XOR Operator817703
-Node: Bitwise Left and Right Shift Operators818695
-Node: Overflow Operators825906
-Node: Value Overflow827398
-Node: Precedence and Associativity830347
-Node: Operator Methods 1833125
-Node: Prefix and Postfix Operators835773
-Node: Compound Assignment Operators 1837398
-Node: Equivalence Operators838950
-Node: Custom Operators842086
-Node: Precedence for Custom Infix Operators843636
-Node: Index845967
+Node: Welcome to Swift14353
+Node: About Swift14572
+Node: Version Compatibility16754
+Node: A Swift Tour18006
+Node: Simple Values19642
+Node: Control Flow22977
+Node: Functions and Closures27606
+Node: Objects and Classes32088
+Node: Enumerations and Structures38699
+Node: Protocols and Extensions44179
+Node: Error Handling47170
+Node: Generics50502
+Node: Language Guide52179
+Node: The Basics53101
+Node: Constants and Variables55734
+Node: Declaring Constants and Variables56353
+Node: Type Annotations57743
+Node: Naming Constants and Variables59652
+Node: Printing Constants and Variables61422
+Node: Comments63071
+Node: Semicolons64374
+Node: Integers64816
+Node: Integer Bounds65496
+Node: Int66082
+Node: UInt66867
+Node: Floating-Point Numbers67714
+Node: Type Safety and Type Inference68726
+Node: Numeric Literals71513
+Node: Numeric Type Conversion73566
+Node: Integer Conversion74522
+Node: Integer and Floating-Point Conversion77054
+Node: Type Aliases78545
+Node: Booleans79469
+Node: Tuples81546
+Node: Optionals84977
+Node: nil87348
+Node: If Statements and Forced Unwrapping88513
+Node: Optional Binding90050
+Node: Implicitly Unwrapped Optionals93426
+Node: Error Handling 197554
+Node: Assertions and Preconditions100245
+Node: Debugging with Assertions102472
+Node: Enforcing Preconditions104204
+Node: Basic Operators106324
+Node: Terminology108083
+Node: Assignment Operator108996
+Node: Arithmetic Operators110068
+Node: Remainder Operator111033
+Node: Unary Minus Operator112767
+Node: Unary Plus Operator113331
+Node: Compound Assignment Operators113871
+Node: Comparison Operators114875
+Node: Ternary Conditional Operator118531
+Node: Nil-Coalescing Operator120470
+Node: Range Operators122832
+Node: Closed Range Operator123180
+Node: Half-Open Range Operator123980
+Node: One-Sided Ranges125262
+Node: Logical Operators126902
+Node: Logical NOT Operator127453
+Node: Logical AND Operator128460
+Node: Logical OR Operator129430
+Node: Combining Logical Operators130633
+Node: Explicit Parentheses132015
+Node: Strings and Characters133016
+Node: String Literals135296
+Node: Multiline String Literals136005
+Node: Special Characters in String Literals138616
+Node: Extended String Delimiters140410
+Node: Initializing an Empty String141720
+Node: String Mutability142533
+Node: Strings Are Value Types143431
+Node: Working with Characters144650
+Node: Concatenating Strings and Characters145701
+Node: String Interpolation147811
+Node: Unicode149954
+Node: Unicode Scalar Values150590
+Node: Extended Grapheme Clusters151385
+Node: Counting Characters153952
+Node: Accessing and Modifying a String156361
+Node: String Indices156729
+Node: Inserting and Removing159281
+Node: Substrings160700
+Node: Comparing Strings163522
+Node: String and Character Equality163904
+Node: Prefix and Suffix Equality166339
+Node: Unicode Representations of Strings168675
+Node: UTF-8 Representation170552
+Node: UTF-16 Representation171750
+Node: Unicode Scalar Representation173317
+Node: Collection Types175054
+Node: Mutability of Collections176120
+Node: Arrays176955
+Node: Array Type Shorthand Syntax177834
+Node: Creating an Empty Array178384
+Node: Creating an Array with a Default Value179366
+Node: Creating an Array by Adding Two Arrays Together180080
+Node: Creating an Array with an Array Literal180870
+Node: Accessing and Modifying an Array183052
+Node: Iterating Over an Array187711
+Node: Sets188905
+Node: Hash Values for Set Types189785
+Node: Set Type Syntax191641
+Node: Creating and Initializing an Empty Set192010
+Node: Creating a Set with an Array Literal192994
+Node: Accessing and Modifying a Set194864
+Node: Iterating Over a Set196661
+Node: Performing Set Operations197439
+Node: Fundamental Set Operations197907
+Node: Set Membership and Equality199173
+Node: Dictionaries200870
+Node: Dictionary Type Shorthand Syntax202096
+Node: Creating an Empty Dictionary202895
+Node: Creating a Dictionary with a Dictionary Literal203941
+Node: Accessing and Modifying a Dictionary206706
+Node: Iterating Over a Dictionary210733
+Node: Control Flow 1212482
+Node: For-In Loops213695
+Node: While Loops218866
+Node: While219498
+Node: Repeat-While224051
+Node: Conditional Statements226777
+Node: If227712
+Node: Switch230371
+Node: Control Transfer Statements244250
+Node: Continue245062
+Node: Break246116
+Node: Fallthrough250362
+Node: Labeled Statements253124
+Node: Early Exit258319
+Node: Checking API Availability260630
+Node: Functions262658
+Node: Defining and Calling Functions263962
+Node: Function Parameters and Return Values267631
+Node: Functions Without Parameters268336
+Node: Functions With Multiple Parameters269088
+Node: Functions Without Return Values270461
+Node: Functions with Multiple Return Values272633
+Node: Functions With an Implicit Return276962
+Node: Function Argument Labels and Parameter Names278301
+Node: Specifying Argument Labels279547
+Node: Omitting Argument Labels280586
+Node: Default Parameter Values281354
+Node: Variadic Parameters282633
+Node: In-Out Parameters284123
+Node: Function Types287320
+Node: Using Function Types288639
+Node: Function Types as Parameter Types290102
+Node: Function Types as Return Types291942
+Node: Nested Functions294343
+Node: Closures295733
+Node: Closure Expressions297467
+Node: The Sorted Method298684
+Node: Closure Expression Syntax301235
+Node: Inferring Type From Context303084
+Node: Implicit Returns from Single-Expression Closures304705
+Node: Shorthand Argument Names305568
+Node: Operator Methods306499
+Node: Trailing Closures307269
+Node: Capturing Values314934
+Node: Closures Are Reference Types319969
+Node: Escaping Closures321289
+Node: Autoclosures325487
+Node: Enumerations330356
+Node: Enumeration Syntax332271
+Node: Matching Enumeration Values with a Switch Statement334413
+Node: Iterating over Enumeration Cases336149
+Node: Associated Values337772
+Node: Raw Values342267
+Node: Implicitly Assigned Raw Values343874
+Node: Initializing from a Raw Value345585
+Node: Recursive Enumerations347703
+Node: Structures and Classes350740
+Node: Comparing Structures and Classes351986
+Node: Definition Syntax354163
+Node: Structure and Class Instances356585
+Node: Accessing Properties357718
+Node: Memberwise Initializers for Structure Types358950
+Node: Structures and Enumerations Are Value Types359780
+Node: Classes Are Reference Types363857
+Node: Identity Operators366892
+Node: Pointers368649
+Node: Properties369618
+Node: Stored Properties370858
+Node: Stored Properties of Constant Structure Instances372655
+Node: Lazy Stored Properties373875
+Node: Stored Properties and Instance Variables377607
+Node: Computed Properties378623
+Node: Shorthand Setter Declaration382005
+Node: Shorthand Getter Declaration382931
+Node: Read-Only Computed Properties384103
+Node: Property Observers386013
+Node: Property Wrappers390790
+Node: Setting Initial Values for Wrapped Properties394882
+Node: Projecting a Value From a Property Wrapper400526
+Node: Global and Local Variables404897
+Node: Type Properties406235
+Node: Type Property Syntax407909
+Node: Querying and Setting Type Properties409511
+Node: Methods414427
+Node: Instance Methods415330
+Node: The self Property417792
+Node: Modifying Value Types from Within Instance Methods419769
+Node: Assigning to self Within a Mutating Method421909
+Node: Type Methods423622
+Node: Subscripts430174
+Node: Subscript Syntax431136
+Node: Subscript Usage433760
+Node: Subscript Options435650
+Node: Type Subscripts440031
+Node: Inheritance441053
+Node: Defining a Base Class442224
+Node: Subclassing444164
+Node: Overriding446805
+Node: Accessing Superclass Methods Properties and Subscripts448027
+Node: Overriding Methods449326
+Node: Overriding Properties450210
+Node: Preventing Overrides455500
+Node: Initialization456432
+Node: Setting Initial Values for Stored Properties457790
+Node: Initializers458711
+Node: Default Property Values459860
+Node: Customizing Initialization461123
+Node: Initialization Parameters461757
+Node: Parameter Names and Argument Labels463565
+Node: Initializer Parameters Without Argument Labels465916
+Node: Optional Property Types467398
+Node: Assigning Constant Properties During Initialization468994
+Node: Default Initializers470463
+Node: Memberwise Initializers for Structure Types 1472095
+Node: Initializer Delegation for Value Types473978
+Node: Class Inheritance and Initialization479471
+Node: Designated Initializers and Convenience Initializers480410
+Node: Syntax for Designated and Convenience Initializers482171
+Node: Initializer Delegation for Class Types482899
+Node: Two-Phase Initialization485308
+Node: Initializer Inheritance and Overriding491343
+Node: Automatic Initializer Inheritance497413
+Node: Designated and Convenience Initializers in Action498922
+Node: Failable Initializers507202
+Node: Failable Initializers for Enumerations511723
+Node: Failable Initializers for Enumerations with Raw Values513587
+Node: Propagation of Initialization Failure515018
+Node: Overriding a Failable Initializer518285
+Node: The init! Failable Initializer521866
+Node: Required Initializers522788
+Node: Setting a Default Property Value with a Closure or Function523914
+Node: Deinitialization527839
+Node: How Deinitialization Works528311
+Node: Deinitializers in Action530023
+Node: Optional Chaining534972
+Node: Optional Chaining as an Alternative to Forced Unwrapping536095
+Node: Defining Model Classes for Optional Chaining541061
+Node: Accessing Properties Through Optional Chaining545080
+Node: Calling Methods Through Optional Chaining547501
+Node: Accessing Subscripts Through Optional Chaining550121
+Node: Accessing Subscripts of Optional Type552602
+Node: Linking Multiple Levels of Chaining553902
+Node: Chaining on Methods with Optional Return Values557085
+Node: Error Handling 2558908
+Node: Representing and Throwing Errors560512
+Node: Handling Errors561709
+Node: Propagating Errors Using Throwing Functions563482
+Node: Handling Errors Using Do-Catch567718
+Node: Converting Errors to Optional Values571718
+Node: Disabling Error Propagation573271
+Node: Specifying Cleanup Actions574195
+Node: Type Casting576154
+Node: Defining a Class Hierarchy for Type Casting576933
+Node: Checking Type580001
+Node: Downcasting581491
+Node: Type Casting for Any and AnyObject585605
+Node: Nested Types589263
+Node: Nested Types in Action590023
+Node: Referring to Nested Types594382
+Node: Extensions594970
+Node: Extension Syntax596270
+Node: Computed Properties 1597557
+Node: Initializers 1600042
+Node: Methods 1603427
+Node: Mutating Instance Methods604338
+Node: Subscripts 1605059
+Node: Nested Types 1606191
+Node: Protocols608246
+Node: Protocol Syntax609451
+Node: Property Requirements610323
+Node: Method Requirements614314
+Node: Mutating Method Requirements616917
+Node: Initializer Requirements619711
+Node: Class Implementations of Protocol Initializer Requirements620341
+Node: Failable Initializer Requirements622299
+Node: Protocols as Types622939
+Node: Delegation626721
+Node: Adding Protocol Conformance with an Extension634452
+Node: Conditionally Conforming to a Protocol636853
+Node: Declaring Protocol Adoption with an Extension638169
+Node: Adopting a Protocol Using a Synthesized Implementation639319
+Node: Collections of Protocol Types643027
+Node: Protocol Inheritance644293
+Node: Class-Only Protocols647673
+Node: Protocol Composition648742
+Node: Checking for Protocol Conformance652681
+Node: Optional Protocol Requirements656624
+Node: Protocol Extensions664741
+Node: Providing Default Implementations666256
+Node: Adding Constraints to Protocol Extensions667520
+Node: Generics 1669657
+Node: The Problem That Generics Solve671016
+Node: Generic Functions673484
+Node: Type Parameters676460
+Node: Naming Type Parameters677625
+Node: Generic Types678485
+Node: Extending a Generic Type683563
+Node: Type Constraints685461
+Node: Type Constraint Syntax687606
+Node: Type Constraints in Action688499
+Node: Associated Types692659
+Node: Associated Types in Action693421
+Node: Extending an Existing Type to Specify an Associated Type698878
+Node: Adding Constraints to an Associated Type700274
+Node: Using a Protocol in Its Associated Type's Constraints701170
+Node: Generic Where Clauses704026
+Node: Extensions with a Generic Where Clause709894
+Node: Contextual Where Clauses713855
+Node: Associated Types with a Generic Where Clause716614
+Node: Generic Subscripts718101
+Node: Opaque Types719728
+Node: The Problem That Opaque Types Solve720693
+Node: Returning an Opaque Type723665
+Node: Differences Between Opaque Types and Protocol Types730328
+Node: Automatic Reference Counting736445
+Node: How ARC Works738018
+Node: ARC in Action739602
+Node: Strong Reference Cycles Between Class Instances742502
+Node: Resolving Strong Reference Cycles Between Class Instances747510
+Node: Weak References748850
+Node: Unowned References752728
+Node: Unowned Optional References758233
+Node: Unowned References and Implicitly Unwrapped Optional Properties761936
+Node: Strong Reference Cycles for Closures766686
+Node: Resolving Strong Reference Cycles for Closures773570
+Node: Defining a Capture List774732
+Node: Weak and Unowned References775909
+Node: Memory Safety778820
+Node: Understanding Conflicting Access to Memory779950
+Node: Characteristics of Memory Access782917
+Node: Conflicting Access to In-Out Parameters785019
+Node: Conflicting Access to self in Methods788450
+Node: Conflicting Access to Properties791252
+Node: Access Control794621
+Node: Modules and Source Files796194
+Node: Access Levels797370
+Node: Guiding Principle of Access Levels799716
+Node: Default Access Levels800642
+Node: Access Levels for Single-Target Apps801148
+Node: Access Levels for Frameworks801875
+Node: Access Levels for Unit Test Targets802761
+Node: Access Control Syntax803394
+Node: Custom Types804511
+Node: Tuple Types807214
+Node: Function Types 1807893
+Node: Enumeration Types809784
+Node: Nested Types 2810834
+Node: Subclassing 1811288
+Node: Constants Variables Properties and Subscripts813513
+Node: Getters and Setters814258
+Node: Initializers 2818602
+Node: Default Initializers 1819353
+Node: Default Memberwise Initializers for Structure Types820236
+Node: Protocols 1821045
+Node: Protocol Inheritance 1822114
+Node: Protocol Conformance822521
+Node: Extensions 1823780
+Node: Private Members in Extensions825127
+Node: Generics 2826390
+Node: Type Aliases 1826725
+Node: Advanced Operators827340
+Node: Bitwise Operators829006
+Node: Bitwise NOT Operator829752
+Node: Bitwise AND Operator830893
+Node: Bitwise OR Operator831728
+Node: Bitwise XOR Operator832521
+Node: Bitwise Left and Right Shift Operators833513
+Node: Overflow Operators840724
+Node: Value Overflow842216
+Node: Precedence and Associativity845165
+Node: Operator Methods 1847943
+Node: Prefix and Postfix Operators850591
+Node: Compound Assignment Operators 1852216
+Node: Equivalence Operators853768
+Node: Custom Operators855804
+Node: Precedence for Custom Infix Operators857356
+Node: Index859687
 
 End Tag Table
 

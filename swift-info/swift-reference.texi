@@ -97,6 +97,7 @@ Prefix Expressions
 Binary Expressions
 
 * Assignment Operator::
+* Ternary Conditional Operator::
 * Type-Casting Operators::
 
 Primary Expressions
@@ -237,6 +238,7 @@ Declaration Attributes
 * frozen::
 * GKInspectable::
 * inlinable::
+* main::
 * nonobjc::
 * NSApplicationMain::
 * NSCopying::
@@ -316,8 +318,10 @@ Summary of the Grammar
 @item
 @ref{Patterns}
 @item
-@ref{Generic Parameters and Arguments, , Generic Parameters and
-Arguments}
+[[Generic Parameters and Arguments][Generic Parameters and
+@end itemize
+Arguments]]
+@itemize
 @item
 @ref{Summary of the Grammar}
 @end itemize
@@ -529,7 +533,7 @@ Inside a closure with no explicit parameter names, the parameters are
 implicitly named @samp{$0}, @samp{$1}, @samp{$2}, and so on. These names are valid
 identifiers within the scope of the closure.
 
-The compiler synthesizes identifiers that begin with a dollar sign ($)
+The compiler synthesizes identifiers that begin with a dollar sign (@samp{$})
 for properties that have a property wrapper projection. Your code can
 interact with these identifiers, but you can't declare identifiers with
 that prefix. For more information, see the
@@ -677,7 +681,7 @@ Keywords used in patterns: @samp{_}.
 @item
 Keywords that begin with a number sign (@samp{#}): @samp{#available},
 @samp{#colorLiteral}, @samp{#column}, @samp{#else}, @samp{#elseif}, @samp{#endif}, @samp{#error},
-@samp{#file}, @samp{#fileLiteral}, @samp{#function}, @samp{#if}, @samp{#imageLiteral}, @samp{#line},
+@samp{#file}, @samp{#filePath}, @samp{#fileLiteral}, @samp{#function}, @samp{#if}, @samp{#imageLiteral}, @samp{#line},
 @samp{#selector}, @samp{#sourceLocation}, and @samp{#warning}.
 
 @item
@@ -1114,6 +1118,7 @@ forms:
 #"characters"#
 @item
 
+
 @item
 #"""
 @item
@@ -1350,9 +1355,9 @@ operator followed by the @samp{.+} operator.
 
 Although you can define custom operators that contain a question mark
 (@samp{?}), they can't consist of a single question mark character only.
-Additionally, although operators can contain an exclamation mark (@samp{!}),
+Additionally, although operators can contain an exclamation point (@samp{!}),
 postfix operators can't begin with either a question mark or an
-exclamation mark.
+exclamation point.
 
 Note
 
@@ -1817,6 +1822,7 @@ func anotherFunction(left: Int, right: Int) @{@}
 func functionWithDifferentLabels(top: Int, bottom: Int) @{@}
 @item
 
+
 @item
 var f = someFunction // The type of f is (Int, Int) -> Void, not
 (left: Int, right: Int) -> Void.
@@ -1826,11 +1832,13 @@ f = anotherFunction // OK
 f = functionWithDifferentLabels // OK
 @item
 
+
 @item
 func functionWithDifferentArgumentTypes(left: Int, right: String) @{@}
 @item
 f = functionWithDifferentArgumentTypes // Error
 @item
+
 
 @item
 func functionWithDifferentNumberOfArguments(left: Int, right: Int,
@@ -1892,11 +1900,13 @@ first @{ first @{@} @} // Error
 second @{ second @{@} @} // Error
 @item
 
+
 @item
 first @{ second @{@} @} // Error
 @item
 second @{ first @{@} @} // Error
 @item
+
 
 @item
 first @{ external @{@} @} // OK
@@ -2138,6 +2148,7 @@ let tupleOfImplicitlyUnwrappedElements: (Int!, Int!) // Error
 let implicitlyUnwrappedTuple: (Int, Int)! // OK
 @item
 
+
 @item
 let arrayOfImplicitlyUnwrappedElements: [Int!] // Error
 @item
@@ -2170,7 +2181,7 @@ implicitly-unwrapped-optional-type
 @node Protocol Composition Type
 @section Protocol Composition Type
 
-A @emph{protocol composition} type defines a type that conforms to each
+A @emph{protocol composition type} defines a type that conforms to each
 protocol in a list of specified protocols, or a type that is a subclass
 of a given class and conforms to each protocol in a list of specified
 protocols. Protocol composition types may be used only when specifying a
@@ -2419,6 +2430,7 @@ print(type(of: x.f()))
 // Prints "Superclass"
 @item
 
+
 @item
 class Subclass: Superclass @{ @}
 @item
@@ -2428,6 +2440,7 @@ print(type(of: y.f()))
 @item
 // Prints "Subclass"
 @item
+
 
 @item
 let z: Superclass = Subclass()
@@ -2503,8 +2516,8 @@ type-inheritance-list
 @node Type Inference
 @section Type Inference
 
-Swift uses @emph{type inference} extensively, allowing you to omit the type or
-part of the type of many variables and expressions in your code. For
+Swift uses @emph{type inference} extensively, allowing you to omit the type
+or part of the type of many variables and expressions in your code. For
 example, instead of writing @samp{var x: Int = 0}, you can write @samp{var x = 0},
 omitting the type completely---the compiler correctly infers that @samp{x}
 names a value of type @samp{Int}. Similarly, you can omit part of a type when
@@ -2737,6 +2750,7 @@ _@{opt@}
 
 @menu
 * Assignment Operator::
+* Ternary Conditional Operator::
 * Type-Casting Operators::
 @end menu
 
@@ -2771,8 +2785,8 @@ Grammar of an assignment operator
 assignment-operator →
 @samp{=}
 
-
-@strong{*} Ternary Conditional Operator
+@node Ternary Conditional Operator
+@subsection Ternary Conditional Operator
 
 The @emph{ternary conditional operator} evaluates to one of two given values
 based on the value of a condition. It has the following form:
@@ -2839,6 +2853,7 @@ f(x)
 // Prints "Function for Int"
 @item
 
+
 @item
 let y: Any = x
 @item
@@ -2846,6 +2861,7 @@ f(y)
 @item
 // Prints "Function for Any"
 @item
+
 
 @item
 f(x as Any)
@@ -2974,6 +2990,7 @@ string or a number), an array or dictionary literal, a playground
 literal, or one of the following special literals:
 
 @findex #file
+@findex #filePath
 @findex #line
 @findex #column
 @findex #function
@@ -2986,6 +3003,9 @@ literal, or one of the following special literals:
 @item @samp{#file}
 @tab @samp{String}
 @tab The name of the file in which it appears.
+@item @samp{#filePath}
+@tab @samp{String}
+@tab The path to the file in which it appears.
 @item @samp{#line}
 @tab @samp{Int}
 @tab The line number on which it appears.
@@ -2999,6 +3019,21 @@ literal, or one of the following special literals:
 @tab @samp{UnsafeRawPointer}
 @tab The DSO (dynamic shared object) handle in use where it appears.
 @end multitable
+
+The string value of a @samp{#file} expression has the form @emph{module///file},
+where @emph{file} is the name of the file in which the expression appears and
+@emph{module} is the name of the module that this file is part of. The string
+value of a @samp{#filePath} expression is the full file-system path to the
+file in which the expression appears. Both of these values can be
+changed by @samp{#sourceLocation}, as described in
+@ref{Line Control Statement}.
+
+Note
+
+To parse a @samp{#file} expression, read the module name as the text before
+the first slash (@samp{/}) and the filename as the text after the last slash.
+In the future, the string might contain multiple slashes, such as
+@samp{MyModule/some/disambiguation/MyFile.swift}.
 
 Inside a function, the value of @samp{#function} is the name of that
 function, inside a method it is the name of that method, inside a
@@ -3179,7 +3214,7 @@ current instance of the type in which it occurs. In a type method,
 @samp{self} refers to the current type in which it occurs.
 
 The @samp{self} expression is used to specify scope when accessing members,
-providing disambiguation when there is another variable of the same name
+providing disambiguation when there's another variable of the same name
 in scope, such as a function parameter. For example:
 
 @enumerate
@@ -3343,6 +3378,7 @@ return x + y
 @}
 @item
 
+
 @item
 myFunction @{ x, y in
 @item
@@ -3351,9 +3387,11 @@ return x + y
 @}
 @item
 
+
 @item
 myFunction @{ return $0 + $1 @}
 @item
+
 
 @item
 myFunction @{ $0 + $1 @}
@@ -3408,6 +3446,7 @@ print(a, b)
 @}
 @item
 
+
 @item
 a = 10
 @item
@@ -3425,7 +3464,7 @@ value of the @samp{a} in the outer scope when the closure is created, but
 their values are not connected in any special way. This means that a
 change to the value of @samp{a} in the outer scope does not affect the value
 of @samp{a} in the inner scope, nor does a change to @samp{a} inside the closure
-affect the value of @samp{a} outside the closure. In contrast, there is only
+affect the value of @samp{a} outside the closure. In contrast, there's only
 one variable named @samp{b}---the @samp{b} in the outer scope---so changes from
 inside or outside the closure are visible in both places.
 
@@ -3453,6 +3492,7 @@ print(x.value, y.value)
 @item
 @}
 @item
+
 
 @item
 x.value = 10
@@ -3727,11 +3767,13 @@ var someValue: Int
 @}
 @item
 
+
 @item
 let s = SomeStructure(someValue: 12)
 @item
 let pathToProperty = .someValue
 @item
+
 
 @item
 let value = s[keyPath: pathToProperty]
@@ -3757,6 +3799,7 @@ self.someProperty = someProperty
 @item
 @}
 @item
+
 
 @item
 let c = SomeClass(someProperty: 10)
@@ -3802,11 +3845,13 @@ self.outer = SomeStructure(someValue: someValue)
 @}
 @item
 
+
 @item
 let nested = OuterStructure(someValue: 24)
 @item
 let nestedKeyPath = .outer.someValue
 @item
+
 
 @item
 let nestedValue = nested[keyPath: nestedKeyPath]
@@ -3844,6 +3889,7 @@ let path = \[String].[index]
 let fn: ([String]) -> String = @{ strings in strings[index] @}
 @item
 
+
 @item
 print(greetings[keyPath: path])
 @item
@@ -3854,6 +3900,7 @@ print(fn(greetings))
 // Prints "bonjour"
 @item
 
+
 @item
 // Setting 'index' to a new value doesn't affect 'path'
 @item
@@ -3863,6 +3910,7 @@ print(greetings[keyPath: path])
 @item
 // Prints "bonjour"
 @item
+
 
 @item
 // Because 'fn' closes over 'index', it uses the new value
@@ -3884,6 +3932,7 @@ print(firstGreeting?.count as Any)
 @item
 // Prints "Optional(5)"
 @item
+
 
 @item
 // Do the same thing using a key path.
@@ -3926,6 +3975,73 @@ print(interestingNumbers[keyPath: \[String:
 [Int]].["hexagonal"]!.count.bitWidth])
 @item
 // Prints "64"
+@end enumerate
+
+You can use a key path expression in contexts where you would normally
+provide a function or closure. Specifically, you can use a key path
+expression whose root type is @samp{SomeType} and whose path produces a value
+of type @samp{Value}, instead of a function or closure of type
+@samp{(SomeType) -> Value}.
+
+@enumerate
+@item
+struct Task @{
+@item
+var description: String
+@item
+var completed: Bool
+@item
+@}
+@item
+var toDoList = [
+@item
+Task(description: "Practice ping-pong.", completed: false),
+@item
+Task(description: "Buy a pirate costume.", completed: true),
+@item
+Task(description: "Visit Boston in the Fall.", completed: false),
+@item
+]
+@item
+
+
+@item
+// Both approaches below are equivalent.
+@item
+let descriptions = toDoList.filter(\.completed).map(\.description)
+@item
+let descriptions2 = toDoList.filter @{ $0.completed @}.map @{
+$0.description @}
+@end enumerate
+
+Any side effects of a key path expression are evaluated only at the
+point where the expression is evaluated. For example, if you make a
+function call inside a subscript in a key path expression, the function
+is called only once as part of evaluating the expression, not every time
+the key path is used.
+
+@enumerate
+@item
+func makeIndex() -> Int @{
+@item
+print("Made an index")
+@item
+return 0
+@item
+@}
+@item
+// The line below calls makeIndex().
+@item
+let taskKeyPath = \[Task][makeIndex()]
+@item
+// Prints "Made an index"
+@item
+
+
+@item
+// Using taskKeyPath doesn't call makeIndex() again.
+@item
+let someTask = toDoList[keyPath: taskKeyPath]
 @end enumerate
 
 For more information about using key paths in code that interacts with
@@ -4001,10 +4117,14 @@ class SomeClass: NSObject @{
 @item
 @@objc let property: String
 @item
+
+
+@item
 @@objc(doSomethingWithInt:)
 @item
-func doSomething(_ x: Int) @{@}
+func doSomething(_ x: Int) @{ @}
 @item
+
 
 @item
 init(property: String) @{
@@ -4107,11 +4227,13 @@ self.someProperty = someProperty
 @}
 @item
 
+
 @item
 let c = SomeClass(someProperty: 12)
 @item
 let keyPath = #keyPath(SomeClass.someProperty)
 @item
+
 
 @item
 if let value = c.value(forKey: keyPath) @{
@@ -4254,9 +4376,9 @@ The @emph{function name} can be any expression whose value is of a function
 type.
 
 If the function definition includes names for its parameters, the
-function call must include names before its argument values separated by
-a colon (@samp{:}). This kind of function call expression has the following
-form:
+function call must include names before its argument values, separated
+by a colon (@samp{:}). This kind of function call expression has the
+following form:
 
 @enumerate
 @item
@@ -4264,31 +4386,42 @@ function name(argument name 1: argument value 1, argument name 2:
 argument value 2)
 @end enumerate
 
-A function call expression can include a trailing closure in the form of
-a closure expression immediately after the closing parenthesis. The
-trailing closure is understood as an argument to the function, added
-after the last parenthesized argument. The following function calls are
-equivalent:
+A function call expression can include trailing closures in the form of
+closure expressions immediately after the closing parenthesis. The
+trailing closures are understood as arguments to the function, added
+after the last parenthesized argument. The first closure expression is
+unlabeled; any additional closure expressions are preceded by their
+argument labels. The example below shows the equivalent version of
+function calls that do and don't use trailing closure syntax:
 
 @enumerate
 @item
 // someFunction takes an integer and a closure as its arguments
 @item
-someFunction(x: x, f: @{$0 == 13@})
+someFunction(x: x, f: @{ $0 == 13 @})
 @item
-someFunction(x: x) @{$0 == 13@}
+someFunction(x: x) @{ $0 == 13 @}
+@item
+
+
+@item
+// anotherFunction takes an integer and two closures as its arguments
+@item
+anotherFunction(x: x, f: @{ $0 == 13 @}, g: @{ print(99) @})
+@item
+anotherFunction(x: x) @{ $0 == 13 @} g: @{ print(99) @}
 @end enumerate
 
-If the trailing closure is the function's only argument, the parentheses
-can be omitted.
+If the trailing closure is the function's only argument, you can omit
+the parentheses.
 
 @enumerate
 @item
 // someMethod takes a closure as its only argument
 @item
-myData.someMethod() @{$0 == 13@}
+myData.someMethod() @{ $0 == 13 @}
 @item
-myData.someMethod @{$0 == 13@}
+myData.someMethod @{ $0 == 13 @}
 @end enumerate
 
 A class, structure, or enumeration type can enable syntactic sugar for
@@ -4404,6 +4537,7 @@ let s1 = SomeType.init(data: 3) // Valid
 let s2 = SomeType(data: 1) // Also valid
 @item
 
+
 @item
 let s3 = type(of: someValue).init(data: 7) // Valid
 @item
@@ -4494,11 +4628,13 @@ func overloadedMethod(x: Int, y: Bool) @{@}
 let instance = SomeClass()
 @item
 
+
 @item
 let a = instance.someMethod // Ambiguous
 @item
 let b = instance.someMethod(x:y:) // Unambiguous
 @item
+
 
 @item
 let d = instance.overloadedMethod // Ambiguous
@@ -4643,6 +4779,7 @@ x! += 1
 // x is now 1
 @item
 
+
 @item
 var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
 @item
@@ -4727,6 +4864,7 @@ return 42 // No actual side effects.
 var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
 @item
 
+
 @item
 someDictionary["not here"]?[0] = someFunctionWithSideEffects()
 @item
@@ -4734,6 +4872,7 @@ someDictionary["not here"]?[0] = someFunctionWithSideEffects()
 @item
 // someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
 @item
+
 
 @item
 someDictionary["a"]?[0] = someFunctionWithSideEffects()
@@ -5335,13 +5474,13 @@ statement to take the new cases into account.
 let representation: Mirror.AncestorRepresentation = .generated
 switch representation @{
 case .customized:
-    print("Use the nearest ancestor's implementation.")
+print("Use the nearest ancestor's implementation.")
 case .generated:
-    print("Generate a default mirror for all ancestor classes.")
+print("Generate a default mirror for all ancestor classes.")
 case .suppressed:
-    print("Suppress the representation of all ancestor classes.")
+print("Suppress the representation of all ancestor classes.")
 @@unknown default:
-    print("Use a representation that was unknown when this code was compiled.")
+print("Use a representation that was unknown when this code was compiled.")
 @}
 // Prints "Generate a default mirror for all ancestor classes."
 @end example
@@ -5797,8 +5936,22 @@ statements
 @item
 statements
 @item
+@} catch pattern 3, pattern 4 where condition @{
+@item
+statements
+@item
+@} catch @{
+@item
+statements
+@item
 @}
 @end enumerate
+
+If any statement in the @samp{do} code block throws an error, program control
+is transferred to the first @samp{catch} clause whose pattern matches the
+error. If none of the clauses match, the error propagates to the
+surrounding scope. If an error is unhandled at the top level, program
+execution stops with a runtime error.
 
 Like a @samp{switch} statement, the compiler attempts to infer whether
 @samp{catch} clauses are exhaustive. If such a determination can be made, the
@@ -5807,9 +5960,17 @@ the containing scope, which means the error must be handled by an
 enclosing @samp{catch} clause or the containing function must be declared
 with @samp{throws}.
 
+@cindex catching multiple error patterns
+
+A @samp{catch} clause that has multiple patterns matches the error if any of
+its patterns match the error. If a @samp{catch} clause contains multiple
+patterns, all of the patterns must contain the same constant or variable
+bindings, and each bound variable or constant must have the same type in
+all of the @samp{catch} clause's patterns.
+
 To ensure that an error is handled, use a @samp{catch} clause with a pattern
 that matches all errors, such as a wildcard pattern (@samp{_}). If a @samp{catch}
-clause does not specify a pattern, the @samp{catch} clause matches and binds
+clause doesn't specify a pattern, the @samp{catch} clause matches and binds
 any error to a local constant named @samp{error}. For more information about
 the patterns you can use in a @samp{catch} clause, see
 @ref{Patterns}.
@@ -6007,7 +6168,7 @@ statements to compile if both compilation conditions are false
 Note
 
 Each statement in the body of a conditional compilation block is parsed
-even if it's not compiled. However, there is an exception if the
+even if it's not compiled. However, there's an exception if the
 compilation condition includes a @samp{swift()} platform condition: The
 statements are parsed only if the compiler's version of Swift matches
 what is specified in the platform condition. This exception ensures that
@@ -6167,20 +6328,23 @@ A line control statement has the following forms:
 
 @enumerate
 @item
-#sourceLocation(file: filename, line: line number)
+#sourceLocation(file: file path, line: line number)
 @item
 #sourceLocation()
 @end enumerate
 
 The first form of a line control statement changes the values of the
-@samp{#line} and @samp{#file} literal expressions, beginning with the line of code
-following the line control statement. The @emph{line number} changes the
-value of @samp{#line} and is any integer literal greater than zero. The
-@emph{filename} changes the value of @samp{#file} and is a string literal.
+@samp{#line}, @samp{#file}, and @samp{#filePath} literal expressions, beginning with
+the line of code following the line control statement. The @emph{line number}
+changes the value of @samp{#line} and is any integer literal greater than
+zero. The @emph{file path} changes the value of @samp{#file} and @samp{#filePath}, and
+is a string literal. The specified string becomes the value of
+@samp{#filePath}, and the last path component of the string becomes the value
+of @samp{#file}.
 
 The second form of a line control statement, @samp{#sourceLocation()}, resets
-the source code location back to the default line numbering and
-filename.
+the source code location back to the default line numbering and file
+path.
 
 Grammar of a line control statement
 
@@ -6427,6 +6591,20 @@ that is part of the same module. You can override this default behavior
 by marking the declaration with an access-level modifier, as described
 in @ref{Access Control Levels}.
 
+There are two kinds of top-level code: top-level declarations and
+executable top-level code. Top-level declarations consist of only
+declarations, and are allowed in all Swift source files. Executable
+top-level code contains statements and expressions, not just
+declarations, and is allowed only as the top-level entry point for the
+program.
+
+The Swift code you compile to make an executable can contain at most one
+of the following approaches to mark the top-level entry point,
+regardless of how the code is organized into files and modules: the
+@samp{main} attribute, the @samp{NSApplicationMain} attribute, the
+@samp{UIApplicationMain} attribute, a @samp{main.swift} file, or a file that
+contains top-level executable code.
+
 Grammar of a top-level declaration
 
 top-level-declaration
@@ -6534,11 +6712,12 @@ refers to can't.
 When a constant is declared at global scope, it must be initialized with
 a value. When a constant declaration occurs in the context of a function
 or method, it can be initialized later, as long as it is guaranteed to
-have a value set before the first time its value is read. When a
-constant declaration occurs in the context of a class or structure
-declaration, it is considered a @emph{constant property}. Constant
-declarations are not computed properties and therefore do not have
-getters or setters.
+have a value set before the first time its value is read. If the
+compiler can prove that the constant's value is never read, the constant
+isn't required to have a value set at all. When a constant declaration
+occurs in the context of a class or structure declaration, it is
+considered a @emph{constant property}. Constant declarations are not computed
+properties and therefore do not have getters or setters.
 
 If the @emph{constant name} of a constant declaration is a tuple pattern, the
 name of each item in the tuple is bound to the corresponding value in
@@ -6763,7 +6942,10 @@ Observers,,swift,}.
 The initializer @emph{expression} is optional in the context of a class or
 structure declaration, but required elsewhere. The @emph{type} annotation is
 optional when the type can be inferred from the initializer
-@emph{expression}.
+@emph{expression}. This expression is evaluated the first time you read the
+property's value. If you overwrite the property's initial value without
+reading it, this expression is evaluated before the first time you write
+to the property.
 
 The @samp{willSet} and @samp{didSet} observers provide a way to observe (and to
 respond appropriately) when the value of a variable or property is being
@@ -6793,6 +6975,89 @@ The @samp{didSet} clause is optional when you provide a @samp{willSet} clause.
 Likewise, the @samp{willSet} clause is optional when you provide a @samp{didSet}
 clause.
 
+@cindex order of execution of getters and property observers
+
+If the body of the @samp{didSet} observer refers to the old value, the getter
+is called before the observer, to make the old value available.
+Otherwise, the new value is stored without calling the superclass's
+getter. The example below shows a computed property that's defined by
+the superclass and overridden by its subclasses to add an observer.
+
+@enumerate
+@item
+class Superclass @{
+@item
+private var xValue = 12
+@item
+var x: Int @{
+@item
+get @{ print("Getter was called"); return xValue @}
+@item
+set @{ print("Setter was called"); xValue = newValue @}
+@item
+@}
+@item
+@}
+@item
+
+
+@item
+// This subclass doesn't refer to oldValue in its observer, so the
+@item
+// superclass's getter is called only once to print the value.
+@item
+class New: Superclass @{
+@item
+override var x: Int @{
+@item
+didSet @{ print("New value \(x)") @}
+@item
+@}
+@item
+@}
+@item
+let new = New()
+@item
+new.x = 100
+@item
+// Prints "Setter was called"
+@item
+// Prints "Getter was called"
+@item
+// Prints "New value 100"
+@item
+
+
+@item
+// This subclass refers to oldValue in its observer, so the
+superclass's
+@item
+// getter is called once before the setter, and again to print the
+value.
+@item
+class NewAndOld: Superclass @{
+@item
+override var x: Int @{
+@item
+didSet @{ print("Old value \(oldValue) - new value \(x)") @}
+@item
+@}
+@item
+@}
+@item
+let newAndOld = NewAndOld()
+@item
+newAndOld.x = 200
+@item
+// Prints "Getter was called"
+@item
+// Prints "Setter was called"
+@item
+// Prints "Getter was called"
+@item
+// Prints "Old value 12 - new value 200"
+@end enumerate
+
 For more information and to see an example of how to use property
 observers, see @ref{Property Observers,Property
 Observers,,swift,}.
@@ -6805,12 +7070,6 @@ To declare a type variable property, mark the declaration with the
 with the @samp{class} declaration modifier instead to allow subclasses to
 override the superclass's implementation. Type properties are discussed
 in @ref{Type Properties,Type Properties,,swift,}.
-
-Note
-
-In a class declaration, the @samp{static} keyword has the same effect as
-marking the declaration with both the @samp{class} and @samp{final} declaration
-modifiers.
 
 Grammar of a variable declaration
 
@@ -6976,6 +7235,7 @@ some or all of the generic parameters of the existing type. For example:
 typealias StringDictionary<Value> = Dictionary<String, Value>
 @item
 
+
 @item
 // The following dictionaries have the same type.
 @item
@@ -7020,6 +7280,7 @@ typealias Element = Iterator.Element
 @item
 @}
 @item
+
 
 @item
 func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int @{
@@ -7088,6 +7349,9 @@ you write @samp{inout} in front of a parameter's type, the parameter can be
 modified inside the scope of the function. In-out parameters are
 discussed in detail in @ref{In-Out Parameters},
 below.
+
+A function declaration whose @emph{statements} include only a single
+expression is understood to return the value of that expression.
 
 Functions can return multiple values using a tuple type as the return
 type of the function.
@@ -7237,6 +7501,7 @@ var localX = x
 @item
 defer @{ x = localX @}
 @item
+
 
 @item
 // Operate on localX asynchronously, then wait before returning.
@@ -7678,6 +7943,7 @@ let f = Number.integer
 @item
 // f is a function of type (Int) -> Number
 @item
+
 
 @item
 // Apply f to create an array of Number instances with integer values
@@ -8262,6 +8528,33 @@ whether a conforming type implements them---see
 @ref{Optional Protocol Requirements,Optional Protocol
 Requirements,,swift,}.
 
+The cases of an enumeration can satisfy protocol requirements for type
+members. Specifically, an enumeration case without any associated values
+satisfies a protocol requirement for a get-only type variable of type
+@samp{Self}, and an enumeration case with associated values satisfies a
+protocol requirement for a function that returns @samp{Self} whose parameters
+and their argument labels match the case's associated values. For
+example:
+
+@enumerate
+@item
+protocol SomeProtocol @{
+@item
+static var someValue: Self @{ get @}
+@item
+static func someFunction(x: Int) -> Self
+@item
+@}
+@item
+enum MyEnum: SomeProtocol @{
+@item
+case someValue
+@item
+case someFunction(x: Int)
+@item
+@}
+@end enumerate
+
 To restrict the adoption of a protocol to class types only, include the
 @samp{AnyObject} protocol in the @emph{inherited protocols} list after the colon.
 For example, the following protocol can be adopted only by class types:
@@ -8389,6 +8682,16 @@ property. For examples of conforming types that implement the property
 requirements of a protocol, see
 @ref{Property Requirements,Property Requirements,,swift,}.
 
+To declare a type property requirement in a protocol declaration, mark
+the property declaration with the @samp{static} keyword. Structures and
+enumerations that conform to the protocol declare the property with the
+@samp{static} keyword, and classes that conform to the protocol declare the
+property with either the @samp{static} or @samp{class} keyword. Extensions that
+add protocol conformance to a structure, enumeration, or class use the
+same keyword as the type they extend uses. Extensions that provide a
+default implementation for a type property requirement use the @samp{static}
+keyword.
+
 See also @ref{Variable Declaration}.
 
 Grammar of a protocol property declaration
@@ -8500,6 +8803,16 @@ subscript declaration includes only the @samp{get} keyword, a conforming type
 must implement @emph{at least} a getter clause and optionally can implement a
 setter clause.
 
+To declare a static subscript requirement in a protocol declaration,
+mark the subscript declaration with the @samp{static} declaration modifier.
+Structures and enumerations that conform to the protocol declare the
+subscript with the @samp{static} keyword, and classes that conform to the
+protocol declare the subscript with either the @samp{static} or @samp{class}
+keyword. Extensions that add protocol conformance to a structure,
+enumeration, or class use the same keyword as the type they extend uses.
+Extensions that provide a default implementation for a static subscript
+requirement use the @samp{static} keyword.
+
 See also @ref{Subscript Declaration}.
 
 Grammar of a protocol subscript declaration
@@ -8543,6 +8856,7 @@ associatedtype SomeType
 @}
 @item
 
+
 @item
 protocol SubProtocolA: SomeProtocol @{
 @item
@@ -8552,6 +8866,7 @@ associatedtype SomeType: Equatable
 @item
 @}
 @item
+
 
 @item
 // This syntax is preferred.
@@ -8680,7 +8995,7 @@ can return @samp{nil} to indicate that initialization failed.
 To declare a failable initializer that produces an optional instance,
 append a question mark to the @samp{init} keyword in the initializer
 declaration (@samp{init?}). To declare a failable initializer that produces
-an implicitly unwrapped optional instance, append an exclamation mark
+an implicitly unwrapped optional instance, append an exclamation point
 instead (@samp{init!}). The example below shows an @samp{init?} failable
 initializer that produces an optional instance of a structure.
 
@@ -8944,6 +9259,7 @@ print(self)
 @}
 @item
 
+
 @item
 protocol TitledLoggable: Loggable @{
 @item
@@ -8962,6 +9278,7 @@ print("\(Self.logTitle): \(self)")
 @}
 @item
 
+
 @item
 struct Pair<T>: CustomStringConvertible @{
 @item
@@ -8978,6 +9295,7 @@ return "(\(first), \(second))"
 @}
 @item
 
+
 @item
 extension Pair: Loggable where T: Loggable @{ @}
 @item
@@ -8991,6 +9309,7 @@ return "Pair of '\(T.logTitle)'"
 @item
 @}
 @item
+
 
 @item
 extension String: TitledLoggable @{
@@ -9078,6 +9397,7 @@ func serialize() -> Any
 @}
 @item
 
+
 @item
 extension Array: Serializable where Element == Int @{
 @item
@@ -9115,6 +9435,7 @@ extension Int: SerializableInArray @{ @}
 @item
 extension String: SerializableInArray @{ @}
 @item
+
 
 @item
 extension Array: Serializable where Element: SerializableInArray @{
@@ -9154,6 +9475,7 @@ func markAndLog()
 @}
 @item
 
+
 @item
 extension MarkedLoggable @{
 @item
@@ -9167,6 +9489,7 @@ log()
 @item
 @}
 @item
+
 
 @item
 extension Array: Loggable where Element: Loggable @{ @}
@@ -9888,6 +10211,7 @@ You can apply a declaration attribute to declarations only.
 * frozen::
 * GKInspectable::
 * inlinable::
+* main::
 * nonobjc::
 * NSApplicationMain::
 * NSCopying::
@@ -9926,6 +10250,12 @@ the following platform or language names:
 
 @item
 @samp{macOSApplicationExtension}
+
+@item
+@samp{macCatalyst}
+
+@item
+@samp{macCatalystApplicationExtension}
 
 @item
 @samp{watchOS}
@@ -10157,9 +10487,11 @@ print("Unrecognized number")
 @}
 @item
 
+
 @item
 let dial = TelephoneExchange()
 @item
+
 
 @item
 // Use a dynamic method call.
@@ -10169,11 +10501,13 @@ dial(4, 1, 1)
 // Prints "Get Swift help on forums.swift.org"
 @item
 
+
 @item
 dial(8, 6, 7, 5, 3, 0, 9)
 @item
 // Prints "Unrecognized number"
 @item
+
 
 @item
 // Call the underlying method directly.
@@ -10214,6 +10548,7 @@ repeatElement(label, count: count).joined(separator: " ")
 @item
 @}
 @item
+
 
 @item
 let repeatLabels = Repeater()
@@ -10320,6 +10655,7 @@ return dictionary[member] ?? 1054
 let s = DynamicStruct()
 @item
 
+
 @item
 // Use dynamic member lookup.
 @item
@@ -10330,6 +10666,7 @@ print(dynamic)
 // Prints "325"
 @item
 
+
 @item
 // Call the underlying subscript directly.
 @item
@@ -10338,6 +10675,40 @@ let equivalent = s[dynamicMember: "someDynamicMember"]
 print(dynamic == equivalent)
 @item
 // Prints "true"
+@end enumerate
+
+Dynamic member lookup by key path can be used to implement a wrapper
+type in a way that supports compile-time type checking. For example:
+
+@enumerate
+@item
+struct Point @{ var x, y: Int @}
+@item
+
+
+@item
+@@dynamicMemberLookup
+@item
+struct PassthroughWrapper<Value> @{
+@item
+var value: Value
+@item
+subscript<T>(dynamicMember member: KeyPath<Value, T>) -> T @{
+@item
+get @{ return value[keyPath: member] @}
+@item
+@}
+@item
+@}
+@item
+
+
+@item
+let point = Point(x: 381, y: 431)
+@item
+let wrapper = PassthroughWrapper(value: point)
+@item
+print(wrapper.x)
 @end enumerate
 
 @node frozen
@@ -10418,6 +10789,48 @@ This attribute can't be applied to declarations that are nested inside
 functions or to @samp{fileprivate} or @samp{private} declarations. Functions and
 closures that are defined inside an inlinable function are implicitly
 inlinable, even though they can't be marked with this attribute.
+
+@node main
+@subsection main
+
+@findex @@main
+
+Apply this attribute to a structure, class, or enumeration declaration
+to indicate that it contains the top-level entry point for program flow.
+The type must provide a @samp{main} type function that doesn't take any
+arguments and returns @samp{Void}. For example:
+
+@enumerate
+@item
+@@main
+@item
+struct MyTopLevel @{
+@item
+static func main() @{
+@item
+// Top-level code goes here
+@item
+@}
+@item
+@}
+@end enumerate
+
+Another way to describe the requirements of the @samp{main} attribute is that
+the type you write this attribute on must satisfy the same requirements
+as types that conform to the following hypothetical protocol:
+
+@enumerate
+@item
+protocol ProvidesMain @{
+@item
+static func main() throws
+@item
+@}
+@end enumerate
+
+The Swift code you compile to make an executable can contain at most one
+top-level entry point, as discussed in
+@ref{Top-Level Code}.
 
 @node nonobjc
 @subsection nonobjc
@@ -10522,17 +10935,21 @@ The @samp{objc} attribute is also implicitly added in the following cases:
 @itemize
 @item
 The declaration is an override in a subclass, and the superclass's
+@end itemize
 declaration has the @samp{objc} attribute.
 
+@itemize
 @item
 The declaration satisfies a requirement from a protocol that has the
+@end itemize
 @samp{objc} attribute.
 
+@itemize
 @item
 The declaration has the @samp{IBAction}, @samp{IBSegueAction}, @samp{IBOutlet},
+@end itemize
 @samp{IBDesignable}, @samp{IBInspectable}, @samp{NSManaged}, or @samp{GKInspectable}
 attribute.
-@end itemize
 
 If you apply the @samp{objc} attribute to an enumeration, each enumeration
 case is exposed to Objective-C code as the concatenation of the
@@ -10863,12 +11280,12 @@ confusion when attempting to use one or the other from within a
 Interface Builder attributes are declaration attributes used by
 Interface Builder to synchronize with Xcode. Swift provides the
 following Interface Builder attributes: @samp{IBAction}, @samp{IBSegueAction},
- @samp{IBOutlet}, @samp{IBDesignable}, and @samp{IBInspectable}. These attributes are
+@samp{IBOutlet}, @samp{IBDesignable}, and @samp{IBInspectable}. These attributes are
 conceptually the same as their Objective-C counterparts.
 
 You apply the @samp{IBOutlet} and @samp{IBInspectable} attributes to property
 declarations of a class. You apply the @samp{IBAction} and @samp{IBSegueAction}
- attribute to method declarations of a class and the @samp{IBDesignable}
+attribute to method declarations of a class and the @samp{IBDesignable}
 attribute to class declarations.
 
 Applying the @samp{IBAction}, @samp{IBSegueAction}, @samp{IBOutlet}, @samp{IBDesignable}, or
@@ -10909,19 +11326,23 @@ arguments:
 @itemize
 @item
 The @samp{swift} argument indicates a Swift function reference. This is the
+@end itemize
 standard calling convention for function values in Swift.
 
+@itemize
 @item
 The @samp{block} argument indicates an Objective-C compatible block
+@end itemize
 reference. The function value is represented as a reference to the
 block object, which is an @samp{id}-compatible Objective-C object that
 embeds its invocation function within the object. The invocation
 function uses the C calling convention.
 
+@itemize
 @item
 The @samp{c} argument indicates a C function reference. The function value
-carries no context and uses the C calling convention.
 @end itemize
+carries no context and uses the C calling convention.
 
 With a few exceptions, a function of any calling convention can be used
 when a function any other calling convention is needed. A nongeneric
@@ -11585,6 +12006,31 @@ type.
 Any type argument substituted for a type parameter must meet all the
 constraints and requirements placed on the type parameter.
 
+A generic @samp{where} clause can appear as part of a declaration that
+includes type parameters, or as part of a declaration that's nested
+inside of a declaration that includes type parameters. The generic
+@samp{where} clause for a nested declaration can still refer to the type
+parameters of the enclosing declaration; however, the requirements from
+that @samp{where} clause apply only to the declaration where it's written.
+
+If the enclosing declaration also has a @samp{where} clause, the requirements
+from both clauses are combined. In the example below, @samp{startsWithZero()}
+is available only if @samp{Element} conforms to both @samp{SomeProtocol} and
+@samp{Numeric}.
+
+@enumerate
+@item
+extension Collection where Element: SomeProtocol @{
+@item
+func startsWithZero() -> Bool where Element: Numeric @{
+@item
+return first == .zero
+@item
+@}
+@item
+@}
+@end enumerate
+
 You can overload a generic function or initializer by providing
 different constraints, requirements, or both on the type parameters.
 When you call an overloaded generic function or initializer, the
@@ -11709,8 +12155,8 @@ elements are themselves arrays of integers.
 @enumerate
 @item
 let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8,
-9]]
 @end enumerate
+9]]
 
 As mentioned in @ref{Generic Parameter Clause, , Generic
 Parameter Clause}, you don't use a generic argument clause to specify
@@ -12561,6 +13007,10 @@ metatype-type
 → type @samp{.} @samp{Type} |
 type @samp{.} @samp{Protocol}
 
+Grammar of a Self type
+
+self-type → @samp{Self}
+
 Grammar of a type inheritance clause
 
 type-inheritance-clause
@@ -13130,9 +13580,11 @@ identifier
 @samp{:}
 operator
 
-trailing-closure
-→
-closure-expression
+trailing-closures → closure-expression labeled-trailing-closures _@{opt@}
+
+labeled-trailing-closures → labeled-trailing-closure labeled-trailing-closures _@{opt@}
+
+labeled-trailing-closure → identifier @samp{:} closure-expression
 
 Grammar of an initializer expression
 
@@ -13564,6 +14016,9 @@ _@{opt@}
 where-clause
 _@{opt@}
 code-block
+
+catch-pattern-list → catch-pattern | catch-pattern @samp{,} catch-pattern-list
+catch-pattern → pattern where-clause _@{opt@}
 
 Grammar of a compiler control statement
 

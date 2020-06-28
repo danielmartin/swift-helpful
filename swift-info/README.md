@@ -4,7 +4,7 @@
 
 (Work in progress.)
 
-Curated Swift 5.2 documentation and reference in GNU Info format, with cross-references and indices for concepts and keywords.
+Curated Swift 5.3 documentation and reference in GNU Info format, with cross-references and indices for concepts and keywords.
 
 If you use macOS, I recommend you install a newer version of GNU texinfo:
 

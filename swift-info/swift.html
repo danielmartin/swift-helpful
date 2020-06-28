@@ -3,10 +3,10 @@
 <!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>The Swift Programming Language Guide (Swift 5.2)</title>
+<title>The Swift Programming Language Guide (Swift 5.3)</title>
 
-<meta name="description" content="The Swift Programming Language Guide (Swift 5.2)">
-<meta name="keywords" content="The Swift Programming Language Guide (Swift 5.2)">
+<meta name="description" content="The Swift Programming Language Guide (Swift 5.3)">
+<meta name="keywords" content="The Swift Programming Language Guide (Swift 5.3)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -37,7 +37,7 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<h1 class="settitle" align="center">The Swift Programming Language Guide (Swift 5.2)</h1>
+<h1 class="settitle" align="center">The Swift Programming Language Guide (Swift 5.3)</h1>
 
 
 
@@ -472,16 +472,17 @@ ul.no-bullet {list-style: none}
       <li><a id="toc-Conditionally-Conforming-to-a-Protocol-1" href="#Conditionally-Conforming-to-a-Protocol">26.8.1 Conditionally Conforming to a Protocol</a></li>
       <li><a id="toc-Declaring-Protocol-Adoption-with-an-Extension-1" href="#Declaring-Protocol-Adoption-with-an-Extension">26.8.2 Declaring Protocol Adoption with an Extension</a></li>
     </ul></li>
-    <li><a id="toc-Collections-of-Protocol-Types-1" href="#Collections-of-Protocol-Types">26.9 Collections of Protocol Types</a></li>
-    <li><a id="toc-Protocol-Inheritance-2" href="#Protocol-Inheritance">26.10 Protocol Inheritance</a></li>
-    <li><a id="toc-Class_002dOnly-Protocols-1" href="#Class_002dOnly-Protocols">26.11 Class-Only Protocols</a></li>
-    <li><a id="toc-Protocol-Composition-1" href="#Protocol-Composition">26.12 Protocol Composition</a></li>
-    <li><a id="toc-Checking-for-Protocol-Conformance-1" href="#Checking-for-Protocol-Conformance">26.13 Checking for Protocol Conformance</a></li>
-    <li><a id="toc-Optional-Protocol-Requirements-1" href="#Optional-Protocol-Requirements">26.14 Optional Protocol Requirements</a></li>
-    <li><a id="toc-Protocol-Extensions-1" href="#Protocol-Extensions">26.15 Protocol Extensions</a>
+    <li><a id="toc-Adopting-a-Protocol-Using-a-Synthesized-Implementation-1" href="#Adopting-a-Protocol-Using-a-Synthesized-Implementation">26.9 Adopting a Protocol Using a Synthesized Implementation</a></li>
+    <li><a id="toc-Collections-of-Protocol-Types-1" href="#Collections-of-Protocol-Types">26.10 Collections of Protocol Types</a></li>
+    <li><a id="toc-Protocol-Inheritance-2" href="#Protocol-Inheritance">26.11 Protocol Inheritance</a></li>
+    <li><a id="toc-Class_002dOnly-Protocols-1" href="#Class_002dOnly-Protocols">26.12 Class-Only Protocols</a></li>
+    <li><a id="toc-Protocol-Composition-1" href="#Protocol-Composition">26.13 Protocol Composition</a></li>
+    <li><a id="toc-Checking-for-Protocol-Conformance-1" href="#Checking-for-Protocol-Conformance">26.14 Checking for Protocol Conformance</a></li>
+    <li><a id="toc-Optional-Protocol-Requirements-1" href="#Optional-Protocol-Requirements">26.15 Optional Protocol Requirements</a></li>
+    <li><a id="toc-Protocol-Extensions-1" href="#Protocol-Extensions">26.16 Protocol Extensions</a>
     <ul class="no-bullet">
-      <li><a id="toc-Providing-Default-Implementations-1" href="#Providing-Default-Implementations">26.15.1 Providing Default Implementations</a></li>
-      <li><a id="toc-Adding-Constraints-to-Protocol-Extensions-1" href="#Adding-Constraints-to-Protocol-Extensions">26.15.2 Adding Constraints to Protocol Extensions</a></li>
+      <li><a id="toc-Providing-Default-Implementations-1" href="#Providing-Default-Implementations">26.16.1 Providing Default Implementations</a></li>
+      <li><a id="toc-Adding-Constraints-to-Protocol-Extensions-1" href="#Adding-Constraints-to-Protocol-Extensions">26.16.2 Adding Constraints to Protocol Extensions</a></li>
     </ul></li>
   </ul></li>
   <li><a id="toc-Generics-4" href="#Generics-1">27 Generics</a>
@@ -506,8 +507,9 @@ ul.no-bullet {list-style: none}
     </ul></li>
     <li><a id="toc-Generic-Where-Clauses-1" href="#Generic-Where-Clauses">27.9 Generic Where Clauses</a></li>
     <li><a id="toc-Extensions-with-a-Generic-Where-Clause-1" href="#Extensions-with-a-Generic-Where-Clause">27.10 Extensions with a Generic Where Clause</a></li>
-    <li><a id="toc-Associated-Types-with-a-Generic-Where-Clause-1" href="#Associated-Types-with-a-Generic-Where-Clause">27.11 Associated Types with a Generic Where Clause</a></li>
-    <li><a id="toc-Generic-Subscripts-1" href="#Generic-Subscripts">27.12 Generic Subscripts</a></li>
+    <li><a id="toc-Contextual-Where-Clauses-1" href="#Contextual-Where-Clauses">27.11 Contextual Where Clauses</a></li>
+    <li><a id="toc-Associated-Types-with-a-Generic-Where-Clause-1" href="#Associated-Types-with-a-Generic-Where-Clause">27.12 Associated Types with a Generic Where Clause</a></li>
+    <li><a id="toc-Generic-Subscripts-1" href="#Generic-Subscripts">27.13 Generic Subscripts</a></li>
   </ul></li>
   <li><a id="toc-Opaque-Types-1" href="#Opaque-Types">28 Opaque Types</a>
   <ul class="no-bullet">
@@ -524,7 +526,8 @@ ul.no-bullet {list-style: none}
     <ul class="no-bullet">
       <li><a id="toc-Weak-References-1" href="#Weak-References">29.4.1 Weak References</a></li>
       <li><a id="toc-Unowned-References-1" href="#Unowned-References">29.4.2 Unowned References</a></li>
-      <li><a id="toc-Unowned-References-and-Implicitly-Unwrapped-Optional-Properties-1" href="#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties">29.4.3 Unowned References and Implicitly Unwrapped Optional Properties</a></li>
+      <li><a id="toc-Unowned-Optional-References-1" href="#Unowned-Optional-References">29.4.3 Unowned Optional References</a></li>
+      <li><a id="toc-Unowned-References-and-Implicitly-Unwrapped-Optional-Properties-1" href="#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties">29.4.4 Unowned References and Implicitly Unwrapped Optional Properties</a></li>
     </ul></li>
     <li><a id="toc-Strong-Reference-Cycles-for-Closures-1" href="#Strong-Reference-Cycles-for-Closures">29.5 Strong Reference Cycles for Closures</a></li>
     <li><a id="toc-Resolving-Strong-Reference-Cycles-for-Closures-1" href="#Resolving-Strong-Reference-Cycles-for-Closures">29.6 Resolving Strong Reference Cycles for Closures</a>
@@ -619,7 +622,7 @@ ul.no-bullet {list-style: none}
 <p>
 Next: <a href="#Welcome-to-Swift" accesskey="n" rel="next">Welcome to Swift</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="The-Swift-Programming-Language-Guide-_0028Swift-5_002e2_0029"></span><h1 class="top">The Swift Programming Language Guide (Swift 5.2)</h1>
+<span id="The-Swift-Programming-Language-Guide-_0028Swift-5_002e3_0029"></span><h1 class="top">The Swift Programming Language Guide (Swift 5.3)</h1>
 
 <table class="menu" border="0" cellspacing="0">
 <tr><td align="left" valign="top">&bull; <a href="#Welcome-to-Swift" accesskey="1">Welcome to Swift</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -1474,6 +1477,8 @@ Protocols
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Adding-Protocol-Conformance-with-an-Extension">Adding Protocol Conformance with an Extension</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Adopting-a-Protocol-Using-a-Synthesized-Implementation">Adopting a Protocol Using a Synthesized Implementation</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Collections-of-Protocol-Types">Collections of Protocol Types</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Protocol-Inheritance">Protocol Inheritance</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -1536,6 +1541,8 @@ Generics
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Extensions-with-a-Generic-Where-Clause">Extensions with a Generic Where Clause</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Contextual-Where-Clauses">Contextual Where Clauses</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Associated-Types-with-a-Generic-Where-Clause">Associated Types with a Generic Where Clause</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Generic-Subscripts">Generic Subscripts</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -1593,6 +1600,8 @@ Resolving Strong Reference Cycles Between Class Instances
 </pre></th></tr><tr><td align="left" valign="top">&bull; <a href="#Weak-References">Weak References</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Unowned-References">Unowned References</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Unowned-Optional-References">Unowned Optional References</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties">Unowned References and Implicitly Unwrapped Optional Properties</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
@@ -1830,13 +1839,13 @@ Next: <a href="#A-Swift-Tour" accesskey="n" rel="next">A Swift Tour</a>, Previou
 </div>
 <span id="Version-Compatibility-1"></span><h2 class="chapter">3 Version Compatibility</h2>
 
-<p>This book describes Swift 5.2, the default version of Swift that&rsquo;s
-included in Xcode 11.4. You can use Xcode 11 to build targets that are
-written in either Swift 5.2, Swift 4.2, or Swift 4.
+<p>This book describes Swift 5.3, the default version of Swift that&rsquo;s
+included in Xcode 12. You can use Xcode 12 to build targets that are
+written in either Swift 5.3, Swift 4.2, or Swift 4.
 </p>
-<p>When you use Xcode 11.4 to build Swift 4 and Swift 4.2 code, most Swift
-5.2 functionality is available. That said, the following changes are
-available only to code that uses Swift 5.2 or later:
+<p>When you use Xcode 12 to build Swift 4 and Swift 4.2 code, most Swift
+5.3 functionality is available. That said, the following changes are
+available only to code that uses Swift 5.3 or later:
 </p>
 <ul>
 <li> Functions that return an opaque type require the Swift 5.1 runtime.
@@ -1849,10 +1858,10 @@ the correct integer type. For example, &lsquo;<samp>UInt64(0xffff_ffff_ffff_ffff
 evaluates to the correct value rather than overflowing.
 </li></ul>
 
-<p>A target written in Swift 5.2 can depend on a target that&rsquo;s written in
+<p>A target written in Swift 5.3 can depend on a target that&rsquo;s written in
 Swift 4.2 or Swift 4, and vice versa. This means, if you have a large
 project that&rsquo;s divided into multiple frameworks, you can migrate your
-code from Swift 4 to Swift 5.2 one framework at a time.
+code from Swift 4 to Swift 5.3 one framework at a time.
 </p>
 <hr>
 <span id="A-Swift-Tour"></span><div class="header">
@@ -3006,6 +3015,7 @@ Next: <a href="#The-Basics" accesskey="n" rel="next">The Basics</a>, Previous: <
 </li><li> <a href="#Extensions">Extensions</a>
 </li><li> <a href="#Protocols">Protocols</a>
 </li><li> <a href="#Generics">Generics</a>
+</li><li> <a href="#Opaque-Types">Opaque Types</a>
 </li><li> <a href="#Automatic-Reference-Counting">Automatic Reference Counting</a>
 </li><li> <a href="#Memory-Safety">Memory Safety</a>
 </li><li> <a href="#Access-Control">Access Control</a>
@@ -4068,8 +4078,8 @@ operator (&lsquo;<samp>!=</samp>&rsquo;).
 </pre></div>
 
 <p>Once you&rsquo;re sure that the optional <em>does</em> contain a value, you can
-access its underlying value by adding an exclamation mark (&lsquo;<samp>!</samp>&rsquo;) to the
-end of the optional&rsquo;s name. The exclamation mark effectively says, “I
+access its underlying value by adding an exclamation point (&lsquo;<samp>!</samp>&rsquo;) to the
+end of the optional&rsquo;s name. The exclamation point effectively says, “I
 know that this optional definitely has a value; please use it.” This is
 known as <em>forced unwrapping</em> of the optional&rsquo;s value:
 </p>
@@ -4195,8 +4205,10 @@ value all of the time.
 </p>
 <p>These kinds of optionals are defined as <em>implicitly unwrapped
 optionals</em>. You write an implicitly unwrapped optional by placing an
-exclamation mark (&lsquo;<samp>String!</samp>&rsquo;) rather than a question mark (&lsquo;<samp>String?</samp>&rsquo;)
-after the type that you want to make optional.
+exclamation point (&lsquo;<samp>String!</samp>&rsquo;) rather than a question mark (&lsquo;<samp>String?</samp>&rsquo;)
+after the type that you want to make optional. Rather than placing an
+exclamation point after the optional&rsquo;s name when you use it, you place
+an exclamation point after the optional&rsquo;s type when you declare it.
 </p>
 <p>Implicitly unwrapped optionals are useful when an optional&rsquo;s value is
 confirmed to exist immediately after the optional is first defined and
@@ -4215,27 +4227,35 @@ as an explicit &lsquo;<samp>String</samp>&rsquo;:
 </p>
 <div class="example">
 <pre class="example">let possibleString: String? = &quot;An optional string.&quot;
-let forcedString: String = possibleString! // requires an exclamation mark
+let forcedString: String = possibleString! // requires an exclamation point
 
 let assumedString: String! = &quot;An implicitly unwrapped optional string.&quot;
-let implicitString: String = assumedString // no need for an exclamation mark
+let implicitString: String = assumedString // no need for an exclamation point
 </pre></div>
 
 <p>You can think of an implicitly unwrapped optional as giving permission
-for the optional to be unwrapped automatically whenever it&rsquo;s used.
-Rather than placing an exclamation mark after the optional&rsquo;s name each
-time you use it, you place an exclamation mark after the optional&rsquo;s type
-when you declare it.
+for the optional to be force-unwrapped if needed. When you use an
+implicitly unwrapped optional value, Swift first tries to use it as an
+ordinary optional value; if it can&rsquo;t be used as an optional, Swift
+force-unwraps the value. In the code above, the optional value
+&lsquo;<samp>assumedString</samp>&rsquo; is force-unwrapped before assigning its value to
+&lsquo;<samp>implicitString</samp>&rsquo; because &lsquo;<samp>implicitString</samp>&rsquo; has an explicit, non-optional
+type of &lsquo;<samp>String</samp>&rsquo;. In code below, &lsquo;<samp>optionalString</samp>&rsquo; doesn&rsquo;t have an
+explicit type so it&rsquo;s an ordinary optional.
 </p>
-<p>Note
-</p>
+<div class="example">
+<pre class="example">let optionalString = assumedString
+// The type of optionalString is &quot;String?&quot; and assumedString isn't
+force-unwrapped.
+</pre></div>
+
 <p>If an implicitly unwrapped optional is &lsquo;<samp>nil</samp>&rsquo; and you try to access its
 wrapped value, you&rsquo;ll trigger a runtime error. The result is exactly the
-same as if you place an exclamation mark after a normal optional that
+same as if you place an exclamation point after a normal optional that
 doesn&rsquo;t contain a value.
 </p>
-<p>You can still treat an implicitly unwrapped optional like a normal
-optional, to check if it contains a value:
+<p>You can check whether an implicitly unwrapped optional is &lsquo;<samp>nil</samp>&rsquo; the same
+way you check a normal optional:
 </p>
 <div class="example">
 <pre class="example">if assumedString != nil {
@@ -4500,15 +4520,15 @@ two numbers, as in &lsquo;<samp>let i = 1 + 2</samp>&rsquo;, and the logical AND
 combines two Boolean values, as in
 &lsquo;<samp>if enteredDoorCode &amp;&amp; passedRetinaScan</samp>&rsquo;.
 </p>
-<p>Swift supports most standard C operators and improves several
-capabilities to eliminate common coding errors. The assignment operator
-(&lsquo;<samp>=</samp>&rsquo;) doesn&rsquo;t return a value, to prevent it from being mistakenly used
-when the equal to operator (&lsquo;<samp>==</samp>&rsquo;) is intended. Arithmetic operators
-(&lsquo;<samp>+</samp>&rsquo;, &lsquo;<samp>-</samp>&rsquo;, &lsquo;<samp>*</samp>&rsquo;, &lsquo;<samp>/</samp>&rsquo;, &lsquo;<samp>%</samp>&rsquo; and so forth) detect and disallow value
-overflow, to avoid unexpected results when working with numbers that
-become larger or smaller than the allowed value range of the type that
-stores them. You can opt in to value overflow behavior by using Swift&rsquo;s
-overflow operators, as described in
+<p>Swift supports the operators you may already know from languages like C
+and improves several capabilities to eliminate common coding errors. The
+assignment operator (&lsquo;<samp>=</samp>&rsquo;) doesn&rsquo;t return a value, to prevent it from
+being mistakenly used when the equal to operator (&lsquo;<samp>==</samp>&rsquo;) is intended.
+Arithmetic operators (&lsquo;<samp>+</samp>&rsquo;, &lsquo;<samp>-</samp>&rsquo;, &lsquo;<samp>*</samp>&rsquo;, &lsquo;<samp>/</samp>&rsquo;, &lsquo;<samp>%</samp>&rsquo; and so forth) detect and
+disallow value overflow, to avoid unexpected results when working with
+numbers that become larger or smaller than the allowed value range of
+the type that stores them. You can opt in to value overflow behavior by
+ using Swift&rsquo;s overflow operators, as described in
 <a href="#Overflow-Operators">Overflow Operators</a>.
 </p>
 <p>Swift also provides range operators that aren&rsquo;t found in C, such as
@@ -4790,7 +4810,7 @@ Next: <a href="#Ternary-Conditional-Operator" accesskey="n" rel="next">Ternary C
 </div>
 <span id="Comparison-Operators-1"></span><h3 class="section">7.5 Comparison Operators</h3>
 
-<p>Swift supports all standard C <em>comparison operators</em>:
+<p>Swift supports the following comparison operators:
 </p>
 <ul>
 <li> Equal to (&lsquo;<samp>a =</samp>&rsquo; b=)
@@ -8847,9 +8867,9 @@ Using the &lsquo;<samp>gameLoop</samp>&rsquo; label makes it clear which control
 be terminated.
 </p>
 <p>It is not strictly necessary to use the &lsquo;<samp>gameLoop</samp>&rsquo; label when calling
-&lsquo;<samp>continue gameLoop</samp>&rsquo; to jump to the next iteration of the loop. There is
+&lsquo;<samp>continue gameLoop</samp>&rsquo; to jump to the next iteration of the loop. There&rsquo;s
 only one loop in the game, and therefore no ambiguity as to which loop
-the &lsquo;<samp>continue</samp>&rsquo; statement will affect. However, there is no harm in using
+the &lsquo;<samp>continue</samp>&rsquo; statement will affect. However, there&rsquo;s no harm in using
 the &lsquo;<samp>gameLoop</samp>&rsquo; label with the &lsquo;<samp>continue</samp>&rsquo; statement. Doing so is
 consistent with the label&rsquo;s use alongside the &lsquo;<samp>break</samp>&rsquo; statement and
 helps make the game&rsquo;s logic clearer to read and understand.
@@ -9900,7 +9920,7 @@ Values</a>.
 Closures take one of three forms:
 </p>
 <ul>
-<li> Global functions are closures that have a name and do not capture any
+<li> Global functions are closures that have a name and don&rsquo;t capture any
 values.
 
 </li><li> Nested functions are closures that have a name and can capture values
@@ -10100,7 +10120,7 @@ can infer the types of its parameters and the type of the value it
 returns. The &lsquo;<samp>sorted(by:)</samp>&rsquo; method is being called on an array of
 strings, so its argument must be a function of type
 &lsquo;<samp>(String, String) -&gt; Bool</samp>&rsquo;. This means that the &lsquo;<samp>(String, String)</samp>&rsquo; and
-&lsquo;<samp>Bool</samp>&rsquo; types do not need to be written as part of the closure
+&lsquo;<samp>Bool</samp>&rsquo; types don&rsquo;t need to be written as part of the closure
 expression&rsquo;s definition. Because all of the types can be inferred, the
 return arrow (&lsquo;<samp>-&gt;</samp>&rsquo;) and the parentheses around the names of the
 parameters can also be omitted:
@@ -10142,7 +10162,7 @@ declaration, as in this version of the previous example:
 <p>Here, the function type of the &lsquo;<samp>sorted(by:)</samp>&rsquo; method&rsquo;s argument makes it
 clear that a &lsquo;<samp>Bool</samp>&rsquo; value must be returned by the closure. Because the
 closure&rsquo;s body contains a single expression (&lsquo;<samp>s1 &gt; s2</samp>&rsquo;) that returns a
-&lsquo;<samp>Bool</samp>&rsquo; value, there is no ambiguity, and the &lsquo;<samp>return</samp>&rsquo; keyword can be
+&lsquo;<samp>Bool</samp>&rsquo; value, there&rsquo;s no ambiguity, and the &lsquo;<samp>return</samp>&rsquo; keyword can be
 omitted.
 </p>
 <hr>
@@ -10191,7 +10211,7 @@ that you want to use its string-specific implementation:
 <pre class="example">reversedNames = names.sorted(by: &gt;)
 </pre></div>
 
-<p>For more about operator method, see
+<p>For more about operator methods, see
 <a href="#Operator-Methods">Operator Methods</a>.
 </p>
 <hr>
@@ -10205,11 +10225,13 @@ Next: <a href="#Capturing-Values" accesskey="n" rel="next">Capturing Values</a>,
 
 <p>If you need to pass a closure expression to a function as the function&rsquo;s
 final argument and the closure expression is long, it can be useful to
-write it as a <em>trailing closure</em> instead. A trailing closure is written
-after the function call&rsquo;s parentheses, even though it is still an
-argument to the function. When you use the trailing closure syntax, you
-don&rsquo;t write the argument label for the closure as part of the function
-call.
+write it as a <em>trailing closure</em> instead. You write a trailing closure
+after the function call&rsquo;s parentheses, even though the trailing closure
+is still an argument to the function. When you use the trailing closure
+syntax, you don&rsquo;t write the argument label for the first closure as part
+of the function call. A function call can include multiple trailing
+closures; however, the first few examples below use a single trailing
+closure.
 </p>
 <div class="example">
 <pre class="example">func someFunctionThatTakesAClosure(closure: () -&gt; Void) {
@@ -10235,9 +10257,9 @@ Expression Syntax</a> section above can be written outside of the
 <pre class="example">reversedNames = names.sorted() { $0 &gt; $1 }
 </pre></div>
 
-<p>If a closure expression is provided as the function or method&rsquo;s only
-argument and you provide that expression as a trailing closure, you do
-not need to write a pair of parentheses &lsquo;<samp>()</samp>&rsquo; after the function or
+<p>If a closure expression is provided as the function&rsquo;s or method&rsquo;s only
+argument and you provide that expression as a trailing closure, you
+don&rsquo;t need to write a pair of parentheses &lsquo;<samp>()</samp>&rsquo; after the function or
 method&rsquo;s name when you call the function:
 </p>
 <div class="example">
@@ -10246,11 +10268,12 @@ method&rsquo;s name when you call the function:
 
 <p>Trailing closures are most useful when the closure is sufficiently long
 that it is not possible to write it inline on a single line. As an
-example, Swift&rsquo;s &lsquo;<samp>Array</samp>&rsquo; type has a &lsquo;<samp>map(_:)</samp>&rsquo; method which takes a
+example, Swift&rsquo;s &lsquo;<samp>Array</samp>&rsquo; type has a &lsquo;<samp>map(_:)</samp>&rsquo; method, which takes a
 closure expression as its single argument. The closure is called once
 for each item in the array, and returns an alternative mapped value
-(possibly of some other type) for that item. The nature of the mapping
-and the type of the returned value is left up to the closure to specify.
+(possibly of some other type) for that item. You specify the nature of
+the mapping and the type of the returned value by writing code in the
+closure that you pass to &lsquo;<samp>map(_:)</samp>&rsquo;.
 </p>
 <p>After applying the provided closure to each array element, the &lsquo;<samp>map(_:)</samp>&rsquo;
 method returns a new array containing all of the new mapped values, in
@@ -10292,7 +10315,7 @@ as a trailing closure:
 </pre></div>
 
 <p>The &lsquo;<samp>map(_:)</samp>&rsquo; method calls the closure expression once for each item in
-the array. You do not need to specify the type of the closure&rsquo;s input
+the array. You don&rsquo;t need to specify the type of the closure&rsquo;s input
 parameter, &lsquo;<samp>number</samp>&rsquo;, because the type can be inferred from the values in
 the array to be mapped.
 </p>
@@ -10312,11 +10335,11 @@ a string representation of any integer greater than zero.
 <p>Note
 </p>
 <p>The call to the &lsquo;<samp>digitNames</samp>&rsquo; dictionary&rsquo;s subscript is followed by an
-exclamation mark (&lsquo;<samp>!</samp>&rsquo;), because dictionary subscripts return an optional
+exclamation point (&lsquo;<samp>!</samp>&rsquo;), because dictionary subscripts return an optional
 value to indicate that the dictionary lookup can fail if the key does
 not exist. In the example above, it is guaranteed that &lsquo;<samp>number % 10</samp>&rsquo;
 will always be a valid subscript key for the &lsquo;<samp>digitNames</samp>&rsquo; dictionary,
-and so an exclamation mark is used to force-unwrap the &lsquo;<samp>String</samp>&rsquo; value
+and so an exclamation point is used to force-unwrap the &lsquo;<samp>String</samp>&rsquo; value
 stored in the subscript&rsquo;s optional return value.
 </p>
 <p>The string retrieved from the &lsquo;<samp>digitNames</samp>&rsquo; dictionary is added to the
@@ -10336,6 +10359,45 @@ output array by the &lsquo;<samp>map(_:)</samp>&rsquo; method.
 encapsulates the closure&rsquo;s functionality immediately after the function
 that closure supports, without needing to wrap the entire closure within
 the &lsquo;<samp>map(_:)</samp>&rsquo; method&rsquo;s outer parentheses.
+</p>
+<span id="index-multiple-trailing-closures"></span>
+
+<p>If a function takes multiple closures, you omit the argument label for
+the first trailing closure and you label the remaining trailing
+closures. For example, the function below loads a picture for a photo
+gallery:
+</p>
+<div class="example">
+<pre class="example">func loadPicture(from server: Server, completion: (Picture) -&gt; Void,
+                 onFailure: () -&gt; Void) {
+    if let picture = download(&quot;photo.jpg&quot;, from: server) {
+        completion(picture)
+    } else {
+        onFailure()
+    }
+}
+</pre></div>
+
+<p>When you call this function to load a picture, you provide two closures.
+The first closure is a completion handler that displays a picture after
+a successful download. The second closure is an error handler that
+displays an error to the user.
+</p>
+<div class="example">
+<pre class="example">loadPicture(from: someServer) { picture in
+    someView.currentPicture = picture
+} onFailure: {
+    print(&quot;Couldn't download the next picture.&quot;)
+}
+</pre></div>
+
+<p>In this example, the &lsquo;<samp>loadPicture(from:completion:onFailure:)</samp>&rsquo; function
+dispatches its network task into the background, and calls one of the
+two completion handlers when the network task finishes. Writing the
+function this way lets you cleanly separate the code that&rsquo;s responsible
+for handling a network failure from the code that updates the user
+interface after a successful download, instead of using just one closure
+that handles both circumstances.
 </p>
 <hr>
 <span id="Capturing-Values"></span><div class="header">
@@ -10407,7 +10469,7 @@ seem unusual:
 refers to &lsquo;<samp>runningTotal</samp>&rsquo; and &lsquo;<samp>amount</samp>&rsquo; from within its function body. It
 does this by capturing a <em>reference</em> to &lsquo;<samp>runningTotal</samp>&rsquo; and &lsquo;<samp>amount</samp>&rsquo; from
 the surrounding function and using them within its own function body.
-Capturing by reference ensures that &lsquo;<samp>runningTotal</samp>&rsquo; and &lsquo;<samp>amount</samp>&rsquo; do not
+Capturing by reference ensures that &lsquo;<samp>runningTotal</samp>&rsquo; and &lsquo;<samp>amount</samp>&rsquo; don&rsquo;t
 disappear when the call to &lsquo;<samp>makeIncrementer</samp>&rsquo; ends, and also ensures that
 &lsquo;<samp>runningTotal</samp>&rsquo; is available the next time the &lsquo;<samp>incrementer</samp>&rsquo; function is
 called.
@@ -10519,8 +10581,8 @@ When you declare a function that takes a closure as one of its
 parameters, you can write &lsquo;<samp>@escaping</samp>&rsquo; before the parameter&rsquo;s type to
 indicate that the closure is allowed to escape.
 </p>
-<p>One way that a closure can escape is by being stored in a variable that
-is defined outside the function. As an example, many functions that
+<p>One way that a closure can escape is by being stored in a variable
+that&rsquo;s defined outside the function. As an example, many functions that
 start an asynchronous operation take a closure argument as a completion
 handler. The function returns after it starts the operation, but the
 closure isn&rsquo;t called until the operation is completed&mdash;the closure
@@ -10538,17 +10600,30 @@ its argument and adds it to an array that&rsquo;s declared outside the
 function. If you didn&rsquo;t mark the parameter of this function with
 &lsquo;<samp>@escaping</samp>&rsquo;, you would get a compile-time error.
 </p>
-<p>Marking a closure with &lsquo;<samp>@escaping</samp>&rsquo; means you have to refer to &lsquo;<samp>self</samp>&rsquo;
-explicitly within the closure. For example, in the code below, the
-closure passed to &lsquo;<samp>someFunctionWithEscapingClosure(_:)</samp>&rsquo; is an escaping
-closure, which means it needs to refer to &lsquo;<samp>self</samp>&rsquo; explicitly. In
-contrast, the closure passed to &lsquo;<samp>someFunctionWithNonescapingClosure(_:)</samp>&rsquo;
-is a nonescaping closure, which means it can refer to &lsquo;<samp>self</samp>&rsquo; implicitly.
+<span id="index-self-references-in-closures"></span>
+
+<p>An escaping closure that refers to &lsquo;<samp>self</samp>&rsquo; needs special consideration if
+&lsquo;<samp>self</samp>&rsquo; refers to an instance of a class. Capturing &lsquo;<samp>self</samp>&rsquo; in an escaping
+closure makes it easy to accidentally create a strong reference cycle.
+For information about reference cycles, see
+<a href="#Automatic-Reference-Counting">Automatic Reference Counting</a>.
+</p>
+<p>Normally, a closure captures variables implicitly by using them in the
+body of the closure, but in this case you need to be explicit. If you
+want to capture &lsquo;<samp>self</samp>&rsquo;, write &lsquo;<samp>self</samp>&rsquo; explicitly when you use it, or
+include &lsquo;<samp>self</samp>&rsquo; in the closure&rsquo;s capture list. Writing &lsquo;<samp>self</samp>&rsquo; explicitly
+lets you express your intent, and reminds you to confirm that there
+isn&rsquo;t a reference cycle. For example, in the code below, the closure
+passed to &lsquo;<samp>someFunctionWithEscapingClosure(_:)</samp>&rsquo; refers to &lsquo;<samp>self</samp>&rsquo;
+explicitly. In contrast, the closure passed to
+&lsquo;<samp>someFunctionWithNonescapingClosure(_:)</samp>&rsquo; is a nonescaping closure, which
+means it can refer to &lsquo;<samp>self</samp>&rsquo; implicitly.
 </p>
 <div class="example">
 <pre class="example">func someFunctionWithNonescapingClosure(closure: () -&gt; Void) {
     closure()
 }
+
 
 class SomeClass {
     var x = 10
@@ -10558,16 +10633,56 @@ class SomeClass {
     }
 }
 
-let instance = SomeClass()
+</pre></div>
+
+<div class="example">
+<pre class="example">let instance = SomeClass()
 instance.doSomething()
 print(instance.x)
 // Prints &quot;200&quot;
+
 
 completionHandlers.first?()
 print(instance.x)
 // Prints &quot;100&quot;
 </pre></div>
 
+<p>Here&rsquo;s a version of &lsquo;<samp>doSomething()</samp>&rsquo; that captures &lsquo;<samp>self</samp>&rsquo; by including it
+in the closure&rsquo;s capture list, and then refers to &lsquo;<samp>self</samp>&rsquo; implicitly:
+</p>
+<div class="example">
+<pre class="example">class SomeOtherClass {
+    var x = 10
+    func doSomething() {
+        someFunctionWithEscapingClosure { [self] in x = 100 }
+        someFunctionWithNonescapingClosure { x = 200 }
+    }
+}
+</pre></div>
+
+<p>If &lsquo;<samp>self</samp>&rsquo; is an instance of a structure or an enumeration, you can
+always refer to &lsquo;<samp>self</samp>&rsquo; implicitly. However, an escaping closure can&rsquo;t
+capture a mutable reference to &lsquo;<samp>self</samp>&rsquo; when &lsquo;<samp>self</samp>&rsquo; is an instance of a
+structure or an enumeration. Structures and enumerations don&rsquo;t allow
+shared mutability, as discussed in
+<a href="#Structures-and-Enumerations-Are-Value-Types">Structures and Enumerations Are
+Value Types</a>.
+</p>
+<div class="example">
+<pre class="example">struct SomeStruct {
+    var x = 10
+    mutating func doSomething() {
+        someFunctionWithNonescapingClosure { x = 200 } // Ok
+        someFunctionWithEscapingClosure { x = 100 } // Error
+    }
+}
+</pre></div>
+
+<p>The call to the &lsquo;<samp>someFunctionWithEscapingClosure</samp>&rsquo; function in the
+example above is an error because it&rsquo;s inside a mutating method, so
+&lsquo;<samp>self</samp>&rsquo; is mutable. That violates the rule that escaping closures can&rsquo;t
+capture a mutable reference to &lsquo;<samp>self</samp>&rsquo; for structures.
+</p>
 <hr>
 <span id="Autoclosures"></span><div class="header">
 <p>
@@ -11980,7 +12095,7 @@ queried:
 </p>
 <p>If a property marked with the &lsquo;<samp>lazy</samp>&rsquo; modifier is accessed by multiple
 threads simultaneously and the property has not yet been initialized,
-there is no guarantee that the property will be initialized only once.
+there&rsquo;s no guarantee that the property will be initialized only once.
 </p>
 <hr>
 <span id="Stored-Properties-and-Instance-Variables"></span><div class="header">
@@ -12212,14 +12327,21 @@ Next: <a href="#Property-Wrappers" accesskey="n" rel="next">Property Wrappers</a
 Property observers are called every time a property&rsquo;s value is set, even
 if the new value is the same as the property&rsquo;s current value.
 </p>
-<p>You can add property observers to any stored properties you define,
-except for lazy stored properties. You can also add property observers
-to any inherited property (whether stored or computed) by overriding the
-property within a subclass. You don&rsquo;t need to define property observers
-for nonoverridden computed properties, because you can observe and
-respond to changes to their value in the computed property&rsquo;s setter.
-Property overriding is described in
-<a href="#Overriding">Overriding</a>.
+<p>You can add property observers in the following places:
+</p>
+<ul>
+<li> Stored properties that you define
+
+</li><li> Stored properties that you inherit
+
+</li><li> Computed properties that you inherit
+</li></ul>
+
+<p>For an inherited property, you add a property observer by overriding
+that property in a subclass. For a computed property that you define,
+use the property&rsquo;s setter to observe and respond to value changes,
+instead of trying to create an observer. Overriding properties is
+described in <a href="#Overriding">Overriding</a>.
 </p>
 <p>You have the option to define either or both of these observers on a
 property:
@@ -12588,11 +12710,9 @@ print(mixedRectangle.height)
 </pre></div>
 
 <p>The instance of &lsquo;<samp>SmallNumber</samp>&rsquo; that wraps &lsquo;<samp>height</samp>&rsquo; is created by calling
-&lsquo;<samp>SmallNumber(wrappedValue: 1)</samp>&rsquo;, which uses the default maximum value of
-</p><ol>
-<li> The instance that wraps &lsquo;<samp>width</samp>&rsquo; is created by calling
-</li></ol>
-<p>&lsquo;<samp>SmallNumber(wrappedValue: 2, maximum: 9)</samp>&rsquo;.
+&lsquo;<samp>SmallNumber(wrappedValue: 1)</samp>&rsquo;, which uses the default maximum value
+of 12. The instance that wraps &lsquo;<samp>width</samp>&rsquo; is created by calling
+&lsquo;<samp>SmallNumber(wrappedValue: 2, maximum: 9)</samp>&rsquo;.
 </p>
 <hr>
 <span id="Projecting-a-Value-From-a-Property-Wrapper"></span><div class="header">
@@ -13563,7 +13683,7 @@ type.
 <p>Like functions, subscripts can take a varying number of parameters and
 provide default values for their parameters, as discussed in
 <a href="#Variadic-Parameters">Variadic Parameters</a> and <a href="#Default-Parameter-Values">Default Parameter Values</a>. However, unlike functions,
-they can&rsquo;t use in-out parameters.
+subscripts can&rsquo;t use in-out parameters.
 </p>
 <p>A class or structure can provide as many subscript implementations as it
 needs, and the appropriate subscript to be used will be inferred based
@@ -15828,7 +15948,7 @@ Previous: <a href="#Overriding-a-Failable-Initializer" accesskey="p" rel="prev">
 instance of the appropriate type by placing a question mark after the
 &lsquo;<samp>init</samp>&rsquo; keyword (&lsquo;<samp>init?</samp>&rsquo;). Alternatively, you can define a failable
 initializer that creates an implicitly unwrapped optional instance of
-the appropriate type. Do this by placing an exclamation mark after the
+the appropriate type. Do this by placing an exclamation point after the
 &lsquo;<samp>init</samp>&rsquo; keyword (&lsquo;<samp>init!</samp>&rsquo;) instead of a question mark.
 </p>
 <p>You can delegate from &lsquo;<samp>init?</samp>&rsquo; to &lsquo;<samp>init!</samp>&rsquo; and vice versa, and you can
@@ -16120,7 +16240,7 @@ print(&quot;There are now \(Bank.coinsInBank) coins left in the bank&quot;)
 are available. This &lsquo;<samp>Player</samp>&rsquo; instance is stored in an optional &lsquo;<samp>Player</samp>&rsquo;
 variable called &lsquo;<samp>playerOne</samp>&rsquo;. An optional variable is used here, because
 players can leave the game at any point. The optional lets you track
-whether there is currently a player in the game.
+whether there&rsquo;s currently a player in the game.
 </p>
 <p>Because &lsquo;<samp>playerOne</samp>&rsquo; is an optional, it is qualified with an exclamation
 mark (&lsquo;<samp>!</samp>&rsquo;) when its &lsquo;<samp>coinsInPurse</samp>&rsquo; property is accessed to print its
@@ -16201,7 +16321,7 @@ Next: <a href="#Defining-Model-Classes-for-Optional-Chaining" accesskey="n" rel=
 <p>You specify optional chaining by placing a question mark (&lsquo;<samp>?</samp>&rsquo;) after the
 optional value on which you wish to call a property, method or subscript
 if the optional is non-&lsquo;<samp>nil</samp>&rsquo;. This is very similar to placing an
-exclamation mark (&lsquo;<samp>!</samp>&rsquo;) after an optional value to force the unwrapping
+exclamation point (&lsquo;<samp>!</samp>&rsquo;) after an optional value to force the unwrapping
 of its value. The main difference is that optional chaining fails
 gracefully when the optional is &lsquo;<samp>nil</samp>&rsquo;, whereas forced unwrapping
 triggers a runtime error when the optional is &lsquo;<samp>nil</samp>&rsquo;.
@@ -16247,7 +16367,7 @@ below, &lsquo;<samp>john</samp>&rsquo; has a &lsquo;<samp>residence</samp>&rsquo
 </pre></div>
 
 <p>If you try to access the &lsquo;<samp>numberOfRooms</samp>&rsquo; property of this person&rsquo;s
-&lsquo;<samp>residence</samp>&rsquo;, by placing an exclamation mark after &lsquo;<samp>residence</samp>&rsquo; to force
+&lsquo;<samp>residence</samp>&rsquo;, by placing an exclamation point after &lsquo;<samp>residence</samp>&rsquo; to force
 the unwrapping of its value, you trigger a runtime error, because there
 is no &lsquo;<samp>residence</samp>&rsquo; value to unwrap:
 </p>
@@ -16263,7 +16383,7 @@ of rooms. However, this code always triggers a runtime error when
 </p>
 <p>Optional chaining provides an alternative way to access the value of
 &lsquo;<samp>numberOfRooms</samp>&rsquo;. To use optional chaining, use a question mark in place
-of the exclamation mark:
+of the exclamation point:
 </p>
 <div class="example">
 <pre class="example">if let roomCount = john.residence?.numberOfRooms {
@@ -17048,6 +17168,8 @@ handle the error.
     statements
 } catch pattern 2 where condition {
     statements
+} catch pattern 3, pattern 4 where condition {
+    statements
 } catch {
     statements
 }
@@ -17106,7 +17228,7 @@ error.
     do {
         try vendingMachine.vend(itemNamed: item)
     } catch is VendingMachineError {
-        print(&quot;Invalid selection, out of stock, or not enough money.&quot;)
+        print(&quot;Couldn't buy that from the vending machine.&quot;)
     }
 }
 
@@ -17115,7 +17237,7 @@ do {
 } catch {
     print(&quot;Unexpected non-vending-machine-related error: \(error)&quot;)
 }
-// Prints &quot;Invalid selection, out of stock, or not enough money.&quot;
+// Prints &quot;Couldn't buy that from the vending machine.&quot;
 </pre></div>
 
 <p>In the &lsquo;<samp>nourish(with:)</samp>&rsquo; function, if &lsquo;<samp>vend(itemNamed:)</samp>&rsquo; throws an error
@@ -17701,7 +17823,7 @@ raw &lsquo;<samp>Int</samp>&rsquo; value.
 &lsquo;<samp>suit</samp>&rsquo;. It also defines a computed property called &lsquo;<samp>description</samp>&rsquo;, which
 uses the values stored in &lsquo;<samp>rank</samp>&rsquo; and &lsquo;<samp>suit</samp>&rsquo; to build a description of
 the name and value of the card. The &lsquo;<samp>description</samp>&rsquo; property uses optional
-binding to check whether there is a second value to display, and if so,
+binding to check whether there&rsquo;s a second value to display, and if so,
 inserts additional description detail for that second value.
 </p>
 <p>Because &lsquo;<samp>BlackjackCard</samp>&rsquo; is a structure with no custom initializers, it
@@ -18219,7 +18341,9 @@ types can take advantage of.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Adding-Protocol-Conformance-with-an-Extension" accesskey="8">Adding Protocol Conformance with an Extension</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Collections-of-Protocol-Types" accesskey="9">Collections of Protocol Types</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#Adopting-a-Protocol-Using-a-Synthesized-Implementation" accesskey="9">Adopting a Protocol Using a Synthesized Implementation</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Collections-of-Protocol-Types">Collections of Protocol Types</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Protocol-Inheritance">Protocol Inheritance</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
@@ -18892,7 +19016,7 @@ game.play()
 <hr>
 <span id="Adding-Protocol-Conformance-with-an-Extension"></span><div class="header">
 <p>
-Next: <a href="#Collections-of-Protocol-Types" accesskey="n" rel="next">Collections of Protocol Types</a>, Previous: <a href="#Delegation" accesskey="p" rel="prev">Delegation</a>, Up: <a href="#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Adopting-a-Protocol-Using-a-Synthesized-Implementation" accesskey="n" rel="next">Adopting a Protocol Using a Synthesized Implementation</a>, Previous: <a href="#Delegation" accesskey="p" rel="prev">Delegation</a>, Up: <a href="#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Adding-Protocol-Conformance-with-an-Extension-1"></span><h3 class="section">26.8 Adding Protocol Conformance with an Extension</h3>
 
@@ -19034,11 +19158,110 @@ requirements. They must always explicitly declare their adoption of the
 protocol.
 </p>
 <hr>
+<span id="Adopting-a-Protocol-Using-a-Synthesized-Implementation"></span><div class="header">
+<p>
+Next: <a href="#Collections-of-Protocol-Types" accesskey="n" rel="next">Collections of Protocol Types</a>, Previous: <a href="#Adding-Protocol-Conformance-with-an-Extension" accesskey="p" rel="prev">Adding Protocol Conformance with an Extension</a>, Up: <a href="#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Adopting-a-Protocol-Using-a-Synthesized-Implementation-1"></span><h3 class="section">26.9 Adopting a Protocol Using a Synthesized Implementation</h3>
+
+<span id="index-automatic-conformance-for-Equatable_002c-Hashable_002c-Comparable"></span>
+
+<p>Swift can automatically provide the protocol conformance for
+&lsquo;<samp>Equatable</samp>&rsquo;, &lsquo;<samp>Hashable</samp>&rsquo;, and &lsquo;<samp>Comparable</samp>&rsquo; in many simple cases. Using
+this synthesized implementation means you don&rsquo;t have to write repetitive
+boilerplate code to implement the protocol requirements yourself.
+</p>
+<p>Swift provides a synthesized implementation of &lsquo;<samp>Equatable</samp>&rsquo; for the
+following kinds of custom types:
+</p>
+<ul>
+<li> Structures that have only stored properties that conform to the
+&lsquo;<samp>Equatable</samp>&rsquo; protocol
+
+</li><li> Enumerations that have only associated types that conform to the
+&lsquo;<samp>Equatable</samp>&rsquo; protocol
+
+</li><li> Enumerations that have no associated types
+</li></ul>
+
+<p>To receive a synthesized implementation of &lsquo;<samp>==</samp>&rsquo;, declare conformance to
+&lsquo;<samp>Equatable</samp>&rsquo; in the file that contains the original declaration, without
+implementing an &lsquo;<samp>==</samp>&rsquo; operator yourself. The &lsquo;<samp>Equatable</samp>&rsquo; protocol
+provides a default implementation of &lsquo;<samp>!=</samp>&rsquo;.
+</p>
+<p>The example below defines a &lsquo;<samp>Vector3D</samp>&rsquo; structure for a three-dimensional
+position vector &lsquo;<samp>(x, y, z)</samp>&rsquo;, similar to the &lsquo;<samp>Vector2D</samp>&rsquo; structure.
+Because the &lsquo;<samp>x</samp>&rsquo;, &lsquo;<samp>y</samp>&rsquo;, and &lsquo;<samp>z</samp>&rsquo; properties are all of an &lsquo;<samp>Equatable</samp>&rsquo; type,
+&lsquo;<samp>Vector3D</samp>&rsquo; receives synthesized implementations of the equivalence
+operators.
+</p>
+<div class="example">
+<pre class="example">struct Vector3D: Equatable {
+    var x = 0.0, y = 0.0, z = 0.0
+}
+
+
+let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+if twoThreeFour == anotherTwoThreeFour {
+    print(&quot;These two vectors are also equivalent.&quot;)
+}
+// Prints &quot;These two vectors are also equivalent.&quot;
+</pre></div>
+
+<p>Swift provides a synthesized implementation of &lsquo;<samp>Hashable</samp>&rsquo; for the
+following kinds of custom types:
+</p>
+<ul>
+<li> Structures that have only stored properties that conform to the
+&lsquo;<samp>Hashable</samp>&rsquo; protocol
+
+</li><li> Enumerations that have only associated types that conform to the
+&lsquo;<samp>Hashable</samp>&rsquo; protocol
+
+</li><li> Enumerations that have no associated types
+</li></ul>
+
+<p>To receive a synthesized implementation of &lsquo;<samp>hash(into:)</samp>&rsquo;, declare
+conformance to &lsquo;<samp>Hashable</samp>&rsquo; in the file that contains the original
+declaration, without implementing a &lsquo;<samp>hash(into:)</samp>&rsquo; method yourself.
+</p>
+<p>Swift provides a synthesized implementation of &lsquo;<samp>Comparable</samp>&rsquo; for
+enumerations that don&rsquo;t have a raw value. If the enumeration has
+associated types, they must all conform to the &lsquo;<samp>Comparable</samp>&rsquo; protocol. To
+receive a synthesized implementation of &lsquo;<samp>&lt;</samp>&rsquo;, declare conformance to
+&lsquo;<samp>Comparable</samp>&rsquo; in the file that contains the original enumeration
+declaration, without implementing a &lsquo;<samp>&lt;</samp>&rsquo; operator yourself. The
+&lsquo;<samp>Comparable</samp>&rsquo; protocol&rsquo;s default implementation of &lsquo;<samp>&lt;=</samp>&rsquo;, &lsquo;<samp>&gt;</samp>&rsquo;, and &lsquo;<samp>&gt;=</samp>&rsquo;
+provides the remaining comparison operators.
+</p>
+<p>The example below defines a &lsquo;<samp>SkillLevel</samp>&rsquo; enumeration with cases for
+beginners, intermediates, and experts. Experts are additionally ranked
+by the number of stars they have.
+</p>
+<div class="example">
+<pre class="example">enum SkillLevel: Comparable {
+    case beginner
+    case intermediate
+    case expert(stars: Int)
+}
+var levels = [SkillLevel.intermediate, SkillLevel.beginner,
+              SkillLevel.expert(stars: 5), SkillLevel.expert(stars: 3)]
+for level in levels.sorted() {
+    print(level)
+}
+// Prints &quot;beginner&quot;
+// Prints &quot;intermediate&quot;
+// Prints &quot;expert(stars: 3)&quot;
+// Prints &quot;expert(stars: 5)&quot;
+</pre></div>
+
+<hr>
 <span id="Collections-of-Protocol-Types"></span><div class="header">
 <p>
-Next: <a href="#Protocol-Inheritance" accesskey="n" rel="next">Protocol Inheritance</a>, Previous: <a href="#Adding-Protocol-Conformance-with-an-Extension" accesskey="p" rel="prev">Adding Protocol Conformance with an Extension</a>, Up: <a href="#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Protocol-Inheritance" accesskey="n" rel="next">Protocol Inheritance</a>, Previous: <a href="#Adopting-a-Protocol-Using-a-Synthesized-Implementation" accesskey="p" rel="prev">Adopting a Protocol Using a Synthesized Implementation</a>, Up: <a href="#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Collections-of-Protocol-Types-1"></span><h3 class="section">26.9 Collections of Protocol Types</h3>
+<span id="Collections-of-Protocol-Types-1"></span><h3 class="section">26.10 Collections of Protocol Types</h3>
 
 <p>A protocol can be used as the type to be stored in a collection such as
 an array or a dictionary, as mentioned in
@@ -19073,7 +19296,7 @@ known to have a &lsquo;<samp>textualDescription</samp>&rsquo; property, it&rsquo
 <p>
 Next: <a href="#Class_002dOnly-Protocols" accesskey="n" rel="next">Class-Only Protocols</a>, Previous: <a href="#Collections-of-Protocol-Types" accesskey="p" rel="prev">Collections of Protocol Types</a>, Up: <a href="#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Protocol-Inheritance-2"></span><h3 class="section">26.10 Protocol Inheritance</h3>
+<span id="Protocol-Inheritance-2"></span><h3 class="section">26.11 Protocol Inheritance</h3>
 
 <p>A protocol can <em>inherit</em> one or more other protocols and can add further
 requirements on top of the requirements it inherits. The syntax for
@@ -19163,7 +19386,7 @@ pretty text description of any &lsquo;<samp>SnakesAndLadders</samp>&rsquo; insta
 <p>
 Next: <a href="#Protocol-Composition" accesskey="n" rel="next">Protocol Composition</a>, Previous: <a href="#Protocol-Inheritance" accesskey="p" rel="prev">Protocol Inheritance</a>, Up: <a href="#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Class_002dOnly-Protocols-1"></span><h3 class="section">26.11 Class-Only Protocols</h3>
+<span id="Class_002dOnly-Protocols-1"></span><h3 class="section">26.12 Class-Only Protocols</h3>
 
 <p>You can limit protocol adoption to class types (and not structures or
 enumerations) by adding the &lsquo;<samp>AnyObject</samp>&rsquo; protocol to a protocol&rsquo;s
@@ -19193,7 +19416,7 @@ Enumerations Are Value Types</a> and
 <p>
 Next: <a href="#Checking-for-Protocol-Conformance" accesskey="n" rel="next">Checking for Protocol Conformance</a>, Previous: <a href="#Class_002dOnly-Protocols" accesskey="p" rel="prev">Class-Only Protocols</a>, Up: <a href="#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Protocol-Composition-1"></span><h3 class="section">26.12 Protocol Composition</h3>
+<span id="Protocol-Composition-1"></span><h3 class="section">26.13 Protocol Composition</h3>
 
 <p>It can be useful to require a type to conform to multiple protocols at
 the same time. You can combine multiple protocols into a single
@@ -19290,7 +19513,7 @@ invalid.
 <p>
 Next: <a href="#Optional-Protocol-Requirements" accesskey="n" rel="next">Optional Protocol Requirements</a>, Previous: <a href="#Protocol-Composition" accesskey="p" rel="prev">Protocol Composition</a>, Up: <a href="#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Checking-for-Protocol-Conformance-1"></span><h3 class="section">26.13 Checking for Protocol Conformance</h3>
+<span id="Checking-for-Protocol-Conformance-1"></span><h3 class="section">26.14 Checking for Protocol Conformance</h3>
 
 <p>You can use the &lsquo;<samp>is</samp>&rsquo; and &lsquo;<samp>as</samp>&rsquo; operators described in
 <a href="#Type-Casting">Type Casting</a> to check for protocol conformance,
@@ -19402,7 +19625,7 @@ can be accessed.
 <p>
 Next: <a href="#Protocol-Extensions" accesskey="n" rel="next">Protocol Extensions</a>, Previous: <a href="#Checking-for-Protocol-Conformance" accesskey="p" rel="prev">Checking for Protocol Conformance</a>, Up: <a href="#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Optional-Protocol-Requirements-1"></span><h3 class="section">26.14 Optional Protocol Requirements</h3>
+<span id="Optional-Protocol-Requirements-1"></span><h3 class="section">26.15 Optional Protocol Requirements</h3>
 
 <p>You can define <em>optional requirements</em> for protocols. These requirements
 don&rsquo;t have to be implemented by types that conform to the protocol.
@@ -19595,7 +19818,7 @@ for _ in 1...5 {
 <p>
 Previous: <a href="#Optional-Protocol-Requirements" accesskey="p" rel="prev">Optional Protocol Requirements</a>, Up: <a href="#Protocols" accesskey="u" rel="up">Protocols</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Protocol-Extensions-1"></span><h3 class="section">26.15 Protocol Extensions</h3>
+<span id="Protocol-Extensions-1"></span><h3 class="section">26.16 Protocol Extensions</h3>
 
 <p>Protocols can be extended to provide method, initializer, subscript, and
 computed property implementations to conforming types. This allows you
@@ -19642,7 +19865,7 @@ inheritance is always specified in the protocol declaration itself.
 <p>
 Next: <a href="#Adding-Constraints-to-Protocol-Extensions" accesskey="n" rel="next">Adding Constraints to Protocol Extensions</a>, Up: <a href="#Protocol-Extensions" accesskey="u" rel="up">Protocol Extensions</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Providing-Default-Implementations-1"></span><h4 class="subsection">26.15.1 Providing Default Implementations</h4>
+<span id="Providing-Default-Implementations-1"></span><h4 class="subsection">26.16.1 Providing Default Implementations</h4>
 
 <p>You can use protocol extensions to provide a default implementation to
 any method or computed property requirement of that protocol. If a
@@ -19676,7 +19899,7 @@ of accessing the &lsquo;<samp>textualDescription</samp>&rsquo; property:
 <p>
 Previous: <a href="#Providing-Default-Implementations" accesskey="p" rel="prev">Providing Default Implementations</a>, Up: <a href="#Protocol-Extensions" accesskey="u" rel="up">Protocol Extensions</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Adding-Constraints-to-Protocol-Extensions-1"></span><h4 class="subsection">26.15.2 Adding Constraints to Protocol Extensions</h4>
+<span id="Adding-Constraints-to-Protocol-Extensions-1"></span><h4 class="subsection">26.16.2 Adding Constraints to Protocol Extensions</h4>
 
 <p>When you define a protocol extension, you can specify constraints that
 conforming types must satisfy before the methods and properties of the
@@ -19775,6 +19998,8 @@ limitations on what that type can be.
 <tr><td align="left" valign="top">&bull; <a href="#Generic-Where-Clauses" accesskey="9">Generic Where Clauses</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Extensions-with-a-Generic-Where-Clause">Extensions with a Generic Where Clause</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Contextual-Where-Clauses">Contextual Where Clauses</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Associated-Types-with-a-Generic-Where-Clause">Associated Types with a Generic Where Clause</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
@@ -20190,7 +20415,11 @@ dictionary.
 &lsquo;<samp>Dictionary</samp>&rsquo;, which specifies that the key type must conform to the
 &lsquo;<samp>Hashable</samp>&rsquo; protocol, a special protocol defined in the Swift standard
 library. All of Swift&rsquo;s basic types (such as &lsquo;<samp>String</samp>&rsquo;, &lsquo;<samp>Int</samp>&rsquo;, &lsquo;<samp>Double</samp>&rsquo;,
-and &lsquo;<samp>Bool</samp>&rsquo;) are hashable by default.
+and &lsquo;<samp>Bool</samp>&rsquo;) are hashable by default. For information about making your
+own custom types conform to the &lsquo;<samp>Hashable</samp>&rsquo; protocol, see
+<a href="https://developer.apple.com/documentation/swift/hashable#2849490">Conforming
+to the Hashable Protocol</a>
+[<a href="https://developer.apple.com/documentation/swift/hashable#2849490">https://developer.apple.com/documentation/swift/hashable#2849490</a>].
 </p>
 <p>You can define your own type constraints when creating custom generic
 types, and these constraints provide much of the power of generic
@@ -20345,8 +20574,8 @@ Next: <a href="#Generic-Where-Clauses" accesskey="n" rel="next">Generic Where Cl
 <span id="index-associatedtype"></span>
 
 <p>When defining a protocol, it&rsquo;s sometimes useful to declare one or more
-associated types as part of the protocol&rsquo;s definition. An &lsquo;<samp>associated
-type</samp>&rsquo; gives a placeholder name to a type that is used as part of the
+associated types as part of the protocol&rsquo;s definition. An <em>associated
+type</em> gives a placeholder name to a type that is used as part of the
 protocol. The actual type to use for that associated type isn&rsquo;t
 specified until the protocol is adopted. Associated types are specified
 with the &lsquo;<samp>associatedtype</samp>&rsquo; keyword.
@@ -20582,9 +20811,8 @@ is discussed in <a href="#Associated-Types-with-a-Generic-Where-Clause">Associat
 Where Clause</a> below.
 </p>
 <p>Here&rsquo;s an extension of the &lsquo;<samp>Stack</samp>&rsquo; type from
-<a href="#Strong-Reference-Cycles-for-Closures">Strong Reference Cycles for
-Closures</a> above that adds conformance to the &lsquo;<samp>SuffixableContainer</samp>&rsquo;
-protocol:
+<a href="#Generic-Types">Generic Types</a> above that adds conformance to
+the &lsquo;<samp>SuffixableContainer</samp>&rsquo; protocol:
 </p>
 <div class="example">
 <pre class="example">extension Stack: SuffixableContainer {
@@ -20772,7 +21000,7 @@ correctly reports that all of the items in the two containers match.
 <hr>
 <span id="Extensions-with-a-Generic-Where-Clause"></span><div class="header">
 <p>
-Next: <a href="#Associated-Types-with-a-Generic-Where-Clause" accesskey="n" rel="next">Associated Types with a Generic Where Clause</a>, Previous: <a href="#Generic-Where-Clauses" accesskey="p" rel="prev">Generic Where Clauses</a>, Up: <a href="#Generics-1" accesskey="u" rel="up">Generics 1</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Contextual-Where-Clauses" accesskey="n" rel="next">Contextual Where Clauses</a>, Previous: <a href="#Generic-Where-Clauses" accesskey="p" rel="prev">Generic Where Clauses</a>, Up: <a href="#Generics-1" accesskey="u" rel="up">Generics 1</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Extensions-with-a-Generic-Where-Clause-1"></span><h3 class="section">27.10 Extensions with a Generic Where Clause</h3>
 
@@ -20883,11 +21111,84 @@ that you write elsewhere. Separate each requirement in the list with a
 comma.
 </p>
 <hr>
+<span id="Contextual-Where-Clauses"></span><div class="header">
+<p>
+Next: <a href="#Associated-Types-with-a-Generic-Where-Clause" accesskey="n" rel="next">Associated Types with a Generic Where Clause</a>, Previous: <a href="#Extensions-with-a-Generic-Where-Clause" accesskey="p" rel="prev">Extensions with a Generic Where Clause</a>, Up: <a href="#Generics-1" accesskey="u" rel="up">Generics 1</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Contextual-Where-Clauses-1"></span><h3 class="section">27.11 Contextual Where Clauses</h3>
+
+<span id="index-restrict-extension-declarations-to-particular-types"></span>
+
+<p>You can write a generic &lsquo;<samp>where</samp>&rsquo; clause as part of a declaration that
+doesn&rsquo;t have its own generic type constraints, when you&rsquo;re already
+working in the context of generic types. For example, you can write a
+generic &lsquo;<samp>where</samp>&rsquo; clause on a subscript of a generic type or on a method
+in an extension to a generic type. The &lsquo;<samp>Container</samp>&rsquo; structure is generic,
+and the &lsquo;<samp>where</samp>&rsquo; clauses in the example below specify what type
+constraints have to be satisfied to make these new methods available on
+a container.
+</p>
+<div class="example">
+<pre class="example">extension Container {
+    func average() -&gt; Double where Item == Int {
+        var sum = 0.0
+        for index in 0..&lt;count {
+            sum += Double(self[index])
+        }
+        return sum / Double(count)
+    }
+    func endsWith(_ item: Item) -&gt; Bool where Item: Equatable {
+        return count &gt;= 1 &amp;&amp; self[count-1] == item
+    }
+}
+let numbers = [1260, 1200, 98, 37]
+print(numbers.average())
+// Prints &quot;648.75&quot;
+print(numbers.endsWith(37))
+// Prints &quot;true&quot;
+</pre></div>
+
+<p>This example adds an &lsquo;<samp>average()</samp>&rsquo; method to &lsquo;<samp>Container</samp>&rsquo; when the items
+are integers, and it adds an &lsquo;<samp>endsWith(_:)</samp>&rsquo; method when the items are
+equatable. Both functions include a generic &lsquo;<samp>where</samp>&rsquo; clause that adds
+type constraints to the generic &lsquo;<samp>Item</samp>&rsquo; type parameter from the original
+declaration of &lsquo;<samp>Container</samp>&rsquo;.
+</p>
+<p>If you want to write this code without using contextual &lsquo;<samp>where</samp>&rsquo; clauses,
+you write two extensions, one for each generic &lsquo;<samp>where</samp>&rsquo; clause. The
+example above and the example below have the same behavior.
+</p>
+<div class="example">
+<pre class="example">extension Container where Item == Int {
+    func average() -&gt; Double {
+        var sum = 0.0
+        for index in 0..&lt;count {
+            sum += Double(self[index])
+        }
+        return sum / Double(count)
+    }
+}
+extension Container where Item: Equatable {
+    func endsWith(_ item: Item) -&gt; Bool {
+        return count &gt;= 1 &amp;&amp; self[count-1] == item
+    }
+}
+</pre></div>
+
+<p>In the version of this example that uses contextual &lsquo;<samp>where</samp>&rsquo; clauses, the
+implementation of &lsquo;<samp>average()</samp>&rsquo; and &lsquo;<samp>endsWith(_:)</samp>&rsquo; are both in the same
+extension because each method&rsquo;s generic &lsquo;<samp>where</samp>&rsquo; clause states the
+requirements that need to be satisfied to make that method available.
+Moving those requirements to the extensions&rsquo; generic &lsquo;<samp>where</samp>&rsquo; clauses
+makes the methods available in the same situations, but requires one
+extension per requirement.
+</p>
+<hr>
 <span id="Associated-Types-with-a-Generic-Where-Clause"></span><div class="header">
 <p>
-Next: <a href="#Generic-Subscripts" accesskey="n" rel="next">Generic Subscripts</a>, Previous: <a href="#Extensions-with-a-Generic-Where-Clause" accesskey="p" rel="prev">Extensions with a Generic Where Clause</a>, Up: <a href="#Generics-1" accesskey="u" rel="up">Generics 1</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Generic-Subscripts" accesskey="n" rel="next">Generic Subscripts</a>, Previous: <a href="#Contextual-Where-Clauses" accesskey="p" rel="prev">Contextual Where Clauses</a>, Up: <a href="#Generics-1" accesskey="u" rel="up">Generics 1</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Associated-Types-with-a-Generic-Where-Clause-1"></span><h3 class="section">27.11 Associated Types with a Generic Where Clause</h3>
+<span id="Associated-Types-with-a-Generic-Where-Clause-1"></span><h3 class="section">27.12 Associated Types with a Generic Where Clause</h3>
 
 <p>You can include a generic &lsquo;<samp>where</samp>&rsquo; clause on an associated type. For
 example, suppose you want to make a version of &lsquo;<samp>Container</samp>&rsquo; that includes
@@ -20926,7 +21227,7 @@ in the protocol declaration. For example, the following code declares a
 <p>
 Previous: <a href="#Associated-Types-with-a-Generic-Where-Clause" accesskey="p" rel="prev">Associated Types with a Generic Where Clause</a>, Up: <a href="#Generics-1" accesskey="u" rel="up">Generics 1</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Generic-Subscripts-1"></span><h3 class="section">27.12 Generic Subscripts</h3>
+<span id="Generic-Subscripts-1"></span><h3 class="section">27.13 Generic Subscripts</h3>
 
 <p>Subscripts can be generic, and they can include generic &lsquo;<samp>where</samp>&rsquo; clauses.
 You write the placeholder type name inside angle brackets after
@@ -21515,8 +21816,8 @@ at the point that you call the &lsquo;<samp>Person</samp>&rsquo; class&rsquo;s i
 confirms that initialization has taken place.
 </p>
 <p>Because the new &lsquo;<samp>Person</samp>&rsquo; instance has been assigned to the &lsquo;<samp>reference1</samp>&rsquo;
-variable, there is now a strong reference from &lsquo;<samp>reference1</samp>&rsquo; to the new
-&lsquo;<samp>Person</samp>&rsquo; instance. Because there is at least one strong reference, ARC
+variable, there&rsquo;s now a strong reference from &lsquo;<samp>reference1</samp>&rsquo; to the new
+&lsquo;<samp>Person</samp>&rsquo; instance. Because there&rsquo;s at least one strong reference, ARC
 makes sure that this &lsquo;<samp>Person</samp>&rsquo; is kept in memory and is not deallocated.
 </p>
 <p>If you assign the same &lsquo;<samp>Person</samp>&rsquo; instance to two more variables, two more
@@ -21632,8 +21933,8 @@ the new &lsquo;<samp>Apartment</samp>&rsquo; instance:
 </p>
 <img src="images/referenceCycle01_2x.png" alt="images/referenceCycle01_2x">
 <p>You can now link the two instances together so that the person has an
-apartment, and the apartment has a tenant. Note that an exclamation mark
-(&lsquo;<samp>!</samp>&rsquo;) is used to unwrap and access the instances stored inside the
+apartment, and the apartment has a tenant. Note that an exclamation
+point (&lsquo;<samp>!</samp>&rsquo;) is used to unwrap and access the instances stored inside the
 &lsquo;<samp>john</samp>&rsquo; and &lsquo;<samp>unit4A</samp>&rsquo; optional variables, so that the properties of those
 instances can be set:
 </p>
@@ -21701,7 +22002,9 @@ the same lifetime or a longer lifetime.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Unowned-References" accesskey="2">Unowned References</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties" accesskey="3">Unowned References and Implicitly Unwrapped Optional Properties</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#Unowned-Optional-References" accesskey="3">Unowned Optional References</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties" accesskey="4">Unowned References and Implicitly Unwrapped Optional Properties</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 </table>
 
@@ -21816,7 +22119,7 @@ such a purpose.
 <hr>
 <span id="Unowned-References"></span><div class="header">
 <p>
-Next: <a href="#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties" accesskey="n" rel="next">Unowned References and Implicitly Unwrapped Optional Properties</a>, Previous: <a href="#Weak-References" accesskey="p" rel="prev">Weak References</a>, Up: <a href="#Resolving-Strong-Reference-Cycles-Between-Class-Instances" accesskey="u" rel="up">Resolving Strong Reference Cycles Between Class Instances</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Unowned-Optional-References" accesskey="n" rel="next">Unowned Optional References</a>, Previous: <a href="#Weak-References" accesskey="p" rel="prev">Weak References</a>, Up: <a href="#Resolving-Strong-Reference-Cycles-Between-Class-Instances" accesskey="u" rel="up">Resolving Strong Reference Cycles Between Class Instances</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Unowned-References-1"></span><h4 class="subsection">29.4.2 Unowned References</h4>
 
@@ -21828,9 +22131,9 @@ unowned reference is used when the other instance has the same lifetime
 or a longer lifetime. You indicate an unowned reference by placing the
 &lsquo;<samp>unowned</samp>&rsquo; keyword before a property or variable declaration.
 </p>
-<p>An unowned reference is expected to always have a value. As a result,
-ARC never sets an unowned reference&rsquo;s value to &lsquo;<samp>nil</samp>&rsquo;, which means that
-unowned references are defined using non-optional types.
+<p>Unlike a weak reference, an unowned reference is expected to always have
+a value. As a result, marking a value as unowned doesn&rsquo;t make it
+optional, and ARC never sets an unowned reference&rsquo;s value to &lsquo;<samp>nil</samp>&rsquo;.
 </p>
 <p>Important
 </p>
@@ -21897,17 +22200,17 @@ and 64-bit systems.
 &lsquo;<samp>john</samp>&rsquo;, which will be used to store a reference to a specific customer.
 This variable has an initial value of nil, by virtue of being optional:
 </p>
-<ol>
-<li> var john: Customer?
-</li></ol>
+<div class="example">
+<pre class="example">var john: Customer?
+</pre></div>
 
 <p>You can now create a &lsquo;<samp>Customer</samp>&rsquo; instance, and use it to initialize and
 assign a new &lsquo;<samp>CreditCard</samp>&rsquo; instance as that customer&rsquo;s &lsquo;<samp>card</samp>&rsquo; property:
 </p>
-<ol>
-<li> john = Customer(name: &quot;John Appleseed&quot;)
-</li><li> john!.card = CreditCard(number: 1234<em>_5678</em><em>_9012</em><em>_3456</em>, customer: john!)
-</li></ol>
+<div class="example">
+<pre class="example">john = Customer(name: &quot;John Appleseed&quot;)
+john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
+</pre></div>
 
 <p>Here&rsquo;s how the references look, now that you&rsquo;ve linked the two
 instances:
@@ -21950,11 +22253,103 @@ it refers to is deallocated, your program will try to access the memory
 location where the instance used to be, which is an unsafe operation.
 </p>
 <hr>
+<span id="Unowned-Optional-References"></span><div class="header">
+<p>
+Next: <a href="#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties" accesskey="n" rel="next">Unowned References and Implicitly Unwrapped Optional Properties</a>, Previous: <a href="#Unowned-References" accesskey="p" rel="prev">Unowned References</a>, Up: <a href="#Resolving-Strong-Reference-Cycles-Between-Class-Instances" accesskey="u" rel="up">Resolving Strong Reference Cycles Between Class Instances</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Unowned-Optional-References-1"></span><h4 class="subsection">29.4.3 Unowned Optional References</h4>
+
+<p>You can mark an optional reference to a class as unowned. In terms of
+the ARC ownership model, an unowned optional reference and a weak
+reference can both be used in the same contexts. The difference is that
+when you use an unowned optional reference, you&rsquo;re responsible for
+making sure it always refers to a valid object or is set to &lsquo;<samp>nil</samp>&rsquo;.
+</p>
+<p>Here&rsquo;s an example that keeps track of the courses offered by a
+particular department at a school:
+</p>
+<div class="example">
+<pre class="example">class Department {
+    var name: String
+    var courses: [Course]
+    init(name: String) {
+        self.name = name
+        self.courses = []
+    }
+}
+
+
+class Course {
+    var name: String
+    unowned var department: Department
+    unowned var nextCourse: Course?
+    init(name: String, in department: Department) {
+        self.name = name
+        self.department = department
+        self.nextCourse = nil
+    }
+}
+</pre></div>
+
+<p>&lsquo;<samp>Department</samp>&rsquo; maintains a strong reference to each course that the
+department offers. In the ARC ownership model, a department owns its
+courses. &lsquo;<samp>Course</samp>&rsquo; has two unowned references, one to the department and
+one to the next course a student should take; a course doesn&rsquo;t own
+either of these objects. Every course is part of some department so the
+&lsquo;<samp>department</samp>&rsquo; property isn&rsquo;t an optional. However, because some courses
+don&rsquo;t have a recommended follow-on course, the &lsquo;<samp>nextCourse</samp>&rsquo; property is
+an optional.
+</p>
+<p>Here&rsquo;s an example of using these classes:
+</p>
+<div class="example">
+<pre class="example">let department = Department(name: &quot;Horticulture&quot;)
+
+
+let intro = Course(name: &quot;Survey of Plants&quot;, in: department)
+let intermediate = Course(name: &quot;Growing Common Herbs&quot;, in:
+                                                          department)
+let advanced = Course(name: &quot;Caring for Tropical Plants&quot;, in:
+                                                            department)
+
+
+intro.nextCourse = intermediate
+intermediate.nextCourse = advanced
+department.courses = [intro, intermediate, advanced]
+</pre></div>
+
+<p>The code above creates a department and its three courses. The intro and
+intermediate courses both have a suggested next course stored in their
+&lsquo;<samp>nextCourse</samp>&rsquo; property, which maintains an unowned optional reference to
+the course a student should take after after completing this one.
+</p>
+<img src="images/unownedOptionalReference_2x.png" alt="images/unownedOptionalReference_2x">
+<p>An unowned optional reference doesn&rsquo;t keep a strong hold on the instance
+of the class that it wraps, and so it doesn&rsquo;t prevent ARC from
+deallocating the instance. It behaves the same as an unowned reference
+does under ARC, except that an unowned optional reference can be &lsquo;<samp>nil</samp>&rsquo;.
+</p>
+<p>Like non-optional unowned references, you&rsquo;re responsible for ensuring
+that &lsquo;<samp>nextCourse</samp>&rsquo; always refers to a course that hasn&rsquo;t been
+deallocated. In this case, for example, when you delete a course from
+&lsquo;<samp>department.courses</samp>&rsquo; you also need to remove any references to it that
+other courses might have.
+</p>
+<p>Note
+</p>
+<p>The underlying type of an optional value is &lsquo;<samp>Optional</samp>&rsquo;, which is an
+enumeration in the Swift standard library. However, optionals are an
+exception to the rule that value types can&rsquo;t be marked with &lsquo;<samp>unowned</samp>&rsquo;.
+</p>
+<p>The optional that wraps the class doesn&rsquo;t use reference counting, so you
+don&rsquo;t need to maintain a strong reference to the optional.
+</p>
+<hr>
 <span id="Unowned-References-and-Implicitly-Unwrapped-Optional-Properties"></span><div class="header">
 <p>
-Previous: <a href="#Unowned-References" accesskey="p" rel="prev">Unowned References</a>, Up: <a href="#Resolving-Strong-Reference-Cycles-Between-Class-Instances" accesskey="u" rel="up">Resolving Strong Reference Cycles Between Class Instances</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Previous: <a href="#Unowned-Optional-References" accesskey="p" rel="prev">Unowned Optional References</a>, Up: <a href="#Resolving-Strong-Reference-Cycles-Between-Class-Instances" accesskey="u" rel="up">Resolving Strong Reference Cycles Between Class Instances</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Unowned-References-and-Implicitly-Unwrapped-Optional-Properties-1"></span><h4 class="subsection">29.4.3 Unowned References and Implicitly Unwrapped Optional Properties</h4>
+<span id="Unowned-References-and-Implicitly-Unwrapped-Optional-Properties-1"></span><h4 class="subsection">29.4.4 Unowned References and Implicitly Unwrapped Optional Properties</h4>
 
 <p>The examples for weak and unowned references above cover two of the more
 common scenarios in which it&rsquo;s necessary to break a strong reference
@@ -21970,7 +22365,7 @@ property that is allowed to be &lsquo;<samp>nil</samp>&rsquo; and another proper
 &lsquo;<samp>nil</samp>&rsquo; have the potential to cause a strong reference cycle. This
 scenario is best resolved with an unowned reference.
 </p>
-<p>However, there is a third scenario, in which <em>both</em> properties should
+<p>However, there&rsquo;s a third scenario, in which <em>both</em> properties should
 always have a value, and neither property should ever be &lsquo;<samp>nil</samp>&rsquo; once
 initialization is complete. In this scenario, it&rsquo;s useful to combine an
 unowned property on one class with an implicitly unwrapped optional
@@ -22020,7 +22415,7 @@ Initialization</a>.
 </p>
 <p>To cope with this requirement, you declare the &lsquo;<samp>capitalCity</samp>&rsquo; property of
 &lsquo;<samp>Country</samp>&rsquo; as an implicitly unwrapped optional property, indicated by the
-exclamation mark at the end of its type annotation (&lsquo;<samp>City!</samp>&rsquo;). This means
+exclamation point at the end of its type annotation (&lsquo;<samp>City!</samp>&rsquo;). This means
 that the &lsquo;<samp>capitalCity</samp>&rsquo; property has a default value of &lsquo;<samp>nil</samp>&rsquo;, like any
 other optional, but can be accessed without the need to unwrap its value
 as described in <a href="#Implicitly-Unwrapped-Optionals">Implicitly Unwrapped
@@ -22038,7 +22433,7 @@ own &lsquo;<samp>capitalCity</samp>&rsquo; property.
 <p>All of this means that you can create the &lsquo;<samp>Country</samp>&rsquo; and &lsquo;<samp>City</samp>&rsquo; instances
 in a single statement, without creating a strong reference cycle, and
 the &lsquo;<samp>capitalCity</samp>&rsquo; property can be accessed directly, without needing to
-use an exclamation mark to unwrap its optional value:
+use an exclamation point to unwrap its optional value:
 </p>
 <div class="example">
 <pre class="example">var country = Country(name: &quot;Canada&quot;, capitalName: &quot;Ottawa&quot;)
@@ -23018,7 +23413,7 @@ Next: <a href="#Custom-Types" accesskey="n" rel="next">Custom Types</a>, Previou
 
 <p>Define the access level for an entity by placing one of the &lsquo;<samp>open</samp>&rsquo;,
 &lsquo;<samp>public</samp>&rsquo;, &lsquo;<samp>internal</samp>&rsquo;, &lsquo;<samp>fileprivate</samp>&rsquo;, or &lsquo;<samp>private</samp>&rsquo; modifiers at the
-beginning of the entity&rsquo;s declaration:
+beginning of the entity&rsquo;s declaration.
 </p>
 <div class="example">
 <pre class="example">public class SomePublicClass {}
@@ -24397,42 +24792,10 @@ if twoThree == anotherTwoThree {
 </pre></div>
 
 <p>In many simple cases, you can ask Swift to provide synthesized
-implementations of the equivalence operators for you. Swift provides
-synthesized implementations for the following kinds of custom types:
+implementations of the equivalence operators for you, as described in
+<a href="#Adopting-a-Protocol-Using-a-Synthesized-Implementation">Adopting a Protocol Using a Synthesized
+Implementation</a>.
 </p>
-<ul>
-<li> Structures that have only stored properties that conform to the
-&lsquo;<samp>Equatable</samp>&rsquo; protocol
-
-</li><li> Enumerations that have only associated types that conform to the
-&lsquo;<samp>Equatable</samp>&rsquo; protocol
-
-</li><li> Enumerations that have no associated types
-</li></ul>
-
-<p>To receive a synthesized implementation of &lsquo;<samp>==</samp>&rsquo;, declare &lsquo;<samp>Equatable</samp>&rsquo;
-conformance in the file that contains the original declaration, without
-implementing an &lsquo;<samp>==</samp>&rsquo; operator yourself.
-</p>
-<p>The example below defines a &lsquo;<samp>Vector3D</samp>&rsquo; structure for a three-dimensional
-position vector &lsquo;<samp>(x, y, z)</samp>&rsquo;, similar to the &lsquo;<samp>Vector2D</samp>&rsquo; structure.
-Because the &lsquo;<samp>x</samp>&rsquo;, &lsquo;<samp>y</samp>&rsquo;, and &lsquo;<samp>z</samp>&rsquo; properties are all of an &lsquo;<samp>Equatable</samp>&rsquo; type,
-&lsquo;<samp>Vector3D</samp>&rsquo; receives synthesized implementations of the equivalence
-operators.
-</p>
-<div class="example">
-<pre class="example">struct Vector3D: Equatable {
-    var x = 0.0, y = 0.0, z = 0.0
-}
-
-let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
-let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
-if twoThreeFour == anotherTwoThreeFour {
-    print(&quot;These two vectors are also equivalent.&quot;)
-}
-// Prints &quot;These two vectors are also equivalent.&quot;
-</pre></div>
-
 <hr>
 <span id="Custom-Operators"></span><div class="header">
 <p>
@@ -24452,9 +24815,9 @@ can be used to define custom operators, see Operators.
 keyword, and are marked with the &lsquo;<samp>prefix</samp>&rsquo;, &lsquo;<samp>infix</samp>&rsquo; or &lsquo;<samp>postfix</samp>&rsquo;
 modifiers:
 </p>
-<ol>
-<li> prefix operator +
-</li></ol>
+<div class="example">
+<pre class="example">prefix operator +++
+</pre></div>
 
 <p>The example above defines a new prefix operator called &lsquo;<samp>+++</samp>&rsquo;. This
 operator does not have an existing meaning in Swift, and so it is given
@@ -24611,6 +24974,7 @@ Previous: <a href="#Advanced-Operators" accesskey="p" rel="prev">Advanced Operat
 <tr><td></td><td valign="top"><a href="#index-AnyObject"><code>AnyObject</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Type-Casting-for-Any-and-AnyObject">Type Casting for Any and AnyObject</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-as"><code>as</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Downcasting">Downcasting</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-associatedtype"><code>associatedtype</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Associated-Types">Associated Types</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-automatic-conformance-for-Equatable_002c-Hashable_002c-Comparable">automatic conformance for Equatable, Hashable, Comparable</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Adopting-a-Protocol-Using-a-Synthesized-Implementation">Adopting a Protocol Using a Synthesized Implementation</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-B">B</th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-break"><code>break</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Break">Break</a></td></tr>
@@ -24683,6 +25047,7 @@ Previous: <a href="#Advanced-Operators" accesskey="p" rel="prev">Advanced Operat
 <tr><td></td><td valign="top"><a href="#index-let"><code>let</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Constants-and-Variables">Constants and Variables</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-M">M</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-multiple-trailing-closures">multiple trailing closures</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Trailing-Closures">Trailing Closures</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-mutating"><code>mutating</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Protocols-and-Extensions">Protocols and Extensions</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-N">N</th><td></td><td></td></tr>
@@ -24705,11 +25070,13 @@ Previous: <a href="#Advanced-Operators" accesskey="p" rel="prev">Advanced Operat
 <tr><th id="Index_cp_letter-R">R</th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-repeat"><code>repeat</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Repeat_002dWhile">Repeat-While</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-required"><code>required</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Required-Initializers">Required Initializers</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-restrict-extension-declarations-to-particular-types">restrict extension declarations to particular types</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Contextual-Where-Clauses">Contextual Where Clauses</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-return"><code>return</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Function-Parameters-and-Return-Values">Function Parameters and Return Values</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-right"><code>right</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Operator-Methods-1">Operator Methods 1</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 <tr><th id="Index_cp_letter-S">S</th><td></td><td></td></tr>
 <tr><td></td><td valign="top"><a href="#index-self"><code>self</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#The-self-Property">The self Property</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-self-references-in-closures">self references in closures</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Escaping-Closures">Escaping Closures</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-some"><code>some</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Returning-an-Opaque-Type">Returning an Opaque Type</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-static"><code>static</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Type-Property-Syntax">Type Property Syntax</a></td></tr>
 <tr><td></td><td valign="top"><a href="#index-string">string</a>:</td><td>&nbsp;</td><td valign="top"><a href="#Strings-and-Characters">Strings and Characters</a></td></tr>

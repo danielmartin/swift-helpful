@@ -1,4 +1,4 @@
-#+TITLE: The Swift Programming Language Guide (Swift 5.2)
+#+TITLE: The Swift Programming Language Guide (Swift 5.3)
 
 #+AUTHOR: Apple Inc.
 #+TEXINFO_HEADER: @syncodeindex vr cp
@@ -63,13 +63,13 @@ wait to see what you create with it.
 
 * Version Compatibility
 
-This book describes Swift 5.2, the default version of Swift that's
-included in Xcode 11.4. You can use Xcode 11 to build targets that are
-written in either Swift 5.2, Swift 4.2, or Swift 4.
+This book describes Swift 5.3, the default version of Swift that's
+included in Xcode 12. You can use Xcode 12 to build targets that are
+written in either Swift 5.3, Swift 4.2, or Swift 4.
 
-When you use Xcode 11.4 to build Swift 4 and Swift 4.2 code, most Swift
-5.2 functionality is available. That said, the following changes are
-available only to code that uses Swift 5.2 or later:
+When you use Xcode 12 to build Swift 4 and Swift 4.2 code, most Swift
+5.3 functionality is available. That said, the following changes are
+available only to code that uses Swift 5.3 or later:
 
 - Functions that return an opaque type require the Swift 5.1 runtime.
 
@@ -80,10 +80,10 @@ available only to code that uses Swift 5.2 or later:
   the correct integer type. For example, =UInt64(0xffff_ffff_ffff_ffff)=
   evaluates to the correct value rather than overflowing.
 
-A target written in Swift 5.2 can depend on a target that's written in
+A target written in Swift 5.3 can depend on a target that's written in
 Swift 4.2 or Swift 4, and vice versa. This means, if you have a large
 project that's divided into multiple frameworks, you can migrate your
-code from Swift 4 to Swift 5.2 one framework at a time.
+code from Swift 4 to Swift 5.3 one framework at a time.
 
 * A Swift Tour
 
@@ -1165,6 +1165,7 @@ Writing =<T: Equatable>= is the same as writing
 - [[Extensions][Extensions]]
 - [[Protocols][Protocols]]
 - [[Generics][Generics]]
+- [[Opaque Types][Opaque Types]]
 - [[Automatic Reference Counting][Automatic Reference Counting]]
 - [[Memory Safety][Memory Safety]]
 - [[Access Control][Access Control]]
@@ -2025,8 +2026,8 @@ If an optional has a value, it's considered to be “not equal to” =nil=:
 #+END_SRC
 
 Once you're sure that the optional /does/ contain a value, you can
-access its underlying value by adding an exclamation mark (=!=) to the
-end of the optional's name. The exclamation mark effectively says, “I
+access its underlying value by adding an exclamation point (=!=) to the
+end of the optional's name. The exclamation point effectively says, “I
 know that this optional definitely has a value; please use it.” This is
 known as /forced unwrapping/ of the optional's value:
 
@@ -2142,8 +2143,10 @@ value all of the time.
 
 These kinds of optionals are defined as /implicitly unwrapped
 optionals/. You write an implicitly unwrapped optional by placing an
-exclamation mark (=String!=) rather than a question mark (=String?=)
-after the type that you want to make optional.
+exclamation point (=String!=) rather than a question mark (=String?=)
+after the type that you want to make optional. Rather than placing an
+exclamation point after the optional's name when you use it, you place
+an exclamation point after the optional's type when you declare it.
 
 Implicitly unwrapped optionals are useful when an optional's value is
 confirmed to exist immediately after the optional is first defined and
@@ -2162,27 +2165,35 @@ as an explicit =String=:
 
 #+BEGIN_SRC swift
   let possibleString: String? = "An optional string."
-  let forcedString: String = possibleString! // requires an exclamation mark
+  let forcedString: String = possibleString! // requires an exclamation point
 
   let assumedString: String! = "An implicitly unwrapped optional string."
-  let implicitString: String = assumedString // no need for an exclamation mark
+  let implicitString: String = assumedString // no need for an exclamation point
 #+END_SRC
 
 You can think of an implicitly unwrapped optional as giving permission
-for the optional to be unwrapped automatically whenever it's used.
-Rather than placing an exclamation mark after the optional's name each
-time you use it, you place an exclamation mark after the optional's type
-when you declare it.
+for the optional to be force-unwrapped if needed. When you use an
+implicitly unwrapped optional value, Swift first tries to use it as an
+ordinary optional value; if it can't be used as an optional, Swift
+force-unwraps the value. In the code above, the optional value
+=assumedString= is force-unwrapped before assigning its value to
+=implicitString= because =implicitString= has an explicit, non-optional
+type of =String=. In code below, =optionalString= doesn't have an
+explicit type so it's an ordinary optional.
 
-Note
+#+BEGIN_SRC swift
+let optionalString = assumedString
+// The type of optionalString is "String?" and assumedString isn't
+force-unwrapped.
+#+END_SRC
 
 If an implicitly unwrapped optional is =nil= and you try to access its
 wrapped value, you'll trigger a runtime error. The result is exactly the
-same as if you place an exclamation mark after a normal optional that
+same as if you place an exclamation point after a normal optional that
 doesn't contain a value.
 
-You can still treat an implicitly unwrapped optional like a normal
-optional, to check if it contains a value:
+You can check whether an implicitly unwrapped optional is =nil= the same
+way you check a normal optional:
 
 #+BEGIN_SRC swift
   if assumedString != nil {
@@ -2415,15 +2426,15 @@ two numbers, as in =let i = 1 + 2=, and the logical AND operator (=&&=)
 combines two Boolean values, as in
 =if enteredDoorCode && passedRetinaScan=.
 
-Swift supports most standard C operators and improves several
-capabilities to eliminate common coding errors. The assignment operator
-(===) doesn't return a value, to prevent it from being mistakenly used
-when the equal to operator (====) is intended. Arithmetic operators
-(=+=, =-=, =*=, =/=, =%= and so forth) detect and disallow value
-overflow, to avoid unexpected results when working with numbers that
-become larger or smaller than the allowed value range of the type that
-stores them. You can opt in to value overflow behavior by using Swift's
-overflow operators, as described in
+Swift supports the operators you may already know from languages like C
+and improves several capabilities to eliminate common coding errors. The
+assignment operator (===) doesn't return a value, to prevent it from
+being mistakenly used when the equal to operator (====) is intended.
+Arithmetic operators (=+=, =-=, =*=, =/=, =%= and so forth) detect and
+disallow value overflow, to avoid unexpected results when working with
+numbers that become larger or smaller than the allowed value range of
+the type that stores them. You can opt in to value overflow behavior by
+ using Swift's overflow operators, as described in
 [[Overflow Operators][Overflow Operators]].
 
 Swift also provides range operators that aren't found in C, such as
@@ -2632,7 +2643,7 @@ Declarations]]
 
 ** Comparison Operators
 
-Swift supports all standard C /comparison operators/:
+Swift supports the following comparison operators:
 
 - Equal to (=a == b=)
 
@@ -6078,9 +6089,9 @@ Using the =gameLoop= label makes it clear which control statement should
 be terminated.
 
 It is not strictly necessary to use the =gameLoop= label when calling
-=continue gameLoop= to jump to the next iteration of the loop. There is
+=continue gameLoop= to jump to the next iteration of the loop. There's
 only one loop in the game, and therefore no ambiguity as to which loop
-the =continue= statement will affect. However, there is no harm in using
+the =continue= statement will affect. However, there's no harm in using
 the =gameLoop= label with the =continue= statement. Doing so is
 consistent with the label's use alongside the =break= statement and
 helps make the game's logic clearer to read and understand.
@@ -6969,7 +6980,7 @@ Global and nested functions, as introduced in
 [[Functions][Functions]], are actually special cases of closures.
 Closures take one of three forms:
 
-- Global functions are closures that have a name and do not capture any
+- Global functions are closures that have a name and don't capture any
   values.
 
 - Nested functions are closures that have a name and can capture values
@@ -7116,7 +7127,7 @@ can infer the types of its parameters and the type of the value it
 returns. The =sorted(by:)= method is being called on an array of
 strings, so its argument must be a function of type
 =(String, String) -> Bool=. This means that the =(String, String)= and
-=Bool= types do not need to be written as part of the closure
+=Bool= types don't need to be written as part of the closure
 expression's definition. Because all of the types can be inferred, the
 return arrow (=->=) and the parentheses around the names of the
 parameters can also be omitted:
@@ -7153,7 +7164,7 @@ declaration, as in this version of the previous example:
 Here, the function type of the =sorted(by:)= method's argument makes it
 clear that a =Bool= value must be returned by the closure. Because the
 closure's body contains a single expression (=s1 > s2=) that returns a
-=Bool= value, there is no ambiguity, and the =return= keyword can be
+=Bool= value, there's no ambiguity, and the =return= keyword can be
 omitted.
 
 *** Shorthand Argument Names
@@ -7192,7 +7203,7 @@ that you want to use its string-specific implementation:
   reversedNames = names.sorted(by: >)
 #+END_SRC
 
-For more about operator method, see
+For more about operator methods, see
 [[Operator Methods][Operator Methods]].
 
 ** Trailing Closures
@@ -7201,11 +7212,13 @@ For more about operator method, see
 
 If you need to pass a closure expression to a function as the function's
 final argument and the closure expression is long, it can be useful to
-write it as a /trailing closure/ instead. A trailing closure is written
-after the function call's parentheses, even though it is still an
-argument to the function. When you use the trailing closure syntax, you
-don't write the argument label for the closure as part of the function
-call.
+write it as a /trailing closure/ instead. You write a trailing closure
+after the function call's parentheses, even though the trailing closure
+is still an argument to the function. When you use the trailing closure
+syntax, you don't write the argument label for the first closure as part
+of the function call. A function call can include multiple trailing
+closures; however, the first few examples below use a single trailing
+closure.
 
 #+BEGIN_SRC swift
   func someFunctionThatTakesAClosure(closure: () -> Void) {
@@ -7231,9 +7244,9 @@ Expression Syntax]] section above can be written outside of the
   reversedNames = names.sorted() { $0 > $1 }
 #+END_SRC
 
-If a closure expression is provided as the function or method's only
-argument and you provide that expression as a trailing closure, you do
-not need to write a pair of parentheses =()= after the function or
+If a closure expression is provided as the function's or method's only
+argument and you provide that expression as a trailing closure, you
+don't need to write a pair of parentheses =()= after the function or
 method's name when you call the function:
 
 #+BEGIN_SRC swift
@@ -7242,11 +7255,12 @@ method's name when you call the function:
 
 Trailing closures are most useful when the closure is sufficiently long
 that it is not possible to write it inline on a single line. As an
-example, Swift's =Array= type has a =map(_:)= method which takes a
+example, Swift's =Array= type has a =map(_:)= method, which takes a
 closure expression as its single argument. The closure is called once
 for each item in the array, and returns an alternative mapped value
-(possibly of some other type) for that item. The nature of the mapping
-and the type of the returned value is left up to the closure to specify.
+(possibly of some other type) for that item. You specify the nature of
+the mapping and the type of the returned value by writing code in the
+closure that you pass to =map(_:)=.
 
 After applying the provided closure to each array element, the =map(_:)=
 method returns a new array containing all of the new mapped values, in
@@ -7288,7 +7302,7 @@ as a trailing closure:
 #+END_SRC
 
 The =map(_:)= method calls the closure expression once for each item in
-the array. You do not need to specify the type of the closure's input
+the array. You don't need to specify the type of the closure's input
 parameter, =number=, because the type can be inferred from the values in
 the array to be mapped.
 
@@ -7308,11 +7322,11 @@ a string representation of any integer greater than zero.
 Note
 
 The call to the =digitNames= dictionary's subscript is followed by an
-exclamation mark (=!=), because dictionary subscripts return an optional
+exclamation point (=!=), because dictionary subscripts return an optional
 value to indicate that the dictionary lookup can fail if the key does
 not exist. In the example above, it is guaranteed that =number % 10=
 will always be a valid subscript key for the =digitNames= dictionary,
-and so an exclamation mark is used to force-unwrap the =String= value
+and so an exclamation point is used to force-unwrap the =String= value
 stored in the subscript's optional return value.
 
 The string retrieved from the =digitNames= dictionary is added to the
@@ -7332,6 +7346,45 @@ The use of trailing closure syntax in the example above neatly
 encapsulates the closure's functionality immediately after the function
 that closure supports, without needing to wrap the entire closure within
 the =map(_:)= method's outer parentheses.
+
+#+CINDEX: multiple trailing closures
+
+If a function takes multiple closures, you omit the argument label for
+the first trailing closure and you label the remaining trailing
+closures. For example, the function below loads a picture for a photo
+gallery:
+
+#+BEGIN_SRC swift
+  func loadPicture(from server: Server, completion: (Picture) -> Void,
+                   onFailure: () -> Void) {
+      if let picture = download("photo.jpg", from: server) {
+          completion(picture)
+      } else {
+          onFailure()
+      }
+  }
+#+END_SRC
+
+When you call this function to load a picture, you provide two closures.
+The first closure is a completion handler that displays a picture after
+a successful download. The second closure is an error handler that
+displays an error to the user.
+
+#+BEGIN_SRC swift
+  loadPicture(from: someServer) { picture in
+      someView.currentPicture = picture
+  } onFailure: {
+      print("Couldn't download the next picture.")
+  }
+#+END_SRC
+
+In this example, the =loadPicture(from:completion:onFailure:)= function
+dispatches its network task into the background, and calls one of the
+two completion handlers when the network task finishes. Writing the
+function this way lets you cleanly separate the code that's responsible
+for handling a network failure from the code that updates the user
+interface after a successful download, instead of using just one closure
+that handles both circumstances.
 
 ** Capturing Values
 
@@ -7398,7 +7451,7 @@ The =incrementer()= function doesn't have any parameters, and yet it
 refers to =runningTotal= and =amount= from within its function body. It
 does this by capturing a /reference/ to =runningTotal= and =amount= from
 the surrounding function and using them within its own function body.
-Capturing by reference ensures that =runningTotal= and =amount= do not
+Capturing by reference ensures that =runningTotal= and =amount= don't
 disappear when the call to =makeIncrementer= ends, and also ensures that
 =runningTotal= is available the next time the =incrementer= function is
 called.
@@ -7500,8 +7553,8 @@ When you declare a function that takes a closure as one of its
 parameters, you can write =@escaping= before the parameter's type to
 indicate that the closure is allowed to escape.
 
-One way that a closure can escape is by being stored in a variable that
-is defined outside the function. As an example, many functions that
+One way that a closure can escape is by being stored in a variable
+that's defined outside the function. As an example, many functions that
 start an asynchronous operation take a closure argument as a completion
 handler. The function returns after it starts the operation, but the
 closure isn't called until the operation is completed---the closure
@@ -7519,17 +7572,30 @@ its argument and adds it to an array that's declared outside the
 function. If you didn't mark the parameter of this function with
 =@escaping=, you would get a compile-time error.
 
-Marking a closure with =@escaping= means you have to refer to =self=
-explicitly within the closure. For example, in the code below, the
-closure passed to =someFunctionWithEscapingClosure(_:)= is an escaping
-closure, which means it needs to refer to =self= explicitly. In
-contrast, the closure passed to =someFunctionWithNonescapingClosure(_:)=
-is a nonescaping closure, which means it can refer to =self= implicitly.
+#+CINDEX: self references in closures
+
+An escaping closure that refers to =self= needs special consideration if
+=self= refers to an instance of a class. Capturing =self= in an escaping
+closure makes it easy to accidentally create a strong reference cycle.
+For information about reference cycles, see
+[[Automatic Reference Counting][Automatic Reference Counting]].
+
+Normally, a closure captures variables implicitly by using them in the
+body of the closure, but in this case you need to be explicit. If you
+want to capture =self=, write =self= explicitly when you use it, or
+include =self= in the closure's capture list. Writing =self= explicitly
+lets you express your intent, and reminds you to confirm that there
+isn't a reference cycle. For example, in the code below, the closure
+passed to =someFunctionWithEscapingClosure(_:)= refers to =self=
+explicitly. In contrast, the closure passed to
+=someFunctionWithNonescapingClosure(_:)= is a nonescaping closure, which
+means it can refer to =self= implicitly.
 
 #+BEGIN_SRC swift
   func someFunctionWithNonescapingClosure(closure: () -> Void) {
       closure()
   }
+
 
   class SomeClass {
       var x = 10
@@ -7539,15 +7605,55 @@ is a nonescaping closure, which means it can refer to =self= implicitly.
       }
   }
 
+#+END_SRC
+
+#+BEGIN_SRC swift
   let instance = SomeClass()
   instance.doSomething()
   print(instance.x)
   // Prints "200"
 
+
   completionHandlers.first?()
   print(instance.x)
   // Prints "100"
 #+END_SRC
+
+Here's a version of =doSomething()= that captures =self= by including it
+in the closure's capture list, and then refers to =self= implicitly:
+
+#+BEGIN_SRC swift
+  class SomeOtherClass {
+      var x = 10
+      func doSomething() {
+          someFunctionWithEscapingClosure { [self] in x = 100 }
+          someFunctionWithNonescapingClosure { x = 200 }
+      }
+  }
+#+END_SRC
+
+If =self= is an instance of a structure or an enumeration, you can
+always refer to =self= implicitly. However, an escaping closure can't
+capture a mutable reference to =self= when =self= is an instance of a
+structure or an enumeration. Structures and enumerations don't allow
+shared mutability, as discussed in
+[[Structures and Enumerations Are Value Types][Structures and Enumerations Are
+Value Types]].
+
+#+BEGIN_SRC swift
+  struct SomeStruct {
+      var x = 10
+      mutating func doSomething() {
+          someFunctionWithNonescapingClosure { x = 200 } // Ok
+          someFunctionWithEscapingClosure { x = 100 } // Error
+      }
+  }
+#+END_SRC
+
+The call to the =someFunctionWithEscapingClosure= function in the
+example above is an error because it's inside a mutating method, so
+=self= is mutable. That violates the rule that escaping closures can't
+capture a mutable reference to =self= for structures.
 
 ** Autoclosures
 
@@ -8762,7 +8868,7 @@ Note
 
 If a property marked with the =lazy= modifier is accessed by multiple
 threads simultaneously and the property has not yet been initialized,
-there is no guarantee that the property will be initialized only once.
+there's no guarantee that the property will be initialized only once.
 
 *** Stored Properties and Instance Variables
 
@@ -8953,14 +9059,19 @@ Property observers observe and respond to changes in a property's value.
 Property observers are called every time a property's value is set, even
 if the new value is the same as the property's current value.
 
-You can add property observers to any stored properties you define,
-except for lazy stored properties. You can also add property observers
-to any inherited property (whether stored or computed) by overriding the
-property within a subclass. You don't need to define property observers
-for nonoverridden computed properties, because you can observe and
-respond to changes to their value in the computed property's setter.
-Property overriding is described in
-[[Overriding][Overriding]].
+You can add property observers in the following places:
+
+- Stored properties that you define
+
+- Stored properties that you inherit
+
+- Computed properties that you inherit
+
+For an inherited property, you add a property observer by overriding
+that property in a subclass. For a computed property that you define,
+use the property's setter to observe and respond to value changes,
+instead of trying to create an observer. Overriding properties is
+described in [[Overriding][Overriding]].
 
 You have the option to define either or both of these observers on a
 property:
@@ -9310,8 +9421,8 @@ arguments you include. For example:
 #+END_SRC
 
 The instance of =SmallNumber= that wraps =height= is created by calling
-=SmallNumber(wrappedValue: 1)=, which uses the default maximum value of
-12. The instance that wraps =width= is created by calling
+=SmallNumber(wrappedValue: 1)=, which uses the default maximum value
+of 12. The instance that wraps =width= is created by calling
 =SmallNumber(wrappedValue: 2, maximum: 9)=.
 
 *** Projecting a Value From a Property Wrapper
@@ -10170,7 +10281,7 @@ type.
 Like functions, subscripts can take a varying number of parameters and
 provide default values for their parameters, as discussed in
 [[Variadic Parameters][Variadic Parameters]] and [[Default Parameter Values][Default Parameter Values]]. However, unlike functions,
-they can't use in-out parameters.
+subscripts can't use in-out parameters.
 
 A class or structure can provide as many subscript implementations as it
 needs, and the appropriate subscript to be used will be inferred based
@@ -12126,7 +12237,7 @@ You typically define a failable initializer that creates an optional
 instance of the appropriate type by placing a question mark after the
 =init= keyword (=init?=). Alternatively, you can define a failable
 initializer that creates an implicitly unwrapped optional instance of
-the appropriate type. Do this by placing an exclamation mark after the
+the appropriate type. Do this by placing an exclamation point after the
 =init= keyword (=init!=) instead of a question mark.
 
 You can delegate from =init?= to =init!= and vice versa, and you can
@@ -12386,7 +12497,7 @@ A new =Player= instance is created, with a request for 100 coins if they
 are available. This =Player= instance is stored in an optional =Player=
 variable called =playerOne=. An optional variable is used here, because
 players can leave the game at any point. The optional lets you track
-whether there is currently a player in the game.
+whether there's currently a player in the game.
 
 Because =playerOne= is an optional, it is qualified with an exclamation
 mark (=!=) when its =coinsInPurse= property is accessed to print its
@@ -12440,7 +12551,7 @@ success or failure.
 You specify optional chaining by placing a question mark (=?=) after the
 optional value on which you wish to call a property, method or subscript
 if the optional is non-=nil=. This is very similar to placing an
-exclamation mark (=!=) after an optional value to force the unwrapping
+exclamation point (=!=) after an optional value to force the unwrapping
 of its value. The main difference is that optional chaining fails
 gracefully when the optional is =nil=, whereas forced unwrapping
 triggers a runtime error when the optional is =nil=.
@@ -12486,7 +12597,7 @@ below, =john= has a =residence= property value of =nil=:
 #+END_SRC
 
 If you try to access the =numberOfRooms= property of this person's
-=residence=, by placing an exclamation mark after =residence= to force
+=residence=, by placing an exclamation point after =residence= to force
 the unwrapping of its value, you trigger a runtime error, because there
 is no =residence= value to unwrap:
 
@@ -12502,7 +12613,7 @@ of rooms. However, this code always triggers a runtime error when
 
 Optional chaining provides an alternative way to access the value of
 =numberOfRooms=. To use optional chaining, use a question mark in place
-of the exclamation mark:
+of the exclamation point:
 
 #+BEGIN_SRC swift
   if let roomCount = john.residence?.numberOfRooms {
@@ -13198,6 +13309,8 @@ Here is the general form of a =do=-=catch= statement:
       statements
   } catch pattern 2 where condition {
       statements
+  } catch pattern 3, pattern 4 where condition {
+      statements
   } catch {
       statements
   }
@@ -13256,7 +13369,7 @@ For example, the above example can be written so any error that isn't a
       do {
           try vendingMachine.vend(itemNamed: item)
       } catch is VendingMachineError {
-          print("Invalid selection, out of stock, or not enough money.")
+          print("Couldn't buy that from the vending machine.")
       }
   }
 
@@ -13265,7 +13378,7 @@ For example, the above example can be written so any error that isn't a
   } catch {
       print("Unexpected non-vending-machine-related error: \(error)")
   }
-  // Prints "Invalid selection, out of stock, or not enough money."
+  // Prints "Couldn't buy that from the vending machine."
 #+END_SRC
 
 In the =nourish(with:)= function, if =vend(itemNamed:)= throws an error
@@ -13779,7 +13892,7 @@ The =BlackjackCard= structure itself has two properties---=rank= and
 =suit=. It also defines a computed property called =description=, which
 uses the values stored in =rank= and =suit= to build a description of
 the name and value of the card. The =description= property uses optional
-binding to check whether there is a second value to display, and if so,
+binding to check whether there's a second value to display, and if so,
 inserts additional description detail for that second value.
 
 Because =BlackjackCard= is a structure with no custom initializers, it
@@ -14928,6 +15041,96 @@ Types don't automatically adopt a protocol just by satisfying its
 requirements. They must always explicitly declare their adoption of the
 protocol.
 
+** Adopting a Protocol Using a Synthesized Implementation
+
+#+CINDEX: automatic conformance for Equatable, Hashable, Comparable
+
+Swift can automatically provide the protocol conformance for
+=Equatable=, =Hashable=, and =Comparable= in many simple cases. Using
+this synthesized implementation means you don't have to write repetitive
+boilerplate code to implement the protocol requirements yourself.
+
+Swift provides a synthesized implementation of =Equatable= for the
+following kinds of custom types:
+
+- Structures that have only stored properties that conform to the
+  =Equatable= protocol
+
+- Enumerations that have only associated types that conform to the
+  =Equatable= protocol
+
+- Enumerations that have no associated types
+
+To receive a synthesized implementation of ====, declare conformance to
+=Equatable= in the file that contains the original declaration, without
+implementing an ==== operator yourself. The =Equatable= protocol
+provides a default implementation of =!==.
+
+The example below defines a =Vector3D= structure for a three-dimensional
+position vector =(x, y, z)=, similar to the =Vector2D= structure.
+Because the =x=, =y=, and =z= properties are all of an =Equatable= type,
+=Vector3D= receives synthesized implementations of the equivalence
+operators.
+
+#+BEGIN_SRC swift
+  struct Vector3D: Equatable {
+      var x = 0.0, y = 0.0, z = 0.0
+  }
+
+
+  let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+  let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+  if twoThreeFour == anotherTwoThreeFour {
+      print("These two vectors are also equivalent.")
+  }
+  // Prints "These two vectors are also equivalent."
+#+END_SRC
+
+Swift provides a synthesized implementation of =Hashable= for the
+following kinds of custom types:
+
+- Structures that have only stored properties that conform to the
+  =Hashable= protocol
+
+- Enumerations that have only associated types that conform to the
+  =Hashable= protocol
+
+- Enumerations that have no associated types
+
+To receive a synthesized implementation of =hash(into:)=, declare
+conformance to =Hashable= in the file that contains the original
+declaration, without implementing a =hash(into:)= method yourself.
+
+Swift provides a synthesized implementation of =Comparable= for
+enumerations that don't have a raw value. If the enumeration has
+associated types, they must all conform to the =Comparable= protocol. To
+receive a synthesized implementation of =<=, declare conformance to
+=Comparable= in the file that contains the original enumeration
+declaration, without implementing a =<= operator yourself. The
+=Comparable= protocol's default implementation of =<==, =>=, and =>==
+provides the remaining comparison operators.
+
+The example below defines a =SkillLevel= enumeration with cases for
+beginners, intermediates, and experts. Experts are additionally ranked
+by the number of stars they have.
+
+#+BEGIN_SRC swift
+  enum SkillLevel: Comparable {
+      case beginner
+      case intermediate
+      case expert(stars: Int)
+  }
+  var levels = [SkillLevel.intermediate, SkillLevel.beginner,
+                SkillLevel.expert(stars: 5), SkillLevel.expert(stars: 3)]
+  for level in levels.sorted() {
+      print(level)
+  }
+  // Prints "beginner"
+  // Prints "intermediate"
+  // Prints "expert(stars: 3)"
+  // Prints "expert(stars: 5)"
+#+END_SRC
+
 ** Collections of Protocol Types
 
 A protocol can be used as the type to be stored in a collection such as
@@ -15958,7 +16161,11 @@ This requirement is enforced by a type constraint on the key type for
 =Dictionary=, which specifies that the key type must conform to the
 =Hashable= protocol, a special protocol defined in the Swift standard
 library. All of Swift's basic types (such as =String=, =Int=, =Double=,
-and =Bool=) are hashable by default.
+and =Bool=) are hashable by default. For information about making your
+own custom types conform to the =Hashable= protocol, see
+[[https://developer.apple.com/documentation/swift/hashable#2849490][Conforming
+to the Hashable Protocol]]
+[https://developer.apple.com/documentation/swift/hashable#2849490].
 
 You can define your own type constraints when creating custom generic
 types, and these constraints provide much of the power of generic
@@ -16091,8 +16298,8 @@ used with any type that is =Equatable=, such as =Double= or =String=:
 #+FINDEX: associatedtype
 
 When defining a protocol, it's sometimes useful to declare one or more
-associated types as part of the protocol's definition. An =associated
-type= gives a placeholder name to a type that is used as part of the
+associated types as part of the protocol's definition. An /associated
+type/ gives a placeholder name to a type that is used as part of the
 protocol. The actual type to use for that associated type isn't
 specified until the protocol is adopted. Associated types are specified
 with the =associatedtype= keyword.
@@ -16295,9 +16502,8 @@ is discussed in [[Associated Types with a Generic Where Clause][Associated Types
 Where Clause]] below.
 
 Here's an extension of the =Stack= type from
-[[Strong Reference Cycles for Closures][Strong Reference Cycles for
-Closures]] above that adds conformance to the =SuffixableContainer=
-protocol:
+[[Generic Types][Generic Types]] above that adds conformance to
+the =SuffixableContainer= protocol:
 
 #+BEGIN_SRC swift
   extension Stack: SuffixableContainer {
@@ -16580,6 +16786,74 @@ You can include multiple requirements in a generic =where= clause that
 is part of an extension, just like you can for a generic =where= clause
 that you write elsewhere. Separate each requirement in the list with a
 comma.
+
+** Contextual Where Clauses
+
+#+CINDEX: restrict extension declarations to particular types
+
+You can write a generic =where= clause as part of a declaration that
+doesn't have its own generic type constraints, when you're already
+working in the context of generic types. For example, you can write a
+generic =where= clause on a subscript of a generic type or on a method
+in an extension to a generic type. The =Container= structure is generic,
+and the =where= clauses in the example below specify what type
+constraints have to be satisfied to make these new methods available on
+a container.
+
+#+BEGIN_SRC swift
+  extension Container {
+      func average() -> Double where Item == Int {
+          var sum = 0.0
+          for index in 0..<count {
+              sum += Double(self[index])
+          }
+          return sum / Double(count)
+      }
+      func endsWith(_ item: Item) -> Bool where Item: Equatable {
+          return count >= 1 && self[count-1] == item
+      }
+  }
+  let numbers = [1260, 1200, 98, 37]
+  print(numbers.average())
+  // Prints "648.75"
+  print(numbers.endsWith(37))
+  // Prints "true"
+#+END_SRC
+
+This example adds an =average()= method to =Container= when the items
+are integers, and it adds an =endsWith(_:)= method when the items are
+equatable. Both functions include a generic =where= clause that adds
+type constraints to the generic =Item= type parameter from the original
+declaration of =Container=.
+
+If you want to write this code without using contextual =where= clauses,
+you write two extensions, one for each generic =where= clause. The
+example above and the example below have the same behavior.
+
+#+BEGIN_SRC swift
+  extension Container where Item == Int {
+      func average() -> Double {
+          var sum = 0.0
+          for index in 0..<count {
+              sum += Double(self[index])
+          }
+          return sum / Double(count)
+      }
+  }
+  extension Container where Item: Equatable {
+      func endsWith(_ item: Item) -> Bool {
+          return count >= 1 && self[count-1] == item
+      }
+  }
+#+END_SRC
+
+In the version of this example that uses contextual =where= clauses, the
+implementation of =average()= and =endsWith(_:)= are both in the same
+extension because each method's generic =where= clause states the
+requirements that need to be satisfied to make that method available.
+Moving those requirements to the extensions' generic =where= clauses
+makes the methods available in the same situations, but requires one
+extension per requirement.
 
 ** Associated Types with a Generic Where Clause
 
@@ -17143,8 +17417,8 @@ at the point that you call the =Person= class's initializer. This
 confirms that initialization has taken place.
 
 Because the new =Person= instance has been assigned to the =reference1=
-variable, there is now a strong reference from =reference1= to the new
-=Person= instance. Because there is at least one strong reference, ARC
+variable, there's now a strong reference from =reference1= to the new
+=Person= instance. Because there's at least one strong reference, ARC
 makes sure that this =Person= is kept in memory and is not deallocated.
 
 If you assign the same =Person= instance to two more variables, two more
@@ -17255,8 +17529,8 @@ the new =Apartment= instance:
 
 [[file:images/referenceCycle01_2x.png]]
 You can now link the two instances together so that the person has an
-apartment, and the apartment has a tenant. Note that an exclamation mark
-(=!=) is used to unwrap and access the instances stored inside the
+apartment, and the apartment has a tenant. Note that an exclamation
+point (=!=) is used to unwrap and access the instances stored inside the
 =john= and =unit4A= optional variables, so that the properties of those
 instances can be set:
 
@@ -17427,9 +17701,9 @@ unowned reference is used when the other instance has the same lifetime
 or a longer lifetime. You indicate an unowned reference by placing the
 =unowned= keyword before a property or variable declaration.
 
-An unowned reference is expected to always have a value. As a result,
-ARC never sets an unowned reference's value to =nil=, which means that
-unowned references are defined using non-optional types.
+Unlike a weak reference, an unowned reference is expected to always have
+a value. As a result, marking a value as unowned doesn't make it
+optional, and ARC never sets an unowned reference's value to =nil=.
 
 Important
 
@@ -17496,13 +17770,17 @@ This next code snippet defines an optional =Customer= variable called
 =john=, which will be used to store a reference to a specific customer.
 This variable has an initial value of nil, by virtue of being optional:
 
-1. var john: Customer?
+#+BEGIN_SRC swift
+  var john: Customer?
+#+END_SRC
 
 You can now create a =Customer= instance, and use it to initialize and
 assign a new =CreditCard= instance as that customer's =card= property:
 
-1. john = Customer(name: "John Appleseed")
-2. john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
+#+BEGIN_SRC swift
+  john = Customer(name: "John Appleseed")
+  john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
+#+END_SRC
 
 Here's how the references look, now that you've linked the two
 instances:
@@ -17544,6 +17822,93 @@ If you try to access an unsafe unowned reference after the instance that
 it refers to is deallocated, your program will try to access the memory
 location where the instance used to be, which is an unsafe operation.
 
+*** Unowned Optional References
+
+You can mark an optional reference to a class as unowned. In terms of
+the ARC ownership model, an unowned optional reference and a weak
+reference can both be used in the same contexts. The difference is that
+when you use an unowned optional reference, you're responsible for
+making sure it always refers to a valid object or is set to =nil=.
+
+Here's an example that keeps track of the courses offered by a
+particular department at a school:
+
+#+BEGIN_SRC swift
+  class Department {
+      var name: String
+      var courses: [Course]
+      init(name: String) {
+          self.name = name
+          self.courses = []
+      }
+  }
+
+
+  class Course {
+      var name: String
+      unowned var department: Department
+      unowned var nextCourse: Course?
+      init(name: String, in department: Department) {
+          self.name = name
+          self.department = department
+          self.nextCourse = nil
+      }
+  }
+#+END_SRC
+
+=Department= maintains a strong reference to each course that the
+department offers. In the ARC ownership model, a department owns its
+courses. =Course= has two unowned references, one to the department and
+one to the next course a student should take; a course doesn't own
+either of these objects. Every course is part of some department so the
+=department= property isn't an optional. However, because some courses
+don't have a recommended follow-on course, the =nextCourse= property is
+an optional.
+
+Here's an example of using these classes:
+
+#+BEGIN_SRC swift
+  let department = Department(name: "Horticulture")
+
+
+  let intro = Course(name: "Survey of Plants", in: department)
+  let intermediate = Course(name: "Growing Common Herbs", in:
+                                                            department)
+  let advanced = Course(name: "Caring for Tropical Plants", in:
+                                                              department)
+
+
+  intro.nextCourse = intermediate
+  intermediate.nextCourse = advanced
+  department.courses = [intro, intermediate, advanced]
+#+END_SRC
+
+The code above creates a department and its three courses. The intro and
+intermediate courses both have a suggested next course stored in their
+=nextCourse= property, which maintains an unowned optional reference to
+the course a student should take after after completing this one.
+
+[[file:images/unownedOptionalReference_2x.png]]
+An unowned optional reference doesn't keep a strong hold on the instance
+of the class that it wraps, and so it doesn't prevent ARC from
+deallocating the instance. It behaves the same as an unowned reference
+does under ARC, except that an unowned optional reference can be =nil=.
+
+Like non-optional unowned references, you're responsible for ensuring
+that =nextCourse= always refers to a course that hasn't been
+deallocated. In this case, for example, when you delete a course from
+=department.courses= you also need to remove any references to it that
+other courses might have.
+
+Note
+
+The underlying type of an optional value is =Optional=, which is an
+enumeration in the Swift standard library. However, optionals are an
+exception to the rule that value types can't be marked with =unowned=.
+
+The optional that wraps the class doesn't use reference counting, so you
+don't need to maintain a strong reference to the optional.
+
 *** Unowned References and Implicitly Unwrapped Optional Properties
 
 The examples for weak and unowned references above cover two of the more
@@ -17560,7 +17925,7 @@ property that is allowed to be =nil= and another property that cannot be
 =nil= have the potential to cause a strong reference cycle. This
 scenario is best resolved with an unowned reference.
 
-However, there is a third scenario, in which /both/ properties should
+However, there's a third scenario, in which /both/ properties should
 always have a value, and neither property should ever be =nil= once
 initialization is complete. In this scenario, it's useful to combine an
 unowned property on one class with an implicitly unwrapped optional
@@ -17610,7 +17975,7 @@ Initialization]].
 
 To cope with this requirement, you declare the =capitalCity= property of
 =Country= as an implicitly unwrapped optional property, indicated by the
-exclamation mark at the end of its type annotation (=City!=). This means
+exclamation point at the end of its type annotation (=City!=). This means
 that the =capitalCity= property has a default value of =nil=, like any
 other optional, but can be accessed without the need to unwrap its value
 as described in [[Implicitly Unwrapped Optionals][Implicitly Unwrapped
@@ -17628,7 +17993,7 @@ own =capitalCity= property.
 All of this means that you can create the =Country= and =City= instances
 in a single statement, without creating a strong reference cycle, and
 the =capitalCity= property can be accessed directly, without needing to
-use an exclamation mark to unwrap its optional value:
+use an exclamation point to unwrap its optional value:
 
 #+BEGIN_SRC swift
   var country = Country(name: "Canada", capitalName: "Ottawa")
@@ -18440,7 +18805,7 @@ enabled.
 
 Define the access level for an entity by placing one of the =open=,
 =public=, =internal=, =fileprivate=, or =private= modifiers at the
-beginning of the entity's declaration:
+beginning of the entity's declaration.
 
 #+BEGIN_SRC swift
   public class SomePublicClass {}
@@ -19567,39 +19932,9 @@ are equivalent:
 #+END_SRC
 
 In many simple cases, you can ask Swift to provide synthesized
-implementations of the equivalence operators for you. Swift provides
-synthesized implementations for the following kinds of custom types:
-
-- Structures that have only stored properties that conform to the
-  =Equatable= protocol
-
-- Enumerations that have only associated types that conform to the
-  =Equatable= protocol
-
-- Enumerations that have no associated types
-
-To receive a synthesized implementation of ====, declare =Equatable=
-conformance in the file that contains the original declaration, without
-implementing an ==== operator yourself.
-
-The example below defines a =Vector3D= structure for a three-dimensional
-position vector =(x, y, z)=, similar to the =Vector2D= structure.
-Because the =x=, =y=, and =z= properties are all of an =Equatable= type,
-=Vector3D= receives synthesized implementations of the equivalence
-operators.
-
-#+BEGIN_SRC swift
-  struct Vector3D: Equatable {
-      var x = 0.0, y = 0.0, z = 0.0
-  }
-
-  let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
-  let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
-  if twoThreeFour == anotherTwoThreeFour {
-      print("These two vectors are also equivalent.")
-  }
-  // Prints "These two vectors are also equivalent."
-#+END_SRC
+implementations of the equivalence operators for you, as described in
+[[Adopting a Protocol Using a Synthesized Implementation][Adopting a Protocol Using a Synthesized
+Implementation]].
 
 ** Custom Operators
 
@@ -19615,7 +19950,9 @@ New operators are declared at a global level using the =operator=
 keyword, and are marked with the =prefix=, =infix= or =postfix=
 modifiers:
 
-1. prefix operator +++
+#+BEGIN_SRC swift
+  prefix operator +++
+#+END_SRC
 
 The example above defines a new prefix operator called =+++=. This
 operator does not have an existing meaning in Swift, and so it is given
