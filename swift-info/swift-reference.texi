@@ -2985,6 +2985,8 @@ key-path-string-expression
 @node Literal Expression
 @subsection Literal Expression
 
+@uref{https://github.com/apple/swift-evolution/blob/master/proposals/0028-modernizing-debug-identifiers.md, Proposal}
+
 A @emph{literal expression} consists of either an ordinary literal (such as a
 string or a number), an array or dictionary literal, a playground
 literal, or one of the following special literals:
@@ -6027,6 +6029,8 @@ diagnostic-statement
 
 @node Conditional Compilation Block
 @subsection Conditional Compilation Block
+
+@uref{https://github.com/apple/swift-evolution/blob/master/proposals/0020-if-swift-version.md, Proposal}
 
 A conditional compilation block allows code to be conditionally compiled
 depending on the value of one or more compilation conditions.

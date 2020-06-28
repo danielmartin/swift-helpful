@@ -6566,6 +6566,8 @@ labels help make your code more readable.
 
 *** Specifying Argument Labels
 
+[[https://github.com/apple/swift-evolution/blob/master/proposals/0001-keywords-as-argument-labels.md][Proposal]]
+
 You write an argument label before the parameter name, separated by a
 space:
 
@@ -6668,6 +6670,8 @@ Note
 A function may have at most one variadic parameter.
 
 *** In-Out Parameters
+
+[[https://github.com/apple/swift-evolution/blob/master/proposals/0031-adjusting-inout-declarations.md][Proposal]]
 
 Function parameters are constants by default. Trying to change the value
 of a function parameter from within the body of that function results in
@@ -18687,6 +18691,8 @@ to define individual types in separate source files, a single source
 file can contain definitions for multiple types, functions, and so on.
 
 ** Access Levels
+
+[[https://github.com/apple/swift-evolution/blob/master/proposals/0025-scoped-access-level.md][Proposal]]
 
 Swift provides five different /access levels/ for entities within your
 code. These access levels are relative to the source file in which an
