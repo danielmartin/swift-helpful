@@ -1913,6 +1913,8 @@ access the values of those elements:
   // Prints "The status message is OK"
 #+END_SRC
 
+#+CINDEX: tuples, use cases
+
 Tuples are particularly useful as the return values of functions. A
 function that tries to retrieve a web page might return the
 =(Int, String)= tuple type to describe the success or failure of the
@@ -8307,6 +8309,8 @@ applies to instances of /either/ a class or a structure type. Because of
 this, the more general term /instance/ is used.
 
 ** Comparing Structures and Classes
+
+#+CINDEX: When to use structures and when to use classes
 
 Structures and classes in Swift have many things in common. Both can:
 

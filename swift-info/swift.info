@@ -21433,6 +21433,7 @@ Index
                                                               (line   6)
 * try?:                                  Converting Errors to Optional Values.
                                                               (line   6)
+* tuples, use cases:                     Tuples.              (line  65)
 * typealias:                             Type Aliases.        (line   6)
 * typedef:                               Type Aliases 1.      (line   6)
 * Unicode in string literals:            Special Characters in String Literals.
@@ -21443,6 +21444,8 @@ Index
 * way to refer to a closure argument:    Shorthand Argument Names.
                                                               (line   6)
 * weak:                                  Weak References.     (line   6)
+* When to use structures and when to use classes: Comparing Structures and Classes.
+                                                              (line   6)
 * where:                                 Extensions with a Generic Where Clause.
                                                               (line   6)
 * while:                                 While.               (line   6)

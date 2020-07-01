@@ -2752,6 +2752,8 @@ print("The status message is \(http200Status.description)")
 // Prints "The status message is OK"
 @end example
 
+@cindex tuples, use cases
+
 Tuples are particularly useful as the return values of functions. A
 function that tries to retrieve a web page might return the
 @samp{(Int, String)} tuple type to describe the success or failure of the
@@ -9616,6 +9618,8 @@ this, the more general term @emph{instance} is used.
 
 @node Comparing Structures and Classes
 @section Comparing Structures and Classes
+
+@cindex When to use structures and when to use classes
 
 Structures and classes in Swift have many things in common. Both can:
 
