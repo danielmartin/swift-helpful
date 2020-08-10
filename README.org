@@ -50,7 +50,7 @@ can read the definitive discussion about that topic.
 
 Information is not only limited to keywords. The Swift programming language is gradually increasing the use of
 attributes in the language, so ~swift-helpful~ will also show information about attributes. Let's say you don't know
-what ~@dynamicCallable~ means, an attribute introduced in Swift 5. Simply place the point in one occurrance of that
+what ~@dynamicCallable~ means, an attribute introduced in Swift 5. Simply place the point in one occurrence of that
 attribute and invoke ~swift-helpful~ to read an explanation, this time coming from the official Swift Reference manual:
 
 [[file:screenshots/dynamicCallable.png]]
