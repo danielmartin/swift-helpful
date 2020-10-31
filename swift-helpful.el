@@ -603,7 +603,7 @@ symbol."
   "Configure `info-look' so that Swift reference indices can be queried."
   (info-lookup-maybe-add-help
    :mode 'swift-mode
-   :regexp "[#@_a-zA-Z][_a-zA-Z0-9\\?!]*"
+   :regexp "&\\(+\\|-\\|*\\)=\\|[#@_a-zA-Z][_a-zA-Z0-9\\?!]*"
    :doc-spec '(("(swift)Index" nil "['`‘]" "['’]")
                ("(swift-reference)Index" nil "['`‘]" "['’]"))))
 

@@ -19592,6 +19592,8 @@ integers remain negative as their value moves closer to zero.
 
 ** Overflow Operators
 
+#+CINDEX: Overflow operators
+
 If you try to insert a number into an integer constant or variable that
 cannot hold that value, by default Swift reports an error rather than
 allowing an invalid value to be created. This behavior gives extra
@@ -19625,6 +19627,9 @@ calculations. These operators all begin with an ampersand (=&=):
 
 *** Value Overflow
 
+#+FINDEX: &+=
+#+FINDEX: &*=
+
 Numbers can overflow in both the positive and negative direction.
 
 Here's an example of what happens when an unsigned integer is allowed to
@@ -19647,6 +19652,9 @@ below. The value that remains within the bounds of the =UInt8= after the
 overflow addition is =00000000=, or zero.
 
 [[file:images/overflowAddition_2x.png]]
+
+#+FINDEX: &-=
+
 Something similar happens when an unsigned integer is allowed to
 overflow in the negative direction. Here's an example using the overflow
 subtraction operator (=&-=):

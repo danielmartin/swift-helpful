@@ -37,7 +37,7 @@
 * Basic Operators::
 * Strings and Characters::
 * Collection Types::
-* Control Flow: Control Flow 1. 
+* Control Flow: Control Flow (1). 
 * Functions::
 * Closures::
 * Enumerations::
@@ -49,12 +49,12 @@
 * Initialization::
 * Deinitialization::
 * Optional Chaining::
-* Error Handling: Error Handling 2. 
+* Error Handling: Error Handling (2). 
 * Type Casting::
 * Nested Types::
 * Extensions::
 * Protocols::
-* Generics: Generics 1. 
+* Generics: Generics (1). 
 * Opaque Types::
 * Automatic Reference Counting::
 * Memory Safety::
@@ -90,7 +90,7 @@ The Basics
 * Booleans::
 * Tuples::
 * Optionals::
-* Error Handling: Error Handling 1. 
+* Error Handling: Error Handling (1). 
 * Assertions and Preconditions::
 
 Constants and Variables
@@ -432,7 +432,7 @@ Customizing Initialization
 
 Default Initializers
 
-* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types 1. 
+* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types (1). 
 
 Class Inheritance and Initialization
 
@@ -499,11 +499,11 @@ Nested Types
 Extensions
 
 * Extension Syntax::
-* Computed Properties: Computed Properties 1. 
-* Initializers: Initializers 1. 
-* Methods: Methods 1. 
-* Subscripts: Subscripts 1. 
-* Nested Types: Nested Types 1. 
+* Computed Properties: Computed Properties (1). 
+* Initializers: Initializers (1). 
+* Methods: Methods (1). 
+* Subscripts: Subscripts (1). 
+* Nested Types: Nested Types (1). 
 
 Methods
 
@@ -615,13 +615,13 @@ Access Control
 * Access Levels::
 * Access Control Syntax::
 * Custom Types::
-* Subclassing: Subclassing 1. 
+* Subclassing: Subclassing (1). 
 * Constants, Variables, Properties, and Subscripts: Constants Variables Properties and Subscripts. 
-* Initializers: Initializers 2. 
-* Protocols: Protocols 1. 
-* Extensions: Extensions 1. 
-* Generics: Generics 2. 
-* Type Aliases: Type Aliases 1. 
+* Initializers: Initializers (2). 
+* Protocols: Protocols (1). 
+* Extensions: Extensions (1). 
+* Generics: Generics (2). 
+* Type Aliases: Type Aliases (1). 
 
 Access Levels
 
@@ -634,9 +634,9 @@ Access Levels
 Custom Types
 
 * Tuple Types::
-* Function Types: Function Types 1. 
+* Function Types: Function Types (1). 
 * Enumeration Types::
-* Nested Types: Nested Types 2. 
+* Nested Types: Nested Types (2). 
 
 Constants, Variables, Properties, and Subscripts
 
@@ -644,12 +644,12 @@ Constants, Variables, Properties, and Subscripts
 
 Initializers
 
-* Default Initializers: Default Initializers 1. 
+* Default Initializers: Default Initializers (1). 
 * Default Memberwise Initializers for Structure Types::
 
 Protocols
 
-* Protocol Inheritance: Protocol Inheritance 1. 
+* Protocol Inheritance: Protocol Inheritance (1). 
 * Protocol Conformance::
 
 Extensions
@@ -661,7 +661,7 @@ Advanced Operators
 * Bitwise Operators::
 * Overflow Operators::
 * Precedence and Associativity::
-* Operator Methods: Operator Methods 1. 
+* Operator Methods: Operator Methods (1). 
 * Custom Operators::
 
 Bitwise Operators
@@ -679,7 +679,7 @@ Overflow Operators
 Operator Methods
 
 * Prefix and Postfix Operators::
-* Compound Assignment Operators: Compound Assignment Operators 1. 
+* Compound Assignment Operators: Compound Assignment Operators (1). 
 * Equivalence Operators::
 
 Custom Operators
@@ -1933,7 +1933,7 @@ Writing @samp{<T: Equatable>} is the same as writing
 
 Swift is a new programming language for iOS, macOS, watchOS, and tvOS
 app development. Nonetheless, many parts of Swift will be familiar from
-your experience of developing in C and Objective-C.
+your experience of developing in C and Objective-C@.
 
 Swift provides its own versions of all fundamental C and Objective-C
 types, including @samp{Int} for integers, @samp{Double} and @samp{Float} for
@@ -1945,7 +1945,7 @@ collection types, @samp{Array}, @samp{Set}, and @samp{Dictionary}, as described 
 Like C, Swift uses variables to store and refer to values by an
 identifying name. Swift also makes extensive use of variables whose
 values can't be changed. These are known as constants, and are much more
-powerful than constants in C. Constants are used throughout Swift to
+powerful than constants in C@. Constants are used throughout Swift to
 make code safer and clearer in intent when you work with values that
 don't need to change.
 
@@ -1983,7 +1983,7 @@ errors as early as possible in the development process.
 * Booleans::
 * Tuples::
 * Optionals::
-* Error Handling: Error Handling 1. 
+* Error Handling: Error Handling (1). 
 * Assertions and Preconditions::
 @end menu
 
@@ -2190,7 +2190,7 @@ Use comments to include nonexecutable text in your code, as a note or
 reminder to yourself. Comments are ignored by the Swift compiler when
 your code is compiled.
 
-Comments in Swift are very similar to comments in C. Single-line
+Comments in Swift are very similar to comments in C@. Single-line
 comments begin with two forward-slashes (@samp{//}):
 
 @example
@@ -2360,7 +2360,7 @@ the type of a particular expression automatically when it compiles your
 code, simply by examining the values you provide.
 
 Because of type inference, Swift requires far fewer type declarations
-than languages such as C or Objective-C. Constants and variables are
+than languages such as C or Objective-C@. Constants and variables are
 still explicitly typed, but much of the work of specifying their type is
 done for you.
 
@@ -2781,7 +2781,7 @@ value at all.
 
 Note
 
-The concept of optionals doesn't exist in C or Objective-C. The nearest
+The concept of optionals doesn't exist in C or Objective-C@. The nearest
 thing in Objective-C is the ability to return @samp{nil} from a method that
 would otherwise return an object, with @samp{nil} meaning “the absence of a
 valid object.” However, this only works for objects---it doesn't work
@@ -2854,7 +2854,7 @@ var surveyAnswer: String?
 
 Note
 
-Swift's @samp{nil} isn't the same as @samp{nil} in Objective-C. In Objective-C,
+Swift's @samp{nil} isn't the same as @samp{nil} in Objective-C@. In Objective-C,
 @samp{nil} is a pointer to a nonexistent object. In Swift, @samp{nil} isn't a
 pointer---it's the absence of a value of a certain type. Optionals of
 @emph{any} type can be set to @samp{nil}, not just object types.
@@ -3072,7 +3072,7 @@ a variable becoming @samp{nil} at a later point. Always use a normal optional
 type if you need to check for a @samp{nil} value during the lifetime of a
 variable.
 
-@node Error Handling 1
+@node Error Handling (1)
 @section Error Handling
 
 @cindex exception
@@ -4046,7 +4046,7 @@ collection of @samp{Character} values.
 Swift's @samp{String} and @samp{Character} types provide a fast, Unicode-compliant
 way to work with text in your code. The syntax for string creation and
 manipulation is lightweight and readable, with a string literal syntax
-that is similar to C. String concatenation is as simple as combining two
+that is similar to C@. String concatenation is as simple as combining two
 strings with the @samp{+} operator, and string mutability is managed by
 choosing between a constant or a variable, just like any other value in
 Swift. You can also use strings to insert constants, variables,
@@ -6093,7 +6093,7 @@ Swift's @samp{Dictionary} type does not have a defined ordering. To iterate
 over the keys or values of a dictionary in a specific order, use the
 @samp{sorted()} method on its @samp{keys} or @samp{values} property.
 
-@node Control Flow 1
+@node Control Flow (1)
 @chapter Control Flow
 
 Swift provides a variety of control flow statements. These include
@@ -6237,7 +6237,7 @@ for tickMark in 0..<minutes @{
 @}
 @end example
 
-Some users might want fewer tick marks in their UI. They could prefer
+Some users might want fewer tick marks in their UI@. They could prefer
 one mark every @samp{5} minutes instead. Use the @samp{stride(from:to:by:)}
 function to skip the unwanted marks.
 
@@ -7914,7 +7914,7 @@ before a parameter's type. An in-out parameter has a value that is
 passed @emph{in} to the function, is modified by the function, and is passed
 back @emph{out} of the function to replace the original value. For a detailed
 discussion of the behavior of in-out parameters and associated compiler
-optimizations, see @ref{In-Out Parameters,In-Out
+optimizations, see @ref{In-Out%20Parameters,In-Out
 Parameters,,swift-reference,}.
 
 You can only pass a variable as the argument for an in-out parameter.
@@ -9129,7 +9129,7 @@ introduce new enumeration cases.
 Note
 
 Swift enumeration cases don't have an integer value set by default,
-unlike languages like C and Objective-C. In the @samp{CompassPoint} example
+unlike languages like C and Objective-C@. In the @samp{CompassPoint} example
 above, @samp{north}, @samp{south}, @samp{east} and @samp{west} don't implicitly equal @samp{0},
 @samp{1}, @samp{2} and @samp{3}. Instead, the different enumeration cases are values in
 their own right, with an explicitly defined type of @samp{CompassPoint}.
@@ -11193,10 +11193,10 @@ Classes, structures, and enumerations can all define instance methods,
 which encapsulate specific tasks and functionality for working with an
 instance of a given type. Classes, structures, and enumerations can also
 define type methods, which are associated with the type itself. Type
-methods are similar to class methods in Objective-C.
+methods are similar to class methods in Objective-C@.
 
 The fact that structures and enumerations can define methods in Swift is
-a major difference from C and Objective-C. In Objective-C, classes are
+a major difference from C and Objective-C@. In Objective-C, classes are
 the only types that can define methods. In Swift, you can choose whether
 to define a class, structure, or enumeration, and still have the
 flexibility to define methods on the type you create.
@@ -12617,10 +12617,10 @@ create a new instance of the class with initializer syntax, written as
 @samp{item}.
 
 @menu
-* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types 1. 
+* Memberwise Initializers for Structure Types: Memberwise Initializers for Structure Types (1). 
 @end menu
 
-@node Memberwise Initializers for Structure Types 1
+@node Memberwise Initializers for Structure Types (1)
 @subsection Memberwise Initializers for Structure Types
 
 @uref{https://github.com/apple/swift-evolution/blob/master/proposals/0242-default-values-memberwise.md, Proposal}
@@ -12947,7 +12947,7 @@ being set to a different value by another initializer unexpectedly.
 Note
 
 Swift's two-phase initialization process is similar to initialization in
-Objective-C. The main difference is that during phase 1, Objective-C
+Objective-C@. The main difference is that during phase 1, Objective-C
 assigns zero or null values (such as @samp{0} or @samp{nil}) to every property.
 Swift's initialization flow is more flexible in that it lets you set
 custom initial values, and can cope with types for which @samp{0} or @samp{nil} is
@@ -14714,7 +14714,7 @@ In the example above, you place the optional chaining question mark
 is the @samp{buildingIdentifier()} method's return value, and not the
 @samp{buildingIdentifier()} method itself.
 
-@node Error Handling 2
+@node Error Handling (2)
 @chapter Error Handling
 
 @emph{Error handling} is the process of responding to and recovering from
@@ -14738,7 +14738,7 @@ resolve.
 Note
 
 Error handling in Swift interoperates with error handling patterns that
-use the @samp{NSError} class in Cocoa and Objective-C. For more information
+use the @samp{NSError} class in Cocoa and Objective-C@. For more information
 about this class, see
 @uref{https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift, Handling
 Cocoa Errors in Swift}
@@ -15617,7 +15617,7 @@ naturally qualified by the context in which they are defined.
 enumeration, or protocol type. This includes the ability to extend types
 for which you do not have access to the original source code (known as
 @emph{retroactive modeling}). Extensions are similar to categories in
-Objective-C. (Unlike Objective-C categories, Swift extensions do not
+Objective-C@. (Unlike Objective-C categories, Swift extensions do not
 have names.)
 
 Extensions in Swift can:
@@ -15654,11 +15654,11 @@ existing functionality.
 
 @menu
 * Extension Syntax::
-* Computed Properties: Computed Properties 1. 
-* Initializers: Initializers 1. 
-* Methods: Methods 1. 
-* Subscripts: Subscripts 1. 
-* Nested Types: Nested Types 1. 
+* Computed Properties: Computed Properties (1). 
+* Initializers: Initializers (1). 
+* Methods: Methods (1). 
+* Subscripts: Subscripts (1). 
+* Nested Types: Nested Types (1). 
 @end menu
 
 @node Extension Syntax
@@ -15698,7 +15698,7 @@ If you define an extension to add new functionality to an existing type,
 the new functionality will be available on all existing instances of
 that type, even if they were created before the extension was defined.
 
-@node Computed Properties 1
+@node Computed Properties (1)
 @section Computed Properties
 
 Extensions can add computed instance properties and computed type
@@ -15757,7 +15757,7 @@ Note
 Extensions can add new computed properties, but they cannot add stored
 properties, or add property observers to existing properties.
 
-@node Initializers 1
+@node Initializers (1)
 @section Initializers
 
 Extensions can add new initializers to existing types. This enables you
@@ -15844,7 +15844,7 @@ If you provide a new initializer with an extension, you are still
 responsible for making sure that each instance is fully initialized once
 the initializer completes.
 
-@node Methods 1
+@node Methods (1)
 @section Methods
 
 Extensions can add new instance methods and type methods to existing
@@ -15903,7 +15903,7 @@ someInt.square()
 // someInt is now 9
 @end example
 
-@node Subscripts 1
+@node Subscripts (1)
 @section Subscripts
 
 Extensions can add new subscripts to an existing type. This example adds
@@ -15951,7 +15951,7 @@ padded with zeros to the left:
 0746381295[9]
 @end example
 
-@node Nested Types 1
+@node Nested Types (1)
 @section Nested Types
 
 Extensions can add new nested types to existing classes, structures, and
@@ -17259,7 +17259,7 @@ You can define @emph{optional requirements} for protocols. These requirements
 don't have to be implemented by types that conform to the protocol.
 Optional requirements are prefixed by the @samp{optional} modifier as part of
 the protocol's definition. Optional requirements are available so that
-you can write code that interoperates with Objective-C. Both the
+you can write code that interoperates with Objective-C@. Both the
 protocol and the optional requirement must be marked with the @samp{@@objc}
 attribute. Note that @samp{@@objc} protocols can be adopted only by classes
 that inherit from Objective-C classes or other @samp{@@objc} classes. They
@@ -17570,7 +17570,7 @@ extensions that provide implementations for the same method or property,
 Swift uses the implementation corresponding to the most specialized
 constraints.
 
-@node Generics 1
+@node Generics (1)
 @chapter Generics
 
 @emph{Generic code} enables you to write flexible, reusable functions and
@@ -19221,7 +19221,7 @@ similar to the approach described in
 @uref{https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html, Transitioning
 to ARC Release Notes}
 [@uref{https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html}]
-for using ARC with Objective-C.
+for using ARC with Objective-C@.
 
 Reference counting applies only to instances of classes. Structures and
 enumerations are value types, not reference types, and are not stored
@@ -20617,13 +20617,13 @@ them (properties, types, functions, and so on) are referred to as
 * Access Levels::
 * Access Control Syntax::
 * Custom Types::
-* Subclassing: Subclassing 1. 
+* Subclassing: Subclassing (1). 
 * Constants, Variables, Properties, and Subscripts: Constants Variables Properties and Subscripts. 
-* Initializers: Initializers 2. 
-* Protocols: Protocols 1. 
-* Extensions: Extensions 1. 
-* Generics: Generics 2. 
-* Type Aliases: Type Aliases 1. 
+* Initializers: Initializers (2). 
+* Protocols: Protocols (1). 
+* Extensions: Extensions (1). 
+* Generics: Generics (2). 
+* Type Aliases: Type Aliases (1). 
 @end menu
 
 @node Modules and Source Files
@@ -20777,7 +20777,7 @@ Any internal implementation details of your framework can still use the
 default access level of internal, or can be marked as private or file
 private if you want to hide them from other parts of the framework's
 internal code. You need to mark an entity as open or public only if you
-want it to become part of your framework's API.
+want it to become part of your framework's API@.
 
 @node Access Levels for Unit Test Targets
 @subsection Access Levels for Unit Test Targets
@@ -20885,9 +20885,9 @@ private class SomePrivateClass @{ // explicitly private class
 
 @menu
 * Tuple Types::
-* Function Types: Function Types 1. 
+* Function Types: Function Types (1). 
 * Enumeration Types::
-* Nested Types: Nested Types 2. 
+* Nested Types: Nested Types (2). 
 @end menu
 
 @node Tuple Types
@@ -20905,7 +20905,7 @@ structures, enumerations, and functions do. A tuple type's access level
 is determined automatically from the types that make up the tuple type,
 and can't be specified explicitly.
 
-@node Function Types 1
+@node Function Types (1)
 @subsection Function Types
 
 The access level for a function type is calculated as the most
@@ -20980,7 +20980,7 @@ enumeration's access level. For example, you can't use a private type as
 the raw-value type of an enumeration with an internal access level.
 @end enumerate
 
-@node Nested Types 2
+@node Nested Types (2)
 @subsection Nested Types
 
 The access level of a nested type is the same as its containing type,
@@ -20989,7 +20989,7 @@ public type have an automatic access level of internal. If you want a
 nested type within a public type to be publicly available, you must
 explicitly declare the nested type as public.
 
-@node Subclassing 1
+@node Subclassing (1)
 @section Subclassing
 
 You can subclass any class that can be accessed in the current access
@@ -21160,7 +21160,7 @@ public struct TrackedString @{
 @}
 @end example
 
-@node Initializers 2
+@node Initializers (2)
 @section Initializers
 
 @cindex constructors
@@ -21176,11 +21176,11 @@ parameters can't be more private than the initializer's own access
 level.
 
 @menu
-* Default Initializers: Default Initializers 1. 
+* Default Initializers: Default Initializers (1). 
 * Default Memberwise Initializers for Structure Types::
 @end menu
 
-@node Default Initializers 1
+@node Default Initializers (1)
 @subsection Default Initializers
 
 As described in @ref{Default Initializers},
@@ -21211,7 +21211,7 @@ type to be initializable with a memberwise initializer when used in
 another module, you must provide a public memberwise initializer
 yourself as part of the type's definition.
 
-@node Protocols 1
+@node Protocols (1)
 @section Protocols
 
 @cindex interface, protocol
@@ -21234,11 +21234,11 @@ This behavior is different from other types, where a public type
 definition implies an access level of internal for the type's members.
 
 @menu
-* Protocol Inheritance: Protocol Inheritance 1. 
+* Protocol Inheritance: Protocol Inheritance (1). 
 * Protocol Conformance::
 @end menu
 
-@node Protocol Inheritance 1
+@node Protocol Inheritance (1)
 @subsection Protocol Inheritance
 
 If you define a new protocol that inherits from an existing protocol,
@@ -21272,7 +21272,7 @@ In Swift, as in Objective-C, protocol conformance is global---it isn't
 possible for a type to conform to a protocol in two different ways
 within the same program.
 
-@node Extensions 1
+@node Extensions (1)
 @section Extensions
 
 @cindex categories
@@ -21347,14 +21347,14 @@ extension SomeStruct: SomeProtocol @{
 @}
 @end example
 
-@node Generics 2
+@node Generics (2)
 @section Generics
 
 The access level for a generic type or generic function is the minimum
 of the access level of the generic type or function itself and the
 access level of any type constraints on its type parameters.
 
-@node Type Aliases 1
+@node Type Aliases (1)
 @section Type Aliases
 
 @cindex typedef
@@ -21377,7 +21377,7 @@ satisfy protocol conformances.
 In addition to the operators described in @ref{Basic Operators, , Basic
 Operators}, Swift provides several advanced operators that perform more
 complex value manipulation. These include all of the bitwise and bit
-shifting operators you will be familiar with from C and Objective-C.
+shifting operators you will be familiar with from C and Objective-C@.
 
 Unlike arithmetic operators in C, arithmetic operators in Swift do not
 overflow by default. Overflow behavior is trapped and reported as an
@@ -21403,7 +21403,7 @@ the custom operators you define.
 * Bitwise Operators::
 * Overflow Operators::
 * Precedence and Associativity::
-* Operator Methods: Operator Methods 1. 
+* Operator Methods: Operator Methods (1). 
 * Custom Operators::
 @end menu
 
@@ -21668,6 +21668,8 @@ integers remain negative as their value moves closer to zero.
 @node Overflow Operators
 @section Overflow Operators
 
+@cindex Overflow operators
+
 If you try to insert a number into an integer constant or variable that
 cannot hold that value, by default Swift reports an error rather than
 allowing an invalid value to be created. This behavior gives extra
@@ -21711,6 +21713,9 @@ Overflow multiplication (@samp{&*})
 @node Value Overflow
 @subsection Value Overflow
 
+@findex &+=
+@findex &*=
+
 Numbers can overflow in both the positive and negative direction.
 
 Here's an example of what happens when an unsigned integer is allowed to
@@ -21733,6 +21738,9 @@ below. The value that remains within the bounds of the @samp{UInt8} after the
 overflow addition is @samp{00000000}, or zero.
 
 @image{images/overflowAddition_2x,,,,png}
+
+@findex &-=
+
 Something similar happens when an unsigned integer is allowed to
 overflow in the negative direction. Here's an example using the overflow
 subtraction operator (@samp{&-}):
@@ -21851,12 +21859,12 @@ Declarations}
 Note
 
 Swift's operator precedences and associativity rules are simpler and
-more predictable than those found in C and Objective-C. However, this
+more predictable than those found in C and Objective-C@. However, this
 means that they are not exactly the same as in C-based languages. Be
 careful to ensure that operator interactions still behave in the way you
 intend when porting existing code to Swift.
 
-@node Operator Methods 1
+@node Operator Methods (1)
 @section Operator Methods
 
 Classes and structures can provide their own implementations of existing
@@ -21919,7 +21927,7 @@ make the vector @samp{(5.0, 5.0)}, as illustrated below.
 
 @menu
 * Prefix and Postfix Operators::
-* Compound Assignment Operators: Compound Assignment Operators 1. 
+* Compound Assignment Operators: Compound Assignment Operators (1). 
 * Equivalence Operators::
 @end menu
 
@@ -21961,7 +21969,7 @@ let alsoPositive = -negative
 // alsoPositive is a Vector2D instance with values of (3.0, 4.0)
 @end example
 
-@node Compound Assignment Operators 1
+@node Compound Assignment Operators (1)
 @subsection Compound Assignment Operators
 
 @emph{Compound assignment operators} combine assignment (@samp{=}) with another
@@ -22144,7 +22152,7 @@ operator. However, if you apply both a prefix and a postfix operator to
 the same operand, the postfix operator is applied first.
 
 @node Index
-@unnumbered Index
+@chapter Index
 
 @printindex cp
 
