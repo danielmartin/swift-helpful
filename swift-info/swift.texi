@@ -1,7 +1,7 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
 @setfilename swift.info
-@settitle The Swift Programming Language Guide (Swift 5.3)
+@settitle The Swift Programming Language Guide (Swift 5.4)
 @documentencoding UTF-8
 @documentlanguage en
 @syncodeindex vr cp
@@ -16,7 +16,7 @@
 
 @finalout
 @titlepage
-@title The Swift Programming Language Guide (Swift 5.3)
+@title The Swift Programming Language Guide (Swift 5.4)
 @author Apple Inc.
 @end titlepage
 
@@ -24,7 +24,7 @@
 
 @ifnottex
 @node Top
-@top The Swift Programming Language Guide (Swift 5.3)
+@top The Swift Programming Language Guide (Swift 5.4)
 @end ifnottex
 
 @menu
@@ -663,6 +663,7 @@ Advanced Operators
 * Precedence and Associativity::
 * Operator Methods: Operator Methods (1). 
 * Custom Operators::
+* Result Builders::
 
 Bitwise Operators
 
@@ -760,13 +761,13 @@ wait to see what you create with it.
 @node Version Compatibility
 @chapter Version Compatibility
 
-This book describes Swift 5.3, the default version of Swift that's
-included in Xcode 12. You can use Xcode 12 to build targets that are
-written in either Swift 5.3, Swift 4.2, or Swift 4.
+This book describes Swift 5.4, the default version of Swift that's
+included in Xcode 12.5. You can use Xcode 12.5 to build targets that are
+written in either Swift 5.4, Swift 4.2, or Swift 4.
 
-When you use Xcode 12 to build Swift 4 and Swift 4.2 code, most Swift
-5.3 functionality is available. That said, the following changes are
-available only to code that uses Swift 5.3 or later:
+When you use Xcode 12.5 to build Swift 4 and Swift 4.2 code, most Swift
+5.4 functionality is available. That said, the following changes are
+available only to code that uses Swift 5.4 or later:
 
 @itemize
 @item
@@ -782,10 +783,10 @@ the correct integer type. For example, @samp{UInt64(0xffff_ffff_ffff_ffff)}
 evaluates to the correct value rather than overflowing.
 @end itemize
 
-A target written in Swift 5.3 can depend on a target that's written in
+A target written in Swift 5.4 can depend on a target that's written in
 Swift 4.2 or Swift 4, and vice versa. This means, if you have a large
 project that's divided into multiple frameworks, you can migrate your
-code from Swift 4 to Swift 5.3 one framework at a time.
+code from Swift 4 to Swift 5.4 one framework at a time.
 
 @node A Swift Tour
 @chapter A Swift Tour
@@ -854,8 +855,8 @@ lets the compiler infer its type. In the example above, the compiler
 infers that @samp{myVariable} is an integer because its initial value is an
 integer.
 
-If the initial value doesn't provide enough information (or if there is
-no initial value), specify the type by writing it after the variable,
+If the initial value doesn't provide enough information (or if isn't an
+initial value), specify the type by writing it after the variable,
 separated by a colon.
 
 @example
@@ -1007,9 +1008,9 @@ using the @samp{??} operator. If the optional value is missing, the default
 value is used instead.
 
 @example
-let nickName: String? = nil
+let nickname: String? = nil
 let fullName: String = "John Appleseed"
-let informalGreeting = "Hi \(nickName ?? fullName)"
+let informalGreeting = "Hi \(nickname ?? fullName)"
 @end example
 
 Switches support any kind of data and a wide variety of comparison
@@ -1039,7 +1040,7 @@ matched the pattern to a constant.
 
 After executing the code inside the switch case that matched, the
 program exits from the switch statement. Execution doesn't continue to
-the next case, so there is no need to explicitly break out of the switch
+the next case, so you don't need to explicitly break out of the switch
 at the end of each case's code.
 
 You use @samp{for}-@samp{in} to iterate over items in a dictionary by providing a
@@ -1054,7 +1055,7 @@ let interestingNumbers = [
   "Square": [1, 4, 9, 16, 25],
 ]
 var largest = 0
-for (kind, numbers) in interestingNumbers @{
+for (_, numbers) in interestingNumbers @{
     for number in numbers @{
         if number > largest @{
             largest = number
@@ -1067,8 +1068,8 @@ print(largest)
 
 Experiment
 
-Add another variable to keep track of which kind of number was the
-largest, as well as what that largest number was.
+Replace the @samp{_} with a variable name, and keep track of which kind of
+number was the largest.
 
 Use @samp{while} to repeat a block of code until a condition changes. The
 condition of a loop can be at the end instead, ensuring that the loop is
@@ -1167,7 +1168,7 @@ print(statistics.2)
 
 Functions can be nested. Nested functions have access to variables that
 were declared in the outer function. You can use nested functions to
-organize the code in a function that is long or complex.
+organize the code in a function that's long or complex.
 
 @example
 func returnFifteen() -> Int @{
@@ -1216,11 +1217,11 @@ hasAnyMatches(list: numbers, condition: lessThanTen)
 Functions are actually a special case of closures: blocks of code that
 can be called later. The code in a closure has access to things like
 variables and functions that were available in the scope where the
-closure was created, even if the closure is in a different scope when it
-is executed---you saw an example of this already with nested functions.
-You can write a closure without a name by surrounding code with braces
-(@samp{@{@}}). Use @samp{in} to separate the arguments and return type from the
-body.
+closure was created, even if the closure is in a different scope when
+it's executed---you saw an example of this already with nested
+functions. You can write a closure without a name by surrounding code
+with braces (@samp{@{@}}). Use @samp{in} to separate the arguments and return type
+from the body.
 
 @example
 numbers.map(@{ (number: Int) -> Int in
@@ -1264,7 +1265,7 @@ print(sortedNumbers)
 
 Use @samp{class} followed by the class's name to create a class. A property
 declaration in a class is written the same way as a constant or variable
-declaration, except that it is in the context of a class. Likewise,
+declaration, except that it's in the context of a class. Likewise,
 method and function declarations are written the same way.
 
 @example
@@ -1320,7 +1321,7 @@ Use @samp{deinit} to create a deinitializer if you need to perform some
 cleanup before the object is deallocated.
 
 Subclasses include their superclass name after their class name,
-separated by a colon. There is no requirement for classes to subclass
+separated by a colon. There's no requirement for classes to subclass
 any standard root class, so you can include or omit a superclass as
 needed.
 
@@ -1412,7 +1413,7 @@ be done at this point.
 @end enumerate
 
 If you don't need to compute the property but still need to provide code
-that is run before and after setting a new value, use @samp{willSet} and
+that's run before and after setting a new value, use @samp{willSet} and
 @samp{didSet}. The code you provide is run any time the value changes outside
 of an initializer. For example, the class below ensures that the side
 length of its triangle is always the same as the side length of its
@@ -1505,7 +1506,7 @@ value of an enumeration case.
 
 Use the @samp{init?(rawValue:)} initializer to make an instance of an
 enumeration from a raw value. It returns either the enumeration case
-matching the raw value or @samp{nil} if there is no matching @samp{Rank}.
+matching the raw value or @samp{nil} if there's no matching @samp{Rank}.
 
 @example
 if let convertedRank = Rank(rawValue: 3) @{
@@ -1591,7 +1592,7 @@ cases.
 Use @samp{struct} to create a structure. Structures support many of the same
 behaviors as classes, including methods and initializers. One of the
 most important differences between structures and classes is that
-structures are always copied when they are passed around in your code,
+structures are always copied when they're passed around in your code,
 but classes are passed by reference.
 
 @example
@@ -1666,7 +1667,7 @@ mutating because methods on a class can always modify the class.
 
 Use @samp{extension} to add functionality to an existing type, such as new
 methods and computed properties. You can use an extension to add
-protocol conformance to a type that is declared elsewhere, or even to a
+protocol conformance to a type that's declared elsewhere, or even to a
 type that you imported from a library or framework.
 
 @example
@@ -1690,7 +1691,7 @@ property.
 You can use a protocol name just like any other named type---for
 example, to create a collection of objects that have different types but
 that all conform to a single protocol. When you work with values whose
-type is a protocol type, methods outside the protocol definition are not
+type is a protocol type, methods outside the protocol definition aren't
 available.
 
 @example
@@ -1787,7 +1788,7 @@ let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
 let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
 @end example
 
-Use @samp{defer} to write a block of code that is executed after all other
+Use @samp{defer} to write a block of code that's executed after all other
 code in the function, just before the function returns. The code is
 executed regardless of whether the function throws an error. You can use
 @samp{defer} to write setup and cleanup code next to each other, even though
@@ -2063,7 +2064,7 @@ var welcomeMessage: String
 The colon in the declaration means “@dots{}of type@dots{},” so the code above
 can be read as:
 
-“Declare a variable called @samp{welcomeMessage} that is of type @samp{String}.”
+“Declare a variable called @samp{welcomeMessage} that's of type @samp{String}.”
 
 The phrase “of type @samp{String=” means “can store any =String} value.”
 Think of it as meaning “the type of thing” (or “the kind of thing”) that
@@ -2597,7 +2598,7 @@ at the point that they're evaluated by the compiler.
 define type aliases with the @samp{typealias} keyword.
 
 Type aliases are useful when you want to refer to an existing type by a
-name that is contextually more appropriate, such as when working with
+name that's contextually more appropriate, such as when working with
 data of a specific size from an external source:
 
 @example
@@ -2925,7 +2926,7 @@ rather than forced unwrapping:
 if let actualNumber = Int(possibleNumber) @{
     print("The string \"\(possibleNumber)\" has an integer value of \(actualNumber)")
 @} else @{
-    print("The string \"\(possibleNumber)\" could not be converted to an integer")
+    print("The string \"\(possibleNumber)\" couldn't be converted to an integer")
 @}
 // Prints "The string "123" has an integer value of 123"
 @end example
@@ -2939,8 +2940,8 @@ in the optional.”
 If the conversion is successful, the @samp{actualNumber} constant becomes
 available for use within the first branch of the @samp{if} statement. It has
 already been initialized with the value contained @emph{within} the optional,
-and so there's no need to use the @samp{!} suffix to access its value. In
-this example, @samp{actualNumber} is simply used to print the result of the
+and so you don't use the @samp{!} suffix to access its value. In this 
+example, @samp{actualNumber} is simply used to print the result of the
 conversion.
 
 You can use both constants and variables with optional binding. If you
@@ -3244,7 +3245,7 @@ if age > 10 @{
 
 Use a precondition whenever a condition has the potential to be false,
 but must @emph{definitely} be true for your code to continue execution. For
-example, use a precondition to check that a subscript is not out of
+example, use a precondition to check that a subscript isn't out of
 bounds, or to check that a function has been passed a valid value.
 
 You write a precondition by calling the
@@ -3289,7 +3290,7 @@ two numbers, as in @samp{let i = 1 + 2}, and the logical AND operator (@samp{&&}
 combines two Boolean values, as in
 @samp{if enteredDoorCode && passedRetinaScan}.
 
-Swift supports the operators you may already know from languages like C
+Swift supports the operators you may already know from languages like C,
 and improves several capabilities to eliminate common coding errors. The
 assignment operator (@samp{=}) doesn't return a value, to prevent it from
 being mistakenly used when the equal to operator (@samp{==}) is intended.
@@ -3367,12 +3368,12 @@ let (x, y) = (1, 2)
 @end example
 
 Unlike the assignment operator in C and Objective-C, the assignment
-operator in Swift does not itself return a value. The following
-statement is not valid:
+operator in Swift doesn't itself return a value. The following statement 
+isn't valid:
 
 @example
 if x = y @{
-    // This is not valid, because x = y does not return a value.
+    // This isn't valid, because x = y doesn't return a value.
 @}
 @end example
 
@@ -3429,7 +3430,7 @@ The addition operator is also supported for @samp{String} concatenation:
 @subsection Remainder Operator
 
 The @emph{remainder operator} (@samp{a % b}) works out how many multiples of @samp{b}
-will fit inside @samp{a} and returns the value that is left over (known as
+will fit inside @samp{a} and returns the value that's left over (known as
 the @emph{remainder}).
 
 Note
@@ -3576,11 +3577,11 @@ whether or not the statement is true:
 
 @example
 1 == 1 // true because 1 is equal to 1
-2 != 1 // true because 2 is not equal to 1
+2 != 1 // true because 2 isn't equal to 1
 2 > 1 // true because 2 is greater than 1
 1 < 2 // true because 1 is less than 2
 1 >= 1 // true because 1 is greater than or equal to 1
-2 <= 1 // false because 2 is not less than or equal to 1
+2 <= 1 // false because 2 isn't less than or equal to 1
 @end example
 
 Comparison operators are often used in conditional statements, such as
@@ -3607,7 +3608,7 @@ overall result of the tuple comparison. If all the elements are equal,
 then the tuples themselves are equal. For example:
 
 @example
-(1, "zebra") < (2, "apple") // true because 1 is less than 2; "zebra" and "apple" are not compared
+(1, "zebra") < (2, "apple") // true because 1 is less than 2; "zebra" and "apple" aren't compared
 (3, "apple") < (3, "bird") // true because 3 is equal to 3, and "apple" is less than "bird"
 (4, "dog") == (4, "dog") // true because 4 is equal to 4, and "dog" is equal to "dog"
 @end example
@@ -3701,7 +3702,7 @@ ternary conditional operator into one compound statement.
 The @emph{nil-coalescing operator} (@samp{a ?? b}) unwraps an optional @samp{a} if it
 contains a value, or returns a default value @samp{b} if @samp{a} is @samp{nil}. The
 expression @samp{a} is always of an optional type. The expression @samp{b} must
-match the type that is stored inside @samp{a}.
+match the type that's stored inside @samp{a}.
 
 The nil-coalescing operator is shorthand for the code below:
 
@@ -3710,14 +3711,14 @@ a != nil ? a! : b
 @end example
 
 The code above uses the ternary conditional operator and forced
-unwrapping (@samp{a!}) to access the value wrapped inside @samp{a} when @samp{a} is not
+unwrapping (@samp{a!}) to access the value wrapped inside @samp{a} when @samp{a} isn't
 @samp{nil}, and to return @samp{b} otherwise. The nil-coalescing operator provides
 a more elegant way to encapsulate this conditional checking and
 unwrapping in a concise and readable form.
 
 Note
 
-If the value of @samp{a} is non-@samp{nil}, the value of @samp{b} is not evaluated.
+If the value of @samp{a} is non-@samp{nil}, the value of @samp{b} isn't evaluated.
 This is known as @emph{short-circuit evaluation}.
 
 The example below uses the nil-coalescing operator to choose between a
@@ -3747,7 +3748,7 @@ the nil-coalescing operator check again, the value wrapped inside
 @example
 userDefinedColorName = "green"
 colorNameToUse = userDefinedColorName ?? defaultColorName
-// userDefinedColorName is not nil, so colorNameToUse is set to "green"
+// userDefinedColorName isn't nil, so colorNameToUse is set to "green"
 @end example
 
 @node Range Operators
@@ -3955,7 +3956,7 @@ expression to be @samp{true}.
 
 Like the Logical AND operator above, the Logical OR operator uses
 short-circuit evaluation to consider its expressions. If the left side
-of a Logical OR expression is @samp{true}, the right side is not evaluated,
+of a Logical OR expression is @samp{true}, the right side isn't evaluated,
 because it can't change the outcome of the overall expression.
 
 In the example below, the first @samp{Bool} value (@samp{hasDoorKey}) is @samp{false},
@@ -4046,7 +4047,7 @@ collection of @samp{Character} values.
 Swift's @samp{String} and @samp{Character} types provide a fast, Unicode-compliant
 way to work with text in your code. The syntax for string creation and
 manipulation is lightweight and readable, with a string literal syntax
-that is similar to C@. String concatenation is as simple as combining two
+that's similar to C@. String concatenation is as simple as combining two
 strings with the @samp{+} operator, and string mutability is managed by
 choosing between a constant or a variable, just like any other value in
 Swift. You can also use strings to insert constants, variables,
@@ -4478,7 +4479,7 @@ print(#"Write an interpolated string in Swift using \(multiplier)."#)
 @end example
 
 To use string interpolation inside a string that uses extended
-delimiters, match the number of number signs before the backslash to the
+delimiters, match the number of number signs after the backslash to the
 number of number signs at the beginning and end of the string. For
 example:
 
@@ -4776,8 +4777,8 @@ that make up the substring are stored. The difference between strings
 and substrings is that, as a performance optimization, a substring can
 reuse part of the memory that's used to store the original string, or
 part of the memory that's used to store another substring. (Strings have
-a similar optimization, but if two strings share memory, they are
-equal.) This performance optimization means you don't have to pay the
+a similar optimization, but if two strings share memory, they're equal.) 
+This performance optimization means you don't have to pay the
 performance cost of copying memory until you modify either the string or
 substring. As mentioned above, substrings aren't suitable for long-term
 storage---because they reuse the storage of the original string, the
@@ -4865,14 +4866,14 @@ let latinCapitalLetterA: Character = "\u@{41@}"
 let cyrillicCapitalLetterA: Character = "\u@{0410@}"
 
 if latinCapitalLetterA != cyrillicCapitalLetterA @{
-    print("These two characters are not equivalent.")
+    print("These two characters aren't equivalent.")
 @}
-// Prints "These two characters are not equivalent."
+// Prints "These two characters aren't equivalent."
 @end example
 
 Note
 
-String and character comparisons in Swift are not locale-sensitive.
+String and character comparisons in Swift aren't locale-sensitive.
 
 @node Prefix and Suffix Equality
 @subsection Prefix and Suffix Equality
@@ -5105,10 +5106,10 @@ Dictionaries are unordered collections of key-value associations.
 
 @image{images/CollectionTypes_intro_2x,,,,png}
 Arrays, sets, and dictionaries in Swift are always clear about the types
-of values and keys that they can store. This means that you cannot
-insert a value of the wrong type into a collection by mistake. It also
-means you can be confident about the type of values you will retrieve
-from a collection.
+of values and keys that they can store. This means that you can't insert 
+a value of the wrong type into a collection by mistake. It also means 
+you can be confident about the type of values you will retrieve from a 
+collection.
 
 Note
 
@@ -5128,16 +5129,16 @@ collections}. For more about generic types and collections, see
 @section Mutability of Collections
 
 If you create an array, a set, or a dictionary, and assign it to a
-variable, the collection that is created will be @emph{mutable}. This means
+variable, the collection that's created will be @emph{mutable}. This means
 that you can change (or @emph{mutate}) the collection after it's created by
 adding, removing, or changing items in the collection. If you assign an
 array, a set, or a dictionary to a constant, that collection is
-@emph{immutable}, and its size and contents cannot be changed.
+@emph{immutable}, and its size and contents can't be changed.
 
 Note
 
-It is good practice to create immutable collections in all cases where
-the collection does not need to change. Doing so makes it easier for you
+It's good practice to create immutable collections in all cases where
+the collection doesn't need to change. Doing so makes it easier for you
 to reason about your code and enables the Swift compiler to optimize the
 performance of the collections you create.
 
@@ -5256,7 +5257,7 @@ var shoppingList: [String] = ["Eggs", "Milk"]
 
 The @samp{shoppingList} variable is declared as “an array of string values”,
 written as @samp{[String]}. Because this particular array has specified a
-value type of @samp{String}, it is allowed to store @samp{String} values only.
+value type of @samp{String}, it's allowed to store @samp{String} values only.
 Here, the @samp{shoppingList} array is initialized with two @samp{String} values
 (@samp{"Eggs"} and @samp{"Milk"}), written within an array literal.
 
@@ -5306,9 +5307,9 @@ the @samp{count} property is equal to @samp{0}:
 if shoppingList.isEmpty @{
     print("The shopping list is empty.")
 @} else @{
-    print("The shopping list is not empty.")
+    print("The shopping list isn't empty.")
 @}
-// Prints "The shopping list is not empty."
+// Prints "The shopping list isn't empty."
 @end example
 
 You can add a new item to the end of an array by calling the array's
@@ -5381,8 +5382,8 @@ by an index of @samp{0}.
 
 Similarly, you remove an item from the array with the @samp{remove(at:)}
 method. This method removes the item at the specified index and returns
-the removed item (although you can ignore the returned value if you do
-not need it):
+the removed item (although you can ignore the returned value if you 
+don't need it):
 
 @example
 let mapleSyrup = shoppingList.remove(at: 0)
@@ -5393,7 +5394,7 @@ let mapleSyrup = shoppingList.remove(at: 0)
 
 Note
 
-If you try to access or modify a value for an index that is outside of
+If you try to access or modify a value for an index that's outside of
 an array's existing bounds, you will trigger a runtime error. You can
 check that an index is valid before using it by comparing it to the
 array's @samp{count} property. The largest valid index in an array is
@@ -5464,7 +5465,7 @@ For more about the @samp{for}-@samp{in} loop, see
 
 A @emph{set} stores distinct values of the same type in a collection with no
 defined ordering. You can use a set instead of an array when the order
-of items is not important, or when you need to ensure that an item only
+of items isn't important, or when you need to ensure that an item only
 appears once.
 
 Note
@@ -5490,9 +5491,9 @@ Between Set and NSSet}
 
 A type must be @emph{hashable} in order to be stored in a set---that is, the
 type must provide a way to compute a @emph{hash value} for itself. A hash
-value is an @samp{Int} value that is the same for all objects that compare
-equally, such that if @samp{a =} b=, it follows that
-@samp{a.hashValue =} b.hashValue=.
+value is an @samp{Int} value that's the same for all objects that compare
+equally, such that if @samp{a =} b=, the hash value of @samp{a} is equal to the
+hash value of @samp{b}.
 
 All of Swift's basic types (such as @samp{String}, @samp{Int}, @samp{Double}, and
 @samp{Bool}) are hashable by default, and can be used as set value types or
@@ -5503,38 +5504,19 @@ by default.
 Note
 
 You can use your own custom types as set value types or dictionary key
-types by making them conform to the @samp{Hashable} protocol from Swift's
-standard library. Types that conform to the @samp{Hashable} protocol must
-provide a gettable @samp{Int} property called @samp{hashValue}. The value returned
-by a type's @samp{hashValue} property is not required to be the same across
-different executions of the same program, or in different programs.
-
-Because the @samp{Hashable} protocol conforms to @samp{Equatable}, conforming
-types must also provide an implementation of the equals operator (@samp{==}).
-The @samp{Equatable} protocol requires any conforming implementation of @samp{==}
-to be an equivalence relation. That is, an implementation of @samp{==} must
-satisfy the following three conditions, for all values @samp{a}, @samp{b}, and
-@samp{c}:
-
-@itemize
-@item
-@samp{a =} a= (Reflexivity)
-
-@item
-@samp{a =} b= implies @samp{b =} a= (Symmetry)
-
-@item
-@samp{a =} b && b @samp{= c} implies @samp{a =} c= (Transitivity)
-@end itemize
-
-For more information about conforming to protocols, see
+types by making them conform to the @samp{Hashable} protocol from the Swift
+standard library. For information about implementing the required
+@samp{hash(into:)} method, see
+@uref{https://developer.apple.com/documentation/swift/hashable, @samp{Hashable}}
+[@uref{https://developer.apple.com/documentation/swift/hashable}]. For
+information about conforming to protocols, see
 @ref{Protocols}.
 
 @node Set Type Syntax
 @subsection Set Type Syntax
 
 The type of a Swift set is written as @samp{Set<Element>}, where @samp{Element} is
-the type that the set is allowed to store. Unlike arrays, sets do not
+the type that the set is allowed to store. Unlike arrays, sets don't
 have an equivalent shorthand form.
 
 @node Creating and Initializing an Empty Set
@@ -5580,7 +5562,7 @@ var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
 
 The @samp{favoriteGenres} variable is declared as “a set of @samp{String} values”,
 written as @samp{Set<String>}. Because this particular set has specified a
-value type of @samp{String}, it is @emph{only} allowed to store @samp{String} values.
+value type of @samp{String}, it's @emph{only} allowed to store @samp{String} values.
 Here, the @samp{favoriteGenres} set is initialized with three @samp{String} values
 (@samp{"Rock"}, @samp{"Classical"}, and @samp{"Hip hop"}), written within an array
 literal.
@@ -5591,7 +5573,7 @@ The @samp{favoriteGenres} set is declared as a variable (with the @samp{var}
 introducer) and not a constant (with the @samp{let} introducer) because items
 are added and removed in the examples below.
 
-A set type cannot be inferred from an array literal alone, so the type
+A set type can't be inferred from an array literal alone, so the type
 @samp{Set} must be explicitly declared. However, because of Swift's type
 inference, you don't have to write the type of the set's elements if
 you're initializing it with an array literal that contains values of
@@ -5641,7 +5623,7 @@ favoriteGenres.insert("Jazz")
 
 You can remove an item from a set by calling the set's @samp{remove(_:)}
 method, which removes the item if it's a member of the set, and returns
-the removed value, or returns @samp{nil} if the set did not contain it.
+the removed value, or returns @samp{nil} if the set didn't contain it.
 Alternatively, all items in a set can be removed with its @samp{removeAll()}
 method.
 
@@ -5683,7 +5665,7 @@ for genre in favoriteGenres @{
 For more about the @samp{for}-@samp{in} loop, see
 @ref{For-In Loops}.
 
-Swift's @samp{Set} type does not have a defined ordering. To iterate over the
+Swift's @samp{Set} type doesn't have a defined ordering. To iterate over the
 values of a set in a specific order, use the @samp{sorted()} method, which
 returns the set's elements as an array sorted using the @samp{<} operator.
 
@@ -5805,7 +5787,7 @@ A @emph{dictionary} stores associations between keys of the same type and
 values of the same type in a collection with no defined ordering. Each
 value is associated with a unique @emph{key}, which acts as an identifier for
 that value within the dictionary. Unlike items in an array, items in a
-dictionary do not have a specified order. You use a dictionary when you
+dictionary don't have a specified order. You use a dictionary when you
 need to look up values based on their identifier, in much the same way
 that a real-world dictionary is used to look up the definition for a
 particular word.
@@ -5957,9 +5939,9 @@ the @samp{count} property is equal to @samp{0}:
 if airports.isEmpty @{
     print("The airports dictionary is empty.")
 @} else @{
-    print("The airports dictionary is not empty.")
+    print("The airports dictionary isn't empty.")
 @}
-// Prints "The airports dictionary is not empty."
+// Prints "The airports dictionary isn't empty."
 @end example
 
 You can add a new item to a dictionary with subscript syntax. Use a new
@@ -6002,7 +5984,7 @@ if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") @{
 @end example
 
 You can also use subscript syntax to retrieve a value from the
-dictionary for a particular key. Because it is possible to request a key
+dictionary for a particular key. Because it's possible to request a key
 for which no value exists, a dictionary's subscript returns an optional
 value of the dictionary's value type. If the dictionary contains a value
 for the requested key, the subscript returns an optional value
@@ -6013,7 +5995,7 @@ returns @samp{nil}:
 if let airportName = airports["DUB"] @{
     print("The name of the airport is \(airportName).")
 @} else @{
-    print("That airport is not in the airports dictionary.")
+    print("That airport isn't in the airports dictionary.")
 @}
 // Prints "The name of the airport is Dublin Airport."
 @end example
@@ -6023,7 +6005,7 @@ dictionary by assigning a value of @samp{nil} for that key:
 
 @example
 airports["APL"] = "Apple International"
-// "Apple International" is not the real airport for APL, so delete it
+// "Apple International" isn't the real airport for APL, so delete it
 airports["APL"] = nil
 // APL has now been removed from the dictionary
 @end example
@@ -6037,7 +6019,7 @@ existed:
 if let removedValue = airports.removeValue(forKey: "DUB") @{
     print("The removed airport's name is \(removedValue).")
 @} else @{
-    print("The airports dictionary does not contain a value for DUB.")
+    print("The airports dictionary doesn't contain a value for DUB.")
 @}
 // Prints "The removed airport's name is Dublin Airport."
 @end example
@@ -6089,7 +6071,7 @@ let airportNames = [String](airports.values)
 // airportNames is ["London Heathrow", "Toronto Pearson"]
 @end example
 
-Swift's @samp{Dictionary} type does not have a defined ordering. To iterate
+Swift's @samp{Dictionary} type doesn't have a defined ordering. To iterate
 over the keys or values of a dictionary in a specific order, use the
 @samp{sorted()} method on its @samp{keys} or @samp{values} property.
 
@@ -6164,9 +6146,9 @@ for (animalName, legCount) in numberOfLegs @{
 @end example
 
 The contents of a @samp{Dictionary} are inherently unordered, and iterating
-over them does not guarantee the order in which they will be retrieved.
+over them doesn't guarantee the order in which they will be retrieved.
 In particular, the order you insert items into a @samp{Dictionary} doesn't
-define the order they are iterated. For more about arrays and
+define the order they're iterated. For more about arrays and
 dictionaries, see @ref{Collection Types}.
 
 You can also use @samp{for}-@samp{in} loops with numeric ranges. This example
@@ -6194,10 +6176,10 @@ the value of @samp{index} is updated to contain the second value in the range
 again. This process continues until the end of the range is reached.
 
 In the example above, @samp{index} is a constant whose value is automatically
-set at the start of each iteration of the loop. As such, @samp{index} does
-not have to be declared before it is used. It is implicitly declared
-simply by its inclusion in the loop declaration, without the need for a
-@samp{let} declaration keyword.
+set at the start of each iteration of the loop. As such, @samp{index} doesn't 
+have to be declared before it's used. It's implicitly declared simply by 
+its inclusion in the loop declaration, without the need for a @samp{let} 
+declaration keyword.
 
 If you don't need each value from a sequence, you can ignore the values
 by using an underscore in place of a variable name.
@@ -6220,7 +6202,7 @@ times, using a closed range that starts with @samp{1} and ends with @samp{10}. F
 this calculation, the individual counter values each time through the
 loop are unnecessary---the code simply executes the loop the correct
 number of times. The underscore character (@samp{_}) used in place of a loop
-variable causes the individual values to be ignored and does not provide
+variable causes the individual values to be ignored and doesn't provide
 access to the current value during each iteration of the loop.
 
 In some situations, you might not want to use closed ranges, which
@@ -6264,8 +6246,8 @@ for tickMark in stride(from: 3, through: hours, by: hourInterval) @{
 
 A @samp{while} loop performs a set of statements until a condition becomes
 @samp{false}. These kinds of loops are best used when the number of
-iterations is not known before the first iteration begins. Swift
-provides two kinds of @samp{while} loops:
+iterations isn't known before the first iteration begins. Swift provides 
+two kinds of @samp{while} loops:
 
 @itemize
 @item
@@ -6379,7 +6361,7 @@ of generating a random number, it starts with a @samp{diceRoll} value of @samp{0
 Each time through the @samp{while} loop, @samp{diceRoll} is incremented by one and
 is then checked to see whether it has become too large. Whenever this
 return value equals @samp{7}, the dice roll has become too large and is reset
-to a value of @samp{1}. The result is a sequence of @samp{diceRoll} values that is
+to a value of @samp{1}. The result is a sequence of @samp{diceRoll} values that's
 always @samp{1}, @samp{2}, @samp{3}, @samp{4}, @samp{5}, @samp{6}, @samp{1}, @samp{2} and so on.
 
 After rolling the dice, the player moves forward by @samp{diceRoll} squares.
@@ -6392,7 +6374,7 @@ snakes.
 
 Note
 
-If this check is not performed, @samp{board[square]} might try to access a
+If this check isn't performed, @samp{board[square]} might try to access a
 value outside the bounds of the @samp{board} array, which would trigger a
 runtime error.
 
@@ -6402,7 +6384,7 @@ has moved on or beyond square number @samp{25}, the loop's condition
 evaluates to @samp{false} and the game ends.
 
 A @samp{while} loop is appropriate in this case, because the length of the
-game is not clear at the start of the @samp{while} loop. Instead, the loop is
+game isn't clear at the start of the @samp{while} loop. Instead, the loop is
 executed until a particular condition is satisfied.
 
 @node Repeat-While
@@ -6481,7 +6463,7 @@ game described earlier.
 @node Conditional Statements
 @section Conditional Statements
 
-It is often useful to execute different pieces of code based on certain
+It's often useful to execute different pieces of code based on certain
 conditions. You might want to run an extra piece of code when an error
 occurs, or to display a message when a value becomes too high or too
 low. To do this, you make parts of your code @emph{conditional}.
@@ -6537,7 +6519,7 @@ if temperatureInFahrenheit <= 32 @{
 @end example
 
 One of these two branches is always executed. Because the temperature
-has increased to @samp{40} degrees Fahrenheit, it is no longer cold enough to
+has increased to @samp{40} degrees Fahrenheit, it's no longer cold enough to
 advise wearing a scarf and so the @samp{else} branch is triggered instead.
 
 You can chain multiple @samp{if} statements together to consider additional
@@ -6560,7 +6542,7 @@ warm temperatures. The final @samp{else} clause remains, and it prints a
 response for any temperatures that are neither too warm nor too cold.
 
 The final @samp{else} clause is optional, however, and can be excluded if the
-set of conditions does not need to be complete.
+set of conditions doesn't need to be complete.
 
 @example
 temperatureInFahrenheit = 72
@@ -6610,7 +6592,7 @@ this chapter.
 
 Like the body of an @samp{if} statement, each @samp{case} is a separate branch of
 code execution. The @samp{switch} statement determines which branch should be
-selected. This procedure is known as @emph{switching} on the value that is
+selected. This procedure is known as @emph{switching} on the value that's
 being considered.
 
 @findex default
@@ -6619,7 +6601,7 @@ Every @samp{switch} statement must be @emph{exhaustive}. That is, every possible
 value of the type being considered must be matched by one of the
 @samp{switch} cases. If it's not appropriate to provide a case for every
 possible value, you can define a default case to cover any values that
-are not addressed explicitly. This default case is indicated by the
+aren't addressed explicitly. This default case is indicated by the
 @samp{default} keyword, and must always appear last.
 
 This example uses a @samp{switch} statement to consider a single lowercase
@@ -6651,7 +6633,7 @@ No Implicit Fallthrough
 
 
 In contrast with @samp{switch} statements in C and Objective-C, @samp{switch}
-statements in Swift do not fall through the bottom of each case and into
+statements in Swift don't fall through the bottom of each case and into
 the next one by default. Instead, the entire @samp{switch} statement finishes
 its execution as soon as the first matching @samp{switch} case is completed,
 without requiring an explicit @samp{break} statement. This makes the @samp{switch}
@@ -6660,13 +6642,13 @@ more than one @samp{switch} case by mistake.
 
 Note
 
-Although @samp{break} is not required in Swift, you can use a @samp{break}
+Although @samp{break} isn't required in Swift, you can use a @samp{break}
 statement to match and ignore a particular case or to break out of a
 matched case before that case has completed its execution. For details,
 see Break in a Switch Statement.
 
 The body of each case @emph{must} contain at least one executable statement.
-It is not valid to write the following code, because the first case is
+It isn't valid to write the following code, because the first case is
 empty:
 
 @example
@@ -6681,11 +6663,11 @@ default:
 // This will report a compile-time error.
 @end example
 
-Unlike a @samp{switch} statement in C, this @samp{switch} statement does not match
+Unlike a @samp{switch} statement in C, this @samp{switch} statement doesn't match
 both @samp{"a"} and @samp{"A"}. Rather, it reports a compile-time error that
-@samp{case "a":} does not contain any executable statements. This approach
+@samp{case "a":} doesn't contain any executable statements. This approach
 avoids accidental fallthrough from one case to another and makes for
-safer code that is clearer in its intent.
+safer code that's clearer in its intent.
 
 To make a @samp{switch} with a single case that matches both @samp{"a"} and @samp{"A"},
 combine the two values into a compound case, separating the values with
@@ -6828,14 +6810,14 @@ Similarly, the second case, @samp{case (0, let y)}, matches any point with an
 constant @samp{y}.
 
 After the temporary constants are declared, they can be used within the
-case's code block. Here, they are used to print the categorization of
+case's code block. Here, they're used to print the categorization of
 the point.
 
-This @samp{switch} statement does not have a @samp{default} case. The final case,
+This @samp{switch} statement doesn't have a @samp{default} case. The final case,
 @samp{case let (x, y)}, declares a tuple of two placeholder constants that
 can match any value. Because @samp{anotherPoint} is always a tuple of two
 values, this case matches all possible remaining values, and a @samp{default}
-case is not needed to make the @samp{switch} statement exhaustive.
+case isn't needed to make the @samp{switch} statement exhaustive.
 
 @item
 Where
@@ -6872,7 +6854,7 @@ only if the @samp{where} clause's condition evaluates to @samp{true} for that
 value.
 
 As in the previous example, the final case matches all possible
-remaining values, and so a @samp{default} case is not needed to make the
+remaining values, and so a @samp{default} case isn't needed to make the
 @samp{switch} statement exhaustive.
 
 @item
@@ -6894,7 +6876,7 @@ case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
      "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
     print("\(someCharacter) is a consonant")
 default:
-    print("\(someCharacter) is not a vowel or a consonant")
+    print("\(someCharacter) isn't a vowel or a consonant")
 @}
 // Prints "e is a vowel"
 @end example
@@ -6973,7 +6955,7 @@ in @ref{Propagating Errors Using Throwing Functions}.
 
 @findex continue
 
-The @samp{continue} statement tells a loop to stop what it is doing and start
+The @samp{continue} statement tells a loop to stop what it's doing and start
 again at the beginning of the next iteration through the loop. It says
 “I am done with the current loop iteration” without leaving the loop
 altogether.
@@ -7029,7 +7011,7 @@ the code after the @samp{switch} statement's closing brace (@samp{@}}).
 
 This behavior can be used to match and ignore one or more cases in a
 @samp{switch} statement. Because Swift's @samp{switch} statement is exhaustive and
-does not allow empty cases, it is sometimes necessary to deliberately
+doesn't allow empty cases, it's sometimes necessary to deliberately
 match and ignore a case in order to make your intentions explicit. You
 do this by writing the @samp{break} statement as the entire body of the case
 you want to ignore. When that case is matched by the @samp{switch} statement,
@@ -7039,7 +7021,7 @@ execution immediately.
 Note
 
 A @samp{switch} case that contains only a comment is reported as a
-compile-time error. Comments are not statements and do not cause a
+compile-time error. Comments aren't statements and don't cause a
 @samp{switch} case to be ignored. Always use a @samp{break} statement to ignore a
 @samp{switch} case.
 
@@ -7065,12 +7047,12 @@ default:
 if let integerValue = possibleIntegerValue @{
     print("The integer value of \(numberSymbol) is \(integerValue).")
 @} else @{
-    print("An integer value could not be found for \(numberSymbol).")
+    print("An integer value couldn't be found for \(numberSymbol).")
 @}
 // Prints "The integer value of 三 is 3."
 @end example
 
-This example checks @samp{numberSymbol} to determine whether it is a Latin,
+This example checks @samp{numberSymbol} to determine whether it's a Latin,
 Arabic, Chinese, or Thai symbol for the numbers @samp{1} to @samp{4}. If a match
 is found, one of the @samp{switch} statement's cases sets an optional @samp{Int?}
 variable called @samp{possibleIntegerValue} to an appropriate integer value.
@@ -7083,10 +7065,10 @@ succeed only if @samp{possibleIntegerValue} was set to an actual value by one
 of the @samp{switch} statement's first four cases.
 
 Because it's not practical to list every possible @samp{Character} value in
-the example above, a @samp{default} case handles any characters that are not
-matched. This @samp{default} case does not need to perform any action, and so
-it is written with a single @samp{break} statement as its body. As soon as
-the @samp{default} case is matched, the @samp{break} statement ends the @samp{switch}
+the example above, a @samp{default} case handles any characters that aren't
+matched. This @samp{default} case doesn't need to perform any action, and so
+it's written with a single @samp{break} statement as its body. As soon as the 
+@samp{default} case is matched, the @samp{break} statement ends the @samp{switch}
 statement's execution, and code execution continues from the @samp{if let}
 statement.
 @end enumerate
@@ -7136,7 +7118,7 @@ the @samp{default} case as well. The @samp{default} case adds some extra text to
 the end of the description, and the @samp{switch} statement is complete.
 
 Unless the value of @samp{integerToDescribe} is in the list of known prime
-numbers, it is not matched by the first @samp{switch} case at all. Because
+numbers, it isn't matched by the first @samp{switch} case at all. Because
 there are no other specific cases, @samp{integerToDescribe} is matched by the
 @samp{default} case.
 
@@ -7147,7 +7129,7 @@ prime number.
 
 Note
 
-The @samp{fallthrough} keyword does not check the case conditions for the
+The @samp{fallthrough} keyword doesn't check the case conditions for the
 @samp{switch} case that it causes execution to fall into. The @samp{fallthrough}
 keyword simply causes code execution to move directly to the statements
 inside the next case (or @samp{default} case) block, as in C's standard
@@ -7161,7 +7143,7 @@ inside the next case (or @samp{default} case) block, as in C's standard
 In Swift, you can nest loops and conditional statements inside other
 loops and conditional statements to create complex control flow
 structures. However, loops and conditional statements can both use the
-@samp{break} statement to end their execution prematurely. Therefore, it is
+@samp{break} statement to end their execution prematurely. Therefore, it's
 sometimes useful to be explicit about which loop or conditional
 statement you want a @samp{break} statement to terminate. Similarly, if you
 have multiple nested loops, it can be useful to be explicit about which
@@ -7215,7 +7197,7 @@ var diceRoll = 0
 
 This version of the game uses a @samp{while} loop and a @samp{switch} statement to
 implement the game's logic. The @samp{while} loop has a statement label
-called @samp{gameLoop} to indicate that it is the main game loop for the
+called @samp{gameLoop} to indicate that it's the main game loop for the
 Snakes and Ladders game.
 
 The @samp{while} loop's condition is @samp{while square !} finalSquare=, to
@@ -7266,12 +7248,12 @@ snakes and ladders. The loop then ends, and control returns to the
 
 Note
 
-If the @samp{break} statement above did not use the @samp{gameLoop} label, it
-would break out of the @samp{switch} statement, not the @samp{while} statement.
-Using the @samp{gameLoop} label makes it clear which control statement should
-be terminated.
+If the @samp{break} statement above didn't use the @samp{gameLoop} label, it would 
+break out of the @samp{switch} statement, not the @samp{while} statement. Using 
+the @samp{gameLoop} label makes it clear which control statement should be 
+terminated.
 
-It is not strictly necessary to use the @samp{gameLoop} label when calling
+It isn't strictly necessary to use the @samp{gameLoop} label when calling
 @samp{continue gameLoop} to jump to the next iteration of the loop. There's
 only one loop in the game, and therefore no ambiguity as to which loop
 the @samp{continue} statement will affect. However, there's no harm in using
@@ -7290,7 +7272,7 @@ depending on the Boolean value of an expression. You use a @samp{guard}
 statement to require that a condition must be true in order for the code
 after the @samp{guard} statement to be executed. Unlike an @samp{if} statement, a
 @samp{guard} statement always has an @samp{else} clause---the code inside the
-@samp{else} clause is executed if the condition is not true.
+@samp{else} clause is executed if the condition isn't true.
 
 @example
 func greet(person: [String: String]) @{
@@ -7322,7 +7304,7 @@ that were assigned values using an optional binding as part of the
 condition are available for the rest of the code block that the @samp{guard}
 statement appears in.
 
-If that condition is not met, the code inside the @samp{else} branch is
+If that condition isn't met, the code inside the @samp{else} branch is
 executed. That branch must transfer control to exit the code block in
 which the @samp{guard} statement appears. It can do this with a control
 transfer statement such as @samp{return}, @samp{break}, @samp{continue}, or @samp{throw}, or
@@ -7422,7 +7404,7 @@ functionality within a nested function scope.
 When you define a function, you can optionally define one or more named,
 typed values that the function takes as input, known as @emph{parameters}.
 You can also optionally define a type of value that the function will
-pass back as output when it is done, known as its @emph{return type}.
+pass back as output when it's done, known as its @emph{return type}.
 
 Every function has a @emph{function name}, which describes the task that the
 function performs. To use a function, you “call” that function with its
@@ -7449,7 +7431,7 @@ return type with the @emph{return arrow} @samp{->} (a hyphen followed by a right
 angle bracket), which is followed by the name of the type to return.
 
 The definition describes what the function does, what it expects to
-receive, and what it returns when it is done. The definition makes it
+receive, and what it returns when it's done. The definition makes it
 easy for the function to be called unambiguously from elsewhere in your
 code:
 
@@ -7482,7 +7464,7 @@ function finishes its execution and returns the current value of
 @samp{greeting}.
 
 You can call the @samp{greet(person:)} function multiple times with different
-input values. The example above shows what happens if it is called with
+input values. The example above shows what happens if it's called with
 an input value of @samp{"Anna"}, and an input value of @samp{"Brian"}. The
 function returns a tailored greeting in each case.
 
@@ -7518,9 +7500,9 @@ and different parameter options.
 @node Functions Without Parameters
 @subsection Functions Without Parameters
 
-Functions are not required to define input parameters. Here's a function
+Functions aren't required to define input parameters. Here's a function
 with no input parameters, which always returns the same @samp{String} message
-whenever it is called:
+whenever it's called:
 
 @example
 func sayHelloWorld() -> String @{
@@ -7531,7 +7513,7 @@ print(sayHelloWorld())
 @end example
 
 The function definition still needs parentheses after the function's
-name, even though it does not take any parameters. The function name is
+name, even though it doesn't take any parameters. The function name is
 also followed by an empty pair of parentheses when the function is
 called.
 
@@ -7567,7 +7549,7 @@ arguments but the @samp{greet(person:)} function takes only one.
 @node Functions Without Return Values
 @subsection Functions Without Return Values
 
-Functions are not required to define a return type. Here's a version of
+Functions aren't required to define a return type. Here's a version of
 the @samp{greet(person:)} function, which prints its own @samp{String} value
 rather than returning it:
 
@@ -7579,8 +7561,8 @@ greet(person: "Dave")
 // Prints "Hello, Dave!"
 @end example
 
-Because it does not need to return a value, the function's definition
-does not include the return arrow (@samp{->}) or a return type.
+Because it doesn't need to return a value, the function's definition
+doesn't include the return arrow (@samp{->}) or a return type.
 
 Note
 
@@ -7589,7 +7571,7 @@ still return a value, even though no return value is defined. Functions
 without a defined return type return a special value of type @samp{Void}.
 This is simply an empty tuple, which is written as @samp{()}.
 
-The return value of a function can be ignored when it is called:
+The return value of a function can be ignored when it's called:
 
 @example
 func printAndCount(string: String) -> Int @{
@@ -7602,19 +7584,19 @@ func printWithoutCounting(string: String) @{
 printAndCount(string: "hello, world")
 // prints "hello, world" and returns a value of 12
 printWithoutCounting(string: "hello, world")
-// prints "hello, world" but does not return a value
+// prints "hello, world" but doesn't return a value
 @end example
 
 The first function, @samp{printAndCount(string:)}, prints a string, and then
 returns its character count as an @samp{Int}. The second function,
 @samp{printWithoutCounting(string:)}, calls the first function, but ignores
 its return value. When the second function is called, the message is
-still printed by the first function, but the returned value is not used.
+still printed by the first function, but the returned value isn't used.
 
 Note
 
 Return values can be ignored, but a function that says it will return a
-value must always do so. A function with a defined return type cannot
+value must always do so. A function with a defined return type can't
 allow control to fall out of the bottom of the function without
 returning a value, and attempting to do so will result in a compile-time
 error.
@@ -7650,7 +7632,7 @@ accessed by name when querying the function's return value.
 The body of the @samp{minMax(array:)} function starts by setting two working
 variables called @samp{currentMin} and @samp{currentMax} to the value of the first
 integer in the array. The function then iterates over the remaining
-values in the array and checks each value to see if it is smaller or
+values in the array and checks each value to see if it's smaller or
 larger than the values of @samp{currentMin} and @samp{currentMax} respectively.
 Finally, the overall minimum and maximum values are returned as a tuple
 of two @samp{Int} values.
@@ -7665,7 +7647,7 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 // Prints "min is -6 and max is 109"
 @end example
 
-Note that the tuple's members do not need to be named at the point that
+Note that the tuple's members don't need to be named at the point that
 the tuple is returned from the function, because their names are already
 specified as part of the function's return type.
 
@@ -7689,8 +7671,8 @@ tuple type, the entire tuple is optional, not just each individual value
 within the tuple.
 
 The @samp{minMax(array:)} function above returns a tuple containing two @samp{Int}
-values. However, the function does not perform any safety checks on the
-array it is passed. If the @samp{array} argument contains an empty array, the
+values. However, the function doesn't perform any safety checks on the
+array it's passed. If the @samp{array} argument contains an empty array, the
 @samp{minMax(array:)} function, as defined above, will trigger a runtime
 error when attempting to access @samp{array[0]}.
 
@@ -7814,7 +7796,7 @@ print(greet(person: "Bill", from: "Cupertino"))
 
 The use of argument labels can allow a function to be called in an
 expressive, sentence-like manner, while still providing a function body
-that is readable and clear in intent.
+that's readable and clear in intent.
 
 @node Omitting Argument Labels
 @subsection Omitting Argument Labels
@@ -7893,7 +7875,7 @@ arithmeticMean(3, 8.25, 18.75)
 
 Note
 
-A function may have at most one variadic parameter.
+A function can have multiple variadic parameters.
 
 @node In-Out Parameters
 @subsection In-Out Parameters
@@ -7910,23 +7892,23 @@ ended, define that parameter as an @emph{in-out parameter} instead.
 @findex inout
 
 You write an in-out parameter by placing the @samp{inout} keyword right
-before a parameter's type. An in-out parameter has a value that is
-passed @emph{in} to the function, is modified by the function, and is passed
-back @emph{out} of the function to replace the original value. For a detailed
+before a parameter's type. An in-out parameter has a value that's passed 
+@emph{in} to the function, is modified by the function, and is passed back 
+@emph{out} of the function to replace the original value. For a detailed
 discussion of the behavior of in-out parameters and associated compiler
-optimizations, see @ref{In-Out%20Parameters,In-Out
+optimizations, see @ref{In-Out Parameters,In-Out
 Parameters,,swift-reference,}.
 
 You can only pass a variable as the argument for an in-out parameter.
-You cannot pass a constant or a literal value as the argument, because
-constants and literals cannot be modified. You place an ampersand (@samp{&})
+You can't pass a constant or a literal value as the argument, because
+constants and literals can't be modified. You place an ampersand (@samp{&})
 directly before a variable's name when you pass it as an argument to an
 in-out parameter, to indicate that it can be modified by the function.
 
 Note
 
-In-out parameters cannot have default values, and variadic parameters
-cannot be marked as @samp{inout}.
+In-out parameters can't have default values, and variadic parameters
+can't be marked as @samp{inout}.
 
 Here's an example of a function called @samp{swapTwoInts(_:_:)}, which has
 two in-out integer parameters called @samp{a} and @samp{b}:
@@ -7947,7 +7929,7 @@ assigning the value of @samp{b} to @samp{a}, and then assigning @samp{temporaryA
 
 You can call the @samp{swapTwoInts(_:_:)} function with two variables of type
 @samp{Int} to swap their values. Note that the names of @samp{someInt} and
-@samp{anotherInt} are prefixed with an ampersand when they are passed to the
+@samp{anotherInt} are prefixed with an ampersand when they're passed to the
 @samp{swapTwoInts(_:_:)} function:
 
 @example
@@ -7964,9 +7946,9 @@ though they were originally defined outside of the function.
 
 Note
 
-In-out parameters are not the same as returning a value from a function.
-The @samp{swapTwoInts} example above does not define a return type or return
-a value, but it still modifies the values of @samp{someInt} and @samp{anotherInt}.
+In-out parameters aren't the same as returning a value from a function.
+The @samp{swapTwoInts} example above doesn't define a return type or return a 
+value, but it still modifies the values of @samp{someInt} and @samp{anotherInt}.
 In-out parameters are an alternative way for a function to have an
 effect outside of the scope of its function body.
 
@@ -8085,7 +8067,7 @@ as the argument for this first parameter. The second and third
 parameters are called @samp{a} and @samp{b}, and are both of type @samp{Int}. These are
 used as the two input values for the provided math function.
 
-When @samp{printMathResult(_:_:_:)} is called, it is passed the
+When @samp{printMathResult(_:_:_:)} is called, it's passed the
 @samp{addTwoInts(_:_:)} function, and the integer values @samp{3} and @samp{5}. It
 calls the provided function with the values @samp{3} and @samp{5}, and prints the
 result of @samp{8}.
@@ -8209,13 +8191,13 @@ around and used in your code. Closures in Swift are similar to blocks in
 C and Objective-C and to lambdas in other programming languages.
 
 Closures can capture and store references to any constants and variables
-from the context in which they are defined. This is known as @emph{closing
+from the context in which they're defined. This is known as @emph{closing
 over} those constants and variables. Swift handles all of the memory
 management of capturing for you.
 
 Note
 
-Don't worry if you are not familiar with the concept of capturing. It is
+Don't worry if you aren't familiar with the concept of capturing. It's
 explained in detail below in @ref{Capturing Values, , Capturing
 Values}.
 
@@ -8271,8 +8253,8 @@ Trailing closure syntax
 
 Nested functions, as introduced in @ref{Nested Functions, , Nested
 Functions}, are a convenient means of naming and defining
-self-contained blocks of code as part of a larger function. However, it
-is sometimes useful to write shorter versions of function-like
+self-contained blocks of code as part of a larger function. However, 
+it's sometimes useful to write shorter versions of function-like
 constructs without a full declaration and name. This is particularly
 true when you work with functions or methods that take functions as one
 or more of their arguments.
@@ -8302,7 +8284,7 @@ sorts an array of values of a known type, based on the output of a
 sorting closure that you provide. Once it completes the sorting process,
 the @samp{sorted(by:)} method returns a new array of the same type and size
 as the old one, with its elements in the correct sorted order. The
-original array is not modified by the @samp{sorted(by:)} method.
+original array isn't modified by the @samp{sorted(by:)} method.
 
 The closure expression examples below use the @samp{sorted(by:)} method to
 sort an array of @samp{String} values in reverse alphabetical order. Here's
@@ -8375,7 +8357,7 @@ reversedNames = names.sorted(by: @{ (s1: String, s2: String) -> Bool in
 
 Note that the declaration of parameters and return type for this inline
 closure is identical to the declaration from the @samp{backward(_:_:)}
-function. In both cases, it is written as
+function. In both cases, it's written as
 @samp{(s1: String, s2: String) -> Bool}. However, for the inline closure
 expression, the parameters and return type are written @emph{inside} the
 curly braces, not outside of them.
@@ -8412,7 +8394,7 @@ parameters can also be omitted:
 reversedNames = names.sorted(by: @{ s1, s2 in return s1 > s2 @} )
 @end example
 
-It is always possible to infer the parameter types and return type when
+It's always possible to infer the parameter types and return type when
 passing a closure to a function or method as an inline closure
 expression. As a result, you never need to write an inline closure in
 its fullest form when the closure is used as a function or method
@@ -8421,9 +8403,9 @@ argument.
 Nonetheless, you can still make the types explicit if you wish, and
 doing so is encouraged if it avoids ambiguity for readers of your code.
 In the case of the @samp{sorted(by:)} method, the purpose of the closure is
-clear from the fact that sorting is taking place, and it is safe for a
+clear from the fact that sorting is taking place, and it's safe for a
 reader to assume that the closure is likely to be working with @samp{String}
-values, because it is assisting with the sorting of an array of strings.
+values, because it's assisting with the sorting of an array of strings.
 
 @node Implicit Returns from Single-Expression Closures
 @subsection Implicit Returns from Single-Expression Closures
@@ -8534,7 +8516,7 @@ reversedNames = names.sorted @{ $0 > $1 @}
 @end example
 
 Trailing closures are most useful when the closure is sufficiently long
-that it is not possible to write it inline on a single line. As an
+that it isn't possible to write it inline on a single line. As an
 example, Swift's @samp{Array} type has a @samp{map(_:)} method, which takes a
 closure expression as its single argument. The closure is called once
 for each item in the array, and returns an alternative mapped value
@@ -8593,7 +8575,7 @@ always constants.) The closure expression also specifies a return type
 of @samp{String}, to indicate the type that will be stored in the mapped
 output array.
 
-The closure expression builds a string called @samp{output} each time it is
+The closure expression builds a string called @samp{output} each time it's
 called. It calculates the last digit of @samp{number} by using the remainder
 operator (@samp{number % 10}), and uses this digit to look up an appropriate
 string in the @samp{digitNames} dictionary. The closure can be used to create
@@ -8602,21 +8584,21 @@ a string representation of any integer greater than zero.
 Note
 
 The call to the @samp{digitNames} dictionary's subscript is followed by an
-exclamation point (@samp{!}), because dictionary subscripts return an optional
-value to indicate that the dictionary lookup can fail if the key does
-not exist. In the example above, it is guaranteed that @samp{number % 10}
-will always be a valid subscript key for the @samp{digitNames} dictionary,
-and so an exclamation point is used to force-unwrap the @samp{String} value
-stored in the subscript's optional return value.
+exclamation point (@samp{!}), because dictionary subscripts return an 
+optional value to indicate that the dictionary lookup can fail if the 
+key doesn't exist. In the example above, it's guaranteed that 
+@samp{number % 10} will always be a valid subscript key for the @samp{digitNames} 
+dictionary, and so an exclamation point is used to force-unwrap the 
+@samp{String} value stored in the subscript's optional return value.
 
 The string retrieved from the @samp{digitNames} dictionary is added to the
 @emph{front} of @samp{output}, effectively building a string version of the number
 in reverse. (The expression @samp{number % 10} gives a value of @samp{6} for @samp{16},
 @samp{8} for @samp{58}, and @samp{0} for @samp{510}.)
 
-The @samp{number} variable is then divided by @samp{10}. Because it is an integer,
-it is rounded down during the division, so @samp{16} becomes @samp{1}, @samp{58}
-becomes @samp{5}, and @samp{510} becomes @samp{51}.
+The @samp{number} variable is then divided by @samp{10}. Because it's an integer,
+it's rounded down during the division, so @samp{16} becomes @samp{1}, @samp{58} becomes 
+@samp{5}, and @samp{510} becomes @samp{51}.
 
 The process is repeated until @samp{number} is equal to @samp{0}, at which point
 the @samp{output} string is returned by the closure, and is added to the
@@ -8670,7 +8652,7 @@ that handles both circumstances.
 @section Capturing Values
 
 A closure can @emph{capture} constants and variables from the surrounding
-context in which it is defined. The closure can then refer to and modify
+context in which it's defined. The closure can then refer to and modify
 the values of those constants and variables from within its body, even
 if the original scope that defined the constants and variables no longer
 exists.
@@ -8685,7 +8667,7 @@ a nested function called @samp{incrementer}. The nested @samp{incrementer()}
 function captures two values, @samp{runningTotal} and @samp{amount}, from its
 surrounding context. After capturing these values, @samp{incrementer} is
 returned by @samp{makeIncrementer} as a closure that increments
-@samp{runningTotal} by @samp{amount} each time it is called.
+@samp{runningTotal} by @samp{amount} each time it's called.
 
 @example
 func makeIncrementer(forIncrement amount: Int) -> () -> Int @{
@@ -8700,7 +8682,7 @@ func makeIncrementer(forIncrement amount: Int) -> () -> Int @{
 
 The return type of @samp{makeIncrementer} is @samp{() -> Int}. This means that it
 returns a @emph{function}, rather than a simple value. The function it
-returns has no parameters, and returns an @samp{Int} value each time it is
+returns has no parameters, and returns an @samp{Int} value each time it's
 called. To learn how functions can return other functions, see
 @ref{Function Types as Return Types}.
 
@@ -8740,11 +8722,11 @@ called.
 Note
 
 As an optimization, Swift may instead capture and store a @emph{copy} of a
-value if that value is not mutated by a closure, and if the value is not
+value if that value isn't mutated by a closure, and if the value isn't
 mutated after the closure is created.
 
 Swift also handles all memory management involved in disposing of
-variables when they are no longer needed.
+variables when they're no longer needed.
 
 Here's an example of @samp{makeIncrementer} in action:
 
@@ -8754,7 +8736,7 @@ let incrementByTen = makeIncrementer(forIncrement: 10)
 
 This example sets a constant called @samp{incrementByTen} to refer to an
 incrementer function that adds @samp{10} to its @samp{runningTotal} variable each
-time it is called. Calling the function multiple times shows this
+time it's called. Calling the function multiple times shows this
 behavior in action:
 
 @example
@@ -8776,7 +8758,7 @@ incrementBySeven()
 @end example
 
 Calling the original incrementer (@samp{incrementByTen}) again continues to
-increment its own @samp{runningTotal} variable, and does not affect the
+increment its own @samp{runningTotal} variable, and doesn't affect the
 variable captured by @samp{incrementBySeven}:
 
 @example
@@ -8804,8 +8786,8 @@ because functions and closures are @emph{reference types}.
 
 Whenever you assign a function or a closure to a constant or a variable,
 you are actually setting that constant or variable to be a @emph{reference}
-to the function or closure. In the example above, it is the choice of
-closure that @samp{incrementByTen} @emph{refers to} that is constant, and not the
+to the function or closure. In the example above, it's the choice of
+closure that @samp{incrementByTen} @emph{refers to} that's constant, and not the
 contents of the closure itself.
 
 This also means that if you assign a closure to two different constants
@@ -8844,7 +8826,7 @@ closure isn't called until the operation is completed---the closure
 needs to escape, to be called later. For example:
 
 @example
-var completionHandlers: [() -> Void] = []
+var completionHandlers: [() -> Void]()
 func someFunctionWithEscapingClosure(completionHandler: @@escaping () -> Void) @{
     completionHandlers.append(completionHandler)
 @}
@@ -8944,7 +8926,7 @@ capture a mutable reference to @samp{self} for structures.
 @cindex closures created automatically to wrap expression arguments
 @findex @@autoclosure
 
-An @emph{autoclosure} is a closure that is automatically created to wrap an
+An @emph{autoclosure} is a closure that's automatically created to wrap an
 expression that's being passed as an argument to a function. It doesn't
 take any arguments, and when it's called, it returns the value of the
 expression that's wrapped inside of it. This syntactic convenience lets
@@ -8983,9 +8965,9 @@ Even though the first element of the @samp{customersInLine} array is removed
 by the code inside the closure, the array element isn't removed until
 the closure is actually called. If the closure is never called, the
 expression inside the closure is never evaluated, which means the array
-element is never removed. Note that the type of @samp{customerProvider} is
-not @samp{String} but @samp{() -> String}---a function with no parameters that
-returns a string.
+element is never removed. Note that the type of @samp{customerProvider} isn't
+@samp{String} but @samp{() -> String}---a function with no parameters that returns 
+a string.
 
 You get the same behavior of delayed evaluation when you pass a closure
 as an argument to a function.
@@ -9024,7 +9006,7 @@ Overusing autoclosures can make your code hard to understand. The
 context and function name should make it clear that evaluation is being
 deferred.
 
-If you want an autoclosure that is allowed to escape, use both the
+If you want an autoclosure that's allowed to escape, use both the
 @samp{@@autoclosure} and @samp{@@escaping} attributes. The @samp{@@escaping} attribute is
 described above in @ref{Escaping Closures}.
 
@@ -9306,7 +9288,7 @@ value of @samp{upc} with an associated value of type (@samp{Int}, @samp{Int}, @s
 
 This definition doesn't provide any actual @samp{Int} or @samp{String} values---it
 just defines the @emph{type} of associated values that @samp{Barcode} constants
-and variables can store when they are equal to @samp{Barcode.upc} or
+and variables can store when they're equal to @samp{Barcode.upc} or
 @samp{Barcode.qrCode}.
 
 You can then create new barcodes using either type:
@@ -9840,7 +9822,7 @@ value types, and are implemented as structures behind the scenes.
 
 All structures and enumerations are value types in Swift. This means
 that any structure and enumeration instances you create---and any value
-types they have as properties---are always copied when they are passed
+types they have as properties---are always copied when they're passed
 around in your code.
 
 Note
@@ -9868,8 +9850,8 @@ video (1920 pixels wide by 1080 pixels high).
 It then declares a variable called @samp{cinema} and sets it to the current
 value of @samp{hd}. Because @samp{Resolution} is a structure, a @emph{copy} of the
 existing instance is made, and this new copy is assigned to @samp{cinema}.
-Even though @samp{hd} and @samp{cinema} now have the same width and height, they
-are two completely different instances behind the scenes.
+Even though @samp{hd} and @samp{cinema} now have the same width and height,
+they're two completely different instances behind the scenes.
 
 Next, the @samp{width} property of @samp{cinema} is amended to be the width of the
 slightly wider 2K standard used for digital cinema projection (2048
@@ -9898,7 +9880,7 @@ print("hd is still \(hd.width) pixels wide")
 When @samp{cinema} was given the current value of @samp{hd}, the @emph{values} stored
 in @samp{hd} were copied into the new @samp{cinema} instance. The end result was
 two completely separate instances that contained the same numeric
-values. However, because they are separate instances, setting the width
+values. However, because they're separate instances, setting the width
 of @samp{cinema} to @samp{2048} doesn't affect the width stored in @samp{hd}, as shown
 in the figure below:
 
@@ -9930,8 +9912,8 @@ value that was stored in @samp{rememberedDirection}.
 @node Classes Are Reference Types
 @section Classes Are Reference Types
 
-Unlike value types, @emph{reference types} are @emph{not} copied when they are
-assigned to a variable or constant, or when they are passed to a
+Unlike value types, @emph{reference types} are @emph{not} copied when they're
+assigned to a variable or constant, or when they're passed to a
 function. Rather than a copy, a reference to the same existing instance
 is used.
 
@@ -9961,7 +9943,7 @@ alsoTenEighty.frameRate = 30.0
 
 Because classes are reference types, @samp{tenEighty} and @samp{alsoTenEighty}
 actually both refer to the @emph{same} @samp{VideoMode} instance. Effectively,
-they are just two different names for the same single instance, as shown
+they're just two different names for the same single instance, as shown
 in the figure below:
 
 @image{images/sharedStateClass_2x,,,,png}
@@ -9990,7 +9972,7 @@ of the @samp{tenEighty} and @samp{alsoTenEighty} constants themselves don't
 actually change. @samp{tenEighty} and @samp{alsoTenEighty} themselves don't
 “store” the @samp{VideoMode} instance---instead, they both @emph{refer} to a
 @samp{VideoMode} instance behind the scenes. It's the @samp{frameRate} property of
-the underlying @samp{VideoMode} that is changed, not the values of the
+the underlying @samp{VideoMode} that's changed, not the values of the
 constant references to that @samp{VideoMode}.
 
 @menu
@@ -10004,7 +9986,7 @@ constant references to that @samp{VideoMode}.
 Because classes are reference types, it's possible for multiple
 constants and variables to refer to the same single instance of a class
 behind the scenes. (The same isn't true for structures and enumerations,
-because they are always copied when they are assigned to a constant or
+because they're always copied when they're assigned to a constant or
 variable, or passed to a function.)
 
 It can sometimes be useful to find out whether two constants or
@@ -10091,11 +10073,11 @@ setter of multiple properties.
 @node Stored Properties
 @section Stored Properties
 
-In its simplest form, a stored property is a constant or variable that
-is stored as part of an instance of a particular class or structure.
-Stored properties can be either @emph{variable stored properties} (introduced
-by the @samp{var} keyword) or @emph{constant stored properties} (introduced by the
-@samp{let} keyword).
+In its simplest form, a stored property is a constant or variable that's 
+stored as part of an instance of a particular class or structure. Stored 
+properties can be either @emph{variable stored properties} (introduced by the 
+@samp{var} keyword) or @emph{constant stored properties} (introduced by the @samp{let} 
+keyword).
 
 You can provide a default value for a stored property as part of its
 definition, as described in @ref{Default Property Values, , Default
@@ -10106,8 +10088,8 @@ stored properties, as described in
 Initialization}.
 
 The example below defines a structure called @samp{FixedLengthRange}, which
-describes a range of integers whose range length cannot be changed after
-it is created:
+describes a range of integers whose range length can't be changed after
+it's created:
 
 @example
 struct FixedLengthRange @{
@@ -10123,7 +10105,7 @@ rangeOfThreeItems.firstValue = 6
 Instances of @samp{FixedLengthRange} have a variable stored property called
 @samp{firstValue} and a constant stored property called @samp{length}. In the
 example above, @samp{length} is initialized when the new range is created and
-cannot be changed thereafter, because it is a constant property.
+can't be changed thereafter, because it's a constant property.
 
 @menu
 * Stored Properties of Constant Structure Instances::
@@ -10135,7 +10117,7 @@ cannot be changed thereafter, because it is a constant property.
 @subsection Stored Properties of Constant Structure Instances
 
 If you create an instance of a structure and assign that instance to a
-constant, you cannot modify the instance's properties, even if they were
+constant, you can't modify the instance's properties, even if they were
 declared as variable properties:
 
 @example
@@ -10146,13 +10128,13 @@ rangeOfFourItems.firstValue = 6
 @end example
 
 Because @samp{rangeOfFourItems} is declared as a constant (with the @samp{let}
-keyword), it is not possible to change its @samp{firstValue} property, even
+keyword), it isn't possible to change its @samp{firstValue} property, even
 though @samp{firstValue} is a variable property.
 
 This behavior is due to structures being @emph{value types}. When an instance
 of a value type is marked as a constant, so are all of its properties.
 
-The same is not true for classes, which are @emph{reference types}. If you
+The same isn't true for classes, which are @emph{reference types}. If you
 assign an instance of a reference type to a constant, you can still
 change that instance's variable properties.
 
@@ -10161,8 +10143,8 @@ change that instance's variable properties.
 
 @findex lazy
 
-A @emph{lazy stored property} is a property whose initial value is not
-calculated until the first time it is used. You indicate a lazy stored
+A @emph{lazy stored property} is a property whose initial value isn't
+calculated until the first time it's used. You indicate a lazy stored
 property by writing the @samp{lazy} modifier before its declaration.
 
 Note
@@ -10170,15 +10152,15 @@ Note
 You must always declare a lazy property as a variable (with the @samp{var}
 keyword), because its initial value might not be retrieved until after
 instance initialization completes. Constant properties must always have
-a value @emph{before} initialization completes, and therefore cannot be
+a value @emph{before} initialization completes, and therefore can't be
 declared as lazy.
 
 Lazy properties are useful when the initial value for a property is
-dependent on outside factors whose values are not known until after an
+dependent on outside factors whose values aren't known until after an
 instance's initialization is complete. Lazy properties are also useful
 when the initial value for a property requires complex or
-computationally expensive setup that should not be performed unless or
-until it is needed.
+computationally expensive setup that shouldn't be performed unless or
+until it's needed.
 
 The example below uses a lazy stored property to avoid unnecessary
 initialization of a complex class. This example defines two classes
@@ -10205,14 +10187,13 @@ class DataManager @{
 let manager = DataManager()
 manager.data.append("Some data")
 manager.data.append("Some more data")
-// the DataImporter instance for the importer property has not yet been created
+// the DataImporter instance for the importer property hasn't yet been created
 @end example
 
 The @samp{DataManager} class has a stored property called @samp{data}, which is
 initialized with a new, empty array of @samp{String} values. Although the
-rest of its functionality is not shown, the purpose of this
-@samp{DataManager} class is to manage and provide access to this array of
-@samp{String} data.
+rest of its functionality isn't shown, the purpose of this @samp{DataManager} 
+class is to manage and provide access to this array of @samp{String} data.
 
 Part of the functionality of the @samp{DataManager} class is the ability to
 import data from a file. This functionality is provided by the
@@ -10221,13 +10202,13 @@ time to initialize. This might be because a @samp{DataImporter} instance
 needs to open a file and read its contents into memory when the
 @samp{DataImporter} instance is initialized.
 
-It is possible for a @samp{DataManager} instance to manage its data without
-ever importing data from a file, so there is no need to create a new
-@samp{DataImporter} instance when the @samp{DataManager} itself is created.
+Because it's possible for a @samp{DataManager} instance to manage its data 
+without ever importing data from a file, @samp{DataManager} doesn't create a 
+new @samp{DataImporter} instance when the @samp{DataManager} itself is created.
 Instead, it makes more sense to create the @samp{DataImporter} instance if
-and when it is first used.
+and when it's first used.
 
-Because it is marked with the @samp{lazy} modifier, the @samp{DataImporter}
+Because it's marked with the @samp{lazy} modifier, the @samp{DataImporter}
 instance for the @samp{importer} property is only created when the @samp{importer}
 property is first accessed, such as when its @samp{filename} property is
 queried:
@@ -10241,7 +10222,7 @@ print(manager.importer.filename)
 Note
 
 If a property marked with the @samp{lazy} modifier is accessed by multiple
-threads simultaneously and the property has not yet been initialized,
+threads simultaneously and the property hasn't yet been initialized,
 there's no guarantee that the property will be initialized only once.
 
 @node Stored Properties and Instance Variables
@@ -10253,10 +10234,10 @@ In addition to properties, you can use instance variables as a backing
 store for the values stored in a property.
 
 Swift unifies these concepts into a single property declaration. A Swift
-property does not have a corresponding instance variable, and the
-backing store for a property is not accessed directly. This approach
-avoids confusion about how the value is accessed in different contexts
-and simplifies the property's declaration into a single, definitive
+property doesn't have a corresponding instance variable, and the backing 
+store for a property isn't accessed directly. This approach avoids 
+confusion about how the value is accessed in different contexts and 
+simplifies the property's declaration into a single, definitive
 statement. All information about the property---including its name,
 type, and memory management characteristics---is defined in a single
 location as part of the type's definition.
@@ -10265,7 +10246,7 @@ location as part of the type's definition.
 @section Computed Properties
 
 In addition to stored properties, classes, structures, and enumerations
-can define @emph{computed properties}, which do not actually store a value.
+can define @emph{computed properties}, which don't actually store a value.
 Instead, they provide a getter and an optional setter to retrieve and
 set other properties and values indirectly.
 
@@ -10407,16 +10388,16 @@ Omitting the @samp{return} from a getter follows the same rules as omitting
 
 A computed property with a getter but no setter is known as a @emph{read-only
 computed property}. A read-only computed property always returns a
-value, and can be accessed through dot syntax, but cannot be set to a
+value, and can be accessed through dot syntax, but can't be set to a
 different value.
 
 Note
 
 You must declare computed properties---including read-only computed
 properties---as variable properties with the @samp{var} keyword, because
-their value is not fixed. The @samp{let} keyword is only used for constant
-properties, to indicate that their values cannot be changed once they
-are set as part of instance initialization.
+their value isn't fixed. The @samp{let} keyword is only used for constant
+properties, to indicate that their values can't be changed once they're 
+set as part of instance initialization.
 
 You can simplify the declaration of a read-only computed property by
 removing the @samp{get} keyword and its braces:
@@ -10439,7 +10420,7 @@ structure also has a read-only computed property called @samp{volume}, which
 calculates and returns the current volume of the cuboid. It doesn't make
 sense for @samp{volume} to be settable, because it would be ambiguous as to
 which values of @samp{width}, @samp{height}, and @samp{depth} should be used for a
-particular @samp{volume} value. Nonetheless, it is useful for a @samp{Cuboid} to
+particular @samp{volume} value. Nonetheless, it's useful for a @samp{Cuboid} to
 provide a read-only computed property to enable external users to
 discover its current calculated volume.
 
@@ -10496,9 +10477,8 @@ Note
 
 The @samp{willSet} and @samp{didSet} observers of superclass properties are called
 when a property is set in a subclass initializer, after the superclass
-initializer has been called. They are not called while a class is
-setting its own properties, before the superclass initializer has been
-called.
+initializer has been called. They aren't called while a class is setting 
+its own properties, before the superclass initializer has been called.
 
 For more information about initializer delegation, see
 @ref{Initializer Delegation for Value Types}
@@ -10548,13 +10528,13 @@ new value is the same as the current value.
 
 This example's @samp{willSet} observer uses a custom parameter name of
 @samp{newTotalSteps} for the upcoming new value. In this example, it simply
-prints out the value that is about to be set.
+prints out the value that's about to be set.
 
 The @samp{didSet} observer is called after the value of @samp{totalSteps} is
 updated. It compares the new value of @samp{totalSteps} against the old
 value. If the total number of steps has increased, a message is printed
 to indicate how many new steps have been taken. The @samp{didSet} observer
-does not provide a custom parameter name for the old value, and the
+doesn't provide a custom parameter name for the old value, and the
 default name of @samp{oldValue} is used instead.
 
 Note
@@ -10828,8 +10808,11 @@ print(mixedRectangle.height)
 @end example
 
 The instance of @samp{SmallNumber} that wraps @samp{height} is created by calling
-@samp{SmallNumber(wrappedValue: 1)}, which uses the default maximum value
-of 12. The instance that wraps @samp{width} is created by calling
+@samp{SmallNumber(wrappedValue: 1)}, which uses the default maximum value of 
+@enumerate
+@item
+The instance that wraps @samp{width} is created by calling
+@end enumerate
 @samp{SmallNumber(wrappedValue: 2, maximum: 9)}.
 
 @node Projecting a Value From a Property Wrapper
@@ -10960,14 +10943,14 @@ value to be set and retrieved.
 
 However, you can also define @emph{computed variables} and define observers
 for stored variables, in either a global or local scope. Computed
-variables calculate their value, rather than storing it, and they are
+variables calculate their value, rather than storing it, and they're
 written in the same way as computed properties.
 
 Note
 
 Global constants and variables are always computed lazily, in a similar
 manner to @ref{Lazy Stored Properties}. Unlike
-lazy stored properties, global constants and variables do not need to be
+lazy stored properties, global constants and variables don't need to be
 marked with the @samp{lazy} modifier.
 
 Local constants and variables are never computed lazily.
@@ -10987,7 +10970,7 @@ kinds of properties are called @emph{type properties}.
 Type properties are useful for defining values that are universal to
 @emph{all} instances of a particular type, such as a constant property that
 all instances can use (like a static constant in C), or a variable
-property that stores a value that is global to all instances of that
+property that stores a value that's global to all instances of that
 type (like a static variable in C).
 
 Stored type properties can be variables or constants. Computed type
@@ -10997,13 +10980,13 @@ as computed instance properties.
 Note
 
 Unlike stored instance properties, you must always give stored type
-properties a default value. This is because the type itself does not
+properties a default value. This is because the type itself doesn't
 have an initializer that can assign a value to a stored type property at
 initialization time.
 
 Stored type properties are lazily initialized on their first access.
-They are guaranteed to be initialized only once, even when accessed by
-multiple threads simultaneously, and they do not need to be marked with
+They're guaranteed to be initialized only once, even when accessed by
+multiple threads simultaneously, and they don't need to be marked with
 the @samp{lazy} modifier.
 
 @menu
@@ -11129,7 +11112,7 @@ called @samp{currentLevel}, which represents the channel's current audio
 level on a scale of @samp{0} to @samp{10}.
 
 The @samp{currentLevel} property has a @samp{didSet} property observer to check
-the value of @samp{currentLevel} whenever it is set. This observer performs
+the value of @samp{currentLevel} whenever it's set. This observer performs
 two checks:
 
 @itemize
@@ -11148,7 +11131,7 @@ property observer stores the new @samp{currentLevel} value in the
 Note
 
 In the first of these two checks, the @samp{didSet} observer sets
-@samp{currentLevel} to a different value. This does not, however, cause the
+@samp{currentLevel} to a different value. This doesn't, however, cause the
 observer to be called again.
 
 You can use the @samp{AudioChannel} structure to create two new audio
@@ -11220,7 +11203,7 @@ You write an instance method within the opening and closing braces of
 the type it belongs to. An instance method has implicit access to all
 other instance methods and properties of that type. An instance method
 can be called only on a specific instance of the type it belongs to. It
-cannot be called in isolation without an existing instance.
+can't be called in isolation without an existing instance.
 
 Here's an example that defines a simple @samp{Counter} class, which can be
 used to count the number of times an action occurs:
@@ -11316,7 +11299,7 @@ necessary to refer to the property in a more qualified way. You use the
 property name.
 
 Here, @samp{self} disambiguates between a method parameter called @samp{x} and an
-instance property that is also called @samp{x}:
+instance property that's also called @samp{x}:
 
 @example
 struct Point @{
@@ -11339,7 +11322,7 @@ referred to the method parameter called @samp{x}.
 @subsection Modifying Value Types from Within Instance Methods
 
 Structures and enumerations are @emph{value types}. By default, the
-properties of a value type cannot be modified from within its instance
+properties of a value type can't be modified from within its instance
 methods.
 
 However, if you need to modify the properties of your structure or
@@ -11370,13 +11353,13 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
 
 The @samp{Point} structure above defines a mutating @samp{moveBy(x:y:)} method,
 which moves a @samp{Point} instance by a certain amount. Instead of returning
-a new point, this method actually modifies the point on which it is
+a new point, this method actually modifies the point on which it's
 called. The @samp{mutating} keyword is added to its definition to enable it
 to modify its properties.
 
-Note that you cannot call a mutating method on a constant of structure
-type, because its properties cannot be changed, even if they are
-variable properties, as described in @ref{Stored Properties of Constant Structure Instances}.
+Note that you can't call a mutating method on a constant of structure
+type, because its properties can't be changed, even if they're variable 
+properties, as described in @ref{Stored Properties of Constant Structure Instances}.
 
 @example
 let fixedPoint = Point(x: 3.0, y: 3.0)
@@ -11479,7 +11462,7 @@ properties by using the type property's name without a type name prefix.
 
 The example below defines a structure called @samp{LevelTracker}, which
 tracks a player's progress through the different levels or stages of a
-game. It is a single-player game, but can store information for multiple
+game. It's a single-player game, but can store information for multiple
 players on a single device.
 
 All of the game's levels (apart from level one) are locked when the game
@@ -11578,7 +11561,7 @@ print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
 // Prints "highest unlocked level is now 2"
 @end example
 
-If you create a second player, whom you try to move to a level that is
+If you create a second player, whom you try to move to a level that's
 not yet unlocked by any player in the game, the attempt to set the
 player's current level fails:
 
@@ -11587,9 +11570,9 @@ player = Player(name: "Beto")
 if player.tracker.advance(to: 6) @{
     print("player is now on level 6")
 @} else @{
-    print("level 6 has not yet been unlocked")
+    print("level 6 hasn't yet been unlocked")
 @}
-// Prints "level 6 has not yet been unlocked"
+// Prints "level 6 hasn't yet been unlocked"
 @end example
 
 @node Subscripts
@@ -11606,7 +11589,7 @@ elements in a @samp{Dictionary} instance as @samp{someDictionary[key]}.
 
 You can define multiple subscripts for a single type, and the
 appropriate subscript overload to use is selected based on the type of
-index value you pass to the subscript. Subscripts are not limited to a
+index value you pass to the subscript. Subscripts aren't limited to a
 single dimension, and you can define subscripts with multiple input
 parameters to suit your custom type's needs.
 
@@ -11643,7 +11626,7 @@ subscript(index: Int) -> Int @{
 The type of @samp{newValue} is the same as the return value of the subscript.
 As with computed properties, you can choose not to specify the setter's
 @samp{(newValue)} parameter. A default parameter called @samp{newValue} is
-provided to your setter if you do not provide one yourself.
+provided to your setter if you don't provide one yourself.
 
 As with read-only computed properties, you can simplify the declaration
 of a read-only subscript by removing the @samp{get} keyword and its braces:
@@ -11681,14 +11664,14 @@ times @samp{6}.
 
 Note
 
-An @emph{n}-times-table is based on a fixed mathematical rule. It is not
+An @emph{n}-times-table is based on a fixed mathematical rule. It isn't
 appropriate to set @samp{threeTimesTable[someIndex]} to a new value, and so
 the subscript for @samp{TimesTable} is defined as a read-only subscript.
 
 @node Subscript Usage
 @section Subscript Usage
 
-The exact meaning of “subscript” depends on the context in which it is
+The exact meaning of “subscript” depends on the context in which it's
 used. Subscripts are typically used as a shortcut for accessing the
 member elements in a collection, list, or sequence. You are free to
 implement subscripts in the most appropriate way for your particular
@@ -11743,11 +11726,11 @@ on the types of the value or values that are contained within the
 subscript brackets at the point that the subscript is used. This
 definition of multiple subscripts is known as @emph{subscript overloading}.
 
-While it is most common for a subscript to take a single parameter, you
-can also define a subscript with multiple parameters if it is
-appropriate for your type. The following example defines a @samp{Matrix}
-structure, which represents a two-dimensional matrix of @samp{Double} values.
-The @samp{Matrix} structure's subscript takes two integer parameters:
+While it's most common for a subscript to take a single parameter, you
+can also define a subscript with multiple parameters if it's appropriate
+for your type. The following example defines a @samp{Matrix} structure, which
+represents a two-dimensional matrix of @samp{Double} values. The @samp{Matrix}
+structure's subscript takes two integer parameters:
 
 @example
 struct Matrix @{
@@ -11775,7 +11758,7 @@ struct Matrix @{
 @end example
 
 @samp{Matrix} provides an initializer that takes two parameters called @samp{rows}
-and @samp{columns}, and creates an array that is large enough to store
+and @samp{columns}, and creates an array that's large enough to store
 @samp{rows * columns} values of type @samp{Double}. Each position in the matrix is
 given an initial value of @samp{0.0}. To achieve this, the array's size, and
 an initial cell value of @samp{0.0}, are passed to an array initializer that
@@ -11822,7 +11805,7 @@ func indexIsValid(row: Int, column: Int) -> Bool @{
 @}
 @end example
 
-An assertion is triggered if you try to access a subscript that is
+An assertion is triggered if you try to access a subscript that's
 outside of the matrix bounds:
 
 @example
@@ -11886,12 +11869,12 @@ defined as a stored or computed property.
 @node Defining a Base Class
 @section Defining a Base Class
 
-Any class that does not inherit from another class is known as a @emph{base
+Any class that doesn't inherit from another class is known as a @emph{base
 class}.
 
 Note
 
-Swift classes do not inherit from a universal base class. Classes you
+Swift classes don't inherit from a universal base class. Classes you
 define without specifying a superclass automatically become base classes
 for you to build upon.
 
@@ -11902,7 +11885,7 @@ property's value is used by a read-only computed @samp{String} property
 called @samp{description} to create a description of the vehicle.
 
 The @samp{Vehicle} base class also defines a method called @samp{makeNoise}. This
-method does not actually do anything for a base @samp{Vehicle} instance, but
+method doesn't actually do anything for a base @samp{Vehicle} instance, but
 will be customized by subclasses of @samp{Vehicle} later on:
 
 @example
@@ -11934,7 +11917,7 @@ print("Vehicle: \(someVehicle.description)")
 @end example
 
 The @samp{Vehicle} class defines common characteristics for an arbitrary
-vehicle, but is not much use in itself. To make it more useful, you need
+vehicle, but isn't much use in itself. To make it more useful, you need
 to refine it to describe more specific kinds of vehicles.
 
 @node Subclassing
@@ -12026,7 +12009,7 @@ it would otherwise inherit from a superclass. This is known as
 @findex override
 To override a characteristic that would otherwise be inherited, you
 prefix your overriding definition with the @samp{override} keyword. Doing so
-clarifies that you intend to provide an override and have not provided a
+clarifies that you intend to provide an override and haven't provided a
 matching definition by mistake. Overriding by accident can cause
 unexpected behavior, and any overrides without the @samp{override} keyword
 are diagnosed as an error when your code is compiled.
@@ -12046,7 +12029,7 @@ check ensures that your overriding definition is correct.
 @subsection Accessing Superclass Methods, Properties, and Subscripts
 
 When you provide a method, property, or subscript override for a
-subclass, it is sometimes useful to use the existing superclass
+subclass, it's sometimes useful to use the existing superclass
 implementation as part of your override. For example, you can refine the
 behavior of that existing implementation, or store a modified value in
 an existing inherited variable.
@@ -12118,7 +12101,7 @@ Overriding Property Getters and Setters
 You can provide a custom getter (and setter, if appropriate) to override
 @emph{any} inherited property, regardless of whether the inherited property
 is implemented as a stored or computed property at source. The stored or
-computed nature of an inherited property is not known by a subclass---it
+computed nature of an inherited property isn't known by a subclass---it
 only knows that the inherited property has a certain name and type. You
 must always state both the name and the type of the property you are
 overriding, to enable the compiler to check that your override matches a
@@ -12126,7 +12109,7 @@ superclass property with the same name and type.
 
 You can present an inherited read-only property as a read-write property
 by providing both a getter and a setter in your subclass property
-override. You cannot, however, present an inherited read-write property
+override. You can't, however, present an inherited read-write property
 as a read-only property.
 
 Note
@@ -12183,12 +12166,12 @@ originally implemented. For more information on property observers, see
 
 Note
 
-You cannot add property observers to inherited constant stored
-properties or inherited read-only computed properties. The value of
-these properties cannot be set, and so it is not appropriate to provide
-a @samp{willSet} or @samp{didSet} implementation as part of an override.
+You can't add property observers to inherited constant stored properties
+or inherited read-only computed properties. The value of these
+properties can't be set, and so it isn't appropriate to provide a
+@samp{willSet} or @samp{didSet} implementation as part of an override.
 
-Note also that you cannot provide both an overriding setter and an
+Note also that you can't provide both an overriding setter and an
 overriding property observer for the same property. If you want to
 observe changes to a property's value, and you are already providing a
 custom setter for that property, you can simply observe any value
@@ -12212,7 +12195,7 @@ class AutomaticCar: Car @{
 Whenever you set the @samp{currentSpeed} property of an @samp{AutomaticCar}
 instance, the property's @samp{didSet} observer sets the instance's @samp{gear}
 property to an appropriate choice of gear for the new speed.
-Specifically, the property observer chooses a gear that is the new
+Specifically, the property observer chooses a gear that's the new
 @samp{currentSpeed} value divided by @samp{10}, rounded down to the nearest
 integer, plus @samp{1}. A speed of @samp{35.0} produces a gear of @samp{4}:
 
@@ -12249,14 +12232,14 @@ attempt to subclass a final class is reported as a compile-time error.
 @emph{Initialization} is the process of preparing an instance of a class,
 structure, or enumeration for use. This process involves setting an
 initial value for each stored property on that instance and performing
-any other setup or initialization that is required before the new
+any other setup or initialization that's required before the new
 instance is ready for use.
 
 You implement this initialization process by defining @emph{initializers},
 which are like special methods that can be called to create a new
 instance of a particular type. Unlike Objective-C initializers, Swift
-initializers do not return a value. Their primary role is to ensure that
-new instances of a type are correctly initialized before they are used
+initializers don't return a value. Their primary role is to ensure that
+new instances of a type are correctly initialized before they're used
 for the first time.
 
 Instances of class types can also implement a @emph{deinitializer}, which
@@ -12280,7 +12263,7 @@ deallocated. For more information about deinitializers, see
 
 Classes and structures @emph{must} set all of their stored properties to an
 appropriate initial value by the time an instance of that class or
-structure is created. Stored properties cannot be left in an
+structure is created. Stored properties can't be left in an
 indeterminate state.
 
 You can set an initial value for a stored property within an
@@ -12340,7 +12323,7 @@ freezing point of water in degrees Fahrenheit).
 You can set the initial value of a stored property from within an
 initializer, as shown above. Alternatively, specify a @emph{default property
 value} as part of the property's declaration. You specify a default
-property value by assigning an initial value to the property when it is
+property value by assigning an initial value to the property when it's
 defined.
 
 Note
@@ -12424,7 +12407,7 @@ As with function and method parameters, initialization parameters can
 have both a parameter name for use within the initializer's body and an
 argument label for use when calling the initializer.
 
-However, initializers do not have an identifying function name before
+However, initializers don't have an identifying function name before
 their parentheses in the way that functions and methods do. Therefore,
 the names and types of an initializer's parameters play a particularly
 important role in identifying which initializer should be called.
@@ -12466,9 +12449,9 @@ let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
 let halfGray = Color(white: 0.5)
 @end example
 
-Note that it is not possible to call these initializers without using
+Note that it isn't possible to call these initializers without using
 argument labels. Argument labels must always be used in an initializer
-if they are defined, and omitting them is a compile-time error:
+if they're defined, and omitting them is a compile-time error:
 
 @example
 let veryGreen = Color(0.0, 1.0, 0.0)
@@ -12478,14 +12461,14 @@ let veryGreen = Color(0.0, 1.0, 0.0)
 @node Initializer Parameters Without Argument Labels
 @subsection Initializer Parameters Without Argument Labels
 
-If you do not want to use an argument label for an initializer
-parameter, write an underscore (@samp{_}) instead of an explicit argument
-label for that parameter to override the default behavior.
+If you don't want to use an argument label for an initializer parameter,
+write an underscore (@samp{_}) instead of an explicit argument label for that
+parameter to override the default behavior.
 
 Here's an expanded version of the @samp{Celsius} example from
 @ref{Initialization Parameters} above, with
 an additional initializer to create a new @samp{Celsius} instance from a
-@samp{Double} value that is already in the Celsius scale:
+@samp{Double} value that's already in the Celsius scale:
 
 @example
 struct Celsius @{
@@ -12505,18 +12488,18 @@ let bodyTemperature = Celsius(37.0)
 @end example
 
 The initializer call @samp{Celsius(37.0)} is clear in its intent without the
-need for an argument label. It is therefore appropriate to write this
+need for an argument label. It's therefore appropriate to write this
 initializer as @samp{init(_ celsius: Double)} so that it can be called by
 providing an unnamed @samp{Double} value.
 
 @node Optional Property Types
 @subsection Optional Property Types
 
-If your custom type has a stored property that is logically allowed to
-have “no value”---perhaps because its value cannot be set during
-initialization, or because it is allowed to have “no value” at some
-later point---declare the property with an @emph{optional} type. Properties
-of optional type are automatically initialized with a value of @samp{nil},
+If your custom type has a stored property that's logically allowed to
+have “no value”---perhaps because its value can't be set during
+initialization, or because it's allowed to have “no value” at some later
+point---declare the property with an @emph{optional} type. Properties of
+optional type are automatically initialized with a value of @samp{nil},
 indicating that the property is deliberately intended to have “no value
 yet” during initialization.
 
@@ -12540,9 +12523,9 @@ cheeseQuestion.ask()
 cheeseQuestion.response = "Yes, I do like cheese."
 @end example
 
-The response to a survey question cannot be known until it is asked, and
+The response to a survey question can't be known until it's asked, and
 so the @samp{response} property is declared with a type of @samp{String?}, or
-“optional @samp{String=”. It is automatically assigned a default value of
+“optional @samp{String=”. It's automatically assigned a default value of
 =nil}, meaning “no string yet”, when a new instance of @samp{SurveyQuestion}
 is initialized.
 
@@ -12550,19 +12533,19 @@ is initialized.
 @subsection Assigning Constant Properties During Initialization
 
 You can assign a value to a constant property at any point during
-initialization, as long as it is set to a definite value by the time
+initialization, as long as it's set to a definite value by the time
 initialization finishes. Once a constant property is assigned a value,
 it can't be further modified.
 
 Note
 
 For class instances, a constant property can be modified during
-initialization only by the class that introduces it. It cannot be
+initialization only by the class that introduces it. It can't be
 modified by a subclass.
 
 You can revise the @samp{SurveyQuestion} example from above to use a constant
 property rather than a variable property for the @samp{text} property of the
-question, to indicate that the question does not change once an instance
+question, to indicate that the question doesn't change once an instance
 of @samp{SurveyQuestion} is created. Even though the @samp{text} property is now a
 constant, it can still be set within the class's initializer:
 
@@ -12587,7 +12570,7 @@ beetsQuestion.response = "I also like beets. (But not with cheese.)"
 @section Default Initializers
 
 Swift provides a @emph{default initializer} for any structure or class that
-provides default values for all of its properties and does not provide
+provides default values for all of its properties and doesn't provide
 at least one initializer itself. The default initializer simply creates
 a new instance with all of its properties set to their default values.
 
@@ -12605,12 +12588,12 @@ var item = ShoppingListItem()
 @end example
 
 Because all properties of the @samp{ShoppingListItem} class have default
-values, and because it is a base class with no superclass,
+values, and because it's a base class with no superclass,
 @samp{ShoppingListItem} automatically gains a default initializer
 implementation that creates a new instance with all of its properties
 set to their default values. (The @samp{name} property is an optional
 @samp{String} property, and so it automatically receives a default value of
-@samp{nil}, even though this value is not written in the code.) The example
+@samp{nil}, even though this value isn't written in the code.) The example
 above uses the default initializer for the @samp{ShoppingListItem} class to
 create a new instance of the class with initializer syntax, written as
 @samp{ShoppingListItem()}, and assigns this new instance to a variable called
@@ -12674,9 +12657,9 @@ delegation}, avoids duplicating code across multiple initializers.
 
 The rules for how initializer delegation works, and for what forms of
 delegation are allowed, are different for value types and class types.
-Value types (structures and enumerations) do not support inheritance,
-and so their initializer delegation process is relatively simple,
-because they can only delegate to another initializer that they provide
+Value types (structures and enumerations) don't support inheritance,
+and so their initializer delegation process is relatively simple, because
+they can only delegate to another initializer that they provide
 themselves. Classes, however, can inherit from other classes, as
 described in @ref{Inheritance}. This means that
 classes have additional responsibilities for ensuring that all stored
@@ -12691,7 +12674,7 @@ call @samp{self.init} only from within an initializer.
 
 Note that if you define a custom initializer for a value type, you will
 no longer have access to the default initializer (or the memberwise
-initializer, if it is a structure) for that type. This constraint
+initializer, if it's a structure) for that type. This constraint
 prevents a situation in which additional essential setup provided in a
 more complex initializer is accidentally circumvented by someone using
 one of the automatic initializers.
@@ -12743,7 +12726,7 @@ struct Rect @{
 @end example
 
 The first @samp{Rect} initializer, @samp{init()}, is functionally the same as the
-default initializer that the structure would have received if it did not
+default initializer that the structure would have received if it didn't
 have its own custom initializers. This initializer has an empty body,
 represented by an empty pair of curly braces @samp{@{@}}. Calling this
 initializer returns a @samp{Rect} instance whose @samp{origin} and @samp{size}
@@ -12758,7 +12741,7 @@ let basicRect = Rect()
 
 The second @samp{Rect} initializer, @samp{init(origin:size:)}, is functionally the
 same as the memberwise initializer that the structure would have
-received if it did not have its own custom initializers. This
+received if it didn't have its own custom initializers. This
 initializer simply assigns the @samp{origin} and @samp{size} argument values to
 the appropriate stored properties:
 
@@ -12780,10 +12763,10 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0), size: Size(width: 3.0, heig
 @end example
 
 The @samp{init(center:size:)} initializer could have assigned the new values
-of @samp{origin} and @samp{size} to the appropriate properties itself. However, it
-is more convenient (and clearer in intent) for the @samp{init(center:size:)}
-initializer to take advantage of an existing initializer that already
-provides exactly that functionality.
+of @samp{origin} and @samp{size} to the appropriate properties itself. However, it's
+more convenient (and clearer in intent) for the
+@samp{init(center:size:)} initializer to take advantage of an existing
+initializer that already provides exactly that functionality.
 
 Note
 
@@ -12820,7 +12803,7 @@ designated initializer fully initializes all properties introduced by
 that class and calls an appropriate superclass initializer to continue
 the initialization process up the superclass chain.
 
-Classes tend to have very few designated initializers, and it is quite
+Classes tend to have very few designated initializers, and it's quite
 common for a class to have only one. Designated initializers are
 “funnel” points through which initialization takes place, and through
 which the initialization process continues up the superclass chain.
@@ -12840,9 +12823,9 @@ of the designated initializer's parameters set to default values. You
 can also define a convenience initializer to create an instance of that
 class for a specific use case or input value type.
 
-You do not have to provide convenience initializers if your class does
-not require them. Create convenience initializers whenever a shortcut to
-a common initialization pattern will save time or make initialization of
+You don't have to provide convenience initializers if your class doesn't
+require them. Create convenience initializers whenever a shortcut to a
+common initialization pattern will save time or make initialization of
 the class clearer in intent.
 
 @node Syntax for Designated and Convenience Initializers
@@ -12905,7 +12888,7 @@ Here, the superclass has a single designated initializer and two
 convenience initializers. One convenience initializer calls another
 convenience initializer, which in turn calls the single designated
 initializer. This satisfies rules 2 and 3 from above. The superclass
-does not itself have a further superclass, and so rule 1 does not apply.
+doesn't itself have a further superclass, and so rule 1 doesn't apply.
 
 The subclass in this figure has two designated initializers and one
 convenience initializer. The convenience initializer must call one of
@@ -12941,7 +12924,7 @@ instance is considered ready for use.
 The use of a two-phase initialization process makes initialization safe,
 while still giving complete flexibility to each class in a class
 hierarchy. Two-phase initialization prevents property values from being
-accessed before they are initialized, and prevents property values from
+accessed before they're initialized, and prevents property values from
 being set to a different value by another initializer unexpectedly.
 
 Note
@@ -12950,8 +12933,8 @@ Swift's two-phase initialization process is similar to initialization in
 Objective-C@. The main difference is that during phase 1, Objective-C
 assigns zero or null values (such as @samp{0} or @samp{nil}) to every property.
 Swift's initialization flow is more flexible in that it lets you set
-custom initial values, and can cope with types for which @samp{0} or @samp{nil} is
-not a valid default value.
+custom initial values, and can cope with types for which @samp{0} or @samp{nil}
+isn't a valid default value.
 
 Swift's compiler performs four helpful safety-checks to make sure that
 two-phase initialization is completed without error:
@@ -12985,12 +12968,12 @@ the convenience initializer assigns will be overwritten by its own
 class's designated initializer.
 
 @item @strong{Safety check 4}
-An initializer cannot call any instance methods,
+An initializer can't call any instance methods,
 read the values of any instance properties, or refer to @samp{self} as a
 value until after the first phase of initialization is complete.
 @end table
 
-The class instance is not fully valid until the first phase ends.
+The class instance isn't fully valid until the first phase ends.
 Properties can only be accessed, and methods can only be called, once
 the class instance is known to be valid at the end of the first phase.
 
@@ -13004,8 +12987,8 @@ checks above:
 A designated or convenience initializer is called on a class.
 
 @item
-Memory for a new instance of that class is allocated. The memory is
-not yet initialized.
+Memory for a new instance of that class is allocated. The memory isn't
+yet initialized.
 
 @item
 A designated initializer for that class confirms that all stored
@@ -13046,7 +13029,7 @@ subclass and superclass:
 
 @image{images/twoPhaseInitialization01_2x,,,,png}
 In this example, initialization begins with a call to a convenience
-initializer on the subclass. This convenience initializer cannot yet
+initializer on the subclass. This convenience initializer can't yet
 modify any properties. It delegates across to a designated initializer
 from the same class.
 
@@ -13066,11 +13049,11 @@ Here's how phase 2 looks for the same initialization call:
 
 @image{images/twoPhaseInitialization02_2x,,,,png}
 The superclass's designated initializer now has an opportunity to
-customize the instance further (although it does not have to).
+customize the instance further (although it doesn't have to).
 
 Once the superclass's designated initializer is finished, the subclass's
 designated initializer can perform additional customization (although
-again, it does not have to).
+again, it doesn't have to).
 
 Finally, once the subclass's designated initializer is finished, the
 convenience initializer that was originally called can perform
@@ -13079,16 +13062,16 @@ additional customization.
 @node Initializer Inheritance and Overriding
 @subsection Initializer Inheritance and Overriding
 
-Unlike subclasses in Objective-C, Swift subclasses do not inherit their
+Unlike subclasses in Objective-C, Swift subclasses don't inherit their
 superclass initializers by default. Swift's approach prevents a
 situation in which a simple initializer from a superclass is inherited
 by a more specialized subclass and is used to create a new instance of
-the subclass that is not fully or correctly initialized.
+the subclass that isn't fully or correctly initialized.
 
 Note
 
 Superclass initializers @emph{are} inherited in certain circumstances, but
-only when it is safe and appropriate to do so. For more information, see
+only when it's safe and appropriate to do so. For more information, see
 @ref{Automatic Initializer Inheritance}
 below.
 
@@ -13121,7 +13104,7 @@ initializer can never be called directly by your subclass, as per the
 rules described above in @ref{Initializer Delegation for Class Types, , Initializer
 Delegation for Class Types}. Therefore, your subclass is not (strictly
 speaking) providing an override of the superclass initializer. As a
-result, you do not write the @samp{override} modifier when providing a
+result, you don't write the @samp{override} modifier when providing a
 matching implementation of a superclass convenience initializer.
 
 The example below defines a base class called @samp{Vehicle}. This base class
@@ -13140,7 +13123,7 @@ class Vehicle @{
 @end example
 
 The @samp{Vehicle} class provides a default value for its only stored
-property, and does not provide any custom initializers itself. As a
+property, and doesn't provide any custom initializers itself. As a
 result, it automatically receives a default initializer, as described in
 @ref{Default Initializers}. The default
 initializer (when available) is always a designated initializer for a
@@ -13222,17 +13205,17 @@ print("Hoverboard: \(hoverboard.description)")
 Note
 
 Subclasses can modify inherited variable properties during
-initialization, but can not modify inherited constant properties.
+initialization, but can't modify inherited constant properties.
 
 @node Automatic Initializer Inheritance
 @subsection Automatic Initializer Inheritance
 
-As mentioned above, subclasses do not inherit their superclass
+As mentioned above, subclasses don't inherit their superclass
 initializers by default. However, superclass initializers @emph{are}
 automatically inherited if certain conditions are met. In practice, this
-means that you do not need to write initializer overrides in many common
+means that you don't need to write initializer overrides in many common
 scenarios, and can inherit your superclass initializers with minimal
-effort whenever it is safe to do so.
+effort whenever it's safe to do so.
 
 Assuming that you provide default values for any new properties you
 introduce in a subclass, the following two rules apply:
@@ -13288,7 +13271,7 @@ class Food @{
 The figure below shows the initializer chain for the @samp{Food} class:
 
 @image{images/initializersExample01_2x,,,,png}
-Classes do not have a default memberwise initializer, and so the @samp{Food}
+Classes don't have a default memberwise initializer, and so the @samp{Food}
 class provides a designated initializer that takes a single argument
 called @samp{name}. This initializer can be used to create a new @samp{Food}
 instance with a specific name:
@@ -13301,8 +13284,8 @@ let namedMeat = Food(name: "Bacon")
 The @samp{init(name: String)} initializer from the @samp{Food} class is provided
 as a @emph{designated} initializer, because it ensures that all stored
 properties of a new @samp{Food} instance are fully initialized. The @samp{Food}
-class does not have a superclass, and so the @samp{init(name: String)}
-initializer does not need to call @samp{super.init()} to complete its
+class doesn't have a superclass, and so the @samp{init(name: String)}
+initializer doesn't need to call @samp{super.init()} to complete its
 initialization.
 
 The @samp{Food} class also provides a @emph{convenience} initializer, @samp{init()},
@@ -13351,7 +13334,7 @@ Initialization} above.
 @samp{RecipeIngredient} also defines a convenience initializer,
 @samp{init(name: String)}, which is used to create a @samp{RecipeIngredient}
 instance by name alone. This convenience initializer assumes a quantity
-of @samp{1} for any @samp{RecipeIngredient} instance that is created without an
+of @samp{1} for any @samp{RecipeIngredient} instance that's created without an
 explicit quantity. The definition of this convenience initializer makes
 @samp{RecipeIngredient} instances quicker and more convenient to create, and
 avoids code duplication when creating several single-quantity
@@ -13412,12 +13395,12 @@ class ShoppingListItem: RecipeIngredient @{
 
 Note
 
-@samp{ShoppingListItem} does not define an initializer to provide an initial
+@samp{ShoppingListItem} doesn't define an initializer to provide an initial
 value for @samp{purchased}, because items in a shopping list (as modeled
 here) always start out unpurchased.
 
 Because it provides a default value for all of the properties it
-introduces and does not define any initializers itself,
+introduces and doesn't define any initializers itself,
 @samp{ShoppingListItem} automatically inherits @emph{all} of the designated and
 convenience initializers from its superclass.
 
@@ -13448,14 +13431,14 @@ Here, a new array called @samp{breakfastList} is created from an array
 literal containing three new @samp{ShoppingListItem} instances. The type of
 the array is inferred to be @samp{[ShoppingListItem]}. After the array is
 created, the name of the @samp{ShoppingListItem} at the start of the array is
-changed from @samp{"[Unnamed]"} to @samp{"Orange juice"} and it is marked as
-having been purchased. Printing the description of each item in the
-array shows that their default states have been set as expected.
+changed from @samp{"[Unnamed]"} to @samp{"Orange juice"} and it's marked as having
+been purchased. Printing the description of each item in the array shows
+that their default states have been set as expected.
 
 @node Failable Initializers
 @section Failable Initializers
 
-It is sometimes useful to define a class, structure, or enumeration for
+It's sometimes useful to define a class, structure, or enumeration for
 which initialization can fail. This failure might be triggered by
 invalid initialization parameter values, the absence of a required
 external resource, or some other condition that prevents initialization
@@ -13468,7 +13451,7 @@ after the @samp{init} keyword (@samp{init?}).
 
 Note
 
-You cannot define a failable and a nonfailable initializer with the same
+You can't define a failable and a nonfailable initializer with the same
 parameter types and names.
 
 A failable initializer creates an @emph{optional} value of the type it
@@ -13477,16 +13460,16 @@ indicate a point at which initialization failure can be triggered.
 
 Note
 
-Strictly speaking, initializers do not return a value. Rather, their
+Strictly speaking, initializers don't return a value. Rather, their
 role is to ensure that @samp{self} is fully and correctly initialized by the
 time that initialization ends. Although you write @samp{return nil} to
-trigger an initialization failure, you do not use the @samp{return} keyword
+trigger an initialization failure, you don't use the @samp{return} keyword
 to indicate initialization success.
 
 For instance, failable initializers are implemented for numeric type
 conversions. To ensure conversion between numeric types maintains the
 value exactly, use the @samp{init(exactly:)} initializer. If the type
-conversion cannot maintain the value, the initializer fails.
+conversion can't maintain the value, the initializer fails.
 
 @example
 let wholeNumber: Double = 12345.0
@@ -13501,9 +13484,9 @@ let valueChanged = Int(exactly: pi)
 // valueChanged is of type Int?, not Int
 
 if valueChanged == nil @{
-    print("\(pi) conversion to Int does not maintain value")
+    print("\(pi) conversion to Int doesn't maintain value")
 @}
-// Prints "3.14159 conversion to Int does not maintain value"
+// Prints "3.14159 conversion to Int doesn't maintain value"
 @end example
 
 The example below defines a structure called @samp{Animal}, with a constant
@@ -13545,17 +13528,17 @@ let anonymousCreature = Animal(species: "")
 // anonymousCreature is of type Animal?, not Animal
 
 if anonymousCreature == nil @{
-    print("The anonymous creature could not be initialized")
+    print("The anonymous creature couldn't be initialized")
 @}
-// Prints "The anonymous creature could not be initialized"
+// Prints "The anonymous creature couldn't be initialized"
 @end example
 
 Note
 
 Checking for an empty string value (such as @samp{""} rather than
-@samp{"Giraffe"}) is not the same as checking for @samp{nil} to indicate the
+@samp{"Giraffe"}) isn't the same as checking for @samp{nil} to indicate the
 absence of an @emph{optional} @samp{String} value. In the example above, an empty
-string (@samp{""}) is a valid, non-optional @samp{String}. However, it is not
+string (@samp{""}) is a valid, non-optional @samp{String}. However, it's not
 appropriate for an animal to have an empty string as the value of its
 @samp{species} property. To model this restriction, the failable initializer
 triggers an initialization failure if an empty string is found.
@@ -13573,7 +13556,7 @@ triggers an initialization failure if an empty string is found.
 
 You can use a failable initializer to select an appropriate enumeration
 case based on one or more parameters. The initializer can then fail if
-the provided parameters do not match an appropriate enumeration case.
+the provided parameters don't match an appropriate enumeration case.
 
 The example below defines an enumeration called @samp{TemperatureUnit}, with
 three possible states (@samp{kelvin}, @samp{celsius}, and @samp{fahrenheit}). A
@@ -13600,7 +13583,7 @@ enum TemperatureUnit @{
 
 You can use this failable initializer to choose an appropriate
 enumeration case for the three possible states and to cause
-initialization to fail if the parameter does not match one of these
+initialization to fail if the parameter doesn't match one of these
 states:
 
 @example
@@ -13612,9 +13595,9 @@ if fahrenheitUnit != nil @{
 
 let unknownUnit = TemperatureUnit(symbol: "X")
 if unknownUnit == nil @{
-    print("This is not a defined temperature unit, so initialization failed.")
+    print("This isn't a defined temperature unit, so initialization failed.")
 @}
-// Prints "This is not a defined temperature unit, so initialization failed."
+// Prints "This isn't a defined temperature unit, so initialization failed."
 @end example
 
 @node Failable Initializers for Enumerations with Raw Values
@@ -13643,9 +13626,9 @@ if fahrenheitUnit != nil @{
 
 let unknownUnit = TemperatureUnit(rawValue: "X")
 if unknownUnit == nil @{
-    print("This is not a defined temperature unit, so initialization failed.")
+    print("This isn't a defined temperature unit, so initialization failed.")
 @}
-// Prints "This is not a defined temperature unit, so initialization failed."
+// Prints "This isn't a defined temperature unit, so initialization failed."
 @end example
 
 @node Propagation of Initialization Failure
@@ -13664,7 +13647,7 @@ Note
 
 A failable initializer can also delegate to a nonfailable initializer.
 Use this approach if you need to add a potential failure state to an
-existing initialization process that does not otherwise fail.
+existing initialization process that doesn't otherwise fail.
 
 The example below defines a subclass of @samp{Product} called @samp{CartItem}. The
 @samp{CartItem} class models an item in an online shopping cart. @samp{CartItem}
@@ -13738,7 +13721,7 @@ if let oneUnnamed = CartItem(name: "", quantity: 1) @{
 You can override a superclass failable initializer in a subclass, just
 like any other initializer. Alternatively, you can override a superclass
 failable initializer with a subclass @emph{nonfailable} initializer. This
-enables you to define a subclass for which initialization cannot fail,
+enables you to define a subclass for which initialization can't fail,
 even though initialization of the superclass is allowed to fail.
 
 Note that if you override a failable superclass initializer with a
@@ -13752,8 +13735,8 @@ You can override a failable initializer with a nonfailable initializer
 but not the other way around.
 
 The example below defines a class called @samp{Document}. This class models a
-document that can be initialized with a @samp{name} property that is either a
-nonempty string value or @samp{nil}, but cannot be an empty string:
+document that can be initialized with a @samp{name} property that's either a
+nonempty string value or @samp{nil}, but can't be an empty string:
 
 @example
 class Document @{
@@ -13796,7 +13779,7 @@ class AutomaticallyNamedDocument: Document @{
 The @samp{AutomaticallyNamedDocument} overrides its superclass's failable
 @samp{init?(name:)} initializer with a nonfailable @samp{init(name:)} initializer.
 Because @samp{AutomaticallyNamedDocument} copes with the empty string case in
-a different way than its superclass, its initializer does not need to
+a different way than its superclass, its initializer doesn't need to
 fail, and so it provides a nonfailable version of the initializer
 instead.
 
@@ -13854,7 +13837,7 @@ class SomeClass @{
 You must also write the @samp{required} modifier before every subclass
 implementation of a required initializer, to indicate that the
 initializer requirement applies to further subclasses in the chain. You
-do not write the @samp{override} modifier when overriding a required
+don't write the @samp{override} modifier when overriding a required
 designated initializer:
 
 @example
@@ -13867,7 +13850,7 @@ class SomeSubclass: SomeClass @{
 
 Note
 
-You do not have to provide an explicit implementation of a required
+You don't have to provide an explicit implementation of a required
 initializer if you can satisfy the requirement with an inherited
 initializer.
 
@@ -13907,10 +13890,10 @@ the property, and not the return value of the closure.
 Note
 
 If you use a closure to initialize a property, remember that the rest of
-the instance has not yet been initialized at the point that the closure
-is executed. This means that you cannot access any other property values
+the instance hasn't yet been initialized at the point that the closure
+is executed. This means that you can't access any other property values
 from within your closure, even if those properties have default values.
-You also cannot use the implicit @samp{self} property, or call any of the
+You also can't use the implicit @samp{self} property, or call any of the
 instance's methods.
 
 The example below defines a structure called @samp{Chessboard}, which models
@@ -13982,7 +13965,7 @@ are only available on class types.
 @node How Deinitialization Works
 @section How Deinitialization Works
 
-Swift automatically deallocates your instances when they are no longer
+Swift automatically deallocates your instances when they're no longer
 needed, to free up resources. Swift handles the memory management of
 instances through @emph{automatic reference counting} (@emph{ARC}), as described
 in @ref{Automatic Reference Counting}.
@@ -13994,7 +13977,7 @@ you might need to close the file before the class instance is
 deallocated.
 
 Class definitions can have at most one deinitializer per class. The
-deinitializer does not take any parameters and is written without
+deinitializer doesn't take any parameters and is written without
 parentheses:
 
 @example
@@ -14005,15 +13988,14 @@ deinit @{
 
 
 Deinitializers are called automatically, just before instance
-deallocation takes place. You are not allowed to call a deinitializer
+deallocation takes place. You aren't allowed to call a deinitializer
 yourself. Superclass deinitializers are inherited by their subclasses,
 and the superclass deinitializer is called automatically at the end of a
 subclass deinitializer implementation. Superclass deinitializers are
-always called, even if a subclass does not provide its own
-deinitializer.
+always called, even if a subclass doesn't provide its own deinitializer.
 
-Because an instance is not deallocated until after its deinitializer is
-called, a deinitializer can access all properties of the instance it is
+Because an instance isn't deallocated until after its deinitializer is
+called, a deinitializer can access all properties of the instance it's
 called on and can modify its behavior based on those properties (such as
 looking up the name of a file that needs to be closed).
 
@@ -14047,7 +14029,7 @@ methods---@samp{distribute(coins:)} and @samp{receive(coins:)}---to handle the
 distribution and collection of coins.
 
 The @samp{distribute(coins:)} method checks that there are enough coins in
-the bank before distributing them. If there are not enough coins, @samp{Bank}
+the bank before distributing them. If there aren't enough coins, @samp{Bank}
 returns a smaller number than the number that was requested (and returns
 zero if no coins are left in the bank). It returns an integer value to
 indicate the actual number of coins that were provided.
@@ -14093,14 +14075,14 @@ print("There are now \(Bank.coinsInBank) coins left in the bank")
 // Prints "There are now 9900 coins left in the bank"
 @end example
 
-A new @samp{Player} instance is created, with a request for 100 coins if they
-are available. This @samp{Player} instance is stored in an optional @samp{Player}
-variable called @samp{playerOne}. An optional variable is used here, because
-players can leave the game at any point. The optional lets you track
-whether there's currently a player in the game.
+A new @samp{Player} instance is created, with a request for 100 coins if
+they're available. This @samp{Player} instance is stored in an optional
+@samp{Player} variable called @samp{playerOne}. An optional variable is used here,
+because players can leave the game at any point. The optional lets you
+track whether there's currently a player in the game.
 
-Because @samp{playerOne} is an optional, it is qualified with an exclamation
-mark (@samp{!}) when its @samp{coinsInPurse} property is accessed to print its
+Because @samp{playerOne} is an optional, it's qualified with an exclamation
+point (@samp{!}) when its @samp{coinsInPurse} property is accessed to print its
 default number of coins, and whenever its @samp{win(coins:)} method is
 called:
 
@@ -14127,7 +14109,7 @@ The player has now left the game. This is indicated by setting the
 optional @samp{playerOne} variable to @samp{nil}, meaning “no @samp{Player} instance.”
 At the point that this happens, the @samp{playerOne} variable's reference to
 the @samp{Player} instance is broken. No other properties or variables are
-still referring to the @samp{Player} instance, and so it is deallocated in
+still referring to the @samp{Player} instance, and so it's deallocated in
 order to free up its memory. Just before this happens, its deinitializer
 is called automatically, and its coins are returned to the bank.
 
@@ -14173,7 +14155,7 @@ value, the result of an optional chaining call is always an optional
 value, even if the property, method, or subscript you are querying
 returns a non-optional value. You can use this optional return value to
 check whether the optional chaining call was successful (the returned
-optional contains a value), or did not succeed due to a @samp{nil} value in
+optional contains a value), or didn't succeed due to a @samp{nil} value in
 the chain (the returned optional value is @samp{nil}).
 
 Specifically, the result of an optional chaining call is of the same
@@ -14210,8 +14192,8 @@ let john = Person()
 
 If you try to access the @samp{numberOfRooms} property of this person's
 @samp{residence}, by placing an exclamation point after @samp{residence} to force
-the unwrapping of its value, you trigger a runtime error, because there
-is no @samp{residence} value to unwrap:
+the unwrapping of its value, you trigger a runtime error, because
+there's no @samp{residence} value to unwrap:
 
 @example
 let roomCount = john.residence!.numberOfRooms
@@ -14245,10 +14227,10 @@ the optional chaining attempt returns a value of type @samp{Int?}, or
 this optional @samp{Int} will also be @samp{nil}, to reflect the fact that it was
 not possible to access @samp{numberOfRooms}. The optional @samp{Int} is accessed
 through optional binding to unwrap the integer and assign the
-non-optional value to the @samp{roomCount} variable.
+non-optional value to the @samp{roomCount} constant.
 
 Note that this is true even though @samp{numberOfRooms} is a non-optional
-@samp{Int}. The fact that it is queried through an optional chain means that
+@samp{Int}. The fact that it's queried through an optional chain means that
 the call to @samp{numberOfRooms} will always return an @samp{Int?} instead of an
 @samp{Int}.
 
@@ -14279,7 +14261,7 @@ if let roomCount = john.residence?.numberOfRooms @{
 You can use optional chaining with calls to properties, methods, and
 subscripts that are more than one level deep. This enables you to drill
 down into subproperties within complex models of interrelated types, and
-to check whether it is possible to access properties, methods, and
+to check whether it's possible to access properties, methods, and
 subscripts on those subproperties.
 
 The code snippets below define four model classes for use in several
@@ -14445,7 +14427,7 @@ nothing is printed.
 
 You can use optional chaining to call a method on an optional value, and
 to check whether that method call is successful. You can do this even if
-that method does not define a return value.
+that method doesn't define a return value.
 
 The @samp{printNumberOfRooms()} method on the @samp{Residence} class prints the
 current value of @samp{numberOfRooms}. Here's how the method looks:
@@ -14456,7 +14438,7 @@ func printNumberOfRooms() @{
 @}
 @end example
 
-This method does not specify a return type. However, functions and
+This method doesn't specify a return type. However, functions and
 methods with no return type have an implicit return type of @samp{Void}, as
 described in @ref{Functions Without Return Values, , Functions Without Return
 Values}. This means that they return a value of @samp{()}, or an empty
@@ -14467,7 +14449,7 @@ method's return type will be @samp{Void?}, not @samp{Void}, because return value
 are always of an optional type when called through optional chaining.
 This enables you to use an @samp{if} statement to check whether it was
 possible to call the @samp{printNumberOfRooms()} method, even though the
-method does not itself define a return value. Compare the return value
+method doesn't itself define a return value. Compare the return value
 from the @samp{printNumberOfRooms} call against @samp{nil} to see if the method
 call was successful:
 
@@ -14510,7 +14492,7 @@ Note
 When you access a subscript on an optional value through optional
 chaining, you place the question mark @emph{before} the subscript's brackets,
 not after. The optional chaining question mark always follows
-immediately after the part of the expression that is optional.
+immediately after the part of the expression that's optional.
 
 The example below tries to retrieve the name of the first room in the
 @samp{rooms} array of the @samp{john.residence} property using the subscript
@@ -14586,22 +14568,21 @@ in the @samp{"Dave"} array to @samp{91}; to increment the first item in the
 @samp{"Bev"} array by @samp{1}; and to try to set the first item in an array for a
 key of @samp{"Brian"}. The first two calls succeed, because the @samp{testScores}
 dictionary contains keys for @samp{"Dave"} and @samp{"Bev"}. The third call fails,
-because the @samp{testScores} dictionary does not contain a key for
-@samp{"Brian"}.
+because the @samp{testScores} dictionary doesn't contain a key for @samp{"Brian"}.
 
 @node Linking Multiple Levels of Chaining
 @section Linking Multiple Levels of Chaining
 
 You can link together multiple levels of optional chaining to drill down
 to properties, methods, and subscripts deeper within a model. However,
-multiple levels of optional chaining do not add more levels of
+multiple levels of optional chaining don't add more levels of
 optionality to the returned value.
 
 To put it another way:
 
 @itemize
 @item
-If the type you are trying to retrieve is not optional, it will become
+If the type you are trying to retrieve isn't optional, it will become
 optional because of the optional chaining.
 
 @item
@@ -14701,7 +14682,7 @@ if let beginsWithThe =
     if beginsWithThe @{
         print("John's building identifier begins with \"The\".")
     @} else @{
-        print("John's building identifier does not begin with \"The\".")
+        print("John's building identifier doesn't begin with \"The\".")
     @}
 @}
 // Prints "John's building identifier begins with "The"."
@@ -14811,7 +14792,7 @@ Note
 Error handling in Swift resembles exception handling in other languages,
 with the use of the @samp{try}, @samp{catch} and @samp{throw} keywords. Unlike
 exception handling in many languages---including Objective-C---error
-handling in Swift does not involve unwinding the call stack, a process
+handling in Swift doesn't involve unwinding the call stack, a process
 that can be computationally expensive. As such, the performance
 characteristics of a @samp{throw} statement are comparable to those of a
 @samp{return} statement.
@@ -14848,7 +14829,7 @@ nonthrowing function must be handled inside the function.
 
 In the example below, the @samp{VendingMachine} class has a
 @samp{vend(itemNamed:)} method that throws an appropriate
-@samp{VendingMachineError} if the requested item is not available, is out of
+@samp{VendingMachineError} if the requested item isn't available, is out of
 stock, or has a cost that exceeds the current deposited amount:
 
 @example
@@ -14944,9 +14925,9 @@ struct PurchasedSnack @{
 @findex catch
 
 You use a @samp{do}-@samp{catch} statement to handle errors by running a block of
-code. If an error is thrown by the code in the @samp{do} clause, it is
-matched against the @samp{catch} clauses to determine which one of them can
-handle the error.
+code. If an error is thrown by the code in the @samp{do} clause, it's matched
+against the @samp{catch} clauses to determine which one of them can handle
+the error.
 
 Here is the general form of a @samp{do}-@samp{catch} statement:
 
@@ -15036,6 +15017,27 @@ that's one of the cases of the @samp{VendingMachineError} enumeration,
 @samp{nourish(with:)} propagates the error to its call site. The error is
 then caught by the general @samp{catch} clause.
 
+Another way to catch several related errors is to list them after
+@samp{catch}, separated by commas. For example:
+
+@example
+func eat(item: String) throws @{
+    do @{
+        try vendingMachine.vend(itemNamed: item)
+    @} catch VendingMachineError.invalidSelection,
+            VendingMachineError.insufficientFunds, VendingMachineError.outOfStock
+    @{
+        print("Invalid selection, out of stock, or not enough money.")
+    @}
+@}
+@end example
+
+The @samp{eat(item:)} function lists the vending machine errors to catch, and
+its error text corresponds to the items in that list. If any of the
+three listed errors are thrown, this @samp{catch} clause handles them by
+printing a message. Any other errors are propagated to the surrounding
+scope, including any vending-machine errors that might be added later.
+
 @node Converting Errors to Optional Values
 @subsection Converting Errors to Optional Values
 
@@ -15094,8 +15096,8 @@ you'll get a runtime error.
 For example, the following code uses a @samp{loadImage(atPath:)} function,
 which loads the image resource at a given path or throws an error if the
 image can't be loaded. In this case, because the image is shipped with
-the application, no error will be thrown at runtime, so it is
-appropriate to disable error propagation.
+the application, no error will be thrown at runtime, so it's appropriate
+to disable error propagation.
 
 @example
 let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
@@ -15180,7 +15182,7 @@ those classes, for use in an example of type casting.
 The first snippet defines a new base class called @samp{MediaItem}. This
 class provides basic functionality for any kind of item that appears in
 a digital media library. Specifically, it declares a @samp{name} property of
-type @samp{String}, and an @samp{init name} initializer. (It is assumed that all
+type @samp{String}, and an @samp{init name} initializer. (It's assumed that all
 media items, including all movies and songs, will have a name.)
 
 @example
@@ -15248,7 +15250,7 @@ described below.
 
 Use the @emph{type check operator} (@samp{is}) to check whether an instance is of
 a certain subclass type. The type check operator returns @samp{true} if the
-instance is of that subclass type and @samp{false} if it is not.
+instance is of that subclass type and @samp{false} if it's not.
 
 The example below defines two variables, @samp{movieCount} and @samp{songCount},
 which count the number of @samp{Movie} and @samp{Song} instances in the @samp{library}
@@ -15275,7 +15277,7 @@ pass, the @samp{for}-@samp{in} loop sets the @samp{item} constant to the next
 @samp{MediaItem} in the array.
 
 @samp{item is Movie} returns @samp{true} if the current @samp{MediaItem} is a @samp{Movie}
-instance and @samp{false} if it is not. Similarly, @samp{item is Song} checks
+instance and @samp{false} if it's not. Similarly, @samp{item is Song} checks
 whether the item is a @samp{Song} instance. At the end of the @samp{for}-@samp{in}
 loop, the values of @samp{movieCount} and @samp{songCount} contain a count of how
 many @samp{MediaItem} instances were found of each type.
@@ -15296,8 +15298,8 @@ of the type you are trying to downcast to. The forced form, @samp{as!},
 attempts the downcast and force-unwraps the result as a single compound
 action.
 
-Use the conditional form of the type cast operator (@samp{as?}) when you are
-not sure if the downcast will succeed. This form of the operator will
+Use the conditional form of the type cast operator (@samp{as?}) when you
+aren't sure if the downcast will succeed. This form of the operator will
 always return an optional value, and the value will be @samp{nil} if the
 downcast was not possible. This enables you to check for a successful
 downcast.
@@ -15316,7 +15318,7 @@ description.
 
 In this example, each item in the array might be a @samp{Movie}, or it might
 be a @samp{Song}. You don't know in advance which actual class to use for
-each item, and so it is appropriate to use the conditional form of the
+each item, and so it's appropriate to use the conditional form of the
 type cast operator (@samp{as?}) to check the downcast each time through the
 loop:
 
@@ -15363,8 +15365,8 @@ whenever a @samp{Song} is found in the library.
 
 Note
 
-Casting does not actually modify the instance or change its values. The
-underlying instance remains the same; it is simply treated and accessed
+Casting doesn't actually modify the instance or change its values. The
+underlying instance remains the same; it's simply treated and accessed
 as an instance of the type to which it has been cast.
 
 @node Type Casting for Any and AnyObject
@@ -15385,7 +15387,7 @@ types.
 @end itemize
 
 Use @samp{Any} and @samp{AnyObject} only when you explicitly need the behavior and
-capabilities they provide. It is always better to be specific about the
+capabilities they provide. It's always better to be specific about the
 types you expect to work with in your code.
 
 Here's an example of using @samp{Any} to work with a mix of different types,
@@ -15410,7 +15412,7 @@ The @samp{things} array contains two @samp{Int} values, two @samp{Double} values
 “Ghostbusters”, and a closure expression that takes a @samp{String} value and
 returns another @samp{String} value.
 
-To discover the specific type of a constant or variable that is known
+To discover the specific type of a constant or variable that's known
 only to be of type @samp{Any} or @samp{AnyObject}, you can use an @samp{is} or @samp{as}
 pattern in a @samp{switch} statement's cases. The example below iterates over
 the items in the @samp{things} array and queries the type of each item with a
@@ -15544,7 +15546,7 @@ together with a raw @samp{Character} value to represent their symbol.
 
 The @samp{Rank} enumeration describes the thirteen possible playing card
 ranks, together with a raw @samp{Int} value to represent their face value.
-(This raw @samp{Int} value is not used for the Jack, Queen, King, and Ace
+(This raw @samp{Int} value isn't used for the Jack, Queen, King, and Ace
 cards.)
 
 As mentioned above, the @samp{Rank} enumeration defines a further nested
@@ -15597,7 +15599,7 @@ property correctly reports that the Ace of Spades has a value of @samp{1} or
 @section Referring to Nested Types
 
 To use a nested type outside of its definition context, prefix its name
-with the name of the type it is nested within:
+with the name of the type it's nested within:
 
 @example
 let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
@@ -15606,7 +15608,7 @@ let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
 
 For the example above, this enables the names of @samp{Suit}, @samp{Rank}, and
 @samp{Values} to be kept deliberately short, because their names are
-naturally qualified by the context in which they are defined.
+naturally qualified by the context in which they're defined.
 
 @node Extensions
 @chapter Extensions
@@ -15615,10 +15617,10 @@ naturally qualified by the context in which they are defined.
 
 @emph{Extensions} add new functionality to an existing class, structure,
 enumeration, or protocol type. This includes the ability to extend types
-for which you do not have access to the original source code (known as
+for which you don't have access to the original source code (known as
 @emph{retroactive modeling}). Extensions are similar to categories in
-Objective-C@. (Unlike Objective-C categories, Swift extensions do not
-have names.)
+Objective-C@. (Unlike Objective-C categories, Swift extensions don't have
+names.)
 
 Extensions in Swift can:
 
@@ -15649,7 +15651,7 @@ can take advantage of. For more details, see
 
 Note
 
-Extensions can add new functionality to a type, but they cannot override
+Extensions can add new functionality to a type, but they can't override
 existing functionality.
 
 @menu
@@ -15723,7 +15725,7 @@ print("Three feet is \(threeFeet) meters")
 @end example
 
 These computed properties express that a @samp{Double} value should be
-considered as a certain unit of length. Although they are implemented as
+considered as a certain unit of length. Although they're implemented as
 computed properties, the names of these properties can be appended to a
 floating-point literal value with dot syntax, as a way to use that
 literal value to perform distance conversions.
@@ -15741,7 +15743,7 @@ value by @samp{3.28084}, to convert it from feet to meters.
 
 @findex get
 
-These properties are read-only computed properties, and so they are
+These properties are read-only computed properties, and so they're
 expressed without the @samp{get} keyword, for brevity. Their return value is
 of type @samp{Double}, and can be used within mathematical calculations
 wherever a @samp{Double} is accepted:
@@ -15754,7 +15756,7 @@ print("A marathon is \(aMarathon) meters long")
 
 Note
 
-Extensions can add new computed properties, but they cannot add stored
+Extensions can add new computed properties, but they can't add stored
 properties, or add property observers to existing properties.
 
 @node Initializers (1)
@@ -15766,12 +15768,12 @@ parameters, or to provide additional initialization options that were
 not included as part of the type's original implementation.
 
 Extensions can add new convenience initializers to a class, but they
-cannot add new designated initializers or deinitializers to a class.
+can't add new designated initializers or deinitializers to a class.
 Designated initializers and deinitializers must always be provided by
 the original class implementation.
 
 If you use an extension to add an initializer to a value type that
-provides default values for all of its stored properties and does not
+provides default values for all of its stored properties and doesn't
 define any custom initializers, you can call the default initializer and
 memberwise initializer for that value type from within your extension's
 initializer. This wouldn't be the case if you had written the
@@ -15862,8 +15864,8 @@ extension Int @{
 @end example
 
 The @samp{repetitions(task:)} method takes a single argument of type
-@samp{() -> Void}, which indicates a function that has no parameters and does
-not return a value.
+@samp{() -> Void}, which indicates a function that has no parameters and
+doesn't return a value.
 
 After defining this extension, you can call the @samp{repetitions(task:)}
 method on any integer to perform a task that many number of times:
@@ -15941,7 +15943,7 @@ extension Int @{
 // returns 7
 @end example
 
-If the @samp{Int} value does not have enough digits for the requested index,
+If the @samp{Int} value doesn't have enough digits for the requested index,
 the subscript implementation returns @samp{0}, as if the number had been
 padded with zeros to the left:
 
@@ -16158,8 +16160,8 @@ protocol as part of the first line of its definition.
 Each instance of @samp{Person} has a single stored property called
 @samp{fullName}, which is of type @samp{String}. This matches the single
 requirement of the @samp{FullyNamed} protocol, and means that @samp{Person} has
-correctly conformed to the protocol. (Swift reports an error at
-compile-time if a protocol requirement is not fulfilled.)
+correctly conformed to the protocol. (Swift reports an error at compile
+time if a protocol requirement isn't fulfilled.)
 
 Here's a more complex class, which also adopts and conforms to the
 @samp{FullyNamed} protocol:
@@ -16261,7 +16263,7 @@ the instance it belongs to and any properties of that instance. This
 process is described in @ref{Modifying Value Types from Within Instance Methods, , Modifying Value Types
 from Within Instance Methods}.
 
-If you define a protocol instance method requirement that is intended to
+If you define a protocol instance method requirement that's intended to
 mutate instances of any type that adopts the protocol, mark the method
 with the @samp{mutating} keyword as part of the protocol's definition. This
 enables structures and enumerations to adopt the protocol and satisfy
@@ -16292,7 +16294,7 @@ protocol Togglable @{
 
 If you implement the @samp{Togglable} protocol for a structure or
 enumeration, that structure or enumeration can conform to the protocol
-by providing an implementation of the @samp{toggle()} method that is also
+by providing an implementation of the @samp{toggle()} method that's also
 marked as @samp{mutating}.
 
 The example below defines an enumeration called @samp{OnOffSwitch}. This
@@ -16640,7 +16642,7 @@ when the game starts, increments it each time a new turn begins, and
 prints out the total number of turns once the game has ended.
 
 The implementation of @samp{gameDidStart(_:)} shown above uses the @samp{game}
-parameter to print some introductory information about the game that is
+parameter to print some introductory information about the game that's
 about to be played. The @samp{game} parameter has a type of @samp{DiceGame}, not
 @samp{SnakesAndLadders}, and so @samp{gameDidStart(_:)} can access and use only
 methods and properties that are implemented as part of the @samp{DiceGame}
@@ -16772,7 +16774,7 @@ print(myDice.textualDescription)
 @subsection Declaring Protocol Adoption with an Extension
 
 If a type already conforms to all of the requirements of a protocol, but
-has not yet stated that it adopts that protocol, you can make it adopt
+hasn't yet stated that it adopts that protocol, you can make it adopt
 the protocol with an empty extension:
 
 @example
@@ -16929,7 +16931,7 @@ for thing in things @{
 Note that the @samp{thing} constant is of type @samp{TextRepresentable}. It's not
 of type @samp{Dice}, or @samp{DiceGame}, or @samp{Hamster}, even if the actual instance
 behind the scenes is of one of those types. Nonetheless, because it's of
-type @samp{TextRepresentable}, and anything that is @samp{TextRepresentable} is
+type @samp{TextRepresentable}, and anything that's @samp{TextRepresentable} is
 known to have a @samp{textualDescription} property, it's safe to access
 @samp{thing.textualDescription} each time through the loop.
 
@@ -16990,7 +16992,7 @@ extension SnakesAndLadders: PrettyTextRepresentable @{
 This extension states that it adopts the @samp{PrettyTextRepresentable}
 protocol and provides an implementation of the
 @samp{prettyTextualDescription} property for the @samp{SnakesAndLadders} type.
-Anything that is @samp{PrettyTextRepresentable} must also be
+Anything that's @samp{PrettyTextRepresentable} must also be
 @samp{TextRepresentable}, and so the implementation of
 @samp{prettyTextualDescription} starts by accessing the @samp{textualDescription}
 property from the @samp{TextRepresentable} protocol to begin an output
@@ -17983,9 +17985,9 @@ that can be used as keys for a dictionary. As described in
 dictionary's keys must be @emph{hashable}. That is, it must provide a way to
 make itself uniquely representable. @samp{Dictionary} needs its keys to be
 hashable so that it can check whether it already contains a value for a
-particular key. Without this requirement, @samp{Dictionary} could not tell
+particular key. Without this requirement, @samp{Dictionary} couldn't tell
 whether it should insert or replace a value for a particular key, nor
-would it be able to find a value for a given key that is already in the
+would it be able to find a value for a given key that's already in the
 dictionary.
 
 This requirement is enforced by a type constraint on the key type for
@@ -18100,7 +18102,7 @@ equal to operator (@samp{==}) and the not equal to operator (@samp{!=}) to compa
 any two values of that type. All of Swift's standard types automatically
 support the @samp{Equatable} protocol.
 
-Any type that is @samp{Equatable} can be used safely with the
+Any type that's @samp{Equatable} can be used safely with the
 @samp{findIndex(of:in:)} function, because it's guaranteed to support the
 equal to operator. To express this fact, you write a type constraint of
 @samp{Equatable} as part of the type parameter's definition when you define
@@ -18122,7 +18124,7 @@ The single type parameter for @samp{findIndex(of:in:)} is written as
 @samp{Equatable} protocol.”
 
 The @samp{findIndex(of:in:)} function now compiles successfully and can be
-used with any type that is @samp{Equatable}, such as @samp{Double} or @samp{String}:
+used with any type that's @samp{Equatable}, such as @samp{Double} or @samp{String}:
 
 @example
 let doubleIndex = findIndex(of: 9.3, in: [3.14159, 0.1, 0.25])
@@ -18138,7 +18140,7 @@ let stringIndex = findIndex(of: "Andrea", in: ["Mike", "Malcolm", "Andrea"])
 
 When defining a protocol, it's sometimes useful to declare one or more
 associated types as part of the protocol's definition. An @emph{associated
-type} gives a placeholder name to a type that is used as part of the
+type} gives a placeholder name to a type that's used as part of the
 protocol. The actual type to use for that associated type isn't
 specified until the protocol is adopted. Associated types are specified
 with the @samp{associatedtype} keyword.
@@ -18651,8 +18653,8 @@ and divides by the container's count to compute the average. It
 explicitly converts the count from @samp{Int} to @samp{Double} to be able to do
 floating-point division.
 
-You can include multiple requirements in a generic @samp{where} clause that
-is part of an extension, just like you can for a generic @samp{where} clause
+You can include multiple requirements in a generic @samp{where} clause that's
+part of an extension, just like you can for a generic @samp{where} clause
 that you write elsewhere. Separate each requirement in the list with a
 comma.
 
@@ -19209,7 +19211,7 @@ type of @samp{twelve} is also inferred to be @samp{Int}.
 
 Swift uses @emph{Automatic Reference Counting} (ARC) to track and manage your
 app's memory usage. In most cases, this means that memory management
-“just works” in Swift, and you do not need to think about memory
+“just works” in Swift, and you don't need to think about memory
 management yourself. ARC automatically frees up the memory used by class
 instances when those instances are no longer needed.
 
@@ -19224,8 +19226,8 @@ to ARC Release Notes}
 for using ARC with Objective-C@.
 
 Reference counting applies only to instances of classes. Structures and
-enumerations are value types, not reference types, and are not stored
-and passed by reference.
+enumerations are value types, not reference types, and aren't stored and
+passed by reference.
 
 @menu
 * How ARC Works::
@@ -19246,15 +19248,15 @@ any stored properties associated with that instance.
 
 Additionally, when an instance is no longer needed, ARC frees up the
 memory used by that instance so that the memory can be used for other
-purposes instead. This ensures that class instances do not take up space
-in memory when they are no longer needed.
+purposes instead. This ensures that class instances don't take up space
+in memory when they're no longer needed.
 
 However, if ARC were to deallocate an instance that was still in use, it
 would no longer be possible to access that instance's properties, or
 call that instance's methods. Indeed, if you tried to access the
 instance, your app would most likely crash.
 
-To make sure that instances don't disappear while they are still needed,
+To make sure that instances don't disappear while they're still needed,
 ARC tracks how many properties, constants, and variables are currently
 referring to each class instance. ARC will not deallocate an instance as
 long as at least one active reference to that instance still exists.
@@ -19263,7 +19265,7 @@ To make this possible, whenever you assign a class instance to a
 property, constant, or variable, that property, constant, or variable
 makes a @emph{strong reference} to the instance. The reference is called a
 “strong” reference because it keeps a firm hold on that instance, and
-does not allow it to be deallocated for as long as that strong reference
+doesn't allow it to be deallocated for as long as that strong reference
 remains.
 
 @node ARC in Action
@@ -19294,8 +19296,8 @@ message when an instance of the class is deallocated.
 The next code snippet defines three variables of type @samp{Person?}, which
 are used to set up multiple references to a new @samp{Person} instance in
 subsequent code snippets. Because these variables are of an optional
-type (@samp{Person?}, not @samp{Person}), they are automatically initialized with
-a value of @samp{nil}, and do not currently reference a @samp{Person} instance.
+type (@samp{Person?}, not @samp{Person}), they're automatically initialized with a
+value of @samp{nil}, and don't currently reference a @samp{Person} instance.
 
 @example
 var reference1: Person?
@@ -19318,7 +19320,7 @@ confirms that initialization has taken place.
 Because the new @samp{Person} instance has been assigned to the @samp{reference1}
 variable, there's now a strong reference from @samp{reference1} to the new
 @samp{Person} instance. Because there's at least one strong reference, ARC
-makes sure that this @samp{Person} is kept in memory and is not deallocated.
+makes sure that this @samp{Person} is kept in memory and isn't deallocated.
 
 If you assign the same @samp{Person} instance to two more variables, two more
 strong references to that instance are established:
@@ -19333,14 +19335,14 @@ instance.
 
 If you break two of these strong references (including the original
 reference) by assigning @samp{nil} to two of the variables, a single strong
-reference remains, and the @samp{Person} instance is not deallocated:
+reference remains, and the @samp{Person} instance isn't deallocated:
 
 @example
 reference1 = nil
 reference2 = nil
 @end example
 
-ARC does not deallocate the @samp{Person} instance until the third and final
+ARC doesn't deallocate the @samp{Person} instance until the third and final
 strong reference is broken, at which point it's clear that you are no
 longer using the @samp{Person} instance:
 
@@ -19391,11 +19393,11 @@ class Apartment @{
 @end example
 
 Every @samp{Person} instance has a @samp{name} property of type @samp{String} and an
-optional @samp{apartment} property that is initially @samp{nil}. The @samp{apartment}
+optional @samp{apartment} property that's initially @samp{nil}. The @samp{apartment}
 property is optional, because a person may not always have an apartment.
 
 Similarly, every @samp{Apartment} instance has a @samp{unit} property of type
-@samp{String} and has an optional @samp{tenant} property that is initially @samp{nil}.
+@samp{String} and has an optional @samp{tenant} property that's initially @samp{nil}.
 The tenant property is optional because an apartment may not always have
 a tenant.
 
@@ -19448,8 +19450,7 @@ cycle between them. The @samp{Person} instance now has a strong reference to
 the @samp{Apartment} instance, and the @samp{Apartment} instance has a strong
 reference to the @samp{Person} instance. Therefore, when you break the strong
 references held by the @samp{john} and @samp{unit4A} variables, the reference
-counts do not drop to zero, and the instances are not deallocated by
-ARC:
+counts don't drop to zero, and the instances aren't deallocated by ARC:
 
 @example
 john = nil
@@ -19466,7 +19467,7 @@ Here's how the strong references look after you set the @samp{john} and
 
 @image{images/referenceCycle03_2x,,,,png}
 The strong references between the @samp{Person} instance and the @samp{Apartment}
-instance remain and cannot be broken.
+instance remain and can't be broken.
 
 @node Resolving Strong Reference Cycles Between Class Instances
 @section Resolving Strong Reference Cycles Between Class Instances
@@ -19507,12 +19508,12 @@ the referenced instance. This behavior prevents the reference from
 becoming part of a strong reference cycle. You indicate a weak reference
 by placing the @samp{weak} keyword before a property or variable declaration.
 
-Because a weak reference does not keep a strong hold on the instance it
+Because a weak reference doesn't keep a strong hold on the instance it
 refers to, it's possible for that instance to be deallocated while the
 weak reference is still referring to it. Therefore, ARC automatically
 sets a weak reference to @samp{nil} when the instance that it refers to is
 deallocated. And, because weak references need to allow their value to
-be changed to @samp{nil} at runtime, they are always declared as variables,
+be changed to @samp{nil} at runtime, they're always declared as variables,
 rather than constants, of an optional type.
 
 You can check for the existence of a value in the weak reference, just
@@ -19605,8 +19606,8 @@ such a purpose.
 
 @findex unowned
 
-Like a weak reference, an @emph{unowned reference} does not keep a strong
-hold on the instance it refers to. Unlike a weak reference, however, an
+Like a weak reference, an @emph{unowned reference} doesn't keep a strong hold
+on the instance it refers to. Unlike a weak reference, however, an
 unowned reference is used when the other instance has the same lifetime
 or a longer lifetime. You indicate an unowned reference by placing the
 @samp{unowned} keyword before a property or variable declaration.
@@ -19618,7 +19619,7 @@ optional, and ARC never sets an unowned reference's value to @samp{nil}.
 Important
 
 Use an unowned reference only when you are sure that the reference
-@emph{always} refers to an instance that has not been deallocated.
+@emph{always} refers to an instance that hasn't been deallocated.
 
 If you try to access the value of an unowned reference after that
 instance has been deallocated, you'll get a runtime error.
@@ -19833,7 +19834,7 @@ cause a strong reference cycle. This scenario is best resolved with a
 weak reference.
 
 The @samp{Customer} and @samp{CreditCard} example shows a situation where one
-property that is allowed to be @samp{nil} and another property that cannot be
+property that's allowed to be @samp{nil} and another property that can't be
 @samp{nil} have the potential to cause a strong reference cycle. This
 scenario is best resolved with an unowned reference.
 
@@ -19880,17 +19881,17 @@ for @samp{City} takes a @samp{Country} instance, and stores this instance in its
 @samp{country} property.
 
 The initializer for @samp{City} is called from within the initializer for
-@samp{Country}. However, the initializer for @samp{Country} cannot pass @samp{self} to
+@samp{Country}. However, the initializer for @samp{Country} can't pass @samp{self} to
 the @samp{City} initializer until a new @samp{Country} instance is fully
 initialized, as described in @ref{Two-Phase Initialization, , Two-Phase
 Initialization}.
 
 To cope with this requirement, you declare the @samp{capitalCity} property of
 @samp{Country} as an implicitly unwrapped optional property, indicated by the
-exclamation point at the end of its type annotation (@samp{City!}). This means
-that the @samp{capitalCity} property has a default value of @samp{nil}, like any
-other optional, but can be accessed without the need to unwrap its value
-as described in @ref{Implicitly Unwrapped Optionals, , Implicitly Unwrapped
+exclamation point at the end of its type annotation (@samp{City!}). This 
+means that the @samp{capitalCity} property has a default value of @samp{nil}, like
+any other optional, but can be accessed without the need to unwrap its
+value as described in @ref{Implicitly Unwrapped Optionals, , Implicitly Unwrapped
 Optionals}.
 
 Because @samp{capitalCity} has a default @samp{nil} value, a new @samp{Country}
@@ -19992,7 +19993,7 @@ takes no parameters, and returns a @samp{String} value”.
 
 By default, the @samp{asHTML} property is assigned a closure that returns a
 string representation of an HTML tag. This tag contains the optional
-@samp{text} value if it exists, or no text content if @samp{text} does not exist.
+@samp{text} value if it exists, or no text content if @samp{text} doesn't exist.
 For a paragraph element, the closure would return @samp{"<p>some text</p>"}
 or @samp{"<p />"}, depending on whether the @samp{text} property equals
 @samp{"some text"} or @samp{nil}.
@@ -20073,8 +20074,8 @@ reference cycle:
 paragraph = nil
 @end example
 
-Note that the message in the @samp{HTMLElement} deinitializer is not printed,
-which shows that the @samp{HTMLElement} instance is not deallocated.
+Note that the message in the @samp{HTMLElement} deinitializer isn't printed,
+which shows that the @samp{HTMLElement} instance isn't deallocated.
 
 @node Resolving Strong Reference Cycles for Closures
 @section Resolving Strong Reference Cycles for Closures
@@ -20108,11 +20109,11 @@ it's possible to capture @samp{self} by accident.
 Each item in a capture list is a pairing of the @samp{weak} or @samp{unowned}
 keyword with a reference to a class instance (such as @samp{self}) or a
 variable initialized with some value (such as
-@samp{delegate = self.delegate}). These pairings are written within a pair
-of square braces, separated by commas.
+@samp{delegate = self.delegate}). These pairings are written within a pair of
+square braces, separated by commas.
 
 Place the capture list before a closure's parameter list and return type
-if they are provided:
+if they're provided:
 
 @example
 lazy var someClosure: @{
@@ -20202,7 +20203,7 @@ Here's how the references look with the capture list in place:
 
 @image{images/closureReferenceCycle02_2x,,,,png}
 This time, the capture of @samp{self} by the closure is an unowned reference,
-and does not keep a strong hold on the @samp{HTMLElement} instance it has
+and doesn't keep a strong hold on the @samp{HTMLElement} instance it has
 captured. If you set the strong reference from the @samp{paragraph} variable
 to @samp{nil}, the @samp{HTMLElement} instance is deallocated, as can be seen from
 the printing of its deinitializer message in the example below:
@@ -20311,7 +20312,7 @@ of the following conditions:
 
 @itemize
 @item
-At least one is a write access.
+At least one is a write access or a nonatomic access.
 
 @item
 They access the same location in memory.
@@ -20325,6 +20326,10 @@ write access changes the location in memory, but a read access doesn't.
 The location in memory refers to what is being accessed---for example, a
 variable, constant, or property. The duration of a memory access is
 either instantaneous or long-term.
+
+An operation is @emph{atomic} if it uses only C atomic operations; otherwise
+it's nonatomic. For a list of those functions, see the @samp{stdatomic(3)}
+man page.
 
 An access is @emph{instantaneous} if it's not possible for other code to run
 after that access starts but before it ends. By their nature, two
@@ -20380,7 +20385,7 @@ increment(&stepSize)
 // Error: conflicting accesses to stepSize
 @end example
 
-In the code above, @samp{stepSize} is a global variable, and it is normally
+In the code above, @samp{stepSize} is a global variable, and it's normally
 accessible from within @samp{increment(_:)}. However, the read access to
 @samp{stepSize} overlaps with the write access to @samp{number}. As shown in the
 figure below, both @samp{number} and @samp{stepSize} refer to the same location in
@@ -20634,7 +20639,7 @@ source files.
 
 @findex import
 A @emph{module} is a single unit of code distribution---a framework or
-application that is built and shipped as a single unit and that can be
+application that's built and shipped as a single unit and that can be
 imported by another module with Swift's @samp{import} keyword.
 
 Each build target (such as an app bundle or framework) in Xcode is
@@ -21190,7 +21195,7 @@ for all of its properties and doesn't provide at least one initializer
 itself.
 
 A default initializer has the same access level as the type it
-initializes, unless that type is defined as @samp{public}. For a type that is
+initializes, unless that type is defined as @samp{public}. For a type that's
 defined as @samp{public}, the default initializer is considered internal. If
 you want a public type to be initializable with a no-argument
 initializer when used in another module, you must explicitly provide a
@@ -21379,7 +21384,7 @@ Operators}, Swift provides several advanced operators that perform more
 complex value manipulation. These include all of the bitwise and bit
 shifting operators you will be familiar with from C and Objective-C@.
 
-Unlike arithmetic operators in C, arithmetic operators in Swift do not
+Unlike arithmetic operators in C, arithmetic operators in Swift don't
 overflow by default. Overflow behavior is trapped and reported as an
 error. To opt in to overflow behavior, use Swift's second set of
 arithmetic operators that overflow by default, such as the overflow
@@ -21405,13 +21410,14 @@ the custom operators you define.
 * Precedence and Associativity::
 * Operator Methods: Operator Methods (1). 
 * Custom Operators::
+* Result Builders::
 @end menu
 
 @node Bitwise Operators
 @section Bitwise Operators
 
 @emph{Bitwise operators} enable you to manipulate the individual raw data
-bits within a data structure. They are often used in low-level
+bits within a data structure. They're often used in low-level
 programming, such as graphics programming and device driver creation.
 Bitwise operators can also be useful when you work with raw data from
 external sources, such as encoding and decoding data for communication
@@ -21599,8 +21605,9 @@ the right, giving a value of @samp{0x66}, which has a decimal value of @samp{102
 
 Finally, the blue component is obtained by performing a bitwise AND
 between the numbers @samp{0xCC6699} and @samp{0x0000FF}, which gives an output
-value of @samp{0x000099}. There's no need to shift this to the right, as
-@samp{0x000099} already equals @samp{0x99}, which has a decimal value of @samp{153}.
+value of @samp{0x000099}. Because @samp{0x000099} already equals @samp{0x99}, which has
+a decimal value of @samp{153}, this value is used without shifting it to the
+right,
 
 @item
 Shifting Behavior for Signed Integers
@@ -21625,7 +21632,7 @@ integers, counting upwards from @samp{0}. Here's how the bits inside an
 The sign bit is @samp{0} (meaning “positive”), and the seven value bits are
 just the number @samp{4}, written in binary notation.
 
-Negative numbers, however, are stored differently. They are stored by
+Negative numbers, however, are stored differently. They're stored by
 subtracting their absolute value from @samp{2} to the power of @samp{n}, where @samp{n}
 is the number of value bits. An eight-bit number has seven value bits,
 so this means @samp{2} to the power of @samp{7}, or @samp{128}.
@@ -21656,8 +21663,8 @@ unsigned integers, but fill any empty bits on the left with the @emph{sign
 bit}, rather than with a zero.
 
 @image{images/bitshiftSigned_2x,,,,png}
-This action ensures that signed integers have the same sign after they
-are shifted to the right, and is known as an @emph{arithmetic shift}.
+This action ensures that signed integers have the same sign after
+they're shifted to the right, and is known as an @emph{arithmetic shift}.
 
 Because of the special way that positive and negative numbers are
 stored, shifting either of them to the right moves them closer to zero.
@@ -21671,7 +21678,7 @@ integers remain negative as their value moves closer to zero.
 @cindex Overflow operators
 
 If you try to insert a number into an integer constant or variable that
-cannot hold that value, by default Swift reports an error rather than
+can't hold that value, by default Swift reports an error rather than
 allowing an invalid value to be created. This behavior gives extra
 safety when you work with numbers that are too large or too small.
 
@@ -21730,7 +21737,7 @@ unsignedOverflow = unsignedOverflow &+ 1
 @end example
 
 The variable @samp{unsignedOverflow} is initialized with the maximum value a
-@samp{UInt8} can hold (@samp{255}, or @samp{11111111} in binary). It is then
+@samp{UInt8} can hold (@samp{255}, or @samp{11111111} in binary). It's then
 incremented by @samp{1} using the overflow addition operator (@samp{&+}). This
 pushes its binary representation just over the size that a @samp{UInt8} can
 hold, causing it to overflow beyond its bounds, as shown in the diagram
@@ -21794,7 +21801,7 @@ are grouped together---either grouped from the left, or grouped from the
 right. Think of it as meaning “they associate with the expression to
 their left,” or “they associate with the expression to their right.”
 
-It is important to consider each operator's precedence and associativity
+It's important to consider each operator's precedence and associativity
 when working out the order in which a compound expression will be
 calculated. For example, operator precedence explains why the following
 expression equals @samp{17}.
@@ -21821,8 +21828,8 @@ to be calculated as follows:
 However, the actual answer is @samp{17}, not @samp{5}. Higher-precedence operators
 are evaluated before lower-precedence ones. In Swift, as in C, the
 remainder operator (@samp{%}) and the multiplication operator (@samp{*}) have a
-higher precedence than the addition operator (@samp{+}). As a result, they
-are both evaluated before the addition is considered.
+higher precedence than the addition operator (@samp{+}). As a result, they're
+both evaluated before the addition is considered.
 
 However, remainder and multiplication have the @emph{same} precedence as each
 other. To work out the exact evaluation order to use, you also need to
@@ -21860,7 +21867,7 @@ Note
 
 Swift's operator precedences and associativity rules are simpler and
 more predictable than those found in C and Objective-C@. However, this
-means that they are not exactly the same as in C-based languages. Be
+means that they aren't exactly the same as in C-based languages. Be
 careful to ensure that operator interactions still behave in the way you
 intend when porting existing code to Swift.
 
@@ -21937,8 +21944,8 @@ make the vector @samp{(5.0, 5.0)}, as illustrated below.
 The example shown above demonstrates a custom implementation of a binary
 infix operator. Classes and structures can also provide implementations
 of the standard @emph{unary operators}. Unary operators operate on a single
-target. They are @emph{prefix} if they precede their target (such as @samp{-a})
-and @emph{postfix} operators if they follow their target (such as @samp{b!}).
+target. They're @emph{prefix} if they precede their target (such as @samp{-a}) and
+@emph{postfix} operators if they follow their target (such as @samp{b!}).
 
 You implement a prefix or postfix unary operator by writing the @samp{prefix}
 or @samp{postfix} modifier before the @samp{func} keyword when declaring the
@@ -22076,7 +22083,7 @@ prefix operator +++
 @end example
 
 The example above defines a new prefix operator called @samp{+++}. This
-operator does not have an existing meaning in Swift, and so it is given
+operator doesn't have an existing meaning in Swift, and so it's given
 its own custom meaning below in the specific context of working with
 @samp{Vector2D} instances. For the purposes of this example, @samp{+++} is treated
 as a new “prefix doubling” operator. It doubles the @samp{x} and @samp{y} values
@@ -22112,7 +22119,7 @@ operators, as well as the operator's associativity. See
 explanation of how these characteristics affect an infix operator's
 interaction with other infix operators.
 
-A custom infix operator that is not explicitly placed into a precedence
+A custom infix operator that isn't explicitly placed into a precedence
 group is given a default precedence group with a precedence immediately
 higher than the precedence of the ternary conditional operator.
 
@@ -22133,7 +22140,7 @@ let plusMinusVector = firstVector +- secondVector
 @end example
 
 This operator adds together the @samp{x} values of two vectors, and subtracts
-the @samp{y} value of the second vector from the first. Because it is in
+the @samp{y} value of the second vector from the first. Because it's in
 essence an “additive” operator, it has been given the same precedence
 group as additive infix operators such as @samp{+} and @samp{-}. For information
 about the operators provided by the Swift standard library, including a
@@ -22147,9 +22154,203 @@ defining your own operators and precedence groups, see Operator Declaration.
 
 Note
 
-You do not specify a precedence when defining a prefix or postfix
+You don't specify a precedence when defining a prefix or postfix
 operator. However, if you apply both a prefix and a postfix operator to
 the same operand, the postfix operator is applied first.
+
+@node Result Builders
+@section Result Builders
+
+A @emph{result builder} is a type you define that adds syntax for creating
+nested data, like a list or tree, in a natural, declarative way. The
+code that uses the result builder can include ordinary Swift syntax,
+like @samp{if} and @samp{for}, to handle conditional or repeated pieces of data.
+
+The code below defines a few types for drawing on a single line using
+stars and text.
+
+@example
+protocol Drawable @{
+    func draw() -> String
+@}
+struct Line: Drawable @{
+    var elements: [Drawable]
+    func draw() -> String @{
+        return elements.map @{ $0.draw() @}.joined(separator: "")
+    @}
+@}
+struct Text: Drawable @{
+    var content: String
+    init(_ content: String) @{ self.content = content @}
+    func draw() -> String @{ return content @}
+@}
+struct Space: Drawable @{
+    func draw() -> String @{ return " " @}
+@}
+struct Stars: Drawable @{
+    var length: Int
+    func draw() -> String @{ return String(repeating: "*", count: length)
+    @}
+@}
+struct AllCaps: Drawable @{
+    var content: Drawable
+    func draw() -> String @{ return content.draw().uppercased() @}
+@}
+@end example
+
+The @samp{Drawable} protocol defines the requirement for something that can
+be drawn, like a line or shape: The type must implement a @samp{draw()}
+method. The @samp{Line} structure represents a single-line drawing, and it
+serves the top-level container for most drawings. To draw a @samp{Line}, the
+structure calls @samp{draw()} on each of the line's components, and then
+concatenates the resulting strings into a single string. The @samp{Text}
+structure wraps a string to make it part of a drawing. The @samp{AllCaps}
+structure wraps and modifies another drawing, converting any text in the
+drawing to uppercase.
+
+It's possible to make a drawing with these types by calling their
+initializers:
+
+@example
+let name: String? = "Ravi Patel"
+let manualDrawing = Line(elements: [
+                           Stars(length: 3),
+                           Text("Hello"),
+                           Space(),
+                           AllCaps(content: Text((name ?? "World") + "!")),
+                           Stars(length: 2),
+                         ])
+print(manualDrawing.draw())
+// Prints "***Hello RAVI PATEL!**"
+@end example
+
+This code works, but it's a little awkward. The deeply nested
+parentheses after @samp{AllCaps} are hard to read. The fallback logic to use
+“World” when @samp{name} is @samp{nil} has to be done inline using the @samp{??}
+operator, which would be difficult with anything more complex. If you
+needed to include switches or @samp{for} loops to build up part of the
+drawing, there's no way to do that. A result builder lets you rewrite
+code like this so that it looks like normal Swift code.
+
+@findex @@resultBuilder
+
+To define a result builder, you write the @samp{@@resultBuilder} attribute on
+a type declaration. For example, this code defines a result builder
+called @samp{DrawingBuilder}, which lets you use a declarative syntax to
+describe a drawing:
+
+@example
+@@resultBuilder
+struct DrawingBuilder @{
+    static func buildBlock(_ components: Drawable...) -> Drawable @{
+        return Line(elements: components)
+    @}
+    static func buildEither(first: Drawable) -> Drawable @{
+        return first
+    @}
+    static func buildEither(second: Drawable) -> Drawable @{
+        return second
+    @}
+@}
+@end example
+
+The @samp{DrawingBuilder} structure defines three methods that implement
+parts of the result builder syntax. The @samp{buildBlock(_:)} method adds
+support for writing a series of lines in a block of code. It combines
+the components in that block into a @samp{Line}. The @samp{buildEither(first:)}
+and @samp{buildEither(second:)} methods add support for @samp{if}-@samp{else}.
+
+You can apply the @samp{@@DrawingBuilding} to a function's parameter, which
+turns a closure passed to the function into the value that the result
+builder creates from that closure. For example:
+
+@example
+func draw(@@DrawingBuilder content: () -> Drawable) -> Drawable @{
+    return content()
+@}
+func caps(@@DrawingBuilder content: () -> Drawable) -> Drawable @{
+    return AllCaps(content: content())
+@}
+
+func makeGreeting(for name: String? = nil) -> Drawable @{
+    let greeting = draw @{
+        Stars(length: 3)
+        Text("Hello")
+        Space()
+        caps @{
+            if let name = name @{
+                Text(name + "!")
+            @} else @{
+                Text("World!")
+            @}
+        @}
+        Stars(length: 2)
+    @}
+    return greeting
+@}
+let genericGreeting = makeGreeting()
+print(genericGreeting.draw())
+// Prints "***Hello WORLD!**"
+
+let personalGreeting = makeGreeting(for: "Ravi Patel")
+print(personalGreeting.draw())
+// Prints "***Hello RAVI PATEL!**"
+@end example
+
+The @samp{makeGreeting(for:)} function takes a @samp{name} parameter and uses it
+to draw a personalized greeting. The @samp{draw(_:)} and @samp{caps(_:)} functions
+both take a single closure as their argument, which is marked with the
+@samp{@@DrawingBuilder} attribute. When you call those functions, you use the
+special syntax that @samp{DrawingBuilder} defines. Swift transforms that
+declarative description of a drawing into a series of calls to the
+methods on @samp{DrawingBuilder} to build up the value that's passed as the
+function argument. For example, Swift transforms the call to @samp{caps(_:)}
+in that example into code like the following:
+
+@example
+let capsDrawing = caps @{
+    let partialDrawing: Drawable
+    if let name = name @{
+        let text = Text(name + "!")
+        partialDrawing = DrawingBuilder.buildEither(first: text)
+    @} else @{
+        let text = Text("World!")
+        partialDrawing = DrawingBuilder.buildEither(second: text)
+    @}
+    return partialDrawing
+@}
+@end example
+
+Swift transforms the @samp{if}-@samp{else} block into calls to the
+@samp{buildEither(first:)} and @samp{buildEither(second:)} methods. Although you
+don't call these methods in your own code, showing the result of the
+transformation makes it easier to see how Swift transforms your code
+when you use the @samp{DrawingBuilder} syntax.
+
+To add support for writing @samp{for} loops in the special drawing syntax,
+add a @samp{buildArray(_:)} method.
+
+@example
+extension DrawingBuilder @{
+    static func buildArray(_ components: [Drawable]) -> Drawable @{
+        return Line(elements: components)
+    @}
+@}
+let manyStars = draw @{
+    Text("Stars:")
+    for length in 1...3 @{
+        Space()
+        Stars(length: length)
+    @}
+@}
+@end example
+
+In the code above, the @samp{for} loop creates an array of drawings, and the
+@samp{buildArray(_:)} method turns that array into a @samp{Line}.
+
+For a complete list of how Swift transforms builder syntax into calls to
+the builder type's methods, see
+@ref{resultBuilder,resultBuilder,,swift-reference,}.
 
 @node Index
 @chapter Index

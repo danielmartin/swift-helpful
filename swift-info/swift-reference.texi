@@ -1,7 +1,7 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
 @setfilename swift-reference.info
-@settitle The Swift Programming Reference (Swift 5.3)
+@settitle The Swift Programming Reference (Swift 5.4)
 @documentencoding UTF-8
 @documentlanguage en
 @syncodeindex vr cp
@@ -16,7 +16,7 @@
 
 @finalout
 @titlepage
-@title The Swift Programming Reference (Swift 5.3)
+@title The Swift Programming Reference (Swift 5.4)
 @author Apple Inc.
 @end titlepage
 
@@ -24,7 +24,7 @@
 
 @ifnottex
 @node Top
-@top The Swift Programming Reference (Swift 5.3)
+@top The Swift Programming Reference (Swift 5.4)
 @end ifnottex
 
 @menu
@@ -75,6 +75,7 @@ Types
 * Protocol Composition Type::
 * Opaque Type::
 * Metatype Type::
+* Any Type::
 * Self Type::
 * Type Inheritance Clause::
 * Type Inference::
@@ -92,6 +93,7 @@ Expressions
 
 Prefix Expressions
 
+* In-Out Expression::
 * Try Operator::
 
 Binary Expressions
@@ -246,6 +248,7 @@ Declaration Attributes
 * objc::
 * objcMembers::
 * propertyWrapper::
+* resultBuilder::
 * requires@math{_stored}@math{_property}@math{_inits}::
 * testable::
 * UIApplicationMain::
@@ -338,7 +341,7 @@ The Swift language is relatively small, because many common types,
 functions, and operators that appear virtually everywhere in Swift code
 are actually defined in the Swift standard library. Although these
 types, functions, and operators are not part of the Swift language
-itself, they are used extensively in the discussions and code examples
+itself, they're used extensively in the discussions and code examples
 in this part of the book.
 
 @menu
@@ -367,7 +370,7 @@ grammar production rule.
 
 @item
 Alternative grammar productions are separated by vertical bars (|).
-When alternative productions are too long to read easily, they are
+When alternative productions are too long to read easily, they're
 broken into multiple grammar production rules on new lines.
 
 @item
@@ -438,7 +441,7 @@ This behavior is referred to as @emph{longest match} or @emph{maximal munch}.
 @section Whitespace and Comments
 
 Whitespace has two uses: to separate tokens in the source file and to
-help determine whether an operator is a prefix or postfix (see
+distinguish between prefix, postfix, and binary operators (see
 @ref{Operators}), but is otherwise ignored.
 The following characters are considered whitespace: space (U+0020), line
 feed (U+000A), carriage return (U+000D), horizontal tab (U+0009),
@@ -466,13 +469,16 @@ whitespace-item →
 line-break
 
 whitespace-item →
+inline-space
+
+whitespace-item →
 comment
 
 whitespace-item →
 multiline-comment
 
 whitespace-item →
-U+0000, U+0009, U+000B, U+000C, or U+0020
+U+0000, U+000B, or U+0020
 
 line-break → U+000A
 
@@ -480,6 +486,14 @@ line-break → U+000D
 
 line-break → U+000D
 followed by U+000A
+
+inline-spaces →
+inline-space
+inline-spaces
+_@{opt@}
+
+inline-space → U+0009 or
+U+0020
 
 comment → @samp{//}
 comment-text
@@ -525,7 +539,7 @@ Multilingual Plane that isn't in a Private Use Area. After the first
 character, digits and combining Unicode characters are also allowed.
 
 To use a reserved word as an identifier, put a backtick (@samp{`}) before and
-after it. For example, @samp{class} is not a valid identifier, but @samp{`class`}
+after it. For example, @samp{class} isn't a valid identifier, but @samp{`class`}
 is valid. The backticks aren't considered part of the identifier; @samp{`x`}
 and @samp{x} have the same meaning.
 
@@ -672,8 +686,8 @@ Keywords used in statements: @samp{break}, @samp{case}, @samp{continue}, @samp{d
 
 @item
 Keywords used in expressions and types: @samp{as}, @samp{Any}, @samp{catch}, @samp{false},
-@samp{is}, @samp{nil}, @samp{super}, @samp{self}, @samp{Self}, @samp{throw}, @samp{throws},
-@samp{true}, and @samp{try}.
+@samp{is}, @samp{nil}, @samp{super}, @samp{self}, @samp{Self}, @samp{throw}, @samp{throws}, @samp{true}, and
+@samp{try}.
 
 @item
 Keywords used in patterns: @samp{_}.
@@ -681,8 +695,9 @@ Keywords used in patterns: @samp{_}.
 @item
 Keywords that begin with a number sign (@samp{#}): @samp{#available},
 @samp{#colorLiteral}, @samp{#column}, @samp{#else}, @samp{#elseif}, @samp{#endif}, @samp{#error},
-@samp{#file}, @samp{#filePath}, @samp{#fileLiteral}, @samp{#function}, @samp{#if}, @samp{#imageLiteral}, @samp{#line},
-@samp{#selector}, @samp{#sourceLocation}, and @samp{#warning}.
+@samp{#file}, @samp{#fileID}, @samp{#fileLiteral}, @samp{#filePath}, @samp{#function}, @samp{#if},
+@samp{#imageLiteral}, @samp{#line}, @samp{#selector}, @samp{#sourceLocation}, and
+@samp{#warning}.
 
 @item
 Keywords reserved in particular contexts: @samp{associativity},
@@ -1035,13 +1050,13 @@ line feeds. It can't contain three unescaped double quotation marks next
 to each other.
 
 The line break after the @samp{"""} that begins the multiline string literal
-is not part of the string. The line break before the @samp{"""} that ends the
+isn't part of the string. The line break before the @samp{"""} that ends the
 literal is also not part of the string. To make a multiline string
 literal that begins or ends with a line feed, write a blank line as its
 first or last line.
 
 A multiline string literal can be indented using any combination of
-spaces and tabs; this indentation is not included in the string. The
+spaces and tabs; this indentation isn't included in the string. The
 @samp{"""} that ends the literal determines the indentation: Every nonblank
 line in the literal must begin with exactly the same indentation that
 appears before the closing @samp{"""}; there's no conversion between tabs and
@@ -1167,7 +1182,7 @@ the same indentation requirements as regular multiline string literals.
 
 The default inferred type of a string literal is @samp{String}. For more
 information about the @samp{String} type, see
-@ref{Strings%20and%20Characters,Strings and Characters,,swift,}
+@ref{Strings and Characters,Strings and Characters,,swift,}
 and @uref{https://developer.apple.com/documentation/swift/string, @samp{String}}
 [@uref{https://developer.apple.com/documentation/swift/string}].
 
@@ -1268,7 +1283,7 @@ string-literal-closing-delimiter
 interpolated-string-literal
 →
 multiline-string-literal-opening-delimiter
-interpolated-text
+multiline-interpolated-text
 _@{opt@}
 multiline-string-literal-closing-delimiter
 
@@ -1326,7 +1341,7 @@ unicode-scalar-digits
 
 escaped-newline →
 escape-sequence
-whitespace
+inline-spaces
 _@{opt@}
 line-break
 
@@ -1335,8 +1350,8 @@ line-break
 
 The Swift standard library defines a number of operators for your use,
 many of which are discussed in
-@ref{Basic%20Operators,Basic Operators,,swift,} and
-@ref{Advanced%20Operators,Advanced Operators,,swift,}. The
+@ref{Basic Operators,Basic Operators,,swift,} and
+@ref{Advanced Operators,Advanced Operators,,swift,}. The
 present section describes which characters can be used to define custom
 operators.
 
@@ -1406,17 +1421,17 @@ must have whitespace around both sides.
 
 In certain constructs, operators with a leading @samp{<} or @samp{>} may be split
 into two or more tokens. The remainder is treated the same way and may
-be split again. As a result, there's no need to use whitespace to
+be split again. As a result, you don't need to add whitespace to
 disambiguate between the closing @samp{>} characters in constructs like
 @samp{Dictionary<String, Array<Int>>}. In this example, the closing @samp{>}
-characters are not treated as a single token that may then be
+characters aren't treated as a single token that may then be
 misinterpreted as a bit shift @samp{>>} operator.
 
 To learn how to define new, custom operators, see
-@ref{Custom%20Operators,Custom Operators,,swift,} and
+@ref{Custom Operators,Custom Operators,,swift,} and
 @ref{Operator Declaration}. To learn how to
 overload existing operators, see
-@ref{Operator%20Methods,Operator Methods,,swift,}.
+@ref{Operator Methods,Operator Methods,,swift,}.
 
 Grammar of operators
 
@@ -1620,6 +1635,7 @@ type @samp{)}
 * Protocol Composition Type::
 * Opaque Type::
 * Metatype Type::
+* Any Type::
 * Self Type::
 * Type Inheritance Clause::
 * Type Inference::
@@ -1681,7 +1697,7 @@ let origin: Point = (0, 0)
 In the second case, a type identifier uses dot (@samp{.}) syntax to refer to
 named types declared in other modules or nested within other types. For
 example, the type identifier in the following code references the named
-type @samp{MyType} that is declared in the @samp{ExampleModule} module.
+type @samp{MyType} that's declared in the @samp{ExampleModule} module.
 
 @enumerate
 @item
@@ -1713,7 +1729,7 @@ also name the elements of a tuple type and use those names to refer to
 the values of the individual elements. An element name consists of an
 identifier followed immediately by a colon (:). For an example that
 demonstrates both of these features, see
-@ref{Functions%20with%20Multiple%20Return%20Values,Functions with Multiple Return
+@ref{Functions with Multiple Return Values,Functions with Multiple Return
 Values,,swift,}.
 
 When an element of a tuple type has a name, that name is part of the
@@ -1785,13 +1801,13 @@ when you call the function. For an example of an autoclosure function
 type parameter, see
 @ref{Autoclosures,Autoclosures,,swift,}.
 
-A function type can have a variadic parameter in its @emph{parameter type}.
+A function type can have variadic parameters in its @emph{parameter type}.
 Syntactically, a variadic parameter consists of a base type name
 followed immediately by three dots (@samp{...}), as in @samp{Int...}. A variadic
 parameter is treated as an array that contains elements of the base type
 name. For instance, the variadic parameter @samp{Int...} is treated as
 @samp{[Int]}. For an example that uses a variadic parameter, see
-@ref{Variadic%20Parameters,Variadic Parameters,,swift,}.
+@ref{Variadic Parameters,Variadic Parameters,,swift,}.
 
 To specify an in-out parameter, prefix the parameter type with the
 @samp{inout} keyword. You can't mark a variadic parameter or a return type
@@ -1806,11 +1822,11 @@ and doesn't return any value. In contrast, without parentheses,
 @samp{(Int, Int) -> Void} is the type of a function that takes two @samp{Int}
 parameters and doesn't return any value. Likewise, because @samp{Void} is a
 type alias for @samp{()}, the function type @samp{(Void) -> Void} is the same as
-@samp{(()) -> ()}---a function that takes a single argument that is an empty
-tuple. These types are not the same as @samp{() -> ()}---a function that
+@samp{(()) -> ()}---a function that takes a single argument that's an empty
+tuple. These types aren't the same as @samp{() -> ()}---a function that
 takes no arguments.
 
-Argument names in functions and methods are not part of the
+Argument names in functions and methods aren't part of the
 corresponding function type. For example:
 
 @enumerate
@@ -1847,7 +1863,7 @@ top: Int) @{@}
 f = functionWithDifferentNumberOfArguments // Error
 @end enumerate
 
-Because argument labels are not part of a function's type, you omit them
+Because argument labels aren't part of a function's type, you omit them
 when writing a function type.
 
 @enumerate
@@ -1933,7 +1949,7 @@ escaping, or temporarily convert one of the nonescaping function
 parameters to an escaping function by using the
 @samp{withoutActuallyEscaping(_:do:)} function. For information about
 avoiding conflicting access to memory, see
-@ref{Memory%20Safety,Memory Safety,,swift,}.
+@ref{Memory Safety,Memory Safety,,swift,}.
 
 Grammar of a function type
 
@@ -2170,7 +2186,7 @@ implicitly unwrapped optional expression. If the value is @samp{nil}, no
 operation is performed and therefore no runtime error is produced.
 
 For more information about implicitly unwrapped optional types, see
-@ref{Implicitly%20Unwrapped%20Optionals,Implicitly Unwrapped
+@ref{Implicitly Unwrapped Optionals,Implicitly Unwrapped
 Optionals,,swift,}.
 
 Grammar of an implicitly unwrapped optional type
@@ -2182,7 +2198,7 @@ implicitly-unwrapped-optional-type
 @section Protocol Composition Type
 
 A @emph{protocol composition type} defines a type that conforms to each
-protocol in a list of specified protocols, or a type that is a subclass
+protocol in a list of specified protocols, or a type that's a subclass
 of a given class and conforms to each protocol in a list of specified
 protocols. Protocol composition types may be used only when specifying a
 type in type annotations, in generic parameter clauses, and in generic
@@ -2202,7 +2218,7 @@ the type to conform to. For example, you can use the protocol
 composition type @samp{ProtocolA & ProtocolB & ProtocolC} instead of
 declaring a new protocol that inherits from @samp{ProtocolA}, @samp{ProtocolB},
 and @samp{ProtocolC}. Likewise, you can use @samp{SuperClass & ProtocolA} instead
-of declaring a new protocol that is a subclass of @samp{SuperClass} and
+of declaring a new protocol that's a subclass of @samp{SuperClass} and
 conforms to @samp{ProtocolA}.
 
 Each item in a protocol composition list is one of the following; the
@@ -2382,6 +2398,60 @@ metatype-type →
 type @samp{.} @samp{Type} |
 type @samp{.} @samp{Protocol}
 
+@node Any Type
+@section Any Type
+
+The @samp{Any} type can contain values from all other types. @samp{Any} can be
+used as the concrete type for an instance of any of the following types:
+
+@itemize
+@item
+A class, structure, or enumeration
+
+@item
+A metatype, such as @samp{Int.self}
+
+@item
+A tuple with any types of components
+
+@item
+A closure or function type
+
+@item
+let mixed: [Any] = ["one", 2, true, (4, 5.3), @{ () -> Int in return 6
+@}]
+@end itemize
+
+When you use @samp{Any} as a concrete type for an instance, you need to cast
+the instance to a known type before you can access its properties or
+methods. Instances with a concrete type of @samp{Any} maintain their original
+dynamic type and can be cast to that type using one of the type-cast
+operators---@samp{as}, @samp{as?}, or @samp{as!}. For example, use @samp{as?} to
+conditionally downcast the first object in a heterogeneous array to a
+@samp{String} as follows:
+
+@enumerate
+@item
+if let first = mixed.first as? String @{
+@item
+print("The first item, '\(first)', is a string.")
+@item
+@}
+@item
+// Prints "The first item, 'one', is a string."
+@end enumerate
+
+For more information about casting, see
+@ref{Type Casting,Type Casting,,swift,}.
+
+The @samp{AnyObject} protocol is similar to the @samp{Any} type. All classes
+implicitly conform to @samp{AnyObject}. Unlike @samp{Any}, which is defined by the
+language, @samp{AnyObject} is defined by the Swift standard library. For more
+information, see @ref{Class-Only Protocols,Class-Only
+Protocols,,swift,} and
+@uref{https://developer.apple.com/documentation/swift/anyobject, @samp{AnyObject}}
+[@uref{https://developer.apple.com/documentation/swift/anyobject}].
+
 @node Self Type
 @section Self Type
 
@@ -2496,7 +2566,7 @@ list of protocols, or in the case of an enumeration that assigns raw
 values to its cases, a single, named type that specifies the type of
 those raw values. For an example of an enumeration definition that uses
 a type inheritance clause to specify the type of its raw values, see
-@ref{Raw%20Values,Raw Values,,swift,}.
+@ref{Raw Values,Raw Values,,swift,}.
 
 Grammar of a type inheritance clause
 
@@ -2596,20 +2666,14 @@ expression. Prefix operators take one argument, the expression that
 follows them.
 
 For information about the behavior of these operators, see
-@ref{Basic%20Operators,Basic Operators,,swift,} and
-@ref{Advanced%20Operators,Advanced Operators,,swift,}.
+@ref{Basic Operators,Basic Operators,,swift,} and
+@ref{Advanced Operators,Advanced Operators,,swift,}.
 
 For information about the operators provided by the Swift standard
 library, see
 @uref{https://developer.apple.com/documentation/swift/operator_declarations, Operator
 Declarations}
 [@uref{https://developer.apple.com/documentation/swift/operator_declarations}].
-
-In addition to the standard library operators, you use @samp{&} immediately
-before the name of a variable that's being passed as an in-out argument
-to a function call expression. For more information and to see an
-example, see @ref{In-Out Parameters, , In-Out
-Parameters}.
 
 Grammar of a prefix expression
 
@@ -2625,8 +2689,33 @@ in-out-expression → @samp{&}
 identifier
 
 @menu
+* In-Out Expression::
 * Try Operator::
 @end menu
+
+@node In-Out Expression
+@subsection In-Out Expression
+
+An @emph{in-out expression} marks a variable that's being passed as an in-out
+argument to a function call expression.
+
+@enumerate
+@item
+&expression
+@end enumerate
+
+For more information about in-out parameters and to see an example, see
+
+@ref{In-Out Parameters,In-Out Parameters,,swift-reference,}.
+
+In-out expressions are also used when providing a non-pointer argument
+in a context where a pointer is needed, as described in
+@ref{Implicit Conversion to a Pointer Type,Implicit Conversion to a Pointer Type,,swift-reference,}.
+
+Grammar of an in-out expression
+
+in-out-expression → @samp{&}
+identifier
 
 @node Try Operator
 @subsection Try Operator
@@ -2647,7 +2736,7 @@ an expression that can throw an error. It has the following form:
 try? expression
 @end enumerate
 
-If the @emph{expression} does not throw an error, the value of the
+If the @emph{expression} doesn't throw an error, the value of the
 optional-try expression is an optional containing the value of the
 @emph{expression}. Otherwise, the value of the optional-try expression is
 @samp{nil}.
@@ -2684,7 +2773,7 @@ operator, unless the binary operator is the assignment operator or the
 @samp{try} expression is enclosed in parentheses.
 
 For more information and to see examples of how to use @samp{try}, @samp{try?},
-and @samp{try!}, see @ref{Error%20Handling,Error
+and @samp{try!}, see @ref{Error Handling,Error
 Handling,,swift,}.
 
 Grammar of a try expression
@@ -2705,8 +2794,8 @@ left-hand argument operator right-hand argument
 @end enumerate
 
 For information about the behavior of these operators, see
-@ref{Basic%20Operators,Basic Operators,,swift,} and
-@ref{Advanced%20Operators,Advanced Operators,,swift,}.
+@ref{Basic Operators,Basic Operators,,swift,} and
+@ref{Advanced Operators,Advanced Operators,,swift,}.
 
 For information about the operators provided by the Swift standard
 library, see
@@ -2778,7 +2867,7 @@ corresponding part of the @emph{expression}. For example:
 // a is "test", b is 12, c is 3, and 9.45 is ignored
 @end enumerate
 
-The assignment operator does not return any value.
+The assignment operator doesn't return any value.
 
 Grammar of an assignment operator
 
@@ -2799,10 +2888,10 @@ condition ? expression used if true : expression used if false
 If the @emph{condition} evaluates to @samp{true}, the conditional operator
 evaluates the first expression and returns its value. Otherwise, it
 evaluates the second expression and returns its value. The unused
-expression is not evaluated.
+expression isn't evaluated.
 
 For an example that uses the ternary conditional operator, see
-@ref{Ternary%20Conditional%20Operator,Ternary Conditional
+@ref{Ternary Conditional Operator,Ternary Conditional
 Operator,,swift,}.
 
 Grammar of a conditional operator
@@ -2835,7 +2924,7 @@ The @samp{is} operator checks at runtime whether the @emph{expression} can be ca
 to the specified @emph{type}. It returns @samp{true} if the @emph{expression} can be
 cast to the specified @emph{type}; otherwise, it returns @samp{false}.
 
-The @samp{as} operator performs a cast when it is known at compile time that
+The @samp{as} operator performs a cast when it's known at compile time that
 the cast always succeeds, such as upcasting or bridging. Upcasting lets
 you use an expression as an instance of its type's supertype, without
 using an intermediate variable. The following approaches are equivalent:
@@ -2892,7 +2981,7 @@ raised. The behavior of @samp{x as! T} is the same as the behavior of
 @samp{(x as? T)!}.
 
 For more information about type casting and to see examples that use the
-type-casting operators, see @ref{Type%20Casting,Type
+type-casting operators, see @ref{Type Casting,Type
 Casting,,swift,}.
 
 Grammar of a type-casting operator
@@ -2992,6 +3081,7 @@ string or a number), an array or dictionary literal, a playground
 literal, or one of the following special literals:
 
 @findex #file
+@findex #fileID
 @findex #filePath
 @findex #line
 @findex #column
@@ -3005,6 +3095,9 @@ literal, or one of the following special literals:
 @item @samp{#file}
 @tab @samp{String}
 @tab The name of the file in which it appears.
+@item @samp{#fileID}
+@tab @samp{String}
+@tab The name of the file and module in which it appears.
 @item @samp{#filePath}
 @tab @samp{String}
 @tab The path to the file in which it appears.
@@ -3022,27 +3115,37 @@ literal, or one of the following special literals:
 @tab The DSO (dynamic shared object) handle in use where it appears.
 @end multitable
 
-The string value of a @samp{#file} expression has the form @emph{module///file},
+The string value of @samp{#file} depends on the language version, to enable
+migration from the old @samp{#filePath} behavior to the new @samp{#fileID}
+behavior. Currently, @samp{#file} has the same value as @samp{#filePath}. In a
+future version of Swift, @samp{#file} will have the same value as @samp{#fileID}
+instead. To adopt the future behavior, replace @samp{#file} with @samp{#fileID} or
+@samp{#filePath} as appropriate.
+
+The string value of a @samp{#fileID} expression has the form @emph{module///file},
 where @emph{file} is the name of the file in which the expression appears and
 @emph{module} is the name of the module that this file is part of. The string
 value of a @samp{#filePath} expression is the full file-system path to the
 file in which the expression appears. Both of these values can be
 changed by @samp{#sourceLocation}, as described in
-@ref{Line Control Statement}.
+@ref{Line Control Statement,Line Control Statement,,swift-reference,}. Because @samp{#fileID}
+doesn't embed the full path to the source file, unlike @samp{#filePath}, it
+gives you better privacy and reduces the size of the compiled binary.
+Avoid using @samp{#filePath} outside of tests, build scripts, or other code
+that doesn't become part of the shipping program.
 
 Note
 
-To parse a @samp{#file} expression, read the module name as the text before
+To parse a @samp{#fileID} expression, read the module name as the text before
 the first slash (@samp{/}) and the filename as the text after the last slash.
 In the future, the string might contain multiple slashes, such as
 @samp{MyModule/some/disambiguation/MyFile.swift}.
 
 Inside a function, the value of @samp{#function} is the name of that
-function, inside a method it is the name of that method, inside a
-property getter or setter it is the name of that property, inside
-special members like @samp{init} or @samp{subscript} it is the name of that
-keyword, and at the top level of a file it is the name of the current
-module.
+function, inside a method it's the name of that method, inside a
+property getter or setter it's the name of that property, inside special
+members like @samp{init} or @samp{subscript} it's the name of that keyword, and at
+the top level of a file it's the name of the current module.
 
 When used as the default value of a function or method parameter, the
 special literal's value is determined when the default value expression
@@ -3137,7 +3240,7 @@ dictionary-literal
 playground-literal
 
 literal-expression
-→ @samp{#file} | @samp{#line} | @samp{#column} | @samp{#function} | @samp{#dsohandle}
+→ @samp{#file} | @samp{#fileID} | @samp{#filePath} | @samp{#line} | @samp{#column} | @samp{#function} | @samp{#dsohandle}
 
 array-literal → @samp{[}
 array-literal-items
@@ -3407,12 +3510,12 @@ constant, such as when you immediately use a closure as part of a
 function call. The closure expressions passed to @samp{myFunction} in code
 above are examples of this kind of immediate use. As a result, whether a
 closure expression is escaping or nonescaping depends on the surrounding
-context of the expression. A closure expression is nonescaping if it is
+context of the expression. A closure expression is nonescaping if it's
 called immediately or passed as a nonescaping function argument.
 Otherwise, the closure expression is escaping.
 
 For more information about escaping closures, see
-@ref{Escaping%20Closures,Escaping Closures,,swift,}.
+@ref{Escaping Closures,Escaping Closures,,swift,}.
 
 @enumerate
 @item
@@ -3463,14 +3566,14 @@ There are two different things named @samp{a}, the variable in the
 surrounding scope and the constant in the closure's scope, but only one
 variable named @samp{b}. The @samp{a} in the inner scope is initialized with the
 value of the @samp{a} in the outer scope when the closure is created, but
-their values are not connected in any special way. This means that a
-change to the value of @samp{a} in the outer scope does not affect the value
+their values aren't connected in any special way. This means that a
+change to the value of @samp{a} in the outer scope doesn't affect the value
 of @samp{a} in the inner scope, nor does a change to @samp{a} inside the closure
 affect the value of @samp{a} outside the closure. In contrast, there's only
 one variable named @samp{b}---the @samp{b} in the outer scope---so changes from
 inside or outside the closure are visible in both places.
 
-This distinction is not visible when the captured variable's type has
+This distinction isn't visible when the captured variable's type has
 reference semantics. For example, there are two things named @samp{x} in the
 code below, a variable in the outer scope and a constant in the inner
 scope, but they both refer to the same object because of reference
@@ -3533,9 +3636,9 @@ myFunction @{ [weak parent = self.parent] in print(parent!.title) @}
 @end enumerate
 
 For more information and examples of closure expressions, see
-@ref{Closure%20Expressions,Closure Expressions,,swift,}. For more
+@ref{Closure Expressions,Closure Expressions,,swift,}. For more
 information and examples of capture lists, see
-@ref{Resolving%20Strong%20Reference%20Cycles%20for%20Closures,Resolving
+@ref{Resolving Strong Reference Cycles for Closures,Resolving
 Strong Reference Cycles for Closures,,swift,}.
 
 Grammar of a closure expression
@@ -4110,7 +4213,7 @@ following form:
 @end enumerate
 
 The @emph{method name} and @emph{property name} must be a reference to a method or
-a property that is available in the Objective-C runtime. The value of a
+a property that's available in the Objective-C runtime. The value of a
 selector expression is an instance of the @samp{Selector} type. For example:
 
 @enumerate
@@ -4210,7 +4313,7 @@ observing APIs. It has the following form:
 #keyPath(property name)
 @end enumerate
 
-The @emph{property name} must be a reference to a property that is available
+The @emph{property name} must be a reference to a property that's available
 in the Objective-C runtime. At compile time, the key-path string
 expression is replaced by a string literal. For example:
 
@@ -4288,7 +4391,7 @@ Observing Programming Guide}
 
 Note
 
-Although the @emph{property name} is an expression, it is never evaluated.
+Although the @emph{property name} is an expression, it's never evaluated.
 
 Grammar of a key-path string expression
 
@@ -4305,8 +4408,8 @@ postfix syntax to an expression. Syntactically, every primary expression
 is also a postfix expression.
 
 For information about the behavior of these operators, see
-@ref{Basic%20Operators,Basic Operators,,swift,} and
-@ref{Advanced%20Operators,Advanced Operators,,swift,}.
+@ref{Basic Operators,Basic Operators,,swift,} and
+@ref{Advanced Operators,Advanced Operators,,swift,}.
 
 For information about the operators provided by the Swift standard
 library, see
@@ -4426,9 +4529,166 @@ myData.someMethod() @{ $0 == 13 @}
 myData.someMethod @{ $0 == 13 @}
 @end enumerate
 
+To include the trailing closures in the arguments, the compiler examines
+the function's parameters from left to right as follows:
+
+@multitable {aaaaaaaaaaaaaaaa} {aaaaaaaaaaaaaaaaaaaa} {aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}
+@headitem Trailing Closure
+@tab Parameter
+@tab Action
+@item Labeled
+@tab Labeled
+@tab If the labels are the same, the closure matches the parameter; otherwise, the parameter is skipped.
+@item Labeled
+@tab Unlabeled
+@tab The parameter is skipped.
+@item Unlabeled
+@tab Labeled or unlabeled
+@tab If the parameter structurally resembles a function type, as defined below, the closure matches the parameter; otherwise, the parameter is skipped.
+@end multitable
+
+The trailing closure is passed as the argument for the parameter that it
+matches. Parameters that were skipped during the scanning process don't
+have an argument passed to them---for example, they can use a default
+parameter. After finding a match, scanning continues with the next
+trailing closure and the next parameter. At the end of the matching
+process, all trailing closures must have a match.
+
+A parameter @emph{structurally resembles} a function type if the parameter
+isn't an in-out parameter, and the parameter is one of the following:
+
+@itemize
+@item
+A parameter whose type is a function type, like @samp{(Bool) -> Int}
+
+@item
+An autoclosure parameter whose wrapped expression's type is a function
+type, like @samp{@@autoclosure () -> ((Bool) -> Int)}
+
+@item
+A variadic parameter whose array element type is a function type, like
+@samp{((Bool) -> Int)...}
+
+@item
+A parameter whose type is wrapped in one or more layers of optional,
+like @samp{Optional<(Bool) -> Int>}
+
+@item
+A parameter whose type combines these allowed types, like
+@samp{(Optional<(Bool) -> Int>)...}
+@end itemize
+
+When a trailing closure is matched to a parameter whose type
+structurally resembles a function type, but isn't a function, the
+closure is wrapped as needed. For example, if the parameter's type is an
+optional type, the closure is wrapped in @samp{Optional} automatically.
+
+To ease migration of code from versions of Swift prior to 5.3---which
+performed this matching from right to left---the compiler checks both
+the left-to-right and right-to-left orderings. If the scan directions
+produce different results, the old right-to-left ordering is used and
+the compiler generates a warning. A future version of Swift will always
+use the left-to-right ordering.
+
+@enumerate
+@item
+typealias Callback = (Int) -> Int
+@item
+func someFunction(firstClosure: Callback? = nil,
+@item
+secondClosure: Callback? = nil) @{
+@item
+let first = firstClosure?(10)
+@item
+let second = secondClosure?(20)
+@item
+print(first ?? "-", second ?? "-")
+@item
+@}
+@item
+
+
+@item
+someFunction() // Prints "- -"
+@item
+someFunction @{ return $0 + 100 @} // Ambiguous
+@item
+someFunction @{ return $0 @} secondClosure: @{ return $0 @} // Prints
+"10 20"
+@end enumerate
+
+In the example above, the function call marked “Ambiguous” prints “-
+120” and produces a compiler warning on Swift 5.3. A future version of
+Swift will print “110 -”.   
+
 A class, structure, or enumeration type can enable syntactic sugar for
 function call syntax by declaring one of several methods, as described
 in @ref{Methods with Special Names}.
+
+@enumerate
+@item
+Implicit Conversion to a Pointer Type
+
+
+In a function call expression, if the argument and parameter have a
+different type, the compiler tries to make their types match by applying
+one of the implicit conversions in the following list:
+
+@itemize
+@item
+@samp{inout SomeType} can become @samp{UnsafePointer<SomeType>} or
+@samp{UnsafeMutablePointer<SomeType>}
+
+@item
+@samp{inout Array<SomeType>} can become @samp{UnsafePointer<SomeType>} or
+@samp{UnsafeMutablePointer<SomeType>}
+
+@item
+@samp{Array<SomeType>} can become @samp{UnsafePointer<SomeType>}
+
+@item
+@samp{String} can become @samp{UnsafePointer<CChar>}
+@end itemize
+
+The following two function calls are equivalent:
+
+@enumerate
+@item
+func unsafeFunction(pointer: UnsafePointer<Int>) @{
+@item
+// @dots{}
+@item
+@}
+@item
+var myNumber = 1234
+@item
+
+
+@item
+unsafeFunction(pointer: &myNumber)
+@item
+withUnsafePointer(to: myNumber) @{ unsafeFunction(pointer: $0) @}
+@end enumerate
+
+A pointer that's created by these implicit conversions is valid only for
+the duration of the function call. To avoid undefined behavior, ensure
+that your code never persists the pointer after the function call ends.
+
+Note
+
+When implicitly converting an array to an unsafe pointer, Swift ensures
+that the array's storage is contiguous by converting or copying the
+array as needed. For example, you can use this syntax with an array that
+was bridged to @samp{Array} from an @samp{NSArray} subclass that makes no API
+contract about its storage. If you need to guarantee that the array's
+storage is already contiguous, so the implicit conversion never needs to
+do this work, use @samp{ContiguousArray} instead of @samp{Array}.
+
+Using @samp{&} instead of an explicit function like @samp{withUnsafePointer(to:)}
+can help make calls to low-level C functions more readable, especially
+when the function takes several pointer arguments. However, when calling
+functions from other Swift code, avoid using @samp{&} instead of using the
+unsafe APIs explicitly.
 
 Grammar of a function call expression
 
@@ -4481,6 +4741,7 @@ operator
 
 trailing-closure →
 closure-expression
+@end enumerate
 
 @node Initializer Expression
 @subsection Initializer Expression
@@ -4647,7 +4908,7 @@ let d: (Int, Bool) -> Void = instance.overloadedMethod(x:y:) //
 Unambiguous
 @end enumerate
 
-If a period appears at the beginning of a line, it is understood as part
+If a period appears at the beginning of a line, it's understood as part
 of an explicit member expression, not as an implicit member expression.
 For example, the following listing shows chained method calls split over
 several lines:
@@ -4757,14 +5018,14 @@ function-call-argument-list
 @subsection Forced-Value Expression
 
 A @emph{forced-value expression} unwraps an optional value that you are
-certain is not @samp{nil}. It has the following form:
+certain isn't @samp{nil}. It has the following form:
 
 @enumerate
 @item
 expression!
 @end enumerate
 
-If the value of the @emph{expression} is not @samp{nil}, the optional value is
+If the value of the @emph{expression} isn't @samp{nil}, the optional value is
 unwrapped and returned with the corresponding non-optional type.
 Otherwise, a runtime error is raised.
 
@@ -4816,14 +5077,14 @@ and they cause the postfix expression to be evaluated in a special way.
 If the value of the optional-chaining expression is @samp{nil}, all of the
 other operations in the postfix expression are ignored and the entire
 postfix expression evaluates to @samp{nil}. If the value of the
-optional-chaining expression is not @samp{nil}, the value of the
+optional-chaining expression isn't @samp{nil}, the value of the
 optional-chaining expression is unwrapped and used to evaluate the rest
 of the postfix expression. In either case, the value of the postfix
 expression is still of an optional type.
 
 If a postfix expression that contains an optional-chaining expression is
 nested inside other postfix expressions, only the outermost expression
-returns an optional type. In the example below, when @samp{c} is not @samp{nil},
+returns an optional type. In the example below, when @samp{c} isn't @samp{nil},
 its value is unwrapped and used to evaluate @samp{.property}, the value of
 which is used to evaluate @samp{.performAction()}. The entire expression
 @samp{c?.property.performAction()} has a value of an optional type.
@@ -4853,7 +5114,7 @@ The unwrapped value of an optional-chaining expression can be modified,
 either by mutating the value itself, or by assigning to one of the
 value's members. If the value of the optional-chaining expression is
 @samp{nil}, the expression on the right-hand side of the assignment operator
-is not evaluated. For example:
+isn't evaluated. For example:
 
 @enumerate
 @item
@@ -4870,7 +5131,7 @@ var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
 @item
 someDictionary["not here"]?[0] = someFunctionWithSideEffects()
 @item
-// someFunctionWithSideEffects is not evaluated
+// someFunctionWithSideEffects isn't evaluated
 @item
 // someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
 @item
@@ -5025,11 +5286,11 @@ the
 @uref{https://developer.apple.com/documentation/swift/iteratorprotocol, @samp{IteratorProtocol}}
 [@uref{https://developer.apple.com/documentation/swift/iteratorprotocol}]
 protocol. The program begins executing a loop by calling the @samp{next()}
-method on the iterator. If the value returned is not @samp{nil}, it is
-assigned to the @emph{item} pattern, the program executes the @emph{statements},
-and then continues execution at the beginning of the loop. Otherwise,
-the program does not perform assignment or execute the @emph{statements}, and
-it is finished executing the @samp{for}-@samp{in} statement.
+method on the iterator. If the value returned isn't @samp{nil}, it's assigned
+to the @emph{item} pattern, the program executes the @emph{statements}, and then
+continues execution at the beginning of the loop. Otherwise, the program
+doesn't perform assignment or execute the @emph{statements}, and it's
+finished executing the @samp{for}-@samp{in} statement.
 
 Grammar of a for-in statement
 
@@ -5080,7 +5341,7 @@ be executed zero or more times.
 
 The value of the @emph{condition} must be of type @samp{Bool} or a type bridged to
 @samp{Bool}. The condition can also be an optional binding declaration, as
-discussed in @ref{Optional%20Binding,Optional
+discussed in @ref{Optional Binding,Optional
 Binding,,swift,}.
 
 Grammar of a while statement
@@ -5158,7 +5419,7 @@ executed at least once.
 
 The value of the @emph{condition} must be of type @samp{Bool} or a type bridged to
 @samp{Bool}. The condition can also be an optional binding declaration, as
-discussed in @ref{Optional%20Binding,Optional
+discussed in @ref{Optional Binding,Optional
 Binding,,swift,}.
 
 Grammar of a repeat-while statement
@@ -5258,7 +5519,7 @@ statements to execute if both conditions are false
 The value of any condition in an @samp{if} statement must be of type @samp{Bool}
 or a type bridged to @samp{Bool}. The condition can also be an optional
 binding declaration, as discussed in
-@ref{Optional%20Binding,Optional Binding,,swift,}.
+@ref{Optional Binding,Optional Binding,,swift,}.
 
 Grammar of an if statement
 
@@ -5295,7 +5556,7 @@ statements
 The value of any condition in a @samp{guard} statement must be of type @samp{Bool}
 or a type bridged to @samp{Bool}. The condition can also be an optional
 binding declaration, as discussed in
-@ref{Optional%20Binding,Optional Binding,,swift,}.
+@ref{Optional Binding,Optional Binding,,swift,}.
 
 Any constants or variables assigned a value from an optional binding
 declaration in a @samp{guard} statement condition can be used for the rest of
@@ -5384,7 +5645,7 @@ to the value of a case in an enumeration and checked for inclusion in a
 specified range of values. For examples of how to use these various
 types of values in @samp{switch} statements, see
 @ref{Switch,Switch,,swift,} in
-@ref{Control%20Flow,Control Flow,,swift,}.
+@ref{Control Flow,Control Flow,,swift,}.
 
 A @samp{switch} case can optionally contain a @samp{where} clause after each
 pattern. A @emph{where clause} is introduced by the @samp{where} keyword followed
@@ -5394,7 +5655,7 @@ If a @samp{where} clause is present, the @emph{statements} within the relevant
 case are executed only if the value of the @emph{control expression} matches
 one of the patterns of the case and the expression of the @samp{where} clause
 evaluates to @samp{true}. For example, a @emph{control expression} matches the
-case in the example below only if it is a tuple that contains two
+case in the example below only if it's a tuple that contains two
 elements of the same value, such as @samp{(1, 1)}.
 
 @enumerate
@@ -5459,7 +5720,7 @@ include a default case, even if every case of the enumeration already
 has a corresponding switch case. You can apply the @samp{@@unknown} attribute
 to the default case, which indicates that the default case should match
 only enumeration cases that are added in the future. Swift produces a
-warning if the default case matches any enumeration case that is known
+warning if the default case matches any enumeration case that's known
 at compiler time. This future warning informs you that the library
 author added a new case to the enumeration that doesn't have a
 corresponding switch case.
@@ -5493,10 +5754,10 @@ Execution Does Not Fall Through Cases Implicitly
 
 
 After the code within a matched case has finished executing, the program
-exits from the @samp{switch} statement. Program execution does not continue
-or “fall through” to the next case or default case. That said, if you
-want execution to continue from one case to the next, explicitly include
-a @samp{fallthrough} statement, which simply consists of the @samp{fallthrough}
+exits from the @samp{switch} statement. Program execution doesn't continue or
+“fall through” to the next case or default case. That said, if you want
+execution to continue from one case to the next, explicitly include a
+@samp{fallthrough} statement, which simply consists of the @samp{fallthrough}
 keyword, in the case from which you want execution to continue. For more
 information about the @samp{fallthrough} statement, see
 @ref{Fallthrough Statement} below.
@@ -5601,8 +5862,8 @@ statement label. You can nest labeled statements, but the name of each
 statement label must be unique.
 
 For more information and to see examples of how to use statement labels,
-see @ref{Labeled%20Statements,Labeled Statements,,swift,} in
-@ref{Control%20Flow,Control Flow,,swift,}.
+see @ref{Labeled Statements,Labeled Statements,,swift,} in
+@ref{Control Flow,Control Flow,,swift,}.
 
 Grammar of a labeled statement
 
@@ -5687,7 +5948,7 @@ When a @samp{break} statement is followed by the name of a statement label,
 it ends program execution of the loop, @samp{if} statement, or @samp{switch}
 statement named by that label.
 
-When a @samp{break} statement is not followed by the name of a statement
+When a @samp{break} statement isn't followed by the name of a statement
 label, it ends program execution of the @samp{switch} statement or the
 innermost enclosing loop statement in which it occurs. You can't use an
 unlabeled @samp{break} statement to break out of an @samp{if} statement.
@@ -5697,8 +5958,8 @@ code following the enclosing loop or @samp{switch} statement, if any.
 
 For examples of how to use a @samp{break} statement, see
 @ref{Break,Break,,swift,} and
-@ref{Labeled%20Statements,Labeled Statements,,swift,} in
-@ref{Control%20Flow,Control Flow,,swift,}.
+@ref{Labeled Statements,Labeled Statements,,swift,} in
+@ref{Control Flow,Control Flow,,swift,}.
 
 Grammar of a break statement
 
@@ -5710,7 +5971,7 @@ _@{opt@}
 @subsection Continue Statement
 
 A @samp{continue} statement ends program execution of the current iteration
-of a loop statement but does not stop execution of the loop statement. A
+of a loop statement but doesn't stop execution of the loop statement. A
 @samp{continue} statement can consist of only the @samp{continue} keyword, or it
 can consist of the @samp{continue} keyword followed by the name of a
 statement label, as shown below.
@@ -5726,7 +5987,7 @@ When a @samp{continue} statement is followed by the name of a statement
 label, it ends program execution of the current iteration of the loop
 statement named by that label.
 
-When a @samp{continue} statement is not followed by the name of a statement
+When a @samp{continue} statement isn't followed by the name of a statement
 label, it ends program execution of the current iteration of the
 innermost enclosing loop statement in which it occurs.
 
@@ -5739,8 +6000,8 @@ is evaluated after the execution of the loop's body.
 
 For examples of how to use a @samp{continue} statement, see
 @ref{Continue,Continue,,swift,} and
-@ref{Labeled%20Statements,Labeled Statements,,swift,} in
-@ref{Control%20Flow,Control Flow,,swift,}.
+@ref{Labeled Statements,Labeled Statements,,swift,} in
+@ref{Control Flow,Control Flow,,swift,}.
 
 Grammar of a continue statement
 
@@ -5756,17 +6017,17 @@ A @samp{fallthrough} statement consists of the @samp{fallthrough} keyword and
 occurs only in a case block of a @samp{switch} statement. A @samp{fallthrough}
 statement causes program execution to continue from one case in a
 @samp{switch} statement to the next case. Program execution continues to the
-next case even if the patterns of the case label do not match the value
+next case even if the patterns of the case label don't match the value
 of the @samp{switch} statement's control expression.
 
 A @samp{fallthrough} statement can appear anywhere inside a @samp{switch}
 statement, not just as the last statement of a case block, but it can't
-be used in the final case block. It also cannot transfer control into a
+be used in the final case block. It also can't transfer control into a
 case block whose pattern contains value binding patterns.
 
 For an example of how to use a @samp{fallthrough} statement in a @samp{switch}
 statement, see @ref{Control Transfer Statements, , Control
-Transfer Statements} in @ref{Control%20Flow,Control
+Transfer Statements} in @ref{Control Flow,Control
 Flow,,swift,}.
 
 Grammar of a fallthrough statement
@@ -5795,9 +6056,9 @@ return expression
 
 When a @samp{return} statement is followed by an expression, the value of the
 expression is returned to the calling function or method. If the value
-of the expression does not match the value of the return type declared
+of the expression doesn't match the value of the return type declared
 in the function or method declaration, the expression's value is
-converted to the return type before it is returned to the calling
+converted to the return type before it's returned to the calling
 function or method.
 
 Note
@@ -5806,8 +6067,8 @@ As described in @ref{Failable Initializers}, a
 special form of the @samp{return} statement (@samp{return nil}) can be used in a
 failable initializer to indicate initialization failure.
 
-When a @samp{return} statement is not followed by an expression, it can be
-used only to return from a function or method that does not return a
+When a @samp{return} statement isn't followed by an expression, it can be
+used only to return from a function or method that doesn't return a
 value (that is, when the return type of the function or method is @samp{Void}
 or @samp{()}).
 
@@ -5841,8 +6102,8 @@ The value of the @emph{expression} must have a type that conforms to the
 @samp{Error} protocol.
 
 For an example of how to use a @samp{throw} statement, see
-@ref{Propagating%20Errors%20Using%20Throwing%20Functions,Propagating Errors Using
-Throwing Functions,,swift,} in @ref{Error%20Handling,Error
+@ref{Propagating Errors Using Throwing Functions,Propagating Errors Using
+Throwing Functions,,swift,} in @ref{Error Handling,Error
 Handling,,swift,}.
 
 Grammar of a throw statement
@@ -5875,7 +6136,7 @@ closing file descriptors, and to perform actions that need to happen
 even if an error is thrown.
 
 If multiple @samp{defer} statements appear in the same scope, the order they
-appear is the reverse of the order they are executed. Executing the last
+appear is the reverse of the order they're executed. Executing the last
 @samp{defer} statement in a given scope first means that statements inside
 that last @samp{defer} statement can refer to resources that will be cleaned
 up by other @samp{defer} statements.
@@ -5918,7 +6179,7 @@ against defined error conditions. Variables and constants declared in
 the scope of a @samp{do} statement can be accessed only within that scope.
 
 A @samp{do} statement in Swift is similar to curly braces (@samp{@{@}}) in C used to
-delimit a code block, and does not incur a performance cost at runtime.
+delimit a code block, and doesn't incur a performance cost at runtime.
 
 A @samp{do} statement has the following form:
 
@@ -5978,7 +6239,7 @@ the patterns you can use in a @samp{catch} clause, see
 @ref{Patterns}.
 
 To see an example of how to use a @samp{do} statement with several @samp{catch}
-clauses, see @ref{Handling%20Errors,Handling
+clauses, see @ref{Handling Errors,Handling
 Errors,,swift,}.
 
 Grammar of a do statement
@@ -5994,10 +6255,23 @@ catch-clauses
 _@{opt@}
 
 catch-clause → @samp{catch}
-pattern _@{opt@}
-where-clause
+catch-pattern-list
 _@{opt@}
 code-block
+
+catch-pattern-list →
+catch-pattern
+@multitable {}
+@item 
+@end multitable
+catch-pattern
+@samp{,}
+catch-pattern-list
+
+catch-pattern →
+pattern
+where-clause
+_@{opt@}
 
 @node Compiler Control Statements
 @section Compiler Control Statements
@@ -6131,20 +6405,21 @@ otherwise, it returns @samp{false}.
 @findex targetEnvironment
 
 The @samp{targetEnvironment()} platform condition returns @samp{true} when code is
-compiled for a simulator; otherwise, it returns @samp{false}.
+being compiled for the specified environment; otherwise, it returns
+@samp{false}.
 
 Note
 
 @findex arch
 
-The @samp{arch(arm)} platform condition does not return @samp{true} for ARM 64
+The @samp{arch(arm)} platform condition doesn't return @samp{true} for ARM 64
 devices. The @samp{arch(i386)} platform condition returns @samp{true} when code is
 compiled for the 32--bit iOS simulator.
 
-You can combine compilation conditions using the logical operators @samp{&&},
-@samp{||}, and @samp{!} and use parentheses for grouping. These operators have the
-same associativity and precedence as the logical operators that are used
-to combine ordinary Boolean expressions.
+You can combine and negate compilation conditions using the logical
+operators @samp{&&}, @samp{||}, and @samp{!} and use parentheses for grouping. These
+operators have the same associativity and precedence as the logical
+operators that are used to combine ordinary Boolean expressions.
 
 Similar to an @samp{if} statement, you can add multiple conditional branches
 to test for different compilation conditions. You can add any number of
@@ -6173,11 +6448,11 @@ Note
 
 Each statement in the body of a conditional compilation block is parsed
 even if it's not compiled. However, there's an exception if the
-compilation condition includes a @samp{swift()} platform condition: The
-statements are parsed only if the compiler's version of Swift matches
-what is specified in the platform condition. This exception ensures that
-an older compiler doesn't attempt to parse syntax introduced in a newer
-version of Swift.
+compilation condition includes a @samp{swift()} or @samp{compiler()} platform
+condition: The statements are parsed only if the language or compiler
+version matches what is specified in the platform condition. This
+exception ensures that an older compiler doesn't attempt to parse syntax
+introduced in a newer version of Swift.
 
 Grammar of a conditional compilation block
 
@@ -6338,13 +6613,15 @@ A line control statement has the following forms:
 @end enumerate
 
 The first form of a line control statement changes the values of the
-@samp{#line}, @samp{#file}, and @samp{#filePath} literal expressions, beginning with
-the line of code following the line control statement. The @emph{line number}
-changes the value of @samp{#line} and is any integer literal greater than
-zero. The @emph{file path} changes the value of @samp{#file} and @samp{#filePath}, and
-is a string literal. The specified string becomes the value of
-@samp{#filePath}, and the last path component of the string becomes the value
-of @samp{#file}.
+@samp{#line}, @samp{#file}, @samp{#fileID}, and @samp{#filePath} literal expressions,
+beginning with the line of code following the line control statement.
+The @emph{line number} changes the value of @samp{#line}, and is any integer
+literal greater than zero. The @emph{file path} changes the value of @samp{#file},
+@samp{#fileID}, and @samp{#filePath}, and is a string literal. The specified
+string becomes the value of @samp{#filePath}, and the last path component of
+the string is used by the value of @samp{#fileID}. For information about
+@samp{#file}, @samp{#fileID}, and @samp{#filePath}, see
+@ref{Literal Expression,Literal Expression,,swift-reference,}.
 
 The second form of a line control statement, @samp{#sourceLocation()}, resets
 the source code location back to the default line numbering and file
@@ -6504,10 +6781,10 @@ class, and protocol types. You can also use a declaration to extend the
 behavior of an existing named type and to import symbols into your
 program that are declared elsewhere.
 
-In Swift, most declarations are also definitions in the sense that they
-are implemented or initialized at the same time they are declared. That
-said, because protocols don't implement their members, most protocol
-members are declarations only. For convenience and because the
+In Swift, most declarations are also definitions in the sense that
+they're implemented or initialized at the same time they're declared.
+That said, because protocols don't implement their members, most
+protocol members are declarations only. For convenience and because the
 distinction isn't that important in Swift, the term @emph{declaration} covers
 both declarations and definitions.
 
@@ -6591,7 +6868,7 @@ The top-level code in a Swift source file consists of zero or more
 statements, declarations, and expressions. By default, variables,
 constants, and other named declarations that are declared at the
 top-level of a source file are accessible to code in every source file
-that is part of the same module. You can override this default behavior
+that's part of the same module. You can override this default behavior
 by marking the declaration with an access-level modifier, as described
 in @ref{Access Control Levels}.
 
@@ -6708,20 +6985,20 @@ let constant name: type = expression
 
 A constant declaration defines an immutable binding between the
 @emph{constant name} and the value of the initializer @emph{expression}; after the
-value of a constant is set, it cannot be changed. That said, if a
+value of a constant is set, it can't be changed. That said, if a
 constant is initialized with a class object, the object itself can
 change, but the binding between the constant name and the object it
 refers to can't.
 
 When a constant is declared at global scope, it must be initialized with
 a value. When a constant declaration occurs in the context of a function
-or method, it can be initialized later, as long as it is guaranteed to
+or method, it can be initialized later, as long as it's guaranteed to
 have a value set before the first time its value is read. If the
 compiler can prove that the constant's value is never read, the constant
 isn't required to have a value set at all. When a constant declaration
-occurs in the context of a class or structure declaration, it is
-considered a @emph{constant property}. Constant declarations are not computed
-properties and therefore do not have getters or setters.
+occurs in the context of a class or structure declaration, it's
+considered a @emph{constant property}. Constant declarations aren't computed
+properties and therefore don't have getters or setters.
 
 If the @emph{constant name} of a constant declaration is a tuple pattern, the
 name of each item in the tuple is bound to the corresponding value in
@@ -6756,11 +7033,11 @@ To declare a constant type property, mark the declaration with the
 always implicitly final; you can't mark it with the @samp{class} or @samp{final}
 declaration modifier to allow or disallow overriding by subclasses. Type
 properties are discussed in
-@ref{Type%20Properties,Type Properties,,swift,}.
+@ref{Type Properties,Type Properties,,swift,}.
 
 For more information about constants and for guidance about when to use
-them, see @ref{Constants%20and%20Variables,Constants and
-Variables,,swift,} and @ref{Stored%20Properties,Stored
+them, see @ref{Constants and Variables,Constants and
+Variables,,swift,} and @ref{Stored Properties,Stored
 Properties,,swift,}.
 
 Grammar of a constant declaration
@@ -6833,9 +7110,9 @@ var variable name: type = expression
 You define this form of a variable declaration at global scope, the
 local scope of a function, or in the context of a class or structure
 declaration. When a variable declaration of this form is declared at
-global scope or the local scope of a function, it is referred to as a
-@emph{stored variable}. When it is declared in the context of a class or
-structure declaration, it is referred to as a @emph{stored variable
+global scope or the local scope of a function, it's referred to as a
+@emph{stored variable}. When it's declared in the context of a class or
+structure declaration, it's referred to as a @emph{stored variable
 property}.
 
 The initializer @emph{expression} can't be present in a protocol declaration,
@@ -6878,30 +7155,30 @@ You define this form of a variable declaration at global scope, the
 local scope of a function, or in the context of a class, structure,
 enumeration, or extension declaration. When a variable declaration of
 this form is declared at global scope or the local scope of a function,
-it is referred to as a @emph{computed variable}. When it is declared in the
-context of a class, structure, or extension declaration, it is referred
+it's referred to as a @emph{computed variable}. When it's declared in the
+context of a class, structure, or extension declaration, it's referred
 to as a @emph{computed property}.
 
 The getter is used to read the value, and the setter is used to write
 the value. The setter clause is optional, and when only a getter is
 needed, you can omit both clauses and simply return the requested value
 directly, as described in
-@ref{Read-Only%20Computed%20Properties,Read-Only Computed
+@ref{Read-Only Computed Properties,Read-Only Computed
 Properties,,swift,}. But if you provide a setter clause, you must also provide
 a getter clause.
 
 The @emph{setter name} and enclosing parentheses is optional. If you provide
-a setter name, it is used as the name of the parameter to the setter. If
-you do not provide a setter name, the default parameter name to the
+a setter name, it's used as the name of the parameter to the setter. If
+you don't provide a setter name, the default parameter name to the
 setter is @samp{newValue}, as described in
-@ref{Shorthand%20Setter%20Declaration,Shorthand Setter
+@ref{Shorthand Setter Declaration,Shorthand Setter
 Declaration,,swift,}.
 
 Unlike stored named values and stored variable properties, the value of
-a computed named value or a computed property is not stored in memory.
+a computed named value or a computed property isn't stored in memory.
 
 For more information and to see examples of computed properties, see
-@ref{Computed%20Properties,Computed Properties,,swift,}.
+@ref{Computed Properties,Computed Properties,,swift,}.
 
 @node Stored Variable Observers and Property Observers
 @subsection Stored Variable Observers and Property Observers
@@ -6933,14 +7210,14 @@ You define this form of a variable declaration at global scope, the
 local scope of a function, or in the context of a class or structure
 declaration. When a variable declaration of this form is declared at
 global scope or the local scope of a function, the observers are
-referred to as @emph{stored variable observers}. When it is declared in the
+referred to as @emph{stored variable observers}. When it's declared in the
 context of a class or structure declaration, the observers are referred
 to as @emph{property observers}.
 
 You can add property observers to any stored property. You can also add
 property observers to any inherited property (whether stored or
 computed) by overriding the property within a subclass, as described in
-@ref{Overriding%20Property%20Observers,Overriding Property
+@ref{Overriding Property Observers,Overriding Property
 Observers,,swift,}.
 
 The initializer @emph{expression} is optional in the context of a class or
@@ -6953,8 +7230,8 @@ to the property.
 
 The @samp{willSet} and @samp{didSet} observers provide a way to observe (and to
 respond appropriately) when the value of a variable or property is being
-set. The observers are not called when the variable or property is first
-initialized. Instead, they are called only when the value is set outside
+set. The observers aren't called when the variable or property is first
+initialized. Instead, they're called only when the value is set outside
 of an initialization context.
 
 A @samp{willSet} observer is called just before the value of the variable or
@@ -6969,11 +7246,11 @@ value that you assign will replace the one that was just set and passed
 to the @samp{willSet} observer.
 
 The @emph{setter name} and enclosing parentheses in the @samp{willSet} and
-@samp{didSet} clauses are optional. If you provide setter names, they are
-used as the parameter names to the @samp{willSet} and @samp{didSet} observers. If
-you do not provide setter names, the default parameter name to the
-@samp{willSet} observer is @samp{newValue} and the default parameter name to the
-@samp{didSet} observer is @samp{oldValue}.
+@samp{didSet} clauses are optional. If you provide setter names, they're used
+as the parameter names to the @samp{willSet} and @samp{didSet} observers. If you
+don't provide setter names, the default parameter name to the @samp{willSet}
+observer is @samp{newValue} and the default parameter name to the @samp{didSet}
+observer is @samp{oldValue}.
 
 The @samp{didSet} clause is optional when you provide a @samp{willSet} clause.
 Likewise, the @samp{willSet} clause is optional when you provide a @samp{didSet}
@@ -7063,7 +7340,7 @@ newAndOld.x = 200
 @end enumerate
 
 For more information and to see an example of how to use property
-observers, see @ref{Property%20Observers,Property
+observers, see @ref{Property Observers,Property
 Observers,,swift,}.
 
 @node Type Variable Properties
@@ -7073,7 +7350,7 @@ To declare a type variable property, mark the declaration with the
 @samp{static} declaration modifier. Classes can mark type computed properties
 with the @samp{class} declaration modifier instead to allow subclasses to
 override the superclass's implementation. Type properties are discussed
-in @ref{Type%20Properties,Type Properties,,swift,}.
+in @ref{Type Properties,Type Properties,,swift,}.
 
 Grammar of a variable declaration
 
@@ -7227,7 +7504,7 @@ typealias name = existing type
 
 After a type alias is declared, the aliased @emph{name} can be used instead
 of the @emph{existing type} everywhere in your program. The @emph{existing type}
-can be a named type or a compound type. Type aliases do not create new
+can be a named type or a compound type. Type aliases don't create new
 types; they simply allow a name to refer to an existing type.
 
 A type alias declaration can use generic parameters to give a name to an
@@ -7272,7 +7549,7 @@ typealias Diccionario = Dictionary
 @end enumerate
 
 Inside a protocol declaration, a type alias can give a shorter and more
-convenient name to a type that is used frequently. For example:
+convenient name to a type that's used frequently. For example:
 
 @enumerate
 @item
@@ -7355,7 +7632,10 @@ discussed in detail in @ref{In-Out Parameters},
 below.
 
 A function declaration whose @emph{statements} include only a single
-expression is understood to return the value of that expression.
+expression is understood to return the value of that expression. This
+implicit return syntax is considered only when the expression's type and
+the function's return type aren't @samp{Void} and aren't an enumeration like
+@samp{Never} that doesn't have any cases.
 
 Functions can return multiple values using a tuple type as the return
 type of the function.
@@ -7363,13 +7643,13 @@ type of the function.
 A function definition can appear inside another function declaration.
 This kind of function is known as a @emph{nested function}.
 
-A nested function is nonescaping if it captures a value that is
+A nested function is nonescaping if it captures a value that's
 guaranteed to never escape---such as an in-out parameter---or passed as
 a nonescaping function argument. Otherwise, the nested function is an
 escaping function.
 
 For a discussion of nested functions, see
-@ref{Nested%20Functions,Nested Functions,,swift,}.
+@ref{Nested Functions,Nested Functions,,swift,}.
 
 @menu
 * Parameter Names::
@@ -7475,12 +7755,11 @@ violates Swift's memory exclusivity guarantee. For the same reason, you
 can't pass the same value to multiple in-out parameters.
 
 For more information about memory safety and memory exclusivity, see
-@ref{Memory%20Safety,Memory Safety,,swift,}.
+@ref{Memory Safety,Memory Safety,,swift,}.
 
 A closure or nested function that captures an in-out parameter must be
 nonescaping. If you need to capture an in-out parameter without mutating
-it or to observe changes made by other code, use a capture list to
-explicitly capture the parameter immutably.
+it, use a capture list to explicitly capture the parameter immutably.
 
 @enumerate
 @item
@@ -7539,12 +7818,13 @@ An underscore (@samp{_}) parameter is explicitly ignored and can't be
 accessed within the body of the function.
 
 A parameter with a base type name followed immediately by three dots
-(@samp{...}) is understood as a variadic parameter. A function can have at
-most one variadic parameter. A variadic parameter is treated as an array
-that contains elements of the base type name. For example, the variadic
-parameter @samp{Int...} is treated as @samp{[Int]}. For an example that uses a
-variadic parameter, see
-@ref{Variadic%20Parameters,Variadic Parameters,,swift,}.
+(@samp{...}) is understood as a variadic parameter. A parameter that
+immediately follows a variadic parameter must have an argument label. A
+function can have multiple variadic parameters. A variadic parameter is
+treated as an array that contains elements of the base type name. For
+example, the variadic parameter @samp{Int...} is treated as @samp{[Int]}. For an
+example that uses a variadic parameter, see
+@ref{Variadic Parameters,Variadic Parameters,,swift,}.
 
 A parameter with an equals sign (@samp{=}) and an expression after its type
 is understood to have a default value of the given expression. The given
@@ -7760,7 +8040,7 @@ methods either cause an irrecoverable error or begin a sequence of work
 that continues indefinitely. This means that code that would otherwise
 run immediately after the call is never executed. Throwing and
 rethrowing functions can transfer program control to an appropriate
-@samp{catch} block, even when they are nonreturning.
+@samp{catch} block, even when they're nonreturning.
 
 A nonreturning function or method can be called to conclude the @samp{else}
 clause of a guard statement, as discussed in
@@ -7879,7 +8159,7 @@ contain deinitializer or protocol declarations.
 Enumeration types can adopt any number of protocols, but can't inherit
 from classes, structures, or other enumerations.
 
-Unlike classes and structures, enumeration types do not have an
+Unlike classes and structures, enumeration types don't have an
 implicitly provided default initializer; all initializers must be
 declared explicitly. Initializers can delegate to other initializers in
 the enumeration, but the initialization process is complete only after
@@ -7889,7 +8169,7 @@ Like structures but unlike classes, enumerations are value types;
 instances of an enumeration are copied when assigned to variables or
 constants, or when passed as arguments to a function call. For
 information about value types, see
-@ref{Structures%20and%20Enumerations%20Are%20Value%20Types,Structures and
+@ref{Structures and Enumerations Are Value Types,Structures and
 Enumerations Are Value Types,,swift,}.
 
 You can extend the behavior of an enumeration type with an extension
@@ -7956,7 +8236,7 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
 @end enumerate
 
 For more information and to see examples of cases with associated value
-types, see @ref{Associated%20Values,Associated
+types, see @ref{Associated Values,Associated
 Values,,swift,}.
 
 @enumerate
@@ -7990,7 +8270,7 @@ associated value, mark the entire enumeration with the @samp{indirect}
 modifier---this is convenient when the enumeration contains many cases
 that would each need to be marked with the @samp{indirect} modifier.
 
-An enumeration that is marked with the @samp{indirect} modifier can contain a
+An enumeration that's marked with the @samp{indirect} modifier can contain a
 mixture of cases that have associated values and cases those that don't.
 That said, it can't contain any cases that are also marked with the
 @samp{indirect} modifier.
@@ -8029,10 +8309,10 @@ contain only a single character. Each case must have a unique name and
 be assigned a unique raw value.
 
 If the raw-value type is specified as @samp{Int} and you don't assign a value
-to the cases explicitly, they are implicitly assigned the values @samp{0},
+to the cases explicitly, they're implicitly assigned the values @samp{0},
 @samp{1}, @samp{2}, and so on. Each unassigned case of type @samp{Int} is implicitly
-assigned a raw value that is automatically incremented from the raw
-value of the previous case.
+assigned a raw value that's automatically incremented from the raw value
+of the previous case.
 
 @enumerate
 @item
@@ -8075,7 +8355,7 @@ in @samp{ExampleEnum.b.rawValue}. You can also use a raw value to find a
 corresponding case, if there is one, by calling the enumeration's
 failable initializer, as in @samp{ExampleEnum(rawValue: 5)}, which returns an
 optional case. For more information and to see examples of cases with
-raw-value types, see @ref{Raw%20Values,Raw
+raw-value types, see @ref{Raw Values,Raw
 Values,,swift,}.
 
 @node Accessing Enumeration Cases
@@ -8084,11 +8364,11 @@ Values,,swift,}.
 To reference the case of an enumeration type, use dot (@samp{.}) syntax, as
 in @samp{EnumerationType.enumerationCase}. When the enumeration type can be
 inferred from context, you can omit it (the dot is still required), as
-described in @ref{Enumeration%20Syntax,Enumeration
+described in @ref{Enumeration Syntax,Enumeration
 Syntax,,swift,} and @ref{Implicit Member Expression}.
 
 To check the values of enumeration cases, use a @samp{switch} statement, as
-shown in @ref{Matching%20Enumeration%20Values%20with%20a%20Switch%20Statement,Matching
+shown in @ref{Matching Enumeration Values with a Switch Statement,Matching
 Enumeration Values with a Switch Statement,,swift,}. The enumeration type is
 pattern-matched against the enumeration case patterns in the case blocks
 of the @samp{switch} statement, as described in
@@ -8254,7 +8534,7 @@ type aliases, and even other structure, class, and enumeration
 declarations. Structure declarations can't contain deinitializer or
 protocol declarations. For a discussion and several examples of
 structures that include various kinds of declarations, see
-@ref{Structures%20and%20Classes,Structures and Classes,,swift,}.
+@ref{Structures and Classes,Structures and Classes,,swift,}.
 
 Structure types can adopt any number of protocols, but can't inherit
 from classes, enumerations, or other structures.
@@ -8271,14 +8551,14 @@ described in
 @item
 If no initializers are declared, call the structure's memberwise
 initializer, as described in
-@ref{Memberwise%20Initializers%20for%20Structure%20Types,Memberwise Initializers
+@ref{Memberwise Initializers for Structure Types,Memberwise Initializers
 for Structure Types,,swift,}.
 
 @item
 If no initializers are declared, and all properties of the structure
 declaration were given initial values, call the structure's default
 initializer, as described in
-@ref{Default%20Initializers,Default Initializers,,swift,}.
+@ref{Default Initializers,Default Initializers,,swift,}.
 @end itemize
 
 The process of initializing a structure's declared properties is
@@ -8286,13 +8566,13 @@ described in @ref{Initialization,Initialization,,swift,}.
 
 Properties of a structure instance can be accessed using dot (@samp{.})
 syntax, as described in
-@ref{Accessing%20Properties,Accessing
+@ref{Accessing Properties,Accessing
 Properties,,swift,}.
 
 Structures are value types; instances of a structure are copied when
 assigned to variables or constants, or when passed as arguments to a
 function call. For information about value types, see
-@ref{Structures%20and%20Enumerations%20Are%20Value%20Types,Structures and
+@ref{Structures and Enumerations Are Value Types,Structures and
 Enumerations Are Value Types,,swift,}.
 
 You can extend the behavior of a structure type with an extension
@@ -8357,7 +8637,7 @@ type aliases, and even other class, structure, and enumeration
 declarations. Class declarations can't contain protocol declarations.
 For a discussion and several examples of classes that include various
 kinds of declarations, see
-@ref{Structures%20and%20Classes,Structures and Classes,,swift,}.
+@ref{Structures and Classes,Structures and Classes,,swift,}.
 
 A class type can inherit from only one parent class, its @emph{superclass},
 but can adopt any number of protocols. The @emph{superclass} appears first
@@ -8387,8 +8667,8 @@ with the @samp{required} declaration modifier.
 Although properties and methods declared in the @emph{superclass} are
 inherited by the current class, designated initializers declared in the
 @emph{superclass} are only inherited when the subclass meets the conditions
-described in @ref{Automatic%20Initializer%20Inheritance,Automatic
-Initializer Inheritance,,swift,}. Swift classes do not inherit from a universal
+described in @ref{Automatic Initializer Inheritance,Automatic
+Initializer Inheritance,,swift,}. Swift classes don't inherit from a universal
 base class.
 
 There are two ways to create an instance of a previously declared class:
@@ -8402,19 +8682,19 @@ in @ref{Initializers,Initializers,,swift,}.
 If no initializers are declared, and all properties of the class
 declaration were given initial values, call the class's default
 initializer, as described in
-@ref{Default%20Initializers,Default Initializers,,swift,}.
+@ref{Default Initializers,Default Initializers,,swift,}.
 @end itemize
 
 Access properties of a class instance with dot (@samp{.}) syntax, as
 described in
-@ref{Accessing%20Properties,Accessing
+@ref{Accessing Properties,Accessing
 Properties,,swift,}.
 
 Classes are reference types; instances of a class are referred to,
 rather than copied, when assigned to variables or constants, or when
 passed as arguments to a function call. For information about reference
 types, see
-@ref{Structures%20and%20Enumerations%20Are%20Value%20Types,Structures and
+@ref{Structures and Enumerations Are Value Types,Structures and
 Enumerations Are Value Types,,swift,}.
 
 You can extend the behavior of a class type with an extension
@@ -8502,14 +8782,14 @@ protocol type inherits from other protocols, the set of requirements
 from those other protocols are aggregated, and any type that inherits
 from the current protocol must conform to all those requirements. For an
 example of how to use protocol inheritance, see
-@ref{Protocol%20Inheritance,Protocol Inheritance,,swift,}.
+@ref{Protocol Inheritance,Protocol Inheritance,,swift,}.
 
 Note
 
 You can also aggregate the conformance requirements of multiple
 protocols using protocol composition types, as described in
 @ref{Protocol Composition Type} and
-@ref{Protocol%20Composition,Protocol Composition,,swift,}.
+@ref{Protocol Composition,Protocol Composition,,swift,}.
 
 You can add protocol conformance to a previously declared type by
 adopting the protocol in an extension declaration of that type. In the
@@ -8529,7 +8809,7 @@ contains optional member requirements. For more information about how to
 use the @samp{optional} declaration modifier and for guidance about how to
 access optional protocol members---for example, when you're not sure
 whether a conforming type implements them---see
-@ref{Optional%20Protocol%20Requirements,Optional Protocol
+@ref{Optional Protocol Requirements,Optional Protocol
 Requirements,,swift,}.
 
 The cases of an enumeration can satisfy protocol requirements for type
@@ -8583,8 +8863,8 @@ mark the protocol with the @samp{AnyObject} requirement explicitly.
 
 Protocols are named types, and thus they can appear in all the same
 places in your code as other named types, as discussed in
-@ref{Protocols%20as%20Types,Protocols as Types,,swift,}. However,
-you can't construct an instance of a protocol, because protocols do not
+@ref{Protocols as Types,Protocols as Types,,swift,}. However,
+you can't construct an instance of a protocol, because protocols don't
 actually provide the implementations for the requirements they specify.
 
 You can use protocols to declare which methods a delegate of a class or
@@ -8672,19 +8952,19 @@ var property name: type @{ get set @}
 As with other protocol member declarations, these property declarations
 declare only the getter and setter requirements for types that conform
 to the protocol. As a result, you don't implement the getter or setter
-directly in the protocol in which it is declared.
+directly in the protocol in which it's declared.
 
 The getter and setter requirements can be satisfied by a conforming type
 in a variety of ways. If a property declaration includes both the @samp{get}
 and @samp{set} keywords, a conforming type can implement it with a stored
-variable property or a computed property that is both readable and
+variable property or a computed property that's both readable and
 writeable (that is, one that implements both a getter and a setter).
 However, that property declaration can't be implemented as a constant
 property or a read-only computed property. If a property declaration
 includes only the @samp{get} keyword, it can be implemented as any kind of
 property. For examples of conforming types that implement the property
 requirements of a protocol, see
-@ref{Property%20Requirements,Property Requirements,,swift,}.
+@ref{Property Requirements,Property Requirements,,swift,}.
 
 To declare a type property requirement in a protocol declaration, mark
 the property declaration with the @samp{static} keyword. Structures and
@@ -8717,7 +8997,7 @@ declarations, with two exceptions: They don't include a function body,
 and you can't provide any default parameter values as part of the
 function declaration. For examples of conforming types that implement
 the method requirements of a protocol, see
-@ref{Method%20Requirements,Method Requirements,,swift,}.
+@ref{Method Requirements,Method Requirements,,swift,}.
 
 To declare a class or static method requirement in a protocol
 declaration, mark the method declaration with the @samp{static} declaration
@@ -8759,7 +9039,7 @@ initializer requirement by implementing any kind of initializer.
 
 When a class implements an initializer to satisfy a protocol's
 initializer requirement, the initializer must be marked with the
-@samp{required} declaration modifier if the class is not already marked with
+@samp{required} declaration modifier if the class isn't already marked with
 the @samp{final} declaration modifier.
 
 See also @ref{Initializer Declaration}.
@@ -8836,13 +9116,13 @@ getter-setter-keyword-block
 @findex Self
 
 Protocols declare associated types using the @samp{associatedtype} keyword.
-An associated type provides an alias for a type that is used as part of
+An associated type provides an alias for a type that's used as part of
 a protocol's declaration. Associated types are similar to type
 parameters in generic parameter clauses, but they're associated with
 @samp{Self} in the protocol in which they're declared. In that context,
 @samp{Self} refers to the eventual type that conforms to the protocol. For
 more information and examples, see
-@ref{Associated%20Types,Associated Types,,swift,}.
+@ref{Associated Types,Associated Types,,swift,}.
 
 @findex where
 
@@ -8960,7 +9240,7 @@ declaration modifier to require that every subclass implement the
 initializer. A subclass's implementation of that initializer must also
 be marked with the @samp{required} declaration modifier.
 
-By default, initializers declared in a superclass are not inherited by
+By default, initializers declared in a superclass aren't inherited by
 subclasses. That said, if a subclass initializes all of its stored
 properties with default values and doesn't define any initializers of
 its own, it inherits all of the superclass's initializers. If the
@@ -9142,10 +9422,10 @@ have at most one.
 
 A subclass inherits its superclass's deinitializer, which is implicitly
 called just before the subclass object is deallocated. The subclass
-object is not deallocated until all deinitializers in its inheritance
+object isn't deallocated until all deinitializers in its inheritance
 chain have finished executing.
 
-Deinitializers are not called directly.
+Deinitializers aren't called directly.
 
 For an example of how to use a deinitializer in a class declaration, see
 @ref{Deinitialization,Deinitialization,,swift,}.
@@ -9602,12 +9882,12 @@ and simply return the requested value directly. That said, if you
 provide a setter clause, you must also provide a getter clause.
 
 The @emph{setter name} and enclosing parentheses are optional. If you provide
-a setter name, it is used as the name of the parameter to the setter. If
-you do not provide a setter name, the default parameter name to the
+a setter name, it's used as the name of the parameter to the setter. If
+you don't provide a setter name, the default parameter name to the
 setter is @samp{value}. The type of the parameter to the setter is the same
 as the @emph{return type}.
 
-You can overload a subscript declaration in the type in which it is
+You can overload a subscript declaration in the type in which it's
 declared, as long as the @emph{parameters} or the @emph{return type} differ from
 the one you're overloading. You can also override a subscript
 declaration inherited from a superclass. When you do so, you must mark
@@ -9693,7 +9973,7 @@ The following form declares a new infix operator:
 infix operator operator name: precedence group
 @end enumerate
 
-An @emph{infix operator} is a binary operator that is written between its two
+An @emph{infix operator} is a binary operator that's written between its two
 operands, such as the familiar addition operator (@samp{+}) in the expression
 @samp{1 + 2}.
 
@@ -9710,7 +9990,7 @@ The following form declares a new prefix operator:
 prefix operator operator name
 @end enumerate
 
-A @emph{prefix operator} is a unary operator that is written immediately
+A @emph{prefix operator} is a unary operator that's written immediately
 before its operand, such as the prefix logical NOT operator (@samp{!}) in the
 expression @samp{!a}.
 
@@ -9724,7 +10004,7 @@ The following form declares a new postfix operator:
 postfix operator operator name
 @end enumerate
 
-A @emph{postfix operator} is a unary operator that is written immediately
+A @emph{postfix operator} is a unary operator that's written immediately
 after its operand, such as the postfix forced-unwrap operator (@samp{!}) in
 the expression @samp{a!}.
 
@@ -9740,7 +10020,7 @@ structure. If you're implementing a prefix or postfix operator, you must
 also mark that method declaration with the corresponding @samp{prefix} or
 @samp{postfix} declaration modifier. To see an example of how to create and
 implement a new operator, see
-@ref{Custom%20Operators,Custom Operators,,swift,}.
+@ref{Custom Operators,Custom Operators,,swift,}.
 
 Grammar of an operator declaration
 
@@ -9811,7 +10091,7 @@ Note
 
 Precedence groups related to each other using @emph{lower group names} and
 @emph{higher group names} must fit into a single relational hierarchy, but
-they @emph{don't} have to form a linear hierarchy. This means it is possible
+they @emph{don't} have to form a linear hierarchy. This means it's possible
 to have precedence groups with undefined relative precedence. Operators
 from those precedence groups can't be used next to each other without
 grouping parentheses.
@@ -9840,7 +10120,7 @@ that are right-associative group right-to-left, and operators that are
 specified with an associativity of @samp{none} don't associate at all.
 Nonassociative operators of the same precedence level can't appear
 adjacent to each to other. For example, the @samp{<} operator has an
-associativity of @samp{none}, which means @samp{1 < 2 < 3} is not a valid
+associativity of @samp{none}, which means @samp{1 < 2 < 3} isn't a valid
 expression.
 
 The @emph{assignment} of a precedence group specifies the precedence of an
@@ -9954,7 +10234,7 @@ subscript member of a class. It's applied to a class to indicate that
 the class can't be subclassed. It's applied to a property, method, or
 subscript of a class to indicate that a class member can't be
 overridden in any subclass. For an example of how to use the @samp{final}
-attribute, see @ref{Preventing%20Overrides,Preventing
+attribute, see @ref{Preventing Overrides,Preventing
 Overrides,,swift,}.
 @end table
 
@@ -9965,7 +10245,7 @@ Apply this modifier to a stored variable property of a class
 or structure to indicate that the property's initial value is
 calculated and stored at most once, when the property is first
 accessed. For an example of how to use the @samp{lazy} modifier, see
-@ref{Lazy%20Stored%20Properties,Lazy Stored Properties,,swift,}.
+@ref{Lazy Stored Properties,Lazy Stored Properties,,swift,}.
 @end table
 
 @findex optional
@@ -9982,7 +10262,7 @@ requirements. For more information about how to use the @samp{optional}
 modifier and for guidance about how to access optional protocol
 members---for example, when you're not sure whether a conforming type
 implements them---see
-@ref{Optional%20Protocol%20Requirements,Optional Protocol
+@ref{Optional Protocol Requirements,Optional Protocol
 Requirements,,swift,}.
 @end table
 
@@ -10020,7 +10300,7 @@ a runtime error is raised. Like a weak reference, the type of the
 property or value must be a class type; unlike a weak reference, the
 type is non-optional. For an example and more information about the
 @samp{unowned} modifier, see
-@ref{Unowned%20References,Unowned
+@ref{Unowned References,Unowned
 References,,swift,}.
 
 @item @samp{unowned(safe)}
@@ -10036,7 +10316,7 @@ used to be, which is a memory-unsafe operation. Like a weak reference,
 the type of the property or value must be a class type; unlike a weak
 reference, the type is non-optional. For an example and more
 information about the @samp{unowned} modifier, see
-@ref{Unowned%20References,Unowned
+@ref{Unowned References,Unowned
 References,,swift,}.
 @end table
 
@@ -10049,7 +10329,7 @@ reference to the object stored as its value. The type of the variable
 or property must be an optional class type. If you access the variable
 or property after the object has been deallocated, its value is @samp{nil}.
 For an example and more information about the @samp{weak} modifier, see
-@ref{Weak%20References,Weak
+@ref{Weak References,Weak
 References,,swift,}.
 @end table
 
@@ -10064,7 +10344,7 @@ Swift provides five levels of access control: open, public, internal,
 file private, and private. You can mark a declaration with one of the
 access-level modifiers below to specify the declaration's access level.
 Access control is discussed in detail in
-@ref{Access%20Control,Access Control,,swift,}.
+@ref{Access Control,Access Control,,swift,}.
 
 @findex open
 
@@ -10129,7 +10409,7 @@ example, @samp{private(set)}). Use this form of an access-level modifier when
 you want to specify an access level for the setter of a variable or
 subscript that's less than or equal to the access level of the variable
 or subscript itself, as discussed in
-@ref{Getters%20and%20Setters,Getters and Setters,,swift,}.
+@ref{Getters and Setters,Getters and Setters,,swift,}.
 
 Grammar of a declaration modifier
 
@@ -10223,6 +10503,7 @@ You can apply a declaration attribute to declarations only.
 * objc::
 * objcMembers::
 * propertyWrapper::
+* resultBuilder::
 * requires@math{_stored}@math{_property}@math{_inits}::
 * testable::
 * UIApplicationMain::
@@ -10760,9 +11041,10 @@ in Xcode, set the “Build Libraries for Distribution” build setting
 [@uref{https://help.apple.com/xcode/mac/current/#/dev04b3a04ba}].
 
 A switch statement over a frozen enumeration doesn't require a @samp{default}
-case, as discussed in Switching Over Future Enumeration Cases.
-Including a @samp{default} or @samp{@@unknown default} case when switching over a frozen
-enumeration produces a warning because that code is never executed.
+case, as discussed in @ref{Switching %Over %Future Enumeration Cases,Switching Over Future
+Enumeration Cases,,swift-reference,}. Including a @samp{default} or @samp{@@unknown default} case
+when switching over a frozen enumeration produces a warning because that
+code is never executed.
 
 @node GKInspectable
 @subsection GKInspectable
@@ -10939,21 +11221,17 @@ The @samp{objc} attribute is also implicitly added in the following cases:
 @itemize
 @item
 The declaration is an override in a subclass, and the superclass's
-@end itemize
 declaration has the @samp{objc} attribute.
 
-@itemize
 @item
 The declaration satisfies a requirement from a protocol that has the
-@end itemize
 @samp{objc} attribute.
 
-@itemize
 @item
 The declaration has the @samp{IBAction}, @samp{IBSegueAction}, @samp{IBOutlet},
-@end itemize
 @samp{IBDesignable}, @samp{IBInspectable}, @samp{NSManaged}, or @samp{GKInspectable}
 attribute.
+@end itemize
 
 If you apply the @samp{objc} attribute to an enumeration, each enumeration
 case is exposed to Objective-C code as the concatenation of the
@@ -11185,6 +11463,569 @@ s.$x // SomeProjection value
 s.$x.wrapper // WrapperWithProjection value
 @end enumerate
 
+@node resultBuilder
+@subsection resultBuilder
+
+@findex @@resultBuilder
+
+Apply this attribute to a class, structure, enumeration to use that type
+as a result builder. A @emph{result builder} is a type that builds a nested
+data structure step by step. You use result builders to implement a
+domain-specific language (DSL) for creating nested data structures in a
+natural, declarative way. For an example of how to use the
+@samp{resultBuilder} attribute, see
+@ref{Result Builders,Result Builders,,swift,}.
+
+@enumerate
+@item
+Result-Building Methods
+
+
+A result builder implements static methods described below. Because all
+of the result builder's functionality is exposed through static methods,
+you don't ever initialize an instance of that type. The @samp{buildBlock(_:)}
+method is required; the other methods---which enable additional
+functionality in the DSL---are optional. The declaration of a result
+builder type doesn't actually have to include any protocol conformance.
+
+The description of the static methods uses three types as placeholders.
+The type @samp{Expression} is a placeholder for the type of the result
+builder's input, @samp{Component} is a placeholder for the type of a partial
+result, and @samp{FinalResult} is a placeholder for the type of the result
+that the result builder produces. You replace these types with the
+actual types that your result builder uses. If your result-building
+methods don't specify a type for @samp{Expression} or @samp{FinalResult}, they
+default to being the same as @samp{Component}.
+
+The result-building methods are as follows:
+
+@table @asis
+@item @samp{static func buildBlock(_ components: Component...) -> Component}
+Combines
+an array of partial results into a single partial result. A result
+builder must implement this method.
+
+@item @samp{static func buildOptional(_ component: Component?) -> Component}
+Builds
+a partial result from a partial result that can be @samp{nil}. Implement
+this method to support @samp{if} statements that don't include an @samp{else}
+clause.
+
+@item @samp{static func buildEither(first: Component) -> Component}
+Builds a
+partial result whose value varies depending on some condition.
+Implement both this method and @samp{buildEither(second:)} to support
+@samp{switch} statements and @samp{if} statements that include an @samp{else} clause.
+
+@item @samp{static func buildEither(second: Component) -> Component}
+Builds a
+partial result whose value varies depending on some condition.
+Implement both this method and @samp{buildEither(first:)} to support
+@samp{switch} statements and @samp{if} statements that include an @samp{else} clause.
+
+@item @samp{static func buildArray(_ components: [Component]) -> Component}
+Builds
+a partial result from an array of partial results. Implement this
+method to support @samp{for} loops.
+
+@item @samp{static func buildExpression(_ expression: Expression) -> Component}
+Builds
+a partial result from an expression. You can implement this method to
+perform preprocessing---for example, converting expressions to an
+internal type---or to provide additional information for type
+inference at use sites.
+
+@item @samp{static func buildFinalResult(_ component: Component) -> FinalResult}
+Builds
+a final result from a partial result. You can implement this method as
+part of a result builder that uses a different type for partial and
+final results, or to perform other postprocessing on a result before
+returning it.
+
+@item @samp{static func buildLimitedAvailability(_ component: Component) -> Component}
+Builds
+a partial result that propagates or erases type information outside a
+compiler-control statement that performs an availability check. You
+can use this to erase type information that varies between the
+conditional branches.
+@end table
+
+For example, the code below defines a simple result builder that builds
+an array of integers. This code defines @samp{Compontent} and @samp{Expression} as
+type aliases, to make it easier to match the examples below to the list
+of methods above.
+
+@enumerate
+@item
+@@resultBuilder
+@item
+struct ArrayBuilder @{
+@item
+typealias Component = [Int]
+@item
+typealias Expression = Int
+@item
+static func buildExpression(_ element: Expression) -> Component @{
+@item
+return [element]
+@item
+@}
+@item
+static func buildOptional(_ component: Component?) -> Component @{
+@item
+guard let component = component else @{ return [] @}
+@item
+return component
+@item
+@}
+@item
+static func buildEither(first component: Component) -> Component @{
+@item
+return component
+@item
+@}
+@item
+static func buildEither(second component: Component) -> Component @{
+@item
+return component
+@item
+@}
+@item
+static func buildArray(_ components: [Component]) -> Component @{
+@item
+return Array(components.joined())
+@item
+@}
+@item
+static func buildBlock(_ components: Component@dots{}) -> Component @{
+@item
+return Array(components.joined())
+@item
+@}
+@item
+@}
+@end enumerate
+
+@anchor{Attributesxhtml#ID635}
+
+@item
+Result Transformations
+
+
+The following syntactic transformations are applied recursively to turn
+code that uses result-builder syntax into code that calls the static
+methods of the result builder type:
+
+@itemize
+@item
+If the result builder has a @samp{buildExpression(_:)} method, each
+expression becomes a call to that method. This transformation is
+always first. For example, the following declarations are equivalent:
+
+@enumerate
+@item
+@@ArrayBuilder var builderNumber: [Int] @{ 10 @}
+@item
+var manualNumber = ArrayBuilder.buildExpression(10)
+@end enumerate
+
+@item
+An assignment statement is transformed like an expression, but is
+understood to evaluate to @samp{()}. You can define an overload of
+@samp{buildExpression(_:)} that takes an argument of type @samp{()} to handle
+assignments specifically.
+
+@item
+A branch statement that checks an availability condition becomes a
+call to the @samp{buildLimitedAvailability(_:)} method. This transformation
+happens before the transformation into a call to
+@samp{buildEither(first:)}, @samp{buildEither(second:)}, or @samp{buildOptional(_:)}.
+You use the @samp{buildLimitedAvailability(_:)} method to erase type
+information that changes depending on which branch is taken. For
+example, the @samp{buildEither(first:)} and @samp{buildEither(second:)} methods
+below use a generic type that captures type information about both
+branches.
+
+@enumerate
+@item
+protocol Drawable @{
+@item
+func draw() -> String
+@item
+@}
+@item
+struct Text: Drawable @{
+@item
+var content: String
+@item
+init(_ content: String) @{ self.content = content @}
+@item
+func draw() -> String @{ return content @}
+@item
+@}
+@item
+struct Line<D: Drawable>: Drawable @{
+@item
+var elements: [D]
+@item
+func draw() -> String @{
+@item
+return elements.map @{ $0.draw() @}.joined(separator: "")
+@item
+@}
+@item
+@}
+@item
+struct DrawEither<First: Drawable, Second: Drawable>: Drawable @{
+@item
+var content: Drawable
+@item
+func draw() -> String @{ return content.draw() @}
+@item
+@}
+@item
+
+
+@item
+@@resultBuilder
+@item
+struct DrawingBuilder @{
+@item
+static func buildBlock<D: Drawable>(_ components: D@dots{}) -> Line<D>
+@{
+@item
+return Line(elements: components)
+@item
+@}
+@item
+static func buildEither<First, Second>(first: First)
+@item
+-> DrawEither<First, Second> @{
+@item
+return DrawEither(content: first)
+@item
+@}
+@item
+static func buildEither<First, Second>(second: Second)
+@item
+-> DrawEither<First, Second> @{
+@item
+return DrawEither(content: second)
+@item
+@}
+@item
+@}
+@end enumerate
+
+However, this approach causes a problem in code that has availability
+checks:
+
+@enumerate
+@item
+@@available(macOS 99, *)
+@item
+struct FutureText: Drawable @{
+@item
+var content: String
+@item
+init(_ content: String) @{ self.content = content @}
+@item
+func draw() -> String @{ return content @}
+@item
+@}
+@item
+@@DrawingBuilder var brokenDrawing: Drawable @{
+@item
+if #available(macOS 99, *) @{
+@item
+FutureText("Inside.future") // Problem
+@item
+@} else @{
+@item
+Text("Inside.present")
+@item
+@}
+@item
+@}
+@item
+// The type of brokenDrawing is Line<DrawEither<Line<FutureText>,
+Line<Text>>>
+@end enumerate
+
+In the code above, @samp{FutureText} appears as part of the type of
+@samp{brokenDrawing} because it's one of the types in the @samp{DrawEither}
+generic type. This could cause your program to crash if @samp{FutureText}
+isn't available at runtime, even in the case where that type is
+explicitly not being used.
+
+To solve this problem, implement a @samp{buildLimitedAvailability(_:)}
+method to erase type information. For example, the code below builds
+an @samp{AnyDrawable} value from its availability check.
+
+@enumerate
+@item
+struct AnyDrawable: Drawable @{
+@item
+var content: Drawable
+@item
+func draw() -> String @{ return content.draw() @}
+@item
+@}
+@item
+extension DrawingBuilder @{
+@item
+static func buildLimitedAvailability(_ content: Drawable) ->
+AnyDrawable @{
+@item
+return AnyDrawable(content: content)
+@item
+@}
+@item
+@}
+@item
+
+
+@item
+@@DrawingBuilder var typeErasedDrawing: Drawable @{
+@item
+if #available(macOS 99, *) @{
+@item
+FutureText("Inside.future")
+@item
+@} else @{
+@item
+Text("Inside.present")
+@item
+@}
+@item
+@}
+@item
+// The type of typeErasedDrawing is Line<DrawEither<AnyDrawable,
+Line<Text>>>
+@end enumerate
+
+@item
+A branch statement becomes a series of nested calls to the
+@samp{buildEither(first:)} and @samp{buildEither(second:)} methods. The
+statements' conditions and cases are mapped onto the leaf nodes of a
+binary tree, and the statement becomes a nested call to the
+@samp{buildEither} methods following the path to that leaf node from the
+root node.
+
+For example, if you write a switch statement that has three cases, the
+compiler uses a binary tree with three leaf nodes. Likewise, because
+the path from the root node to the second case is “second child” and
+then “first child”, that case becomes a nested call like
+@samp{buildEither(first: buildEither(second: ... ))}. The following
+declarations are equivalent:
+
+@enumerate
+@item
+let someNumber = 19
+@item
+@@ArrayBuilder var builderConditional: [Int] @{
+@item
+if someNumber < 12 @{
+@item
+31
+@item
+@} else if someNumber == 19 @{
+@item
+32
+@item
+@} else @{
+@item
+33
+@item
+@}
+@item
+@}
+@item
+
+
+@item
+var manualConditional: [Int]
+@item
+if someNumber < 12 @{
+@item
+let partialResult = ArrayBuilder.buildExpression(31)
+@item
+let outerPartialResult = ArrayBuilder.buildEither(first:
+partialResult)
+@item
+manualConditional = ArrayBuilder.buildEither(first:
+outerPartialResult)
+@item
+@} else if someNumber == 19 @{
+@item
+let partialResult = ArrayBuilder.buildExpression(32)
+@item
+let outerPartialResult = ArrayBuilder.buildEither(second:
+partialResult)
+@item
+manualConditional = ArrayBuilder.buildEither(first:
+outerPartialResult)
+@item
+@} else @{
+@item
+let partialResult = ArrayBuilder.buildExpression(33)
+@item
+manualConditional = ArrayBuilder.buildEither(second:
+partialResult)
+@item
+@}
+@end enumerate
+
+@item
+A branch statement that might not produce a value, like an @samp{if}
+statement without an @samp{else} clause, becomes a call to
+@samp{buildOptional(_:)}. If the @samp{if} statement's condition is satisfied,
+its code block is transformed and passed as the argument; otherwise,
+@samp{buildOptional(_:)} is called with @samp{nil} as its argument. For example,
+the following declarations are equivalent:
+
+@enumerate
+@item
+@@ArrayBuilder var builderOptional: [Int] @{
+@item
+if (someNumber % 2) == 1 @{ 20 @}
+@item
+@}
+@item
+
+
+@item
+var partialResult: [Int]? = nil
+@item
+if (someNumber % 2) == 1 @{
+@item
+partialResult = ArrayBuilder.buildExpression(20)
+@item
+@}
+@item
+var manualOptional = ArrayBuilder.buildOptional(partialResult)
+@end enumerate
+
+@item
+A code block or @samp{do} statement becomes a call to the @samp{buildBlock(_:)}
+method. Each of the statements inside of the block is transformed, one
+at a time, and they become the arguments to the @samp{buildBlock(_:)}
+method. For example, the following declarations are equivalent:
+
+@enumerate
+@item
+@@ArrayBuilder var builderBlock: [Int] @{
+@item
+100
+@item
+200
+@item
+300
+@item
+@}
+@item
+
+
+@item
+var manualBlock = ArrayBuilder.buildBlock(
+@item
+ArrayBuilder.buildExpression(100),
+@item
+ArrayBuilder.buildExpression(200),
+@item
+ArrayBuilder.buildExpression(300)
+@item
+)
+@end enumerate
+
+@item
+A @samp{for} loop becomes a temporary variable, a @samp{for} loop, and call to
+the @samp{buildArray(_:)} method. The new @samp{for} loop iterates over the
+sequence and appends each partial result to that array. The temporary
+array is passed as the argument in the @samp{buildArray(_:)} call. For
+example, the following declarations are equivalent:
+
+@enumerate
+@item
+@@ArrayBuilder var builderArray: [Int] @{
+@item
+for i in 5@dots{}7 @{
+@item
+100 + i
+@item
+@}
+@item
+@}
+@item
+
+
+@item
+var temporary: \] = []
+@item
+for i in 5@dots{}7 @{
+@item
+let partialResult = ArrayBuilder.buildExpression(100 + i)
+@item
+temporary.append(partialResult)
+@item
+@}
+@item
+let manualArray = ArrayBuilder.buildArray(temporary)
+@end enumerate
+
+@item
+If the result builder has a @samp{buildFinalResult(_:)} method, the final
+result becomes a call to that method. This transformation is always
+last.
+@end itemize
+
+Although the transformation behavior is described in terms of temporary
+variables, using a result builder doesn't actually create any new
+declarations that are visible from the rest of your code.
+
+You can't use @samp{break}, @samp{continue}, @samp{defer}, @samp{guard}, or @samp{return}
+statements, @samp{while} statements, or @samp{do}-@samp{catch} statements in the code
+that a result builder transforms.
+
+The transformation process doesn't change declarations in the code,
+which lets you use temporary constants and variables to build up
+expressions piece by piece. It also doesn't change @samp{throw} statements,
+compile-time diagnostic statements, or closures that contain a @samp{return}
+statement.
+
+Whenever possible, transformations are coalesced. For example, the
+expression @samp{4 + 5 * 6} becomes @samp{buildExpression(4 + 5 * 6)} rather
+multiple calls to that function. Likewise, nested branch statements
+become a single binary tree of calls to the @samp{buildEither} methods.
+
+@anchor{Attributesxhtml#ID636}
+
+@item
+Custom Result-Builder Attributes
+
+
+Creating a result builder type creates a custom attribute with the same
+name. You can apply that attribute in the following places:
+
+@itemize
+@item
+On a function declaration, the result builder builds the body of the
+function.
+
+@item
+On a variable or subscript declaration that includes a getter, the
+result builder builds the body of the getter.
+
+@item
+On a parameter in a function declaration, the result builder builds
+the body of a closure that's passed as the corresponding argument.
+@end itemize
+
+Applying a result builder attribute doesn't impact ABI compatibility.
+Applying a result builder attribute to a parameter makes that attribute
+part of the function's interface, which can effect source compatibility.
+@end enumerate
+
 @node requires@math{_stored}@math{_property}@math{_inits}
 @subsection requires@math{_stored}@math{_property}@math{_inits}
 
@@ -11330,23 +12171,19 @@ arguments:
 @itemize
 @item
 The @samp{swift} argument indicates a Swift function reference. This is the
-@end itemize
 standard calling convention for function values in Swift.
 
-@itemize
 @item
 The @samp{block} argument indicates an Objective-C compatible block
-@end itemize
 reference. The function value is represented as a reference to the
 block object, which is an @samp{id}-compatible Objective-C object that
 embeds its invocation function within the object. The invocation
 function uses the C calling convention.
 
-@itemize
 @item
 The @samp{c} argument indicates a C function reference. The function value
-@end itemize
 carries no context and uses the C calling convention.
+@end itemize
 
 With a few exceptions, a function of any calling convention can be used
 when a function any other calling convention is needed. A nongeneric
@@ -11365,7 +12202,7 @@ later execution. This means that the value is allowed to outlive the
 lifetime of the call. Function type parameters with the @samp{escaping} type
 attribute require explicit use of @samp{self.} for properties or methods. For
 an example of how to use the @samp{escaping} attribute, see
-@ref{Escaping%20Closures,Escaping Closures,,swift,}.
+@ref{Escaping Closures,Escaping Closures,,swift,}.
 
 @node Switch Case Attributes
 @section Switch Case Attributes
@@ -11668,7 +12505,7 @@ values, the corresponding enumeration case pattern must specify a tuple
 pattern that contains one element for each associated value. For an
 example that uses a @samp{switch} statement to match enumeration cases
 containing associated values, see
-@ref{Associated%20Values,Associated Values,,swift,}.
+@ref{Associated Values,Associated Values,,swift,}.
 
 An enumeration case pattern also matches values of that case wrapped in
 an optional. This simplified syntax lets you omit an optional pattern.
@@ -11800,7 +12637,7 @@ the matched value is cast to the @emph{pattern} specified in the right-hand
 side of the @samp{as} pattern.
 
 For an example that uses a @samp{switch} statement to match values with @samp{is}
-and @samp{as} patterns, see @ref{Type%20Casting%20for%20Any%20and%20AnyObject,Type
+and @samp{as} patterns, see @ref{Type Casting for Any and  AnyObject,Type
 Casting for Any and AnyObject,,swift,}.
 
 Grammar of a type casting pattern
@@ -12149,7 +12986,7 @@ specified in a generic @samp{where} clause. In the example above, the @samp{Key}
 type parameter is constrained to conform to the @samp{Hashable} protocol and
 therefore @samp{String} must also conform to the @samp{Hashable} protocol.
 
-You can also replace a type parameter with a type argument that is
+You can also replace a type parameter with a type argument that's
 itself a specialized version of a generic type (provided it satisfies
 the appropriate constraints and requirements). For example, you can
 replace the type parameter @samp{Element} in @samp{Array<Element>} with a
@@ -12215,6 +13052,10 @@ whitespace-item
 line-break
 
 whitespace-item
+→
+inline-space
+
+whitespace-item
 → comment
 
 whitespace-item
@@ -12222,7 +13063,7 @@ whitespace-item
 multiline-comment
 
 whitespace-item
-→ U+0000, U+0009, U+000B, U+000C, or U+0020
+→ U+0000, U+000B, or U+000C
 
 line-break →
 U+000A
@@ -12232,6 +13073,15 @@ U+000D
 
 line-break →
 U+000D followed by U+000A
+
+inline-spaces
+→
+inline-space
+inline-spaces
+_@{opt@}
+
+inline-space →
+U+0009 or U+0020
 
 comment → @samp{//}
 comment-text
@@ -12644,7 +13494,7 @@ string-literal-closing-delimiter
 interpolated-string-literal
 →
 multiline-string-literal-opening-delimiter
-interpolated-text
+multiline-interpolated-text
 _@{opt@}
 multiline-string-literal-closing-delimiter
 
@@ -12706,7 +13556,7 @@ unicode-scalar-digits
 escaped-newline
 →
 escape-sequence
-whitespace
+inline-spaces
 _@{opt@}
 line-break
 
@@ -12868,9 +13718,10 @@ type →
 metatype-type
 
 type →
-self-type
+any-type
 
-type → @samp{Any}
+type →
+self-type
 
 type → @samp{(}
 type @samp{)}
@@ -13010,6 +13861,10 @@ Grammar of a metatype type
 metatype-type
 → type @samp{.} @samp{Type} |
 type @samp{.} @samp{Protocol}
+
+Grammar of an Any type
+
+any-type → @samp{Any}
 
 Grammar of a Self type
 
@@ -13201,7 +14056,10 @@ dictionary-literal
 playground-literal
 
 literal-expression
-→ @samp{#file} | @samp{#line} | @samp{#column} | @samp{#function} | @samp{#dsohandle}
+→ @samp{#file} | @samp{#fileID} | @samp{#filePath}
+
+literal-expression
+→ @samp{#line} | @samp{#column} | @samp{#function} | @samp{#dsohandle}
 
 array-literal
 → @samp{[}
@@ -13388,6 +14246,20 @@ capture-specifier
 _@{opt@}
 expression
 
+capture-list-item
+→
+capture-specifier
+_@{opt@}
+identifier
+@samp{=}
+expression
+
+capture-list-item
+→
+capture-specifier
+_@{opt@}
+self-expression
+
 capture-specifier
 → @samp{weak} | @samp{unowned} | @samp{unowned(safe)} | @samp{unowned(unsafe)}
 
@@ -13547,7 +14419,7 @@ function-call-expression
 postfix-expression
 function-call-argument-clause
 _@{opt@}
-trailing-closure
+trailing-closures
 
 function-call-argument-clause
 → @samp{(} @samp{)} | @samp{(}
@@ -14015,9 +14887,8 @@ catch-clauses
 _@{opt@}
 
 catch-clause →
-@samp{catch} pattern
-_@{opt@}
-where-clause
+@samp{catch}
+catch-pattern-list
 _@{opt@}
 code-block
 
@@ -14155,7 +15026,7 @@ environment
 @samp{)}
 
 operating-system
-→ @samp{macOS} | @samp{iOS} | @samp{watchOS} | @samp{tvOS}
+→ @samp{macOS} | @samp{iOS} | @samp{watchOS} | @samp{tvOS} | @samp{Linux} | @samp{Windows}
 
 architecture →
 @samp{i386} | @samp{x86_64} | @samp{arm} | @samp{arm64}
@@ -14176,13 +15047,13 @@ module-name →
 identifier
 
 environment →
-@samp{simulator}
+@samp{simulator} | @samp{macCatalyst}
 
 Grammar of a line control statement
 
 line-control-statement
 → @samp{#sourceLocation} @samp{(} @samp{file:}
-file-name @samp{,}
+file-path @samp{,}
 @samp{line:}
 line-number
 @samp{)}
@@ -14193,7 +15064,7 @@ line-control-statement
 line-number → A
 decimal integer greater than zero
 
-file-name →
+file-path →
 static-string-literal
 
 Grammar of a compile-time diagnostic statement

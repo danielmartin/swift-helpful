@@ -1,4 +1,4 @@
-#+TITLE: The Swift Programming Language Guide (Swift 5.3)
+#+TITLE: The Swift Programming Language Guide (Swift 5.4)
 
 #+AUTHOR: Apple Inc.
 #+TEXINFO_HEADER: @syncodeindex vr cp
@@ -63,13 +63,13 @@ wait to see what you create with it.
 
 * Version Compatibility
 
-This book describes Swift 5.3, the default version of Swift that's
-included in Xcode 12. You can use Xcode 12 to build targets that are
-written in either Swift 5.3, Swift 4.2, or Swift 4.
+This book describes Swift 5.4, the default version of Swift that's
+included in Xcode 12.5. You can use Xcode 12.5 to build targets that are
+written in either Swift 5.4, Swift 4.2, or Swift 4.
 
-When you use Xcode 12 to build Swift 4 and Swift 4.2 code, most Swift
-5.3 functionality is available. That said, the following changes are
-available only to code that uses Swift 5.3 or later:
+When you use Xcode 12.5 to build Swift 4 and Swift 4.2 code, most Swift
+5.4 functionality is available. That said, the following changes are
+available only to code that uses Swift 5.4 or later:
 
 - Functions that return an opaque type require the Swift 5.1 runtime.
 
@@ -80,10 +80,10 @@ available only to code that uses Swift 5.3 or later:
   the correct integer type. For example, =UInt64(0xffff_ffff_ffff_ffff)=
   evaluates to the correct value rather than overflowing.
 
-A target written in Swift 5.3 can depend on a target that's written in
+A target written in Swift 5.4 can depend on a target that's written in
 Swift 4.2 or Swift 4, and vice versa. This means, if you have a large
 project that's divided into multiple frameworks, you can migrate your
-code from Swift 4 to Swift 5.3 one framework at a time.
+code from Swift 4 to Swift 5.4 one framework at a time.
 
 * A Swift Tour
 
@@ -139,8 +139,8 @@ lets the compiler infer its type. In the example above, the compiler
 infers that =myVariable= is an integer because its initial value is an
 integer.
 
-If the initial value doesn't provide enough information (or if there is
-no initial value), specify the type by writing it after the variable,
+If the initial value doesn't provide enough information (or if isn't an
+initial value), specify the type by writing it after the variable,
 separated by a colon.
 
 #+BEGIN_SRC swift
@@ -291,9 +291,9 @@ using the =??= operator. If the optional value is missing, the default
 value is used instead.
 
 #+BEGIN_SRC swift
-  let nickName: String? = nil
+  let nickname: String? = nil
   let fullName: String = "John Appleseed"
-  let informalGreeting = "Hi \(nickName ?? fullName)"
+  let informalGreeting = "Hi \(nickname ?? fullName)"
 #+END_SRC
 
 Switches support any kind of data and a wide variety of comparison
@@ -323,7 +323,7 @@ matched the pattern to a constant.
 
 After executing the code inside the switch case that matched, the
 program exits from the switch statement. Execution doesn't continue to
-the next case, so there is no need to explicitly break out of the switch
+the next case, so you don't need to explicitly break out of the switch
 at the end of each case's code.
 
 You use =for=-=in= to iterate over items in a dictionary by providing a
@@ -338,7 +338,7 @@ arbitrary order.
     "Square": [1, 4, 9, 16, 25],
   ]
   var largest = 0
-  for (kind, numbers) in interestingNumbers {
+  for (_, numbers) in interestingNumbers {
       for number in numbers {
           if number > largest {
               largest = number
@@ -351,8 +351,8 @@ arbitrary order.
 
 Experiment
 
-Add another variable to keep track of which kind of number was the
-largest, as well as what that largest number was.
+Replace the =_= with a variable name, and keep track of which kind of
+number was the largest.
 
 Use =while= to repeat a block of code until a condition changes. The
 condition of a loop can be at the end instead, ensuring that the loop is
@@ -450,7 +450,7 @@ either by name or by number.
 
 Functions can be nested. Nested functions have access to variables that
 were declared in the outer function. You can use nested functions to
-organize the code in a function that is long or complex.
+organize the code in a function that's long or complex.
 
 #+BEGIN_SRC swift
   func returnFifteen() -> Int {
@@ -499,11 +499,11 @@ A function can take another function as one of its arguments.
 Functions are actually a special case of closures: blocks of code that
 can be called later. The code in a closure has access to things like
 variables and functions that were available in the scope where the
-closure was created, even if the closure is in a different scope when it
-is executed---you saw an example of this already with nested functions.
-You can write a closure without a name by surrounding code with braces
-(={}=). Use =in= to separate the arguments and return type from the
-body.
+closure was created, even if the closure is in a different scope when
+it's executed---you saw an example of this already with nested
+functions. You can write a closure without a name by surrounding code
+with braces (={}=). Use =in= to separate the arguments and return type
+from the body.
 
 #+BEGIN_SRC swift
   numbers.map({ (number: Int) -> Int in
@@ -546,7 +546,7 @@ omit the parentheses entirely.
 
 Use =class= followed by the class's name to create a class. A property
 declaration in a class is written the same way as a constant or variable
-declaration, except that it is in the context of a class. Likewise,
+declaration, except that it's in the context of a class. Likewise,
 method and function declarations are written the same way.
 
 #+BEGIN_SRC swift
@@ -602,7 +602,7 @@ Use =deinit= to create a deinitializer if you need to perform some
 cleanup before the object is deallocated.
 
 Subclasses include their superclass name after their class name,
-separated by a colon. There is no requirement for classes to subclass
+separated by a colon. There's no requirement for classes to subclass
 any standard root class, so you can include or omit a superclass as
 needed.
 
@@ -689,7 +689,7 @@ three different steps:
    be done at this point.
 
 If you don't need to compute the property but still need to provide code
-that is run before and after setting a new value, use =willSet= and
+that's run before and after setting a new value, use =willSet= and
 =didSet=. The code you provide is run any time the value changes outside
 of an initializer. For example, the class below ensures that the side
 length of its triangle is always the same as the side length of its
@@ -781,7 +781,7 @@ value of an enumeration case.
 
 Use the =init?(rawValue:)= initializer to make an instance of an
 enumeration from a raw value. It returns either the enumeration case
-matching the raw value or =nil= if there is no matching =Rank=.
+matching the raw value or =nil= if there's no matching =Rank=.
 
 #+BEGIN_SRC swift
   if let convertedRank = Rank(rawValue: 3) {
@@ -867,7 +867,7 @@ cases.
 Use =struct= to create a structure. Structures support many of the same
 behaviors as classes, including methods and initializers. One of the
 most important differences between structures and classes is that
-structures are always copied when they are passed around in your code,
+structures are always copied when they're passed around in your code,
 but classes are passed by reference.
 
 #+BEGIN_SRC swift
@@ -941,7 +941,7 @@ mutating because methods on a class can always modify the class.
 
 Use =extension= to add functionality to an existing type, such as new
 methods and computed properties. You can use an extension to add
-protocol conformance to a type that is declared elsewhere, or even to a
+protocol conformance to a type that's declared elsewhere, or even to a
 type that you imported from a library or framework.
 
 #+BEGIN_SRC swift
@@ -965,7 +965,7 @@ property.
 You can use a protocol name just like any other named type---for
 example, to create a collection of objects that have different types but
 that all conform to a single protocol. When you work with values whose
-type is a protocol type, methods outside the protocol definition are not
+type is a protocol type, methods outside the protocol definition aren't
 available.
 
 #+BEGIN_SRC swift
@@ -1061,7 +1061,7 @@ containing the value that the function returned.
   let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
 #+END_SRC
 
-Use =defer= to write a block of code that is executed after all other
+Use =defer= to write a block of code that's executed after all other
 code in the function, just before the function returns. The code is
 executed regardless of whether the function throws an error. You can use
 =defer= to write setup and cleanup code next to each other, even though
@@ -1278,7 +1278,7 @@ values:
 The colon in the declaration means “...of type...,” so the code above
 can be read as:
 
-“Declare a variable called =welcomeMessage= that is of type =String=.”
+“Declare a variable called =welcomeMessage= that's of type =String=.”
 
 The phrase “of type =String=” means “can store any =String= value.”
 Think of it as meaning “the type of thing” (or “the kind of thing”) that
@@ -1760,7 +1760,7 @@ at the point that they're evaluated by the compiler.
 define type aliases with the =typealias= keyword.
 
 Type aliases are useful when you want to refer to an existing type by a
-name that is contextually more appropriate, such as when working with
+name that's contextually more appropriate, such as when working with
 data of a specific size from an external source:
 
 #+BEGIN_SRC swift
@@ -2075,7 +2075,7 @@ rather than forced unwrapping:
   if let actualNumber = Int(possibleNumber) {
       print("The string \"\(possibleNumber)\" has an integer value of \(actualNumber)")
   } else {
-      print("The string \"\(possibleNumber)\" could not be converted to an integer")
+      print("The string \"\(possibleNumber)\" couldn't be converted to an integer")
   }
   // Prints "The string "123" has an integer value of 123"
 #+END_SRC
@@ -2089,8 +2089,8 @@ in the optional.”
 If the conversion is successful, the =actualNumber= constant becomes
 available for use within the first branch of the =if= statement. It has
 already been initialized with the value contained /within/ the optional,
-and so there's no need to use the =!= suffix to access its value. In
-this example, =actualNumber= is simply used to print the result of the
+and so you don't use the =!= suffix to access its value. In this 
+example, =actualNumber= is simply used to print the result of the
 conversion.
 
 You can use both constants and variables with optional binding. If you
@@ -2384,7 +2384,7 @@ function to indicate that an assertion has failed. For example:
 
 Use a precondition whenever a condition has the potential to be false,
 but must /definitely/ be true for your code to continue execution. For
-example, use a precondition to check that a subscript is not out of
+example, use a precondition to check that a subscript isn't out of
 bounds, or to check that a function has been passed a valid value.
 
 You write a precondition by calling the
@@ -2428,7 +2428,7 @@ two numbers, as in =let i = 1 + 2=, and the logical AND operator (=&&=)
 combines two Boolean values, as in
 =if enteredDoorCode && passedRetinaScan=.
 
-Swift supports the operators you may already know from languages like C
+Swift supports the operators you may already know from languages like C,
 and improves several capabilities to eliminate common coding errors. The
 assignment operator (===) doesn't return a value, to prevent it from
 being mistakenly used when the equal to operator (====) is intended.
@@ -2487,12 +2487,12 @@ elements can be decomposed into multiple constants or variables at once:
 #+END_SRC
 
 Unlike the assignment operator in C and Objective-C, the assignment
-operator in Swift does not itself return a value. The following
-statement is not valid:
+operator in Swift doesn't itself return a value. The following statement 
+isn't valid:
 
 #+BEGIN_SRC swift
   if x = y {
-      // This is not valid, because x = y does not return a value.
+      // This isn't valid, because x = y doesn't return a value.
   }
 #+END_SRC
 
@@ -2535,7 +2535,7 @@ The addition operator is also supported for =String= concatenation:
 *** Remainder Operator
 
 The /remainder operator/ (=a % b=) works out how many multiples of =b=
-will fit inside =a= and returns the value that is left over (known as
+will fit inside =a= and returns the value that's left over (known as
 the /remainder/).
 
 Note
@@ -2671,11 +2671,11 @@ whether or not the statement is true:
 
 #+BEGIN_SRC swift
   1 == 1 // true because 1 is equal to 1
-  2 != 1 // true because 2 is not equal to 1
+  2 != 1 // true because 2 isn't equal to 1
   2 > 1 // true because 2 is greater than 1
   1 < 2 // true because 1 is less than 2
   1 >= 1 // true because 1 is greater than or equal to 1
-  2 <= 1 // false because 2 is not less than or equal to 1
+  2 <= 1 // false because 2 isn't less than or equal to 1
 #+END_SRC
 
 Comparison operators are often used in conditional statements, such as
@@ -2702,7 +2702,7 @@ overall result of the tuple comparison. If all the elements are equal,
 then the tuples themselves are equal. For example:
 
 #+BEGIN_SRC swift
-  (1, "zebra") < (2, "apple") // true because 1 is less than 2; "zebra" and "apple" are not compared
+  (1, "zebra") < (2, "apple") // true because 1 is less than 2; "zebra" and "apple" aren't compared
   (3, "apple") < (3, "bird") // true because 3 is equal to 3, and "apple" is less than "bird"
   (4, "dog") == (4, "dog") // true because 4 is equal to 4, and "dog" is equal to "dog"
 #+END_SRC
@@ -2794,7 +2794,7 @@ ternary conditional operator into one compound statement.
 The /nil-coalescing operator/ (=a ?? b=) unwraps an optional =a= if it
 contains a value, or returns a default value =b= if =a= is =nil=. The
 expression =a= is always of an optional type. The expression =b= must
-match the type that is stored inside =a=.
+match the type that's stored inside =a=.
 
 The nil-coalescing operator is shorthand for the code below:
 
@@ -2803,14 +2803,14 @@ The nil-coalescing operator is shorthand for the code below:
 #+END_SRC
 
 The code above uses the ternary conditional operator and forced
-unwrapping (=a!=) to access the value wrapped inside =a= when =a= is not
+unwrapping (=a!=) to access the value wrapped inside =a= when =a= isn't
 =nil=, and to return =b= otherwise. The nil-coalescing operator provides
 a more elegant way to encapsulate this conditional checking and
 unwrapping in a concise and readable form.
 
 Note
 
-If the value of =a= is non-=nil=, the value of =b= is not evaluated.
+If the value of =a= is non-=nil=, the value of =b= isn't evaluated.
 This is known as /short-circuit evaluation/.
 
 The example below uses the nil-coalescing operator to choose between a
@@ -2840,7 +2840,7 @@ the nil-coalescing operator check again, the value wrapped inside
 #+BEGIN_SRC swift
   userDefinedColorName = "green"
   colorNameToUse = userDefinedColorName ?? defaultColorName
-  // userDefinedColorName is not nil, so colorNameToUse is set to "green"
+  // userDefinedColorName isn't nil, so colorNameToUse is set to "green"
 #+END_SRC
 
 ** Range Operators
@@ -3021,7 +3021,7 @@ expression to be =true=.
 
 Like the Logical AND operator above, the Logical OR operator uses
 short-circuit evaluation to consider its expressions. If the left side
-of a Logical OR expression is =true=, the right side is not evaluated,
+of a Logical OR expression is =true=, the right side isn't evaluated,
 because it can't change the outcome of the overall expression.
 
 In the example below, the first =Bool= value (=hasDoorKey=) is =false=,
@@ -3109,7 +3109,7 @@ collection of =Character= values.
 Swift's =String= and =Character= types provide a fast, Unicode-compliant
 way to work with text in your code. The syntax for string creation and
 manipulation is lightweight and readable, with a string literal syntax
-that is similar to C. String concatenation is as simple as combining two
+that's similar to C. String concatenation is as simple as combining two
 strings with the =+= operator, and string mutability is managed by
 choosing between a constant or a variable, just like any other value in
 Swift. You can also use strings to insert constants, variables,
@@ -3505,7 +3505,7 @@ For example:
 #+END_SRC
 
 To use string interpolation inside a string that uses extended
-delimiters, match the number of number signs before the backslash to the
+delimiters, match the number of number signs after the backslash to the
 number of number signs at the beginning and end of the string. For
 example:
 
@@ -3785,8 +3785,8 @@ that make up the substring are stored. The difference between strings
 and substrings is that, as a performance optimization, a substring can
 reuse part of the memory that's used to store the original string, or
 part of the memory that's used to store another substring. (Strings have
-a similar optimization, but if two strings share memory, they are
-equal.) This performance optimization means you don't have to pay the
+a similar optimization, but if two strings share memory, they're equal.) 
+This performance optimization means you don't have to pay the
 performance cost of copying memory until you modify either the string or
 substring. As mentioned above, substrings aren't suitable for long-term
 storage---because they reuse the storage of the original string, the
@@ -3867,14 +3867,14 @@ don't have the same linguistic meaning:
   let cyrillicCapitalLetterA: Character = "\u{0410}"
 
   if latinCapitalLetterA != cyrillicCapitalLetterA {
-      print("These two characters are not equivalent.")
+      print("These two characters aren't equivalent.")
   }
-  // Prints "These two characters are not equivalent."
+  // Prints "These two characters aren't equivalent."
 #+END_SRC
 
 Note
 
-String and character comparisons in Swift are not locale-sensitive.
+String and character comparisons in Swift aren't locale-sensitive.
 
 *** Prefix and Suffix Equality
 
@@ -4090,10 +4090,10 @@ Dictionaries are unordered collections of key-value associations.
 
 [[file:images/CollectionTypes_intro_2x.png]]
 Arrays, sets, and dictionaries in Swift are always clear about the types
-of values and keys that they can store. This means that you cannot
-insert a value of the wrong type into a collection by mistake. It also
-means you can be confident about the type of values you will retrieve
-from a collection.
+of values and keys that they can store. This means that you can't insert 
+a value of the wrong type into a collection by mistake. It also means 
+you can be confident about the type of values you will retrieve from a 
+collection.
 
 Note
 
@@ -4104,16 +4104,16 @@ collections/. For more about generic types and collections, see
 ** Mutability of Collections
 
 If you create an array, a set, or a dictionary, and assign it to a
-variable, the collection that is created will be /mutable/. This means
+variable, the collection that's created will be /mutable/. This means
 that you can change (or /mutate/) the collection after it's created by
 adding, removing, or changing items in the collection. If you assign an
 array, a set, or a dictionary to a constant, that collection is
-/immutable/, and its size and contents cannot be changed.
+/immutable/, and its size and contents can't be changed.
 
 Note
 
-It is good practice to create immutable collections in all cases where
-the collection does not need to change. Doing so makes it easier for you
+It's good practice to create immutable collections in all cases where
+the collection doesn't need to change. Doing so makes it easier for you
 to reason about your code and enables the Swift compiler to optimize the
 performance of the collections you create.
 
@@ -4216,7 +4216,7 @@ The example below creates an array called =shoppingList= to store
 
 The =shoppingList= variable is declared as “an array of string values”,
 written as =[String]=. Because this particular array has specified a
-value type of =String=, it is allowed to store =String= values only.
+value type of =String=, it's allowed to store =String= values only.
 Here, the =shoppingList= array is initialized with two =String= values
 (="Eggs"= and ="Milk"=), written within an array literal.
 
@@ -4265,9 +4265,9 @@ the =count= property is equal to =0=:
   if shoppingList.isEmpty {
       print("The shopping list is empty.")
   } else {
-      print("The shopping list is not empty.")
+      print("The shopping list isn't empty.")
   }
-  // Prints "The shopping list is not empty."
+  // Prints "The shopping list isn't empty."
 #+END_SRC
 
 You can add a new item to the end of an array by calling the array's
@@ -4340,8 +4340,8 @@ by an index of =0=.
 
 Similarly, you remove an item from the array with the =remove(at:)=
 method. This method removes the item at the specified index and returns
-the removed item (although you can ignore the returned value if you do
-not need it):
+the removed item (although you can ignore the returned value if you 
+don't need it):
 
 #+BEGIN_SRC swift
   let mapleSyrup = shoppingList.remove(at: 0)
@@ -4352,7 +4352,7 @@ not need it):
 
 Note
 
-If you try to access or modify a value for an index that is outside of
+If you try to access or modify a value for an index that's outside of
 an array's existing bounds, you will trigger a runtime error. You can
 check that an index is valid before using it by comparing it to the
 array's =count= property. The largest valid index in an array is
@@ -4421,7 +4421,7 @@ For more about the =for=-=in= loop, see
 
 A /set/ stores distinct values of the same type in a collection with no
 defined ordering. You can use a set instead of an array when the order
-of items is not important, or when you need to ensure that an item only
+of items isn't important, or when you need to ensure that an item only
 appears once.
 
 Note
@@ -4437,9 +4437,9 @@ Between Set and NSSet]]
 
 A type must be /hashable/ in order to be stored in a set---that is, the
 type must provide a way to compute a /hash value/ for itself. A hash
-value is an =Int= value that is the same for all objects that compare
-equally, such that if =a == b=, it follows that
-=a.hashValue == b.hashValue=.
+value is an =Int= value that's the same for all objects that compare
+equally, such that if =a == b=, the hash value of =a= is equal to the
+hash value of =b=.
 
 All of Swift's basic types (such as =String=, =Int=, =Double=, and
 =Bool=) are hashable by default, and can be used as set value types or
@@ -4450,32 +4450,18 @@ by default.
 Note
 
 You can use your own custom types as set value types or dictionary key
-types by making them conform to the =Hashable= protocol from Swift's
-standard library. Types that conform to the =Hashable= protocol must
-provide a gettable =Int= property called =hashValue=. The value returned
-by a type's =hashValue= property is not required to be the same across
-different executions of the same program, or in different programs.
-
-Because the =Hashable= protocol conforms to =Equatable=, conforming
-types must also provide an implementation of the equals operator (====).
-The =Equatable= protocol requires any conforming implementation of ====
-to be an equivalence relation. That is, an implementation of ==== must
-satisfy the following three conditions, for all values =a=, =b=, and
-=c=:
-
-- =a == a= (Reflexivity)
-
-- =a == b= implies =b == a= (Symmetry)
-
-- =a == b && b == c= implies =a == c= (Transitivity)
-
-For more information about conforming to protocols, see
+types by making them conform to the =Hashable= protocol from the Swift
+standard library. For information about implementing the required
+=hash(into:)= method, see
+[[https://developer.apple.com/documentation/swift/hashable][=Hashable=]]
+[https://developer.apple.com/documentation/swift/hashable]. For
+information about conforming to protocols, see
 [[Protocols][Protocols]].
 
 *** Set Type Syntax
 
 The type of a Swift set is written as =Set<Element>=, where =Element= is
-the type that the set is allowed to store. Unlike arrays, sets do not
+the type that the set is allowed to store. Unlike arrays, sets don't
 have an equivalent shorthand form.
 
 *** Creating and Initializing an Empty Set
@@ -4519,7 +4505,7 @@ The example below creates a set called =favoriteGenres= to store
 
 The =favoriteGenres= variable is declared as “a set of =String= values”,
 written as =Set<String>=. Because this particular set has specified a
-value type of =String=, it is /only/ allowed to store =String= values.
+value type of =String=, it's /only/ allowed to store =String= values.
 Here, the =favoriteGenres= set is initialized with three =String= values
 (="Rock"=, ="Classical"=, and ="Hip hop"=), written within an array
 literal.
@@ -4530,7 +4516,7 @@ The =favoriteGenres= set is declared as a variable (with the =var=
 introducer) and not a constant (with the =let= introducer) because items
 are added and removed in the examples below.
 
-A set type cannot be inferred from an array literal alone, so the type
+A set type can't be inferred from an array literal alone, so the type
 =Set= must be explicitly declared. However, because of Swift's type
 inference, you don't have to write the type of the set's elements if
 you're initializing it with an array literal that contains values of
@@ -4579,7 +4565,7 @@ method:
 
 You can remove an item from a set by calling the set's =remove(_:)=
 method, which removes the item if it's a member of the set, and returns
-the removed value, or returns =nil= if the set did not contain it.
+the removed value, or returns =nil= if the set didn't contain it.
 Alternatively, all items in a set can be removed with its =removeAll()=
 method.
 
@@ -4620,7 +4606,7 @@ You can iterate over the values in a set with a =for=-=in= loop.
 For more about the =for=-=in= loop, see
 [[For-In Loops][For-In Loops]].
 
-Swift's =Set= type does not have a defined ordering. To iterate over the
+Swift's =Set= type doesn't have a defined ordering. To iterate over the
 values of a set in a specific order, use the =sorted()= method, which
 returns the set's elements as an array sorted using the =<= operator.
 
@@ -4720,7 +4706,7 @@ A /dictionary/ stores associations between keys of the same type and
 values of the same type in a collection with no defined ordering. Each
 value is associated with a unique /key/, which acts as an identifier for
 that value within the dictionary. Unlike items in an array, items in a
-dictionary do not have a specified order. You use a dictionary when you
+dictionary don't have a specified order. You use a dictionary when you
 need to look up values based on their identifier, in much the same way
 that a real-world dictionary is used to look up the definition for a
 particular word.
@@ -4860,9 +4846,9 @@ the =count= property is equal to =0=:
   if airports.isEmpty {
       print("The airports dictionary is empty.")
   } else {
-      print("The airports dictionary is not empty.")
+      print("The airports dictionary isn't empty.")
   }
-  // Prints "The airports dictionary is not empty."
+  // Prints "The airports dictionary isn't empty."
 #+END_SRC
 
 You can add a new item to a dictionary with subscript syntax. Use a new
@@ -4905,7 +4891,7 @@ one existed before the update, or =nil= if no value existed:
 #+END_SRC
 
 You can also use subscript syntax to retrieve a value from the
-dictionary for a particular key. Because it is possible to request a key
+dictionary for a particular key. Because it's possible to request a key
 for which no value exists, a dictionary's subscript returns an optional
 value of the dictionary's value type. If the dictionary contains a value
 for the requested key, the subscript returns an optional value
@@ -4916,7 +4902,7 @@ returns =nil=:
   if let airportName = airports["DUB"] {
       print("The name of the airport is \(airportName).")
   } else {
-      print("That airport is not in the airports dictionary.")
+      print("That airport isn't in the airports dictionary.")
   }
   // Prints "The name of the airport is Dublin Airport."
 #+END_SRC
@@ -4926,7 +4912,7 @@ dictionary by assigning a value of =nil= for that key:
 
 #+BEGIN_SRC swift
   airports["APL"] = "Apple International"
-  // "Apple International" is not the real airport for APL, so delete it
+  // "Apple International" isn't the real airport for APL, so delete it
   airports["APL"] = nil
   // APL has now been removed from the dictionary
 #+END_SRC
@@ -4940,7 +4926,7 @@ existed:
   if let removedValue = airports.removeValue(forKey: "DUB") {
       print("The removed airport's name is \(removedValue).")
   } else {
-      print("The airports dictionary does not contain a value for DUB.")
+      print("The airports dictionary doesn't contain a value for DUB.")
   }
   // Prints "The removed airport's name is Dublin Airport."
 #+END_SRC
@@ -4991,7 +4977,7 @@ property:
   // airportNames is ["London Heathrow", "Toronto Pearson"]
 #+END_SRC
 
-Swift's =Dictionary= type does not have a defined ordering. To iterate
+Swift's =Dictionary= type doesn't have a defined ordering. To iterate
 over the keys or values of a dictionary in a specific order, use the
 =sorted()= method on its =keys= or =values= property.
 
@@ -5055,9 +5041,9 @@ values are decomposed into a constant called =legCount=.
 #+END_SRC
 
 The contents of a =Dictionary= are inherently unordered, and iterating
-over them does not guarantee the order in which they will be retrieved.
+over them doesn't guarantee the order in which they will be retrieved.
 In particular, the order you insert items into a =Dictionary= doesn't
-define the order they are iterated. For more about arrays and
+define the order they're iterated. For more about arrays and
 dictionaries, see [[Collection Types][Collection Types]].
 
 You can also use =for=-=in= loops with numeric ranges. This example
@@ -5085,10 +5071,10 @@ the value of =index= is updated to contain the second value in the range
 again. This process continues until the end of the range is reached.
 
 In the example above, =index= is a constant whose value is automatically
-set at the start of each iteration of the loop. As such, =index= does
-not have to be declared before it is used. It is implicitly declared
-simply by its inclusion in the loop declaration, without the need for a
-=let= declaration keyword.
+set at the start of each iteration of the loop. As such, =index= doesn't 
+have to be declared before it's used. It's implicitly declared simply by 
+its inclusion in the loop declaration, without the need for a =let= 
+declaration keyword.
 
 If you don't need each value from a sequence, you can ignore the values
 by using an underscore in place of a variable name.
@@ -5111,7 +5097,7 @@ times, using a closed range that starts with =1= and ends with =10=. For
 this calculation, the individual counter values each time through the
 loop are unnecessary---the code simply executes the loop the correct
 number of times. The underscore character (=_=) used in place of a loop
-variable causes the individual values to be ignored and does not provide
+variable causes the individual values to be ignored and doesn't provide
 access to the current value during each iteration of the loop.
 
 In some situations, you might not want to use closed ranges, which
@@ -5154,8 +5140,8 @@ instead:
 
 A =while= loop performs a set of statements until a condition becomes
 =false=. These kinds of loops are best used when the number of
-iterations is not known before the first iteration begins. Swift
-provides two kinds of =while= loops:
+iterations isn't known before the first iteration begins. Swift provides 
+two kinds of =while= loops:
 
 - =while= evaluates its condition at the start of each pass through the
   loop.
@@ -5250,7 +5236,7 @@ of generating a random number, it starts with a =diceRoll= value of =0=.
 Each time through the =while= loop, =diceRoll= is incremented by one and
 is then checked to see whether it has become too large. Whenever this
 return value equals =7=, the dice roll has become too large and is reset
-to a value of =1=. The result is a sequence of =diceRoll= values that is
+to a value of =1=. The result is a sequence of =diceRoll= values that's
 always =1=, =2=, =3=, =4=, =5=, =6=, =1=, =2= and so on.
 
 After rolling the dice, the player moves forward by =diceRoll= squares.
@@ -5263,7 +5249,7 @@ snakes.
 
 Note
 
-If this check is not performed, =board[square]= might try to access a
+If this check isn't performed, =board[square]= might try to access a
 value outside the bounds of the =board= array, which would trigger a
 runtime error.
 
@@ -5273,7 +5259,7 @@ has moved on or beyond square number =25=, the loop's condition
 evaluates to =false= and the game ends.
 
 A =while= loop is appropriate in this case, because the length of the
-game is not clear at the start of the =while= loop. Instead, the loop is
+game isn't clear at the start of the =while= loop. Instead, the loop is
 executed until a particular condition is satisfied.
 
 *** Repeat-While
@@ -5350,7 +5336,7 @@ game described earlier.
 
 ** Conditional Statements
 
-It is often useful to execute different pieces of code based on certain
+It's often useful to execute different pieces of code based on certain
 conditions. You might want to run an extra piece of code when an error
 occurs, or to display a message when a value becomes too high or too
 low. To do this, you make parts of your code /conditional/.
@@ -5400,7 +5386,7 @@ These statements are indicated by the =else= keyword.
 #+END_SRC
 
 One of these two branches is always executed. Because the temperature
-has increased to =40= degrees Fahrenheit, it is no longer cold enough to
+has increased to =40= degrees Fahrenheit, it's no longer cold enough to
 advise wearing a scarf and so the =else= branch is triggered instead.
 
 You can chain multiple =if= statements together to consider additional
@@ -5423,7 +5409,7 @@ warm temperatures. The final =else= clause remains, and it prints a
 response for any temperatures that are neither too warm nor too cold.
 
 The final =else= clause is optional, however, and can be excluded if the
-set of conditions does not need to be complete.
+set of conditions doesn't need to be complete.
 
 #+BEGIN_SRC swift
   temperatureInFahrenheit = 72
@@ -5472,7 +5458,7 @@ this chapter.
 
 Like the body of an =if= statement, each =case= is a separate branch of
 code execution. The =switch= statement determines which branch should be
-selected. This procedure is known as /switching/ on the value that is
+selected. This procedure is known as /switching/ on the value that's
 being considered.
 
 #+FINDEX: default
@@ -5481,7 +5467,7 @@ Every =switch= statement must be /exhaustive/. That is, every possible
 value of the type being considered must be matched by one of the
 =switch= cases. If it's not appropriate to provide a case for every
 possible value, you can define a default case to cover any values that
-are not addressed explicitly. This default case is indicated by the
+aren't addressed explicitly. This default case is indicated by the
 =default= keyword, and must always appear last.
 
 This example uses a =switch= statement to consider a single lowercase
@@ -5510,7 +5496,7 @@ provision ensures that the =switch= statement is exhaustive.
 **** No Implicit Fallthrough
 
 In contrast with =switch= statements in C and Objective-C, =switch=
-statements in Swift do not fall through the bottom of each case and into
+statements in Swift don't fall through the bottom of each case and into
 the next one by default. Instead, the entire =switch= statement finishes
 its execution as soon as the first matching =switch= case is completed,
 without requiring an explicit =break= statement. This makes the =switch=
@@ -5519,7 +5505,7 @@ more than one =switch= case by mistake.
 
 Note
 
-Although =break= is not required in Swift, you can use a =break=
+Although =break= isn't required in Swift, you can use a =break=
 statement to match and ignore a particular case or to break out of a
 matched case before that case has completed its execution. For details,
 see Break in a Switch Statement.
@@ -5527,7 +5513,7 @@ see Break in a Switch Statement.
 # [[Break in a Switch Statement][Break in a Switch Statement]].
 
 The body of each case /must/ contain at least one executable statement.
-It is not valid to write the following code, because the first case is
+It isn't valid to write the following code, because the first case is
 empty:
 
 #+BEGIN_SRC swift
@@ -5542,11 +5528,11 @@ empty:
   // This will report a compile-time error.
 #+END_SRC
 
-Unlike a =switch= statement in C, this =switch= statement does not match
+Unlike a =switch= statement in C, this =switch= statement doesn't match
 both ="a"= and ="A"=. Rather, it reports a compile-time error that
-=case "a":= does not contain any executable statements. This approach
+=case "a":= doesn't contain any executable statements. This approach
 avoids accidental fallthrough from one case to another and makes for
-safer code that is clearer in its intent.
+safer code that's clearer in its intent.
 
 To make a =switch= with a single case that matches both ="a"= and ="A"=,
 combine the two values into a compound case, separating the values with
@@ -5685,14 +5671,14 @@ Similarly, the second case, =case (0, let y)=, matches any point with an
 constant =y=.
 
 After the temporary constants are declared, they can be used within the
-case's code block. Here, they are used to print the categorization of
+case's code block. Here, they're used to print the categorization of
 the point.
 
-This =switch= statement does not have a =default= case. The final case,
+This =switch= statement doesn't have a =default= case. The final case,
 =case let (x, y)=, declares a tuple of two placeholder constants that
 can match any value. Because =anotherPoint= is always a tuple of two
 values, this case matches all possible remaining values, and a =default=
-case is not needed to make the =switch= statement exhaustive.
+case isn't needed to make the =switch= statement exhaustive.
 
 **** Where
 
@@ -5727,7 +5713,7 @@ only if the =where= clause's condition evaluates to =true= for that
 value.
 
 As in the previous example, the final case matches all possible
-remaining values, and so a =default= case is not needed to make the
+remaining values, and so a =default= case isn't needed to make the
 =switch= statement exhaustive.
 
 **** Compound Cases
@@ -5747,7 +5733,7 @@ long. For example:
        "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
       print("\(someCharacter) is a consonant")
   default:
-      print("\(someCharacter) is not a vowel or a consonant")
+      print("\(someCharacter) isn't a vowel or a consonant")
   }
   // Prints "e is a vowel"
 #+END_SRC
@@ -5809,7 +5795,7 @@ in [[Propagating Errors Using Throwing Functions][Propagating Errors Using Throw
 
 #+FINDEX: continue
 
-The =continue= statement tells a loop to stop what it is doing and start
+The =continue= statement tells a loop to stop what it's doing and start
 again at the beginning of the next iteration through the loop. It says
 “I am done with the current loop iteration” without leaving the loop
 altogether.
@@ -5859,7 +5845,7 @@ the code after the =switch= statement's closing brace (=}=).
 
 This behavior can be used to match and ignore one or more cases in a
 =switch= statement. Because Swift's =switch= statement is exhaustive and
-does not allow empty cases, it is sometimes necessary to deliberately
+doesn't allow empty cases, it's sometimes necessary to deliberately
 match and ignore a case in order to make your intentions explicit. You
 do this by writing the =break= statement as the entire body of the case
 you want to ignore. When that case is matched by the =switch= statement,
@@ -5869,7 +5855,7 @@ execution immediately.
 Note
 
 A =switch= case that contains only a comment is reported as a
-compile-time error. Comments are not statements and do not cause a
+compile-time error. Comments aren't statements and don't cause a
 =switch= case to be ignored. Always use a =break= statement to ignore a
 =switch= case.
 
@@ -5895,12 +5881,12 @@ brevity, multiple values are covered in a single =switch= case.
   if let integerValue = possibleIntegerValue {
       print("The integer value of \(numberSymbol) is \(integerValue).")
   } else {
-      print("An integer value could not be found for \(numberSymbol).")
+      print("An integer value couldn't be found for \(numberSymbol).")
   }
   // Prints "The integer value of 三 is 3."
 #+END_SRC
 
-This example checks =numberSymbol= to determine whether it is a Latin,
+This example checks =numberSymbol= to determine whether it's a Latin,
 Arabic, Chinese, or Thai symbol for the numbers =1= to =4=. If a match
 is found, one of the =switch= statement's cases sets an optional =Int?=
 variable called =possibleIntegerValue= to an appropriate integer value.
@@ -5913,10 +5899,10 @@ succeed only if =possibleIntegerValue= was set to an actual value by one
 of the =switch= statement's first four cases.
 
 Because it's not practical to list every possible =Character= value in
-the example above, a =default= case handles any characters that are not
-matched. This =default= case does not need to perform any action, and so
-it is written with a single =break= statement as its body. As soon as
-the =default= case is matched, the =break= statement ends the =switch=
+the example above, a =default= case handles any characters that aren't
+matched. This =default= case doesn't need to perform any action, and so
+it's written with a single =break= statement as its body. As soon as the 
+=default= case is matched, the =break= statement ends the =switch=
 statement's execution, and code execution continues from the =if let=
 statement.
 
@@ -5964,7 +5950,7 @@ the =default= case as well. The =default= case adds some extra text to
 the end of the description, and the =switch= statement is complete.
 
 Unless the value of =integerToDescribe= is in the list of known prime
-numbers, it is not matched by the first =switch= case at all. Because
+numbers, it isn't matched by the first =switch= case at all. Because
 there are no other specific cases, =integerToDescribe= is matched by the
 =default= case.
 
@@ -5975,7 +5961,7 @@ prime number.
 
 Note
 
-The =fallthrough= keyword does not check the case conditions for the
+The =fallthrough= keyword doesn't check the case conditions for the
 =switch= case that it causes execution to fall into. The =fallthrough=
 keyword simply causes code execution to move directly to the statements
 inside the next case (or =default= case) block, as in C's standard
@@ -5988,7 +5974,7 @@ inside the next case (or =default= case) block, as in C's standard
 In Swift, you can nest loops and conditional statements inside other
 loops and conditional statements to create complex control flow
 structures. However, loops and conditional statements can both use the
-=break= statement to end their execution prematurely. Therefore, it is
+=break= statement to end their execution prematurely. Therefore, it's
 sometimes useful to be explicit about which loop or conditional
 statement you want a =break= statement to terminate. Similarly, if you
 have multiple nested loops, it can be useful to be explicit about which
@@ -6039,7 +6025,7 @@ initialized in the same way as before:
 
 This version of the game uses a =while= loop and a =switch= statement to
 implement the game's logic. The =while= loop has a statement label
-called =gameLoop= to indicate that it is the main game loop for the
+called =gameLoop= to indicate that it's the main game loop for the
 Snakes and Ladders game.
 
 The =while= loop's condition is =while square != finalSquare=, to
@@ -6085,12 +6071,12 @@ result of the move and to determine whether the move is allowed:
 
 Note
 
-If the =break= statement above did not use the =gameLoop= label, it
-would break out of the =switch= statement, not the =while= statement.
-Using the =gameLoop= label makes it clear which control statement should
-be terminated.
+If the =break= statement above didn't use the =gameLoop= label, it would 
+break out of the =switch= statement, not the =while= statement. Using 
+the =gameLoop= label makes it clear which control statement should be 
+terminated.
 
-It is not strictly necessary to use the =gameLoop= label when calling
+It isn't strictly necessary to use the =gameLoop= label when calling
 =continue gameLoop= to jump to the next iteration of the loop. There's
 only one loop in the game, and therefore no ambiguity as to which loop
 the =continue= statement will affect. However, there's no harm in using
@@ -6108,7 +6094,7 @@ depending on the Boolean value of an expression. You use a =guard=
 statement to require that a condition must be true in order for the code
 after the =guard= statement to be executed. Unlike an =if= statement, a
 =guard= statement always has an =else= clause---the code inside the
-=else= clause is executed if the condition is not true.
+=else= clause is executed if the condition isn't true.
 
 #+BEGIN_SRC swift
   func greet(person: [String: String]) {
@@ -6140,7 +6126,7 @@ that were assigned values using an optional binding as part of the
 condition are available for the rest of the code block that the =guard=
 statement appears in.
 
-If that condition is not met, the code inside the =else= branch is
+If that condition isn't met, the code inside the =else= branch is
 executed. That branch must transfer control to exit the code block in
 which the =guard= statement appears. It can do this with a control
 transfer statement such as =return=, =break=, =continue=, or =throw=, or
@@ -6229,7 +6215,7 @@ functionality within a nested function scope.
 When you define a function, you can optionally define one or more named,
 typed values that the function takes as input, known as /parameters/.
 You can also optionally define a type of value that the function will
-pass back as output when it is done, known as its /return type/.
+pass back as output when it's done, known as its /return type/.
 
 Every function has a /function name/, which describes the task that the
 function performs. To use a function, you “call” that function with its
@@ -6256,7 +6242,7 @@ return type with the /return arrow/ =->= (a hyphen followed by a right
 angle bracket), which is followed by the name of the type to return.
 
 The definition describes what the function does, what it expects to
-receive, and what it returns when it is done. The definition makes it
+receive, and what it returns when it's done. The definition makes it
 easy for the function to be called unambiguously from elsewhere in your
 code:
 
@@ -6289,7 +6275,7 @@ function finishes its execution and returns the current value of
 =greeting=.
 
 You can call the =greet(person:)= function multiple times with different
-input values. The example above shows what happens if it is called with
+input values. The example above shows what happens if it's called with
 an input value of ="Anna"=, and an input value of ="Brian"=. The
 function returns a tailored greeting in each case.
 
@@ -6315,9 +6301,9 @@ and different parameter options.
 
 *** Functions Without Parameters
 
-Functions are not required to define input parameters. Here's a function
+Functions aren't required to define input parameters. Here's a function
 with no input parameters, which always returns the same =String= message
-whenever it is called:
+whenever it's called:
 
 #+BEGIN_SRC swift
   func sayHelloWorld() -> String {
@@ -6328,7 +6314,7 @@ whenever it is called:
 #+END_SRC
 
 The function definition still needs parentheses after the function's
-name, even though it does not take any parameters. The function name is
+name, even though it doesn't take any parameters. The function name is
 also followed by an empty pair of parentheses when the function is
 called.
 
@@ -6362,7 +6348,7 @@ arguments but the =greet(person:)= function takes only one.
 
 *** Functions Without Return Values
 
-Functions are not required to define a return type. Here's a version of
+Functions aren't required to define a return type. Here's a version of
 the =greet(person:)= function, which prints its own =String= value
 rather than returning it:
 
@@ -6374,8 +6360,8 @@ rather than returning it:
   // Prints "Hello, Dave!"
 #+END_SRC
 
-Because it does not need to return a value, the function's definition
-does not include the return arrow (=->=) or a return type.
+Because it doesn't need to return a value, the function's definition
+doesn't include the return arrow (=->=) or a return type.
 
 Note
 
@@ -6384,7 +6370,7 @@ still return a value, even though no return value is defined. Functions
 without a defined return type return a special value of type =Void=.
 This is simply an empty tuple, which is written as =()=.
 
-The return value of a function can be ignored when it is called:
+The return value of a function can be ignored when it's called:
 
 #+BEGIN_SRC swift
   func printAndCount(string: String) -> Int {
@@ -6397,19 +6383,19 @@ The return value of a function can be ignored when it is called:
   printAndCount(string: "hello, world")
   // prints "hello, world" and returns a value of 12
   printWithoutCounting(string: "hello, world")
-  // prints "hello, world" but does not return a value
+  // prints "hello, world" but doesn't return a value
 #+END_SRC
 
 The first function, =printAndCount(string:)=, prints a string, and then
 returns its character count as an =Int=. The second function,
 =printWithoutCounting(string:)=, calls the first function, but ignores
 its return value. When the second function is called, the message is
-still printed by the first function, but the returned value is not used.
+still printed by the first function, but the returned value isn't used.
 
 Note
 
 Return values can be ignored, but a function that says it will return a
-value must always do so. A function with a defined return type cannot
+value must always do so. A function with a defined return type can't
 allow control to fall out of the bottom of the function without
 returning a value, and attempting to do so will result in a compile-time
 error.
@@ -6444,7 +6430,7 @@ accessed by name when querying the function's return value.
 The body of the =minMax(array:)= function starts by setting two working
 variables called =currentMin= and =currentMax= to the value of the first
 integer in the array. The function then iterates over the remaining
-values in the array and checks each value to see if it is smaller or
+values in the array and checks each value to see if it's smaller or
 larger than the values of =currentMin= and =currentMax= respectively.
 Finally, the overall minimum and maximum values are returned as a tuple
 of two =Int= values.
@@ -6459,7 +6445,7 @@ minimum and maximum found values:
   // Prints "min is -6 and max is 109"
 #+END_SRC
 
-Note that the tuple's members do not need to be named at the point that
+Note that the tuple's members don't need to be named at the point that
 the tuple is returned from the function, because their names are already
 specified as part of the function's return type.
 
@@ -6480,8 +6466,8 @@ tuple type, the entire tuple is optional, not just each individual value
 within the tuple.
 
 The =minMax(array:)= function above returns a tuple containing two =Int=
-values. However, the function does not perform any safety checks on the
-array it is passed. If the =array= argument contains an empty array, the
+values. However, the function doesn't perform any safety checks on the
+array it's passed. If the =array= argument contains an empty array, the
 =minMax(array:)= function, as defined above, will trigger a runtime
 error when attempting to access =array[0]=.
 
@@ -6593,7 +6579,7 @@ person's name and hometown and returns a greeting:
 
 The use of argument labels can allow a function to be called in an
 expressive, sentence-like manner, while still providing a function body
-that is readable and clear in intent.
+that's readable and clear in intent.
 
 *** Omitting Argument Labels
 
@@ -6669,7 +6655,7 @@ The example below calculates the /arithmetic mean/ (also known as the
 
 Note
 
-A function may have at most one variadic parameter.
+A function can have multiple variadic parameters.
 
 *** In-Out Parameters
 
@@ -6685,23 +6671,23 @@ ended, define that parameter as an /in-out parameter/ instead.
 #+FINDEX: inout
 
 You write an in-out parameter by placing the =inout= keyword right
-before a parameter's type. An in-out parameter has a value that is
-passed /in/ to the function, is modified by the function, and is passed
-back /out/ of the function to replace the original value. For a detailed
+before a parameter's type. An in-out parameter has a value that's passed 
+/in/ to the function, is modified by the function, and is passed back 
+/out/ of the function to replace the original value. For a detailed
 discussion of the behavior of in-out parameters and associated compiler
-optimizations, see [[info:swift-reference#In-Out%20Parameters][In-Out
+optimizations, see [[info:swift-reference#In-Out Parameters][In-Out
 Parameters]].
 
 You can only pass a variable as the argument for an in-out parameter.
-You cannot pass a constant or a literal value as the argument, because
-constants and literals cannot be modified. You place an ampersand (=&=)
+You can't pass a constant or a literal value as the argument, because
+constants and literals can't be modified. You place an ampersand (=&=)
 directly before a variable's name when you pass it as an argument to an
 in-out parameter, to indicate that it can be modified by the function.
 
 Note
 
-In-out parameters cannot have default values, and variadic parameters
-cannot be marked as =inout=.
+In-out parameters can't have default values, and variadic parameters
+can't be marked as =inout=.
 
 Here's an example of a function called =swapTwoInts(_:_:)=, which has
 two in-out integer parameters called =a= and =b=:
@@ -6722,7 +6708,7 @@ assigning the value of =b= to =a=, and then assigning =temporaryA= to
 
 You can call the =swapTwoInts(_:_:)= function with two variables of type
 =Int= to swap their values. Note that the names of =someInt= and
-=anotherInt= are prefixed with an ampersand when they are passed to the
+=anotherInt= are prefixed with an ampersand when they're passed to the
 =swapTwoInts(_:_:)= function:
 
 #+BEGIN_SRC swift
@@ -6739,9 +6725,9 @@ though they were originally defined outside of the function.
 
 Note
 
-In-out parameters are not the same as returning a value from a function.
-The =swapTwoInts= example above does not define a return type or return
-a value, but it still modifies the values of =someInt= and =anotherInt=.
+In-out parameters aren't the same as returning a value from a function.
+The =swapTwoInts= example above doesn't define a return type or return a 
+value, but it still modifies the values of =someInt= and =anotherInt=.
 In-out parameters are an alternative way for a function to have an
 effect outside of the scope of its function body.
 
@@ -6851,7 +6837,7 @@ as the argument for this first parameter. The second and third
 parameters are called =a= and =b=, and are both of type =Int=. These are
 used as the two input values for the provided math function.
 
-When =printMathResult(_:_:_:)= is called, it is passed the
+When =printMathResult(_:_:_:)= is called, it's passed the
 =addTwoInts(_:_:)= function, and the integer values =3= and =5=. It
 calls the provided function with the values =3= and =5=, and prints the
 result of =8=.
@@ -6972,13 +6958,13 @@ around and used in your code. Closures in Swift are similar to blocks in
 C and Objective-C and to lambdas in other programming languages.
 
 Closures can capture and store references to any constants and variables
-from the context in which they are defined. This is known as /closing
+from the context in which they're defined. This is known as /closing
 over/ those constants and variables. Swift handles all of the memory
 management of capturing for you.
 
 Note
 
-Don't worry if you are not familiar with the concept of capturing. It is
+Don't worry if you aren't familiar with the concept of capturing. It's
 explained in detail below in [[Capturing Values][Capturing
 Values]].
 
@@ -7013,8 +6999,8 @@ scenarios. These optimizations include:
 
 Nested functions, as introduced in [[Nested Functions][Nested
 Functions]], are a convenient means of naming and defining
-self-contained blocks of code as part of a larger function. However, it
-is sometimes useful to write shorter versions of function-like
+self-contained blocks of code as part of a larger function. However, 
+it's sometimes useful to write shorter versions of function-like
 constructs without a full declaration and name. This is particularly
 true when you work with functions or methods that take functions as one
 or more of their arguments.
@@ -7034,7 +7020,7 @@ sorts an array of values of a known type, based on the output of a
 sorting closure that you provide. Once it completes the sorting process,
 the =sorted(by:)= method returns a new array of the same type and size
 as the old one, with its elements in the correct sorted order. The
-original array is not modified by the =sorted(by:)= method.
+original array isn't modified by the =sorted(by:)= method.
 
 The closure expression examples below use the =sorted(by:)= method to
 sort an array of =String= values in reverse alphabetical order. Here's
@@ -7106,7 +7092,7 @@ The example below shows a closure expression version of the
 
 Note that the declaration of parameters and return type for this inline
 closure is identical to the declaration from the =backward(_:_:)=
-function. In both cases, it is written as
+function. In both cases, it's written as
 =(s1: String, s2: String) -> Bool=. However, for the inline closure
 expression, the parameters and return type are written /inside/ the
 curly braces, not outside of them.
@@ -7142,7 +7128,7 @@ parameters can also be omitted:
   reversedNames = names.sorted(by: { s1, s2 in return s1 > s2 } )
 #+END_SRC
 
-It is always possible to infer the parameter types and return type when
+It's always possible to infer the parameter types and return type when
 passing a closure to a function or method as an inline closure
 expression. As a result, you never need to write an inline closure in
 its fullest form when the closure is used as a function or method
@@ -7151,9 +7137,9 @@ argument.
 Nonetheless, you can still make the types explicit if you wish, and
 doing so is encouraged if it avoids ambiguity for readers of your code.
 In the case of the =sorted(by:)= method, the purpose of the closure is
-clear from the fact that sorting is taking place, and it is safe for a
+clear from the fact that sorting is taking place, and it's safe for a
 reader to assume that the closure is likely to be working with =String=
-values, because it is assisting with the sorting of an array of strings.
+values, because it's assisting with the sorting of an array of strings.
 
 *** Implicit Returns from Single-Expression Closures
 
@@ -7260,7 +7246,7 @@ method's name when you call the function:
 #+END_SRC
 
 Trailing closures are most useful when the closure is sufficiently long
-that it is not possible to write it inline on a single line. As an
+that it isn't possible to write it inline on a single line. As an
 example, Swift's =Array= type has a =map(_:)= method, which takes a
 closure expression as its single argument. The closure is called once
 for each item in the array, and returns an alternative mapped value
@@ -7319,7 +7305,7 @@ always constants.) The closure expression also specifies a return type
 of =String=, to indicate the type that will be stored in the mapped
 output array.
 
-The closure expression builds a string called =output= each time it is
+The closure expression builds a string called =output= each time it's
 called. It calculates the last digit of =number= by using the remainder
 operator (=number % 10=), and uses this digit to look up an appropriate
 string in the =digitNames= dictionary. The closure can be used to create
@@ -7328,21 +7314,21 @@ a string representation of any integer greater than zero.
 Note
 
 The call to the =digitNames= dictionary's subscript is followed by an
-exclamation point (=!=), because dictionary subscripts return an optional
-value to indicate that the dictionary lookup can fail if the key does
-not exist. In the example above, it is guaranteed that =number % 10=
-will always be a valid subscript key for the =digitNames= dictionary,
-and so an exclamation point is used to force-unwrap the =String= value
-stored in the subscript's optional return value.
+exclamation point (=!=), because dictionary subscripts return an 
+optional value to indicate that the dictionary lookup can fail if the 
+key doesn't exist. In the example above, it's guaranteed that 
+=number % 10= will always be a valid subscript key for the =digitNames= 
+dictionary, and so an exclamation point is used to force-unwrap the 
+=String= value stored in the subscript's optional return value.
 
 The string retrieved from the =digitNames= dictionary is added to the
 /front/ of =output=, effectively building a string version of the number
 in reverse. (The expression =number % 10= gives a value of =6= for =16=,
 =8= for =58=, and =0= for =510=.)
 
-The =number= variable is then divided by =10=. Because it is an integer,
-it is rounded down during the division, so =16= becomes =1=, =58=
-becomes =5=, and =510= becomes =51=.
+The =number= variable is then divided by =10=. Because it's an integer,
+it's rounded down during the division, so =16= becomes =1=, =58= becomes 
+=5=, and =510= becomes =51=.
 
 The process is repeated until =number= is equal to =0=, at which point
 the =output= string is returned by the closure, and is added to the
@@ -7395,7 +7381,7 @@ that handles both circumstances.
 ** Capturing Values
 
 A closure can /capture/ constants and variables from the surrounding
-context in which it is defined. The closure can then refer to and modify
+context in which it's defined. The closure can then refer to and modify
 the values of those constants and variables from within its body, even
 if the original scope that defined the constants and variables no longer
 exists.
@@ -7410,7 +7396,7 @@ a nested function called =incrementer=. The nested =incrementer()=
 function captures two values, =runningTotal= and =amount=, from its
 surrounding context. After capturing these values, =incrementer= is
 returned by =makeIncrementer= as a closure that increments
-=runningTotal= by =amount= each time it is called.
+=runningTotal= by =amount= each time it's called.
 
 #+BEGIN_SRC swift
   func makeIncrementer(forIncrement amount: Int) -> () -> Int {
@@ -7425,7 +7411,7 @@ returned by =makeIncrementer= as a closure that increments
 
 The return type of =makeIncrementer= is =() -> Int=. This means that it
 returns a /function/, rather than a simple value. The function it
-returns has no parameters, and returns an =Int= value each time it is
+returns has no parameters, and returns an =Int= value each time it's
 called. To learn how functions can return other functions, see
 [[Function Types as Return Types][Function Types as Return Types]].
 
@@ -7465,11 +7451,11 @@ called.
 Note
 
 As an optimization, Swift may instead capture and store a /copy/ of a
-value if that value is not mutated by a closure, and if the value is not
+value if that value isn't mutated by a closure, and if the value isn't
 mutated after the closure is created.
 
 Swift also handles all memory management involved in disposing of
-variables when they are no longer needed.
+variables when they're no longer needed.
 
 Here's an example of =makeIncrementer= in action:
 
@@ -7479,7 +7465,7 @@ Here's an example of =makeIncrementer= in action:
 
 This example sets a constant called =incrementByTen= to refer to an
 incrementer function that adds =10= to its =runningTotal= variable each
-time it is called. Calling the function multiple times shows this
+time it's called. Calling the function multiple times shows this
 behavior in action:
 
 #+BEGIN_SRC swift
@@ -7501,7 +7487,7 @@ reference to a new, separate =runningTotal= variable:
 #+END_SRC
 
 Calling the original incrementer (=incrementByTen=) again continues to
-increment its own =runningTotal= variable, and does not affect the
+increment its own =runningTotal= variable, and doesn't affect the
 variable captured by =incrementBySeven=:
 
 #+BEGIN_SRC swift
@@ -7528,8 +7514,8 @@ because functions and closures are /reference types/.
 
 Whenever you assign a function or a closure to a constant or a variable,
 you are actually setting that constant or variable to be a /reference/
-to the function or closure. In the example above, it is the choice of
-closure that =incrementByTen= /refers to/ that is constant, and not the
+to the function or closure. In the example above, it's the choice of
+closure that =incrementByTen= /refers to/ that's constant, and not the
 contents of the closure itself.
 
 This also means that if you assign a closure to two different constants
@@ -7567,7 +7553,7 @@ closure isn't called until the operation is completed---the closure
 needs to escape, to be called later. For example:
 
 #+BEGIN_SRC swift
-  var completionHandlers: [() -> Void] = []
+  var completionHandlers: [() -> Void]()
   func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
       completionHandlers.append(completionHandler)
   }
@@ -7666,7 +7652,7 @@ capture a mutable reference to =self= for structures.
 #+CINDEX: closures created automatically to wrap expression arguments
 #+FINDEX: @@autoclosure
 
-An /autoclosure/ is a closure that is automatically created to wrap an
+An /autoclosure/ is a closure that's automatically created to wrap an
 expression that's being passed as an argument to a function. It doesn't
 take any arguments, and when it's called, it returns the value of the
 expression that's wrapped inside of it. This syntactic convenience lets
@@ -7705,9 +7691,9 @@ Even though the first element of the =customersInLine= array is removed
 by the code inside the closure, the array element isn't removed until
 the closure is actually called. If the closure is never called, the
 expression inside the closure is never evaluated, which means the array
-element is never removed. Note that the type of =customerProvider= is
-not =String= but =() -> String=---a function with no parameters that
-returns a string.
+element is never removed. Note that the type of =customerProvider= isn't
+=String= but =() -> String=---a function with no parameters that returns 
+a string.
 
 You get the same behavior of delayed evaluation when you pass a closure
 as an argument to a function.
@@ -7746,7 +7732,7 @@ Overusing autoclosures can make your code hard to understand. The
 context and function name should make it clear that evaluation is being
 deferred.
 
-If you want an autoclosure that is allowed to escape, use both the
+If you want an autoclosure that's allowed to escape, use both the
 =@autoclosure= and =@escaping= attributes. The =@escaping= attribute is
 described above in [[Escaping Closures][Escaping Closures]].
 
@@ -8014,7 +8000,7 @@ value of =upc= with an associated value of type (=Int=, =Int=, =Int=,
 
 This definition doesn't provide any actual =Int= or =String= values---it
 just defines the /type/ of associated values that =Barcode= constants
-and variables can store when they are equal to =Barcode.upc= or
+and variables can store when they're equal to =Barcode.upc= or
 =Barcode.qrCode=.
 
 You can then create new barcodes using either type:
@@ -8505,7 +8491,7 @@ value types, and are implemented as structures behind the scenes.
 
 All structures and enumerations are value types in Swift. This means
 that any structure and enumeration instances you create---and any value
-types they have as properties---are always copied when they are passed
+types they have as properties---are always copied when they're passed
 around in your code.
 
 Note
@@ -8533,8 +8519,8 @@ video (1920 pixels wide by 1080 pixels high).
 It then declares a variable called =cinema= and sets it to the current
 value of =hd=. Because =Resolution= is a structure, a /copy/ of the
 existing instance is made, and this new copy is assigned to =cinema=.
-Even though =hd= and =cinema= now have the same width and height, they
-are two completely different instances behind the scenes.
+Even though =hd= and =cinema= now have the same width and height,
+they're two completely different instances behind the scenes.
 
 Next, the =width= property of =cinema= is amended to be the width of the
 slightly wider 2K standard used for digital cinema projection (2048
@@ -8563,7 +8549,7 @@ the old value of =1920=:
 When =cinema= was given the current value of =hd=, the /values/ stored
 in =hd= were copied into the new =cinema= instance. The end result was
 two completely separate instances that contained the same numeric
-values. However, because they are separate instances, setting the width
+values. However, because they're separate instances, setting the width
 of =cinema= to =2048= doesn't affect the width stored in =hd=, as shown
 in the figure below:
 
@@ -8594,8 +8580,8 @@ value that was stored in =rememberedDirection=.
 
 ** Classes Are Reference Types
 
-Unlike value types, /reference types/ are /not/ copied when they are
-assigned to a variable or constant, or when they are passed to a
+Unlike value types, /reference types/ are /not/ copied when they're
+assigned to a variable or constant, or when they're passed to a
 function. Rather than a copy, a reference to the same existing instance
 is used.
 
@@ -8625,7 +8611,7 @@ and the frame rate of =alsoTenEighty= is modified:
 
 Because classes are reference types, =tenEighty= and =alsoTenEighty=
 actually both refer to the /same/ =VideoMode= instance. Effectively,
-they are just two different names for the same single instance, as shown
+they're just two different names for the same single instance, as shown
 in the figure below:
 
 [[file:images/sharedStateClass_2x.png]]
@@ -8654,7 +8640,7 @@ of the =tenEighty= and =alsoTenEighty= constants themselves don't
 actually change. =tenEighty= and =alsoTenEighty= themselves don't
 “store” the =VideoMode= instance---instead, they both /refer/ to a
 =VideoMode= instance behind the scenes. It's the =frameRate= property of
-the underlying =VideoMode= that is changed, not the values of the
+the underlying =VideoMode= that's changed, not the values of the
 constant references to that =VideoMode=.
 
 *** Identity Operators
@@ -8662,7 +8648,7 @@ constant references to that =VideoMode=.
 Because classes are reference types, it's possible for multiple
 constants and variables to refer to the same single instance of a class
 behind the scenes. (The same isn't true for structures and enumerations,
-because they are always copied when they are assigned to a constant or
+because they're always copied when they're assigned to a constant or
 variable, or passed to a function.)
 
 It can sometimes be useful to find out whether two constants or
@@ -8733,11 +8719,11 @@ setter of multiple properties.
 
 ** Stored Properties
 
-In its simplest form, a stored property is a constant or variable that
-is stored as part of an instance of a particular class or structure.
-Stored properties can be either /variable stored properties/ (introduced
-by the =var= keyword) or /constant stored properties/ (introduced by the
-=let= keyword).
+In its simplest form, a stored property is a constant or variable that's 
+stored as part of an instance of a particular class or structure. Stored 
+properties can be either /variable stored properties/ (introduced by the 
+=var= keyword) or /constant stored properties/ (introduced by the =let= 
+keyword).
 
 You can provide a default value for a stored property as part of its
 definition, as described in [[Default Property Values][Default
@@ -8748,8 +8734,8 @@ stored properties, as described in
 Initialization]].
 
 The example below defines a structure called =FixedLengthRange=, which
-describes a range of integers whose range length cannot be changed after
-it is created:
+describes a range of integers whose range length can't be changed after
+it's created:
 
 #+BEGIN_SRC swift
   struct FixedLengthRange {
@@ -8765,12 +8751,12 @@ it is created:
 Instances of =FixedLengthRange= have a variable stored property called
 =firstValue= and a constant stored property called =length=. In the
 example above, =length= is initialized when the new range is created and
-cannot be changed thereafter, because it is a constant property.
+can't be changed thereafter, because it's a constant property.
 
 *** Stored Properties of Constant Structure Instances
 
 If you create an instance of a structure and assign that instance to a
-constant, you cannot modify the instance's properties, even if they were
+constant, you can't modify the instance's properties, even if they were
 declared as variable properties:
 
 #+BEGIN_SRC swift
@@ -8781,13 +8767,13 @@ declared as variable properties:
 #+END_SRC
 
 Because =rangeOfFourItems= is declared as a constant (with the =let=
-keyword), it is not possible to change its =firstValue= property, even
+keyword), it isn't possible to change its =firstValue= property, even
 though =firstValue= is a variable property.
 
 This behavior is due to structures being /value types/. When an instance
 of a value type is marked as a constant, so are all of its properties.
 
-The same is not true for classes, which are /reference types/. If you
+The same isn't true for classes, which are /reference types/. If you
 assign an instance of a reference type to a constant, you can still
 change that instance's variable properties.
 
@@ -8795,8 +8781,8 @@ change that instance's variable properties.
 
 #+FINDEX: lazy
 
-A /lazy stored property/ is a property whose initial value is not
-calculated until the first time it is used. You indicate a lazy stored
+A /lazy stored property/ is a property whose initial value isn't
+calculated until the first time it's used. You indicate a lazy stored
 property by writing the =lazy= modifier before its declaration.
 
 Note
@@ -8804,15 +8790,15 @@ Note
 You must always declare a lazy property as a variable (with the =var=
 keyword), because its initial value might not be retrieved until after
 instance initialization completes. Constant properties must always have
-a value /before/ initialization completes, and therefore cannot be
+a value /before/ initialization completes, and therefore can't be
 declared as lazy.
 
 Lazy properties are useful when the initial value for a property is
-dependent on outside factors whose values are not known until after an
+dependent on outside factors whose values aren't known until after an
 instance's initialization is complete. Lazy properties are also useful
 when the initial value for a property requires complex or
-computationally expensive setup that should not be performed unless or
-until it is needed.
+computationally expensive setup that shouldn't be performed unless or
+until it's needed.
 
 The example below uses a lazy stored property to avoid unnecessary
 initialization of a complex class. This example defines two classes
@@ -8839,14 +8825,13 @@ full:
   let manager = DataManager()
   manager.data.append("Some data")
   manager.data.append("Some more data")
-  // the DataImporter instance for the importer property has not yet been created
+  // the DataImporter instance for the importer property hasn't yet been created
 #+END_SRC
 
 The =DataManager= class has a stored property called =data=, which is
 initialized with a new, empty array of =String= values. Although the
-rest of its functionality is not shown, the purpose of this
-=DataManager= class is to manage and provide access to this array of
-=String= data.
+rest of its functionality isn't shown, the purpose of this =DataManager= 
+class is to manage and provide access to this array of =String= data.
 
 Part of the functionality of the =DataManager= class is the ability to
 import data from a file. This functionality is provided by the
@@ -8855,13 +8840,13 @@ time to initialize. This might be because a =DataImporter= instance
 needs to open a file and read its contents into memory when the
 =DataImporter= instance is initialized.
 
-It is possible for a =DataManager= instance to manage its data without
-ever importing data from a file, so there is no need to create a new
-=DataImporter= instance when the =DataManager= itself is created.
+Because it's possible for a =DataManager= instance to manage its data 
+without ever importing data from a file, =DataManager= doesn't create a 
+new =DataImporter= instance when the =DataManager= itself is created.
 Instead, it makes more sense to create the =DataImporter= instance if
-and when it is first used.
+and when it's first used.
 
-Because it is marked with the =lazy= modifier, the =DataImporter=
+Because it's marked with the =lazy= modifier, the =DataImporter=
 instance for the =importer= property is only created when the =importer=
 property is first accessed, such as when its =filename= property is
 queried:
@@ -8875,7 +8860,7 @@ queried:
 Note
 
 If a property marked with the =lazy= modifier is accessed by multiple
-threads simultaneously and the property has not yet been initialized,
+threads simultaneously and the property hasn't yet been initialized,
 there's no guarantee that the property will be initialized only once.
 
 *** Stored Properties and Instance Variables
@@ -8886,10 +8871,10 @@ In addition to properties, you can use instance variables as a backing
 store for the values stored in a property.
 
 Swift unifies these concepts into a single property declaration. A Swift
-property does not have a corresponding instance variable, and the
-backing store for a property is not accessed directly. This approach
-avoids confusion about how the value is accessed in different contexts
-and simplifies the property's declaration into a single, definitive
+property doesn't have a corresponding instance variable, and the backing 
+store for a property isn't accessed directly. This approach avoids 
+confusion about how the value is accessed in different contexts and 
+simplifies the property's declaration into a single, definitive
 statement. All information about the property---including its name,
 type, and memory management characteristics---is defined in a single
 location as part of the type's definition.
@@ -8897,7 +8882,7 @@ location as part of the type's definition.
 ** Computed Properties
 
 In addition to stored properties, classes, structures, and enumerations
-can define /computed properties/, which do not actually store a value.
+can define /computed properties/, which don't actually store a value.
 Instead, they provide a getter and an optional setter to retrieve and
 set other properties and values indirectly.
 
@@ -9025,16 +9010,16 @@ Omitting the =return= from a getter follows the same rules as omitting
 
 A computed property with a getter but no setter is known as a /read-only
 computed property/. A read-only computed property always returns a
-value, and can be accessed through dot syntax, but cannot be set to a
+value, and can be accessed through dot syntax, but can't be set to a
 different value.
 
 Note
 
 You must declare computed properties---including read-only computed
 properties---as variable properties with the =var= keyword, because
-their value is not fixed. The =let= keyword is only used for constant
-properties, to indicate that their values cannot be changed once they
-are set as part of instance initialization.
+their value isn't fixed. The =let= keyword is only used for constant
+properties, to indicate that their values can't be changed once they're 
+set as part of instance initialization.
 
 You can simplify the declaration of a read-only computed property by
 removing the =get= keyword and its braces:
@@ -9057,7 +9042,7 @@ structure also has a read-only computed property called =volume=, which
 calculates and returns the current volume of the cuboid. It doesn't make
 sense for =volume= to be settable, because it would be ambiguous as to
 which values of =width=, =height=, and =depth= should be used for a
-particular =volume= value. Nonetheless, it is useful for a =Cuboid= to
+particular =volume= value. Nonetheless, it's useful for a =Cuboid= to
 provide a read-only computed property to enable external users to
 discover its current calculated volume.
 
@@ -9104,9 +9089,8 @@ Note
 
 The =willSet= and =didSet= observers of superclass properties are called
 when a property is set in a subclass initializer, after the superclass
-initializer has been called. They are not called while a class is
-setting its own properties, before the superclass initializer has been
-called.
+initializer has been called. They aren't called while a class is setting 
+its own properties, before the superclass initializer has been called.
 
 For more information about initializer delegation, see
 [[Initializer Delegation for Value Types][Initializer Delegation for Value Types]]
@@ -9156,13 +9140,13 @@ new value is the same as the current value.
 
 This example's =willSet= observer uses a custom parameter name of
 =newTotalSteps= for the upcoming new value. In this example, it simply
-prints out the value that is about to be set.
+prints out the value that's about to be set.
 
 The =didSet= observer is called after the value of =totalSteps= is
 updated. It compares the new value of =totalSteps= against the old
 value. If the total number of steps has increased, a message is printed
 to indicate how many new steps have been taken. The =didSet= observer
-does not provide a custom parameter name for the old value, and the
+doesn't provide a custom parameter name for the old value, and the
 default name of =oldValue= is used instead.
 
 Note
@@ -9429,8 +9413,8 @@ arguments you include. For example:
 #+END_SRC
 
 The instance of =SmallNumber= that wraps =height= is created by calling
-=SmallNumber(wrappedValue: 1)=, which uses the default maximum value
-of 12. The instance that wraps =width= is created by calling
+=SmallNumber(wrappedValue: 1)=, which uses the default maximum value of 
+12. The instance that wraps =width= is created by calling
 =SmallNumber(wrappedValue: 2, maximum: 9)=.
 
 *** Projecting a Value From a Property Wrapper
@@ -9559,14 +9543,14 @@ value to be set and retrieved.
 
 However, you can also define /computed variables/ and define observers
 for stored variables, in either a global or local scope. Computed
-variables calculate their value, rather than storing it, and they are
+variables calculate their value, rather than storing it, and they're
 written in the same way as computed properties.
 
 Note
 
 Global constants and variables are always computed lazily, in a similar
 manner to [[Lazy Stored Properties][Lazy Stored Properties]]. Unlike
-lazy stored properties, global constants and variables do not need to be
+lazy stored properties, global constants and variables don't need to be
 marked with the =lazy= modifier.
 
 Local constants and variables are never computed lazily.
@@ -9585,7 +9569,7 @@ kinds of properties are called /type properties/.
 Type properties are useful for defining values that are universal to
 /all/ instances of a particular type, such as a constant property that
 all instances can use (like a static constant in C), or a variable
-property that stores a value that is global to all instances of that
+property that stores a value that's global to all instances of that
 type (like a static variable in C).
 
 Stored type properties can be variables or constants. Computed type
@@ -9595,13 +9579,13 @@ as computed instance properties.
 Note
 
 Unlike stored instance properties, you must always give stored type
-properties a default value. This is because the type itself does not
+properties a default value. This is because the type itself doesn't
 have an initializer that can assign a value to a stored type property at
 initialization time.
 
 Stored type properties are lazily initialized on their first access.
-They are guaranteed to be initialized only once, even when accessed by
-multiple threads simultaneously, and they do not need to be marked with
+They're guaranteed to be initialized only once, even when accessed by
+multiple threads simultaneously, and they don't need to be marked with
 the =lazy= modifier.
 
 *** Type Property Syntax
@@ -9720,7 +9704,7 @@ called =currentLevel=, which represents the channel's current audio
 level on a scale of =0= to =10=.
 
 The =currentLevel= property has a =didSet= property observer to check
-the value of =currentLevel= whenever it is set. This observer performs
+the value of =currentLevel= whenever it's set. This observer performs
 two checks:
 
 - If the new value of =currentLevel= is greater than the allowed
@@ -9735,7 +9719,7 @@ two checks:
 Note
 
 In the first of these two checks, the =didSet= observer sets
-=currentLevel= to a different value. This does not, however, cause the
+=currentLevel= to a different value. This doesn't, however, cause the
 observer to be called again.
 
 You can use the =AudioChannel= structure to create two new audio
@@ -9800,7 +9784,7 @@ You write an instance method within the opening and closing braces of
 the type it belongs to. An instance method has implicit access to all
 other instance methods and properties of that type. An instance method
 can be called only on a specific instance of the type it belongs to. It
-cannot be called in isolation without an existing instance.
+can't be called in isolation without an existing instance.
 
 Here's an example that defines a simple =Counter= class, which can be
 used to count the number of times an action occurs:
@@ -9884,7 +9868,7 @@ necessary to refer to the property in a more qualified way. You use the
 property name.
 
 Here, =self= disambiguates between a method parameter called =x= and an
-instance property that is also called =x=:
+instance property that's also called =x=:
 
 #+BEGIN_SRC swift
   struct Point {
@@ -9906,7 +9890,7 @@ referred to the method parameter called =x=.
 *** Modifying Value Types from Within Instance Methods
 
 Structures and enumerations are /value types/. By default, the
-properties of a value type cannot be modified from within its instance
+properties of a value type can't be modified from within its instance
 methods.
 
 However, if you need to modify the properties of your structure or
@@ -9937,13 +9921,13 @@ the =func= keyword for that method:
 
 The =Point= structure above defines a mutating =moveBy(x:y:)= method,
 which moves a =Point= instance by a certain amount. Instead of returning
-a new point, this method actually modifies the point on which it is
+a new point, this method actually modifies the point on which it's
 called. The =mutating= keyword is added to its definition to enable it
 to modify its properties.
 
-Note that you cannot call a mutating method on a constant of structure
-type, because its properties cannot be changed, even if they are
-variable properties, as described in [[Stored Properties of Constant Structure Instances][Stored Properties of Constant Structure Instances]].
+Note that you can't call a mutating method on a constant of structure
+type, because its properties can't be changed, even if they're variable 
+properties, as described in [[Stored Properties of Constant Structure Instances][Stored Properties of Constant Structure Instances]].
 
 #+BEGIN_SRC swift
   let fixedPoint = Point(x: 3.0, y: 3.0)
@@ -10044,7 +10028,7 @@ properties by using the type property's name without a type name prefix.
 
 The example below defines a structure called =LevelTracker=, which
 tracks a player's progress through the different levels or stages of a
-game. It is a single-player game, but can store information for multiple
+game. It's a single-player game, but can store information for multiple
 players on a single device.
 
 All of the game's levels (apart from level one) are locked when the game
@@ -10143,7 +10127,7 @@ see what happens when the player completes level one:
   // Prints "highest unlocked level is now 2"
 #+END_SRC
 
-If you create a second player, whom you try to move to a level that is
+If you create a second player, whom you try to move to a level that's
 not yet unlocked by any player in the game, the attempt to set the
 player's current level fails:
 
@@ -10152,9 +10136,9 @@ player's current level fails:
   if player.tracker.advance(to: 6) {
       print("player is now on level 6")
   } else {
-      print("level 6 has not yet been unlocked")
+      print("level 6 hasn't yet been unlocked")
   }
-  // Prints "level 6 has not yet been unlocked"
+  // Prints "level 6 hasn't yet been unlocked"
 #+END_SRC
 
 * Subscripts
@@ -10170,7 +10154,7 @@ elements in a =Dictionary= instance as =someDictionary[key]=.
 
 You can define multiple subscripts for a single type, and the
 appropriate subscript overload to use is selected based on the type of
-index value you pass to the subscript. Subscripts are not limited to a
+index value you pass to the subscript. Subscripts aren't limited to a
 single dimension, and you can define subscripts with multiple input
 parameters to suit your custom type's needs.
 
@@ -10199,7 +10183,7 @@ the same way as for computed properties:
 The type of =newValue= is the same as the return value of the subscript.
 As with computed properties, you can choose not to specify the setter's
 =(newValue)= parameter. A default parameter called =newValue= is
-provided to your setter if you do not provide one yourself.
+provided to your setter if you don't provide one yourself.
 
 As with read-only computed properties, you can simplify the declaration
 of a read-only subscript by removing the =get= keyword and its braces:
@@ -10237,13 +10221,13 @@ times =6=.
 
 Note
 
-An /n/-times-table is based on a fixed mathematical rule. It is not
+An /n/-times-table is based on a fixed mathematical rule. It isn't
 appropriate to set =threeTimesTable[someIndex]= to a new value, and so
 the subscript for =TimesTable= is defined as a read-only subscript.
 
 ** Subscript Usage
 
-The exact meaning of “subscript” depends on the context in which it is
+The exact meaning of “subscript” depends on the context in which it's
 used. Subscripts are typically used as a shortcut for accessing the
 member elements in a collection, list, or sequence. You are free to
 implement subscripts in the most appropriate way for your particular
@@ -10297,11 +10281,11 @@ on the types of the value or values that are contained within the
 subscript brackets at the point that the subscript is used. This
 definition of multiple subscripts is known as /subscript overloading/.
 
-While it is most common for a subscript to take a single parameter, you
-can also define a subscript with multiple parameters if it is
-appropriate for your type. The following example defines a =Matrix=
-structure, which represents a two-dimensional matrix of =Double= values.
-The =Matrix= structure's subscript takes two integer parameters:
+While it's most common for a subscript to take a single parameter, you
+can also define a subscript with multiple parameters if it's appropriate
+for your type. The following example defines a =Matrix= structure, which
+represents a two-dimensional matrix of =Double= values. The =Matrix=
+structure's subscript takes two integer parameters:
 
 #+BEGIN_SRC swift
   struct Matrix {
@@ -10329,7 +10313,7 @@ The =Matrix= structure's subscript takes two integer parameters:
 #+END_SRC
 
 =Matrix= provides an initializer that takes two parameters called =rows=
-and =columns=, and creates an array that is large enough to store
+and =columns=, and creates an array that's large enough to store
 =rows * columns= values of type =Double=. Each position in the matrix is
 given an initial value of =0.0=. To achieve this, the array's size, and
 an initial cell value of =0.0=, are passed to an array initializer that
@@ -10376,7 +10360,7 @@ called =indexIsValid(row:column:)=, which checks whether the requested
   }
 #+END_SRC
 
-An assertion is triggered if you try to access a subscript that is
+An assertion is triggered if you try to access a subscript that's
 outside of the matrix bounds:
 
 #+BEGIN_SRC swift
@@ -10430,12 +10414,12 @@ defined as a stored or computed property.
 
 ** Defining a Base Class
 
-Any class that does not inherit from another class is known as a /base
+Any class that doesn't inherit from another class is known as a /base
 class/.
 
 Note
 
-Swift classes do not inherit from a universal base class. Classes you
+Swift classes don't inherit from a universal base class. Classes you
 define without specifying a superclass automatically become base classes
 for you to build upon.
 
@@ -10446,7 +10430,7 @@ property's value is used by a read-only computed =String= property
 called =description= to create a description of the vehicle.
 
 The =Vehicle= base class also defines a method called =makeNoise=. This
-method does not actually do anything for a base =Vehicle= instance, but
+method doesn't actually do anything for a base =Vehicle= instance, but
 will be customized by subclasses of =Vehicle= later on:
 
 #+BEGIN_SRC swift
@@ -10478,7 +10462,7 @@ vehicle's current speed:
 #+END_SRC
 
 The =Vehicle= class defines common characteristics for an arbitrary
-vehicle, but is not much use in itself. To make it more useful, you need
+vehicle, but isn't much use in itself. To make it more useful, you need
 to refine it to describe more specific kinds of vehicles.
 
 ** Subclassing
@@ -10568,7 +10552,7 @@ it would otherwise inherit from a superclass. This is known as
 #+FINDEX: override
 To override a characteristic that would otherwise be inherited, you
 prefix your overriding definition with the =override= keyword. Doing so
-clarifies that you intend to provide an override and have not provided a
+clarifies that you intend to provide an override and haven't provided a
 matching definition by mistake. Overriding by accident can cause
 unexpected behavior, and any overrides without the =override= keyword
 are diagnosed as an error when your code is compiled.
@@ -10581,7 +10565,7 @@ check ensures that your overriding definition is correct.
 *** Accessing Superclass Methods, Properties, and Subscripts
 
 When you provide a method, property, or subscript override for a
-subclass, it is sometimes useful to use the existing superclass
+subclass, it's sometimes useful to use the existing superclass
 implementation as part of your override. For example, you can refine the
 behavior of that existing implementation, or store a modified value in
 an existing inherited variable.
@@ -10643,7 +10627,7 @@ underlying property value changes.
 You can provide a custom getter (and setter, if appropriate) to override
 /any/ inherited property, regardless of whether the inherited property
 is implemented as a stored or computed property at source. The stored or
-computed nature of an inherited property is not known by a subclass---it
+computed nature of an inherited property isn't known by a subclass---it
 only knows that the inherited property has a certain name and type. You
 must always state both the name and the type of the property you are
 overriding, to enable the compiler to check that your override matches a
@@ -10651,7 +10635,7 @@ superclass property with the same name and type.
 
 You can present an inherited read-only property as a read-write property
 by providing both a getter and a setter in your subclass property
-override. You cannot, however, present an inherited read-write property
+override. You can't, however, present an inherited read-write property
 as a read-only property.
 
 Note
@@ -10706,12 +10690,12 @@ originally implemented. For more information on property observers, see
 
 Note
 
-You cannot add property observers to inherited constant stored
-properties or inherited read-only computed properties. The value of
-these properties cannot be set, and so it is not appropriate to provide
-a =willSet= or =didSet= implementation as part of an override.
+You can't add property observers to inherited constant stored properties
+or inherited read-only computed properties. The value of these
+properties can't be set, and so it isn't appropriate to provide a
+=willSet= or =didSet= implementation as part of an override.
 
-Note also that you cannot provide both an overriding setter and an
+Note also that you can't provide both an overriding setter and an
 overriding property observer for the same property. If you want to
 observe changes to a property's value, and you are already providing a
 custom setter for that property, you can simply observe any value
@@ -10735,7 +10719,7 @@ use based on the current speed:
 Whenever you set the =currentSpeed= property of an =AutomaticCar=
 instance, the property's =didSet= observer sets the instance's =gear=
 property to an appropriate choice of gear for the new speed.
-Specifically, the property observer chooses a gear that is the new
+Specifically, the property observer chooses a gear that's the new
 =currentSpeed= value divided by =10=, rounded down to the nearest
 integer, plus =1=. A speed of =35.0= produces a gear of =4=:
 
@@ -10769,14 +10753,14 @@ attempt to subclass a final class is reported as a compile-time error.
 /Initialization/ is the process of preparing an instance of a class,
 structure, or enumeration for use. This process involves setting an
 initial value for each stored property on that instance and performing
-any other setup or initialization that is required before the new
+any other setup or initialization that's required before the new
 instance is ready for use.
 
 You implement this initialization process by defining /initializers/,
 which are like special methods that can be called to create a new
 instance of a particular type. Unlike Objective-C initializers, Swift
-initializers do not return a value. Their primary role is to ensure that
-new instances of a type are correctly initialized before they are used
+initializers don't return a value. Their primary role is to ensure that
+new instances of a type are correctly initialized before they're used
 for the first time.
 
 Instances of class types can also implement a /deinitializer/, which
@@ -10788,7 +10772,7 @@ deallocated. For more information about deinitializers, see
 
 Classes and structures /must/ set all of their stored properties to an
 appropriate initial value by the time an instance of that class or
-structure is created. Stored properties cannot be left in an
+structure is created. Stored properties can't be left in an
 indeterminate state.
 
 You can set an initial value for a stored property within an
@@ -10841,7 +10825,7 @@ freezing point of water in degrees Fahrenheit).
 You can set the initial value of a stored property from within an
 initializer, as shown above. Alternatively, specify a /default property
 value/ as part of the property's declaration. You specify a default
-property value by assigning an initial value to the property when it is
+property value by assigning an initial value to the property when it's
 defined.
 
 Note
@@ -10914,7 +10898,7 @@ As with function and method parameters, initialization parameters can
 have both a parameter name for use within the initializer's body and an
 argument label for use when calling the initializer.
 
-However, initializers do not have an identifying function name before
+However, initializers don't have an identifying function name before
 their parentheses in the way that functions and methods do. Therefore,
 the names and types of an initializer's parameters play a particularly
 important role in identifying which initializer should be called.
@@ -10956,9 +10940,9 @@ providing named values for each initializer parameter:
   let halfGray = Color(white: 0.5)
 #+END_SRC
 
-Note that it is not possible to call these initializers without using
+Note that it isn't possible to call these initializers without using
 argument labels. Argument labels must always be used in an initializer
-if they are defined, and omitting them is a compile-time error:
+if they're defined, and omitting them is a compile-time error:
 
 #+BEGIN_SRC swift
   let veryGreen = Color(0.0, 1.0, 0.0)
@@ -10969,14 +10953,14 @@ if they are defined, and omitting them is a compile-time error:
 
 *** Initializer Parameters Without Argument Labels
 
-If you do not want to use an argument label for an initializer
-parameter, write an underscore (=_=) instead of an explicit argument
-label for that parameter to override the default behavior.
+If you don't want to use an argument label for an initializer parameter,
+write an underscore (=_=) instead of an explicit argument label for that
+parameter to override the default behavior.
 
 Here's an expanded version of the =Celsius= example from
 [[Initialization Parameters][Initialization Parameters]] above, with
 an additional initializer to create a new =Celsius= instance from a
-=Double= value that is already in the Celsius scale:
+=Double= value that's already in the Celsius scale:
 
 #+BEGIN_SRC swift
   struct Celsius {
@@ -10996,17 +10980,17 @@ an additional initializer to create a new =Celsius= instance from a
 #+END_SRC
 
 The initializer call =Celsius(37.0)= is clear in its intent without the
-need for an argument label. It is therefore appropriate to write this
+need for an argument label. It's therefore appropriate to write this
 initializer as =init(_ celsius: Double)= so that it can be called by
 providing an unnamed =Double= value.
 
 *** Optional Property Types
 
-If your custom type has a stored property that is logically allowed to
-have “no value”---perhaps because its value cannot be set during
-initialization, or because it is allowed to have “no value” at some
-later point---declare the property with an /optional/ type. Properties
-of optional type are automatically initialized with a value of =nil=,
+If your custom type has a stored property that's logically allowed to
+have “no value”---perhaps because its value can't be set during
+initialization, or because it's allowed to have “no value” at some later
+point---declare the property with an /optional/ type. Properties of
+optional type are automatically initialized with a value of =nil=,
 indicating that the property is deliberately intended to have “no value
 yet” during initialization.
 
@@ -11030,28 +11014,28 @@ optional =String= property called =response=:
   cheeseQuestion.response = "Yes, I do like cheese."
 #+END_SRC
 
-The response to a survey question cannot be known until it is asked, and
+The response to a survey question can't be known until it's asked, and
 so the =response= property is declared with a type of =String?=, or
-“optional =String=”. It is automatically assigned a default value of
+“optional =String=”. It's automatically assigned a default value of
 =nil=, meaning “no string yet”, when a new instance of =SurveyQuestion=
 is initialized.
 
 *** Assigning Constant Properties During Initialization
 
 You can assign a value to a constant property at any point during
-initialization, as long as it is set to a definite value by the time
+initialization, as long as it's set to a definite value by the time
 initialization finishes. Once a constant property is assigned a value,
 it can't be further modified.
 
 Note
 
 For class instances, a constant property can be modified during
-initialization only by the class that introduces it. It cannot be
+initialization only by the class that introduces it. It can't be
 modified by a subclass.
 
 You can revise the =SurveyQuestion= example from above to use a constant
 property rather than a variable property for the =text= property of the
-question, to indicate that the question does not change once an instance
+question, to indicate that the question doesn't change once an instance
 of =SurveyQuestion= is created. Even though the =text= property is now a
 constant, it can still be set within the class's initializer:
 
@@ -11075,7 +11059,7 @@ constant, it can still be set within the class's initializer:
 ** Default Initializers
 
 Swift provides a /default initializer/ for any structure or class that
-provides default values for all of its properties and does not provide
+provides default values for all of its properties and doesn't provide
 at least one initializer itself. The default initializer simply creates
 a new instance with all of its properties set to their default values.
 
@@ -11093,12 +11077,12 @@ shopping list:
 #+END_SRC
 
 Because all properties of the =ShoppingListItem= class have default
-values, and because it is a base class with no superclass,
+values, and because it's a base class with no superclass,
 =ShoppingListItem= automatically gains a default initializer
 implementation that creates a new instance with all of its properties
 set to their default values. (The =name= property is an optional
 =String= property, and so it automatically receives a default value of
-=nil=, even though this value is not written in the code.) The example
+=nil=, even though this value isn't written in the code.) The example
 above uses the default initializer for the =ShoppingListItem= class to
 create a new instance of the class with initializer syntax, written as
 =ShoppingListItem()=, and assigns this new instance to a variable called
@@ -11156,9 +11140,9 @@ delegation/, avoids duplicating code across multiple initializers.
 
 The rules for how initializer delegation works, and for what forms of
 delegation are allowed, are different for value types and class types.
-Value types (structures and enumerations) do not support inheritance,
-and so their initializer delegation process is relatively simple,
-because they can only delegate to another initializer that they provide
+Value types (structures and enumerations) don't support inheritance,
+and so their initializer delegation process is relatively simple, because
+they can only delegate to another initializer that they provide
 themselves. Classes, however, can inherit from other classes, as
 described in [[Inheritance][Inheritance]]. This means that
 classes have additional responsibilities for ensuring that all stored
@@ -11173,7 +11157,7 @@ call =self.init= only from within an initializer.
 
 Note that if you define a custom initializer for a value type, you will
 no longer have access to the default initializer (or the memberwise
-initializer, if it is a structure) for that type. This constraint
+initializer, if it's a structure) for that type. This constraint
 prevents a situation in which additional essential setup provided in a
 more complex initializer is accidentally circumvented by someone using
 one of the automatic initializers.
@@ -11225,7 +11209,7 @@ structure's definition:
 #+END_SRC
 
 The first =Rect= initializer, =init()=, is functionally the same as the
-default initializer that the structure would have received if it did not
+default initializer that the structure would have received if it didn't
 have its own custom initializers. This initializer has an empty body,
 represented by an empty pair of curly braces ={}=. Calling this
 initializer returns a =Rect= instance whose =origin= and =size=
@@ -11240,7 +11224,7 @@ property definitions:
 
 The second =Rect= initializer, =init(origin:size:)=, is functionally the
 same as the memberwise initializer that the structure would have
-received if it did not have its own custom initializers. This
+received if it didn't have its own custom initializers. This
 initializer simply assigns the =origin= and =size= argument values to
 the appropriate stored properties:
 
@@ -11262,10 +11246,10 @@ values in the appropriate properties:
 #+END_SRC
 
 The =init(center:size:)= initializer could have assigned the new values
-of =origin= and =size= to the appropriate properties itself. However, it
-is more convenient (and clearer in intent) for the =init(center:size:)=
-initializer to take advantage of an existing initializer that already
-provides exactly that functionality.
+of =origin= and =size= to the appropriate properties itself. However, it's
+more convenient (and clearer in intent) for the
+=init(center:size:)= initializer to take advantage of an existing
+initializer that already provides exactly that functionality.
 
 Note
 
@@ -11290,7 +11274,7 @@ designated initializer fully initializes all properties introduced by
 that class and calls an appropriate superclass initializer to continue
 the initialization process up the superclass chain.
 
-Classes tend to have very few designated initializers, and it is quite
+Classes tend to have very few designated initializers, and it's quite
 common for a class to have only one. Designated initializers are
 “funnel” points through which initialization takes place, and through
 which the initialization process continues up the superclass chain.
@@ -11310,9 +11294,9 @@ of the designated initializer's parameters set to default values. You
 can also define a convenience initializer to create an instance of that
 class for a specific use case or input value type.
 
-You do not have to provide convenience initializers if your class does
-not require them. Create convenience initializers whenever a shortcut to
-a common initialization pattern will save time or make initialization of
+You don't have to provide convenience initializers if your class doesn't
+require them. Create convenience initializers whenever a shortcut to a
+common initialization pattern will save time or make initialization of
 the class clearer in intent.
 
 *** Syntax for Designated and Convenience Initializers
@@ -11364,7 +11348,7 @@ Here, the superclass has a single designated initializer and two
 convenience initializers. One convenience initializer calls another
 convenience initializer, which in turn calls the single designated
 initializer. This satisfies rules 2 and 3 from above. The superclass
-does not itself have a further superclass, and so rule 1 does not apply.
+doesn't itself have a further superclass, and so rule 1 doesn't apply.
 
 The subclass in this figure has two designated initializers and one
 convenience initializer. The convenience initializer must call one of
@@ -11400,7 +11384,7 @@ instance is considered ready for use.
 The use of a two-phase initialization process makes initialization safe,
 while still giving complete flexibility to each class in a class
 hierarchy. Two-phase initialization prevents property values from being
-accessed before they are initialized, and prevents property values from
+accessed before they're initialized, and prevents property values from
 being set to a different value by another initializer unexpectedly.
 
 Note
@@ -11409,8 +11393,8 @@ Swift's two-phase initialization process is similar to initialization in
 Objective-C. The main difference is that during phase 1, Objective-C
 assigns zero or null values (such as =0= or =nil=) to every property.
 Swift's initialization flow is more flexible in that it lets you set
-custom initial values, and can cope with types for which =0= or =nil= is
-not a valid default value.
+custom initial values, and can cope with types for which =0= or =nil=
+isn't a valid default value.
 
 Swift's compiler performs four helpful safety-checks to make sure that
 two-phase initialization is completed without error:
@@ -11437,11 +11421,11 @@ hands off up the chain.
   the convenience initializer assigns will be overwritten by its own
   class's designated initializer.
 
-- *Safety check 4* :: An initializer cannot call any instance methods,
+- *Safety check 4* :: An initializer can't call any instance methods,
   read the values of any instance properties, or refer to =self= as a
   value until after the first phase of initialization is complete.
 
-The class instance is not fully valid until the first phase ends.
+The class instance isn't fully valid until the first phase ends.
 Properties can only be accessed, and methods can only be called, once
 the class instance is known to be valid at the end of the first phase.
 
@@ -11452,8 +11436,8 @@ checks above:
 
 - A designated or convenience initializer is called on a class.
 
-- Memory for a new instance of that class is allocated. The memory is
-  not yet initialized.
+- Memory for a new instance of that class is allocated. The memory isn't
+  yet initialized.
 
 - A designated initializer for that class confirms that all stored
   properties introduced by that class have a value. The memory for these
@@ -11485,7 +11469,7 @@ subclass and superclass:
 
 [[file:images/twoPhaseInitialization01_2x.png]]
 In this example, initialization begins with a call to a convenience
-initializer on the subclass. This convenience initializer cannot yet
+initializer on the subclass. This convenience initializer can't yet
 modify any properties. It delegates across to a designated initializer
 from the same class.
 
@@ -11505,11 +11489,11 @@ Here's how phase 2 looks for the same initialization call:
 
 [[file:images/twoPhaseInitialization02_2x.png]]
 The superclass's designated initializer now has an opportunity to
-customize the instance further (although it does not have to).
+customize the instance further (although it doesn't have to).
 
 Once the superclass's designated initializer is finished, the subclass's
 designated initializer can perform additional customization (although
-again, it does not have to).
+again, it doesn't have to).
 
 Finally, once the subclass's designated initializer is finished, the
 convenience initializer that was originally called can perform
@@ -11517,16 +11501,16 @@ additional customization.
 
 *** Initializer Inheritance and Overriding
 
-Unlike subclasses in Objective-C, Swift subclasses do not inherit their
+Unlike subclasses in Objective-C, Swift subclasses don't inherit their
 superclass initializers by default. Swift's approach prevents a
 situation in which a simple initializer from a superclass is inherited
 by a more specialized subclass and is used to create a new instance of
-the subclass that is not fully or correctly initialized.
+the subclass that isn't fully or correctly initialized.
 
 Note
 
 Superclass initializers /are/ inherited in certain circumstances, but
-only when it is safe and appropriate to do so. For more information, see
+only when it's safe and appropriate to do so. For more information, see
 [[Automatic Initializer Inheritance][Automatic Initializer Inheritance]]
 below.
 
@@ -11559,7 +11543,7 @@ initializer can never be called directly by your subclass, as per the
 rules described above in [[Initializer Delegation for Class Types][Initializer
 Delegation for Class Types]]. Therefore, your subclass is not (strictly
 speaking) providing an override of the superclass initializer. As a
-result, you do not write the =override= modifier when providing a
+result, you don't write the =override= modifier when providing a
 matching implementation of a superclass convenience initializer.
 
 The example below defines a base class called =Vehicle=. This base class
@@ -11578,7 +11562,7 @@ vehicle's characteristics:
 #+END_SRC
 
 The =Vehicle= class provides a default value for its only stored
-property, and does not provide any custom initializers itself. As a
+property, and doesn't provide any custom initializers itself. As a
 result, it automatically receives a default initializer, as described in
 [[Default Initializers][Default Initializers]]. The default
 initializer (when available) is always a designated initializer for a
@@ -11660,16 +11644,16 @@ by the =Vehicle= initializer.
 Note
 
 Subclasses can modify inherited variable properties during
-initialization, but can not modify inherited constant properties.
+initialization, but can't modify inherited constant properties.
 
 *** Automatic Initializer Inheritance
 
-As mentioned above, subclasses do not inherit their superclass
+As mentioned above, subclasses don't inherit their superclass
 initializers by default. However, superclass initializers /are/
 automatically inherited if certain conditions are met. In practice, this
-means that you do not need to write initializer overrides in many common
+means that you don't need to write initializer overrides in many common
 scenarios, and can inherit your superclass initializers with minimal
-effort whenever it is safe to do so.
+effort whenever it's safe to do so.
 
 Assuming that you provide default values for any new properties you
 introduce in a subclass, the following two rules apply:
@@ -11720,7 +11704,7 @@ initializers for creating =Food= instances:
 The figure below shows the initializer chain for the =Food= class:
 
 [[file:images/initializersExample01_2x.png]]
-Classes do not have a default memberwise initializer, and so the =Food=
+Classes don't have a default memberwise initializer, and so the =Food=
 class provides a designated initializer that takes a single argument
 called =name=. This initializer can be used to create a new =Food=
 instance with a specific name:
@@ -11733,8 +11717,8 @@ instance with a specific name:
 The =init(name: String)= initializer from the =Food= class is provided
 as a /designated/ initializer, because it ensures that all stored
 properties of a new =Food= instance are fully initialized. The =Food=
-class does not have a superclass, and so the =init(name: String)=
-initializer does not need to call =super.init()= to complete its
+class doesn't have a superclass, and so the =init(name: String)=
+initializer doesn't need to call =super.init()= to complete its
 initialization.
 
 The =Food= class also provides a /convenience/ initializer, =init()=,
@@ -11783,7 +11767,7 @@ Initialization]] above.
 =RecipeIngredient= also defines a convenience initializer,
 =init(name: String)=, which is used to create a =RecipeIngredient=
 instance by name alone. This convenience initializer assumes a quantity
-of =1= for any =RecipeIngredient= instance that is created without an
+of =1= for any =RecipeIngredient= instance that's created without an
 explicit quantity. The definition of this convenience initializer makes
 =RecipeIngredient= instances quicker and more convenient to create, and
 avoids code duplication when creating several single-quantity
@@ -11844,12 +11828,12 @@ description of a =ShoppingListItem= instance:
 
 Note
 
-=ShoppingListItem= does not define an initializer to provide an initial
+=ShoppingListItem= doesn't define an initializer to provide an initial
 value for =purchased=, because items in a shopping list (as modeled
 here) always start out unpurchased.
 
 Because it provides a default value for all of the properties it
-introduces and does not define any initializers itself,
+introduces and doesn't define any initializers itself,
 =ShoppingListItem= automatically inherits /all/ of the designated and
 convenience initializers from its superclass.
 
@@ -11880,13 +11864,13 @@ Here, a new array called =breakfastList= is created from an array
 literal containing three new =ShoppingListItem= instances. The type of
 the array is inferred to be =[ShoppingListItem]=. After the array is
 created, the name of the =ShoppingListItem= at the start of the array is
-changed from ="[Unnamed]"= to ="Orange juice"= and it is marked as
-having been purchased. Printing the description of each item in the
-array shows that their default states have been set as expected.
+changed from ="[Unnamed]"= to ="Orange juice"= and it's marked as having
+been purchased. Printing the description of each item in the array shows
+that their default states have been set as expected.
 
 ** Failable Initializers
 
-It is sometimes useful to define a class, structure, or enumeration for
+It's sometimes useful to define a class, structure, or enumeration for
 which initialization can fail. This failure might be triggered by
 invalid initialization parameter values, the absence of a required
 external resource, or some other condition that prevents initialization
@@ -11899,7 +11883,7 @@ after the =init= keyword (=init?=).
 
 Note
 
-You cannot define a failable and a nonfailable initializer with the same
+You can't define a failable and a nonfailable initializer with the same
 parameter types and names.
 
 A failable initializer creates an /optional/ value of the type it
@@ -11908,16 +11892,16 @@ indicate a point at which initialization failure can be triggered.
 
 Note
 
-Strictly speaking, initializers do not return a value. Rather, their
+Strictly speaking, initializers don't return a value. Rather, their
 role is to ensure that =self= is fully and correctly initialized by the
 time that initialization ends. Although you write =return nil= to
-trigger an initialization failure, you do not use the =return= keyword
+trigger an initialization failure, you don't use the =return= keyword
 to indicate initialization success.
 
 For instance, failable initializers are implemented for numeric type
 conversions. To ensure conversion between numeric types maintains the
 value exactly, use the =init(exactly:)= initializer. If the type
-conversion cannot maintain the value, the initializer fails.
+conversion can't maintain the value, the initializer fails.
 
 #+BEGIN_SRC swift
   let wholeNumber: Double = 12345.0
@@ -11932,9 +11916,9 @@ conversion cannot maintain the value, the initializer fails.
   // valueChanged is of type Int?, not Int
 
   if valueChanged == nil {
-      print("\(pi) conversion to Int does not maintain value")
+      print("\(pi) conversion to Int doesn't maintain value")
   }
-  // Prints "3.14159 conversion to Int does not maintain value"
+  // Prints "3.14159 conversion to Int doesn't maintain value"
 #+END_SRC
 
 The example below defines a structure called =Animal=, with a constant
@@ -11976,17 +11960,17 @@ If you pass an empty string value to the failable initializer's
   // anonymousCreature is of type Animal?, not Animal
 
   if anonymousCreature == nil {
-      print("The anonymous creature could not be initialized")
+      print("The anonymous creature couldn't be initialized")
   }
-  // Prints "The anonymous creature could not be initialized"
+  // Prints "The anonymous creature couldn't be initialized"
 #+END_SRC
 
 Note
 
 Checking for an empty string value (such as =""= rather than
-="Giraffe"=) is not the same as checking for =nil= to indicate the
+="Giraffe"=) isn't the same as checking for =nil= to indicate the
 absence of an /optional/ =String= value. In the example above, an empty
-string (=""=) is a valid, non-optional =String=. However, it is not
+string (=""=) is a valid, non-optional =String=. However, it's not
 appropriate for an animal to have an empty string as the value of its
 =species= property. To model this restriction, the failable initializer
 triggers an initialization failure if an empty string is found.
@@ -11995,7 +11979,7 @@ triggers an initialization failure if an empty string is found.
 
 You can use a failable initializer to select an appropriate enumeration
 case based on one or more parameters. The initializer can then fail if
-the provided parameters do not match an appropriate enumeration case.
+the provided parameters don't match an appropriate enumeration case.
 
 The example below defines an enumeration called =TemperatureUnit=, with
 three possible states (=kelvin=, =celsius=, and =fahrenheit=). A
@@ -12022,7 +12006,7 @@ a =Character= value representing a temperature symbol:
 
 You can use this failable initializer to choose an appropriate
 enumeration case for the three possible states and to cause
-initialization to fail if the parameter does not match one of these
+initialization to fail if the parameter doesn't match one of these
 states:
 
 #+BEGIN_SRC swift
@@ -12034,9 +12018,9 @@ states:
 
   let unknownUnit = TemperatureUnit(symbol: "X")
   if unknownUnit == nil {
-      print("This is not a defined temperature unit, so initialization failed.")
+      print("This isn't a defined temperature unit, so initialization failed.")
   }
-  // Prints "This is not a defined temperature unit, so initialization failed."
+  // Prints "This isn't a defined temperature unit, so initialization failed."
 #+END_SRC
 
 *** Failable Initializers for Enumerations with Raw Values
@@ -12064,9 +12048,9 @@ values of type =Character= and to take advantage of the
 
   let unknownUnit = TemperatureUnit(rawValue: "X")
   if unknownUnit == nil {
-      print("This is not a defined temperature unit, so initialization failed.")
+      print("This isn't a defined temperature unit, so initialization failed.")
   }
-  // Prints "This is not a defined temperature unit, so initialization failed."
+  // Prints "This isn't a defined temperature unit, so initialization failed."
 #+END_SRC
 
 *** Propagation of Initialization Failure
@@ -12084,7 +12068,7 @@ Note
 
 A failable initializer can also delegate to a nonfailable initializer.
 Use this approach if you need to add a potential failure state to an
-existing initialization process that does not otherwise fail.
+existing initialization process that doesn't otherwise fail.
 
 The example below defines a subclass of =Product= called =CartItem=. The
 =CartItem= class models an item in an online shopping cart. =CartItem=
@@ -12157,7 +12141,7 @@ to fail:
 You can override a superclass failable initializer in a subclass, just
 like any other initializer. Alternatively, you can override a superclass
 failable initializer with a subclass /nonfailable/ initializer. This
-enables you to define a subclass for which initialization cannot fail,
+enables you to define a subclass for which initialization can't fail,
 even though initialization of the superclass is allowed to fail.
 
 Note that if you override a failable superclass initializer with a
@@ -12171,8 +12155,8 @@ You can override a failable initializer with a nonfailable initializer
 but not the other way around.
 
 The example below defines a class called =Document=. This class models a
-document that can be initialized with a =name= property that is either a
-nonempty string value or =nil=, but cannot be an empty string:
+document that can be initialized with a =name= property that's either a
+nonempty string value or =nil=, but can't be an empty string:
 
 #+BEGIN_SRC swift
   class Document {
@@ -12215,7 +12199,7 @@ initializer:
 The =AutomaticallyNamedDocument= overrides its superclass's failable
 =init?(name:)= initializer with a nonfailable =init(name:)= initializer.
 Because =AutomaticallyNamedDocument= copes with the empty string case in
-a different way than its superclass, its initializer does not need to
+a different way than its superclass, its initializer doesn't need to
 fail, and so it provides a nonfailable version of the initializer
 instead.
 
@@ -12271,7 +12255,7 @@ that initializer:
 You must also write the =required= modifier before every subclass
 implementation of a required initializer, to indicate that the
 initializer requirement applies to further subclasses in the chain. You
-do not write the =override= modifier when overriding a required
+don't write the =override= modifier when overriding a required
 designated initializer:
 
 #+BEGIN_SRC swift
@@ -12284,7 +12268,7 @@ designated initializer:
 
 Note
 
-You do not have to provide an explicit implementation of a required
+You don't have to provide an explicit implementation of a required
 initializer if you can satisfy the requirement with an inherited
 initializer.
 
@@ -12323,10 +12307,10 @@ the property, and not the return value of the closure.
 Note
 
 If you use a closure to initialize a property, remember that the rest of
-the instance has not yet been initialized at the point that the closure
-is executed. This means that you cannot access any other property values
+the instance hasn't yet been initialized at the point that the closure
+is executed. This means that you can't access any other property values
 from within your closure, even if those properties have default values.
-You also cannot use the implicit =self= property, or call any of the
+You also can't use the implicit =self= property, or call any of the
 instance's methods.
 
 The example below defines a structure called =Chessboard=, which models
@@ -12391,7 +12375,7 @@ are only available on class types.
 
 ** How Deinitialization Works
 
-Swift automatically deallocates your instances when they are no longer
+Swift automatically deallocates your instances when they're no longer
 needed, to free up resources. Swift handles the memory management of
 instances through /automatic reference counting/ (/ARC/), as described
 in [[Automatic Reference Counting][Automatic Reference Counting]].
@@ -12403,7 +12387,7 @@ you might need to close the file before the class instance is
 deallocated.
 
 Class definitions can have at most one deinitializer per class. The
-deinitializer does not take any parameters and is written without
+deinitializer doesn't take any parameters and is written without
 parentheses:
 
 #+BEGIN_SRC swift
@@ -12414,15 +12398,14 @@ parentheses:
 
 
 Deinitializers are called automatically, just before instance
-deallocation takes place. You are not allowed to call a deinitializer
+deallocation takes place. You aren't allowed to call a deinitializer
 yourself. Superclass deinitializers are inherited by their subclasses,
 and the superclass deinitializer is called automatically at the end of a
 subclass deinitializer implementation. Superclass deinitializers are
-always called, even if a subclass does not provide its own
-deinitializer.
+always called, even if a subclass doesn't provide its own deinitializer.
 
-Because an instance is not deallocated until after its deinitializer is
-called, a deinitializer can access all properties of the instance it is
+Because an instance isn't deallocated until after its deinitializer is
+called, a deinitializer can access all properties of the instance it's
 called on and can modify its behavior based on those properties (such as
 looking up the name of a file that needs to be closed).
 
@@ -12455,7 +12438,7 @@ methods---=distribute(coins:)= and =receive(coins:)=---to handle the
 distribution and collection of coins.
 
 The =distribute(coins:)= method checks that there are enough coins in
-the bank before distributing them. If there are not enough coins, =Bank=
+the bank before distributing them. If there aren't enough coins, =Bank=
 returns a smaller number than the number that was requested (and returns
 zero if no coins are left in the bank). It returns an integer value to
 indicate the actual number of coins that were provided.
@@ -12501,14 +12484,14 @@ deinitializer simply returns all of the player's coins to the bank:
   // Prints "There are now 9900 coins left in the bank"
 #+END_SRC
 
-A new =Player= instance is created, with a request for 100 coins if they
-are available. This =Player= instance is stored in an optional =Player=
-variable called =playerOne=. An optional variable is used here, because
-players can leave the game at any point. The optional lets you track
-whether there's currently a player in the game.
+A new =Player= instance is created, with a request for 100 coins if
+they're available. This =Player= instance is stored in an optional
+=Player= variable called =playerOne=. An optional variable is used here,
+because players can leave the game at any point. The optional lets you
+track whether there's currently a player in the game.
 
-Because =playerOne= is an optional, it is qualified with an exclamation
-mark (=!=) when its =coinsInPurse= property is accessed to print its
+Because =playerOne= is an optional, it's qualified with an exclamation
+point (=!=) when its =coinsInPurse= property is accessed to print its
 default number of coins, and whenever its =win(coins:)= method is
 called:
 
@@ -12535,7 +12518,7 @@ The player has now left the game. This is indicated by setting the
 optional =playerOne= variable to =nil=, meaning “no =Player= instance.”
 At the point that this happens, the =playerOne= variable's reference to
 the =Player= instance is broken. No other properties or variables are
-still referring to the =Player= instance, and so it is deallocated in
+still referring to the =Player= instance, and so it's deallocated in
 order to free up its memory. Just before this happens, its deinitializer
 is called automatically, and its coins are returned to the bank.
 
@@ -12569,7 +12552,7 @@ value, the result of an optional chaining call is always an optional
 value, even if the property, method, or subscript you are querying
 returns a non-optional value. You can use this optional return value to
 check whether the optional chaining call was successful (the returned
-optional contains a value), or did not succeed due to a =nil= value in
+optional contains a value), or didn't succeed due to a =nil= value in
 the chain (the returned optional value is =nil=).
 
 Specifically, the result of an optional chaining call is of the same
@@ -12606,8 +12589,8 @@ below, =john= has a =residence= property value of =nil=:
 
 If you try to access the =numberOfRooms= property of this person's
 =residence=, by placing an exclamation point after =residence= to force
-the unwrapping of its value, you trigger a runtime error, because there
-is no =residence= value to unwrap:
+the unwrapping of its value, you trigger a runtime error, because
+there's no =residence= value to unwrap:
 
 #+BEGIN_SRC swift
   let roomCount = john.residence!.numberOfRooms
@@ -12641,10 +12624,10 @@ the optional chaining attempt returns a value of type =Int?=, or
 this optional =Int= will also be =nil=, to reflect the fact that it was
 not possible to access =numberOfRooms=. The optional =Int= is accessed
 through optional binding to unwrap the integer and assign the
-non-optional value to the =roomCount= variable.
+non-optional value to the =roomCount= constant.
 
 Note that this is true even though =numberOfRooms= is a non-optional
-=Int=. The fact that it is queried through an optional chain means that
+=Int=. The fact that it's queried through an optional chain means that
 the call to =numberOfRooms= will always return an =Int?= instead of an
 =Int=.
 
@@ -12674,7 +12657,7 @@ default =numberOfRooms= value of =1=:
 You can use optional chaining with calls to properties, methods, and
 subscripts that are more than one level deep. This enables you to drill
 down into subproperties within complex models of interrelated types, and
-to check whether it is possible to access properties, methods, and
+to check whether it's possible to access properties, methods, and
 subscripts on those subproperties.
 
 The code snippets below define four model classes for use in several
@@ -12838,7 +12821,7 @@ nothing is printed.
 
 You can use optional chaining to call a method on an optional value, and
 to check whether that method call is successful. You can do this even if
-that method does not define a return value.
+that method doesn't define a return value.
 
 The =printNumberOfRooms()= method on the =Residence= class prints the
 current value of =numberOfRooms=. Here's how the method looks:
@@ -12849,7 +12832,7 @@ current value of =numberOfRooms=. Here's how the method looks:
   }
 #+END_SRC
 
-This method does not specify a return type. However, functions and
+This method doesn't specify a return type. However, functions and
 methods with no return type have an implicit return type of =Void=, as
 described in [[Functions Without Return Values][Functions Without Return
 Values]]. This means that they return a value of =()=, or an empty
@@ -12860,7 +12843,7 @@ method's return type will be =Void?=, not =Void=, because return values
 are always of an optional type when called through optional chaining.
 This enables you to use an =if= statement to check whether it was
 possible to call the =printNumberOfRooms()= method, even though the
-method does not itself define a return value. Compare the return value
+method doesn't itself define a return value. Compare the return value
 from the =printNumberOfRooms= call against =nil= to see if the method
 call was successful:
 
@@ -12902,7 +12885,7 @@ Note
 When you access a subscript on an optional value through optional
 chaining, you place the question mark /before/ the subscript's brackets,
 not after. The optional chaining question mark always follows
-immediately after the part of the expression that is optional.
+immediately after the part of the expression that's optional.
 
 The example below tries to retrieve the name of the first room in the
 =rooms= array of the =john.residence= property using the subscript
@@ -12973,19 +12956,18 @@ in the ="Dave"= array to =91=; to increment the first item in the
 ="Bev"= array by =1=; and to try to set the first item in an array for a
 key of ="Brian"=. The first two calls succeed, because the =testScores=
 dictionary contains keys for ="Dave"= and ="Bev"=. The third call fails,
-because the =testScores= dictionary does not contain a key for
-="Brian"=.
+because the =testScores= dictionary doesn't contain a key for ="Brian"=.
 
 ** Linking Multiple Levels of Chaining
 
 You can link together multiple levels of optional chaining to drill down
 to properties, methods, and subscripts deeper within a model. However,
-multiple levels of optional chaining do not add more levels of
+multiple levels of optional chaining don't add more levels of
 optionality to the returned value.
 
 To put it another way:
 
-- If the type you are trying to retrieve is not optional, it will become
+- If the type you are trying to retrieve isn't optional, it will become
   optional because of the optional chaining.
 
 - If the type you are trying to retrieve is /already/ optional, it will
@@ -13078,7 +13060,7 @@ parentheses:
       if beginsWithThe {
           print("John's building identifier begins with \"The\".")
       } else {
-          print("John's building identifier does not begin with \"The\".")
+          print("John's building identifier doesn't begin with \"The\".")
       }
   }
   // Prints "John's building identifier begins with "The"."
@@ -13179,7 +13161,7 @@ Note
 Error handling in Swift resembles exception handling in other languages,
 with the use of the =try=, =catch= and =throw= keywords. Unlike
 exception handling in many languages---including Objective-C---error
-handling in Swift does not involve unwinding the call stack, a process
+handling in Swift doesn't involve unwinding the call stack, a process
 that can be computationally expensive. As such, the performance
 characteristics of a =throw= statement are comparable to those of a
 =return= statement.
@@ -13208,7 +13190,7 @@ nonthrowing function must be handled inside the function.
 
 In the example below, the =VendingMachine= class has a
 =vend(itemNamed:)= method that throws an appropriate
-=VendingMachineError= if the requested item is not available, is out of
+=VendingMachineError= if the requested item isn't available, is out of
 stock, or has a cost that exceeds the current deposited amount:
 
 #+BEGIN_SRC swift
@@ -13303,9 +13285,9 @@ propagating them to its caller.
 #+FINDEX: catch
 
 You use a =do=-=catch= statement to handle errors by running a block of
-code. If an error is thrown by the code in the =do= clause, it is
-matched against the =catch= clauses to determine which one of them can
-handle the error.
+code. If an error is thrown by the code in the =do= clause, it's matched
+against the =catch= clauses to determine which one of them can handle
+the error.
 
 Here is the general form of a =do=-=catch= statement:
 
@@ -13395,6 +13377,27 @@ that's one of the cases of the =VendingMachineError= enumeration,
 =nourish(with:)= propagates the error to its call site. The error is
 then caught by the general =catch= clause.
 
+Another way to catch several related errors is to list them after
+=catch=, separated by commas. For example:
+
+#+BEGIN_SRC swift
+  func eat(item: String) throws {
+      do {
+          try vendingMachine.vend(itemNamed: item)
+      } catch VendingMachineError.invalidSelection,
+              VendingMachineError.insufficientFunds, VendingMachineError.outOfStock
+      {
+          print("Invalid selection, out of stock, or not enough money.")
+      }
+  }
+#+END_SRC
+
+The =eat(item:)= function lists the vending machine errors to catch, and
+its error text corresponds to the items in that list. If any of the
+three listed errors are thrown, this =catch= clause handles them by
+printing a message. Any other errors are propagated to the surrounding
+scope, including any vending-machine errors that might be added later.
+
 *** Converting Errors to Optional Values
 
 #+FINDEX: try?
@@ -13451,8 +13454,8 @@ you'll get a runtime error.
 For example, the following code uses a =loadImage(atPath:)= function,
 which loads the image resource at a given path or throws an error if the
 image can't be loaded. In this case, because the image is shipped with
-the application, no error will be thrown at runtime, so it is
-appropriate to disable error propagation.
+the application, no error will be thrown at runtime, so it's appropriate
+to disable error propagation.
 
 #+BEGIN_SRC swift
   let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
@@ -13527,7 +13530,7 @@ those classes, for use in an example of type casting.
 The first snippet defines a new base class called =MediaItem=. This
 class provides basic functionality for any kind of item that appears in
 a digital media library. Specifically, it declares a =name= property of
-type =String=, and an =init name= initializer. (It is assumed that all
+type =String=, and an =init name= initializer. (It's assumed that all
 media items, including all movies and songs, will have a name.)
 
 #+BEGIN_SRC swift
@@ -13594,7 +13597,7 @@ described below.
 
 Use the /type check operator/ (=is=) to check whether an instance is of
 a certain subclass type. The type check operator returns =true= if the
-instance is of that subclass type and =false= if it is not.
+instance is of that subclass type and =false= if it's not.
 
 The example below defines two variables, =movieCount= and =songCount=,
 which count the number of =Movie= and =Song= instances in the =library=
@@ -13621,7 +13624,7 @@ pass, the =for=-=in= loop sets the =item= constant to the next
 =MediaItem= in the array.
 
 =item is Movie= returns =true= if the current =MediaItem= is a =Movie=
-instance and =false= if it is not. Similarly, =item is Song= checks
+instance and =false= if it's not. Similarly, =item is Song= checks
 whether the item is a =Song= instance. At the end of the =for=-=in=
 loop, the values of =movieCount= and =songCount= contain a count of how
 many =MediaItem= instances were found of each type.
@@ -13641,8 +13644,8 @@ of the type you are trying to downcast to. The forced form, =as!=,
 attempts the downcast and force-unwraps the result as a single compound
 action.
 
-Use the conditional form of the type cast operator (=as?=) when you are
-not sure if the downcast will succeed. This form of the operator will
+Use the conditional form of the type cast operator (=as?=) when you
+aren't sure if the downcast will succeed. This form of the operator will
 always return an optional value, and the value will be =nil= if the
 downcast was not possible. This enables you to check for a successful
 downcast.
@@ -13661,7 +13664,7 @@ description.
 
 In this example, each item in the array might be a =Movie=, or it might
 be a =Song=. You don't know in advance which actual class to use for
-each item, and so it is appropriate to use the conditional form of the
+each item, and so it's appropriate to use the conditional form of the
 type cast operator (=as?=) to check the downcast each time through the
 loop:
 
@@ -13708,8 +13711,8 @@ whenever a =Song= is found in the library.
 
 Note
 
-Casting does not actually modify the instance or change its values. The
-underlying instance remains the same; it is simply treated and accessed
+Casting doesn't actually modify the instance or change its values. The
+underlying instance remains the same; it's simply treated and accessed
 as an instance of the type to which it has been cast.
 
 ** Type Casting for Any and AnyObject
@@ -13725,7 +13728,7 @@ Swift provides two special types for working with nonspecific types:
 - =AnyObject= can represent an instance of any class type.
 
 Use =Any= and =AnyObject= only when you explicitly need the behavior and
-capabilities they provide. It is always better to be specific about the
+capabilities they provide. It's always better to be specific about the
 types you expect to work with in your code.
 
 Here's an example of using =Any= to work with a mix of different types,
@@ -13750,7 +13753,7 @@ The =things= array contains two =Int= values, two =Double= values, a
 “Ghostbusters”, and a closure expression that takes a =String= value and
 returns another =String= value.
 
-To discover the specific type of a constant or variable that is known
+To discover the specific type of a constant or variable that's known
 only to be of type =Any= or =AnyObject=, you can use an =is= or =as=
 pattern in a =switch= statement's cases. The example below iterates over
 the items in the =things= array and queries the type of each item with a
@@ -13877,7 +13880,7 @@ together with a raw =Character= value to represent their symbol.
 
 The =Rank= enumeration describes the thirteen possible playing card
 ranks, together with a raw =Int= value to represent their face value.
-(This raw =Int= value is not used for the Jack, Queen, King, and Ace
+(This raw =Int= value isn't used for the Jack, Queen, King, and Ace
 cards.)
 
 As mentioned above, the =Rank= enumeration defines a further nested
@@ -13925,7 +13928,7 @@ property correctly reports that the Ace of Spades has a value of =1= or
 ** Referring to Nested Types
 
 To use a nested type outside of its definition context, prefix its name
-with the name of the type it is nested within:
+with the name of the type it's nested within:
 
 #+BEGIN_SRC swift
   let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
@@ -13934,7 +13937,7 @@ with the name of the type it is nested within:
 
 For the example above, this enables the names of =Suit=, =Rank=, and
 =Values= to be kept deliberately short, because their names are
-naturally qualified by the context in which they are defined.
+naturally qualified by the context in which they're defined.
 
 * Extensions
 
@@ -13942,10 +13945,10 @@ naturally qualified by the context in which they are defined.
 
 /Extensions/ add new functionality to an existing class, structure,
 enumeration, or protocol type. This includes the ability to extend types
-for which you do not have access to the original source code (known as
+for which you don't have access to the original source code (known as
 /retroactive modeling/). Extensions are similar to categories in
-Objective-C. (Unlike Objective-C categories, Swift extensions do not
-have names.)
+Objective-C. (Unlike Objective-C categories, Swift extensions don't have
+names.)
 
 Extensions in Swift can:
 
@@ -13968,7 +13971,7 @@ can take advantage of. For more details, see
 
 Note
 
-Extensions can add new functionality to a type, but they cannot override
+Extensions can add new functionality to a type, but they can't override
 existing functionality.
 
 ** Extension Syntax
@@ -14031,7 +14034,7 @@ for working with distance units:
 #+END_SRC
 
 These computed properties express that a =Double= value should be
-considered as a certain unit of length. Although they are implemented as
+considered as a certain unit of length. Although they're implemented as
 computed properties, the names of these properties can be appended to a
 floating-point literal value with dot syntax, as a way to use that
 literal value to perform distance conversions.
@@ -14049,7 +14052,7 @@ value by =3.28084=, to convert it from feet to meters.
 
 #+FINDEX: get
 
-These properties are read-only computed properties, and so they are
+These properties are read-only computed properties, and so they're
 expressed without the =get= keyword, for brevity. Their return value is
 of type =Double=, and can be used within mathematical calculations
 wherever a =Double= is accepted:
@@ -14062,7 +14065,7 @@ wherever a =Double= is accepted:
 
 Note
 
-Extensions can add new computed properties, but they cannot add stored
+Extensions can add new computed properties, but they can't add stored
 properties, or add property observers to existing properties.
 
 ** Initializers
@@ -14073,12 +14076,12 @@ parameters, or to provide additional initialization options that were
 not included as part of the type's original implementation.
 
 Extensions can add new convenience initializers to a class, but they
-cannot add new designated initializers or deinitializers to a class.
+can't add new designated initializers or deinitializers to a class.
 Designated initializers and deinitializers must always be provided by
 the original class implementation.
 
 If you use an extension to add an initializer to a value type that
-provides default values for all of its stored properties and does not
+provides default values for all of its stored properties and doesn't
 define any custom initializers, you can call the default initializer and
 memberwise initializer for that value type from within your extension's
 initializer. This wouldn't be the case if you had written the
@@ -14168,8 +14171,8 @@ types. The following example adds a new instance method called
 #+END_SRC
 
 The =repetitions(task:)= method takes a single argument of type
-=() -> Void=, which indicates a function that has no parameters and does
-not return a value.
+=() -> Void=, which indicates a function that has no parameters and
+doesn't return a value.
 
 After defining this extension, you can call the =repetitions(task:)=
 method on any integer to perform a task that many number of times:
@@ -14237,7 +14240,7 @@ number:
   // returns 7
 #+END_SRC
 
-If the =Int= value does not have enough digits for the requested index,
+If the =Int= value doesn't have enough digits for the requested index,
 the subscript implementation returns =0=, as if the number had been
 padded with zeros to the left:
 
@@ -14431,8 +14434,8 @@ protocol as part of the first line of its definition.
 Each instance of =Person= has a single stored property called
 =fullName=, which is of type =String=. This matches the single
 requirement of the =FullyNamed= protocol, and means that =Person= has
-correctly conformed to the protocol. (Swift reports an error at
-compile-time if a protocol requirement is not fulfilled.)
+correctly conformed to the protocol. (Swift reports an error at compile
+time if a protocol requirement isn't fulfilled.)
 
 Here's a more complex class, which also adopts and conforms to the
 =FullyNamed= protocol:
@@ -14532,7 +14535,7 @@ the instance it belongs to and any properties of that instance. This
 process is described in [[Modifying Value Types from Within Instance Methods][Modifying Value Types
 from Within Instance Methods]].
 
-If you define a protocol instance method requirement that is intended to
+If you define a protocol instance method requirement that's intended to
 mutate instances of any type that adopts the protocol, mark the method
 with the =mutating= keyword as part of the protocol's definition. This
 enables structures and enumerations to adopt the protocol and satisfy
@@ -14563,7 +14566,7 @@ expected to mutate the state of a conforming instance when it's called:
 
 If you implement the =Togglable= protocol for a structure or
 enumeration, that structure or enumeration can conform to the protocol
-by providing an implementation of the =toggle()= method that is also
+by providing an implementation of the =toggle()= method that's also
 marked as =mutating=.
 
 The example below defines an enumeration called =OnOffSwitch=. This
@@ -14896,7 +14899,7 @@ when the game starts, increments it each time a new turn begins, and
 prints out the total number of turns once the game has ended.
 
 The implementation of =gameDidStart(_:)= shown above uses the =game=
-parameter to print some introductory information about the game that is
+parameter to print some introductory information about the game that's
 about to be played. The =game= parameter has a type of =DiceGame=, not
 =SnakesAndLadders=, and so =gameDidStart(_:)= can access and use only
 methods and properties that are implemented as part of the =DiceGame=
@@ -15020,7 +15023,7 @@ conforms to =TextRepresentable=.
 *** Declaring Protocol Adoption with an Extension
 
 If a type already conforms to all of the requirements of a protocol, but
-has not yet stated that it adopts that protocol, you can make it adopt
+hasn't yet stated that it adopts that protocol, you can make it adopt
 the protocol with an empty extension:
 
 #+BEGIN_SRC swift
@@ -15165,7 +15168,7 @@ item's textual description:
 Note that the =thing= constant is of type =TextRepresentable=. It's not
 of type =Dice=, or =DiceGame=, or =Hamster=, even if the actual instance
 behind the scenes is of one of those types. Nonetheless, because it's of
-type =TextRepresentable=, and anything that is =TextRepresentable= is
+type =TextRepresentable=, and anything that's =TextRepresentable= is
 known to have a =textualDescription= property, it's safe to access
 =thing.textualDescription= each time through the loop.
 
@@ -15225,7 +15228,7 @@ The =SnakesAndLadders= class can be extended to adopt and conform to
 This extension states that it adopts the =PrettyTextRepresentable=
 protocol and provides an implementation of the
 =prettyTextualDescription= property for the =SnakesAndLadders= type.
-Anything that is =PrettyTextRepresentable= must also be
+Anything that's =PrettyTextRepresentable= must also be
 =TextRepresentable=, and so the implementation of
 =prettyTextualDescription= starts by accessing the =textualDescription=
 property from the =TextRepresentable= protocol to begin an output
@@ -16160,9 +16163,9 @@ that can be used as keys for a dictionary. As described in
 dictionary's keys must be /hashable/. That is, it must provide a way to
 make itself uniquely representable. =Dictionary= needs its keys to be
 hashable so that it can check whether it already contains a value for a
-particular key. Without this requirement, =Dictionary= could not tell
+particular key. Without this requirement, =Dictionary= couldn't tell
 whether it should insert or replace a value for a particular key, nor
-would it be able to find a value for a given key that is already in the
+would it be able to find a value for a given key that's already in the
 dictionary.
 
 This requirement is enforced by a type constraint on the key type for
@@ -16270,7 +16273,7 @@ equal to operator (====) and the not equal to operator (=!==) to compare
 any two values of that type. All of Swift's standard types automatically
 support the =Equatable= protocol.
 
-Any type that is =Equatable= can be used safely with the
+Any type that's =Equatable= can be used safely with the
 =findIndex(of:in:)= function, because it's guaranteed to support the
 equal to operator. To express this fact, you write a type constraint of
 =Equatable= as part of the type parameter's definition when you define
@@ -16292,7 +16295,7 @@ The single type parameter for =findIndex(of:in:)= is written as
 =Equatable= protocol.”
 
 The =findIndex(of:in:)= function now compiles successfully and can be
-used with any type that is =Equatable=, such as =Double= or =String=:
+used with any type that's =Equatable=, such as =Double= or =String=:
 
 #+BEGIN_SRC swift
   let doubleIndex = findIndex(of: 9.3, in: [3.14159, 0.1, 0.25])
@@ -16307,7 +16310,7 @@ used with any type that is =Equatable=, such as =Double= or =String=:
 
 When defining a protocol, it's sometimes useful to declare one or more
 associated types as part of the protocol's definition. An /associated
-type/ gives a placeholder name to a type that is used as part of the
+type/ gives a placeholder name to a type that's used as part of the
 protocol. The actual type to use for that associated type isn't
 specified until the protocol is adopted. Associated types are specified
 with the =associatedtype= keyword.
@@ -16790,8 +16793,8 @@ and divides by the container's count to compute the average. It
 explicitly converts the count from =Int= to =Double= to be able to do
 floating-point division.
 
-You can include multiple requirements in a generic =where= clause that
-is part of an extension, just like you can for a generic =where= clause
+You can include multiple requirements in a generic =where= clause that's
+part of an extension, just like you can for a generic =where= clause
 that you write elsewhere. Separate each requirement in the list with a
 comma.
 
@@ -17329,7 +17332,7 @@ type of =twelve= is also inferred to be =Int=.
 
 Swift uses /Automatic Reference Counting/ (ARC) to track and manage your
 app's memory usage. In most cases, this means that memory management
-“just works” in Swift, and you do not need to think about memory
+“just works” in Swift, and you don't need to think about memory
 management yourself. ARC automatically frees up the memory used by class
 instances when those instances are no longer needed.
 
@@ -17344,8 +17347,8 @@ to ARC Release Notes]]
 for using ARC with Objective-C.
 
 Reference counting applies only to instances of classes. Structures and
-enumerations are value types, not reference types, and are not stored
-and passed by reference.
+enumerations are value types, not reference types, and aren't stored and
+passed by reference.
 
 ** How ARC Works
 
@@ -17356,15 +17359,15 @@ any stored properties associated with that instance.
 
 Additionally, when an instance is no longer needed, ARC frees up the
 memory used by that instance so that the memory can be used for other
-purposes instead. This ensures that class instances do not take up space
-in memory when they are no longer needed.
+purposes instead. This ensures that class instances don't take up space
+in memory when they're no longer needed.
 
 However, if ARC were to deallocate an instance that was still in use, it
 would no longer be possible to access that instance's properties, or
 call that instance's methods. Indeed, if you tried to access the
 instance, your app would most likely crash.
 
-To make sure that instances don't disappear while they are still needed,
+To make sure that instances don't disappear while they're still needed,
 ARC tracks how many properties, constants, and variables are currently
 referring to each class instance. ARC will not deallocate an instance as
 long as at least one active reference to that instance still exists.
@@ -17373,7 +17376,7 @@ To make this possible, whenever you assign a class instance to a
 property, constant, or variable, that property, constant, or variable
 makes a /strong reference/ to the instance. The reference is called a
 “strong” reference because it keeps a firm hold on that instance, and
-does not allow it to be deallocated for as long as that strong reference
+doesn't allow it to be deallocated for as long as that strong reference
 remains.
 
 ** ARC in Action
@@ -17403,8 +17406,8 @@ message when an instance of the class is deallocated.
 The next code snippet defines three variables of type =Person?=, which
 are used to set up multiple references to a new =Person= instance in
 subsequent code snippets. Because these variables are of an optional
-type (=Person?=, not =Person=), they are automatically initialized with
-a value of =nil=, and do not currently reference a =Person= instance.
+type (=Person?=, not =Person=), they're automatically initialized with a
+value of =nil=, and don't currently reference a =Person= instance.
 
 #+BEGIN_SRC swift
   var reference1: Person?
@@ -17427,7 +17430,7 @@ confirms that initialization has taken place.
 Because the new =Person= instance has been assigned to the =reference1=
 variable, there's now a strong reference from =reference1= to the new
 =Person= instance. Because there's at least one strong reference, ARC
-makes sure that this =Person= is kept in memory and is not deallocated.
+makes sure that this =Person= is kept in memory and isn't deallocated.
 
 If you assign the same =Person= instance to two more variables, two more
 strong references to that instance are established:
@@ -17442,14 +17445,14 @@ instance.
 
 If you break two of these strong references (including the original
 reference) by assigning =nil= to two of the variables, a single strong
-reference remains, and the =Person= instance is not deallocated:
+reference remains, and the =Person= instance isn't deallocated:
 
 #+BEGIN_SRC swift
   reference1 = nil
   reference2 = nil
 #+END_SRC
 
-ARC does not deallocate the =Person= instance until the third and final
+ARC doesn't deallocate the =Person= instance until the third and final
 strong reference is broken, at which point it's clear that you are no
 longer using the =Person= instance:
 
@@ -17499,11 +17502,11 @@ accident. This example defines two classes called =Person= and
 #+END_SRC
 
 Every =Person= instance has a =name= property of type =String= and an
-optional =apartment= property that is initially =nil=. The =apartment=
+optional =apartment= property that's initially =nil=. The =apartment=
 property is optional, because a person may not always have an apartment.
 
 Similarly, every =Apartment= instance has a =unit= property of type
-=String= and has an optional =tenant= property that is initially =nil=.
+=String= and has an optional =tenant= property that's initially =nil=.
 The tenant property is optional because an apartment may not always have
 a tenant.
 
@@ -17556,8 +17559,7 @@ cycle between them. The =Person= instance now has a strong reference to
 the =Apartment= instance, and the =Apartment= instance has a strong
 reference to the =Person= instance. Therefore, when you break the strong
 references held by the =john= and =unit4A= variables, the reference
-counts do not drop to zero, and the instances are not deallocated by
-ARC:
+counts don't drop to zero, and the instances aren't deallocated by ARC:
 
 #+BEGIN_SRC swift
   john = nil
@@ -17574,7 +17576,7 @@ Here's how the strong references look after you set the =john= and
 
 [[file:images/referenceCycle03_2x.png]]
 The strong references between the =Person= instance and the =Apartment=
-instance remain and cannot be broken.
+instance remain and can't be broken.
 
 ** Resolving Strong Reference Cycles Between Class Instances
 
@@ -17606,12 +17608,12 @@ the referenced instance. This behavior prevents the reference from
 becoming part of a strong reference cycle. You indicate a weak reference
 by placing the =weak= keyword before a property or variable declaration.
 
-Because a weak reference does not keep a strong hold on the instance it
+Because a weak reference doesn't keep a strong hold on the instance it
 refers to, it's possible for that instance to be deallocated while the
 weak reference is still referring to it. Therefore, ARC automatically
 sets a weak reference to =nil= when the instance that it refers to is
 deallocated. And, because weak references need to allow their value to
-be changed to =nil= at runtime, they are always declared as variables,
+be changed to =nil= at runtime, they're always declared as variables,
 rather than constants, of an optional type.
 
 You can check for the existence of a value in the weak reference, just
@@ -17703,8 +17705,8 @@ such a purpose.
 
 #+FINDEX: unowned
 
-Like a weak reference, an /unowned reference/ does not keep a strong
-hold on the instance it refers to. Unlike a weak reference, however, an
+Like a weak reference, an /unowned reference/ doesn't keep a strong hold
+on the instance it refers to. Unlike a weak reference, however, an
 unowned reference is used when the other instance has the same lifetime
 or a longer lifetime. You indicate an unowned reference by placing the
 =unowned= keyword before a property or variable declaration.
@@ -17716,7 +17718,7 @@ optional, and ARC never sets an unowned reference's value to =nil=.
 Important
 
 Use an unowned reference only when you are sure that the reference
-/always/ refers to an instance that has not been deallocated.
+/always/ refers to an instance that hasn't been deallocated.
 
 If you try to access the value of an unowned reference after that
 instance has been deallocated, you'll get a runtime error.
@@ -17929,7 +17931,7 @@ cause a strong reference cycle. This scenario is best resolved with a
 weak reference.
 
 The =Customer= and =CreditCard= example shows a situation where one
-property that is allowed to be =nil= and another property that cannot be
+property that's allowed to be =nil= and another property that can't be
 =nil= have the potential to cause a strong reference cycle. This
 scenario is best resolved with an unowned reference.
 
@@ -17976,17 +17978,17 @@ for =City= takes a =Country= instance, and stores this instance in its
 =country= property.
 
 The initializer for =City= is called from within the initializer for
-=Country=. However, the initializer for =Country= cannot pass =self= to
+=Country=. However, the initializer for =Country= can't pass =self= to
 the =City= initializer until a new =Country= instance is fully
 initialized, as described in [[Two-Phase Initialization][Two-Phase
 Initialization]].
 
 To cope with this requirement, you declare the =capitalCity= property of
 =Country= as an implicitly unwrapped optional property, indicated by the
-exclamation point at the end of its type annotation (=City!=). This means
-that the =capitalCity= property has a default value of =nil=, like any
-other optional, but can be accessed without the need to unwrap its value
-as described in [[Implicitly Unwrapped Optionals][Implicitly Unwrapped
+exclamation point at the end of its type annotation (=City!=). This 
+means that the =capitalCity= property has a default value of =nil=, like
+any other optional, but can be accessed without the need to unwrap its
+value as described in [[Implicitly Unwrapped Optionals][Implicitly Unwrapped
 Optionals]].
 
 Because =capitalCity= has a default =nil= value, a new =Country=
@@ -18087,7 +18089,7 @@ takes no parameters, and returns a =String= value”.
 
 By default, the =asHTML= property is assigned a closure that returns a
 string representation of an HTML tag. This tag contains the optional
-=text= value if it exists, or no text content if =text= does not exist.
+=text= value if it exists, or no text content if =text= doesn't exist.
 For a paragraph element, the closure would return ="<p>some text</p>"=
 or ="<p />"=, depending on whether the =text= property equals
 ="some text"= or =nil=.
@@ -18168,8 +18170,8 @@ reference cycle:
   paragraph = nil
 #+END_SRC
 
-Note that the message in the =HTMLElement= deinitializer is not printed,
-which shows that the =HTMLElement= instance is not deallocated.
+Note that the message in the =HTMLElement= deinitializer isn't printed,
+which shows that the =HTMLElement= instance isn't deallocated.
 
 ** Resolving Strong Reference Cycles for Closures
 
@@ -18196,11 +18198,11 @@ it's possible to capture =self= by accident.
 Each item in a capture list is a pairing of the =weak= or =unowned=
 keyword with a reference to a class instance (such as =self=) or a
 variable initialized with some value (such as
-=delegate = self.delegate=). These pairings are written within a pair
-of square braces, separated by commas.
+=delegate = self.delegate=). These pairings are written within a pair of
+square braces, separated by commas.
 
 Place the capture list before a closure's parameter list and return type
-if they are provided:
+if they're provided:
 
 #+BEGIN_SRC swift
   lazy var someClosure: {
@@ -18289,7 +18291,7 @@ Here's how the references look with the capture list in place:
 
 [[file:images/closureReferenceCycle02_2x.png]]
 This time, the capture of =self= by the closure is an unowned reference,
-and does not keep a strong hold on the =HTMLElement= instance it has
+and doesn't keep a strong hold on the =HTMLElement= instance it has
 captured. If you set the strong reference from the =paragraph= variable
 to =nil=, the =HTMLElement= instance is deallocated, as can be seen from
 the printing of its deinitializer message in the example below:
@@ -18382,7 +18384,7 @@ the duration of the access, and the location in memory being accessed.
 Specifically, a conflict occurs if you have two accesses that meet all
 of the following conditions:
 
-- At least one is a write access.
+- At least one is a write access or a nonatomic access.
 
 - They access the same location in memory.
 
@@ -18393,6 +18395,10 @@ write access changes the location in memory, but a read access doesn't.
 The location in memory refers to what is being accessed---for example, a
 variable, constant, or property. The duration of a memory access is
 either instantaneous or long-term.
+
+An operation is /atomic/ if it uses only C atomic operations; otherwise
+it's nonatomic. For a list of those functions, see the =stdatomic(3)=
+man page.
 
 An access is /instantaneous/ if it's not possible for other code to run
 after that access starts but before it ends. By their nature, two
@@ -18447,7 +18453,7 @@ original creates a conflict. For example:
   // Error: conflicting accesses to stepSize
 #+END_SRC
 
-In the code above, =stepSize= is a global variable, and it is normally
+In the code above, =stepSize= is a global variable, and it's normally
 accessible from within =increment(_:)=. However, the read access to
 =stepSize= overlaps with the write access to =number=. As shown in the
 figure below, both =number= and =stepSize= refer to the same location in
@@ -18678,7 +18684,7 @@ source files.
 
 #+FINDEX: import
 A /module/ is a single unit of code distribution---a framework or
-application that is built and shipped as a single unit and that can be
+application that's built and shipped as a single unit and that can be
 imported by another module with Swift's =import= keyword.
 
 Each build target (such as an app bundle or framework) in Xcode is
@@ -19175,7 +19181,7 @@ for all of its properties and doesn't provide at least one initializer
 itself.
 
 A default initializer has the same access level as the type it
-initializes, unless that type is defined as =public=. For a type that is
+initializes, unless that type is defined as =public=. For a type that's
 defined as =public=, the default initializer is considered internal. If
 you want a public type to be initializable with a no-argument
 initializer when used in another module, you must explicitly provide a
@@ -19341,7 +19347,7 @@ Operators]], Swift provides several advanced operators that perform more
 complex value manipulation. These include all of the bitwise and bit
 shifting operators you will be familiar with from C and Objective-C.
 
-Unlike arithmetic operators in C, arithmetic operators in Swift do not
+Unlike arithmetic operators in C, arithmetic operators in Swift don't
 overflow by default. Overflow behavior is trapped and reported as an
 error. To opt in to overflow behavior, use Swift's second set of
 arithmetic operators that overflow by default, such as the overflow
@@ -19364,7 +19370,7 @@ the custom operators you define.
 ** Bitwise Operators
 
 /Bitwise operators/ enable you to manipulate the individual raw data
-bits within a data structure. They are often used in low-level
+bits within a data structure. They're often used in low-level
 programming, such as graphics programming and device driver creation.
 Bitwise operators can also be useful when you work with raw data from
 external sources, such as encoding and decoding data for communication
@@ -19527,8 +19533,9 @@ the right, giving a value of =0x66=, which has a decimal value of =102=.
 
 Finally, the blue component is obtained by performing a bitwise AND
 between the numbers =0xCC6699= and =0x0000FF=, which gives an output
-value of =0x000099=. There's no need to shift this to the right, as
-=0x000099= already equals =0x99=, which has a decimal value of =153=.
+value of =0x000099=. Because =0x000099= already equals =0x99=, which has
+a decimal value of =153=, this value is used without shifting it to the
+right,
 
 **** Shifting Behavior for Signed Integers
 
@@ -19551,7 +19558,7 @@ integers, counting upwards from =0=. Here's how the bits inside an
 The sign bit is =0= (meaning “positive”), and the seven value bits are
 just the number =4=, written in binary notation.
 
-Negative numbers, however, are stored differently. They are stored by
+Negative numbers, however, are stored differently. They're stored by
 subtracting their absolute value from =2= to the power of =n=, where =n=
 is the number of value bits. An eight-bit number has seven value bits,
 so this means =2= to the power of =7=, or =128=.
@@ -19582,8 +19589,8 @@ unsigned integers, but fill any empty bits on the left with the /sign
 bit/, rather than with a zero.
 
 [[file:images/bitshiftSigned_2x.png]]
-This action ensures that signed integers have the same sign after they
-are shifted to the right, and is known as an /arithmetic shift/.
+This action ensures that signed integers have the same sign after
+they're shifted to the right, and is known as an /arithmetic shift/.
 
 Because of the special way that positive and negative numbers are
 stored, shifting either of them to the right moves them closer to zero.
@@ -19595,7 +19602,7 @@ integers remain negative as their value moves closer to zero.
 #+CINDEX: Overflow operators
 
 If you try to insert a number into an integer constant or variable that
-cannot hold that value, by default Swift reports an error rather than
+can't hold that value, by default Swift reports an error rather than
 allowing an invalid value to be created. This behavior gives extra
 safety when you work with numbers that are too large or too small.
 
@@ -19644,7 +19651,7 @@ overflow in the positive direction, using the overflow addition operator
 #+END_SRC
 
 The variable =unsignedOverflow= is initialized with the maximum value a
-=UInt8= can hold (=255=, or =11111111= in binary). It is then
+=UInt8= can hold (=255=, or =11111111= in binary). It's then
 incremented by =1= using the overflow addition operator (=&+=). This
 pushes its binary representation just over the size that a =UInt8= can
 hold, causing it to overflow beyond its bounds, as shown in the diagram
@@ -19707,7 +19714,7 @@ are grouped together---either grouped from the left, or grouped from the
 right. Think of it as meaning “they associate with the expression to
 their left,” or “they associate with the expression to their right.”
 
-It is important to consider each operator's precedence and associativity
+It's important to consider each operator's precedence and associativity
 when working out the order in which a compound expression will be
 calculated. For example, operator precedence explains why the following
 expression equals =17=.
@@ -19729,8 +19736,8 @@ to be calculated as follows:
 However, the actual answer is =17=, not =5=. Higher-precedence operators
 are evaluated before lower-precedence ones. In Swift, as in C, the
 remainder operator (=%=) and the multiplication operator (=*=) have a
-higher precedence than the addition operator (=+=). As a result, they
-are both evaluated before the addition is considered.
+higher precedence than the addition operator (=+=). As a result, they're
+both evaluated before the addition is considered.
 
 However, remainder and multiplication have the /same/ precedence as each
 other. To work out the exact evaluation order to use, you also need to
@@ -19768,7 +19775,7 @@ Note
 
 Swift's operator precedences and associativity rules are simpler and
 more predictable than those found in C and Objective-C. However, this
-means that they are not exactly the same as in C-based languages. Be
+means that they aren't exactly the same as in C-based languages. Be
 careful to ensure that operator interactions still behave in the way you
 intend when porting existing code to Swift.
 
@@ -19837,8 +19844,8 @@ make the vector =(5.0, 5.0)=, as illustrated below.
 The example shown above demonstrates a custom implementation of a binary
 infix operator. Classes and structures can also provide implementations
 of the standard /unary operators/. Unary operators operate on a single
-target. They are /prefix/ if they precede their target (such as =-a=)
-and /postfix/ operators if they follow their target (such as =b!=).
+target. They're /prefix/ if they precede their target (such as =-a=) and
+/postfix/ operators if they follow their target (such as =b!=).
 
 You implement a prefix or postfix unary operator by writing the =prefix=
 or =postfix= modifier before the =func= keyword when declaring the
@@ -19973,7 +19980,7 @@ modifiers:
 #+END_SRC
 
 The example above defines a new prefix operator called =+++=. This
-operator does not have an existing meaning in Swift, and so it is given
+operator doesn't have an existing meaning in Swift, and so it's given
 its own custom meaning below in the specific context of working with
 =Vector2D= instances. For the purposes of this example, =+++= is treated
 as a new “prefix doubling” operator. It doubles the =x= and =y= values
@@ -20004,7 +20011,7 @@ operators, as well as the operator's associativity. See
 explanation of how these characteristics affect an infix operator's
 interaction with other infix operators.
 
-A custom infix operator that is not explicitly placed into a precedence
+A custom infix operator that isn't explicitly placed into a precedence
 group is given a default precedence group with a precedence immediately
 higher than the precedence of the ternary conditional operator.
 
@@ -20025,7 +20032,7 @@ which belongs to the precedence group =AdditionPrecedence=:
 #+END_SRC
 
 This operator adds together the =x= values of two vectors, and subtracts
-the =y= value of the second vector from the first. Because it is in
+the =y= value of the second vector from the first. Because it's in
 essence an “additive” operator, it has been given the same precedence
 group as additive infix operators such as =+= and =-=. For information
 about the operators provided by the Swift standard library, including a
@@ -20039,9 +20046,201 @@ defining your own operators and precedence groups, see Operator Declaration.
 
 Note
 
-You do not specify a precedence when defining a prefix or postfix
+You don't specify a precedence when defining a prefix or postfix
 operator. However, if you apply both a prefix and a postfix operator to
 the same operand, the postfix operator is applied first.
+
+** Result Builders
+A /result builder/ is a type you define that adds syntax for creating
+nested data, like a list or tree, in a natural, declarative way. The
+code that uses the result builder can include ordinary Swift syntax,
+like =if= and =for=, to handle conditional or repeated pieces of data.
+
+The code below defines a few types for drawing on a single line using
+stars and text.
+
+#+BEGIN_SRC swift
+  protocol Drawable {
+      func draw() -> String
+  }
+  struct Line: Drawable {
+      var elements: [Drawable]
+      func draw() -> String {
+          return elements.map { $0.draw() }.joined(separator: "")
+      }
+  }
+  struct Text: Drawable {
+      var content: String
+      init(_ content: String) { self.content = content }
+      func draw() -> String { return content }
+  }
+  struct Space: Drawable {
+      func draw() -> String { return " " }
+  }
+  struct Stars: Drawable {
+      var length: Int
+      func draw() -> String { return String(repeating: "*", count: length)
+      }
+  }
+  struct AllCaps: Drawable {
+      var content: Drawable
+      func draw() -> String { return content.draw().uppercased() }
+  }
+#+END_SRC
+
+The =Drawable= protocol defines the requirement for something that can
+be drawn, like a line or shape: The type must implement a =draw()=
+method. The =Line= structure represents a single-line drawing, and it
+serves the top-level container for most drawings. To draw a =Line=, the
+structure calls =draw()= on each of the line's components, and then
+concatenates the resulting strings into a single string. The =Text=
+structure wraps a string to make it part of a drawing. The =AllCaps=
+structure wraps and modifies another drawing, converting any text in the
+drawing to uppercase.
+
+It's possible to make a drawing with these types by calling their
+initializers:
+
+#+BEGIN_SRC swift
+  let name: String? = "Ravi Patel"
+  let manualDrawing = Line(elements: [
+                             Stars(length: 3),
+                             Text("Hello"),
+                             Space(),
+                             AllCaps(content: Text((name ?? "World") + "!")),
+                             Stars(length: 2),
+                           ])
+  print(manualDrawing.draw())
+  // Prints "***Hello RAVI PATEL!**"
+#+END_SRC
+
+This code works, but it's a little awkward. The deeply nested
+parentheses after =AllCaps= are hard to read. The fallback logic to use
+“World” when =name= is =nil= has to be done inline using the =??=
+operator, which would be difficult with anything more complex. If you
+needed to include switches or =for= loops to build up part of the
+drawing, there's no way to do that. A result builder lets you rewrite
+code like this so that it looks like normal Swift code.
+
+#+FINDEX: @@resultBuilder
+
+To define a result builder, you write the =@resultBuilder= attribute on
+a type declaration. For example, this code defines a result builder
+called =DrawingBuilder=, which lets you use a declarative syntax to
+describe a drawing:
+
+#+BEGIN_SRC swift
+  @resultBuilder
+  struct DrawingBuilder {
+      static func buildBlock(_ components: Drawable...) -> Drawable {
+          return Line(elements: components)
+      }
+      static func buildEither(first: Drawable) -> Drawable {
+          return first
+      }
+      static func buildEither(second: Drawable) -> Drawable {
+          return second
+      }
+  }
+#+END_SRC
+
+The =DrawingBuilder= structure defines three methods that implement
+parts of the result builder syntax. The =buildBlock(_:)= method adds
+support for writing a series of lines in a block of code. It combines
+the components in that block into a =Line=. The =buildEither(first:)=
+and =buildEither(second:)= methods add support for =if=-=else=.
+
+You can apply the =@DrawingBuilding= to a function's parameter, which
+turns a closure passed to the function into the value that the result
+builder creates from that closure. For example:
+
+#+BEGIN_SRC swift
+  func draw(@DrawingBuilder content: () -> Drawable) -> Drawable {
+      return content()
+  }
+  func caps(@DrawingBuilder content: () -> Drawable) -> Drawable {
+      return AllCaps(content: content())
+  }
+
+  func makeGreeting(for name: String? = nil) -> Drawable {
+      let greeting = draw {
+          Stars(length: 3)
+          Text("Hello")
+          Space()
+          caps {
+              if let name = name {
+                  Text(name + "!")
+              } else {
+                  Text("World!")
+              }
+          }
+          Stars(length: 2)
+      }
+      return greeting
+  }
+  let genericGreeting = makeGreeting()
+  print(genericGreeting.draw())
+  // Prints "***Hello WORLD!**"
+
+  let personalGreeting = makeGreeting(for: "Ravi Patel")
+  print(personalGreeting.draw())
+  // Prints "***Hello RAVI PATEL!**"
+#+END_SRC
+
+The =makeGreeting(for:)= function takes a =name= parameter and uses it
+to draw a personalized greeting. The =draw(_:)= and =caps(_:)= functions
+both take a single closure as their argument, which is marked with the
+=@DrawingBuilder= attribute. When you call those functions, you use the
+special syntax that =DrawingBuilder= defines. Swift transforms that
+declarative description of a drawing into a series of calls to the
+methods on =DrawingBuilder= to build up the value that's passed as the
+function argument. For example, Swift transforms the call to =caps(_:)=
+in that example into code like the following:
+
+#+BEGIN_SRC swift
+  let capsDrawing = caps {
+      let partialDrawing: Drawable
+      if let name = name {
+          let text = Text(name + "!")
+          partialDrawing = DrawingBuilder.buildEither(first: text)
+      } else {
+          let text = Text("World!")
+          partialDrawing = DrawingBuilder.buildEither(second: text)
+      }
+      return partialDrawing
+  }
+#+END_SRC
+
+Swift transforms the =if=-=else= block into calls to the
+=buildEither(first:)= and =buildEither(second:)= methods. Although you
+don't call these methods in your own code, showing the result of the
+transformation makes it easier to see how Swift transforms your code
+when you use the =DrawingBuilder= syntax.
+
+To add support for writing =for= loops in the special drawing syntax,
+add a =buildArray(_:)= method.
+
+#+BEGIN_SRC swift
+  extension DrawingBuilder {
+      static func buildArray(_ components: [Drawable]) -> Drawable {
+          return Line(elements: components)
+      }
+  }
+  let manyStars = draw {
+      Text("Stars:")
+      for length in 1...3 {
+          Space()
+          Stars(length: length)
+      }
+  }
+#+END_SRC
+
+In the code above, the =for= loop creates an array of drawings, and the
+=buildArray(_:)= method turns that array into a =Line=.
+
+For a complete list of how Swift transforms builder syntax into calls to
+the builder type's methods, see
+[[info:swift-reference#resultBuilder][resultBuilder]].
 
 * Index
 :PROPERTIES:
