@@ -378,10 +378,12 @@ as a number or string.
 
 The following are examples of literals:
 
-1. 42 // Integer literal
-2. 3.14159 // Floating-point literal
-3. "Hello, world!" // String literal
-4. true // Boolean literal
+#+BEGIN_SRC swift
+  42 // Integer literal
+  3.14159 // Floating-point literal
+  "Hello, world!" // String literal
+  true // Boolean literal
+#+END_SRC
 
 A literal doesn't have a type on its own. Instead, a literal is parsed
 as having infinite precision and Swift's type inference attempts to
@@ -651,7 +653,9 @@ A string literal is a sequence of characters surrounded by quotation
 marks. A single-line string literal is surrounded by double quotation
 marks and has the following form:
 
-1. "characters"
+#+BEGIN_SRC swift
+  "characters"
+#+END_SRC
 
 String literals can't contain an unescaped double quotation mark (="=),
 an unescaped backslash (=\=), a carriage return, or a line feed.
@@ -659,9 +663,11 @@ an unescaped backslash (=\=), a carriage return, or a line feed.
 A multiline string literal is surrounded by three double quotation marks
 and has the following form:
 
-1. """
-2. characters
-3. """
+#+BEGIN_SRC swift
+  """
+  characters
+  """
+#+END_SRC
 
 Unlike a single-line string literal, a multiline string literal can
 contain unescaped double quotation marks (="=), carriage returns, and
@@ -719,23 +725,25 @@ an unescaped backslash, a carriage return, or a line feed.
 
 For example, all of the following string literals have the same value:
 
-1. "1 2 3"
-2. "1 2 \("3")"
-3. "1 2 \(3)"
-4. "1 2 \(1 + 2)"
-5. let x = 3; "1 2 \(x)"
+#+BEGIN_SRC swift
+  "1 2 3"
+  "1 2 \("3")"
+  "1 2 \(3)"
+  "1 2 \(1 + 2)"
+  let x = 3; "1 2 \(x)"
+#+END_SRC
 
 A string delimited by extended delimiters is a sequence of characters
 surrounded by quotation marks and a balanced set of one or more number
 signs (=#=). A string delimited by extended delimiters has the following
 forms:
 
-1. #"characters"#
-2.
-
-3. #"""
-4. characters
-5. """#
+#+BEGIN_SRC swift
+  #"characters"#
+  #"""
+  characters
+  """#
+#+END_SRC
 
 Special characters in a string delimited by extended delimiters appear
 in the resulting string as normal characters rather than as special
@@ -747,18 +755,22 @@ terminating the string.
 The following example shows a string literal and a string delimited by
 extended delimiters that create equivalent string values:
 
-1. let string = #"\(x) \ " \u{2603}"#
-2. let escaped = "\\(x) \\ \" \\u{2603}"
-3. print(string)
-4. // Prints "\(x) \ " \u{2603}"
-5. print(string == escaped)
-6. // Prints "true"
+#+BEGIN_SRC swift
+  let string = #"\(x) \ " \u{2603}"#
+  let escaped = "\\(x) \\ \" \\u{2603}"
+  print(string)
+  // Prints "\(x) \ " \u{2603}"
+  print(string == escaped)
+  // Prints "true"
+#+END_SRC   
 
 If you use more than one number sign to form a string delimited by
 extended delimiters, don't place whitespace in between the number signs:
 
-1. print(###"Line 1\###nLine 2"###) // OK
-2. print(# # #"Line 1\# # #nLine 2"# # #) // Error
+#+BEGIN_SRC swift
+  print(###"Line 1\###nLine 2"###) // OK
+  print(# # #"Line 1\# # #nLine 2"# # #) // Error
+#+END_SRC
 
 Multiline string literals that you create using extended delimiters have
 the same indentation requirements as regular multiline string literals.
@@ -774,8 +786,10 @@ concatenated at compile time. For example, the values of =textA= and
 =textB= in the example below are identical---no runtime concatenation is
 performed.
 
-1. let textA = "Hello " + "world"
-2. let textB = "Hello world"
+#+BEGIN_SRC swift
+  let textA = "Hello " + "world"
+  let textB = "Hello world"
+#+END_SRC   
 
 Grammar of a string literal
 
@@ -1199,8 +1213,10 @@ A /type annotation/ explicitly specifies the type of a variable or
 expression. Type annotations begin with a colon (=:=) and end with a
 type, as the following examples show:
 
-1. let someTuple: (Double, Double) = (3.14159, 2.71828)
-2. func someFunction(a: Int) { /* ... */ }
+#+BEGIN_SRC swift
+  let someTuple: (Double, Double) = (3.14159, 2.71828)
+  func someFunction(a: Int) { /* ... */ }
+#+END_SRC   
 
 In the first example, the expression =someTuple= is specified to have
 the tuple type =(Double, Double)=. In the second example, the parameter
@@ -1234,15 +1250,19 @@ type alias of a named or compound type. For instance, in the example
 below, the use of =Point= in the type annotation refers to the tuple
 type =(Int, Int)=.
 
-1. typealias Point = (Int, Int)
-2. let origin: Point = (0, 0)
+#+BEGIN_SRC swift
+  typealias Point = (Int, Int)
+  let origin: Point = (0, 0)
+#+END_SRC   
 
 In the second case, a type identifier uses dot (=.=) syntax to refer to
 named types declared in other modules or nested within other types. For
 example, the type identifier in the following code references the named
 type =MyType= that's declared in the =ExampleModule= module.
 
-1. var someValue: ExampleModule.MyType
+#+BEGIN_SRC swift
+  var someValue: ExampleModule.MyType
+#+END_SRC   
 
 Grammar of a type identifier
 
@@ -1275,12 +1295,13 @@ Values]].
 When an element of a tuple type has a name, that name is part of the
 type.
 
-1. var someTuple = (top: 10, bottom: 12) // someTuple is of type (top:
-   Int, bottom: Int)
-2. someTuple = (top: 4, bottom: 42) // OK: names match
-3. someTuple = (9, 99) // OK: names are inferred
-4. someTuple = (left: 5, right: 5) // Error: names don't match
-
+#+BEGIN_SRC swift
+  var someTuple = (top: 10, bottom: 12) // someTuple is of type (top: Int, bottom: Int)
+  someTuple = (top: 4, bottom: 42) // OK: names match
+  someTuple = (9, 99) // OK: names are inferred
+  someTuple = (left: 5, right: 5) // Error: names don't match
+#+END_SRC
+   
 All tuple types contain two or more types, except for =Void= which is a
 type alias for the empty tuple type, =()=.
 
@@ -1314,7 +1335,9 @@ A /function type/ represents the type of a function, method, or closure
 and consists of a parameter and return type separated by an arrow
 (=->=):
 
-1. (parameter type) -> return type
+#+BEGIN_SRC swift
+  (parameter type) -> return type
+#+END_SRC   
 
 The /parameter type/ is comma-separated list of types. Because the
 /return type/ can be a tuple type, function types support functions and
@@ -1356,31 +1379,32 @@ takes no arguments.
 Argument names in functions and methods aren't part of the
 corresponding function type. For example:
 
-1.  func someFunction(left: Int, right: Int) {}
-2.  func anotherFunction(left: Int, right: Int) {}
-3.  func functionWithDifferentLabels(top: Int, bottom: Int) {}
-4.
+#+BEGIN_SRC swift
+  func someFunction(left: Int, right: Int) {}
+  func anotherFunction(left: Int, right: Int) {}
+  func functionWithDifferentLabels(top: Int, bottom: Int) {}
 
-5.  var f = someFunction // The type of f is (Int, Int) -> Void, not
-    (left: Int, right: Int) -> Void.
-6.  f = anotherFunction // OK
-7.  f = functionWithDifferentLabels // OK
-8.
 
-9.  func functionWithDifferentArgumentTypes(left: Int, right: String) {}
-10. f = functionWithDifferentArgumentTypes // Error
-11.
+  var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
+  f = anotherFunction // OK
+  f = functionWithDifferentLabels // OK
 
-12. func functionWithDifferentNumberOfArguments(left: Int, right: Int,
-    top: Int) {}
-13. f = functionWithDifferentNumberOfArguments // Error
+  func functionWithDifferentArgumentTypes(left: Int, right: String) {}
+  f = functionWithDifferentArgumentTypes // Error
+
+  func functionWithDifferentNumberOfArguments(left: Int, right: Int,
+                                              top: Int) {}
+  f = functionWithDifferentNumberOfArguments // Error
+#+END_SRC    
 
 Because argument labels aren't part of a function's type, you omit them
 when writing a function type.
 
-1. var operation: (lhs: Int, rhs: Int) -> Int // Error
-2. var operation: (_ lhs: Int, _ rhs: Int) -> Int // OK
-3. var operation: (Int, Int) -> Int // OK
+#+BEGIN_SRC swift
+  var operation: (lhs: Int, rhs: Int) -> Int // Error
+  var operation: (_ lhs: Int, _ rhs: Int) -> Int // OK
+  var operation: (Int, Int) -> Int // OK
+#+END_SRC   
 
 If a function type includes more than a single arrow (=->=), the
 function types are grouped from right to left. For example, the function
@@ -1407,20 +1431,19 @@ to another nonescaping function parameter. This restriction helps Swift
 perform more of its checks for conflicting access to memory at compile
 time instead of at runtime. For example:
 
-1.  let external: (() -> Void) -> Void = { _ in () }
-2.  func takesTwoFunctions(first: (() -> Void) -> Void, second: (() ->
-    Void) -> Void) {
-3.  first { first {} } // Error
-4.  second { second {} } // Error
-5.
+#+BEGIN_SRC swift
+  let external: (() -> Void) -> Void = { _ in () }
+  func takesTwoFunctions(first: (() -> Void) -> Void, second: (() -> Void) -> Void) {
+      first { first {} } // Error
+      second { second {} } // Error
 
-6.  first { second {} } // Error
-7.  second { first {} } // Error
-8.
+      first { second {} } // Error
+      second { first {} } // Error
 
-9.  first { external {} } // OK
-10. external { first {} } // OK
-11. }
+      first { external {} } // OK
+      external { first {} } // OK
+  }
+#+END_SRC    
 
 In the code above, both of the parameters to
 =takesTwoFunctions(first:second:)= are functions. Neither parameter is
@@ -1482,12 +1505,16 @@ identifier
 The Swift language provides the following syntactic sugar for the Swift
 standard library =Array<Element>= type:
 
-1. [type]
+#+BEGIN_SRC swift
+  [type]
+#+END_SRC
 
 In other words, the following two declarations are equivalent:
 
-1. let someArray: Array<String> = ["Alex", "Brian", "Dave"]
-2. let someArray: [String] = ["Alex", "Brian", "Dave"]
+#+BEGIN_SRC swift
+  let someArray: Array<String> = ["Alex", "Brian", "Dave"]
+  let someArray: [String] = ["Alex", "Brian", "Dave"]
+#+END_SRC
 
 In both cases, the constant =someArray= is declared as an array of
 strings. The elements of an array can be accessed through subscripting
@@ -1500,7 +1527,7 @@ in the innermost pair of square brackets. For example, you can create a
 three-dimensional array of integers using three sets of square brackets:
 
 #+BEGIN_SRC swift
-var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
+  var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 #+END_SRC
 
 When accessing the elements in a multidimensional array, the left-most
@@ -1525,14 +1552,17 @@ type =]=
 The Swift language provides the following syntactic sugar for the Swift
 standard library =Dictionary<Key, Value>= type:
 
-1. [key type: value type]
+#+BEGIN_SRC swift
+  [key type: value type]
+#+END_SRC   
 
 In other words, the following two declarations are equivalent:
 
-1. let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
-2. let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul":
-   39]
-
+#+BEGIN_SRC swift
+  let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
+  let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
+#+END_SRC
+   
 In both cases, the constant =someDictionary= is declared as a dictionary
 with strings as keys and integers as values.
 
@@ -1563,8 +1593,10 @@ The Swift language defines the postfix =?= as syntactic sugar for the
 named type =Optional<Wrapped>=, which is defined in the Swift standard
 library. In other words, the following two declarations are equivalent:
 
-1. var optionalInteger: Int?
-2. var optionalInteger: Optional<Int>
+#+BEGIN_SRC swift
+  var optionalInteger: Int?
+  var optionalInteger: Optional<Int>
+#+END_SRC   
 
 In both cases, the variable =optionalInteger= is declared to have the
 type of an optional integer. Note that no whitespace may appear between
@@ -1580,8 +1612,10 @@ automatically defaults to =nil=.
 If an instance of an optional type contains a value, you can access that
 value using the postfix operator =!=, as shown below:
 
-1. optionalInteger = 42
-2. optionalInteger! // 42
+#+BEGIN_SRC swift
+  optionalInteger = 42
+  optionalInteger! // 42
+#+END_SRC   
 
 Using the =!= operator to unwrap an optional that has a value of =nil=
 results in a runtime error.
@@ -1609,8 +1643,10 @@ that has a value of =nil=, you'll get a runtime error. With the
 exception of the implicit unwrapping behavior, the following two
 declarations are equivalent:
 
-1. var implicitlyUnwrappedString: String!
-2. var explicitlyUnwrappedString: Optional<String>
+#+BEGIN_SRC swift
+  var implicitlyUnwrappedString: String!
+  var explicitlyUnwrappedString: Optional<String>
+#+END_SRC   
 
 Note that no whitespace may appear between the type and the =!=.
 
@@ -1619,12 +1655,13 @@ contains that type, optional types that are nested inside a tuple type
 or a generic type---such as the element types of a dictionary or
 array---can't be marked as implicitly unwrapped. For example:
 
-1. let tupleOfImplicitlyUnwrappedElements: (Int!, Int!) // Error
-2. let implicitlyUnwrappedTuple: (Int, Int)! // OK
-3.
+#+BEGIN_SRC swift
+  let tupleOfImplicitlyUnwrappedElements: (Int!, Int!) // Error
+  let implicitlyUnwrappedTuple: (Int, Int)! // OK
 
-4. let arrayOfImplicitlyUnwrappedElements: [Int!] // Error
-5. let implicitlyUnwrappedArray: [Int]! // OK
+  let arrayOfImplicitlyUnwrappedElements: [Int!] // Error
+  let implicitlyUnwrappedArray: [Int]! // OK
+#+END_SRC   
 
 Because implicitly unwrapped optionals have the same =Optional<Wrapped>=
 type as optional values, you can use implicitly unwrapped optionals in
@@ -1661,7 +1698,9 @@ type in type annotations, in generic parameter clauses, and in generic
 
 Protocol composition types have the following form:
 
-1. Protocol 1 & Protocol 2
+#+BEGIN_SRC swift
+  Protocol 1 & Protocol 2
+#+END_SRC   
 
 A protocol composition type allows you to specify a value whose type
 conforms to the requirements of multiple protocols without explicitly
@@ -1688,9 +1727,11 @@ for the same protocol to appear more than once in the
 definitions---duplicates are ignored. For example, the definition of
 =PQR= in the code below is equivalent to =P & Q & R=.
 
-1. typealias PQ = P & Q
-2. typealias PQR = PQ & Q & R
-
+#+BEGIN_SRC swift
+  typealias PQ = P & Q
+  typealias PQR = PQ & Q & R
+#+END_SRC
+   
 Grammar of a protocol composition type
 
 protocol-composition-type
@@ -1718,7 +1759,9 @@ wrapped type of an optional.
 
 Opaque types have the following form:
 
-1. some constraint
+#+BEGIN_SRC swift
+  some constraint
+#+END_SRC   
 
 The /constraint/ is a class type, protocol type, protocol composition
 type, or =Any=. A value can be used as an instance of the opaque type
@@ -1762,21 +1805,23 @@ runtime. You can call the =type(of:)= function with an instance of a
 type to access that instance's dynamic, runtime type as a value, as the
 following example shows:
 
-1.  class SomeBaseClass {
-2.  class func printClassName() {
-3.  print("SomeBaseClass")
-4.  }
-5.  }
-6.  class SomeSubClass: SomeBaseClass {
-7.  override class func printClassName() {
-8.  print("SomeSubClass")
-9.  }
-10. }
-11. let someInstance: SomeBaseClass = SomeSubClass()
-12. // The compile-time type of someInstance is SomeBaseClass,
-13. // and the runtime type of someInstance is SomeSubClass
-14. type(of: someInstance).printClassName()
-15. // Prints "SomeSubClass"
+#+BEGIN_SRC swift
+  class SomeBaseClass {
+      class func printClassName() {
+          print("SomeBaseClass")
+      }
+  }
+  class SomeSubClass: SomeBaseClass {
+      override class func printClassName() {
+          print("SomeSubClass")
+      }
+  }
+  let someInstance: SomeBaseClass = SomeSubClass()
+  // The compile-time type of someInstance is SomeBaseClass,
+  // and the runtime type of someInstance is SomeSubClass
+  type(of: someInstance).printClassName()
+  // Prints "SomeSubClass"
+#+END_SRC    
 
 For more information, see
 [[https://developer.apple.com/documentation/swift/2885064-type][=type(of:)=]]
@@ -1788,18 +1833,20 @@ that type's metatype value. For class instances, the initializer that's
 called must be marked with the =required= keyword or the entire class
 marked with the =final= keyword.
 
-1.  class AnotherSubClass: SomeBaseClass {
-2.  let string: String
-3.  required init(string: String) {
-4.  self.string = string
-5.  }
-6.  override class func printClassName() {
-7.  print("AnotherSubClass")
-8.  }
-9.  }
-10. let metatype: AnotherSubClass.Type = AnotherSubClass.self
-11. let anotherInstance = metatype.init(string: "some string")
-
+#+BEGIN_SRC swift
+  class AnotherSubClass: SomeBaseClass {
+      let string: String
+      required init(string: String) {
+          self.string = string
+      }
+      override class func printClassName() {
+          print("AnotherSubClass")
+      }
+  }
+  let metatype: AnotherSubClass.Type = AnotherSubClass.self
+  let anotherInstance = metatype.init(string: "some string")
+#+END_SRC
+    
 Grammar of a metatype type
 
 metatype-type →
@@ -1807,6 +1854,7 @@ type =.= =Type= |
 type =.= =Protocol=
 
 ** Any Type
+
 The =Any= type can contain values from all other types. =Any= can be
 used as the concrete type for an instance of any of the following types:
 
@@ -1818,8 +1866,9 @@ used as the concrete type for an instance of any of the following types:
 
 - A closure or function type
 
-1. let mixed: [Any] = ["one", 2, true, (4, 5.3), { () -> Int in return 6
-   }]
+#+BEGIN_SRC swift  
+  let mixed: [Any] = ["one", 2, true, (4, 5.3), { () -> Int in return 6 }]
+#+END_SRC   
 
 When you use =Any= as a concrete type for an instance, you need to cast
 the instance to a known type before you can access its properties or
@@ -1829,11 +1878,13 @@ operators---=as=, =as?=, or =as!=. For example, use =as?= to
 conditionally downcast the first object in a heterogeneous array to a
 =String= as follows:
 
-1. if let first = mixed.first as? String {
-2. print("The first item, '\(first)', is a string.")
-3. }
-4. // Prints "The first item, 'one', is a string."
-
+#+BEGIN_SRC swift
+  if let first = mixed.first as? String {
+      print("The first item, '\(first)', is a string.")
+  }
+  // Prints "The first item, 'one', is a string."
+#+END_SRC
+   
 For more information about casting, see
 [[info:swift#Type Casting][Type Casting]].
 
@@ -1871,23 +1922,23 @@ members of a class declaration, =Self= can appear only as follows:
 For example, the code below shows an instance method =f= whose return
 type is =Self=.
 
-1.  class Superclass {
-2.  func f() -> Self { return self }
-3.  }
-4.  let x = Superclass()
-5.  print(type(of: x.f()))
-6.  // Prints "Superclass"
-7.
+#+BEGIN_SRC swift
+  class Superclass {
+      func f() -> Self { return self }
+  }
+  let x = Superclass()
+  print(type(of: x.f()))
+  // Prints "Superclass"
 
-8.  class Subclass: Superclass { }
-9.  let y = Subclass()
-10. print(type(of: y.f()))
-11. // Prints "Subclass"
-12.
+  class Subclass: Superclass { }
+  let y = Subclass()
+  print(type(of: y.f()))
+  // Prints "Subclass"
 
-13. let z: Superclass = Subclass()
-14. print(type(of: z.f()))
-15. // Prints "Subclass"
+  let z: Superclass = Subclass()
+  print(type(of: z.f()))
+  // Prints "Subclass"
+#+END_SRC
 
 The last part of the example above shows that =Self= refers to the
 runtime type =Subclass= of the value of =z=, not the compile-time type
@@ -1974,8 +2025,10 @@ for instance, the explicit type annotation (=: Float=) on the constant
 =eFloat= causes the numeric literal =2.71828= to have an inferred type
 of =Float= instead of =Double=.
 
-1. let e = 2.71828 // The type of e is inferred to be Double.
-2. let eFloat: Float = 2.71828 // The type of eFloat is Float.
+#+BEGIN_SRC swift
+  let e = 2.71828 // The type of e is inferred to be Double.
+  let eFloat: Float = 2.71828 // The type of eFloat is Float.
+#+END_SRC   
 
 Type inference in Swift operates at the level of a single expression or
 statement. This means that all of the information needed to infer an
@@ -2047,7 +2100,9 @@ identifier
 An /in-out expression/ marks a variable that's being passed as an in-out
 argument to a function call expression.
 
-1. &expression
+#+BEGIN_SRC swift
+  &expression
+#+END_SRC   
 
 For more information about in-out parameters and to see an example, see
 
@@ -2067,12 +2122,16 @@ identifier
 A /try expression/ consists of the =try= operator followed by an
 expression that can throw an error. It has the following form:
 
-1. try expression
+#+BEGIN_SRC swift
+  try expression
+#+END_SRC   
 
 An /optional-try expression/ consists of the =try?= operator followed by
 an expression that can throw an error. It has the following form:
 
-1. try? expression
+#+BEGIN_SRC swift
+  try? expression
+#+END_SRC   
 
 If the /expression/ doesn't throw an error, the value of the
 optional-try expression is an optional containing the value of the
@@ -2082,7 +2141,9 @@ optional-try expression is an optional containing the value of the
 A /forced-try expression/ consists of the =try!= operator followed by an
 expression that can throw an error. It has the following form:
 
-1. try! expression
+#+BEGIN_SRC swift
+  try! expression
+#+END_SRC   
 
 If the /expression/ throws an error, a runtime error is produced.
 
@@ -2091,12 +2152,11 @@ with =try=, =try?=, or =try!=, that operator applies to the whole binary
 expression. That said, you can use parentheses to be explicit about the
 scope of the operator's application.
 
-1. sum = try someThrowingFunction() + anotherThrowingFunction() // try
-   applies to both function calls
-2. sum = try (someThrowingFunction() + anotherThrowingFunction()) // try
-   applies to both function calls
-3. sum = (try someThrowingFunction()) + anotherThrowingFunction() //
-   Error: try applies only to the first function call
+#+BEGIN_SRC swift
+  sum = try someThrowingFunction() + anotherThrowingFunction() // try applies to both function calls
+  sum = try (someThrowingFunction() + anotherThrowingFunction()) // try applies to both function calls
+  sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+#+END_SRC   
 
 A =try= expression can't appear on the right-hand side of a binary
 operator, unless the binary operator is the assignment operator or the
@@ -2118,7 +2178,9 @@ try-operator → =try= | =try=
 expression that it takes as its left-hand and right-hand arguments. It
 has the following form:
 
-1. left-hand argument operator right-hand argument
+#+BEGIN_SRC swift
+  left-hand argument operator right-hand argument
+#+END_SRC   
 
 For information about the behavior of these operators, see
 [[info:swift#Basic Operators][Basic Operators]] and
@@ -2170,7 +2232,9 @@ _{opt}
 The /assignment operator/ sets a new value for a given expression. It
 has the following form:
 
-1. expression = value
+#+BEGIN_SRC swift
+  expression = value
+#+END_SRC
 
 The value of the /expression/ is set to the value obtained by evaluating
 the /value/. If the /expression/ is a tuple, the /value/ must be a tuple
@@ -2178,8 +2242,9 @@ with the same number of elements. (Nested tuples are allowed.)
 Assignment is performed from each part of the /value/ to the
 corresponding part of the /expression/. For example:
 
-1. (a, _, (b, c)) = ("test", 9.45, (12, 3))
-2. // a is "test", b is 12, c is 3, and 9.45 is ignored
+#+BEGIN_SRC swift
+  (a, _, (b, c)) = ("test", 9.45, (12, 3)) // a is "test", b is 12, c is 3, and 9.45 is ignored
+#+END_SRC   
 
 The assignment operator doesn't return any value.
 
@@ -2194,7 +2259,9 @@ assignment-operator →
 The /ternary conditional operator/ evaluates to one of two given values
 based on the value of a condition. It has the following form:
 
-1. condition ? expression used if true : expression used if false
+#+BEGIN_SRC swift
+  condition ? expression used if true : expression used if false
+#+END_SRC   
 
 If the /condition/ evaluates to =true=, the conditional operator
 evaluates the first expression and returns its value. Otherwise, it
@@ -2220,10 +2287,12 @@ operator, the =as?= operator, and the =as!= operator.
 
 They have the following form:
 
-1. expression is type
-2. expression as type
-3. expression as? type
-4. expression as! type
+#+BEGIN_SRC swift
+  expression is type
+  expression as type
+  expression as? type
+  expression as! type
+#+END_SRC   
 
 The =is= operator checks at runtime whether the /expression/ can be cast
 to the specified /type/. It returns =true= if the /expression/ can be
@@ -2234,21 +2303,18 @@ the cast always succeeds, such as upcasting or bridging. Upcasting lets
 you use an expression as an instance of its type's supertype, without
 using an intermediate variable. The following approaches are equivalent:
 
-1.  func f(_ any: Any) { print("Function for Any") }
-2.  func f(_ int: Int) { print("Function for Int") }
-3.  let x = 10
-4.  f(x)
-5.  // Prints "Function for Int"
-6.
+#+BEGIN_SRC swift
+  func f(_ any: Any) { print("Function for Any") }
+  func f(_ int: Int) { print("Function for Int") }
+  let x = 10
+  f(x) // Prints "Function for Int"
 
-7.  let y: Any = x
-8.  f(y)
-9.  // Prints "Function for Any"
-10.
+  let y: Any = x
+  f(y) // Prints "Function for Any"
 
-11. f(x as Any)
-12. // Prints "Function for Any"
-
+  f(x as Any) // Prints "Function for Any"
+#+END_SRC
+    
 Bridging lets you use an expression of a Swift standard library type
 such as =String= as its corresponding Foundation type such as =NSString=
 without needing to create a new instance. For more information on
@@ -2411,18 +2477,22 @@ When used as the default value of a function or method parameter, the
 special literal's value is determined when the default value expression
 is evaluated at the call site.
 
-1. func logFunctionName(string: String = #function) {
-2. print(string)
-3. }
-4. func myFunction() {
-5. logFunctionName() // Prints "myFunction()".
-6. }
-
+#+BEGIN_SRC swift
+  func logFunctionName(string: String = #function) {
+      print(string)
+  }
+  func myFunction() {
+      logFunctionName() // Prints "myFunction()".
+  }
+#+END_SRC
+   
 An /array literal/ is an ordered collection of values. It has the
 following form:
 
-1. [value 1, value 2, ...]
-
+#+BEGIN_SRC swift
+  [value 1, value 2, ...]
+#+END_SRC
+   
 The last expression in the array can be followed by an optional comma.
 The value of an array literal has type =[T]=, where =T= is the type of
 the expressions inside it. If there are expressions of multiple types,
@@ -2430,12 +2500,16 @@ the expressions inside it. If there are expressions of multiple types,
 using an empty pair of square brackets and can be used to create an
 empty array of a specified type.
 
-1. var emptyArray: [Double] = []
-
+#+BEGIN_SRC swift
+  var emptyArray: [Double] = []
+#+END_SRC
+   
 A /dictionary literal/ is an unordered collection of key-value pairs. It
 has the following form:
 
-1. [key 1: value 1, key 2: value 2, ...]
+#+BEGIN_SRC swift
+  [key 1: value 1, key 2: value 2, ...]
+#+END_SRC   
 
 The last expression in the dictionary can be followed by an optional
 comma. The value of a dictionary literal has type =[Key: Value]=, where
@@ -2447,7 +2521,9 @@ empty dictionary literal is written as a colon inside a pair of brackets
 empty dictionary literal to create an empty dictionary literal of
 specified key and value types.
 
-1. var emptyDictionary: [String: Double] = [:]
+#+BEGIN_SRC swift
+  var emptyDictionary: [String: Double] = [:]
+#+END_SRC   
 
 #+FINDEX: #colorLiteral
 #+FINDEX: #imageLiteral
@@ -2537,11 +2613,13 @@ expression
 The =self= expression is an explicit reference to the current type or
 instance of the type in which it occurs. It has the following forms:
 
-1. self
-2. self.member name
-3. self[subscript index]
-4. self(initializer arguments)
-5. self.init(initializer arguments)
+#+BEGIN_SRC swift
+  self
+  self.member name
+  self[subscript index]
+  self(initializer arguments)
+  self.init(initializer arguments)
+#+END_SRC   
 
 In an initializer, subscript, or instance method, =self= refers to the
 current instance of the type in which it occurs. In a type method,
@@ -2551,23 +2629,27 @@ The =self= expression is used to specify scope when accessing members,
 providing disambiguation when there's another variable of the same name
 in scope, such as a function parameter. For example:
 
-1. class SomeClass {
-2. var greeting: String
-3. init(greeting: String) {
-4. self.greeting = greeting
-5. }
-6. }
+#+BEGIN_SRC swift
+  class SomeClass {
+      var greeting: String
+      init(greeting: String) {
+          self.greeting = greeting
+      }
+  }
+#+END_SRC   
 
 In a mutating method of a value type, you can assign a new instance of
 that value type to =self=. For example:
 
-1. struct Point {
-2. var x = 0.0, y = 0.0
-3. mutating func moveBy(x deltaX: Double, y deltaY: Double) {
-4. self = Point(x: x + deltaX, y: y + deltaY)
-5. }
-6. }
-
+#+BEGIN_SRC swift
+  struct Point {
+      var x = 0.0, y = 0.0
+      mutating func moveBy(x deltaX: Double, y deltaY: Double) {
+          self = Point(x: x + deltaX, y: y + deltaY)
+      }
+  }
+#+END_SRC
+   
 Grammar of a self expression
 
 self-expression → =self= |
@@ -2595,9 +2677,11 @@ self-initializer-expression
 A /superclass expression/ lets a class interact with its superclass. It
 has one of the following forms:
 
-1. super.member name
-2. super[subscript index]
-3. super.init(initializer arguments)
+#+BEGIN_SRC swift
+  super.member name
+  super[subscript index]
+  super.init(initializer arguments)
+#+END_SRC   
 
 The first form is used to access a member of the superclass. The second
 form is used to access the superclass's subscript implementation. The
@@ -2637,9 +2721,9 @@ A /closure expression/ creates a closure, also known as a /lambda/ or an
 declaration, a closure contains statements, and it captures constants
 and variables from its enclosing scope. It has the following form:
 
-1. { (parameters) -> return type in
-2. statements
-3. }
+#+BEGIN_SRC swift
+  { (parameters) -> return type in statements }
+#+END_SRC   
 
 The /parameters/ have the same form as the parameters in a function
 declaration, as described in [[Function Declaration][Function
@@ -2664,20 +2748,19 @@ concisely:
 
 The following closure expressions are equivalent:
 
-1.  myFunction { (x: Int, y: Int) -> Int in
-2.  return x + y
-3.  }
-4.
+#+BEGIN_SRC swift
+  myFunction { (x: Int, y: Int) -> Int in
+      return x + y
+  }
 
-5.  myFunction { x, y in
-6.  return x + y
-7.  }
-8.
+  myFunction { x, y in
+      return x + y
+  }
 
-9.  myFunction { return $0 + $1 }
-10.
+  myFunction { return $0 + $1 }
 
-11. myFunction { $0 + $1 }
+  myFunction { $0 + $1 }
+#+END_SRC
 
 For information about passing a closure as an argument to a function,
 see [[Function Call Expression][Function Call Expression]].
@@ -2713,17 +2796,18 @@ to the value of the constant or variable that has the same name in the
 surrounding scope. For example in the code below, =a= is included in the
 capture list but =b= is not, which gives them different behavior.
 
-1.  var a = 0
-2.  var b = 0
-3.  let closure = { [a] in
-4.  print(a, b)
-5.  }
-6.
+#+BEGIN_SRC swift
+  var a = 0
+  var b = 0
+  let closure = { [a] in
+      print(a, b)
+  }
 
-7.  a = 10
-8.  b = 10
-9.  closure()
-10. // Prints "0 10"
+  a = 10
+  b = 10
+  closure()
+  // Prints "0 10"
+#+END_SRC    
 
 There are two different things named =a=, the variable in the
 surrounding scope and the constant in the closure's scope, but only one
@@ -2742,36 +2826,41 @@ code below, a variable in the outer scope and a constant in the inner
 scope, but they both refer to the same object because of reference
 semantics.
 
-1.  class SimpleClass {
-2.  var value: Int = 0
-3.  }
-4.  var x = SimpleClass()
-5.  var y = SimpleClass()
-6.  let closure = { [x] in
-7.  print(x.value, y.value)
-8.  }
-9.
+#+BEGIN_SRC swift
+  class SimpleClass {
+      var value: Int = 0
+  }
+  var x = SimpleClass()
+  var y = SimpleClass()
+  let closure = { [x] in
+      print(x.value, y.value)
+  }
 
-10. x.value = 10
-11. y.value = 10
-12. closure()
-13. // Prints "10 10"
+  x.value = 10
+  y.value = 10
+  closure()
+  // Prints "10 10"
+#+END_SRC    
 
 If the type of the expression's value is a class, you can mark the
 expression in a capture list with =weak= or =unowned= to capture a weak
 or unowned reference to the expression's value.
 
-1. myFunction { print(self.title) } // implicit strong capture
-2. myFunction { [self] in print(self.title) } // explicit strong capture
-3. myFunction { [weak self] in print(self!.title) } // weak capture
-4. myFunction { [unowned self] in print(self.title) } // unowned capture
+#+BEGIN_SRC swift
+  myFunction { print(self.title) } // implicit strong capture
+  myFunction { [self] in print(self.title) } // explicit strong capture
+  myFunction { [weak self] in print(self!.title) } // weak capture
+  myFunction { [unowned self] in print(self.title) } // unowned capture
+#+END_SRC   
 
 You can also bind an arbitrary expression to a named value in a capture
 list. The expression is evaluated when the closure is created, and the
 value is captured with the specified strength. For example:
 
-1. // Weak capture of "self.parent" as "parent"
-2. myFunction { [weak parent = self.parent] in print(parent!.title) }
+#+BEGIN_SRC swift
+  // Weak capture of "self.parent" as "parent"
+  myFunction { [weak parent = self.parent] in print(parent!.title) }
+#+END_SRC   
 
 For more information and examples of closure expressions, see
 [[info:swift#Closure Expressions][Closure Expressions]]. For more
@@ -2854,13 +2943,17 @@ of a type, such as an enumeration case or a type method, in a context
 where type inference can determine the implied type. It has the
 following form:
 
-1. .member name
-
+#+BEGIN_SRC swift
+  .member name
+#+END_SRC
+   
 For example:
 
-1. var x = MyEnumeration.someValue
-2. x = .anotherValue
-
+#+BEGIN_SRC swift
+  var x = MyEnumeration.someValue
+  x = .anotherValue
+#+END_SRC
+   
 Grammar of a implicit member expression
 
 implicit-member-expression
@@ -2891,7 +2984,9 @@ surrounded by parentheses. Each expression can have an optional
 identifier before it, separated by a colon (=:=). It has the following
 form:
 
-1. (identifier 1: expression 1, identifier 2: expression 2, ...)
+#+BEGIN_SRC swift
+  (identifier 1: expression 1, identifier 2: expression 2, ...)
+#+END_SRC   
 
 Each identifier in a tuple expression must be unique within the scope of
 the tuple expression. In a nested tuple expression, identifiers at the
@@ -2941,8 +3036,9 @@ A /wildcard expression/ is used to explicitly ignore a value during an
 assignment. For example, in the following assignment 10 is assigned to
 =x= and 20 is ignored:
 
-1. (x, _) = (10, 20)
-2. // x is 10, and 20 is ignored
+#+BEGIN_SRC swift
+  (x, _) = (10, 20) // x is 10, and 20 is ignored
+#+END_SRC   
 
 Grammar of a wildcard expression
 
@@ -2956,7 +3052,9 @@ A /key-path expression/ refers to a property or subscript of a type. You
 use key-path expressions in dynamic programming tasks, such as key-value
 observing. They have the following form:
 
-1. \type name.path
+#+BEGIN_SRC swift
+  \type name.path
+#+END_SRC
 
 The /type name/ is the name of a concrete type, including any generic
 parameters, such as =String=, =[Int]=, or =Set<Int>=.
@@ -2973,72 +3071,76 @@ To access a value using a key path, pass the key path to the
 =subscript(keyPath:)= subscript, which is available on all types. For
 example:
 
-1. struct SomeStructure {
-2. var someValue: Int
-3. }
-4.
+#+BEGIN_SRC swift
+  struct SomeStructure {
+      var someValue: Int
+  }
 
-5. let s = SomeStructure(someValue: 12)
-6. let pathToProperty = \SomeStructure.someValue
-7.
+  let s = SomeStructure(someValue: 12)
+  let pathToProperty = \SomeStructure.someValue
 
-8. let value = s[keyPath: pathToProperty]
-9. // value is 12
+  let value = s[keyPath: pathToProperty] // value is 12
+#+END_SRC   
 
 The /type name/ can be omitted in contexts where type inference can
 determine the implied type. The following code uses =\.someProperty=
 instead of =\SomeClass.someProperty=:
 
-1.  class SomeClass: NSObject {
-2.  @objc dynamic var someProperty: Int
-3.  init(someProperty: Int) {
-4.  self.someProperty = someProperty
-5.  }
-6.  }
-7.
+#+BEGIN_SRC swift
+  class SomeClass: NSObject {
+      @objc dynamic var someProperty: Int
+      init(someProperty: Int) {
+          self.someProperty = someProperty
+      }
+  }
 
-8.  let c = SomeClass(someProperty: 10)
-9.  c.observe(\.someProperty) { object, change in
-10. // ...
-11. }
+  let c = SomeClass(someProperty: 10)
+  c.observe(\.someProperty) { object, change in
+      // ...
+  }
+#+END_SRC    
 
 The /path/ can refer to =self= to create the identity key path
 (=\.self=). The identity key path refers to a whole instance, so you can
 use it to access and change all of the data stored in a variable in a
 single step. For example:
 
-1. var compoundValue = (a: 1, b: 2)
-2. // Equivalent to compoundValue = (a: 10, b: 20)
-3. compoundValue[keyPath: \.self] = (a: 10, b: 20)
+#+BEGIN_SRC swift
+  var compoundValue = (a: 1, b: 2)
+  // Equivalent to compoundValue = (a: 10, b: 20)
+  compoundValue[keyPath: \.self] = (a: 10, b: 20)
+#+END_SRC   
 
 The /path/ can contain multiple property names, separated by periods, to
 refer to a property of a property's value. This code uses the key path
 expression =\OuterStructure.outer.someValue= to access the =someValue=
 property of the =OuterStructure= type's =outer= property:
 
-1.  struct OuterStructure {
-2.  var outer: SomeStructure
-3.  init(someValue: Int) {
-4.  self.outer = SomeStructure(someValue: someValue)
-5.  }
-6.  }
-7.
+#+BEGIN_SRC swift
+  struct OuterStructure {
+      var outer: SomeStructure
+      init(someValue: Int) {
+          self.outer = SomeStructure(someValue: someValue)
+      }
+  }
 
-8.  let nested = OuterStructure(someValue: 24)
-9.  let nestedKeyPath = \OuterStructure.outer.someValue
-10.
+  let nested = OuterStructure(someValue: 24)
+  let nestedKeyPath = \OuterStructure.outer.someValue
 
-11. let nestedValue = nested[keyPath: nestedKeyPath]
-12. // nestedValue is 24
+  let nestedValue = nested[keyPath: nestedKeyPath]
+  // nestedValue is 24
+#+END_SRC    
 
 The /path/ can include subscripts using brackets, as long as the
 subscript's parameter type conforms to the =Hashable= protocol. This
 example uses a subscript in a key path to access the second element of
 an array:
 
-1. let greetings = ["hello", "hola", "bonjour", "안녕"]
-2. let myGreeting = greetings[keyPath: \[String].[1]]
-3. // myGreeting is 'hola'
+#+BEGIN_SRC swift
+  let greetings = ["hello", "hola", "bonjour", "안녕"]
+  let myGreeting = greetings[keyPath: \[String].[1]]
+  // myGreeting is 'hola'
+#+END_SRC   
 
 The value used in a subscript can be a named value or a literal. Values
 are captured in key paths using value semantics. The following code uses
@@ -3047,60 +3149,59 @@ access the third element of the =greetings= array. When =index= is
 modified, the key-path expression still references the third element,
 while the closure uses the new index.
 
-1.  var index = 2
-2.  let path = \[String].[index]
-3.  let fn: ([String]) -> String = { strings in strings[index] }
-4.
+#+BEGIN_SRC swift
+  var index = 2
+  let path = \[String].[index]
+  let fn: ([String]) -> String = { strings in strings[index] }
 
-5.  print(greetings[keyPath: path])
-6.  // Prints "bonjour"
-7.  print(fn(greetings))
-8.  // Prints "bonjour"
-9.
+  print(greetings[keyPath: path])
+  // Prints "bonjour"
+  print(fn(greetings))
+  // Prints "bonjour"
 
-10. // Setting 'index' to a new value doesn't affect 'path'
-11. index += 1
-12. print(greetings[keyPath: path])
-13. // Prints "bonjour"
-14.
+  // Setting 'index' to a new value doesn't affect 'path'
+  index += 1
+  print(greetings[keyPath: path])
+  // Prints "bonjour"
 
-15. // Because 'fn' closes over 'index', it uses the new value
-16. print(fn(greetings))
-17. // Prints "안녕"
+  // Because 'fn' closes over 'index', it uses the new value
+  print(fn(greetings))
+  // Prints "안녕"
+#+END_SRC    
 
 The /path/ can use optional chaining and forced unwrapping. This code
 uses optional chaining in a key path to access a property of an optional
 string:
 
-1. let firstGreeting: String? = greetings.first
-2. print(firstGreeting?.count as Any)
-3. // Prints "Optional(5)"
-4.
+#+BEGIN_SRC swift
+  let firstGreeting: String? = greetings.first
+  print(firstGreeting?.count as Any)
+  // Prints "Optional(5)"
 
-5. // Do the same thing using a key path.
-6. let count = greetings[keyPath: \[String].first?.count]
-7. print(count as Any)
-8. // Prints "Optional(5)"
+  // Do the same thing using a key path.
+  let count = greetings[keyPath: \[String].first?.count]
+  print(count as Any)
+  // Prints "Optional(5)"
+#+END_SRC   
 
 You can mix and match components of key paths to access values that are
 deeply nested within a type. The following code accesses different
 values and properties of a dictionary of arrays by using key-path
 expressions that combine these components.
 
-1.  let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
-2.  "triangular": [1, 3, 6, 10, 15, 21, 28],
-3.  "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
-4.  print(interestingNumbers[keyPath: \[String: [Int]].["prime"]] as
-    Any)
-5.  // Prints "Optional([2, 3, 5, 7, 11, 13, 17])"
-6.  print(interestingNumbers[keyPath: \[String: [Int]].["prime"]![0]])
-7.  // Prints "2"
-8.  print(interestingNumbers[keyPath: \[String:
-    [Int]].["hexagonal"]!.count])
-9.  // Prints "7"
-10. print(interestingNumbers[keyPath: \[String:
-    [Int]].["hexagonal"]!.count.bitWidth])
-11. // Prints "64"
+#+BEGIN_SRC swift
+  let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
+                            "triangular": [1, 3, 6, 10, 15, 21, 28],
+                            "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
+  print(interestingNumbers[keyPath: \[String: [Int]].["prime"]] as Any)
+  // Prints "Optional([2, 3, 5, 7, 11, 13, 17])"
+  print(interestingNumbers[keyPath: \[String: [Int]].["prime"]![0]])
+  // Prints "2"
+  print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count])
+  // Prints "7"
+  print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth])
+  // Prints "64"
+#+END_SRC    
 
 You can use a key path expression in contexts where you would normally
 provide a function or closure. Specifically, you can use a key path
@@ -3108,21 +3209,21 @@ expression whose root type is =SomeType= and whose path produces a value
 of type =Value=, instead of a function or closure of type
 =(SomeType) -> Value=.
 
-1.  struct Task {
-2.  var description: String
-3.  var completed: Bool
-4.  }
-5.  var toDoList = [
-6.  Task(description: "Practice ping-pong.", completed: false),
-7.  Task(description: "Buy a pirate costume.", completed: true),
-8.  Task(description: "Visit Boston in the Fall.", completed: false),
-9.  ]
-10.
+#+BEGIN_SRC swift
+  struct Task {
+      var description: String
+      var completed: Bool
+  }
+  var toDoList = [
+    Task(description: "Practice ping-pong.", completed: false),
+    Task(description: "Buy a pirate costume.", completed: true),
+    Task(description: "Visit Boston in the Fall.", completed: false),
+  ]
 
-11. // Both approaches below are equivalent.
-12. let descriptions = toDoList.filter(\.completed).map(\.description)
-13. let descriptions2 = toDoList.filter { $0.completed }.map {
-    $0.description }
+  // Both approaches below are equivalent.
+  let descriptions = toDoList.filter(\.completed).map(\.description)
+  let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
+#+END_SRC    
 
 Any side effects of a key path expression are evaluated only at the
 point where the expression is evaluated. For example, if you make a
@@ -3130,17 +3231,18 @@ function call inside a subscript in a key path expression, the function
 is called only once as part of evaluating the expression, not every time
 the key path is used.
 
-1.  func makeIndex() -> Int {
-2.  print("Made an index")
-3.  return 0
-4.  }
-5.  // The line below calls makeIndex().
-6.  let taskKeyPath = \[Task][makeIndex()]
-7.  // Prints "Made an index"
-8.
+#+BEGIN_SRC swift
+  func makeIndex() -> Int {
+      print("Made an index")
+      return 0
+  }
+  // The line below calls makeIndex().
+  let taskKeyPath = \[Task][makeIndex()]
+  // Prints "Made an index"
 
-9.  // Using taskKeyPath doesn't call makeIndex() again.
-10. let someTask = toDoList[keyPath: taskKeyPath]
+  // Using taskKeyPath doesn't call makeIndex() again.
+  let someTask = toDoList[keyPath: taskKeyPath]
+#+END_SRC    
 
 For more information about using key paths in code that interacts with
 Objective-C APIs, see
@@ -3194,29 +3296,31 @@ following form:
 
 #+FINDEX: #selector
 
-1. #selector(method name)
-2. #selector(getter: property name)
-3. #selector(setter: property name)
+#+BEGIN_SRC swift
+  #selector(method name)
+  #selector(getter: property name)
+  #selector(setter: property name)
+#+END_SRC   
 
 The /method name/ and /property name/ must be a reference to a method or
 a property that's available in the Objective-C runtime. The value of a
 selector expression is an instance of the =Selector= type. For example:
 
-1.  class SomeClass: NSObject {
-2.  @objc let property: String
-3.
+#+BEGIN_SRC swift
+  class SomeClass: NSObject {
+      @objc let property: String
 
-4.  @objc(doSomethingWithInt:)
-5.  func doSomething(_ x: Int) { }
-6.
+      @objc(doSomethingWithInt:)
+      func doSomething(_ x: Int) { }
 
-7.  init(property: String) {
-8.  self.property = property
-9.  }
-10. }
-11. let selectorForMethod = #selector(SomeClass.doSomething(_:))
-12. let selectorForPropertyGetter = #selector(getter:
-    SomeClass.property)
+
+      init(property: String) {
+          self.property = property
+      }
+  }
+  let selectorForMethod = #selector(SomeClass.doSomething(_:))
+  let selectorForPropertyGetter = #selector(getter:SomeClass.property)
+#+END_SRC    
 
 When creating a selector for a property's getter, the /property name/
 can be a reference to a variable or constant property. In contrast, when
@@ -3227,12 +3331,13 @@ The /method name/ can contain parentheses for grouping, as well the =as=
 operator to disambiguate between methods that share a name but have
 different type signatures. For example:
 
-1. extension SomeClass {
-2. @objc(doSomethingWithString:)
-3. func doSomething(_ x: String) { }
-4. }
-5. let anotherSelector = #selector(SomeClass.doSomething(_:) as
-   (SomeClass) -> (String) -> Void)
+#+BEGIN_SRC swift
+  extension SomeClass {
+      @objc(doSomethingWithString:)
+      func doSomething(_ x: String) { }
+  }
+  let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
+#+END_SRC   
 
 Because a selector is created at compile time, not at runtime, the
 compiler can check that a method or property exists and that they're
@@ -3273,40 +3378,44 @@ A key-path string expression lets you access the string used to refer to
 a property in Objective-C, for use in key-value coding and key-value
 observing APIs. It has the following form:
 
-1. #keyPath(property name)
-
+#+BEGIN_SRC swift
+  #keyPath(property name)
+#+END_SRC
+   
 The /property name/ must be a reference to a property that's available
 in the Objective-C runtime. At compile time, the key-path string
 expression is replaced by a string literal. For example:
 
-1.  class SomeClass: NSObject {
-2.  @objc var someProperty: Int
-3.  init(someProperty: Int) {
-4.  self.someProperty = someProperty
-5.  }
-6.  }
-7.
+#+BEGIN_SRC swift
+  class SomeClass: NSObject {
+      @objc var someProperty: Int
+      init(someProperty: Int) {
+          self.someProperty = someProperty
+      }
+  }
 
-8.  let c = SomeClass(someProperty: 12)
-9.  let keyPath = #keyPath(SomeClass.someProperty)
-10.
+  let c = SomeClass(someProperty: 12)
+  let keyPath = #keyPath(SomeClass.someProperty)
 
-11. if let value = c.value(forKey: keyPath) {
-12. print(value)
-13. }
-14. // Prints "12"
+  if let value = c.value(forKey: keyPath) {
+      print(value)
+  }
+  // Prints "12"
+#+END_SRC    
 
 When you use a key-path string expression within a class, you can refer
 to a property of that class by writing just the property name, without
 the class name.
 
-1. extension SomeClass {
-2. func getSomeKeyPath() -> String {
-3. return #keyPath(someProperty)
-4. }
-5. }
-6. print(keyPath == c.getSomeKeyPath())
-7. // Prints "true"
+#+BEGIN_SRC swift
+  extension SomeClass {
+      func getSomeKeyPath() -> String {
+          return #keyPath(someProperty)
+      }
+  }
+  print(keyPath == c.getSomeKeyPath())
+  // Prints "true"
+#+END_SRC   
 
 Because the key path string is created at compile time, not at runtime,
 the compiler can check that the property exists and that the property is
@@ -3399,7 +3508,9 @@ A /function call expression/ consists of a function name followed by a
 comma-separated list of the function's arguments in parentheses.
 Function call expressions have the following form:
 
-1. function name(argument value 1, argument value 2)
+#+BEGIN_SRC swift
+  function name(argument value 1, argument value 2)
+#+END_SRC   
 
 The /function name/ can be any expression whose value is of a function
 type.
@@ -3409,8 +3520,9 @@ function call must include names before its argument values, separated
 by a colon (=:=). This kind of function call expression has the
 following form:
 
-1. function name(argument name 1: argument value 1, argument name 2:
-   argument value 2)
+#+BEGIN_SRC swift
+  function name(argument name 1: argument value 1, argument name 2: argument value 2)
+#+END_SRC   
 
 A function call expression can include trailing closures in the form of
 closure expressions immediately after the closing parenthesis. The
@@ -3420,21 +3532,24 @@ unlabeled; any additional closure expressions are preceded by their
 argument labels. The example below shows the equivalent version of
 function calls that do and don't use trailing closure syntax:
 
-1. // someFunction takes an integer and a closure as its arguments
-2. someFunction(x: x, f: { $0 == 13 })
-3. someFunction(x: x) { $0 == 13 }
-4.
+#+BEGIN_SRC swift
+  // someFunction takes an integer and a closure as its arguments
+  someFunction(x: x, f: { $0 == 13 })
+  someFunction(x: x) { $0 == 13 }
 
-5. // anotherFunction takes an integer and two closures as its arguments
-6. anotherFunction(x: x, f: { $0 == 13 }, g: { print(99) })
-7. anotherFunction(x: x) { $0 == 13 } g: { print(99) }
+  // anotherFunction takes an integer and two closures as its arguments
+  anotherFunction(x: x, f: { $0 == 13 }, g: { print(99) })
+  anotherFunction(x: x) { $0 == 13 } g: { print(99) }
+#+END_SRC   
 
 If the trailing closure is the function's only argument, you can omit
 the parentheses.
 
-1. // someMethod takes a closure as its only argument
-2. myData.someMethod() { $0 == 13 }
-3. myData.someMethod { $0 == 13 }
+#+BEGIN_SRC swift
+  // someMethod takes a closure as its only argument
+  myData.someMethod() { $0 == 13 }
+  myData.someMethod { $0 == 13 }
+#+END_SRC   
 
 To include the trailing closures in the arguments, the compiler examines
 the function's parameters from left to right as follows:
@@ -3481,19 +3596,19 @@ produce different results, the old right-to-left ordering is used and
 the compiler generates a warning. A future version of Swift will always
 use the left-to-right ordering.
 
-1.  typealias Callback = (Int) -> Int
-2.  func someFunction(firstClosure: Callback? = nil,
-3.  secondClosure: Callback? = nil) {
-4.  let first = firstClosure?(10)
-5.  let second = secondClosure?(20)
-6.  print(first ?? "-", second ?? "-")
-7.  }
-8. 
+#+BEGIN_SRC swift
+  typealias Callback = (Int) -> Int
+  func someFunction(firstClosure: Callback? = nil,
+                    secondClosure: Callback? = nil) {
+      let first = firstClosure?(10)
+      let second = secondClosure?(20)
+      print(first ?? "-", second ?? "-")
+  }
 
-9.  someFunction() // Prints "- -"
-10. someFunction { return $0 + 100 } // Ambiguous
-11. someFunction { return $0 } secondClosure: { return $0 } // Prints
-    "10 20"
+  someFunction() // Prints "- -"
+  someFunction { return $0 + 100 } // Ambiguous
+  someFunction { return $0 } secondClosure: { return $0 } // Prints "10 20"
+#+END_SRC    
 
 In the example above, the function call marked “Ambiguous” prints “-
 120” and produces a compiler warning on Swift 5.3. A future version of
@@ -3521,14 +3636,15 @@ one of the implicit conversions in the following list:
 
 The following two function calls are equivalent:
 
-1. func unsafeFunction(pointer: UnsafePointer<Int>) {
-2. // ...
-3. }
-4. var myNumber = 1234
-5.
+#+BEGIN_SRC swift
+  func unsafeFunction(pointer: UnsafePointer<Int>) {
+      // ...
+  }
+  var myNumber = 1234
 
-6. unsafeFunction(pointer: &myNumber)
-7. withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
+  unsafeFunction(pointer: &myNumber)
+  withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
+#+END_SRC   
 
 A pointer that's created by these implicit conversions is valid only for
 the duration of the function call. To avoid undefined behavior, ensure
@@ -3602,38 +3718,44 @@ closure-expression
 An /initializer expression/ provides access to a type's initializer. It
 has the following form:
 
-1. expression.init(initializer arguments)
+#+BEGIN_SRC swift
+  expression.init(initializer arguments)
+#+END_SRC   
 
 You use the initializer expression in a function call expression to
 initialize a new instance of a type. You also use an initializer
 expression to delegate to the initializer of a superclass.
 
-1. class SomeSubClass: SomeSuperClass {
-2. override init() {
-3. // subclass initialization goes here
-4. super.init()
-5. }
-6. }
+#+BEGIN_SRC swift
+  class SomeSubClass: SomeSuperClass {
+      override init() {
+          // subclass initialization goes here
+          super.init()
+      }
+  }
+#+END_SRC   
 
 Like a function, an initializer can be used as a value. For example:
 
-1. // Type annotation is required because String has multiple
-   initializers.
-2. let initializer: (Int) -> String = String.init
-3. let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
-4. print(oneTwoThree)
-5. // Prints "123"
-
+#+BEGIN_SRC swift
+  // Type annotation is required because String has multiple initializers.
+  let initializer: (Int) -> String = String.init
+  let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
+  print(oneTwoThree)
+  // Prints "123"
+#+END_SRC
+   
 If you specify a type by name, you can access the type's initializer
 without using an initializer expression. In all other cases, you must
 use an initializer expression.
 
-1. let s1 = SomeType.init(data: 3) // Valid
-2. let s2 = SomeType(data: 1) // Also valid
-3.
+#+BEGIN_SRC swift
+  let s1 = SomeType.init(data: 3) // Valid
+  let s2 = SomeType(data: 1) // Also valid
 
-4. let s3 = type(of: someValue).init(data: 7) // Valid
-5. let s4 = type(of: someValue)(data: 5) // Error
+  let s3 = type(of: someValue).init(data: 7) // Valid
+  let s4 = type(of: someValue)(data: 5) // Error
+#+END_SRC   
 
 Grammar of an initializer expression
 
@@ -3656,23 +3778,29 @@ An /explicit member expression/ allows access to the members of a named
 type, a tuple, or a module. It consists of a period (=.=) between the
 item and the identifier of its member.
 
-1. expression.member name
+#+BEGIN_SRC swift
+  expression.member name
+#+END_SRC   
 
 The members of a named type are named as part of the type's declaration
 or extension. For example:
 
-1. class SomeClass {
-2. var someProperty = 42
-3. }
-4. let c = SomeClass()
-5. let y = c.someProperty // Member access
+#+BEGIN_SRC swift
+  class SomeClass {
+      var someProperty = 42
+  }
+  let c = SomeClass()
+  let y = c.someProperty // Member access
+#+END_SRC   
 
 The members of a tuple are implicitly named using integers in the order
 they appear, starting from zero. For example:
 
-1. var t = (10, 20, 30)
-2. t.0 = t.1
-3. // Now t is (20, 20, 30)
+#+BEGIN_SRC swift
+  var t = (10, 20, 30)
+  t.0 = t.1
+  // Now t is (20, 20, 30)
+#+END_SRC   
 
 The members of a module access the top-level declarations of that
 module.
@@ -3687,33 +3815,34 @@ parentheses, with each argument name followed by a colon (=:=). Write an
 underscore (=_=) for an argument with no name. To distinguish between
 overloaded methods, use a type annotation. For example:
 
-1.  class SomeClass {
-2.  func someMethod(x: Int, y: Int) {}
-3.  func someMethod(x: Int, z: Int) {}
-4.  func overloadedMethod(x: Int, y: Int) {}
-5.  func overloadedMethod(x: Int, y: Bool) {}
-6.  }
-7.  let instance = SomeClass()
-8.
+#+BEGIN_SRC swift
+  class SomeClass {
+      func someMethod(x: Int, y: Int) {}
+      func someMethod(x: Int, z: Int) {}
+      func overloadedMethod(x: Int, y: Int) {}
+      func overloadedMethod(x: Int, y: Bool) {}
+  }
+  let instance = SomeClass()
 
-9.  let a = instance.someMethod // Ambiguous
-10. let b = instance.someMethod(x:y:) // Unambiguous
-11.
+  let a = instance.someMethod // Ambiguous
+  let b = instance.someMethod(x:y:) // Unambiguous
 
-12. let d = instance.overloadedMethod // Ambiguous
-13. let d = instance.overloadedMethod(x:y:) // Still ambiguous
-14. let d: (Int, Bool) -> Void = instance.overloadedMethod(x:y:) //
-    Unambiguous
+  let d = instance.overloadedMethod // Ambiguous
+  let d = instance.overloadedMethod(x:y:) // Still ambiguous
+  let d: (Int, Bool) -> Void = instance.overloadedMethod(x:y:) // Unambiguous
+#+END_SRC    
 
 If a period appears at the beginning of a line, it's understood as part
 of an explicit member expression, not as an implicit member expression.
 For example, the following listing shows chained method calls split over
 several lines:
 
-1. let x = [10, 3, 20, 15, 4]
-2. .sorted()
-3. .filter { $0 > 5 }
-4. .map { $0 * 100 }
+#+BEGIN_SRC swift
+  let x = [10, 3, 20, 15, 4]
+    .sorted()
+    .filter { $0 > 5 }
+    .map { $0 * 100 }
+#+END_SRC   
 
 Grammar of an explicit member expression
 
@@ -3755,8 +3884,10 @@ identifier
 A postfix =self= expression consists of an expression or the name of a
 type, immediately followed by =.self=. It has the following forms:
 
-1. expression.self
-2. type.self
+#+BEGIN_SRC swift
+  expression.self
+  type.self
+#+END_SRC   
 
 The first form evaluates to the value of the /expression/. For example,
 =x.self= evaluates to =x=.
@@ -3780,7 +3911,9 @@ A /subscript expression/ provides subscript access using the getter and
 setter of the corresponding subscript declaration. It has the following
 form:
 
-1. expression[index expressions]
+#+BEGIN_SRC swift
+  expression[index expressions]
+#+END_SRC   
 
 To evaluate the value of a subscript expression, the subscript getter
 for the /expression/'s type is called with the /index expressions/
@@ -3804,7 +3937,9 @@ function-call-argument-list
 A /forced-value expression/ unwraps an optional value that you are
 certain isn't =nil=. It has the following form:
 
-1. expression!
+#+BEGIN_SRC swift
+  expression!
+#+END_SRC   
 
 If the value of the /expression/ isn't =nil=, the optional value is
 unwrapped and returned with the corresponding non-optional type.
@@ -3814,14 +3949,15 @@ The unwrapped value of a forced-value expression can be modified, either
 by mutating the value itself, or by assigning to one of the value's
 members. For example:
 
-1. var x: Int? = 0
-2. x! += 1
-3. // x is now 1
-4.
+#+BEGIN_SRC swift
+  var x: Int? = 0
+  x! += 1
+  // x is now 1
 
-5. var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-6. someDictionary["a"]![0] = 100
-7. // someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
+  var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
+  someDictionary["a"]![0] = 100
+  // someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
+#+END_SRC   
 
 Grammar of a forced-value expression
 
@@ -3836,7 +3972,9 @@ postfix-expression
 An /optional-chaining expression/ provides a simplified syntax for using
 optional values in postfix expressions. It has the following form:
 
-1. expression?
+#+BEGIN_SRC swift
+  expression?
+#+END_SRC   
 
 The postfix =?= operator makes an optional-chaining expression from an
 expression without changing the expression's value.
@@ -3858,16 +3996,20 @@ its value is unwrapped and used to evaluate =.property=, the value of
 which is used to evaluate =.performAction()=. The entire expression
 =c?.property.performAction()= has a value of an optional type.
 
-1. var c: SomeClass?
-2. var result: Bool? = c?.property.performAction()
+#+BEGIN_SRC swift
+  var c: SomeClass?
+  var result: Bool? = c?.property.performAction()
+#+END_SRC   
 
 The following example shows the behavior of the example above without
 using optional chaining.
 
-1. var result: Bool?
-2. if let unwrappedC = c {
-3. result = unwrappedC.property.performAction()
-4. }
+#+BEGIN_SRC swift
+  var result: Bool?
+  if let unwrappedC = c {
+      result = unwrappedC.property.performAction()
+  }
+#+END_SRC   
 
 The unwrapped value of an optional-chaining expression can be modified,
 either by mutating the value itself, or by assigning to one of the
@@ -3875,20 +4017,20 @@ value's members. If the value of the optional-chaining expression is
 =nil=, the expression on the right-hand side of the assignment operator
 isn't evaluated. For example:
 
-1.  func someFunctionWithSideEffects() -> Int {
-2.  return 42 // No actual side effects.
-3.  }
-4.  var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-5.
+#+BEGIN_SRC swift
+  func someFunctionWithSideEffects() -> Int {
+      return 42 // No actual side effects.
+  }
+  var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
 
-6.  someDictionary["not here"]?[0] = someFunctionWithSideEffects()
-7.  // someFunctionWithSideEffects isn't evaluated
-8.  // someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
-9.
+  someDictionary["not here"]?[0] = someFunctionWithSideEffects()
+  // someFunctionWithSideEffects isn't evaluated
+  // someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
 
-10. someDictionary["a"]?[0] = someFunctionWithSideEffects()
-11. // someFunctionWithSideEffects is evaluated and returns 42
-12. // someDictionary is now ["a": [42, 2, 3], "b": [10, 20]]
+  someDictionary["a"]?[0] = someFunctionWithSideEffects()
+  // someFunctionWithSideEffects is evaluated and returns 42
+  // someDictionary is now ["a": [42, 2, 3], "b": [10, 20]]
+#+END_SRC    
 
 Grammar of an optional-chaining expression
 
@@ -3996,9 +4138,11 @@ each item in a collection (or any type) that conforms to the
 
 A =for=-=in= statement has the following form:
 
-1. for item in collection {
-2. statements
-3. }
+#+BEGIN_SRC swift
+  for item in collection {
+      statements
+  }
+#+END_SRC   
 
 The =makeIterator()= method is called on the /collection/ expression to
 obtain a value of an iterator type---that is, a type that conforms to
@@ -4030,9 +4174,11 @@ long as a condition remains true.
 
 A =while= statement has the following form:
 
-1. while condition {
-2. statements
-3. }
+#+BEGIN_SRC swift
+  while condition {
+      statements
+  }
+#+END_SRC   
 
 A =while= statement is executed as follows:
 
@@ -4091,9 +4237,11 @@ or more times, as long as a condition remains true.
 
 A =repeat=-=while= statement has the following form:
 
-1. repeat {
-2. statements
-3. } while condition
+#+BEGIN_SRC swift
+  repeat {
+      statements
+  } while condition
+#+END_SRC   
 
 A =repeat=-=while= statement is executed as follows:
 
@@ -4159,9 +4307,11 @@ opening and closing braces are required.
 The first form allows code to be executed only when a condition is true
 and has the following form:
 
-1. if condition {
-2. statements
-3. }
+#+BEGIN_SRC swift
+  if condition {
+      statements
+  }
+#+END_SRC   
 
 The second form of an =if= statement provides an additional /else
 clause/ (introduced by the =else= keyword) and is used for executing one
@@ -4169,23 +4319,27 @@ part of code when the condition is true and another part of code when
 the same condition is false. When a single else clause is present, an
 =if= statement has the following form:
 
-1. if condition {
-2. statements to execute if condition is true
-3. } else {
-4. statements to execute if condition is false
-5. }
+#+BEGIN_SRC swift
+  if condition {
+      statements to execute if condition is true
+  } else {
+      statements to execute if condition is false
+  }
+#+END_SRC   
 
 The else clause of an =if= statement can contain another =if= statement
 to test more than one condition. An =if= statement chained together in
 this way has the following form:
 
-1. if condition 1 {
-2. statements to execute if condition 1 is true
-3. } else if condition 2 {
-4. statements to execute if condition 2 is true
-5. } else {
-6. statements to execute if both conditions are false
-7. }
+#+BEGIN_SRC swift
+  if condition 1 {
+      statements to execute if condition 1 is true
+  } else if condition 2 {
+      statements to execute if condition 2 is true
+  } else {
+      statements to execute if both conditions are false
+  }
+#+END_SRC   
 
 The value of any condition in an =if= statement must be of type =Bool=
 or a type bridged to =Bool=. The condition can also be an optional
@@ -4213,9 +4367,11 @@ if one or more conditions aren't met.
 
 A =guard= statement has the following form:
 
-1. guard condition else {
-2. statements
-3. }
+#+BEGIN_SRC swift
+  guard condition else {
+      statements
+  }
+#+END_SRC   
 
 The value of any condition in a =guard= statement must be of type =Bool=
 or a type bridged to =Bool=. The condition can also be an optional
@@ -4259,17 +4415,19 @@ depending on the value of a control expression.
 
 A =switch= statement has the following form:
 
-1.  switch control expression {
-2.  case pattern 1:
-3.  statements
-4.  case pattern 2 where condition:
-5.  statements
-6.  case pattern 3 where condition,
-7.  pattern 4 where condition:
-8.  statements
-9.  default:
-10. statements
-11. }
+#+BEGIN_SRC swift
+  switch control expression {
+  case pattern 1:
+      statements
+  case pattern 2 where condition:
+      statements
+  case pattern 3 where condition,
+       pattern 4 where condition:
+      statements
+  default:
+      statements
+  }
+#+END_SRC    
 
 The /control expression/ of the =switch= statement is evaluated and then
 compared with the patterns specified in each case. If a match is found,
@@ -4301,7 +4459,9 @@ evaluates to =true=. For example, a /control expression/ matches the
 case in the example below only if it's a tuple that contains two
 elements of the same value, such as =(1, 1)=.
 
-1. case let (x, y) where x == y:
+#+BEGIN_SRC swift
+  case let (x, y) where x == y:
+#+END_SRC   
 
 As the above example shows, patterns in a case can also bind constants
 using the =let= keyword (they can also bind variables using the =var=
@@ -4371,18 +4531,18 @@ generates a warning to indicate that you need to update the switch
 statement to take the new cases into account.
 
 #+BEGIN_SRC swift
-let representation: Mirror.AncestorRepresentation = .generated
-switch representation {
-case .customized:
-print("Use the nearest ancestor's implementation.")
-case .generated:
-print("Generate a default mirror for all ancestor classes.")
-case .suppressed:
-print("Suppress the representation of all ancestor classes.")
-@unknown default:
-print("Use a representation that was unknown when this code was compiled.")
-}
-// Prints "Generate a default mirror for all ancestor classes."
+  let representation: Mirror.AncestorRepresentation = .generated
+  switch representation {
+  case .customized:
+      print("Use the nearest ancestor's implementation.")
+  case .generated:
+      print("Generate a default mirror for all ancestor classes.")
+  case .suppressed:
+      print("Suppress the representation of all ancestor classes.")
+  @unknown default:
+      print("Use a representation that was unknown when this code was compiled.")
+  }
+  // Prints "Generate a default mirror for all ancestor classes."
 #+END_SRC
 
 
@@ -4563,8 +4723,10 @@ or a =switch= statement. A =break= statement can consist of only the
 =break= keyword, or it can consist of the =break= keyword followed by
 the name of a statement label, as shown below.
 
-1. break
-2. break label name
+#+BEGIN_SRC swift
+  break
+  break label name
+#+END_SRC   
 
 When a =break= statement is followed by the name of a statement label,
 it ends program execution of the loop, =if= statement, or =switch=
@@ -4598,8 +4760,10 @@ of a loop statement but doesn't stop execution of the loop statement. A
 can consist of the =continue= keyword followed by the name of a
 statement label, as shown below.
 
-1. continue
-2. continue label name
+#+BEGIN_SRC swift
+  continue
+  continue label name
+#+END_SRC   
 
 When a =continue= statement is followed by the name of a statement
 label, it ends program execution of the current iteration of the loop
@@ -4665,8 +4829,10 @@ A =return= statement can consist of only the =return= keyword, or it can
 consist of the =return= keyword followed by an expression, as shown
 below.
 
-1. return
-2. return expression
+#+BEGIN_SRC swift
+  return
+  return expression
+#+END_SRC   
 
 When a =return= statement is followed by an expression, the value of the
 expression is returned to the calling function or method. If the value
@@ -4707,7 +4873,9 @@ clause of a =do= statement.
 A =throw= statement consists of the =throw= keyword followed by an
 expression, as shown below.
 
-1. throw expression
+#+BEGIN_SRC swift
+  throw expression
+#+END_SRC   
 
 The value of the /expression/ must have a type that conforms to the
 =Error= protocol.
@@ -4731,9 +4899,11 @@ in.
 
 A =defer= statement has the following form:
 
-1. defer {
-2. statements
-3. }
+#+BEGIN_SRC swift
+  defer {
+      statements
+  }
+#+END_SRC   
 
 The statements within the =defer= statement are executed no matter how
 program control is transferred. This means that a =defer= statement can
@@ -4747,15 +4917,17 @@ appear is the reverse of the order they're executed. Executing the last
 that last =defer= statement can refer to resources that will be cleaned
 up by other =defer= statements.
 
-1. func f() {
-2. defer { print("First defer") }
-3. defer { print("Second defer") }
-4. print("End of function")
-5. }
-6. f()
-7. // Prints "End of function"
-8. // Prints "Second defer"
-9. // Prints "First defer"
+#+BEGIN_SRC swift
+  func f() {
+      defer { print("First defer") }
+      defer { print("Second defer") }
+      print("End of function")
+  }
+  f()
+  // Prints "End of function"
+  // Prints "Second defer"
+  // Prints "First defer"
+#+END_SRC   
 
 The statements in the =defer= statement can't transfer program control
 outside of the =defer= statement.
@@ -4778,18 +4950,20 @@ delimit a code block, and doesn't incur a performance cost at runtime.
 
 A =do= statement has the following form:
 
-1.  do {
-2.  try expression
-3.  statements
-4.  } catch pattern 1 {
-5.  statements
-6.  } catch pattern 2 where condition {
-7.  statements
-8.  } catch pattern 3, pattern 4 where condition {
-9.  statements
-10. } catch {
-11. statements
-12. }
+#+BEGIN_SRC swift
+  do {
+      try expression
+      statements
+  } catch pattern 1 {
+      statements
+  } catch pattern 2 where condition {
+      statements
+  } catch pattern 3, pattern 4 where condition {
+      statements
+  } catch {
+      statements
+  }
+#+END_SRC    
 
 If any statement in the =do= code block throws an error, program control
 is transferred to the first =catch= clause whose pattern matches the
@@ -4887,9 +5061,11 @@ Every conditional compilation block begins with the =#if= compilation
 directive and ends with the =#endif= compilation directive. A simple
 conditional compilation block has the following form:
 
-1. #if compilation condition
-2. statements
-3. #endif
+#+BEGIN_SRC swift
+  #if compilation condition
+  statements
+  #endif
+#+END_SRC   
 
 Unlike the condition of an =if= statement, the /compilation condition/
 is evaluated at compile time. As a result, the /statements/ are compiled
@@ -4924,20 +5100,21 @@ compiler in Swift 4.2 mode, the compiler version is 5 and the language
 version is 4.2. With those settings, the following code prints all three
 messages:
 
-1.  #if compiler(>=5)
-2.  print("Compiled with the Swift 5 compiler or later")
-3.  #endif
-4.  #if swift(>=4.2)
-5.  print("Compiled in Swift 4.2 mode or later")
-6.  #endif
-7.  #if compiler(>=5) && swift(<5)
-8.  print("Compiled with the Swift 5 compiler or later in a Swift mode
-    earlier than 5")
-9.  #endif
-10. // Prints "Compiled with the Swift 5 compiler or later"
-11. // Prints "Compiled in Swift 4.2 mode or later"
-12. // Prints "Compiled with the Swift 5 compiler or later in a Swift
-    mode earlier than 5"
+#+BEGIN_SRC swift
+  #if compiler(>=5)
+  print("Compiled with the Swift 5 compiler or later")
+  #endif
+  #if swift(>=4.2)
+  print("Compiled in Swift 4.2 mode or later")
+  #endif
+  #if compiler(>=5) && swift(<5)
+  print("Compiled with the Swift 5 compiler or later in a Swift mode
+          earlier than 5")
+  #endif
+  // Prints "Compiled with the Swift 5 compiler or later"
+  // Prints "Compiled in Swift 4.2 mode or later"
+  // Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
+#+END_SRC    
 
 #+FINDEX: canImport
 
@@ -4972,13 +5149,15 @@ additional branches using =#elseif= clauses. You can also add a final
 additional branch using an =#else= clause. Conditional compilation
 blocks that contain multiple branches have the following form:
 
-1. #if compilation condition 1
-2. statements to compile if compilation condition 1 is true
-3. #elseif compilation condition 2
-4. statements to compile if compilation condition 2 is true
-5. #else
-6. statements to compile if both compilation conditions are false
-7. #endif
+#+BEGIN_SRC swift
+  #if compilation condition 1
+  statements to compile if compilation condition 1 is true
+  #elseif compilation condition 2
+  statements to compile if compilation condition 2 is true
+  #else
+  statements to compile if both compilation conditions are false
+  #endif
+#+END_SRC   
 
 Note
 
@@ -5136,8 +5315,10 @@ code location used by Swift for diagnostic and debugging purposes.
 
 A line control statement has the following forms:
 
-1. #sourceLocation(file: file path, line: line number)
-2. #sourceLocation()
+#+BEGIN_SRC swift
+  #sourceLocation(file: file path, line: line number)
+  #sourceLocation()
+#+END_SRC   
 
 The first form of a line control statement changes the values of the
 =#line=, =#file=, =#fileID=, and =#filePath= literal expressions,
@@ -5182,8 +5363,10 @@ the following forms:
 #+FINDEX: #error
 #+FINDEX: #warning
 
-1. #error("error message")
-2. #warning("warning message")
+#+BEGIN_SRC swift
+  #error("error message")
+  #warning("warning message")
+#+END_SRC   
 
 The first form emits the /error message/ as a fatal error and terminates
 the compilation process. The second form emits the /warning message/ as
@@ -5216,11 +5399,13 @@ based on specified platforms arguments.
 
 An availability condition has the following form:
 
-1. if #available(platform name version, ..., *) {
-2. statements to execute if the APIs are available
-3. } else {
-4. fallback statements to execute if the APIs are unavailable
-5. }
+#+BEGIN_SRC swift
+  if #available(platform name version, ..., *) {
+      statements to execute if the APIs are available
+  } else {
+      fallback statements to execute if the APIs are unavailable
+  }
+#+END_SRC   
 
 You use an availability condition to execute a block of code, depending
 on whether the APIs you want to use are available at runtime. The
@@ -5390,9 +5575,11 @@ _{opt}
 A /code block/ is used by a variety of declarations and control
 structures to group statements together. It has the following form:
 
-1. {
-2. statements
-3. }
+#+BEGIN_SRC swift
+  {
+      statements
+  }
+#+END_SRC   
 
 The /statements/ inside a code block include declarations, expressions,
 and other kinds of statements and are executed in order of their
@@ -5411,7 +5598,9 @@ An /import declaration/ lets you access symbols that are declared
 outside the current file. The basic form imports the entire module; it
 consists of the =import= keyword followed by a module name:
 
-1. import module
+#+BEGIN_SRC swift
+  import module
+#+END_SRC   
 
 Providing more detail limits which symbols are imported---you can
 specify a specific submodule or a specific declaration within a module
@@ -5419,8 +5608,10 @@ or submodule. When this detailed form is used, only the imported symbol
 (and not the module that declares it) is made available in the current
 scope.
 
-1. import import kind module.symbol name
-2. import module.submodule
+#+BEGIN_SRC swift
+  import import kind module.symbol name
+  import module.submodule
+#+END_SRC   
 
 Grammar of an import declaration
 
@@ -5454,7 +5645,9 @@ A /constant declaration/ introduces a constant named value into your
 program. Constant declarations are declared using the =let= keyword and
 have the following form:
 
-1. let constant name: type = expression
+#+BEGIN_SRC swift
+  let constant name: type = expression
+#+END_SRC   
 
 A constant declaration defines an immutable binding between the
 /constant name/ and the value of the initializer /expression/; after the
@@ -5477,16 +5670,20 @@ If the /constant name/ of a constant declaration is a tuple pattern, the
 name of each item in the tuple is bound to the corresponding value in
 the initializer /expression/.
 
-1. let (firstNumber, secondNumber) = (10, 42)
+#+BEGIN_SRC swift
+  let (firstNumber, secondNumber) = (10, 42)
+#+END_SRC   
 
 In this example, =firstNumber= is a named constant for the value =10=,
 and =secondNumber= is a named constant for the value =42=. Both
 constants can now be used independently:
 
-1. print("The first number is \(firstNumber).")
-2. // Prints "The first number is 10."
-3. print("The second number is \(secondNumber).")
-4. // Prints "The second number is 42."
+#+BEGIN_SRC swift
+  print("The first number is \(firstNumber).")
+  // Prints "The first number is 10."
+  print("The second number is \(secondNumber).")
+  // Prints "The second number is 42."
+#+END_SRC   
 
 The type annotation (=:= /type/) is optional in a constant declaration
 when the type of the /constant name/ can be inferred, as described in
@@ -5557,7 +5754,9 @@ described in [[info:swift#Overriding][Overriding]].
 The following form declares a stored variable or stored variable
 property:
 
-1. var variable name: type = expression
+#+BEGIN_SRC swift
+  var variable name: type = expression
+#+END_SRC   
 
 You define this form of a variable declaration at global scope, the
 local scope of a function, or in the context of a class or structure
@@ -5584,14 +5783,16 @@ variable property is stored in memory.
 
 The following form declares a computed variable or computed property:
 
-1. var variable name: type {
-2. get {
-3. statements
-4. }
-5. set(setter name) {
-6. statements
-7. }
-8. }
+#+BEGIN_SRC swift
+  var variable name: type {
+      get {
+          statements
+      }
+      set(setter name) {
+          statements
+      }
+  }
+#+END_SRC   
 
 You define this form of a variable declaration at global scope, the
 local scope of a function, or in the context of a class, structure,
@@ -5629,15 +5830,17 @@ You can also declare a stored variable or property with =willSet= and
 =didSet= observers. A stored variable or property declared with
 observers has the following form:
 
-1. var variable name: type = expression {
-2. willSet(setter name) {
-3. statements
-4. }
-5. didSet(setter name) {
-6. statements
-7. }
-8. }
-
+#+BEGIN_SRC swift
+  var variable name: type = expression {
+      willSet(setter name) {
+          statements
+      }
+      didSet(setter name) {
+          statements
+      }
+  }
+#+END_SRC
+   
 You define this form of a variable declaration at global scope, the
 local scope of a function, or in the context of a class or structure
 declaration. When a variable declaration of this form is declared at
@@ -5696,44 +5899,42 @@ Otherwise, the new value is stored without calling the superclass's
 getter. The example below shows a computed property that's defined by
 the superclass and overridden by its subclasses to add an observer.
 
-1.  class Superclass {
-2.  private var xValue = 12
-3.  var x: Int {
-4.  get { print("Getter was called"); return xValue }
-5.  set { print("Setter was called"); xValue = newValue }
-6.  }
-7.  }
-8.
+#+BEGIN_SRC swift
+  class Superclass {
+      private var xValue = 12
+      var x: Int {
+          get { print("Getter was called"); return xValue }
+          set { print("Setter was called"); xValue = newValue }
+      }
+  }
 
-9.  // This subclass doesn't refer to oldValue in its observer, so the
-10. // superclass's getter is called only once to print the value.
-11. class New: Superclass {
-12. override var x: Int {
-13. didSet { print("New value \(x)") }
-14. }
-15. }
-16. let new = New()
-17. new.x = 100
-18. // Prints "Setter was called"
-19. // Prints "Getter was called"
-20. // Prints "New value 100"
-21.
+  // This subclass doesn't refer to oldValue in its observer, so the
+  // superclass's getter is called only once to print the value.
+  class New: Superclass {
+      override var x: Int {
+          didSet { print("New value \(x)") }
+      }
+  }
+  let new = New()
+  new.x = 100
+  // Prints "Setter was called"
+  // Prints "Getter was called"
+  // Prints "New value 100"
 
-22. // This subclass refers to oldValue in its observer, so the
-    superclass's
-23. // getter is called once before the setter, and again to print the
-    value.
-24. class NewAndOld: Superclass {
-25. override var x: Int {
-26. didSet { print("Old value \(oldValue) - new value \(x)") }
-27. }
-28. }
-29. let newAndOld = NewAndOld()
-30. newAndOld.x = 200
-31. // Prints "Getter was called"
-32. // Prints "Setter was called"
-33. // Prints "Getter was called"
-34. // Prints "Old value 12 - new value 200"
+  // This subclass refers to oldValue in its observer, so the superclass's
+  // getter is called once before the setter, and again to print the value.
+    class NewAndOld: Superclass {
+        override var x: Int {
+            didSet { print("Old value \(oldValue) - new value \(x)") }
+        }
+    }
+  let newAndOld = NewAndOld()
+  newAndOld.x = 200
+  // Prints "Getter was called"
+  // Prints "Setter was called"
+  // Prints "Getter was called"
+  // Prints "Old value 12 - new value 200"
+#+END_SRC    
 
 For more information and to see an example of how to use property
 observers, see [[info:swift#Property Observers][Property
@@ -5893,8 +6094,10 @@ A /type alias declaration/ introduces a named alias of an existing type
 into your program. Type alias declarations are declared using the
 =typealias= keyword and have the following form:
 
-1. typealias name = existing type
-
+#+BEGIN_SRC swift
+  typealias name = existing type
+#+END_SRC
+   
 After a type alias is declared, the aliased /name/ can be used instead
 of the /existing type/ everywhere in your program. The /existing type/
 can be a named type or a compound type. Type aliases don't create new
@@ -5904,18 +6107,21 @@ A type alias declaration can use generic parameters to give a name to an
 existing generic type. The type alias can provide concrete types for
 some or all of the generic parameters of the existing type. For example:
 
-1. typealias StringDictionary<Value> = Dictionary<String, Value>
-2.
+#+BEGIN_SRC swift
+  typealias StringDictionary<Value> = Dictionary<String, Value>
 
-3. // The following dictionaries have the same type.
-4. var dictionary1: StringDictionary<Int> = [:]
-5. var dictionary2: Dictionary<String, Int> = [:]
+  // The following dictionaries have the same type.
+  var dictionary1: StringDictionary<Int> = [:]
+  var dictionary2: Dictionary<String, Int> = [:]
+#+END_SRC   
 
 When a type alias is declared with generic parameters, the constraints
 on those parameters must match exactly the constraints on the existing
 type's generic parameters. For example:
 
-1. typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
+#+BEGIN_SRC swift
+  typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
+#+END_SRC   
 
 Because the type alias and the existing type can be used
 interchangeably, the type alias can't introduce additional generic
@@ -5926,20 +6132,24 @@ omitting all generic parameters from the declaration. For example, the
 =Diccionario= type alias declared here has the same generic parameters
 and constraints as =Dictionary=.
 
-1. typealias Diccionario = Dictionary
+#+BEGIN_SRC swift
+  typealias Diccionario = Dictionary
+#+END_SRC   
 
 Inside a protocol declaration, a type alias can give a shorter and more
 convenient name to a type that's used frequently. For example:
 
-1. protocol Sequence {
-2. associatedtype Iterator: IteratorProtocol
-3. typealias Element = Iterator.Element
-4. }
-5.
+#+BEGIN_SRC swift
+  protocol Sequence {
+      associatedtype Iterator: IteratorProtocol
+      typealias Element = Iterator.Element
+  }
 
-6. func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
-7. // ...
-8. }
+
+  func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
+      // ...
+  }
+#+END_SRC   
 
 Without this type alias, the =sum= function would have to refer to the
 associated type as =T.Iterator.Element= instead of =T.Element=.
@@ -5974,16 +6184,20 @@ enumeration, or protocol is referred to as a /method/. Function
 declarations are declared using the =func= keyword and have the
 following form:
 
-1. func function name(parameters) -> return type {
-2. statements
-3. }
+#+BEGIN_SRC swift
+  func function name(parameters) -> return type {
+      statements
+  }
+#+END_SRC   
 
 If the function has a return type of =Void=, the return type can be
 omitted as follows:
 
-1. func function name(parameters) {
-2. statements
-3. }
+#+BEGIN_SRC swift
+  func function name(parameters) {
+      statements
+  }
+#+END_SRC   
 
 The type of each parameter must be included---it can't be inferred. If
 you write =inout= in front of a parameter's type, the parameter can be
@@ -6019,21 +6233,27 @@ one of several forms. The order of arguments in a function call must
 match the order of parameters in the function's declaration. The
 simplest entry in a parameter list has the following form:
 
-1. parameter name: parameter type
+#+BEGIN_SRC swift
+  parameter name: parameter type
+#+END_SRC   
 
 A parameter has a name, which is used within the function body, as well
 as an argument label, which is used when calling the function or method.
 By default, parameter names are also used as argument labels. For
 example:
 
-1. func f(x: Int, y: Int) -> Int { return x + y }
-2. f(x: 1, y: 2) // both x and y are labeled
+#+BEGIN_SRC swift
+  func f(x: Int, y: Int) -> Int { return x + y }
+  f(x: 1, y: 2) // both x and y are labeled
+#+END_SRC   
 
 You can override the default behavior for argument labels with one of
 the following forms:
 
-1. argument label parameter name: parameter type
-2. _ parameter name: parameter type
+#+BEGIN_SRC swift
+  argument label parameter name: parameter type
+  _ parameter name: parameter type
+#+END_SRC   
 
 A name before the parameter name gives the parameter an explicit
 argument label, which can be different from the parameter name. The
@@ -6044,10 +6264,10 @@ An underscore (=_=) before a parameter name suppresses the argument
 label. The corresponding argument must have no label in function or
 method calls.
 
-1. func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n
-   times */ }
-2. repeatGreeting("Hello, world!", count: 2) // count is labeled,
-   greeting is not
+#+BEGIN_SRC swift
+  func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
+  repeatGreeting("Hello, world!", count: 2) // count is labeled, greeting is not
+#+END_SRC   
 
 
 *** In-Out Parameters
@@ -6090,24 +6310,27 @@ A closure or nested function that captures an in-out parameter must be
 nonescaping. If you need to capture an in-out parameter without mutating
 it, use a capture list to explicitly capture the parameter immutably.
 
-1. func someFunction(a: inout Int) -> () -> Int {
-2. return { [a] in return a + 1 }
-3. }
+#+BEGIN_SRC swift
+  func someFunction(a: inout Int) -> () -> Int {
+      return { [a] in return a + 1 }
+  }
+#+END_SRC   
 
 If you need to capture and mutate an in-out parameter, use an explicit
 local copy, such as in multithreaded code that ensures all mutation has
 finished before the function returns.
 
-1. func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
-2. // Make a local copy and manually copy it back.
-3. var localX = x
-4. defer { x = localX }
-5.
+#+BEGIN_SRC swift
+  func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
+      // Make a local copy and manually copy it back.
+      var localX = x
+      defer { x = localX }
 
-6. // Operate on localX asynchronously, then wait before returning.
-7. queue.async { someMutatingOperation(&localX) }
-8. queue.sync {}
-9. }
+      // Operate on localX asynchronously, then wait before returning.
+      queue.async { someMutatingOperation(&localX) }
+      queue.sync {}
+  }
+#+END_SRC   
 
 For more discussion and examples of in-out parameters, see
 [[In-Out Parameters][In-Out Parameters]].
@@ -6118,9 +6341,11 @@ For more discussion and examples of in-out parameters, see
 Parameters can be ignored, take a variable number of values, and provide
 default values using the following forms:
 
-1. _ : parameter type
-2. parameter name: parameter type...
-3. parameter name: parameter type = default argument value
+#+BEGIN_SRC swift
+  _ : parameter type
+  parameter name: parameter type...
+  parameter name: parameter type = default argument value
+#+END_SRC   
 
 An underscore (=_=) parameter is explicitly ignored and can't be
 accessed within the body of the function.
@@ -6139,10 +6364,12 @@ is understood to have a default value of the given expression. The given
 expression is evaluated when the function is called. If the parameter is
 omitted when calling the function, the default value is used instead.
 
-1. func f(x: Int = 42) -> Int { return x }
-2. f() // Valid, uses default value
-3. f(x: 7) // Valid, uses the value provided
-4. f(7) // Invalid, missing argument label
+#+BEGIN_SRC swift
+  func f(x: Int = 42) -> Int { return x }
+  f() // Valid, uses default value
+  f(x: 7) // Valid, uses the value provided
+  f(7) // Invalid, missing argument label
+#+END_SRC   
 
 
 *** Special Kinds of Methods
@@ -6190,17 +6417,19 @@ names.
 
 The following function calls are equivalent:
 
-1.  struct CallableStruct {
-2.  var value: Int
-3.  func callAsFunction(_ number: Int, scale: Int) {
-4.  print(scale * (number + value))
-5.  }
-6.  }
-7.  let callable = CallableStruct(value: 100)
-8.  callable(4, scale: 2)
-9.  callable.callAsFunction(4, scale: 2)
-10. // Both function calls print 208.
-
+#+BEGIN_SRC swift
+  struct CallableStruct {
+      var value: Int
+      func callAsFunction(_ number: Int, scale: Int) {
+          print(scale * (number + value))
+      }
+  }
+  let callable = CallableStruct(value: 100)
+  callable(4, scale: 2)
+  callable.callAsFunction(4, scale: 2)
+  // Both function calls print 208.
+#+END_SRC
+    
 The call-as-function methods and the methods from the =dynamicCallable=
 attribute make different trade-offs between how much information you
 encode into the type system and how much dynamic behavior is possible at
@@ -6214,9 +6443,10 @@ Defining a call-as-function method, or a method from the
 type as if it were a function in any context other than a function call
 expression. For example:
 
-1. let someFunction1: (Int, Int) -> Void = callable(_:scale:) // Error
-2. let someFunction2: (Int, Int) -> Void =
-   callable.callAsFunction(_:scale:)
+#+BEGIN_SRC swift
+  let someFunction1: (Int, Int) -> Void = callable(_:scale:) // Error
+  let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
+#+END_SRC   
 
 The =subscript(dynamicMemberLookup:)= subscript enables syntactic sugar
 for member lookup, as described in
@@ -6229,9 +6459,11 @@ Functions and methods that can throw an error must be marked with the
 =throws= keyword. These functions and methods are known as /throwing
 functions/ and /throwing methods/. They have the following form:
 
-1. func function name(parameters) throws -> return type {
-2. statements
-3. }
+#+BEGIN_SRC swift
+  func function name(parameters) throws -> return type {
+      statements
+  }
+#+END_SRC   
 
 Calls to a throwing function or method must be wrapped in a =try= or
 =try!= expression (that is, in the scope of a =try= or =try!= operator).
@@ -6261,9 +6493,11 @@ throws an error. These functions and methods are known as /rethrowing
 functions/ and /rethrowing methods/. Rethrowing functions and methods
 must have at least one throwing function parameter.
 
-1. func someFunction(callback: () throws -> Void) rethrows {
-2. try callback()
-3. }
+#+BEGIN_SRC swift
+  func someFunction(callback: () throws -> Void) rethrows {
+      try callback()
+  }
+#+END_SRC   
 
 A rethrowing function or method can contain a =throw= statement only
 inside a =catch= clause. This lets you call the throwing function inside
@@ -6273,18 +6507,20 @@ only errors thrown by one of the rethrowing function's throwing
 parameters. For example, the following is invalid because the =catch=
 clause would handle the error thrown by =alwaysThrows()=.
 
-1.  func alwaysThrows() throws {
-2.  throw SomeError.error
-3.  }
-4.  func someFunction(callback: () throws -> Void) rethrows {
-5.  do {
-6.  try callback()
-7.  try alwaysThrows() // Invalid, alwaysThrows() isn't a throwing
-    parameter
-8.  } catch {
-9.  throw AnotherError.error
-10. }
-11. }
+#+BEGIN_SRC swift
+  func alwaysThrows() throws {
+      throw SomeError.error
+  }
+  func someFunction(callback: () throws -> Void) rethrows {
+      do {
+          try callback()
+          try alwaysThrows() // Invalid, alwaysThrows() isn't a throwing
+          parameter
+      } catch {
+          throw AnotherError.error
+      }
+  }
+#+END_SRC    
 
 A throwing method can't override a rethrowing method, and a throwing
 method can't satisfy a protocol requirement for a rethrowing method.
@@ -6442,11 +6678,13 @@ Declaration]].
 The following form declares an enumeration type that contains
 enumeration cases of any type:
 
-1. enum enumeration name: adopted protocols {
-2. case enumeration case 1
-3. case enumeration case 2(associated value types)
-4. }
-
+#+BEGIN_SRC swift
+  enum enumeration name: adopted protocols {
+      case enumeration case 1
+      case enumeration case 2(associated value types)
+  }
+#+END_SRC
+   
 Enumerations declared in this form are sometimes called /discriminated
 unions/ in other programming languages.
 
@@ -6461,17 +6699,18 @@ that create instances of the enumeration with the specified associated
 values. And just like functions, you can get a reference to an
 enumeration case and apply it later in your code.
 
-1. enum Number {
-2. case integer(Int)
-3. case real(Double)
-4. }
-5. let f = Number.integer
-6. // f is a function of type (Int) -> Number
-7.
+#+BEGIN_SRC swift
+  enum Number {
+      case integer(Int)
+      case real(Double)
+  }
+  let f = Number.integer
+  // f is a function of type (Int) -> Number
 
-8. // Apply f to create an array of Number instances with integer values
-9. let evenInts: [Number] = [0, 2, 4, 6].map(f)
-
+  // Apply f to create an array of Number instances with integer values
+  let evenInts: [Number] = [0, 2, 4, 6].map(f)
+#+END_SRC
+   
 For more information and to see examples of cases with associated value
 types, see [[info:swift#Associated Values][Associated
 Values]].
@@ -6489,10 +6728,12 @@ To enable indirection for a particular enumeration case, mark it with
 the =indirect= declaration modifier. An indirect case must have an
 associated value.
 
-1. enum Tree<T> {
-2. case empty
-3. indirect case node(value: T, left: Tree, right: Tree)
-4. }
+#+BEGIN_SRC swift
+  enum Tree<T> {
+      case empty
+      indirect case node(value: T, left: Tree, right: Tree)
+  }
+#+END_SRC   
 
 To enable indirection for all the cases of an enumeration that have an
 associated value, mark the entire enumeration with the =indirect=
@@ -6510,10 +6751,12 @@ That said, it can't contain any cases that are also marked with the
 The following form declares an enumeration type that contains
 enumeration cases of the same basic type:
 
-1. enum enumeration name: raw-value type, adopted protocols {
-2. case enumeration case 1 = raw value 1
-3. case enumeration case 2 = raw value 2
-4. }
+#+BEGIN_SRC swift
+  enum enumeration name: raw-value type, adopted protocols {
+      case enumeration case 1 = raw value 1
+      case enumeration case 2 = raw value 2
+  }
+#+END_SRC   
 
 In this form, each case block consists of the =case= keyword, followed
 by one or more enumeration cases, separated by commas. Unlike the cases
@@ -6536,9 +6779,11 @@ to the cases explicitly, they're implicitly assigned the values =0=,
 assigned a raw value that's automatically incremented from the raw value
 of the previous case.
 
-1. enum ExampleEnum: Int {
-2. case a, b, c = 5, d
-3. }
+#+BEGIN_SRC swift
+  enum ExampleEnum: Int {
+      case a, b, c = 5, d
+  }
+#+END_SRC   
 
 In the above example, the raw value of =ExampleEnum.a= is =0= and the
 value of =ExampleEnum.b= is =1=. And because the value of
@@ -6549,9 +6794,11 @@ If the raw-value type is specified as =String= and you don't assign
 values to the cases explicitly, each unassigned case is implicitly
 assigned a string with the same text as the name of that case.
 
-1. enum GamePlayMode: String {
-2. case cooperative, individual, competitive
-3. }
+#+BEGIN_SRC swift
+  enum GamePlayMode: String {
+      case cooperative, individual, competitive
+  }
+#+END_SRC   
 
 In the above example, the raw value of =GamePlayMode.cooperative= is
 ="cooperative"=, the raw value of =GamePlayMode.individual= is
@@ -6714,10 +6961,12 @@ A /structure declaration/ introduces a named structure type into your
 program. Structure declarations are declared using the =struct= keyword
 and have the following form:
 
-1. struct structure name: adopted protocols {
-2. declarations
-3. }
-
+#+BEGIN_SRC swift
+  struct structure name: adopted protocols {
+      declarations
+  }
+#+END_SRC
+   
 The body of a structure contains zero or more /declarations/. These
 /declarations/ can include both stored and computed properties, type
 properties, instance methods, type methods, initializers, subscripts,
@@ -6805,10 +7054,12 @@ A /class declaration/ introduces a named class type into your program.
 Class declarations are declared using the =class= keyword and have the
 following form:
 
-1. class class name: superclass, adopted protocols {
-2. declarations
-3. }
-
+#+BEGIN_SRC swift
+  class class name: superclass, adopted protocols {
+      declarations
+  }
+#+END_SRC
+   
 The body of a class contains zero or more /declarations/. These
 /declarations/ can include both stored and computed properties, instance
 methods, type methods, initializers, a single deinitializer, subscripts,
@@ -6930,9 +7181,11 @@ A /protocol declaration/ introduces a named protocol type into your
 program. Protocol declarations are declared at global scope using the
 =protocol= keyword and have the following form:
 
-1. protocol protocol name: inherited protocols {
-2. protocol member declarations
-3. }
+#+BEGIN_SRC swift
+  protocol protocol name: inherited protocols {
+      protocol member declarations
+  }
+#+END_SRC
 
 The body of a protocol contains zero or more /protocol member
 declarations/, which describe the conformance requirements that any type
@@ -6988,22 +7241,26 @@ protocol requirement for a function that returns =Self= whose parameters
 and their argument labels match the case's associated values. For
 example:
 
-1. protocol SomeProtocol {
-2. static var someValue: Self { get }
-3. static func someFunction(x: Int) -> Self
-4. }
-5. enum MyEnum: SomeProtocol {
-6. case someValue
-7. case someFunction(x: Int)
-8. }
+#+BEGIN_SRC swift
+  protocol SomeProtocol {
+      static var someValue: Self { get }
+      static func someFunction(x: Int) -> Self
+  }
+  enum MyEnum: SomeProtocol {
+      case someValue
+      case someFunction(x: Int)
+  }
+#+END_SRC   
 
 To restrict the adoption of a protocol to class types only, include the
 =AnyObject= protocol in the /inherited protocols/ list after the colon.
 For example, the following protocol can be adopted only by class types:
 
-1. protocol SomeProtocol: AnyObject {
-2. /* Protocol members go here */
-3. }
+#+BEGIN_SRC swift
+  protocol SomeProtocol: AnyObject {
+      /* Protocol members go here */
+  }
+#+END_SRC   
 
 Any protocol that inherits from a protocol that's marked with the
 =AnyObject= requirement can likewise be adopted only by class types.
@@ -7087,7 +7344,9 @@ including a /protocol property declaration/ in the body of the protocol
 declaration. Protocol property declarations have a special form of a
 variable declaration:
 
-1. var property name: type { get set }
+#+BEGIN_SRC swift
+  var property name: type { get set }
+#+END_SRC   
 
 As with other protocol member declarations, these property declarations
 declare only the getter and setter requirements for types that conform
@@ -7214,7 +7473,9 @@ including a protocol subscript declaration in the body of the protocol
 declaration. Protocol subscript declarations have a special form of a
 subscript declaration:
 
-1. subscript (parameters) -> return type { get set }
+#+BEGIN_SRC swift
+  subscript (parameters) -> return type { get set }
+#+END_SRC   
 
 Subscript declarations only declare the minimum getter and setter
 implementation requirements for types that conform to the protocol. If
@@ -7268,19 +7529,19 @@ constraints to an associated types inherited from another protocol,
 without redeclaring the associated types. For example, the declarations
 of =SubProtocol= below are equivalent:
 
-1.  protocol SomeProtocol {
-2.  associatedtype SomeType
-3.  }
-4.
+#+BEGIN_SRC swift
+  protocol SomeProtocol {
+      associatedtype SomeType
+  }
 
-5.  protocol SubProtocolA: SomeProtocol {
-6.  // This syntax produces a warning.
-7.  associatedtype SomeType: Equatable
-8.  }
-9.
+  protocol SubProtocolA: SomeProtocol {
+      // This syntax produces a warning.
+      associatedtype SomeType: Equatable
+  }
 
-10. // This syntax is preferred.
-11. protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
+  // This syntax is preferred.
+  protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
+#+END_SRC    
 
 See also [[Type Alias Declaration][Type Alias Declaration]].
 
@@ -7316,9 +7577,11 @@ initializers, as described in
 The following form declares initializers for structures, enumerations,
 and designated initializers of classes:
 
-1. init(parameters) {
-2. statements
-3. }
+#+BEGIN_SRC swift
+  init(parameters) {
+      statements
+  }
+#+END_SRC   
 
 A designated initializer of a class initializes all of the class's
 properties directly. It can't call any other initializers of the same
@@ -7338,9 +7601,11 @@ initializers to delegate part or all of the initialization process.
 To declare convenience initializers for a class, mark the initializer
 declaration with the =convenience= declaration modifier.
 
-1. convenience init(parameters) {
-2. statements
-3. }
+#+BEGIN_SRC swift
+  convenience init(parameters) {
+      statements
+  }
+#+END_SRC   
 
 Convenience initializers can delegate the initialization process to
 another convenience initializer or to one of the class's designated
@@ -7393,28 +7658,32 @@ an implicitly unwrapped optional instance, append an exclamation point
 instead (=init!=). The example below shows an =init?= failable
 initializer that produces an optional instance of a structure.
 
-1.  struct SomeStruct {
-2.  let property: String
-3.  // produces an optional instance of 'SomeStruct'
-4.  init?(input: String) {
-5.  if input.isEmpty {
-6.  // discard 'self' and return 'nil'
-7.  return nil
-8.  }
-9.  property = input
-10. }
-11. }
+#+BEGIN_SRC swift
+  struct SomeStruct {
+      let property: String
+      // produces an optional instance of 'SomeStruct'
+      init?(input: String) {
+          if input.isEmpty {
+              // discard 'self' and return 'nil'
+              return nil
+          }
+          property = input
+      }
+  }
+#+END_SRC    
 
 You call an =init?= failable initializer in the same way that you call a
 nonfailable initializer, except that you must deal with the optionality
 of the result.
 
-1. if let actualInstance = SomeStruct(input: "Hello") {
-2. // do something with the instance of 'SomeStruct'
-3. } else {
-4. // initialization of 'SomeStruct' failed and the initializer returned
-   'nil'
-5. }
+#+BEGIN_SRC swift
+  if let actualInstance = SomeStruct(input: "Hello") {
+      // do something with the instance of 'SomeStruct'
+  } else {
+      // initialization of 'SomeStruct' failed and the initializer returned
+      'nil'
+  }
+#+END_SRC   
 
 A failable initializer can return =nil= at any point in the
 implementation of the initializer's body.
@@ -7495,10 +7764,12 @@ code-block
 A /deinitializer declaration/ declares a deinitializer for a class type.
 Deinitializers take no parameters and have the following form:
 
-1. deinit {
-2. statements
-3. }
-
+#+BEGIN_SRC swift
+  deinit {
+      statements
+  }
+#+END_SRC
+   
 A deinitializer is called automatically when there are no longer any
 references to a class object, just before the class object is
 deallocated. A deinitializer can be declared only in the body of a class
@@ -7531,9 +7802,11 @@ An /extension declaration/ allows you to extend the behavior of existing
 types. Extension declarations are declared using the =extension= keyword
 and have the following form:
 
-1. extension type name where requirements {
-2. declarations
-3. }
+#+BEGIN_SRC swift
+  extension type name where requirements {
+      declarations
+  }
+#+END_SRC   
 
 The body of an extension declaration contains zero or more
 /declarations/. These /declarations/ can include computed properties,
@@ -7567,9 +7840,11 @@ overridden in an extension of that type.
 Extension declarations can add protocol conformance to an existing
 class, structure, or enumeration type by specifying /adopted protocols/:
 
-1. extension type name: adopted protocols where requirements {
-2. declarations
-3. }
+#+BEGIN_SRC swift
+  extension type name: adopted protocols where requirements {
+      declarations
+  }
+#+END_SRC   
 
 Extension declarations can't add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the /type
@@ -7592,48 +7867,46 @@ implementations of that protocol's requirements. To illustrate this
 behavior, the following example defines two protocols and a generic type
 that conditionally conforms to both protocols.
 
-1.  protocol Loggable {
-2.  func log()
-3.  }
-4.  extension Loggable {
-5.  func log() {
-6.  print(self)
-7.  }
-8.  }
-9.
+#+BEGIN_SRC swift
+  protocol Loggable {
+      func log()
+  }
+  extension Loggable {
+      func log() {
+          print(self)
+      }
+  }
 
-10. protocol TitledLoggable: Loggable {
-11. static var logTitle: String { get }
-12. }
-13. extension TitledLoggable {
-14. func log() {
-15. print("\(Self.logTitle): \(self)")
-16. }
-17. }
-18.
+  protocol TitledLoggable: Loggable {
+      static var logTitle: String { get }
+  }
+  extension TitledLoggable {
+      func log() {
+          print("\(Self.logTitle): \(self)")
+      }
+  }
 
-19. struct Pair<T>: CustomStringConvertible {
-20. let first: T
-21. let second: T
-22. var description: String {
-23. return "(\(first), \(second))"
-24. }
-25. }
-26.
+  struct Pair<T>: CustomStringConvertible {
+      let first: T
+      let second: T
+      var description: String {
+          return "(\(first), \(second))"
+      }
+  }
 
-27. extension Pair: Loggable where T: Loggable { }
-28. extension Pair: TitledLoggable where T: TitledLoggable {
-29. static var logTitle: String {
-30. return "Pair of '\(T.logTitle)'"
-31. }
-32. }
-33.
+  extension Pair: Loggable where T: Loggable { }
+  extension Pair: TitledLoggable where T: TitledLoggable {
+      static var logTitle: String {
+          return "Pair of '\(T.logTitle)'"
+      }
+  }
 
-34. extension String: TitledLoggable {
-35. static var logTitle: String {
-36. return "String"
-37. }
-38. }
+  extension String: TitledLoggable {
+      static var logTitle: String {
+          return "String"
+      }
+  }
+#+END_SRC    
 
 The =Pair= structure conforms to =Loggable= and =TitledLoggable=
 whenever its generic type conforms to =Loggable= or =TitledLoggable=,
@@ -7643,9 +7916,11 @@ conforms to =TitledLoggable=. When the =log()= method is called on
 =oneAndTwo= directly, the specialized version containing the title
 string is used.
 
-1. let oneAndTwo = Pair(first: "one", second: "two")
-2. oneAndTwo.log()
-3. // Prints "Pair of 'String': (one, two)"
+#+BEGIN_SRC swift
+  let oneAndTwo = Pair(first: "one", second: "two")
+  oneAndTwo.log()
+  // Prints "Pair of 'String': (one, two)"
+#+END_SRC   
 
 However, when =oneAndTwo= is used in a generic context or as an instance
 of the =Loggable= protocol, the specialized version isn't used. Swift
@@ -7654,11 +7929,13 @@ minimum requirements that =Pair= needs to conform to =Loggable=. For
 this reason, the default implementation provided by the =Loggable=
 protocol is used instead.
 
-1. func doSomething<T: Loggable>(with x: T) {
-2. x.log()
-3. }
-4. doSomething(with: oneAndTwo)
-5. // Prints "(one, two)"
+#+BEGIN_SRC swift
+  func doSomething<T: Loggable>(with x: T) {
+      x.log()
+  }
+  doSomething(with: oneAndTwo)
+  // Prints "(one, two)"
+#+END_SRC   
 
 When =log()= is called on the instance that's passed to
 =doSomething(_:)=, the customized title is omitted from the logged
@@ -7685,39 +7962,40 @@ declarations attempt to add conditional conformance to the
 =Serializable= protocol, one for for arrays with =Int= elements, and one
 for arrays with =String= elements.
 
-1.  protocol Serializable {
-2.  func serialize() -> Any
-3.  }
-4.
+#+BEGIN_SRC swift
+  protocol Serializable {
+      func serialize() -> Any
+  }
 
-5.  extension Array: Serializable where Element == Int {
-6.  func serialize() -> Any {
-7.  // implementation
-8.  }
-9.  }
-10. extension Array: Serializable where Element == String {
-11. func serialize() -> Any {
-12. // implementation
-13. }
-14. }
-15. // Error: redundant conformance of 'Array<Element>' to protocol
-    'Serializable'
+
+  extension Array: Serializable where Element == Int {
+      func serialize() -> Any {
+          // implementation
+      }
+  }
+  extension Array: Serializable where Element == String {
+      func serialize() -> Any {
+          // implementation
+      }
+  }
+  // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+#+END_SRC    
 
 If you need to add conditional conformance based on multiple concrete
 types, create a new protocol that each type can conform to and use that
 protocol as the requirement when declaring conditional conformance.
 
-1. protocol SerializableInArray { }
-2. extension Int: SerializableInArray { }
-3. extension String: SerializableInArray { }
-4.
+#+BEGIN_SRC swift
+  protocol SerializableInArray { }
+  extension Int: SerializableInArray { }
+  extension String: SerializableInArray { }
 
-5. extension Array: Serializable where Element: SerializableInArray {
-6. func serialize() -> Any {
-7. // implementation
-8. }
-9. }
-
+  extension Array: Serializable where Element: SerializableInArray {
+      func serialize() -> Any {
+          // implementation
+      }
+  }
+#+END_SRC
 
 **** Resolving Implicit Redundancy
 
@@ -7734,35 +8012,36 @@ The following example explicitly declares the conditional conformance of
 conformance to both =TitledLoggable= and the new =MarkedLoggable=
 protocol.
 
-1.  protocol MarkedLoggable: Loggable {
-2.  func markAndLog()
-3.  }
-4.
+#+BEGIN_SRC swift
+  protocol MarkedLoggable: Loggable {
+      func markAndLog()
+  }
 
-5.  extension MarkedLoggable {
-6.  func markAndLog() {
-7.  print("----------")
-8.  log()
-9.  }
-10. }
-11.
+  extension MarkedLoggable {
+      func markAndLog() {
+          print("----------")
+          log()
+      }
+  }
 
-12. extension Array: Loggable where Element: Loggable { }
-13. extension Array: TitledLoggable where Element: TitledLoggable {
-14. static var logTitle: String {
-15. return "Array of '\(Element.logTitle)'"
-16. }
-17. }
-18. extension Array: MarkedLoggable where Element: MarkedLoggable { }
+  extension Array: Loggable where Element: Loggable { }
+  extension Array: TitledLoggable where Element: TitledLoggable {
+      static var logTitle: String {
+          return "Array of '\(Element.logTitle)'"
+      }
+  }
+  extension Array: MarkedLoggable where Element: MarkedLoggable { }
+#+END_SRC    
 
 Without the extension to explicitly declare conditional conformance to
 =Loggable=, the other =Array= extensions would implicitly create these
 declarations, resulting in an error:
 
-1. extension Array: Loggable where Element: TitledLoggable { }
-2. extension Array: Loggable where Element: MarkedLoggable { }
-3. // Error: redundant conformance of 'Array<Element>' to protocol
-   'Loggable'
+#+BEGIN_SRC swift
+  extension Array: Loggable where Element: TitledLoggable { }
+  extension Array: Loggable where Element: MarkedLoggable { }
+  // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+#+END_SRC   
 
 Grammar of an extension declaration
 
@@ -7801,14 +8080,16 @@ convenient syntax for accessing the elements in a collection, list, or
 sequence. Subscript declarations are declared using the =subscript=
 keyword and have the following form:
 
-1. subscript (parameters) -> return type {
-2. get {
-3. statements
-4. }
-5. set(setter name) {
-6. statements
-7. }
-8. }
+#+BEGIN_SRC swift
+  subscript (parameters) -> return type {
+      get {
+          statements
+      }
+      set(setter name) {
+          statements
+      }
+  }
+#+END_SRC   
 
 Subscript declarations can appear only in the context of a class,
 structure, enumeration, extension, or protocol declaration.
@@ -7914,7 +8195,9 @@ operator can contain only the operator characters defined in
 
 The following form declares a new infix operator:
 
-1. infix operator operator name: precedence group
+#+BEGIN_SRC swift
+  infix operator operator name: precedence group
+#+END_SRC   
 
 An /infix operator/ is a binary operator that's written between its two
 operands, such as the familiar addition operator (=+=) in the expression
@@ -7928,7 +8211,9 @@ than =TernaryPrecedence=. For more information, see
 
 The following form declares a new prefix operator:
 
-1. prefix operator operator name
+#+BEGIN_SRC swift
+  prefix operator operator name
+#+END_SRC   
 
 A /prefix operator/ is a unary operator that's written immediately
 before its operand, such as the prefix logical NOT operator (=!=) in the
@@ -7939,7 +8224,9 @@ operators are nonassociative.
 
 The following form declares a new postfix operator:
 
-1. postfix operator operator name
+#+BEGIN_SRC swift
+  postfix operator operator name
+#+END_SRC   
 
 A /postfix operator/ is a unary operator that's written immediately
 after its operand, such as the postfix forced-unwrap operator (=!=) in
@@ -7997,12 +8284,14 @@ of grouping parentheses.
 
 A precedence group declaration has the following form:
 
-1. precedencegroup precedence group name {
-2. higherThan: lower group names
-3. lowerThan: higher group names
-4. associativity: associativity
-5. assignment: assignment
-6. }
+#+BEGIN_SRC swift
+  precedencegroup precedence group name {
+      higherThan: lower group names
+      lowerThan: higher group names
+      associativity: associativity
+      assignment: assignment
+  }
+#+END_SRC   
 
 The /lower group names/ and /higher group names/ lists specify the new
 precedence group's relation to existing precedence groups. The
@@ -8338,8 +8627,10 @@ warning if the return value is unused.
 You specify an attribute by writing the =@= symbol followed by the
 attribute's name and any arguments that the attribute accepts:
 
-1. @attribute name
-2. @attribute name(attribute arguments)
+#+BEGIN_SRC swift
+  @attribute name
+  @attribute name(attribute arguments)
+#+END_SRC   
 
 Some declaration attributes accept arguments that specify more
 information about the attribute and how it applies to a particular
@@ -8401,7 +8692,9 @@ milestones.
   platform or language in which the declaration was introduced. It has
   the following form:
 
-  1. introduced: version number
+  #+BEGIN_SRC swift
+    introduced: version number
+  #+END_SRC     
 
   The /version number/ consists of one to three positive integers,
   separated by periods.
@@ -8410,7 +8703,9 @@ milestones.
   platform or language in which the declaration was deprecated. It has
   the following form:
 
-  1. deprecated: version number
+  #+BEGIN_SRC swift
+    deprecated: version number
+  #+END_SRC
 
   The optional /version number/ consists of one to three positive
   integers, separated by periods. Omitting the version number indicates
@@ -8423,7 +8718,9 @@ milestones.
   declaration is obsoleted, it's removed from the specified platform or
   language and can no longer be used. It has the following form:
 
-  1. obsoleted: version number
+  #+BEGIN_SRC swift
+    obsoleted: version number
+  #+END_SRC     
 
   The /version number/ consists of one to three positive integers,
   separated by periods.
@@ -8432,7 +8729,9 @@ milestones.
   displays when emitting a warning or error about the use of a
   deprecated or obsoleted declaration. It has the following form:
 
-  1. message: message
+  #+BEGIN_SRC swift
+    message: message
+  #+END_SRC     
 
   The /message/ consists of a string literal.
 
@@ -8441,7 +8740,9 @@ milestones.
   the new name when emitting an error about the use of a renamed
   declaration. It has the following form:
 
-  1. renamed: new name
+  #+BEGIN_SRC swift
+    renamed: new name
+  #+END_SRC     
 
   The /new name/ consists of a string literal.
 
@@ -8451,18 +8752,20 @@ milestones.
   a framework or library. This combination results in a compile-time
   error that the declaration has been renamed.
 
-  1. // First release
-  2. protocol MyProtocol {
-  3. // protocol definition
-  4. }
+  #+BEGIN_SRC swift
+    // First release
+    protocol MyProtocol {
+        // protocol definition
+    }
 
-  1. // Subsequent release renames MyProtocol
-  2. protocol MyRenamedProtocol {
-  3. // protocol definition
-  4. }
-  5.
-  6. @available(*, unavailable, renamed: "MyRenamedProtocol")
-  7. typealias MyProtocol = MyRenamedProtocol
+    // Subsequent release renames MyProtocol
+    protocol MyRenamedProtocol {
+        // protocol definition
+    }
+
+    @available(*, unavailable, renamed: "MyRenamedProtocol")
+    typealias MyProtocol = MyRenamedProtocol
+  #+END_SRC
 
 You can apply multiple =available= attributes on a single declaration to
 specify the declaration's availability on different platforms and
@@ -8476,30 +8779,35 @@ If an =available= attribute only specifies an =introduced= argument in
 addition to a platform or language name argument, you can use the
 following shorthand syntax instead:
 
-1. @available(platform name version number, *)
-2. @available(swift version number)
+#+BEGIN_SRC swift
+  @available(platform name version number, *)
+  @available(swift version number)
+#+END_SRC   
 
 The shorthand syntax for =available= attributes concisely expresses
 availability for multiple platforms. Although the two forms are
 functionally equivalent, the shorthand form is preferred whenever
 possible.
 
-1. @available(iOS 10.0, macOS 10.12, *)
-2. class MyClass {
-3. // class definition
-4. }
+#+BEGIN_SRC swift
+  @available(iOS 10.0, macOS 10.12, *)
+  class MyClass {
+      // class definition
+  }
+#+END_SRC   
 
 An =available= attribute that specifies availability using a Swift
 version number can't additionally specify a declaration's platform
 availability. Instead, use separate =available= attributes to specify a
 Swift version availability and one or more platform availabilities.
 
-1. @available(swift 3.0.2)
-2. @available(macOS 10.12, *)
-3. struct MyStruct {
-4. // struct definition
-5. }
-
+#+BEGIN_SRC swift
+  @available(swift 3.0.2)
+  @available(macOS 10.12, *)
+  struct MyStruct {
+      // struct definition
+  }
+#+END_SRC
 
 *** discardableResult
 
@@ -8522,32 +8830,30 @@ implement either a =dynamicallyCall(withArguments:)= method, a
 You can call an instance of a dynamically callable type as if it's a
 function that takes any number of arguments.
 
-1.  @dynamicCallable
-2.  struct TelephoneExchange {
-3.  func dynamicallyCall(withArguments phoneNumber: [Int]) {
-4.  if phoneNumber == [4, 1, 1] {
-5.  print("Get Swift help on forums.swift.org")
-6.  } else {
-7.  print("Unrecognized number")
-8.  }
-9.  }
-10. }
-11.
+#+BEGIN_SRC swift
+  @dynamicCallable
+  struct TelephoneExchange {
+      func dynamicallyCall(withArguments phoneNumber: [Int]) {
+          if phoneNumber == [4, 1, 1] {
+              print("Get Swift help on forums.swift.org")
+          } else {
+              print("Unrecognized number")
+          }
+      }
+  }
 
-12. let dial = TelephoneExchange()
-13.
+  let dial = TelephoneExchange()
 
-14. // Use a dynamic method call.
-15. dial(4, 1, 1)
-16. // Prints "Get Swift help on forums.swift.org"
-17.
+  // Use a dynamic method call.
+  dial(4, 1, 1)
+  // Prints "Get Swift help on forums.swift.org"
 
-18. dial(8, 6, 7, 5, 3, 0, 9)
-19. // Prints "Unrecognized number"
-20.
+  dial(8, 6, 7, 5, 3, 0, 9)
+  // Prints "Unrecognized number"
 
-21. // Call the underlying method directly.
-22. dial.dynamicallyCall(withArguments: [4, 1, 1])
+  // Call the underlying method directly.
+  dial.dynamicallyCall(withArguments: [4, 1, 1])
+#+END_SRC    
 
 The declaration of the =dynamicallyCall(withArguments:)= method must
 have a single parameter that conforms to the
@@ -8559,26 +8865,27 @@ type.
 You can include labels in a dynamic method call if you implement the
 =dynamicallyCall(withKeywordArguments:)= method.
 
-1.  @dynamicCallable
-2.  struct Repeater {
-3.  func dynamicallyCall(withKeywordArguments pairs:
-    KeyValuePairs<String, Int>) -> String {
-4.  return pairs
-5.  .map { label, count in
-6.  repeatElement(label, count: count).joined(separator: " ")
-7.  }
-8.  .joined(separator: "\n")
-9.  }
-10. }
-11.
+#+BEGIN_SRC swift
+  @dynamicCallable
+  struct Repeater {
+      func dynamicallyCall(withKeywordArguments pairs:
+                             KeyValuePairs<String, Int>) -> String {
+          return pairs
+            .map { label, count in
+                repeatElement(label, count: count).joined(separator: " ")
+            }
+            .joined(separator: "\n")
+      }
+  }
 
-12. let repeatLabels = Repeater()
-13. print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
-14. // a
-15. // b b
-16. // c c c
-17. // b b
-18. // a
+  let repeatLabels = Repeater()
+  print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
+  // a
+  // b b
+  // c c c
+  // b b
+  // a
+#+END_SRC    
 
 The declaration of the =dynamicallyCall(withKeywordArguments:)= method
 must have a single parameter that conforms to the
@@ -8608,8 +8915,9 @@ example doesn't compile because there isn't an implementation of
 =dynamicallyCall(withArguments:)= that takes
 =KeyValuePairs<String, String>=.
 
-1. repeatLabels(a: "four") // Error
-
+#+BEGIN_SRC swift
+  repeatLabels(a: "four") // Error
+#+END_SRC
 
 *** dynamicMemberLookup
 
@@ -8645,46 +8953,46 @@ Dynamic member lookup by member name can be used to create a wrapper
 type around data that can't be type checked at compile time, such as
 when bridging data from other languages into Swift. For example:
 
-1.  @dynamicMemberLookup
-2.  struct DynamicStruct {
-3.  let dictionary = ["someDynamicMember": 325,
-4.  "someOtherMember": 787]
-5.  subscript(dynamicMember member: String) -> Int {
-6.  return dictionary[member] ?? 1054
-7.  }
-8.  }
-9.  let s = DynamicStruct()
-10.
+#+BEGIN_SRC swift
+  @dynamicMemberLookup
+  struct DynamicStruct {
+      let dictionary = ["someDynamicMember": 325,
+                        "someOtherMember": 787]
+      subscript(dynamicMember member: String) -> Int {
+          return dictionary[member] ?? 1054
+      }
+  }
+  let s = DynamicStruct()
 
-11. // Use dynamic member lookup.
-12. let dynamic = s.someDynamicMember
-13. print(dynamic)
-14. // Prints "325"
-15.
+  // Use dynamic member lookup.
+  let dynamic = s.someDynamicMember
+  print(dynamic)
+  // Prints "325"
 
-16. // Call the underlying subscript directly.
-17. let equivalent = s[dynamicMember: "someDynamicMember"]
-18. print(dynamic == equivalent)
-19. // Prints "true"
+  // Call the underlying subscript directly.
+  let equivalent = s[dynamicMember: "someDynamicMember"]
+  print(dynamic == equivalent)
+  // Prints "true"
+#+END_SRC    
 
 Dynamic member lookup by key path can be used to implement a wrapper
 type in a way that supports compile-time type checking. For example:
 
-1.  struct Point { var x, y: Int }
-2.
+#+BEGIN_SRC swift
+  struct Point { var x, y: Int }
 
-3.  @dynamicMemberLookup
-4.  struct PassthroughWrapper<Value> {
-5.  var value: Value
-6.  subscript<T>(dynamicMember member: KeyPath<Value, T>) -> T {
-7.  get { return value[keyPath: member] }
-8.  }
-9.  }
-10.
+  @dynamicMemberLookup
+  struct PassthroughWrapper<Value> {
+      var value: Value
+      subscript<T>(dynamicMember member: KeyPath<Value, T>) -> T {
+          get { return value[keyPath: member] }
+      }
+  }
 
-11. let point = Point(x: 381, y: 431)
-12. let wrapper = PassthroughWrapper(value: point)
-13. print(wrapper.x)
+  let point = Point(x: 381, y: 431)
+  let wrapper = PassthroughWrapper(value: point)
+  print(wrapper.x)
+#+END_SRC    
 
 *** frozen
 
@@ -8772,20 +9080,24 @@ to indicate that it contains the top-level entry point for program flow.
 The type must provide a =main= type function that doesn't take any
 arguments and returns =Void=. For example:
 
-1. @main
-2. struct MyTopLevel {
-3. static func main() {
-4. // Top-level code goes here
-5. }
-6. }
+#+BEGIN_SRC swift
+  @main
+  struct MyTopLevel {
+      static func main() {
+          // Top-level code goes here
+      }
+  }
+#+END_SRC   
 
 Another way to describe the requirements of the =main= attribute is that
 the type you write this attribute on must satisfy the same requirements
 as types that conform to the following hypothetical protocol:
 
-1. protocol ProvidesMain {
-2. static func main() throws
-3. }
+#+BEGIN_SRC swift
+  protocol ProvidesMain {
+      static func main() throws
+  }
+#+END_SRC   
 
 The Swift code you compile to make an executable can contain at most one
 top-level entry point, as discussed in
@@ -8831,8 +9143,10 @@ If you don't use this attribute, supply a =main.swift= file with code at
 the top level that calls the =NSApplicationMain(_:_:)= function as
 follows:
 
-1. import AppKit
-2. NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
+#+BEGIN_SRC swift
+  import AppKit
+  NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
+#+END_SRC   
 
 
 *** NSCopying
@@ -8921,13 +9235,15 @@ The example below exposes the getter for the =enabled= property of the
 =ExampleClass= to Objective-C code as =isEnabled= rather than just as
 the name of the property itself.
 
-1. class ExampleClass: NSObject {
-2. @objc var enabled: Bool {
-3. @objc(isEnabled) get {
-4. // Return the appropriate value
-5. }
-6. }
-7. }
+#+BEGIN_SRC swift
+  class ExampleClass: NSObject {
+      @objc var enabled: Bool {
+          @objc(isEnabled) get {
+              // Return the appropriate value
+          }
+      }
+  }
+#+END_SRC   
 
 For more information, see
 [[https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c][Importing
@@ -9000,38 +9316,37 @@ passed to the property wrapper's initializer. For example, in the code
 below, =SomeStruct= calls each of the initializers that =SomeWrapper=
 defines.
 
-1.  @propertyWrapper
-2.  struct SomeWrapper {
-3.  var wrappedValue: Int
-4.  var someValue: Double
-5.  init() {
-6.  self.wrappedValue = 100
-7.  self.someValue = 12.3
-8.  }
-9.  init(wrappedValue: Int) {
-10. self.wrappedValue = wrappedValue
-11. self.someValue = 45.6
-12. }
-13. init(wrappedValue value: Int, custom: Double) {
-14. self.wrappedValue = value
-15. self.someValue = custom
-16. }
-17. }
-18.
+#+BEGIN_SRC swift
+  @propertyWrapper
+  struct SomeWrapper {
+      var wrappedValue: Int
+      var someValue: Double
+      init() {
+          self.wrappedValue = 100
+          self.someValue = 12.3
+      }
+      init(wrappedValue: Int) {
+          self.wrappedValue = wrappedValue
+          self.someValue = 45.6
+      }
+      init(wrappedValue value: Int, custom: Double) {
+          self.wrappedValue = value
+          self.someValue = custom
+      }
+  }
 
-19. struct SomeStruct {
-20. // Uses init()
-21. @SomeWrapper var a: Int
-22.
+  struct SomeStruct {
+      // Uses init()
+      @SomeWrapper var a: Int
 
-23. // Uses init(wrappedValue:)
-24. @SomeWrapper var b = 10
-25.
+      // Uses init(wrappedValue:)
+      @SomeWrapper var b = 10
 
-26. // Both use init(wrappedValue:custom:)
-27. @SomeWrapper(custom: 98.7) var c = 30
-28. @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
-29. }
+      // Both use init(wrappedValue:custom:)
+      @SomeWrapper(custom: 98.7) var c = 30
+      @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
+  }
+#+END_SRC    
 
 The /projected value/ for a wrapped property is a second value that a
 property wrapper can use to expose additional functionality. The author
@@ -9045,25 +9360,26 @@ projected value for =someProperty= is =$someProperty=. The projected
 value has the same access control level as the original wrapped
 property.
 
-1.  @propertyWrapper
-2.  struct WrapperWithProjection {
-3.  var wrappedValue: Int
-4.  var projectedValue: SomeProjection {
-5.  return SomeProjection(wrapper: self)
-6.  }
-7.  }
-8.  struct SomeProjection {
-9.  var wrapper: WrapperWithProjection
-10. }
-11.
+#+BEGIN_SRC swift
+  @propertyWrapper
+  struct WrapperWithProjection {
+      var wrappedValue: Int
+      var projectedValue: SomeProjection {
+          return SomeProjection(wrapper: self)
+      }
+  }
+  struct SomeProjection {
+      var wrapper: WrapperWithProjection
+  }
 
-12. struct SomeStruct {
-13. @WrapperWithProjection var x = 123
-14. }
-15. let s = SomeStruct()
-16. s.x // Int value
-17. s.$x // SomeProjection value
-18. s.$x.wrapper // WrapperWithProjection value
+  struct SomeStruct {
+      @WrapperWithProjection var x = 123
+  }
+  let s = SomeStruct()
+  s.x // Int value
+  s.$x // SomeProjection value
+  s.$x.wrapper // WrapperWithProjection value
+#+END_SRC    
 
 *** resultBuilder
 
@@ -9142,33 +9458,35 @@ an array of integers. This code defines =Compontent= and =Expression= as
 type aliases, to make it easier to match the examples below to the list
 of methods above.
 
-1.  @resultBuilder
-2.  struct ArrayBuilder {
-3.  typealias Component = [Int]
-4.  typealias Expression = Int
-5.  static func buildExpression(_ element: Expression) -> Component {
-6.  return [element]
-7.  }
-8.  static func buildOptional(_ component: Component?) -> Component {
-9.  guard let component = component else { return [] }
-10. return component
-11. }
-12. static func buildEither(first component: Component) -> Component {
-13. return component
-14. }
-15. static func buildEither(second component: Component) -> Component {
-16. return component
-17. }
-18. static func buildArray(_ components: [Component]) -> Component {
-19. return Array(components.joined())
-20. }
-21. static func buildBlock(_ components: Component...) -> Component {
-22. return Array(components.joined())
-23. }
-24. }
+#+BEGIN_SRC swift
+  @resultBuilder
+  struct ArrayBuilder {
+      typealias Component = [Int]
+      typealias Expression = Int
+      static func buildExpression(_ element: Expression) -> Component {
+          return [element]
+      }
+      static func buildOptional(_ component: Component?) -> Component {
+          guard let component = component else { return [] }
+          return component
+      }
+      static func buildEither(first component: Component) -> Component {
+          return component
+      }
+      static func buildEither(second component: Component) -> Component {
+          return component
+      }
+      static func buildArray(_ components: [Component]) -> Component {
+          return Array(components.joined())
+      }
+      static func buildBlock(_ components: Component...) -> Component {
+          return Array(components.joined())
+      }
+  }
+#+END_SRC    
 
-<<Attributes.xhtml#ID635>>
 **** Result Transformations
+
 The following syntactic transformations are applied recursively to turn
 code that uses result-builder syntax into code that calls the static
 methods of the result builder type:
@@ -9177,8 +9495,10 @@ methods of the result builder type:
   expression becomes a call to that method. This transformation is
   always first. For example, the following declarations are equivalent:
 
-  1. @ArrayBuilder var builderNumber: [Int] { 10 }
-  2. var manualNumber = ArrayBuilder.buildExpression(10)
+  #+BEGIN_SRC swift
+    @ArrayBuilder var builderNumber: [Int] { 10 }
+    var manualNumber = ArrayBuilder.buildExpression(10)
+  #+END_SRC
 
 - An assignment statement is transformed like an expression, but is
   understood to evaluate to =()=. You can define an overload of
@@ -9195,60 +9515,62 @@ methods of the result builder type:
   below use a generic type that captures type information about both
   branches.
 
-  1.  protocol Drawable {
-  2.  func draw() -> String
-  3.  }
-  4.  struct Text: Drawable {
-  5.  var content: String
-  6.  init(_ content: String) { self.content = content }
-  7.  func draw() -> String { return content }
-  8.  }
-  9.  struct Line<D: Drawable>: Drawable {
-  10. var elements: [D]
-  11. func draw() -> String {
-  12. return elements.map { $0.draw() }.joined(separator: "")
-  13. }
-  14. }
-  15. struct DrawEither<First: Drawable, Second: Drawable>: Drawable {
-  16. var content: Drawable
-  17. func draw() -> String { return content.draw() }
-  18. }
-  19.
+  #+BEGIN_SRC swift
+    protocol Drawable {
+        func draw() -> String
+    }
+    struct Text: Drawable {
+        var content: String
+        init(_ content: String) { self.content = content }
+        func draw() -> String { return content }
+    }
+    struct Line<D: Drawable>: Drawable {
+        var elements: [D]
+        func draw() -> String {
+            return elements.map { $0.draw() }.joined(separator: "")
+        }
+    }
+    struct DrawEither<First: Drawable, Second: Drawable>: Drawable {
+        var content: Drawable
+        func draw() -> String { return content.draw() }
+    }
 
-  20. @resultBuilder
-  21. struct DrawingBuilder {
-  22. static func buildBlock<D: Drawable>(_ components: D...) -> Line<D>
-      {
-  23. return Line(elements: components)
-  24. }
-  25. static func buildEither<First, Second>(first: First)
-  26. -> DrawEither<First, Second> {
-  27. return DrawEither(content: first)
-  28. }
-  29. static func buildEither<First, Second>(second: Second)
-  30. -> DrawEither<First, Second> {
-  31. return DrawEither(content: second)
-  32. }
-  33. }
+    @resultBuilder
+    struct DrawingBuilder {
+        static func buildBlock<D: Drawable>(_ components: D...) -> Line<D>
+        {
+            return Line(elements: components)
+        }
+        static func buildEither<First, Second>(first: First)
+          -> DrawEither<First, Second> {
+            return DrawEither(content: first)
+        }
+        static func buildEither<First, Second>(second: Second)
+          -> DrawEither<First, Second> {
+            return DrawEither(content: second)
+        }
+    }
+  #+END_SRC
 
   However, this approach causes a problem in code that has availability
   checks:
 
-  1.  @available(macOS 99, *)
-  2.  struct FutureText: Drawable {
-  3.  var content: String
-  4.  init(_ content: String) { self.content = content }
-  5.  func draw() -> String { return content }
-  6.  }
-  7.  @DrawingBuilder var brokenDrawing: Drawable {
-  8.  if #available(macOS 99, *) {
-  9.  FutureText("Inside.future") // Problem
-  10. } else {
-  11. Text("Inside.present")
-  12. }
-  13. }
-  14. // The type of brokenDrawing is Line<DrawEither<Line<FutureText>,
-      Line<Text>>>
+  #+BEGIN_SRC swift
+    @available(macOS 99, *)
+    struct FutureText: Drawable {
+        var content: String
+        init(_ content: String) { self.content = content }
+        func draw() -> String { return content }
+    }
+    @DrawingBuilder var brokenDrawing: Drawable {
+        if #available(macOS 99, *) {
+            FutureText("Inside.future") // Problem
+        } else {
+            Text("Inside.present")
+        }
+    }
+    // The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
+  #+END_SRC
 
   In the code above, =FutureText= appears as part of the type of
   =brokenDrawing= because it's one of the types in the =DrawEither=
@@ -9260,27 +9582,28 @@ methods of the result builder type:
   method to erase type information. For example, the code below builds
   an =AnyDrawable= value from its availability check.
 
-  1.  struct AnyDrawable: Drawable {
-  2.  var content: Drawable
-  3.  func draw() -> String { return content.draw() }
-  4.  }
-  5.  extension DrawingBuilder {
-  6.  static func buildLimitedAvailability(_ content: Drawable) ->
-      AnyDrawable {
-  7.  return AnyDrawable(content: content)
-  8.  }
-  9.  }
-  10.
+  #+BEGIN_SRC swift
+    struct AnyDrawable: Drawable {
+        var content: Drawable
+        func draw() -> String { return content.draw() }
+    }
+    extension DrawingBuilder {
+        static func buildLimitedAvailability(_ content: Drawable) ->
+          AnyDrawable {
+            return AnyDrawable(content: content)
+        }
+    }
 
-  11. @DrawingBuilder var typeErasedDrawing: Drawable {
-  12. if #available(macOS 99, *) {
-  13. FutureText("Inside.future")
-  14. } else {
-  15. Text("Inside.present")
-  16. }
-  17. }
-  18. // The type of typeErasedDrawing is Line<DrawEither<AnyDrawable,
-      Line<Text>>>
+
+    @DrawingBuilder var typeErasedDrawing: Drawable {
+        if #available(macOS 99, *) {
+            FutureText("Inside.future")
+        } else {
+            Text("Inside.present")
+        }
+    }
+    // The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
+  #+END_SRC
 
 - A branch statement becomes a series of nested calls to the
   =buildEither(first:)= and =buildEither(second:)= methods. The
@@ -9296,36 +9619,32 @@ methods of the result builder type:
   =buildEither(first: buildEither(second: ... ))=. The following
   declarations are equivalent:
 
-  1.  let someNumber = 19
-  2.  @ArrayBuilder var builderConditional: [Int] {
-  3.  if someNumber < 12 {
-  4.  31
-  5.  } else if someNumber == 19 {
-  6.  32
-  7.  } else {
-  8.  33
-  9.  }
-  10. }
-  11.
+  #+BEGIN_SRC swift
+    let someNumber = 19
+    @ArrayBuilder var builderConditional: [Int] {
+        if someNumber < 12 {
+            31
+        } else if someNumber == 19 {
+            32
+        } else {
+            33
+        }
+    }
 
-  12. var manualConditional: [Int]
-  13. if someNumber < 12 {
-  14. let partialResult = ArrayBuilder.buildExpression(31)
-  15. let outerPartialResult = ArrayBuilder.buildEither(first:
-      partialResult)
-  16. manualConditional = ArrayBuilder.buildEither(first:
-      outerPartialResult)
-  17. } else if someNumber == 19 {
-  18. let partialResult = ArrayBuilder.buildExpression(32)
-  19. let outerPartialResult = ArrayBuilder.buildEither(second:
-      partialResult)
-  20. manualConditional = ArrayBuilder.buildEither(first:
-      outerPartialResult)
-  21. } else {
-  22. let partialResult = ArrayBuilder.buildExpression(33)
-  23. manualConditional = ArrayBuilder.buildEither(second:
-      partialResult)
-  24. }
+    var manualConditional: [Int]
+    if someNumber < 12 {
+        let partialResult = ArrayBuilder.buildExpression(31)
+        let outerPartialResult = ArrayBuilder.buildEither(first: partialResult)
+        manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+    } else if someNumber == 19 {
+        let partialResult = ArrayBuilder.buildExpression(32)
+        let outerPartialResult = ArrayBuilder.buildEither(second: partialResult)
+        manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+    } else {
+        let partialResult = ArrayBuilder.buildExpression(33)
+        manualConditional = ArrayBuilder.buildEither(second: partialResult)
+    }
+  #+END_SRC    
 
 - A branch statement that might not produce a value, like an =if=
   statement without an =else= clause, becomes a call to
@@ -9334,34 +9653,36 @@ methods of the result builder type:
   =buildOptional(_:)= is called with =nil= as its argument. For example,
   the following declarations are equivalent:
 
-  1. @ArrayBuilder var builderOptional: [Int] {
-  2. if (someNumber % 2) == 1 { 20 }
-  3. }
-  4.
+  #+BEGIN_SRC swift
+    @ArrayBuilder var builderOptional: [Int] {
+        if (someNumber % 2) == 1 { 20 }
+    }
 
-  5. var partialResult: [Int]? = nil
-  6. if (someNumber % 2) == 1 {
-  7. partialResult = ArrayBuilder.buildExpression(20)
-  8. }
-  9. var manualOptional = ArrayBuilder.buildOptional(partialResult)
+    var partialResult: [Int]? = nil
+    if (someNumber % 2) == 1 {
+        partialResult = ArrayBuilder.buildExpression(20)
+    }
+    var manualOptional = ArrayBuilder.buildOptional(partialResult)
+  #+END_SRC   
 
 - A code block or =do= statement becomes a call to the =buildBlock(_:)=
   method. Each of the statements inside of the block is transformed, one
   at a time, and they become the arguments to the =buildBlock(_:)=
   method. For example, the following declarations are equivalent:
 
-  1.  @ArrayBuilder var builderBlock: [Int] {
-  2.  100
-  3.  200
-  4.  300
-  5.  }
-  6. 
+  #+BEGIN_SRC swift
+    @ArrayBuilder var builderBlock: [Int] {
+        100
+        200
+        300
+    }
 
-  7.  var manualBlock = ArrayBuilder.buildBlock(
-  8.  ArrayBuilder.buildExpression(100),
-  9.  ArrayBuilder.buildExpression(200),
-  10. ArrayBuilder.buildExpression(300)
-  11. )
+    var manualBlock = ArrayBuilder.buildBlock(
+      ArrayBuilder.buildExpression(100),
+      ArrayBuilder.buildExpression(200),
+      ArrayBuilder.buildExpression(300)
+    )
+  #+END_SRC
 
 - A =for= loop becomes a temporary variable, a =for= loop, and call to
   the =buildArray(_:)= method. The new =for= loop iterates over the
@@ -9369,19 +9690,20 @@ methods of the result builder type:
   array is passed as the argument in the =buildArray(_:)= call. For
   example, the following declarations are equivalent:
 
-  1.  @ArrayBuilder var builderArray: [Int] {
-  2.  for i in 5...7 {
-  3.  100 + i
-  4.  }
-  5.  }
-  6. 
+  #+BEGIN_SRC swift
+    @ArrayBuilder var builderArray: [Int] {
+        for i in 5...7 {
+            100 + i
+        }
+    }
 
-  7.  var temporary: \[\[Int\]\] = []
-  8.  for i in 5...7 {
-  9.  let partialResult = ArrayBuilder.buildExpression(100 + i)
-  10. temporary.append(partialResult)
-  11. }
-  12. let manualArray = ArrayBuilder.buildArray(temporary)
+    var temporary: \[\[Int\]\] = []
+    for i in 5...7 {
+        let partialResult = ArrayBuilder.buildExpression(100 + i)
+        temporary.append(partialResult)
+    }
+    let manualArray = ArrayBuilder.buildArray(temporary)
+  #+END_SRC    
 
 - If the result builder has a =buildFinalResult(_:)= method, the final
   result becomes a call to that method. This transformation is always
@@ -9406,7 +9728,6 @@ expression =4 + 5 * 6= becomes =buildExpression(4 + 5 * 6)= rather
 multiple calls to that function. Likewise, nested branch statements
 become a single binary tree of calls to the =buildEither= methods.
 
-<<Attributes.xhtml#ID636>>
 **** Custom Result-Builder Attributes
 Creating a result builder type creates a custom attribute with the same
 name. You can apply that attribute in the following places:
@@ -9717,9 +10038,11 @@ values being matched against. For example, the following code iterates
 through the closed range =1...3=, ignoring the current value of the
 range on each iteration of the loop:
 
-1. for _ in 1...3 {
-2. // Do something three times.
-3. }
+#+BEGIN_SRC swift
+  for _ in 1...3 {
+      // Do something three times.
+  }
+#+END_SRC   
 
 Grammar of a wildcard pattern
 
@@ -9733,7 +10056,9 @@ a variable or constant name. For example, in the following constant
 declaration, =someValue= is an identifier pattern that matches the value
 =42= of type =Int=:
 
-1. let someValue = 42
+#+BEGIN_SRC swift
+  let someValue = 42
+#+END_SRC   
 
 When the match succeeds, the value =42= is bound (assigned) to the
 constant name =someValue=.
@@ -9760,13 +10085,15 @@ variables or constants to their matching values. For example, you can
 decompose the elements of a tuple and bind the value of each element to
 a corresponding identifier pattern.
 
-1. let point = (3, 2)
-2. switch point {
-3. // Bind x and y to the elements of point.
-4. case let (x, y):
-5. print("The point is at (\(x), \(y)).")
-6. }
-7. // Prints "The point is at (3, 2)."
+#+BEGIN_SRC swift
+  let point = (3, 2)
+  switch point {
+      // Bind x and y to the elements of point.
+  case let (x, y):
+      print("The point is at (\(x), \(y)).")
+  }
+  // Prints "The point is at (3, 2)."
+#+END_SRC   
 
 In the example above, =let= distributes to each identifier pattern in
 the tuple pattern =(x, y)=. Because of this behavior, the =switch= cases
@@ -9798,19 +10125,23 @@ patterns that contain those. For example, the following code isn't valid
 because the element =0= in the tuple pattern =(x, 0)= is an expression
 pattern:
 
-1. let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
-2. // This code isn't valid.
-3. for (x, 0) in points {
-4. /* ... */
-5. }
+#+BEGIN_SRC swift
+  let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
+  // This code isn't valid.
+  for (x, 0) in points {
+      /* ... */
+  }
+#+END_SRC   
 
 The parentheses around a tuple pattern that contains a single element
 have no effect. The pattern matches values of that single element's
 type. For example, the following are equivalent:
 
-1. let a = 2 // a: Int = 2
-2. let (a) = 2 // a: Int = 2
-3. let (a): Int = 2 // a: Int = 2
+#+BEGIN_SRC swift
+  let a = 2 // a: Int = 2
+  let (a) = 2 // a: Int = 2
+  let (a): Int = 2 // a: Int = 2
+#+END_SRC   
 
 Grammar of a tuple pattern
 
@@ -9852,17 +10183,19 @@ Note that, because =Optional= is implemented as an enumeration, =.none=
 and =.some= can appear in the same switch as the cases of the
 enumeration type.
 
-1.  enum SomeEnum { case left, right }
-2.  let x: SomeEnum? = .left
-3.  switch x {
-4.  case .left:
-5.  print("Turn left")
-6.  case .right:
-7.  print("Turn right")
-8.  case nil:
-9.  print("Keep going straight")
-10. }
-11. // Prints "Turn left"
+#+BEGIN_SRC swift
+  enum SomeEnum { case left, right }
+  let x: SomeEnum? = .left
+  switch x {
+  case .left:
+      print("Turn left")
+  case .right:
+      print("Turn right")
+  case nil:
+      print("Keep going straight")
+  }
+  // Prints "Turn left"
+#+END_SRC    
 
 Grammar of an enumeration case pattern
 
@@ -9884,29 +10217,33 @@ the same places as enumeration case patterns.
 Because optional patterns are syntactic sugar for =Optional= enumeration
 case patterns, the following are equivalent:
 
-1.  let someOptional: Int? = 42
-2.  // Match using an enumeration case pattern.
-3.  if case .some(let x) = someOptional {
-4.  print(x)
-5.  }
-6.
-7.  // Match using an optional pattern.
-8.  if case let x? = someOptional {
-9.  print(x)
-10. }
+#+BEGIN_SRC swift
+  let someOptional: Int? = 42
+  // Match using an enumeration case pattern.
+  if case .some(let x) = someOptional {
+      print(x)
+  }
+
+  // Match using an optional pattern.
+  if case let x? = someOptional {
+      print(x)
+  }
+#+END_SRC    
 
 The optional pattern provides a convenient way to iterate over an array
 of optional values in a =for=-=in= statement, executing the body of the
 loop only for non-=nil= elements.
 
-1. let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
-2. // Match only non-nil values.
-3. for case let number? in arrayOfOptionalInts {
-4. print("Found a \(number)")
-5. }
-6. // Found a 2
-7. // Found a 3
-8. // Found a 5
+#+BEGIN_SRC swift
+  let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
+  // Match only non-nil values.
+  for case let number? in arrayOfOptionalInts {
+      print("Found a \(number)")
+  }
+  // Found a 2
+  // Found a 3
+  // Found a 5
+#+END_SRC
 
 Grammar of an optional pattern
 
@@ -9921,8 +10258,10 @@ There are two type-casting patterns, the =is= pattern and the =as=
 pattern. The =is= pattern appears only in =switch= statement case
 labels. The =is= and =as= patterns have the following form:
 
-1. is type
-2. pattern as type
+#+BEGIN_SRC swift
+  is type
+  pattern as type
+#+END_SRC   
 
 The =is= pattern matches a value if the type of that value at runtime is
 the same as the type specified in the right-hand side of the =is=
@@ -9967,32 +10306,36 @@ the ==== operator. It can also match a value with a range of values, by
 checking whether the value is contained within the range, as the
 following example shows.
 
-1.  let point = (1, 2)
-2.  switch point {
-3.  case (0, 0):
-4.  print("(0, 0) is at the origin.")
-5.  case (-2...2, -2...2):
-6.  print("(\(point.0), \(point.1)) is near the origin.")
-7.  default:
-8.  print("The point is at (\(point.0), \(point.1)).")
-9.  }
-10. // Prints "(1, 2) is near the origin."
+#+BEGIN_SRC swift
+  let point = (1, 2)
+  switch point {
+  case (0, 0):
+      print("(0, 0) is at the origin.")
+  case (-2...2, -2...2):
+      print("(\(point.0), \(point.1)) is near the origin.")
+  default:
+      print("The point is at (\(point.0), \(point.1)).")
+  }
+  // Prints "(1, 2) is near the origin."
+#+END_SRC    
 
 You can overload the =~== operator to provide custom expression matching
 behavior. For example, you can rewrite the above example to compare the
 =point= expression with a string representations of points.
 
-1.  // Overload the ~= operator to match a string with an integer.
-2.  func ~= (pattern: String, value: Int) -> Bool {
-3.  return pattern == "\(value)"
-4.  }
-5.  switch point {
-6.  case ("0", "0"):
-7.  print("(0, 0) is at the origin.")
-8.  default:
-9.  print("The point is at (\(point.0), \(point.1)).")
-10. }
-11. // Prints "The point is at (1, 2)."
+#+BEGIN_SRC swift
+  // Overload the ~= operator to match a string with an integer.
+  func ~= (pattern: String, value: Int) -> Bool {
+      return pattern == "\(value)"
+  }
+  switch point {
+  case ("0", "0"):
+      print("(0, 0) is at the origin.")
+  default:
+      print("The point is at (\(point.0), \(point.1)).")
+  }
+  // Prints "The point is at (1, 2)."
+#+END_SRC    
 
 Grammar of an expression pattern
 
@@ -10020,12 +10363,16 @@ type or function, along with any associated constraints and requirements
 on those parameters. A generic parameter clause is enclosed in angle
 brackets (<>) and has the following form:
 
-1. <generic parameter list>
+#+BEGIN_SRC swift
+  <generic parameter list>
+#+END_SRC   
 
 The /generic parameter list/ is a comma-separated list of generic
 parameters, each of which has the following form:
 
-1. type parameter: constraint
+#+BEGIN_SRC swift
+  type parameter: constraint
+#+END_SRC   
 
 A generic parameter consists of a /type parameter/ followed by an
 optional /constraint/. A /type parameter/ is simply the name of a
@@ -10040,12 +10387,14 @@ example, in the generic function below, the generic parameter
 =T: Comparable= indicates that any type argument substituted for the
 type parameter =T= must conform to the =Comparable= protocol.
 
-1. func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
-2. if x < y {
-3. return y
-4. }
-5. return x
-6. }
+#+BEGIN_SRC swift
+  func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
+      if x < y {
+          return y
+      }
+      return x
+  }
+#+END_SRC   
 
 Because =Int= and =Double=, for example, both conform to the
 =Comparable= protocol, this function accepts arguments of either type.
@@ -10054,9 +10403,10 @@ clause when you use a generic function or initializer. The type
 arguments are instead inferred from the type of the arguments passed to
 the function or initializer.
 
-1. simpleMax(17, 42) // T is inferred to be Int
-2. simpleMax(3.14159, 2.71828) // T is inferred to be Double
-
+#+BEGIN_SRC swift
+  simpleMax(17, 42) // T is inferred to be Int
+  simpleMax(3.14159, 2.71828) // T is inferred to be Double
+#+END_SRC
 
 *** Generic Where Clauses
 
@@ -10066,7 +10416,9 @@ opening curly brace of a type or function's body. A generic =where=
 clause consists of the =where= keyword, followed by a comma-separated
 list of one or more /requirements/.
 
-1. where requirements
+#+BEGIN_SRC swift
+  where requirements
+#+END_SRC   
 
 The /requirements/ in a generic =where= clause specify that a type
 parameter inherits from a class or conforms to a protocol or protocol
@@ -10103,11 +10455,13 @@ from both clauses are combined. In the example below, =startsWithZero()=
 is available only if =Element= conforms to both =SomeProtocol= and
 =Numeric=.
 
-1. extension Collection where Element: SomeProtocol {
-2. func startsWithZero() -> Bool where Element: Numeric {
-3. return first == .zero
-4. }
-5. }
+#+BEGIN_SRC swift
+  extension Collection where Element: SomeProtocol {
+      func startsWithZero() -> Bool where Element: Numeric {
+          return first == .zero
+      }
+  }
+#+END_SRC   
 
 You can overload a generic function or initializer by providing
 different constraints, requirements, or both on the type parameters.
@@ -10186,7 +10540,9 @@ A /generic argument clause/ specifies the type arguments of a generic
 type. A generic argument clause is enclosed in angle brackets (<>) and
 has the following form:
 
-1. <generic argument list>
+#+BEGIN_SRC swift
+  <generic argument list>
+#+END_SRC   
 
 The /generic argument list/ is a comma-separated list of type arguments.
 A /type argument/ is the name of an actual concrete type that replaces a
@@ -10195,10 +10551,12 @@ generic type. The result is a specialized version of that generic type.
 The example below shows a simplified version of the Swift standard
 library's generic dictionary type.
 
-1. struct Dictionary<Key: Hashable, Value>: Collection,
-   ExpressibleByDictionaryLiteral {
-2. /* ... */
-3. }
+#+BEGIN_SRC swift
+  struct Dictionary<Key: Hashable, Value>: Collection,
+                                           ExpressibleByDictionaryLiteral {
+      /* ... */
+  }
+#+END_SRC   
 
 The specialized version of the generic =Dictionary= type,
 =Dictionary<String, Int>= is formed by replacing the generic parameters
@@ -10216,8 +10574,9 @@ replace the type parameter =Element= in =Array<Element>= with a
 specialized version of an array, =Array<Int>=, to form an array whose
 elements are themselves arrays of integers.
 
-1. let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8,
-9]]
+#+BEGIN_SRC swift
+  let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+#+END_SRC
 
 As mentioned in [[Generic Parameter Clause][Generic
 Parameter Clause]], you don't use a generic argument clause to specify

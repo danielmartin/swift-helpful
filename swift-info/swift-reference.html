@@ -1207,12 +1207,12 @@ as a number or string.
 </p>
 <p>The following are examples of literals:
 </p>
-<ol>
-<li> 42 // Integer literal
-</li><li> 3.14159 // Floating-point literal
-</li><li> &quot;Hello, world!&quot; // String literal
-</li><li> true // Boolean literal
-</li></ol>
+<div class="example">
+<pre class="example">42 // Integer literal
+3.14159 // Floating-point literal
+&quot;Hello, world!&quot; // String literal
+true // Boolean literal
+</pre></div>
 
 <p>A literal doesn&rsquo;t have a type on its own. Instead, a literal is parsed
 as having infinite precision and Swift&rsquo;s type inference attempts to
@@ -1520,9 +1520,9 @@ Previous: <a href="#Floating_002dPoint-Literals" accesskey="p" rel="prev">Floati
 marks. A single-line string literal is surrounded by double quotation
 marks and has the following form:
 </p>
-<ol>
-<li> &quot;characters&quot;
-</li></ol>
+<div class="example">
+<pre class="example">&quot;characters&quot;
+</pre></div>
 
 <p>String literals can&rsquo;t contain an unescaped double quotation mark (&lsquo;<samp>&quot;</samp>&rsquo;),
 an unescaped backslash (&lsquo;<samp>\</samp>&rsquo;), a carriage return, or a line feed.
@@ -1530,11 +1530,11 @@ an unescaped backslash (&lsquo;<samp>\</samp>&rsquo;), a carriage return, or a l
 <p>A multiline string literal is surrounded by three double quotation marks
 and has the following form:
 </p>
-<ol>
-<li> &quot;&quot;&quot;
-</li><li> characters
-</li><li> &quot;&quot;&quot;
-</li></ol>
+<div class="example">
+<pre class="example">&quot;&quot;&quot;
+characters
+&quot;&quot;&quot;
+</pre></div>
 
 <p>Unlike a single-line string literal, a multiline string literal can
 contain unescaped double quotation marks (&lsquo;<samp>&quot;</samp>&rsquo;), carriage returns, and
@@ -1594,25 +1594,25 @@ an unescaped backslash, a carriage return, or a line feed.
 </p>
 <p>For example, all of the following string literals have the same value:
 </p>
-<ol>
-<li> &quot;1 2 3&quot;
-</li><li> &quot;1 2 \(&quot;3&quot;)&quot;
-</li><li> &quot;1 2 \(3)&quot;
-</li><li> &quot;1 2 \(1 + 2)&quot;
-</li><li> let x = 3; &quot;1 2 \(x)&quot;
-</li></ol>
+<div class="example">
+<pre class="example">&quot;1 2 3&quot;
+&quot;1 2 \(&quot;3&quot;)&quot;
+&quot;1 2 \(3)&quot;
+&quot;1 2 \(1 + 2)&quot;
+let x = 3; &quot;1 2 \(x)&quot;
+</pre></div>
 
 <p>A string delimited by extended delimiters is a sequence of characters
 surrounded by quotation marks and a balanced set of one or more number
 signs (&lsquo;<samp>#</samp>&rsquo;). A string delimited by extended delimiters has the following
 forms:
 </p>
-<ol>
-<li> #&quot;characters&quot;#
-</li><li> #&quot;&quot;&quot;
-</li><li> characters
-</li><li> &quot;&quot;&quot;#
-</li></ol>
+<div class="example">
+<pre class="example">#&quot;characters&quot;#
+#&quot;&quot;&quot;
+characters
+&quot;&quot;&quot;#
+</pre></div>
 
 <p>Special characters in a string delimited by extended delimiters appear
 in the resulting string as normal characters rather than as special
@@ -1624,22 +1624,22 @@ terminating the string.
 <p>The following example shows a string literal and a string delimited by
 extended delimiters that create equivalent string values:
 </p>
-<ol>
-<li> let string = #&quot;\(x) \ &quot; &quot;#
-</li><li> let escaped = &quot;\\(x) \\ \&quot; \&quot;
-</li><li> print(string)
-</li><li> // Prints &quot;\(x) \ &quot; &quot;
-</li><li> print(string == escaped)
-</li><li> // Prints &quot;true&quot;
-</li></ol>
+<div class="example">
+<pre class="example">let string = #&quot;\(x) \ &quot; \u{2603}&quot;#
+let escaped = &quot;\\(x) \\ \&quot; \\u{2603}&quot;
+print(string)
+// Prints &quot;\(x) \ &quot; \u{2603}&quot;
+print(string == escaped)
+// Prints &quot;true&quot;
+</pre></div>
 
 <p>If you use more than one number sign to form a string delimited by
 extended delimiters, don&rsquo;t place whitespace in between the number signs:
 </p>
-<ol>
-<li> print(###&quot;Line 1\###nLine 2&quot;###) // OK
-</li><li> print(# # #&quot;Line 1\# # #nLine 2&quot;# # #) // Error
-</li></ol>
+<div class="example">
+<pre class="example">print(###&quot;Line 1\###nLine 2&quot;###) // OK
+print(# # #&quot;Line 1\# # #nLine 2&quot;# # #) // Error
+</pre></div>
 
 <p>Multiline string literals that you create using extended delimiters have
 the same indentation requirements as regular multiline string literals.
@@ -1655,10 +1655,10 @@ concatenated at compile time. For example, the values of &lsquo;<samp>textA</sam
 &lsquo;<samp>textB</samp>&rsquo; in the example below are identical&mdash;no runtime concatenation is
 performed.
 </p>
-<ol>
-<li> let textA = &quot;Hello &quot; + &quot;world&quot;
-</li><li> let textB = &quot;Hello world&quot;
-</li></ol>
+<div class="example">
+<pre class="example">let textA = &quot;Hello &quot; + &quot;world&quot;
+let textB = &quot;Hello world&quot;
+</pre></div>
 
 <p>Grammar of a string literal
 </p>
@@ -2133,10 +2133,10 @@ Next: <a href="#Type-Identifier" accesskey="n" rel="next">Type Identifier</a>, U
 expression. Type annotations begin with a colon (&lsquo;<samp>:</samp>&rsquo;) and end with a
 type, as the following examples show:
 </p>
-<ol>
-<li> let someTuple: (Double, Double) = (3.14159, 2.71828)
-</li><li> func someFunction(a: Int) { <em>* &hellip; *</em> }
-</li></ol>
+<div class="example">
+<pre class="example">let someTuple: (Double, Double) = (3.14159, 2.71828)
+func someFunction(a: Int) { /* ... */ }
+</pre></div>
 
 <p>In the first example, the expression &lsquo;<samp>someTuple</samp>&rsquo; is specified to have
 the tuple type &lsquo;<samp>(Double, Double)</samp>&rsquo;. In the second example, the parameter
@@ -2174,19 +2174,19 @@ type alias of a named or compound type. For instance, in the example
 below, the use of &lsquo;<samp>Point</samp>&rsquo; in the type annotation refers to the tuple
 type &lsquo;<samp>(Int, Int)</samp>&rsquo;.
 </p>
-<ol>
-<li> typealias Point = (Int, Int)
-</li><li> let origin: Point = (0, 0)
-</li></ol>
+<div class="example">
+<pre class="example">typealias Point = (Int, Int)
+let origin: Point = (0, 0)
+</pre></div>
 
 <p>In the second case, a type identifier uses dot (&lsquo;<samp>.</samp>&rsquo;) syntax to refer to
 named types declared in other modules or nested within other types. For
 example, the type identifier in the following code references the named
 type &lsquo;<samp>MyType</samp>&rsquo; that&rsquo;s declared in the &lsquo;<samp>ExampleModule</samp>&rsquo; module.
 </p>
-<ol>
-<li> var someValue: ExampleModule.MyType
-</li></ol>
+<div class="example">
+<pre class="example">var someValue: ExampleModule.MyType
+</pre></div>
 
 <p>Grammar of a type identifier
 </p>
@@ -2223,13 +2223,12 @@ Values</a>.
 <p>When an element of a tuple type has a name, that name is part of the
 type.
 </p>
-<ol>
-<li> var someTuple = (top: 10, bottom: 12) // someTuple is of type (top:
-Int, bottom: Int)
-</li><li> someTuple = (top: 4, bottom: 42) // OK: names match
-</li><li> someTuple = (9, 99) // OK: names are inferred
-</li><li> someTuple = (left: 5, right: 5) // Error: names don&rsquo;t match
-</li></ol>
+<div class="example">
+<pre class="example">var someTuple = (top: 10, bottom: 12) // someTuple is of type (top: Int, bottom: Int)
+someTuple = (top: 4, bottom: 42) // OK: names match
+someTuple = (9, 99) // OK: names are inferred
+someTuple = (left: 5, right: 5) // Error: names don't match
+</pre></div>
 
 <p>All tuple types contain two or more types, except for &lsquo;<samp>Void</samp>&rsquo; which is a
 type alias for the empty tuple type, &lsquo;<samp>()</samp>&rsquo;.
@@ -2272,9 +2271,9 @@ Next: <a href="#Array-Type" accesskey="n" rel="next">Array Type</a>, Previous: <
 and consists of a parameter and return type separated by an arrow
 (&lsquo;<samp>-&gt;</samp>&rsquo;):
 </p>
-<ol>
-<li> (parameter type) -&gt; return type
-</li></ol>
+<div class="example">
+<pre class="example">(parameter type) -&gt; return type
+</pre></div>
 
 <p>The <em>parameter type</em> is comma-separated list of types. Because the
 <em>return type</em> can be a tuple type, function types support functions and
@@ -2316,29 +2315,32 @@ takes no arguments.
 <p>Argument names in functions and methods aren&rsquo;t part of the
 corresponding function type. For example:
 </p>
-<ol>
-<li> func someFunction(left: Int, right: Int) {}
-</li><li> func anotherFunction(left: Int, right: Int) {}
-</li><li> func functionWithDifferentLabels(top: Int, bottom: Int) {}
-</li><li> var f = someFunction // The type of f is (Int, Int) -&gt; Void, not
-(left: Int, right: Int) -&gt; Void.
-</li><li> f = anotherFunction // OK
-</li><li> f = functionWithDifferentLabels // OK
-</li><li> func functionWithDifferentArgumentTypes(left: Int, right: String) {}
-</li><li> f = functionWithDifferentArgumentTypes // Error
-</li><li> func functionWithDifferentNumberOfArguments(left: Int, right: Int,
-top: Int) {}
-</li><li> f = functionWithDifferentNumberOfArguments // Error
-</li></ol>
+<div class="example">
+<pre class="example">func someFunction(left: Int, right: Int) {}
+func anotherFunction(left: Int, right: Int) {}
+func functionWithDifferentLabels(top: Int, bottom: Int) {}
+
+
+var f = someFunction // The type of f is (Int, Int) -&gt; Void, not (left: Int, right: Int) -&gt; Void.
+f = anotherFunction // OK
+f = functionWithDifferentLabels // OK
+
+func functionWithDifferentArgumentTypes(left: Int, right: String) {}
+f = functionWithDifferentArgumentTypes // Error
+
+func functionWithDifferentNumberOfArguments(left: Int, right: Int,
+                                            top: Int) {}
+f = functionWithDifferentNumberOfArguments // Error
+</pre></div>
 
 <p>Because argument labels aren&rsquo;t part of a function&rsquo;s type, you omit them
 when writing a function type.
 </p>
-<ol>
-<li> var operation: (lhs: Int, rhs: Int) -&gt; Int // Error
-</li><li> var operation: (_ lhs: Int, _ rhs: Int) -&gt; Int // OK
-</li><li> var operation: (Int, Int) -&gt; Int // OK
-</li></ol>
+<div class="example">
+<pre class="example">var operation: (lhs: Int, rhs: Int) -&gt; Int // Error
+var operation: (_ lhs: Int, _ rhs: Int) -&gt; Int // OK
+var operation: (Int, Int) -&gt; Int // OK
+</pre></div>
 
 <p>If a function type includes more than a single arrow (&lsquo;<samp>-&gt;</samp>&rsquo;), the
 function types are grouped from right to left. For example, the function
@@ -2373,18 +2375,19 @@ to another nonescaping function parameter. This restriction helps Swift
 perform more of its checks for conflicting access to memory at compile
 time instead of at runtime. For example:
 </p>
-<ol>
-<li> let external: (() -&gt; Void) -&gt; Void = { _ in () }
-</li><li> func takesTwoFunctions(first: (() -&gt; Void) -&gt; Void, second: (() -&gt;
-Void) -&gt; Void) {
-</li><li> first { first {} } // Error
-</li><li> second { second {} } // Error
-</li><li> first { second {} } // Error
-</li><li> second { first {} } // Error
-</li><li> first { external {} } // OK
-</li><li> external { first {} } // OK
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">let external: (() -&gt; Void) -&gt; Void = { _ in () }
+func takesTwoFunctions(first: (() -&gt; Void) -&gt; Void, second: (() -&gt; Void) -&gt; Void) {
+    first { first {} } // Error
+    second { second {} } // Error
+
+    first { second {} } // Error
+    second { first {} } // Error
+
+    first { external {} } // OK
+    external { first {} } // OK
+}
+</pre></div>
 
 <p>In the code above, both of the parameters to
 &lsquo;<samp>takesTwoFunctions(first:second:)</samp>&rsquo; are functions. Neither parameter is
@@ -2452,16 +2455,16 @@ Next: <a href="#Dictionary-Type" accesskey="n" rel="next">Dictionary Type</a>, P
 <p>The Swift language provides the following syntactic sugar for the Swift
 standard library &lsquo;<samp>Array&lt;Element&gt;</samp>&rsquo; type:
 </p>
-<ol>
-<li> [type]
-</li></ol>
+<div class="example">
+<pre class="example">[type]
+</pre></div>
 
 <p>In other words, the following two declarations are equivalent:
 </p>
-<ol>
-<li> let someArray: Array&lt;String&gt; = [&quot;Alex&quot;, &quot;Brian&quot;, &quot;Dave&quot;]
-</li><li> let someArray: [String] = [&quot;Alex&quot;, &quot;Brian&quot;, &quot;Dave&quot;]
-</li></ol>
+<div class="example">
+<pre class="example">let someArray: Array&lt;String&gt; = [&quot;Alex&quot;, &quot;Brian&quot;, &quot;Dave&quot;]
+let someArray: [String] = [&quot;Alex&quot;, &quot;Brian&quot;, &quot;Dave&quot;]
+</pre></div>
 
 <p>In both cases, the constant &lsquo;<samp>someArray</samp>&rsquo; is declared as an array of
 strings. The elements of an array can be accessed through subscripting
@@ -2503,17 +2506,16 @@ Next: <a href="#Optional-Type" accesskey="n" rel="next">Optional Type</a>, Previ
 <p>The Swift language provides the following syntactic sugar for the Swift
 standard library &lsquo;<samp>Dictionary&lt;Key, Value&gt;</samp>&rsquo; type:
 </p>
-<ol>
-<li> [key type: value type]
-</li></ol>
+<div class="example">
+<pre class="example">[key type: value type]
+</pre></div>
 
 <p>In other words, the following two declarations are equivalent:
 </p>
-<ol>
-<li> let someDictionary: [String: Int] = [&quot;Alex&quot;: 31, &quot;Paul&quot;: 39]
-</li><li> let someDictionary: Dictionary&lt;String, Int&gt; = [&quot;Alex&quot;: 31, &quot;Paul&quot;:
-39]
-</li></ol>
+<div class="example">
+<pre class="example">let someDictionary: [String: Int] = [&quot;Alex&quot;: 31, &quot;Paul&quot;: 39]
+let someDictionary: Dictionary&lt;String, Int&gt; = [&quot;Alex&quot;: 31, &quot;Paul&quot;: 39]
+</pre></div>
 
 <p>In both cases, the constant &lsquo;<samp>someDictionary</samp>&rsquo; is declared as a dictionary
 with strings as keys and integers as values.
@@ -2549,10 +2551,10 @@ Next: <a href="#Implicitly-Unwrapped-Optional-Type" accesskey="n" rel="next">Imp
 named type &lsquo;<samp>Optional&lt;Wrapped&gt;</samp>&rsquo;, which is defined in the Swift standard
 library. In other words, the following two declarations are equivalent:
 </p>
-<ol>
-<li> var optionalInteger: Int?
-</li><li> var optionalInteger: Optional&lt;Int&gt;
-</li></ol>
+<div class="example">
+<pre class="example">var optionalInteger: Int?
+var optionalInteger: Optional&lt;Int&gt;
+</pre></div>
 
 <p>In both cases, the variable &lsquo;<samp>optionalInteger</samp>&rsquo; is declared to have the
 type of an optional integer. Note that no whitespace may appear between
@@ -2568,10 +2570,10 @@ automatically defaults to &lsquo;<samp>nil</samp>&rsquo;.
 <p>If an instance of an optional type contains a value, you can access that
 value using the postfix operator &lsquo;<samp>!</samp>&rsquo;, as shown below:
 </p>
-<ol>
-<li> optionalInteger = 42
-</li><li> optionalInteger! // 42
-</li></ol>
+<div class="example">
+<pre class="example">optionalInteger = 42
+optionalInteger! // 42
+</pre></div>
 
 <p>Using the &lsquo;<samp>!</samp>&rsquo; operator to unwrap an optional that has a value of &lsquo;<samp>nil</samp>&rsquo;
 results in a runtime error.
@@ -2603,10 +2605,10 @@ that has a value of &lsquo;<samp>nil</samp>&rsquo;, you&rsquo;ll get a runtime e
 exception of the implicit unwrapping behavior, the following two
 declarations are equivalent:
 </p>
-<ol>
-<li> var implicitlyUnwrappedString: String!
-</li><li> var explicitlyUnwrappedString: Optional&lt;String&gt;
-</li></ol>
+<div class="example">
+<pre class="example">var implicitlyUnwrappedString: String!
+var explicitlyUnwrappedString: Optional&lt;String&gt;
+</pre></div>
 
 <p>Note that no whitespace may appear between the type and the &lsquo;<samp>!</samp>&rsquo;.
 </p>
@@ -2615,12 +2617,13 @@ contains that type, optional types that are nested inside a tuple type
 or a generic type&mdash;such as the element types of a dictionary or
 array&mdash;can&rsquo;t be marked as implicitly unwrapped. For example:
 </p>
-<ol>
-<li> let tupleOfImplicitlyUnwrappedElements: (Int!, Int!) // Error
-</li><li> let implicitlyUnwrappedTuple: (Int, Int)! // OK
-</li><li> let arrayOfImplicitlyUnwrappedElements: [Int!] // Error
-</li><li> let implicitlyUnwrappedArray: [Int]! // OK
-</li></ol>
+<div class="example">
+<pre class="example">let tupleOfImplicitlyUnwrappedElements: (Int!, Int!) // Error
+let implicitlyUnwrappedTuple: (Int, Int)! // OK
+
+let arrayOfImplicitlyUnwrappedElements: [Int!] // Error
+let implicitlyUnwrappedArray: [Int]! // OK
+</pre></div>
 
 <p>Because implicitly unwrapped optionals have the same &lsquo;<samp>Optional&lt;Wrapped&gt;</samp>&rsquo;
 type as optional values, you can use implicitly unwrapped optionals in
@@ -2661,9 +2664,9 @@ type in type annotations, in generic parameter clauses, and in generic
 </p>
 <p>Protocol composition types have the following form:
 </p>
-<ol>
-<li> Protocol 1 &amp; Protocol 2
-</li></ol>
+<div class="example">
+<pre class="example">Protocol 1 &amp; Protocol 2
+</pre></div>
 
 <p>A protocol composition type allows you to specify a value whose type
 conforms to the requirements of multiple protocols without explicitly
@@ -2692,10 +2695,10 @@ for the same protocol to appear more than once in the
 definitions&mdash;duplicates are ignored. For example, the definition of
 &lsquo;<samp>PQR</samp>&rsquo; in the code below is equivalent to &lsquo;<samp>P &amp; Q &amp; R</samp>&rsquo;.
 </p>
-<ol>
-<li> typealias PQ = P &amp; Q
-</li><li> typealias PQR = PQ &amp; Q &amp; R
-</li></ol>
+<div class="example">
+<pre class="example">typealias PQ = P &amp; Q
+typealias PQR = PQ &amp; Q &amp; R
+</pre></div>
 
 <p>Grammar of a protocol composition type
 </p>
@@ -2730,9 +2733,9 @@ wrapped type of an optional.
 </p>
 <p>Opaque types have the following form:
 </p>
-<ol>
-<li> some constraint
-</li></ol>
+<div class="example">
+<pre class="example">some constraint
+</pre></div>
 
 <p>The <em>constraint</em> is a class type, protocol type, protocol composition
 type, or &lsquo;<samp>Any</samp>&rsquo;. A value can be used as an instance of the opaque type
@@ -2780,23 +2783,23 @@ runtime. You can call the &lsquo;<samp>type(of:)</samp>&rsquo; function with an 
 type to access that instance&rsquo;s dynamic, runtime type as a value, as the
 following example shows:
 </p>
-<ol>
-<li> class SomeBaseClass {
-</li><li> class func printClassName() {
-</li><li> print(&quot;SomeBaseClass&quot;)
-</li><li> }
-</li><li> }
-</li><li> class SomeSubClass: SomeBaseClass {
-</li><li> override class func printClassName() {
-</li><li> print(&quot;SomeSubClass&quot;)
-</li><li> }
-</li><li> }
-</li><li> let someInstance: SomeBaseClass = SomeSubClass()
-</li><li> // The compile-time type of someInstance is SomeBaseClass,
-</li><li> // and the runtime type of someInstance is SomeSubClass
-</li><li> type(of: someInstance).printClassName()
-</li><li> // Prints &quot;SomeSubClass&quot;
-</li></ol>
+<div class="example">
+<pre class="example">class SomeBaseClass {
+    class func printClassName() {
+        print(&quot;SomeBaseClass&quot;)
+    }
+}
+class SomeSubClass: SomeBaseClass {
+    override class func printClassName() {
+        print(&quot;SomeSubClass&quot;)
+    }
+}
+let someInstance: SomeBaseClass = SomeSubClass()
+// The compile-time type of someInstance is SomeBaseClass,
+// and the runtime type of someInstance is SomeSubClass
+type(of: someInstance).printClassName()
+// Prints &quot;SomeSubClass&quot;
+</pre></div>
 
 <p>For more information, see
 <a href="https://developer.apple.com/documentation/swift/2885064-type">&lsquo;<samp>type(of:)</samp>&rsquo;</a>
@@ -2808,19 +2811,19 @@ that type&rsquo;s metatype value. For class instances, the initializer that&rsqu
 called must be marked with the &lsquo;<samp>required</samp>&rsquo; keyword or the entire class
 marked with the &lsquo;<samp>final</samp>&rsquo; keyword.
 </p>
-<ol>
-<li> class AnotherSubClass: SomeBaseClass {
-</li><li> let string: String
-</li><li> required init(string: String) {
-</li><li> self.string = string
-</li><li> }
-</li><li> override class func printClassName() {
-</li><li> print(&quot;AnotherSubClass&quot;)
-</li><li> }
-</li><li> }
-</li><li> let metatype: AnotherSubClass.Type = AnotherSubClass.self
-</li><li> let anotherInstance = metatype.init(string: &quot;some string&quot;)
-</li></ol>
+<div class="example">
+<pre class="example">class AnotherSubClass: SomeBaseClass {
+    let string: String
+    required init(string: String) {
+        self.string = string
+    }
+    override class func printClassName() {
+        print(&quot;AnotherSubClass&quot;)
+    }
+}
+let metatype: AnotherSubClass.Type = AnotherSubClass.self
+let anotherInstance = metatype.init(string: &quot;some string&quot;)
+</pre></div>
 
 <p>Grammar of a metatype type
 </p>
@@ -2846,10 +2849,11 @@ used as the concrete type for an instance of any of the following types:
 </li><li> A tuple with any types of components
 
 </li><li> A closure or function type
-
-</li><li> let mixed: [Any] = [&quot;one&quot;, 2, true, (4, 5.3), { () -&gt; Int in return 6
-}]
 </li></ul>
+
+<div class="example">
+<pre class="example">let mixed: [Any] = [&quot;one&quot;, 2, true, (4, 5.3), { () -&gt; Int in return 6 }]
+</pre></div>
 
 <p>When you use &lsquo;<samp>Any</samp>&rsquo; as a concrete type for an instance, you need to cast
 the instance to a known type before you can access its properties or
@@ -2859,12 +2863,12 @@ operators&mdash;&lsquo;<samp>as</samp>&rsquo;, &lsquo;<samp>as?</samp>&rsquo;, o
 conditionally downcast the first object in a heterogeneous array to a
 &lsquo;<samp>String</samp>&rsquo; as follows:
 </p>
-<ol>
-<li> if let first = mixed.first as? String {
-</li><li> print(&quot;The first item, &rsquo;\(first)&rsquo;, is a string.&quot;)
-</li><li> }
-</li><li> // Prints &quot;The first item, &rsquo;one&rsquo;, is a string.&quot;
-</li></ol>
+<div class="example">
+<pre class="example">if let first = mixed.first as? String {
+    print(&quot;The first item, '\(first)', is a string.&quot;)
+}
+// Prints &quot;The first item, 'one', is a string.&quot;
+</pre></div>
 
 <p>For more information about casting, see
 <a href="swift.html#Type-Casting">(swift)Type Casting</a>.
@@ -2910,21 +2914,23 @@ members of a class declaration, &lsquo;<samp>Self</samp>&rsquo; can appear only 
 <p>For example, the code below shows an instance method &lsquo;<samp>f</samp>&rsquo; whose return
 type is &lsquo;<samp>Self</samp>&rsquo;.
 </p>
-<ol>
-<li> class Superclass {
-</li><li> func f() -&gt; Self { return self }
-</li><li> }
-</li><li> let x = Superclass()
-</li><li> print(type(of: x.f()))
-</li><li> // Prints &quot;Superclass&quot;
-</li><li> class Subclass: Superclass { }
-</li><li> let y = Subclass()
-</li><li> print(type(of: y.f()))
-</li><li> // Prints &quot;Subclass&quot;
-</li><li> let z: Superclass = Subclass()
-</li><li> print(type(of: z.f()))
-</li><li> // Prints &quot;Subclass&quot;
-</li></ol>
+<div class="example">
+<pre class="example">class Superclass {
+    func f() -&gt; Self { return self }
+}
+let x = Superclass()
+print(type(of: x.f()))
+// Prints &quot;Superclass&quot;
+
+class Subclass: Superclass { }
+let y = Subclass()
+print(type(of: y.f()))
+// Prints &quot;Subclass&quot;
+
+let z: Superclass = Subclass()
+print(type(of: z.f()))
+// Prints &quot;Subclass&quot;
+</pre></div>
 
 <p>The last part of the example above shows that &lsquo;<samp>Self</samp>&rsquo; refers to the
 runtime type &lsquo;<samp>Subclass</samp>&rsquo; of the value of &lsquo;<samp>z</samp>&rsquo;, not the compile-time type
@@ -3020,10 +3026,10 @@ for instance, the explicit type annotation (&lsquo;<samp>: Float</samp>&rsquo;) 
 &lsquo;<samp>eFloat</samp>&rsquo; causes the numeric literal &lsquo;<samp>2.71828</samp>&rsquo; to have an inferred type
 of &lsquo;<samp>Float</samp>&rsquo; instead of &lsquo;<samp>Double</samp>&rsquo;.
 </p>
-<ol>
-<li> let e = 2.71828 // The type of e is inferred to be Double.
-</li><li> let eFloat: Float = 2.71828 // The type of eFloat is Float.
-</li></ol>
+<div class="example">
+<pre class="example">let e = 2.71828 // The type of e is inferred to be Double.
+let eFloat: Float = 2.71828 // The type of eFloat is Float.
+</pre></div>
 
 <p>Type inference in Swift operates at the level of a single expression or
 statement. This means that all of the information needed to infer an
@@ -3129,9 +3135,9 @@ Next: <a href="#Try-Operator" accesskey="n" rel="next">Try Operator</a>, Up: <a 
 <p>An <em>in-out expression</em> marks a variable that&rsquo;s being passed as an in-out
 argument to a function call expression.
 </p>
-<ol>
-<li> &amp;expression
-</li></ol>
+<div class="example">
+<pre class="example">&amp;expression
+</pre></div>
 
 <p>For more information about in-out parameters and to see an example, see
 </p>
@@ -3156,16 +3162,16 @@ Previous: <a href="#In_002dOut-Expression" accesskey="p" rel="prev">In-Out Expre
 <p>A <em>try expression</em> consists of the &lsquo;<samp>try</samp>&rsquo; operator followed by an
 expression that can throw an error. It has the following form:
 </p>
-<ol>
-<li> try expression
-</li></ol>
+<div class="example">
+<pre class="example">try expression
+</pre></div>
 
 <p>An <em>optional-try expression</em> consists of the &lsquo;<samp>try?</samp>&rsquo; operator followed by
 an expression that can throw an error. It has the following form:
 </p>
-<ol>
-<li> try? expression
-</li></ol>
+<div class="example">
+<pre class="example">try? expression
+</pre></div>
 
 <p>If the <em>expression</em> doesn&rsquo;t throw an error, the value of the
 optional-try expression is an optional containing the value of the
@@ -3175,9 +3181,9 @@ optional-try expression is an optional containing the value of the
 <p>A <em>forced-try expression</em> consists of the &lsquo;<samp>try!</samp>&rsquo; operator followed by an
 expression that can throw an error. It has the following form:
 </p>
-<ol>
-<li> try! expression
-</li></ol>
+<div class="example">
+<pre class="example">try! expression
+</pre></div>
 
 <p>If the <em>expression</em> throws an error, a runtime error is produced.
 </p>
@@ -3186,14 +3192,11 @@ with &lsquo;<samp>try</samp>&rsquo;, &lsquo;<samp>try?</samp>&rsquo;, or &lsquo;
 expression. That said, you can use parentheses to be explicit about the
 scope of the operator&rsquo;s application.
 </p>
-<ol>
-<li> sum = try someThrowingFunction() + anotherThrowingFunction() // try
-applies to both function calls
-</li><li> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try
-applies to both function calls
-</li><li> sum = (try someThrowingFunction()) + anotherThrowingFunction() //
-Error: try applies only to the first function call
-</li></ol>
+<div class="example">
+<pre class="example">sum = try someThrowingFunction() + anotherThrowingFunction() // try applies to both function calls
+sum = try (someThrowingFunction() + anotherThrowingFunction()) // try applies to both function calls
+sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+</pre></div>
 
 <p>A &lsquo;<samp>try</samp>&rsquo; expression can&rsquo;t appear on the right-hand side of a binary
 operator, unless the binary operator is the assignment operator or the
@@ -3219,9 +3222,9 @@ Next: <a href="#Primary-Expressions" accesskey="n" rel="next">Primary Expression
 expression that it takes as its left-hand and right-hand arguments. It
 has the following form:
 </p>
-<ol>
-<li> left-hand argument operator right-hand argument
-</li></ol>
+<div class="example">
+<pre class="example">left-hand argument operator right-hand argument
+</pre></div>
 
 <p>For information about the behavior of these operators, see
 <a href="swift.html#Basic-Operators">(swift)Basic Operators</a> and
@@ -3286,9 +3289,9 @@ Next: <a href="#Ternary-Conditional-Operator" accesskey="n" rel="next">Ternary C
 <p>The <em>assignment operator</em> sets a new value for a given expression. It
 has the following form:
 </p>
-<ol>
-<li> expression = value
-</li></ol>
+<div class="example">
+<pre class="example">expression = value
+</pre></div>
 
 <p>The value of the <em>expression</em> is set to the value obtained by evaluating
 the <em>value</em>. If the <em>expression</em> is a tuple, the <em>value</em> must be a tuple
@@ -3296,10 +3299,9 @@ with the same number of elements. (Nested tuples are allowed.)
 Assignment is performed from each part of the <em>value</em> to the
 corresponding part of the <em>expression</em>. For example:
 </p>
-<ol>
-<li> (a, _, (b, c)) = (&quot;test&quot;, 9.45, (12, 3))
-</li><li> // a is &quot;test&quot;, b is 12, c is 3, and 9.45 is ignored
-</li></ol>
+<div class="example">
+<pre class="example">(a, _, (b, c)) = (&quot;test&quot;, 9.45, (12, 3)) // a is &quot;test&quot;, b is 12, c is 3, and 9.45 is ignored
+</pre></div>
 
 <p>The assignment operator doesn&rsquo;t return any value.
 </p>
@@ -3318,9 +3320,9 @@ Next: <a href="#Type_002dCasting-Operators" accesskey="n" rel="next">Type-Castin
 <p>The <em>ternary conditional operator</em> evaluates to one of two given values
 based on the value of a condition. It has the following form:
 </p>
-<ol>
-<li> condition ? expression used if true : expression used if false
-</li></ol>
+<div class="example">
+<pre class="example">condition ? expression used if true : expression used if false
+</pre></div>
 
 <p>If the <em>condition</em> evaluates to &lsquo;<samp>true</samp>&rsquo;, the conditional operator
 evaluates the first expression and returns its value. Otherwise, it
@@ -3350,12 +3352,12 @@ operator, the &lsquo;<samp>as?</samp>&rsquo; operator, and the &lsquo;<samp>as!<
 </p>
 <p>They have the following form:
 </p>
-<ol>
-<li> expression is type
-</li><li> expression as type
-</li><li> expression as? type
-</li><li> expression as! type
-</li></ol>
+<div class="example">
+<pre class="example">expression is type
+expression as type
+expression as? type
+expression as! type
+</pre></div>
 
 <p>The &lsquo;<samp>is</samp>&rsquo; operator checks at runtime whether the <em>expression</em> can be cast
 to the specified <em>type</em>. It returns &lsquo;<samp>true</samp>&rsquo; if the <em>expression</em> can be
@@ -3366,18 +3368,17 @@ the cast always succeeds, such as upcasting or bridging. Upcasting lets
 you use an expression as an instance of its type&rsquo;s supertype, without
 using an intermediate variable. The following approaches are equivalent:
 </p>
-<ol>
-<li> func f(_ any: Any) { print(&quot;Function for Any&quot;) }
-</li><li> func f(_ int: Int) { print(&quot;Function for Int&quot;) }
-</li><li> let x = 10
-</li><li> f(x)
-</li><li> // Prints &quot;Function for Int&quot;
-</li><li> let y: Any = x
-</li><li> f(y)
-</li><li> // Prints &quot;Function for Any&quot;
-</li><li> f(x as Any)
-</li><li> // Prints &quot;Function for Any&quot;
-</li></ol>
+<div class="example">
+<pre class="example">func f(_ any: Any) { print(&quot;Function for Any&quot;) }
+func f(_ int: Int) { print(&quot;Function for Int&quot;) }
+let x = 10
+f(x) // Prints &quot;Function for Int&quot;
+
+let y: Any = x
+f(y) // Prints &quot;Function for Any&quot;
+
+f(x as Any) // Prints &quot;Function for Any&quot;
+</pre></div>
 
 <p>Bridging lets you use an expression of a Swift standard library type
 such as &lsquo;<samp>String</samp>&rsquo; as its corresponding Foundation type such as &lsquo;<samp>NSString</samp>&rsquo;
@@ -3575,21 +3576,21 @@ the top level of a file it&rsquo;s the name of the current module.
 special literal&rsquo;s value is determined when the default value expression
 is evaluated at the call site.
 </p>
-<ol>
-<li> func logFunctionName(string: String = #function) {
-</li><li> print(string)
-</li><li> }
-</li><li> func myFunction() {
-</li><li> logFunctionName() // Prints &quot;myFunction()&quot;.
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">func logFunctionName(string: String = #function) {
+    print(string)
+}
+func myFunction() {
+    logFunctionName() // Prints &quot;myFunction()&quot;.
+}
+</pre></div>
 
 <p>An <em>array literal</em> is an ordered collection of values. It has the
 following form:
 </p>
-<ol>
-<li> [value 1, value 2, &hellip;]
-</li></ol>
+<div class="example">
+<pre class="example">[value 1, value 2, ...]
+</pre></div>
 
 <p>The last expression in the array can be followed by an optional comma.
 The value of an array literal has type &lsquo;<samp>[T]</samp>&rsquo;, where &lsquo;<samp>T</samp>&rsquo; is the type of
@@ -3598,16 +3599,16 @@ the expressions inside it. If there are expressions of multiple types,
 using an empty pair of square brackets and can be used to create an
 empty array of a specified type.
 </p>
-<ol>
-<li> var emptyArray: [Double] = []
-</li></ol>
+<div class="example">
+<pre class="example">var emptyArray: [Double] = []
+</pre></div>
 
 <p>A <em>dictionary literal</em> is an unordered collection of key-value pairs. It
 has the following form:
 </p>
-<ol>
-<li> [key 1: value 1, key 2: value 2, &hellip;]
-</li></ol>
+<div class="example">
+<pre class="example">[key 1: value 1, key 2: value 2, ...]
+</pre></div>
 
 <p>The last expression in the dictionary can be followed by an optional
 comma. The value of a dictionary literal has type &lsquo;<samp>[Key: Value]</samp>&rsquo;, where
@@ -3619,9 +3620,9 @@ empty dictionary literal is written as a colon inside a pair of brackets
 empty dictionary literal to create an empty dictionary literal of
 specified key and value types.
 </p>
-<ol>
-<li> var emptyDictionary: [String: Double] = [:]
-</li></ol>
+<div class="example">
+<pre class="example">var emptyDictionary: [String: Double] = [:]
+</pre></div>
 
 <span id="index-_0023colorLiteral"></span>
 <span id="index-_0023imageLiteral"></span>
@@ -3718,13 +3719,13 @@ Next: <a href="#Superclass-Expression" accesskey="n" rel="next">Superclass Expre
 <p>The &lsquo;<samp>self</samp>&rsquo; expression is an explicit reference to the current type or
 instance of the type in which it occurs. It has the following forms:
 </p>
-<ol>
-<li> self
-</li><li> self.member name
-</li><li> self[subscript index]
-</li><li> self(initializer arguments)
-</li><li> self.init(initializer arguments)
-</li></ol>
+<div class="example">
+<pre class="example">self
+self.member name
+self[subscript index]
+self(initializer arguments)
+self.init(initializer arguments)
+</pre></div>
 
 <p>In an initializer, subscript, or instance method, &lsquo;<samp>self</samp>&rsquo; refers to the
 current instance of the type in which it occurs. In a type method,
@@ -3734,26 +3735,26 @@ current instance of the type in which it occurs. In a type method,
 providing disambiguation when there&rsquo;s another variable of the same name
 in scope, such as a function parameter. For example:
 </p>
-<ol>
-<li> class SomeClass {
-</li><li> var greeting: String
-</li><li> init(greeting: String) {
-</li><li> self.greeting = greeting
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">class SomeClass {
+    var greeting: String
+    init(greeting: String) {
+        self.greeting = greeting
+    }
+}
+</pre></div>
 
 <p>In a mutating method of a value type, you can assign a new instance of
 that value type to &lsquo;<samp>self</samp>&rsquo;. For example:
 </p>
-<ol>
-<li> struct Point {
-</li><li> var x = 0.0, y = 0.0
-</li><li> mutating func moveBy(x deltaX: Double, y deltaY: Double) {
-</li><li> self = Point(x: x + deltaX, y: y + deltaY)
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">struct Point {
+    var x = 0.0, y = 0.0
+    mutating func moveBy(x deltaX: Double, y deltaY: Double) {
+        self = Point(x: x + deltaX, y: y + deltaY)
+    }
+}
+</pre></div>
 
 <p>Grammar of a self expression
 </p>
@@ -3790,11 +3791,11 @@ Next: <a href="#Closure-Expression" accesskey="n" rel="next">Closure Expression<
 <p>A <em>superclass expression</em> lets a class interact with its superclass. It
 has one of the following forms:
 </p>
-<ol>
-<li> super.member name
-</li><li> super[subscript index]
-</li><li> super.init(initializer arguments)
-</li></ol>
+<div class="example">
+<pre class="example">super.member name
+super[subscript index]
+super.init(initializer arguments)
+</pre></div>
 
 <p>The first form is used to access a member of the superclass. The second
 form is used to access the superclass&rsquo;s subscript implementation. The
@@ -3842,11 +3843,9 @@ Next: <a href="#Implicit-Member-Expression" accesskey="n" rel="next">Implicit Me
 declaration, a closure contains statements, and it captures constants
 and variables from its enclosing scope. It has the following form:
 </p>
-<ol>
-<li> { (parameters) -&gt; return type in
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">{ (parameters) -&gt; return type in statements }
+</pre></div>
 
 <p>The <em>parameters</em> have the same form as the parameters in a function
 declaration, as described in <a href="#Function-Declaration">Function
@@ -3873,16 +3872,19 @@ expression.
 
 <p>The following closure expressions are equivalent:
 </p>
-<ol>
-<li> myFunction { (x: Int, y: Int) -&gt; Int in
-</li><li> return x + y
-</li><li> }
-</li><li> myFunction { x, y in
-</li><li> return x + y
-</li><li> }
-</li><li> myFunction { return $0 + $1 }
-</li><li> myFunction { $0 + $1 }
-</li></ol>
+<div class="example">
+<pre class="example">myFunction { (x: Int, y: Int) -&gt; Int in
+    return x + y
+}
+
+myFunction { x, y in
+    return x + y
+}
+
+myFunction { return $0 + $1 }
+
+myFunction { $0 + $1 }
+</pre></div>
 
 <p>For information about passing a closure as an argument to a function,
 see <a href="#Function-Call-Expression">Function Call Expression</a>.
@@ -3919,17 +3921,18 @@ to the value of the constant or variable that has the same name in the
 surrounding scope. For example in the code below, &lsquo;<samp>a</samp>&rsquo; is included in the
 capture list but &lsquo;<samp>b</samp>&rsquo; is not, which gives them different behavior.
 </p>
-<ol>
-<li> var a = 0
-</li><li> var b = 0
-</li><li> let closure = { [a] in
-</li><li> print(a, b)
-</li><li> }
-</li><li> a = 10
-</li><li> b = 10
-</li><li> closure()
-</li><li> // Prints &quot;0 10&quot;
-</li></ol>
+<div class="example">
+<pre class="example">var a = 0
+var b = 0
+let closure = { [a] in
+    print(a, b)
+}
+
+a = 10
+b = 10
+closure()
+// Prints &quot;0 10&quot;
+</pre></div>
 
 <p>There are two different things named &lsquo;<samp>a</samp>&rsquo;, the variable in the
 surrounding scope and the constant in the closure&rsquo;s scope, but only one
@@ -3948,40 +3951,41 @@ code below, a variable in the outer scope and a constant in the inner
 scope, but they both refer to the same object because of reference
 semantics.
 </p>
-<ol>
-<li> class SimpleClass {
-</li><li> var value: Int = 0
-</li><li> }
-</li><li> var x = SimpleClass()
-</li><li> var y = SimpleClass()
-</li><li> let closure = { [x] in
-</li><li> print(x.value, y.value)
-</li><li> }
-</li><li> x.value = 10
-</li><li> y.value = 10
-</li><li> closure()
-</li><li> // Prints &quot;10 10&quot;
-</li></ol>
+<div class="example">
+<pre class="example">class SimpleClass {
+    var value: Int = 0
+}
+var x = SimpleClass()
+var y = SimpleClass()
+let closure = { [x] in
+    print(x.value, y.value)
+}
+
+x.value = 10
+y.value = 10
+closure()
+// Prints &quot;10 10&quot;
+</pre></div>
 
 <p>If the type of the expression&rsquo;s value is a class, you can mark the
 expression in a capture list with &lsquo;<samp>weak</samp>&rsquo; or &lsquo;<samp>unowned</samp>&rsquo; to capture a weak
 or unowned reference to the expression&rsquo;s value.
 </p>
-<ol>
-<li> myFunction { print(self.title) } // implicit strong capture
-</li><li> myFunction { [self] in print(self.title) } // explicit strong capture
-</li><li> myFunction { [weak self] in print(self!.title) } // weak capture
-</li><li> myFunction { [unowned self] in print(self.title) } // unowned capture
-</li></ol>
+<div class="example">
+<pre class="example">myFunction { print(self.title) } // implicit strong capture
+myFunction { [self] in print(self.title) } // explicit strong capture
+myFunction { [weak self] in print(self!.title) } // weak capture
+myFunction { [unowned self] in print(self.title) } // unowned capture
+</pre></div>
 
 <p>You can also bind an arbitrary expression to a named value in a capture
 list. The expression is evaluated when the closure is created, and the
 value is captured with the specified strength. For example:
 </p>
-<ol>
-<li> // Weak capture of &quot;self.parent&quot; as &quot;parent&quot;
-</li><li> myFunction { [weak parent = self.parent] in print(parent!.title) }
-</li></ol>
+<div class="example">
+<pre class="example">// Weak capture of &quot;self.parent&quot; as &quot;parent&quot;
+myFunction { [weak parent = self.parent] in print(parent!.title) }
+</pre></div>
 
 <p>For more information and examples of closure expressions, see
 <a href="swift.html#Closure-Expressions">(swift)Closure Expressions</a>. For more
@@ -4073,16 +4077,16 @@ of a type, such as an enumeration case or a type method, in a context
 where type inference can determine the implied type. It has the
 following form:
 </p>
-<ol>
-<li> .member name
-</li></ol>
+<div class="example">
+<pre class="example">.member name
+</pre></div>
 
 <p>For example:
 </p>
-<ol>
-<li> var x = MyEnumeration.someValue
-</li><li> x = .anotherValue
-</li></ol>
+<div class="example">
+<pre class="example">var x = MyEnumeration.someValue
+x = .anotherValue
+</pre></div>
 
 <p>Grammar of a implicit member expression
 </p>
@@ -4122,9 +4126,9 @@ surrounded by parentheses. Each expression can have an optional
 identifier before it, separated by a colon (&lsquo;<samp>:</samp>&rsquo;). It has the following
 form:
 </p>
-<ol>
-<li> (identifier 1: expression 1, identifier 2: expression 2, &hellip;)
-</li></ol>
+<div class="example">
+<pre class="example">(identifier 1: expression 1, identifier 2: expression 2, ...)
+</pre></div>
 
 <p>Each identifier in a tuple expression must be unique within the scope of
 the tuple expression. In a nested tuple expression, identifiers at the
@@ -4184,10 +4188,9 @@ Next: <a href="#Key_002dPath-Expression" accesskey="n" rel="next">Key-Path Expre
 assignment. For example, in the following assignment 10 is assigned to
 &lsquo;<samp>x</samp>&rsquo; and 20 is ignored:
 </p>
-<ol>
-<li> (x, _) = (10, 20)
-</li><li> // x is 10, and 20 is ignored
-</li></ol>
+<div class="example">
+<pre class="example">(x, _) = (10, 20) // x is 10, and 20 is ignored
+</pre></div>
 
 <p>Grammar of a wildcard expression
 </p>
@@ -4205,9 +4208,9 @@ Next: <a href="#Selector-Expression" accesskey="n" rel="next">Selector Expressio
 use key-path expressions in dynamic programming tasks, such as key-value
 observing. They have the following form:
 </p>
-<ol>
-<li> name.path
-</li></ol>
+<div class="example">
+<pre class="example">\type name.path
+</pre></div>
 
 <p>The <em>type name</em> is the name of a concrete type, including any generic
 parameters, such as &lsquo;<samp>String</samp>&rsquo;, &lsquo;<samp>[Int]</samp>&rsquo;, or &lsquo;<samp>Set&lt;Int&gt;</samp>&rsquo;.
@@ -4224,72 +4227,76 @@ components can be repeated as many times as needed, in any order.
 &lsquo;<samp>subscript(keyPath:)</samp>&rsquo; subscript, which is available on all types. For
 example:
 </p>
-<ol>
-<li> struct SomeStructure {
-</li><li> var someValue: Int
-</li><li> }
-</li><li> let s = SomeStructure(someValue: 12)
-</li><li> let pathToProperty = .someValue
-</li><li> let value = s[keyPath: pathToProperty]
-</li><li> // value is 12
-</li></ol>
+<div class="example">
+<pre class="example">struct SomeStructure {
+    var someValue: Int
+}
+
+let s = SomeStructure(someValue: 12)
+let pathToProperty = \SomeStructure.someValue
+
+let value = s[keyPath: pathToProperty] // value is 12
+</pre></div>
 
 <p>The <em>type name</em> can be omitted in contexts where type inference can
 determine the implied type. The following code uses &lsquo;<samp>\.someProperty</samp>&rsquo;
 instead of &lsquo;<samp>\SomeClass.someProperty</samp>&rsquo;:
 </p>
-<ol>
-<li> class SomeClass: NSObject {
-</li><li> @objc dynamic var someProperty: Int
-</li><li> init(someProperty: Int) {
-</li><li> self.someProperty = someProperty
-</li><li> }
-</li><li> }
-</li><li> let c = SomeClass(someProperty: 10)
-</li><li> c.observe(\.someProperty) { object, change in
-</li><li> // &hellip;
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">class SomeClass: NSObject {
+    @objc dynamic var someProperty: Int
+    init(someProperty: Int) {
+        self.someProperty = someProperty
+    }
+}
+
+let c = SomeClass(someProperty: 10)
+c.observe(\.someProperty) { object, change in
+    // ...
+}
+</pre></div>
 
 <p>The <em>path</em> can refer to &lsquo;<samp>self</samp>&rsquo; to create the identity key path
 (&lsquo;<samp>\.self</samp>&rsquo;). The identity key path refers to a whole instance, so you can
 use it to access and change all of the data stored in a variable in a
 single step. For example:
 </p>
-<ol>
-<li> var compoundValue = (a: 1, b: 2)
-</li><li> // Equivalent to compoundValue = (a: 10, b: 20)
-</li><li> compoundValue[keyPath: \.self] = (a: 10, b: 20)
-</li></ol>
+<div class="example">
+<pre class="example">var compoundValue = (a: 1, b: 2)
+// Equivalent to compoundValue = (a: 10, b: 20)
+compoundValue[keyPath: \.self] = (a: 10, b: 20)
+</pre></div>
 
 <p>The <em>path</em> can contain multiple property names, separated by periods, to
 refer to a property of a property&rsquo;s value. This code uses the key path
 expression &lsquo;<samp>\OuterStructure.outer.someValue</samp>&rsquo; to access the &lsquo;<samp>someValue</samp>&rsquo;
 property of the &lsquo;<samp>OuterStructure</samp>&rsquo; type&rsquo;s &lsquo;<samp>outer</samp>&rsquo; property:
 </p>
-<ol>
-<li> struct OuterStructure {
-</li><li> var outer: SomeStructure
-</li><li> init(someValue: Int) {
-</li><li> self.outer = SomeStructure(someValue: someValue)
-</li><li> }
-</li><li> }
-</li><li> let nested = OuterStructure(someValue: 24)
-</li><li> let nestedKeyPath = .outer.someValue
-</li><li> let nestedValue = nested[keyPath: nestedKeyPath]
-</li><li> // nestedValue is 24
-</li></ol>
+<div class="example">
+<pre class="example">struct OuterStructure {
+    var outer: SomeStructure
+    init(someValue: Int) {
+        self.outer = SomeStructure(someValue: someValue)
+    }
+}
+
+let nested = OuterStructure(someValue: 24)
+let nestedKeyPath = \OuterStructure.outer.someValue
+
+let nestedValue = nested[keyPath: nestedKeyPath]
+// nestedValue is 24
+</pre></div>
 
 <p>The <em>path</em> can include subscripts using brackets, as long as the
 subscript&rsquo;s parameter type conforms to the &lsquo;<samp>Hashable</samp>&rsquo; protocol. This
 example uses a subscript in a key path to access the second element of
 an array:
 </p>
-<ol>
-<li> let greetings = [&quot;hello&quot;, &quot;hola&quot;, &quot;bonjour&quot;, &quot;안녕&quot;]
-</li><li> let myGreeting = greetings[keyPath: \[String].[1]]
-</li><li> // myGreeting is &rsquo;hola&rsquo;
-</li></ol>
+<div class="example">
+<pre class="example">let greetings = [&quot;hello&quot;, &quot;hola&quot;, &quot;bonjour&quot;, &quot;안녕&quot;]
+let myGreeting = greetings[keyPath: \[String].[1]]
+// myGreeting is 'hola'
+</pre></div>
 
 <p>The value used in a subscript can be a named value or a literal. Values
 are captured in key paths using value semantics. The following code uses
@@ -4298,58 +4305,59 @@ access the third element of the &lsquo;<samp>greetings</samp>&rsquo; array. When
 modified, the key-path expression still references the third element,
 while the closure uses the new index.
 </p>
-<ol>
-<li> var index = 2
-</li><li> let path = \[String].[index]
-</li><li> let fn: ([String]) -&gt; String = { strings in strings[index] }
-</li><li> print(greetings[keyPath: path])
-</li><li> // Prints &quot;bonjour&quot;
-</li><li> print(fn(greetings))
-</li><li> // Prints &quot;bonjour&quot;
-</li><li> // Setting &rsquo;index&rsquo; to a new value doesn&rsquo;t affect &rsquo;path&rsquo;
-</li><li> index += 1
-</li><li> print(greetings[keyPath: path])
-</li><li> // Prints &quot;bonjour&quot;
-</li><li> // Because &rsquo;fn&rsquo; closes over &rsquo;index&rsquo;, it uses the new value
-</li><li> print(fn(greetings))
-</li><li> // Prints &quot;안녕&quot;
-</li></ol>
+<div class="example">
+<pre class="example">var index = 2
+let path = \[String].[index]
+let fn: ([String]) -&gt; String = { strings in strings[index] }
+
+print(greetings[keyPath: path])
+// Prints &quot;bonjour&quot;
+print(fn(greetings))
+// Prints &quot;bonjour&quot;
+
+// Setting 'index' to a new value doesn't affect 'path'
+index += 1
+print(greetings[keyPath: path])
+// Prints &quot;bonjour&quot;
+
+// Because 'fn' closes over 'index', it uses the new value
+print(fn(greetings))
+// Prints &quot;안녕&quot;
+</pre></div>
 
 <p>The <em>path</em> can use optional chaining and forced unwrapping. This code
 uses optional chaining in a key path to access a property of an optional
 string:
 </p>
-<ol>
-<li> let firstGreeting: String? = greetings.first
-</li><li> print(firstGreeting?.count as Any)
-</li><li> // Prints &quot;Optional(5)&quot;
-</li><li> // Do the same thing using a key path.
-</li><li> let count = greetings[keyPath: \[String].first?.count]
-</li><li> print(count as Any)
-</li><li> // Prints &quot;Optional(5)&quot;
-</li></ol>
+<div class="example">
+<pre class="example">let firstGreeting: String? = greetings.first
+print(firstGreeting?.count as Any)
+// Prints &quot;Optional(5)&quot;
+
+// Do the same thing using a key path.
+let count = greetings[keyPath: \[String].first?.count]
+print(count as Any)
+// Prints &quot;Optional(5)&quot;
+</pre></div>
 
 <p>You can mix and match components of key paths to access values that are
 deeply nested within a type. The following code accesses different
 values and properties of a dictionary of arrays by using key-path
 expressions that combine these components.
 </p>
-<ol>
-<li> let interestingNumbers = [&quot;prime&quot;: [2, 3, 5, 7, 11, 13, 17],
-</li><li> &quot;triangular&quot;: [1, 3, 6, 10, 15, 21, 28],
-</li><li> &quot;hexagonal&quot;: [1, 6, 15, 28, 45, 66, 91]]
-</li><li> print(interestingNumbers[keyPath: \[String: [Int]].[&quot;prime&quot;]] as
-Any)
-</li><li> // Prints &quot;Optional([2, 3, 5, 7, 11, 13, 17])&quot;
-</li><li> print(interestingNumbers[keyPath: \[String: [Int]].[&quot;prime&quot;]![0]])
-</li><li> // Prints &quot;2&quot;
-</li><li> print(interestingNumbers[keyPath: \[String:
-[Int]].[&quot;hexagonal&quot;]!.count])
-</li><li> // Prints &quot;7&quot;
-</li><li> print(interestingNumbers[keyPath: \[String:
-[Int]].[&quot;hexagonal&quot;]!.count.bitWidth])
-</li><li> // Prints &quot;64&quot;
-</li></ol>
+<div class="example">
+<pre class="example">let interestingNumbers = [&quot;prime&quot;: [2, 3, 5, 7, 11, 13, 17],
+                          &quot;triangular&quot;: [1, 3, 6, 10, 15, 21, 28],
+                          &quot;hexagonal&quot;: [1, 6, 15, 28, 45, 66, 91]]
+print(interestingNumbers[keyPath: \[String: [Int]].[&quot;prime&quot;]] as Any)
+// Prints &quot;Optional([2, 3, 5, 7, 11, 13, 17])&quot;
+print(interestingNumbers[keyPath: \[String: [Int]].[&quot;prime&quot;]![0]])
+// Prints &quot;2&quot;
+print(interestingNumbers[keyPath: \[String: [Int]].[&quot;hexagonal&quot;]!.count])
+// Prints &quot;7&quot;
+print(interestingNumbers[keyPath: \[String: [Int]].[&quot;hexagonal&quot;]!.count.bitWidth])
+// Prints &quot;64&quot;
+</pre></div>
 
 <p>You can use a key path expression in contexts where you would normally
 provide a function or closure. Specifically, you can use a key path
@@ -4357,21 +4365,21 @@ expression whose root type is &lsquo;<samp>SomeType</samp>&rsquo; and whose path
 of type &lsquo;<samp>Value</samp>&rsquo;, instead of a function or closure of type
 &lsquo;<samp>(SomeType) -&gt; Value</samp>&rsquo;.
 </p>
-<ol>
-<li> struct Task {
-</li><li> var description: String
-</li><li> var completed: Bool
-</li><li> }
-</li><li> var toDoList = [
-</li><li> Task(description: &quot;Practice ping-pong.&quot;, completed: false),
-</li><li> Task(description: &quot;Buy a pirate costume.&quot;, completed: true),
-</li><li> Task(description: &quot;Visit Boston in the Fall.&quot;, completed: false),
-</li><li> ]
-</li><li> // Both approaches below are equivalent.
-</li><li> let descriptions = toDoList.filter(\.completed).map(\.description)
-</li><li> let descriptions2 = toDoList.filter { $0.completed }.map {
-$0.description }
-</li></ol>
+<div class="example">
+<pre class="example">struct Task {
+    var description: String
+    var completed: Bool
+}
+var toDoList = [
+  Task(description: &quot;Practice ping-pong.&quot;, completed: false),
+  Task(description: &quot;Buy a pirate costume.&quot;, completed: true),
+  Task(description: &quot;Visit Boston in the Fall.&quot;, completed: false),
+]
+
+// Both approaches below are equivalent.
+let descriptions = toDoList.filter(\.completed).map(\.description)
+let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
+</pre></div>
 
 <p>Any side effects of a key path expression are evaluated only at the
 point where the expression is evaluated. For example, if you make a
@@ -4379,17 +4387,18 @@ function call inside a subscript in a key path expression, the function
 is called only once as part of evaluating the expression, not every time
 the key path is used.
 </p>
-<ol>
-<li> func makeIndex() -&gt; Int {
-</li><li> print(&quot;Made an index&quot;)
-</li><li> return 0
-</li><li> }
-</li><li> // The line below calls makeIndex().
-</li><li> let taskKeyPath = \[Task][makeIndex()]
-</li><li> // Prints &quot;Made an index&quot;
-</li><li> // Using taskKeyPath doesn&rsquo;t call makeIndex() again.
-</li><li> let someTask = toDoList[keyPath: taskKeyPath]
-</li></ol>
+<div class="example">
+<pre class="example">func makeIndex() -&gt; Int {
+    print(&quot;Made an index&quot;)
+    return 0
+}
+// The line below calls makeIndex().
+let taskKeyPath = \[Task][makeIndex()]
+// Prints &quot;Made an index&quot;
+
+// Using taskKeyPath doesn't call makeIndex() again.
+let someTask = toDoList[keyPath: taskKeyPath]
+</pre></div>
 
 <p>For more information about using key paths in code that interacts with
 Objective-C APIs, see
@@ -4449,29 +4458,31 @@ following form:
 </p>
 <span id="index-_0023selector"></span>
 
-<ol>
-<li> #selector(method name)
-</li><li> #selector(getter: property name)
-</li><li> #selector(setter: property name)
-</li></ol>
+<div class="example">
+<pre class="example">#selector(method name)
+#selector(getter: property name)
+#selector(setter: property name)
+</pre></div>
 
 <p>The <em>method name</em> and <em>property name</em> must be a reference to a method or
 a property that&rsquo;s available in the Objective-C runtime. The value of a
 selector expression is an instance of the &lsquo;<samp>Selector</samp>&rsquo; type. For example:
 </p>
-<ol>
-<li> class SomeClass: NSObject {
-</li><li> @objc let property: String
-</li><li> @objc(doSomethingWithInt:)
-</li><li> func doSomething(_ x: Int) { }
-</li><li> init(property: String) {
-</li><li> self.property = property
-</li><li> }
-</li><li> }
-</li><li> let selectorForMethod = #selector(SomeClass.doSomething(_:))
-</li><li> let selectorForPropertyGetter = #selector(getter:
-SomeClass.property)
-</li></ol>
+<div class="example">
+<pre class="example">class SomeClass: NSObject {
+    @objc let property: String
+
+    @objc(doSomethingWithInt:)
+    func doSomething(_ x: Int) { }
+
+
+    init(property: String) {
+        self.property = property
+    }
+}
+let selectorForMethod = #selector(SomeClass.doSomething(_:))
+let selectorForPropertyGetter = #selector(getter:SomeClass.property)
+</pre></div>
 
 <p>When creating a selector for a property&rsquo;s getter, the <em>property name</em>
 can be a reference to a variable or constant property. In contrast, when
@@ -4482,14 +4493,13 @@ a reference to a variable property only.
 operator to disambiguate between methods that share a name but have
 different type signatures. For example:
 </p>
-<ol>
-<li> extension SomeClass {
-</li><li> @objc(doSomethingWithString:)
-</li><li> func doSomething(_ x: String) { }
-</li><li> }
-</li><li> let anotherSelector = #selector(SomeClass.doSomething(_:) as
-(SomeClass) -&gt; (String) -&gt; Void)
-</li></ol>
+<div class="example">
+<pre class="example">extension SomeClass {
+    @objc(doSomethingWithString:)
+    func doSomething(_ x: String) { }
+}
+let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -&gt; (String) -&gt; Void)
+</pre></div>
 
 <p>Because a selector is created at compile time, not at runtime, the
 compiler can check that a method or property exists and that they&rsquo;re
@@ -4534,42 +4544,44 @@ Previous: <a href="#Selector-Expression" accesskey="p" rel="prev">Selector Expre
 a property in Objective-C, for use in key-value coding and key-value
 observing APIs. It has the following form:
 </p>
-<ol>
-<li> #keyPath(property name)
-</li></ol>
+<div class="example">
+<pre class="example">#keyPath(property name)
+</pre></div>
 
 <p>The <em>property name</em> must be a reference to a property that&rsquo;s available
 in the Objective-C runtime. At compile time, the key-path string
 expression is replaced by a string literal. For example:
 </p>
-<ol>
-<li> class SomeClass: NSObject {
-</li><li> @objc var someProperty: Int
-</li><li> init(someProperty: Int) {
-</li><li> self.someProperty = someProperty
-</li><li> }
-</li><li> }
-</li><li> let c = SomeClass(someProperty: 12)
-</li><li> let keyPath = #keyPath(SomeClass.someProperty)
-</li><li> if let value = c.value(forKey: keyPath) {
-</li><li> print(value)
-</li><li> }
-</li><li> // Prints &quot;12&quot;
-</li></ol>
+<div class="example">
+<pre class="example">class SomeClass: NSObject {
+    @objc var someProperty: Int
+    init(someProperty: Int) {
+        self.someProperty = someProperty
+    }
+}
+
+let c = SomeClass(someProperty: 12)
+let keyPath = #keyPath(SomeClass.someProperty)
+
+if let value = c.value(forKey: keyPath) {
+    print(value)
+}
+// Prints &quot;12&quot;
+</pre></div>
 
 <p>When you use a key-path string expression within a class, you can refer
 to a property of that class by writing just the property name, without
 the class name.
 </p>
-<ol>
-<li> extension SomeClass {
-</li><li> func getSomeKeyPath() -&gt; String {
-</li><li> return #keyPath(someProperty)
-</li><li> }
-</li><li> }
-</li><li> print(keyPath == c.getSomeKeyPath())
-</li><li> // Prints &quot;true&quot;
-</li></ol>
+<div class="example">
+<pre class="example">extension SomeClass {
+    func getSomeKeyPath() -&gt; String {
+        return #keyPath(someProperty)
+    }
+}
+print(keyPath == c.getSomeKeyPath())
+// Prints &quot;true&quot;
+</pre></div>
 
 <p>Because the key path string is created at compile time, not at runtime,
 the compiler can check that the property exists and that the property is
@@ -4687,9 +4699,9 @@ Next: <a href="#Initializer-Expression" accesskey="n" rel="next">Initializer Exp
 comma-separated list of the function&rsquo;s arguments in parentheses.
 Function call expressions have the following form:
 </p>
-<ol>
-<li> function name(argument value 1, argument value 2)
-</li></ol>
+<div class="example">
+<pre class="example">function name(argument value 1, argument value 2)
+</pre></div>
 
 <p>The <em>function name</em> can be any expression whose value is of a function
 type.
@@ -4699,10 +4711,9 @@ function call must include names before its argument values, separated
 by a colon (&lsquo;<samp>:</samp>&rsquo;). This kind of function call expression has the
 following form:
 </p>
-<ol>
-<li> function name(argument name 1: argument value 1, argument name 2:
-argument value 2)
-</li></ol>
+<div class="example">
+<pre class="example">function name(argument name 1: argument value 1, argument name 2: argument value 2)
+</pre></div>
 
 <p>A function call expression can include trailing closures in the form of
 closure expressions immediately after the closing parenthesis. The
@@ -4712,23 +4723,24 @@ unlabeled; any additional closure expressions are preceded by their
 argument labels. The example below shows the equivalent version of
 function calls that do and don&rsquo;t use trailing closure syntax:
 </p>
-<ol>
-<li> // someFunction takes an integer and a closure as its arguments
-</li><li> someFunction(x: x, f: { $0 == 13 })
-</li><li> someFunction(x: x) { $0 == 13 }
-</li><li> // anotherFunction takes an integer and two closures as its arguments
-</li><li> anotherFunction(x: x, f: { $0 == 13 }, g: { print(99) })
-</li><li> anotherFunction(x: x) { $0 == 13 } g: { print(99) }
-</li></ol>
+<div class="example">
+<pre class="example">// someFunction takes an integer and a closure as its arguments
+someFunction(x: x, f: { $0 == 13 })
+someFunction(x: x) { $0 == 13 }
+
+// anotherFunction takes an integer and two closures as its arguments
+anotherFunction(x: x, f: { $0 == 13 }, g: { print(99) })
+anotherFunction(x: x) { $0 == 13 } g: { print(99) }
+</pre></div>
 
 <p>If the trailing closure is the function&rsquo;s only argument, you can omit
 the parentheses.
 </p>
-<ol>
-<li> // someMethod takes a closure as its only argument
-</li><li> myData.someMethod() { $0 == 13 }
-</li><li> myData.someMethod { $0 == 13 }
-</li></ol>
+<div class="example">
+<pre class="example">// someMethod takes a closure as its only argument
+myData.someMethod() { $0 == 13 }
+myData.someMethod { $0 == 13 }
+</pre></div>
 
 <p>To include the trailing closures in the arguments, the compiler examines
 the function&rsquo;s parameters from left to right as follows:
@@ -4778,19 +4790,19 @@ produce different results, the old right-to-left ordering is used and
 the compiler generates a warning. A future version of Swift will always
 use the left-to-right ordering.
 </p>
-<ol>
-<li> typealias Callback = (Int) -&gt; Int
-</li><li> func someFunction(firstClosure: Callback? = nil,
-</li><li> secondClosure: Callback? = nil) {
-</li><li> let first = firstClosure?(10)
-</li><li> let second = secondClosure?(20)
-</li><li> print(first ?? &quot;-&quot;, second ?? &quot;-&quot;)
-</li><li> }
-</li><li> someFunction() // Prints &quot;- -&quot;
-</li><li> someFunction { return $0 + 100 } // Ambiguous
-</li><li> someFunction { return $0 } secondClosure: { return $0 } // Prints
-&quot;10 20&quot;
-</li></ol>
+<div class="example">
+<pre class="example">typealias Callback = (Int) -&gt; Int
+func someFunction(firstClosure: Callback? = nil,
+                  secondClosure: Callback? = nil) {
+    let first = firstClosure?(10)
+    let second = secondClosure?(20)
+    print(first ?? &quot;-&quot;, second ?? &quot;-&quot;)
+}
+
+someFunction() // Prints &quot;- -&quot;
+someFunction { return $0 + 100 } // Ambiguous
+someFunction { return $0 } secondClosure: { return $0 } // Prints &quot;10 20&quot;
+</pre></div>
 
 <p>In the example above, the function call marked “Ambiguous” prints “-
 120” and produces a compiler warning on Swift 5.3. A future version of
@@ -4822,14 +4834,15 @@ one of the implicit conversions in the following list:
 
 <p>The following two function calls are equivalent:
 </p>
-<ol>
-<li> func unsafeFunction(pointer: UnsafePointer&lt;Int&gt;) {
-</li><li> // &hellip;
-</li><li> }
-</li><li> var myNumber = 1234
-</li><li> unsafeFunction(pointer: &amp;myNumber)
-</li><li> withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
-</li></ol>
+<div class="example">
+<pre class="example">func unsafeFunction(pointer: UnsafePointer&lt;Int&gt;) {
+    // ...
+}
+var myNumber = 1234
+
+unsafeFunction(pointer: &amp;myNumber)
+withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
+</pre></div>
 
 <p>A pointer that&rsquo;s created by these implicit conversions is valid only for
 the duration of the function call. To avoid undefined behavior, ensure
@@ -4914,44 +4927,44 @@ Next: <a href="#Explicit-Member-Expression" accesskey="n" rel="next">Explicit Me
 <p>An <em>initializer expression</em> provides access to a type&rsquo;s initializer. It
 has the following form:
 </p>
-<ol>
-<li> expression.init(initializer arguments)
-</li></ol>
+<div class="example">
+<pre class="example">expression.init(initializer arguments)
+</pre></div>
 
 <p>You use the initializer expression in a function call expression to
 initialize a new instance of a type. You also use an initializer
 expression to delegate to the initializer of a superclass.
 </p>
-<ol>
-<li> class SomeSubClass: SomeSuperClass {
-</li><li> override init() {
-</li><li> // subclass initialization goes here
-</li><li> super.init()
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">class SomeSubClass: SomeSuperClass {
+    override init() {
+        // subclass initialization goes here
+        super.init()
+    }
+}
+</pre></div>
 
 <p>Like a function, an initializer can be used as a value. For example:
 </p>
-<ol>
-<li> // Type annotation is required because String has multiple
-initializers.
-</li><li> let initializer: (Int) -&gt; String = String.init
-</li><li> let oneTwoThree = [1, 2, 3].map(initializer).reduce(&quot;&quot;, +)
-</li><li> print(oneTwoThree)
-</li><li> // Prints &quot;123&quot;
-</li></ol>
+<div class="example">
+<pre class="example">// Type annotation is required because String has multiple initializers.
+let initializer: (Int) -&gt; String = String.init
+let oneTwoThree = [1, 2, 3].map(initializer).reduce(&quot;&quot;, +)
+print(oneTwoThree)
+// Prints &quot;123&quot;
+</pre></div>
 
 <p>If you specify a type by name, you can access the type&rsquo;s initializer
 without using an initializer expression. In all other cases, you must
 use an initializer expression.
 </p>
-<ol>
-<li> let s1 = SomeType.init(data: 3) // Valid
-</li><li> let s2 = SomeType(data: 1) // Also valid
-</li><li> let s3 = type(of: someValue).init(data: 7) // Valid
-</li><li> let s4 = type(of: someValue)(data: 5) // Error
-</li></ol>
+<div class="example">
+<pre class="example">let s1 = SomeType.init(data: 3) // Valid
+let s2 = SomeType(data: 1) // Also valid
+
+let s3 = type(of: someValue).init(data: 7) // Valid
+let s4 = type(of: someValue)(data: 5) // Error
+</pre></div>
 
 <p>Grammar of an initializer expression
 </p>
@@ -4978,29 +4991,29 @@ Next: <a href="#Postfix-Self-Expression" accesskey="n" rel="next">Postfix Self E
 type, a tuple, or a module. It consists of a period (&lsquo;<samp>.</samp>&rsquo;) between the
 item and the identifier of its member.
 </p>
-<ol>
-<li> expression.member name
-</li></ol>
+<div class="example">
+<pre class="example">expression.member name
+</pre></div>
 
 <p>The members of a named type are named as part of the type&rsquo;s declaration
 or extension. For example:
 </p>
-<ol>
-<li> class SomeClass {
-</li><li> var someProperty = 42
-</li><li> }
-</li><li> let c = SomeClass()
-</li><li> let y = c.someProperty // Member access
-</li></ol>
+<div class="example">
+<pre class="example">class SomeClass {
+    var someProperty = 42
+}
+let c = SomeClass()
+let y = c.someProperty // Member access
+</pre></div>
 
 <p>The members of a tuple are implicitly named using integers in the order
 they appear, starting from zero. For example:
 </p>
-<ol>
-<li> var t = (10, 20, 30)
-</li><li> t.0 = t.1
-</li><li> // Now t is (20, 20, 30)
-</li></ol>
+<div class="example">
+<pre class="example">var t = (10, 20, 30)
+t.0 = t.1
+// Now t is (20, 20, 30)
+</pre></div>
 
 <p>The members of a module access the top-level declarations of that
 module.
@@ -5015,33 +5028,34 @@ parentheses, with each argument name followed by a colon (&lsquo;<samp>:</samp>&
 underscore (&lsquo;<samp>_</samp>&rsquo;) for an argument with no name. To distinguish between
 overloaded methods, use a type annotation. For example:
 </p>
-<ol>
-<li> class SomeClass {
-</li><li> func someMethod(x: Int, y: Int) {}
-</li><li> func someMethod(x: Int, z: Int) {}
-</li><li> func overloadedMethod(x: Int, y: Int) {}
-</li><li> func overloadedMethod(x: Int, y: Bool) {}
-</li><li> }
-</li><li> let instance = SomeClass()
-</li><li> let a = instance.someMethod // Ambiguous
-</li><li> let b = instance.someMethod(x:y:) // Unambiguous
-</li><li> let d = instance.overloadedMethod // Ambiguous
-</li><li> let d = instance.overloadedMethod(x:y:) // Still ambiguous
-</li><li> let d: (Int, Bool) -&gt; Void = instance.overloadedMethod(x:y:) //
-Unambiguous
-</li></ol>
+<div class="example">
+<pre class="example">class SomeClass {
+    func someMethod(x: Int, y: Int) {}
+    func someMethod(x: Int, z: Int) {}
+    func overloadedMethod(x: Int, y: Int) {}
+    func overloadedMethod(x: Int, y: Bool) {}
+}
+let instance = SomeClass()
+
+let a = instance.someMethod // Ambiguous
+let b = instance.someMethod(x:y:) // Unambiguous
+
+let d = instance.overloadedMethod // Ambiguous
+let d = instance.overloadedMethod(x:y:) // Still ambiguous
+let d: (Int, Bool) -&gt; Void = instance.overloadedMethod(x:y:) // Unambiguous
+</pre></div>
 
 <p>If a period appears at the beginning of a line, it&rsquo;s understood as part
 of an explicit member expression, not as an implicit member expression.
 For example, the following listing shows chained method calls split over
 several lines:
 </p>
-<ol>
-<li> let x = [10, 3, 20, 15, 4]
-</li><li> .sorted()
-</li><li> .filter { $0 &gt; 5 }
-</li><li> .map { $0 * 100 }
-</li></ol>
+<div class="example">
+<pre class="example">let x = [10, 3, 20, 15, 4]
+  .sorted()
+  .filter { $0 &gt; 5 }
+  .map { $0 * 100 }
+</pre></div>
 
 <p>Grammar of an explicit member expression
 </p>
@@ -5087,10 +5101,10 @@ Next: <a href="#Subscript-Expression" accesskey="n" rel="next">Subscript Express
 <p>A postfix &lsquo;<samp>self</samp>&rsquo; expression consists of an expression or the name of a
 type, immediately followed by &lsquo;<samp>.self</samp>&rsquo;. It has the following forms:
 </p>
-<ol>
-<li> expression.self
-</li><li> type.self
-</li></ol>
+<div class="example">
+<pre class="example">expression.self
+type.self
+</pre></div>
 
 <p>The first form evaluates to the value of the <em>expression</em>. For example,
 &lsquo;<samp>x.self</samp>&rsquo; evaluates to &lsquo;<samp>x</samp>&rsquo;.
@@ -5118,9 +5132,9 @@ Next: <a href="#Forced_002dValue-Expression" accesskey="n" rel="next">Forced-Val
 setter of the corresponding subscript declaration. It has the following
 form:
 </p>
-<ol>
-<li> expression[index expressions]
-</li></ol>
+<div class="example">
+<pre class="example">expression[index expressions]
+</pre></div>
 
 <p>To evaluate the value of a subscript expression, the subscript getter
 for the <em>expression</em>&rsquo;s type is called with the <em>index expressions</em>
@@ -5148,9 +5162,9 @@ Next: <a href="#Optional_002dChaining-Expression" accesskey="n" rel="next">Optio
 <p>A <em>forced-value expression</em> unwraps an optional value that you are
 certain isn&rsquo;t &lsquo;<samp>nil</samp>&rsquo;. It has the following form:
 </p>
-<ol>
-<li> expression!
-</li></ol>
+<div class="example">
+<pre class="example">expression!
+</pre></div>
 
 <p>If the value of the <em>expression</em> isn&rsquo;t &lsquo;<samp>nil</samp>&rsquo;, the optional value is
 unwrapped and returned with the corresponding non-optional type.
@@ -5160,14 +5174,15 @@ Otherwise, a runtime error is raised.
 by mutating the value itself, or by assigning to one of the value&rsquo;s
 members. For example:
 </p>
-<ol>
-<li> var x: Int? = 0
-</li><li> x! += 1
-</li><li> // x is now 1
-</li><li> var someDictionary = [&quot;a&quot;: [1, 2, 3], &quot;b&quot;: [10, 20]]
-</li><li> someDictionary[&quot;a&quot;]![0] = 100
-</li><li> // someDictionary is now [&quot;a&quot;: [100, 2, 3], &quot;b&quot;: [10, 20]]
-</li></ol>
+<div class="example">
+<pre class="example">var x: Int? = 0
+x! += 1
+// x is now 1
+
+var someDictionary = [&quot;a&quot;: [1, 2, 3], &quot;b&quot;: [10, 20]]
+someDictionary[&quot;a&quot;]![0] = 100
+// someDictionary is now [&quot;a&quot;: [100, 2, 3], &quot;b&quot;: [10, 20]]
+</pre></div>
 
 <p>Grammar of a forced-value expression
 </p>
@@ -5186,9 +5201,9 @@ Previous: <a href="#Forced_002dValue-Expression" accesskey="p" rel="prev">Forced
 <p>An <em>optional-chaining expression</em> provides a simplified syntax for using
 optional values in postfix expressions. It has the following form:
 </p>
-<ol>
-<li> expression?
-</li></ol>
+<div class="example">
+<pre class="example">expression?
+</pre></div>
 
 <p>The postfix &lsquo;<samp>?</samp>&rsquo; operator makes an optional-chaining expression from an
 expression without changing the expression&rsquo;s value.
@@ -5210,20 +5225,20 @@ its value is unwrapped and used to evaluate &lsquo;<samp>.property</samp>&rsquo;
 which is used to evaluate &lsquo;<samp>.performAction()</samp>&rsquo;. The entire expression
 &lsquo;<samp>c?.property.performAction()</samp>&rsquo; has a value of an optional type.
 </p>
-<ol>
-<li> var c: SomeClass?
-</li><li> var result: Bool? = c?.property.performAction()
-</li></ol>
+<div class="example">
+<pre class="example">var c: SomeClass?
+var result: Bool? = c?.property.performAction()
+</pre></div>
 
 <p>The following example shows the behavior of the example above without
 using optional chaining.
 </p>
-<ol>
-<li> var result: Bool?
-</li><li> if let unwrappedC = c {
-</li><li> result = unwrappedC.property.performAction()
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">var result: Bool?
+if let unwrappedC = c {
+    result = unwrappedC.property.performAction()
+}
+</pre></div>
 
 <p>The unwrapped value of an optional-chaining expression can be modified,
 either by mutating the value itself, or by assigning to one of the
@@ -5231,18 +5246,20 @@ value&rsquo;s members. If the value of the optional-chaining expression is
 &lsquo;<samp>nil</samp>&rsquo;, the expression on the right-hand side of the assignment operator
 isn&rsquo;t evaluated. For example:
 </p>
-<ol>
-<li> func someFunctionWithSideEffects() -&gt; Int {
-</li><li> return 42 // No actual side effects.
-</li><li> }
-</li><li> var someDictionary = [&quot;a&quot;: [1, 2, 3], &quot;b&quot;: [10, 20]]
-</li><li> someDictionary[&quot;not here&quot;]?[0] = someFunctionWithSideEffects()
-</li><li> // someFunctionWithSideEffects isn&rsquo;t evaluated
-</li><li> // someDictionary is still [&quot;a&quot;: [1, 2, 3], &quot;b&quot;: [10, 20]]
-</li><li> someDictionary[&quot;a&quot;]?[0] = someFunctionWithSideEffects()
-</li><li> // someFunctionWithSideEffects is evaluated and returns 42
-</li><li> // someDictionary is now [&quot;a&quot;: [42, 2, 3], &quot;b&quot;: [10, 20]]
-</li></ol>
+<div class="example">
+<pre class="example">func someFunctionWithSideEffects() -&gt; Int {
+    return 42 // No actual side effects.
+}
+var someDictionary = [&quot;a&quot;: [1, 2, 3], &quot;b&quot;: [10, 20]]
+
+someDictionary[&quot;not here&quot;]?[0] = someFunctionWithSideEffects()
+// someFunctionWithSideEffects isn't evaluated
+// someDictionary is still [&quot;a&quot;: [1, 2, 3], &quot;b&quot;: [10, 20]]
+
+someDictionary[&quot;a&quot;]?[0] = someFunctionWithSideEffects()
+// someFunctionWithSideEffects is evaluated and returns 42
+// someDictionary is now [&quot;a&quot;: [42, 2, 3], &quot;b&quot;: [10, 20]]
+</pre></div>
 
 <p>Grammar of an optional-chaining expression
 </p>
@@ -5395,11 +5412,11 @@ each item in a collection (or any type) that conforms to the
 </p>
 <p>A &lsquo;<samp>for</samp>&rsquo;-&lsquo;<samp>in</samp>&rsquo; statement has the following form:
 </p>
-<ol>
-<li> for item in collection {
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">for item in collection {
+    statements
+}
+</pre></div>
 
 <p>The &lsquo;<samp>makeIterator()</samp>&rsquo; method is called on the <em>collection</em> expression to
 obtain a value of an iterator type&mdash;that is, a type that conforms to
@@ -5435,11 +5452,11 @@ long as a condition remains true.
 </p>
 <p>A &lsquo;<samp>while</samp>&rsquo; statement has the following form:
 </p>
-<ol>
-<li> while condition {
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">while condition {
+    statements
+}
+</pre></div>
 
 <p>A &lsquo;<samp>while</samp>&rsquo; statement is executed as follows:
 </p>
@@ -5511,11 +5528,11 @@ or more times, as long as a condition remains true.
 </p>
 <p>A &lsquo;<samp>repeat</samp>&rsquo;-&lsquo;<samp>while</samp>&rsquo; statement has the following form:
 </p>
-<ol>
-<li> repeat {
-</li><li> statements
-</li><li> } while condition
-</li></ol>
+<div class="example">
+<pre class="example">repeat {
+    statements
+} while condition
+</pre></div>
 
 <p>A &lsquo;<samp>repeat</samp>&rsquo;-&lsquo;<samp>while</samp>&rsquo; statement is executed as follows:
 </p>
@@ -5591,11 +5608,11 @@ opening and closing braces are required.
 <p>The first form allows code to be executed only when a condition is true
 and has the following form:
 </p>
-<ol>
-<li> if condition {
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">if condition {
+    statements
+}
+</pre></div>
 
 <p>The second form of an &lsquo;<samp>if</samp>&rsquo; statement provides an additional <em>else
 clause</em> (introduced by the &lsquo;<samp>else</samp>&rsquo; keyword) and is used for executing one
@@ -5603,27 +5620,27 @@ part of code when the condition is true and another part of code when
 the same condition is false. When a single else clause is present, an
 &lsquo;<samp>if</samp>&rsquo; statement has the following form:
 </p>
-<ol>
-<li> if condition {
-</li><li> statements to execute if condition is true
-</li><li> } else {
-</li><li> statements to execute if condition is false
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">if condition {
+    statements to execute if condition is true
+} else {
+    statements to execute if condition is false
+}
+</pre></div>
 
 <p>The else clause of an &lsquo;<samp>if</samp>&rsquo; statement can contain another &lsquo;<samp>if</samp>&rsquo; statement
 to test more than one condition. An &lsquo;<samp>if</samp>&rsquo; statement chained together in
 this way has the following form:
 </p>
-<ol>
-<li> if condition 1 {
-</li><li> statements to execute if condition 1 is true
-</li><li> } else if condition 2 {
-</li><li> statements to execute if condition 2 is true
-</li><li> } else {
-</li><li> statements to execute if both conditions are false
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">if condition 1 {
+    statements to execute if condition 1 is true
+} else if condition 2 {
+    statements to execute if condition 2 is true
+} else {
+    statements to execute if both conditions are false
+}
+</pre></div>
 
 <p>The value of any condition in an &lsquo;<samp>if</samp>&rsquo; statement must be of type &lsquo;<samp>Bool</samp>&rsquo;
 or a type bridged to &lsquo;<samp>Bool</samp>&rsquo;. The condition can also be an optional
@@ -5657,11 +5674,11 @@ if one or more conditions aren&rsquo;t met.
 </p>
 <p>A &lsquo;<samp>guard</samp>&rsquo; statement has the following form:
 </p>
-<ol>
-<li> guard condition else {
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">guard condition else {
+    statements
+}
+</pre></div>
 
 <p>The value of any condition in a &lsquo;<samp>guard</samp>&rsquo; statement must be of type &lsquo;<samp>Bool</samp>&rsquo;
 or a type bridged to &lsquo;<samp>Bool</samp>&rsquo;. The condition can also be an optional
@@ -5708,19 +5725,19 @@ depending on the value of a control expression.
 </p>
 <p>A &lsquo;<samp>switch</samp>&rsquo; statement has the following form:
 </p>
-<ol>
-<li> switch control expression {
-</li><li> case pattern 1:
-</li><li> statements
-</li><li> case pattern 2 where condition:
-</li><li> statements
-</li><li> case pattern 3 where condition,
-</li><li> pattern 4 where condition:
-</li><li> statements
-</li><li> default:
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">switch control expression {
+case pattern 1:
+    statements
+case pattern 2 where condition:
+    statements
+case pattern 3 where condition,
+     pattern 4 where condition:
+    statements
+default:
+    statements
+}
+</pre></div>
 
 <p>The <em>control expression</em> of the &lsquo;<samp>switch</samp>&rsquo; statement is evaluated and then
 compared with the patterns specified in each case. If a match is found,
@@ -5752,9 +5769,9 @@ evaluates to &lsquo;<samp>true</samp>&rsquo;. For example, a <em>control express
 case in the example below only if it&rsquo;s a tuple that contains two
 elements of the same value, such as &lsquo;<samp>(1, 1)</samp>&rsquo;.
 </p>
-<ol>
-<li> case let (x, y) where x == y:
-</li></ol>
+<div class="example">
+<pre class="example">case let (x, y) where x == y:
+</pre></div>
 
 <p>As the above example shows, patterns in a case can also bind constants
 using the &lsquo;<samp>let</samp>&rsquo; keyword (they can also bind variables using the &lsquo;<samp>var</samp>&rsquo;
@@ -5828,13 +5845,13 @@ statement to take the new cases into account.
 <pre class="example">let representation: Mirror.AncestorRepresentation = .generated
 switch representation {
 case .customized:
-print(&quot;Use the nearest ancestor's implementation.&quot;)
+    print(&quot;Use the nearest ancestor's implementation.&quot;)
 case .generated:
-print(&quot;Generate a default mirror for all ancestor classes.&quot;)
+    print(&quot;Generate a default mirror for all ancestor classes.&quot;)
 case .suppressed:
-print(&quot;Suppress the representation of all ancestor classes.&quot;)
+    print(&quot;Suppress the representation of all ancestor classes.&quot;)
 @unknown default:
-print(&quot;Use a representation that was unknown when this code was compiled.&quot;)
+    print(&quot;Use a representation that was unknown when this code was compiled.&quot;)
 }
 // Prints &quot;Generate a default mirror for all ancestor classes.&quot;
 </pre></div>
@@ -6044,10 +6061,10 @@ or a &lsquo;<samp>switch</samp>&rsquo; statement. A &lsquo;<samp>break</samp>&rs
 &lsquo;<samp>break</samp>&rsquo; keyword, or it can consist of the &lsquo;<samp>break</samp>&rsquo; keyword followed by
 the name of a statement label, as shown below.
 </p>
-<ol>
-<li> break
-</li><li> break label name
-</li></ol>
+<div class="example">
+<pre class="example">break
+break label name
+</pre></div>
 
 <p>When a &lsquo;<samp>break</samp>&rsquo; statement is followed by the name of a statement label,
 it ends program execution of the loop, &lsquo;<samp>if</samp>&rsquo; statement, or &lsquo;<samp>switch</samp>&rsquo;
@@ -6085,10 +6102,10 @@ of a loop statement but doesn&rsquo;t stop execution of the loop statement. A
 can consist of the &lsquo;<samp>continue</samp>&rsquo; keyword followed by the name of a
 statement label, as shown below.
 </p>
-<ol>
-<li> continue
-</li><li> continue label name
-</li></ol>
+<div class="example">
+<pre class="example">continue
+continue label name
+</pre></div>
 
 <p>When a &lsquo;<samp>continue</samp>&rsquo; statement is followed by the name of a statement
 label, it ends program execution of the current iteration of the loop
@@ -6162,10 +6179,10 @@ following the function or method call.
 consist of the &lsquo;<samp>return</samp>&rsquo; keyword followed by an expression, as shown
 below.
 </p>
-<ol>
-<li> return
-</li><li> return expression
-</li></ol>
+<div class="example">
+<pre class="example">return
+return expression
+</pre></div>
 
 <p>When a &lsquo;<samp>return</samp>&rsquo; statement is followed by an expression, the value of the
 expression is returned to the calling function or method. If the value
@@ -6210,9 +6227,9 @@ clause of a &lsquo;<samp>do</samp>&rsquo; statement.
 <p>A &lsquo;<samp>throw</samp>&rsquo; statement consists of the &lsquo;<samp>throw</samp>&rsquo; keyword followed by an
 expression, as shown below.
 </p>
-<ol>
-<li> throw expression
-</li></ol>
+<div class="example">
+<pre class="example">throw expression
+</pre></div>
 
 <p>The value of the <em>expression</em> must have a type that conforms to the
 &lsquo;<samp>Error</samp>&rsquo; protocol.
@@ -6240,11 +6257,11 @@ in.
 </p>
 <p>A &lsquo;<samp>defer</samp>&rsquo; statement has the following form:
 </p>
-<ol>
-<li> defer {
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">defer {
+    statements
+}
+</pre></div>
 
 <p>The statements within the &lsquo;<samp>defer</samp>&rsquo; statement are executed no matter how
 program control is transferred. This means that a &lsquo;<samp>defer</samp>&rsquo; statement can
@@ -6258,17 +6275,17 @@ appear is the reverse of the order they&rsquo;re executed. Executing the last
 that last &lsquo;<samp>defer</samp>&rsquo; statement can refer to resources that will be cleaned
 up by other &lsquo;<samp>defer</samp>&rsquo; statements.
 </p>
-<ol>
-<li> func f() {
-</li><li> defer { print(&quot;First defer&quot;) }
-</li><li> defer { print(&quot;Second defer&quot;) }
-</li><li> print(&quot;End of function&quot;)
-</li><li> }
-</li><li> f()
-</li><li> // Prints &quot;End of function&quot;
-</li><li> // Prints &quot;Second defer&quot;
-</li><li> // Prints &quot;First defer&quot;
-</li></ol>
+<div class="example">
+<pre class="example">func f() {
+    defer { print(&quot;First defer&quot;) }
+    defer { print(&quot;Second defer&quot;) }
+    print(&quot;End of function&quot;)
+}
+f()
+// Prints &quot;End of function&quot;
+// Prints &quot;Second defer&quot;
+// Prints &quot;First defer&quot;
+</pre></div>
 
 <p>The statements in the &lsquo;<samp>defer</samp>&rsquo; statement can&rsquo;t transfer program control
 outside of the &lsquo;<samp>defer</samp>&rsquo; statement.
@@ -6295,20 +6312,20 @@ delimit a code block, and doesn&rsquo;t incur a performance cost at runtime.
 </p>
 <p>A &lsquo;<samp>do</samp>&rsquo; statement has the following form:
 </p>
-<ol>
-<li> do {
-</li><li> try expression
-</li><li> statements
-</li><li> } catch pattern 1 {
-</li><li> statements
-</li><li> } catch pattern 2 where condition {
-</li><li> statements
-</li><li> } catch pattern 3, pattern 4 where condition {
-</li><li> statements
-</li><li> } catch {
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">do {
+    try expression
+    statements
+} catch pattern 1 {
+    statements
+} catch pattern 2 where condition {
+    statements
+} catch pattern 3, pattern 4 where condition {
+    statements
+} catch {
+    statements
+}
+</pre></div>
 
 <p>If any statement in the &lsquo;<samp>do</samp>&rsquo; code block throws an error, program control
 is transferred to the first &lsquo;<samp>catch</samp>&rsquo; clause whose pattern matches the
@@ -6426,11 +6443,11 @@ depending on the value of one or more compilation conditions.
 directive and ends with the &lsquo;<samp>#endif</samp>&rsquo; compilation directive. A simple
 conditional compilation block has the following form:
 </p>
-<ol>
-<li> #if compilation condition
-</li><li> statements
-</li><li> #endif
-</li></ol>
+<div class="example">
+<pre class="example">#if compilation condition
+statements
+#endif
+</pre></div>
 
 <p>Unlike the condition of an &lsquo;<samp>if</samp>&rsquo; statement, the <em>compilation condition</em>
 is evaluated at compile time. As a result, the <em>statements</em> are compiled
@@ -6466,22 +6483,21 @@ compiler in Swift 4.2 mode, the compiler version is 5 and the language
 version is 4.2. With those settings, the following code prints all three
 messages:
 </p>
-<ol>
-<li> #if compiler(&gt;=5)
-</li><li> print(&quot;Compiled with the Swift 5 compiler or later&quot;)
-</li><li> #endif
-</li><li> #if swift(&gt;=4.2)
-</li><li> print(&quot;Compiled in Swift 4.2 mode or later&quot;)
-</li><li> #endif
-</li><li> #if compiler(&gt;=5) &amp;&amp; swift(&lt;5)
-</li><li> print(&quot;Compiled with the Swift 5 compiler or later in a Swift mode
-earlier than 5&quot;)
-</li><li> #endif
-</li><li> // Prints &quot;Compiled with the Swift 5 compiler or later&quot;
-</li><li> // Prints &quot;Compiled in Swift 4.2 mode or later&quot;
-</li><li> // Prints &quot;Compiled with the Swift 5 compiler or later in a Swift
-mode earlier than 5&quot;
-</li></ol>
+<div class="example">
+<pre class="example">#if compiler(&gt;=5)
+print(&quot;Compiled with the Swift 5 compiler or later&quot;)
+#endif
+#if swift(&gt;=4.2)
+print(&quot;Compiled in Swift 4.2 mode or later&quot;)
+#endif
+#if compiler(&gt;=5) &amp;&amp; swift(&lt;5)
+print(&quot;Compiled with the Swift 5 compiler or later in a Swift mode
+        earlier than 5&quot;)
+#endif
+// Prints &quot;Compiled with the Swift 5 compiler or later&quot;
+// Prints &quot;Compiled in Swift 4.2 mode or later&quot;
+// Prints &quot;Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5&quot;
+</pre></div>
 
 <span id="index-canImport"></span>
 
@@ -6516,15 +6532,15 @@ additional branches using &lsquo;<samp>#elseif</samp>&rsquo; clauses. You can al
 additional branch using an &lsquo;<samp>#else</samp>&rsquo; clause. Conditional compilation
 blocks that contain multiple branches have the following form:
 </p>
-<ol>
-<li> #if compilation condition 1
-</li><li> statements to compile if compilation condition 1 is true
-</li><li> #elseif compilation condition 2
-</li><li> statements to compile if compilation condition 2 is true
-</li><li> #else
-</li><li> statements to compile if both compilation conditions are false
-</li><li> #endif
-</li></ol>
+<div class="example">
+<pre class="example">#if compilation condition 1
+statements to compile if compilation condition 1 is true
+#elseif compilation condition 2
+statements to compile if compilation condition 2 is true
+#else
+statements to compile if both compilation conditions are false
+#endif
+</pre></div>
 
 <p>Note
 </p>
@@ -6689,10 +6705,10 @@ code location used by Swift for diagnostic and debugging purposes.
 
 <p>A line control statement has the following forms:
 </p>
-<ol>
-<li> #sourceLocation(file: file path, line: line number)
-</li><li> #sourceLocation()
-</li></ol>
+<div class="example">
+<pre class="example">#sourceLocation(file: file path, line: line number)
+#sourceLocation()
+</pre></div>
 
 <p>The first form of a line control statement changes the values of the
 &lsquo;<samp>#line</samp>&rsquo;, &lsquo;<samp>#file</samp>&rsquo;, &lsquo;<samp>#fileID</samp>&rsquo;, and &lsquo;<samp>#filePath</samp>&rsquo; literal expressions,
@@ -6741,10 +6757,10 @@ the following forms:
 <span id="index-_0023error"></span>
 <span id="index-_0023warning"></span>
 
-<ol>
-<li> #error(&quot;error message&quot;)
-</li><li> #warning(&quot;warning message&quot;)
-</li></ol>
+<div class="example">
+<pre class="example">#error(&quot;error message&quot;)
+#warning(&quot;warning message&quot;)
+</pre></div>
 
 <p>The first form emits the <em>error message</em> as a fatal error and terminates
 the compilation process. The second form emits the <em>warning message</em> as
@@ -6781,13 +6797,13 @@ based on specified platforms arguments.
 </p>
 <p>An availability condition has the following form:
 </p>
-<ol>
-<li> if #available(platform name version, &hellip;, *) {
-</li><li> statements to execute if the APIs are available
-</li><li> } else {
-</li><li> fallback statements to execute if the APIs are unavailable
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">if #available(platform name version, ..., *) {
+    statements to execute if the APIs are available
+} else {
+    fallback statements to execute if the APIs are unavailable
+}
+</pre></div>
 
 <p>You use an availability condition to execute a block of code, depending
 on whether the APIs you want to use are available at runtime. The
@@ -7011,11 +7027,11 @@ Next: <a href="#Import-Declaration" accesskey="n" rel="next">Import Declaration<
 <p>A <em>code block</em> is used by a variety of declarations and control
 structures to group statements together. It has the following form:
 </p>
-<ol>
-<li> {
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">{
+    statements
+}
+</pre></div>
 
 <p>The <em>statements</em> inside a code block include declarations, expressions,
 and other kinds of statements and are executed in order of their
@@ -7038,9 +7054,9 @@ Next: <a href="#Constant-Declaration" accesskey="n" rel="next">Constant Declarat
 outside the current file. The basic form imports the entire module; it
 consists of the &lsquo;<samp>import</samp>&rsquo; keyword followed by a module name:
 </p>
-<ol>
-<li> import module
-</li></ol>
+<div class="example">
+<pre class="example">import module
+</pre></div>
 
 <p>Providing more detail limits which symbols are imported&mdash;you can
 specify a specific submodule or a specific declaration within a module
@@ -7048,10 +7064,10 @@ or submodule. When this detailed form is used, only the imported symbol
 (and not the module that declares it) is made available in the current
 scope.
 </p>
-<ol>
-<li> import import kind module.symbol name
-</li><li> import module.submodule
-</li></ol>
+<div class="example">
+<pre class="example">import import kind module.symbol name
+import module.submodule
+</pre></div>
 
 <p>Grammar of an import declaration
 </p>
@@ -7093,9 +7109,9 @@ Next: <a href="#Variable-Declaration" accesskey="n" rel="next">Variable Declarat
 program. Constant declarations are declared using the &lsquo;<samp>let</samp>&rsquo; keyword and
 have the following form:
 </p>
-<ol>
-<li> let constant name: type = expression
-</li></ol>
+<div class="example">
+<pre class="example">let constant name: type = expression
+</pre></div>
 
 <p>A constant declaration defines an immutable binding between the
 <em>constant name</em> and the value of the initializer <em>expression</em>; after the
@@ -7118,20 +7134,20 @@ properties and therefore don&rsquo;t have getters or setters.
 name of each item in the tuple is bound to the corresponding value in
 the initializer <em>expression</em>.
 </p>
-<ol>
-<li> let (firstNumber, secondNumber) = (10, 42)
-</li></ol>
+<div class="example">
+<pre class="example">let (firstNumber, secondNumber) = (10, 42)
+</pre></div>
 
 <p>In this example, &lsquo;<samp>firstNumber</samp>&rsquo; is a named constant for the value &lsquo;<samp>10</samp>&rsquo;,
 and &lsquo;<samp>secondNumber</samp>&rsquo; is a named constant for the value &lsquo;<samp>42</samp>&rsquo;. Both
 constants can now be used independently:
 </p>
-<ol>
-<li> print(&quot;The first number is \(firstNumber).&quot;)
-</li><li> // Prints &quot;The first number is 10.&quot;
-</li><li> print(&quot;The second number is \(secondNumber).&quot;)
-</li><li> // Prints &quot;The second number is 42.&quot;
-</li></ol>
+<div class="example">
+<pre class="example">print(&quot;The first number is \(firstNumber).&quot;)
+// Prints &quot;The first number is 10.&quot;
+print(&quot;The second number is \(secondNumber).&quot;)
+// Prints &quot;The second number is 42.&quot;
+</pre></div>
 
 <p>The type annotation (&lsquo;<samp>:</samp>&rsquo; <em>type</em>) is optional in a constant declaration
 when the type of the <em>constant name</em> can be inferred, as described in
@@ -7223,9 +7239,9 @@ Next: <a href="#Computed-Variables-and-Computed-Properties" accesskey="n" rel="n
 <p>The following form declares a stored variable or stored variable
 property:
 </p>
-<ol>
-<li> var variable name: type = expression
-</li></ol>
+<div class="example">
+<pre class="example">var variable name: type = expression
+</pre></div>
 
 <p>You define this form of a variable declaration at global scope, the
 local scope of a function, or in the context of a class or structure
@@ -7256,16 +7272,16 @@ Next: <a href="#Stored-Variable-Observers-and-Property-Observers" accesskey="n" 
 
 <p>The following form declares a computed variable or computed property:
 </p>
-<ol>
-<li> var variable name: type {
-</li><li> get {
-</li><li> statements
-</li><li> }
-</li><li> set(setter name) {
-</li><li> statements
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">var variable name: type {
+    get {
+        statements
+    }
+    set(setter name) {
+        statements
+    }
+}
+</pre></div>
 
 <p>You define this form of a variable declaration at global scope, the
 local scope of a function, or in the context of a class, structure,
@@ -7307,16 +7323,16 @@ Next: <a href="#Type-Variable-Properties" accesskey="n" rel="next">Type Variable
 &lsquo;<samp>didSet</samp>&rsquo; observers. A stored variable or property declared with
 observers has the following form:
 </p>
-<ol>
-<li> var variable name: type = expression {
-</li><li> willSet(setter name) {
-</li><li> statements
-</li><li> }
-</li><li> didSet(setter name) {
-</li><li> statements
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">var variable name: type = expression {
+    willSet(setter name) {
+        statements
+    }
+    didSet(setter name) {
+        statements
+    }
+}
+</pre></div>
 
 <p>You define this form of a variable declaration at global scope, the
 local scope of a function, or in the context of a class or structure
@@ -7376,42 +7392,42 @@ Otherwise, the new value is stored without calling the superclass&rsquo;s
 getter. The example below shows a computed property that&rsquo;s defined by
 the superclass and overridden by its subclasses to add an observer.
 </p>
-<ol>
-<li> class Superclass {
-</li><li> private var xValue = 12
-</li><li> var x: Int {
-</li><li> get { print(&quot;Getter was called&quot;); return xValue }
-</li><li> set { print(&quot;Setter was called&quot;); xValue = newValue }
-</li><li> }
-</li><li> }
-</li><li> // This subclass doesn&rsquo;t refer to oldValue in its observer, so the
-</li><li> // superclass&rsquo;s getter is called only once to print the value.
-</li><li> class New: Superclass {
-</li><li> override var x: Int {
-</li><li> didSet { print(&quot;New value \(x)&quot;) }
-</li><li> }
-</li><li> }
-</li><li> let new = New()
-</li><li> new.x = 100
-</li><li> // Prints &quot;Setter was called&quot;
-</li><li> // Prints &quot;Getter was called&quot;
-</li><li> // Prints &quot;New value 100&quot;
-</li><li> // This subclass refers to oldValue in its observer, so the
-superclass&rsquo;s
-</li><li> // getter is called once before the setter, and again to print the
-value.
-</li><li> class NewAndOld: Superclass {
-</li><li> override var x: Int {
-</li><li> didSet { print(&quot;Old value \(oldValue) - new value \(x)&quot;) }
-</li><li> }
-</li><li> }
-</li><li> let newAndOld = NewAndOld()
-</li><li> newAndOld.x = 200
-</li><li> // Prints &quot;Getter was called&quot;
-</li><li> // Prints &quot;Setter was called&quot;
-</li><li> // Prints &quot;Getter was called&quot;
-</li><li> // Prints &quot;Old value 12 - new value 200&quot;
-</li></ol>
+<div class="example">
+<pre class="example">class Superclass {
+    private var xValue = 12
+    var x: Int {
+        get { print(&quot;Getter was called&quot;); return xValue }
+        set { print(&quot;Setter was called&quot;); xValue = newValue }
+    }
+}
+
+// This subclass doesn't refer to oldValue in its observer, so the
+// superclass's getter is called only once to print the value.
+class New: Superclass {
+    override var x: Int {
+        didSet { print(&quot;New value \(x)&quot;) }
+    }
+}
+let new = New()
+new.x = 100
+// Prints &quot;Setter was called&quot;
+// Prints &quot;Getter was called&quot;
+// Prints &quot;New value 100&quot;
+
+// This subclass refers to oldValue in its observer, so the superclass's
+// getter is called once before the setter, and again to print the value.
+  class NewAndOld: Superclass {
+      override var x: Int {
+          didSet { print(&quot;Old value \(oldValue) - new value \(x)&quot;) }
+      }
+  }
+let newAndOld = NewAndOld()
+newAndOld.x = 200
+// Prints &quot;Getter was called&quot;
+// Prints &quot;Setter was called&quot;
+// Prints &quot;Getter was called&quot;
+// Prints &quot;Old value 12 - new value 200&quot;
+</pre></div>
 
 <p>For more information and to see an example of how to use property
 observers, see <a href="swift.html#Property-Observers">(swift)Property
@@ -7579,9 +7595,9 @@ Next: <a href="#Function-Declaration" accesskey="n" rel="next">Function Declarat
 into your program. Type alias declarations are declared using the
 &lsquo;<samp>typealias</samp>&rsquo; keyword and have the following form:
 </p>
-<ol>
-<li> typealias name = existing type
-</li></ol>
+<div class="example">
+<pre class="example">typealias name = existing type
+</pre></div>
 
 <p>After a type alias is declared, the aliased <em>name</em> can be used instead
 of the <em>existing type</em> everywhere in your program. The <em>existing type</em>
@@ -7592,20 +7608,21 @@ types; they simply allow a name to refer to an existing type.
 existing generic type. The type alias can provide concrete types for
 some or all of the generic parameters of the existing type. For example:
 </p>
-<ol>
-<li> typealias StringDictionary&lt;Value&gt; = Dictionary&lt;String, Value&gt;
-</li><li> // The following dictionaries have the same type.
-</li><li> var dictionary1: StringDictionary&lt;Int&gt; = [:]
-</li><li> var dictionary2: Dictionary&lt;String, Int&gt; = [:]
-</li></ol>
+<div class="example">
+<pre class="example">typealias StringDictionary&lt;Value&gt; = Dictionary&lt;String, Value&gt;
+
+// The following dictionaries have the same type.
+var dictionary1: StringDictionary&lt;Int&gt; = [:]
+var dictionary2: Dictionary&lt;String, Int&gt; = [:]
+</pre></div>
 
 <p>When a type alias is declared with generic parameters, the constraints
 on those parameters must match exactly the constraints on the existing
 type&rsquo;s generic parameters. For example:
 </p>
-<ol>
-<li> typealias DictionaryOfInts&lt;Key: Hashable&gt; = Dictionary&lt;Key, Int&gt;
-</li></ol>
+<div class="example">
+<pre class="example">typealias DictionaryOfInts&lt;Key: Hashable&gt; = Dictionary&lt;Key, Int&gt;
+</pre></div>
 
 <p>Because the type alias and the existing type can be used
 interchangeably, the type alias can&rsquo;t introduce additional generic
@@ -7616,22 +7633,24 @@ omitting all generic parameters from the declaration. For example, the
 &lsquo;<samp>Diccionario</samp>&rsquo; type alias declared here has the same generic parameters
 and constraints as &lsquo;<samp>Dictionary</samp>&rsquo;.
 </p>
-<ol>
-<li> typealias Diccionario = Dictionary
-</li></ol>
+<div class="example">
+<pre class="example">typealias Diccionario = Dictionary
+</pre></div>
 
 <p>Inside a protocol declaration, a type alias can give a shorter and more
 convenient name to a type that&rsquo;s used frequently. For example:
 </p>
-<ol>
-<li> protocol Sequence {
-</li><li> associatedtype Iterator: IteratorProtocol
-</li><li> typealias Element = Iterator.Element
-</li><li> }
-</li><li> func sum&lt;T: Sequence&gt;(_ sequence: T) -&gt; Int where T.Element == Int {
-</li><li> // &hellip;
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">protocol Sequence {
+    associatedtype Iterator: IteratorProtocol
+    typealias Element = Iterator.Element
+}
+
+
+func sum&lt;T: Sequence&gt;(_ sequence: T) -&gt; Int where T.Element == Int {
+    // ...
+}
+</pre></div>
 
 <p>Without this type alias, the &lsquo;<samp>sum</samp>&rsquo; function would have to refer to the
 associated type as &lsquo;<samp>T.Iterator.Element</samp>&rsquo; instead of &lsquo;<samp>T.Element</samp>&rsquo;.
@@ -7670,20 +7689,20 @@ enumeration, or protocol is referred to as a <em>method</em>. Function
 declarations are declared using the &lsquo;<samp>func</samp>&rsquo; keyword and have the
 following form:
 </p>
-<ol>
-<li> func function name(parameters) -&gt; return type {
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">func function name(parameters) -&gt; return type {
+    statements
+}
+</pre></div>
 
 <p>If the function has a return type of &lsquo;<samp>Void</samp>&rsquo;, the return type can be
 omitted as follows:
 </p>
-<ol>
-<li> func function name(parameters) {
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">func function name(parameters) {
+    statements
+}
+</pre></div>
 
 <p>The type of each parameter must be included&mdash;it can&rsquo;t be inferred. If
 you write &lsquo;<samp>inout</samp>&rsquo; in front of a parameter&rsquo;s type, the parameter can be
@@ -7742,27 +7761,27 @@ one of several forms. The order of arguments in a function call must
 match the order of parameters in the function&rsquo;s declaration. The
 simplest entry in a parameter list has the following form:
 </p>
-<ol>
-<li> parameter name: parameter type
-</li></ol>
+<div class="example">
+<pre class="example">parameter name: parameter type
+</pre></div>
 
 <p>A parameter has a name, which is used within the function body, as well
 as an argument label, which is used when calling the function or method.
 By default, parameter names are also used as argument labels. For
 example:
 </p>
-<ol>
-<li> func f(x: Int, y: Int) -&gt; Int { return x + y }
-</li><li> f(x: 1, y: 2) // both x and y are labeled
-</li></ol>
+<div class="example">
+<pre class="example">func f(x: Int, y: Int) -&gt; Int { return x + y }
+f(x: 1, y: 2) // both x and y are labeled
+</pre></div>
 
 <p>You can override the default behavior for argument labels with one of
 the following forms:
 </p>
-<ol>
-<li> argument label parameter name: parameter type
-</li><li> _ parameter name: parameter type
-</li></ol>
+<div class="example">
+<pre class="example">argument label parameter name: parameter type
+_ parameter name: parameter type
+</pre></div>
 
 <p>A name before the parameter name gives the parameter an explicit
 argument label, which can be different from the parameter name. The
@@ -7773,12 +7792,10 @@ method calls.
 label. The corresponding argument must have no label in function or
 method calls.
 </p>
-<ol>
-<li> func repeatGreeting(_ greeting: String, count n: Int) { <em>* Greet n
-times *</em> }
-</li><li> repeatGreeting(&quot;Hello, world!&quot;, count: 2) // count is labeled,
-greeting is not
-</li></ol>
+<div class="example">
+<pre class="example">func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
+repeatGreeting(&quot;Hello, world!&quot;, count: 2) // count is labeled, greeting is not
+</pre></div>
 
 <hr>
 <span id="In_002dOut-Parameters"></span><div class="header">
@@ -7827,26 +7844,27 @@ can&rsquo;t pass the same value to multiple in-out parameters.
 nonescaping. If you need to capture an in-out parameter without mutating
 it, use a capture list to explicitly capture the parameter immutably.
 </p>
-<ol>
-<li> func someFunction(a: inout Int) -&gt; () -&gt; Int {
-</li><li> return { [a] in return a + 1 }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">func someFunction(a: inout Int) -&gt; () -&gt; Int {
+    return { [a] in return a + 1 }
+}
+</pre></div>
 
 <p>If you need to capture and mutate an in-out parameter, use an explicit
 local copy, such as in multithreaded code that ensures all mutation has
 finished before the function returns.
 </p>
-<ol>
-<li> func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
-</li><li> // Make a local copy and manually copy it back.
-</li><li> var localX = x
-</li><li> defer { x = localX }
-</li><li> // Operate on localX asynchronously, then wait before returning.
-</li><li> queue.async { someMutatingOperation(&amp;localX) }
-</li><li> queue.sync {}
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
+    // Make a local copy and manually copy it back.
+    var localX = x
+    defer { x = localX }
+
+    // Operate on localX asynchronously, then wait before returning.
+    queue.async { someMutatingOperation(&amp;localX) }
+    queue.sync {}
+}
+</pre></div>
 
 <p>For more discussion and examples of in-out parameters, see
 <a href="#In_002dOut-Parameters">In-Out Parameters</a>.
@@ -7861,11 +7879,11 @@ Next: <a href="#Special-Kinds-of-Methods" accesskey="n" rel="next">Special Kinds
 <p>Parameters can be ignored, take a variable number of values, and provide
 default values using the following forms:
 </p>
-<ol>
-<li> _ : parameter type
-</li><li> parameter name: parameter type&hellip;
-</li><li> parameter name: parameter type = default argument value
-</li></ol>
+<div class="example">
+<pre class="example">_ : parameter type
+parameter name: parameter type...
+parameter name: parameter type = default argument value
+</pre></div>
 
 <p>An underscore (&lsquo;<samp>_</samp>&rsquo;) parameter is explicitly ignored and can&rsquo;t be
 accessed within the body of the function.
@@ -7884,12 +7902,12 @@ is understood to have a default value of the given expression. The given
 expression is evaluated when the function is called. If the parameter is
 omitted when calling the function, the default value is used instead.
 </p>
-<ol>
-<li> func f(x: Int = 42) -&gt; Int { return x }
-</li><li> f() // Valid, uses default value
-</li><li> f(x: 7) // Valid, uses the value provided
-</li><li> f(7) // Invalid, missing argument label
-</li></ol>
+<div class="example">
+<pre class="example">func f(x: Int = 42) -&gt; Int { return x }
+f() // Valid, uses default value
+f(x: 7) // Valid, uses the value provided
+f(7) // Invalid, missing argument label
+</pre></div>
 
 <hr>
 <span id="Special-Kinds-of-Methods"></span><div class="header">
@@ -7946,18 +7964,18 @@ names.
 </p>
 <p>The following function calls are equivalent:
 </p>
-<ol>
-<li> struct CallableStruct {
-</li><li> var value: Int
-</li><li> func callAsFunction(_ number: Int, scale: Int) {
-</li><li> print(scale * (number + value))
-</li><li> }
-</li><li> }
-</li><li> let callable = CallableStruct(value: 100)
-</li><li> callable(4, scale: 2)
-</li><li> callable.callAsFunction(4, scale: 2)
-</li><li> // Both function calls print 208.
-</li></ol>
+<div class="example">
+<pre class="example">struct CallableStruct {
+    var value: Int
+    func callAsFunction(_ number: Int, scale: Int) {
+        print(scale * (number + value))
+    }
+}
+let callable = CallableStruct(value: 100)
+callable(4, scale: 2)
+callable.callAsFunction(4, scale: 2)
+// Both function calls print 208.
+</pre></div>
 
 <p>The call-as-function methods and the methods from the &lsquo;<samp>dynamicCallable</samp>&rsquo;
 attribute make different trade-offs between how much information you
@@ -7972,11 +7990,10 @@ the array of arguments.
 type as if it were a function in any context other than a function call
 expression. For example:
 </p>
-<ol>
-<li> let someFunction1: (Int, Int) -&gt; Void = callable(_:scale:) // Error
-</li><li> let someFunction2: (Int, Int) -&gt; Void =
-callable.callAsFunction(_:scale:)
-</li></ol>
+<div class="example">
+<pre class="example">let someFunction1: (Int, Int) -&gt; Void = callable(_:scale:) // Error
+let someFunction2: (Int, Int) -&gt; Void = callable.callAsFunction(_:scale:)
+</pre></div>
 
 <p>The &lsquo;<samp>subscript(dynamicMemberLookup:)</samp>&rsquo; subscript enables syntactic sugar
 for member lookup, as described in
@@ -7993,11 +8010,11 @@ Next: <a href="#Rethrowing-Functions-and-Methods" accesskey="n" rel="next">Rethr
 &lsquo;<samp>throws</samp>&rsquo; keyword. These functions and methods are known as <em>throwing
 functions</em> and <em>throwing methods</em>. They have the following form:
 </p>
-<ol>
-<li> func function name(parameters) throws -&gt; return type {
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">func function name(parameters) throws -&gt; return type {
+    statements
+}
+</pre></div>
 
 <p>Calls to a throwing function or method must be wrapped in a &lsquo;<samp>try</samp>&rsquo; or
 &lsquo;<samp>try!</samp>&rsquo; expression (that is, in the scope of a &lsquo;<samp>try</samp>&rsquo; or &lsquo;<samp>try!</samp>&rsquo; operator).
@@ -8031,11 +8048,11 @@ throws an error. These functions and methods are known as <em>rethrowing
 functions</em> and <em>rethrowing methods</em>. Rethrowing functions and methods
 must have at least one throwing function parameter.
 </p>
-<ol>
-<li> func someFunction(callback: () throws -&gt; Void) rethrows {
-</li><li> try callback()
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">func someFunction(callback: () throws -&gt; Void) rethrows {
+    try callback()
+}
+</pre></div>
 
 <p>A rethrowing function or method can contain a &lsquo;<samp>throw</samp>&rsquo; statement only
 inside a &lsquo;<samp>catch</samp>&rsquo; clause. This lets you call the throwing function inside
@@ -8045,20 +8062,20 @@ only errors thrown by one of the rethrowing function&rsquo;s throwing
 parameters. For example, the following is invalid because the &lsquo;<samp>catch</samp>&rsquo;
 clause would handle the error thrown by &lsquo;<samp>alwaysThrows()</samp>&rsquo;.
 </p>
-<ol>
-<li> func alwaysThrows() throws {
-</li><li> throw SomeError.error
-</li><li> }
-</li><li> func someFunction(callback: () throws -&gt; Void) rethrows {
-</li><li> do {
-</li><li> try callback()
-</li><li> try alwaysThrows() // Invalid, alwaysThrows() isn&rsquo;t a throwing
-parameter
-</li><li> } catch {
-</li><li> throw AnotherError.error
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">func alwaysThrows() throws {
+    throw SomeError.error
+}
+func someFunction(callback: () throws -&gt; Void) rethrows {
+    do {
+        try callback()
+        try alwaysThrows() // Invalid, alwaysThrows() isn't a throwing
+        parameter
+    } catch {
+        throw AnotherError.error
+    }
+}
+</pre></div>
 
 <p>A throwing method can&rsquo;t override a rethrowing method, and a throwing
 method can&rsquo;t satisfy a protocol requirement for a rethrowing method.
@@ -8239,12 +8256,12 @@ Next: <a href="#Enumerations-with-Cases-of-a-Raw_002dValue-Type" accesskey="n" r
 <p>The following form declares an enumeration type that contains
 enumeration cases of any type:
 </p>
-<ol>
-<li> enum enumeration name: adopted protocols {
-</li><li> case enumeration case 1
-</li><li> case enumeration case 2(associated value types)
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">enum enumeration name: adopted protocols {
+    case enumeration case 1
+    case enumeration case 2(associated value types)
+}
+</pre></div>
 
 <p>Enumerations declared in this form are sometimes called <em>discriminated
 unions</em> in other programming languages.
@@ -8260,16 +8277,17 @@ that create instances of the enumeration with the specified associated
 values. And just like functions, you can get a reference to an
 enumeration case and apply it later in your code.
 </p>
-<ol>
-<li> enum Number {
-</li><li> case integer(Int)
-</li><li> case real(Double)
-</li><li> }
-</li><li> let f = Number.integer
-</li><li> // f is a function of type (Int) -&gt; Number
-</li><li> // Apply f to create an array of Number instances with integer values
-</li><li> let evenInts: [Number] = [0, 2, 4, 6].map(f)
-</li></ol>
+<div class="example">
+<pre class="example">enum Number {
+    case integer(Int)
+    case real(Double)
+}
+let f = Number.integer
+// f is a function of type (Int) -&gt; Number
+
+// Apply f to create an array of Number instances with integer values
+let evenInts: [Number] = [0, 2, 4, 6].map(f)
+</pre></div>
 
 <p>For more information and to see examples of cases with associated value
 types, see <a href="swift.html#Associated-Values">(swift)Associated
@@ -8289,12 +8307,12 @@ the compiler must insert a layer of indirection.
 the &lsquo;<samp>indirect</samp>&rsquo; declaration modifier. An indirect case must have an
 associated value.
 </p>
-<ol>
-<li> enum Tree&lt;T&gt; {
-</li><li> case empty
-</li><li> indirect case node(value: T, left: Tree, right: Tree)
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">enum Tree&lt;T&gt; {
+    case empty
+    indirect case node(value: T, left: Tree, right: Tree)
+}
+</pre></div>
 
 <p>To enable indirection for all the cases of an enumeration that have an
 associated value, mark the entire enumeration with the &lsquo;<samp>indirect</samp>&rsquo;
@@ -8317,12 +8335,12 @@ Next: <a href="#Accessing-Enumeration-Cases" accesskey="n" rel="next">Accessing 
 <p>The following form declares an enumeration type that contains
 enumeration cases of the same basic type:
 </p>
-<ol>
-<li> enum enumeration name: raw-value type, adopted protocols {
-</li><li> case enumeration case 1 = raw value 1
-</li><li> case enumeration case 2 = raw value 2
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">enum enumeration name: raw-value type, adopted protocols {
+    case enumeration case 1 = raw value 1
+    case enumeration case 2 = raw value 2
+}
+</pre></div>
 
 <p>In this form, each case block consists of the &lsquo;<samp>case</samp>&rsquo; keyword, followed
 by one or more enumeration cases, separated by commas. Unlike the cases
@@ -8345,11 +8363,11 @@ to the cases explicitly, they&rsquo;re implicitly assigned the values &lsquo;<sa
 assigned a raw value that&rsquo;s automatically incremented from the raw value
 of the previous case.
 </p>
-<ol>
-<li> enum ExampleEnum: Int {
-</li><li> case a, b, c = 5, d
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">enum ExampleEnum: Int {
+    case a, b, c = 5, d
+}
+</pre></div>
 
 <p>In the above example, the raw value of &lsquo;<samp>ExampleEnum.a</samp>&rsquo; is &lsquo;<samp>0</samp>&rsquo; and the
 value of &lsquo;<samp>ExampleEnum.b</samp>&rsquo; is &lsquo;<samp>1</samp>&rsquo;. And because the value of
@@ -8360,11 +8378,11 @@ is automatically incremented from &lsquo;<samp>5</samp>&rsquo; and is therefore 
 values to the cases explicitly, each unassigned case is implicitly
 assigned a string with the same text as the name of that case.
 </p>
-<ol>
-<li> enum GamePlayMode: String {
-</li><li> case cooperative, individual, competitive
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">enum GamePlayMode: String {
+    case cooperative, individual, competitive
+}
+</pre></div>
 
 <p>In the above example, the raw value of &lsquo;<samp>GamePlayMode.cooperative</samp>&rsquo; is
 &lsquo;<samp>&quot;cooperative&quot;</samp>&rsquo;, the raw value of &lsquo;<samp>GamePlayMode.individual</samp>&rsquo; is
@@ -8551,11 +8569,11 @@ Next: <a href="#Class-Declaration" accesskey="n" rel="next">Class Declaration</a
 program. Structure declarations are declared using the &lsquo;<samp>struct</samp>&rsquo; keyword
 and have the following form:
 </p>
-<ol>
-<li> struct structure name: adopted protocols {
-</li><li> declarations
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">struct structure name: adopted protocols {
+    declarations
+}
+</pre></div>
 
 <p>The body of a structure contains zero or more <em>declarations</em>. These
 <em>declarations</em> can include both stored and computed properties, type
@@ -8652,11 +8670,11 @@ Next: <a href="#Protocol-Declaration" accesskey="n" rel="next">Protocol Declarat
 Class declarations are declared using the &lsquo;<samp>class</samp>&rsquo; keyword and have the
 following form:
 </p>
-<ol>
-<li> class class name: superclass, adopted protocols {
-</li><li> declarations
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">class class name: superclass, adopted protocols {
+    declarations
+}
+</pre></div>
 
 <p>The body of a class contains zero or more <em>declarations</em>. These
 <em>declarations</em> can include both stored and computed properties, instance
@@ -8787,11 +8805,11 @@ Next: <a href="#Initializer-Declaration" accesskey="n" rel="next">Initializer De
 program. Protocol declarations are declared at global scope using the
 &lsquo;<samp>protocol</samp>&rsquo; keyword and have the following form:
 </p>
-<ol>
-<li> protocol protocol name: inherited protocols {
-</li><li> protocol member declarations
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">protocol protocol name: inherited protocols {
+    protocol member declarations
+}
+</pre></div>
 
 <p>The body of a protocol contains zero or more <em>protocol member
 declarations</em>, which describe the conformance requirements that any type
@@ -8847,26 +8865,26 @@ protocol requirement for a function that returns &lsquo;<samp>Self</samp>&rsquo;
 and their argument labels match the case&rsquo;s associated values. For
 example:
 </p>
-<ol>
-<li> protocol SomeProtocol {
-</li><li> static var someValue: Self { get }
-</li><li> static func someFunction(x: Int) -&gt; Self
-</li><li> }
-</li><li> enum MyEnum: SomeProtocol {
-</li><li> case someValue
-</li><li> case someFunction(x: Int)
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">protocol SomeProtocol {
+    static var someValue: Self { get }
+    static func someFunction(x: Int) -&gt; Self
+}
+enum MyEnum: SomeProtocol {
+    case someValue
+    case someFunction(x: Int)
+}
+</pre></div>
 
 <p>To restrict the adoption of a protocol to class types only, include the
 &lsquo;<samp>AnyObject</samp>&rsquo; protocol in the <em>inherited protocols</em> list after the colon.
 For example, the following protocol can be adopted only by class types:
 </p>
-<ol>
-<li> protocol SomeProtocol: AnyObject {
-</li><li> <em>* Protocol members go here *</em>
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">protocol SomeProtocol: AnyObject {
+    /* Protocol members go here */
+}
+</pre></div>
 
 <p>Any protocol that inherits from a protocol that&rsquo;s marked with the
 &lsquo;<samp>AnyObject</samp>&rsquo; requirement can likewise be adopted only by class types.
@@ -8969,9 +8987,9 @@ including a <em>protocol property declaration</em> in the body of the protocol
 declaration. Protocol property declarations have a special form of a
 variable declaration:
 </p>
-<ol>
-<li> var property name: type { get set }
-</li></ol>
+<div class="example">
+<pre class="example">var property name: type { get set }
+</pre></div>
 
 <p>As with other protocol member declarations, these property declarations
 declare only the getter and setter requirements for types that conform
@@ -9110,9 +9128,9 @@ including a protocol subscript declaration in the body of the protocol
 declaration. Protocol subscript declarations have a special form of a
 subscript declaration:
 </p>
-<ol>
-<li> subscript (parameters) -&gt; return type { get set }
-</li></ol>
+<div class="example">
+<pre class="example">subscript (parameters) -&gt; return type { get set }
+</pre></div>
 
 <p>Subscript declarations only declare the minimum getter and setter
 implementation requirements for types that conform to the protocol. If
@@ -9170,17 +9188,19 @@ constraints to an associated types inherited from another protocol,
 without redeclaring the associated types. For example, the declarations
 of &lsquo;<samp>SubProtocol</samp>&rsquo; below are equivalent:
 </p>
-<ol>
-<li> protocol SomeProtocol {
-</li><li> associatedtype SomeType
-</li><li> }
-</li><li> protocol SubProtocolA: SomeProtocol {
-</li><li> // This syntax produces a warning.
-</li><li> associatedtype SomeType: Equatable
-</li><li> }
-</li><li> // This syntax is preferred.
-</li><li> protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
-</li></ol>
+<div class="example">
+<pre class="example">protocol SomeProtocol {
+    associatedtype SomeType
+}
+
+protocol SubProtocolA: SomeProtocol {
+    // This syntax produces a warning.
+    associatedtype SomeType: Equatable
+}
+
+// This syntax is preferred.
+protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
+</pre></div>
 
 <p>See also <a href="#Type-Alias-Declaration">Type Alias Declaration</a>.
 </p>
@@ -9220,11 +9240,11 @@ initializers, as described in
 <p>The following form declares initializers for structures, enumerations,
 and designated initializers of classes:
 </p>
-<ol>
-<li> init(parameters) {
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">init(parameters) {
+    statements
+}
+</pre></div>
 
 <p>A designated initializer of a class initializes all of the class&rsquo;s
 properties directly. It can&rsquo;t call any other initializers of the same
@@ -9244,11 +9264,11 @@ initializers to delegate part or all of the initialization process.
 <p>To declare convenience initializers for a class, mark the initializer
 declaration with the &lsquo;<samp>convenience</samp>&rsquo; declaration modifier.
 </p>
-<ol>
-<li> convenience init(parameters) {
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">convenience init(parameters) {
+    statements
+}
+</pre></div>
 
 <p>Convenience initializers can delegate the initialization process to
 another convenience initializer or to one of the class&rsquo;s designated
@@ -9310,32 +9330,32 @@ an implicitly unwrapped optional instance, append an exclamation point
 instead (&lsquo;<samp>init!</samp>&rsquo;). The example below shows an &lsquo;<samp>init?</samp>&rsquo; failable
 initializer that produces an optional instance of a structure.
 </p>
-<ol>
-<li> struct SomeStruct {
-</li><li> let property: String
-</li><li> // produces an optional instance of &rsquo;SomeStruct&rsquo;
-</li><li> init?(input: String) {
-</li><li> if input.isEmpty {
-</li><li> // discard &rsquo;self&rsquo; and return &rsquo;nil&rsquo;
-</li><li> return nil
-</li><li> }
-</li><li> property = input
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">struct SomeStruct {
+    let property: String
+    // produces an optional instance of 'SomeStruct'
+    init?(input: String) {
+        if input.isEmpty {
+            // discard 'self' and return 'nil'
+            return nil
+        }
+        property = input
+    }
+}
+</pre></div>
 
 <p>You call an &lsquo;<samp>init?</samp>&rsquo; failable initializer in the same way that you call a
 nonfailable initializer, except that you must deal with the optionality
 of the result.
 </p>
-<ol>
-<li> if let actualInstance = SomeStruct(input: &quot;Hello&quot;) {
-</li><li> // do something with the instance of &rsquo;SomeStruct&rsquo;
-</li><li> } else {
-</li><li> // initialization of &rsquo;SomeStruct&rsquo; failed and the initializer returned
-&rsquo;nil&rsquo;
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">if let actualInstance = SomeStruct(input: &quot;Hello&quot;) {
+    // do something with the instance of 'SomeStruct'
+} else {
+    // initialization of 'SomeStruct' failed and the initializer returned
+    'nil'
+}
+</pre></div>
 
 <p>A failable initializer can return &lsquo;<samp>nil</samp>&rsquo; at any point in the
 implementation of the initializer&rsquo;s body.
@@ -9420,11 +9440,11 @@ Next: <a href="#Extension-Declaration" accesskey="n" rel="next">Extension Declar
 <p>A <em>deinitializer declaration</em> declares a deinitializer for a class type.
 Deinitializers take no parameters and have the following form:
 </p>
-<ol>
-<li> deinit {
-</li><li> statements
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">deinit {
+    statements
+}
+</pre></div>
 
 <p>A deinitializer is called automatically when there are no longer any
 references to a class object, just before the class object is
@@ -9462,11 +9482,11 @@ Next: <a href="#Subscript-Declaration" accesskey="n" rel="next">Subscript Declar
 types. Extension declarations are declared using the &lsquo;<samp>extension</samp>&rsquo; keyword
 and have the following form:
 </p>
-<ol>
-<li> extension type name where requirements {
-</li><li> declarations
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">extension type name where requirements {
+    declarations
+}
+</pre></div>
 
 <p>The body of an extension declaration contains zero or more
 <em>declarations</em>. These <em>declarations</em> can include computed properties,
@@ -9500,11 +9520,11 @@ overridden in an extension of that type.
 <p>Extension declarations can add protocol conformance to an existing
 class, structure, or enumeration type by specifying <em>adopted protocols</em>:
 </p>
-<ol>
-<li> extension type name: adopted protocols where requirements {
-</li><li> declarations
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">extension type name: adopted protocols where requirements {
+    declarations
+}
+</pre></div>
 
 <p>Extension declarations can&rsquo;t add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the <em>type
@@ -9539,42 +9559,46 @@ implementations of that protocol&rsquo;s requirements. To illustrate this
 behavior, the following example defines two protocols and a generic type
 that conditionally conforms to both protocols.
 </p>
-<ol>
-<li> protocol Loggable {
-</li><li> func log()
-</li><li> }
-</li><li> extension Loggable {
-</li><li> func log() {
-</li><li> print(self)
-</li><li> }
-</li><li> }
-</li><li> protocol TitledLoggable: Loggable {
-</li><li> static var logTitle: String { get }
-</li><li> }
-</li><li> extension TitledLoggable {
-</li><li> func log() {
-</li><li> print(&quot;\(Self.logTitle): \(self)&quot;)
-</li><li> }
-</li><li> }
-</li><li> struct Pair&lt;T&gt;: CustomStringConvertible {
-</li><li> let first: T
-</li><li> let second: T
-</li><li> var description: String {
-</li><li> return &quot;(\(first), \(second))&quot;
-</li><li> }
-</li><li> }
-</li><li> extension Pair: Loggable where T: Loggable { }
-</li><li> extension Pair: TitledLoggable where T: TitledLoggable {
-</li><li> static var logTitle: String {
-</li><li> return &quot;Pair of &rsquo;\(T.logTitle)&rsquo;&quot;
-</li><li> }
-</li><li> }
-</li><li> extension String: TitledLoggable {
-</li><li> static var logTitle: String {
-</li><li> return &quot;String&quot;
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">protocol Loggable {
+    func log()
+}
+extension Loggable {
+    func log() {
+        print(self)
+    }
+}
+
+protocol TitledLoggable: Loggable {
+    static var logTitle: String { get }
+}
+extension TitledLoggable {
+    func log() {
+        print(&quot;\(Self.logTitle): \(self)&quot;)
+    }
+}
+
+struct Pair&lt;T&gt;: CustomStringConvertible {
+    let first: T
+    let second: T
+    var description: String {
+        return &quot;(\(first), \(second))&quot;
+    }
+}
+
+extension Pair: Loggable where T: Loggable { }
+extension Pair: TitledLoggable where T: TitledLoggable {
+    static var logTitle: String {
+        return &quot;Pair of '\(T.logTitle)'&quot;
+    }
+}
+
+extension String: TitledLoggable {
+    static var logTitle: String {
+        return &quot;String&quot;
+    }
+}
+</pre></div>
 
 <p>The &lsquo;<samp>Pair</samp>&rsquo; structure conforms to &lsquo;<samp>Loggable</samp>&rsquo; and &lsquo;<samp>TitledLoggable</samp>&rsquo;
 whenever its generic type conforms to &lsquo;<samp>Loggable</samp>&rsquo; or &lsquo;<samp>TitledLoggable</samp>&rsquo;,
@@ -9584,11 +9608,11 @@ conforms to &lsquo;<samp>TitledLoggable</samp>&rsquo;. When the &lsquo;<samp>log
 &lsquo;<samp>oneAndTwo</samp>&rsquo; directly, the specialized version containing the title
 string is used.
 </p>
-<ol>
-<li> let oneAndTwo = Pair(first: &quot;one&quot;, second: &quot;two&quot;)
-</li><li> oneAndTwo.log()
-</li><li> // Prints &quot;Pair of &rsquo;String&rsquo;: (one, two)&quot;
-</li></ol>
+<div class="example">
+<pre class="example">let oneAndTwo = Pair(first: &quot;one&quot;, second: &quot;two&quot;)
+oneAndTwo.log()
+// Prints &quot;Pair of 'String': (one, two)&quot;
+</pre></div>
 
 <p>However, when &lsquo;<samp>oneAndTwo</samp>&rsquo; is used in a generic context or as an instance
 of the &lsquo;<samp>Loggable</samp>&rsquo; protocol, the specialized version isn&rsquo;t used. Swift
@@ -9597,13 +9621,13 @@ minimum requirements that &lsquo;<samp>Pair</samp>&rsquo; needs to conform to &l
 this reason, the default implementation provided by the &lsquo;<samp>Loggable</samp>&rsquo;
 protocol is used instead.
 </p>
-<ol>
-<li> func doSomething&lt;T: Loggable&gt;(with x: T) {
-</li><li> x.log()
-</li><li> }
-</li><li> doSomething(with: oneAndTwo)
-</li><li> // Prints &quot;(one, two)&quot;
-</li></ol>
+<div class="example">
+<pre class="example">func doSomething&lt;T: Loggable&gt;(with x: T) {
+    x.log()
+}
+doSomething(with: oneAndTwo)
+// Prints &quot;(one, two)&quot;
+</pre></div>
 
 <p>When &lsquo;<samp>log()</samp>&rsquo; is called on the instance that&rsquo;s passed to
 &lsquo;<samp>doSomething(_:)</samp>&rsquo;, the customized title is omitted from the logged
@@ -9636,38 +9660,40 @@ declarations attempt to add conditional conformance to the
 &lsquo;<samp>Serializable</samp>&rsquo; protocol, one for for arrays with &lsquo;<samp>Int</samp>&rsquo; elements, and one
 for arrays with &lsquo;<samp>String</samp>&rsquo; elements.
 </p>
-<ol>
-<li> protocol Serializable {
-</li><li> func serialize() -&gt; Any
-</li><li> }
-</li><li> extension Array: Serializable where Element == Int {
-</li><li> func serialize() -&gt; Any {
-</li><li> // implementation
-</li><li> }
-</li><li> }
-</li><li> extension Array: Serializable where Element == String {
-</li><li> func serialize() -&gt; Any {
-</li><li> // implementation
-</li><li> }
-</li><li> }
-</li><li> // Error: redundant conformance of &rsquo;Array&lt;Element&gt;&rsquo; to protocol
-&rsquo;Serializable&rsquo;
-</li></ol>
+<div class="example">
+<pre class="example">protocol Serializable {
+    func serialize() -&gt; Any
+}
+
+
+extension Array: Serializable where Element == Int {
+    func serialize() -&gt; Any {
+        // implementation
+    }
+}
+extension Array: Serializable where Element == String {
+    func serialize() -&gt; Any {
+        // implementation
+    }
+}
+// Error: redundant conformance of 'Array&lt;Element&gt;' to protocol 'Serializable'
+</pre></div>
 
 <p>If you need to add conditional conformance based on multiple concrete
 types, create a new protocol that each type can conform to and use that
 protocol as the requirement when declaring conditional conformance.
 </p>
-<ol>
-<li> protocol SerializableInArray { }
-</li><li> extension Int: SerializableInArray { }
-</li><li> extension String: SerializableInArray { }
-</li><li> extension Array: Serializable where Element: SerializableInArray {
-</li><li> func serialize() -&gt; Any {
-</li><li> // implementation
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">protocol SerializableInArray { }
+extension Int: SerializableInArray { }
+extension String: SerializableInArray { }
+
+extension Array: Serializable where Element: SerializableInArray {
+    func serialize() -&gt; Any {
+        // implementation
+    }
+}
+</pre></div>
 
 </li><li> Resolving Implicit Redundancy
 
@@ -9685,35 +9711,36 @@ protocol twice with different requirements.
 conformance to both &lsquo;<samp>TitledLoggable</samp>&rsquo; and the new &lsquo;<samp>MarkedLoggable</samp>&rsquo;
 protocol.
 </p>
-<ol>
-<li> protocol MarkedLoggable: Loggable {
-</li><li> func markAndLog()
-</li><li> }
-</li><li> extension MarkedLoggable {
-</li><li> func markAndLog() {
-</li><li> print(&quot;&mdash;&mdash;&mdash;-&quot;)
-</li><li> log()
-</li><li> }
-</li><li> }
-</li><li> extension Array: Loggable where Element: Loggable { }
-</li><li> extension Array: TitledLoggable where Element: TitledLoggable {
-</li><li> static var logTitle: String {
-</li><li> return &quot;Array of &rsquo;\(Element.logTitle)&rsquo;&quot;
-</li><li> }
-</li><li> }
-</li><li> extension Array: MarkedLoggable where Element: MarkedLoggable { }
-</li></ol>
+<div class="example">
+<pre class="example">protocol MarkedLoggable: Loggable {
+    func markAndLog()
+}
+
+extension MarkedLoggable {
+    func markAndLog() {
+        print(&quot;----------&quot;)
+        log()
+    }
+}
+
+extension Array: Loggable where Element: Loggable { }
+extension Array: TitledLoggable where Element: TitledLoggable {
+    static var logTitle: String {
+        return &quot;Array of '\(Element.logTitle)'&quot;
+    }
+}
+extension Array: MarkedLoggable where Element: MarkedLoggable { }
+</pre></div>
 
 <p>Without the extension to explicitly declare conditional conformance to
 &lsquo;<samp>Loggable</samp>&rsquo;, the other &lsquo;<samp>Array</samp>&rsquo; extensions would implicitly create these
 declarations, resulting in an error:
 </p>
-<ol>
-<li> extension Array: Loggable where Element: TitledLoggable { }
-</li><li> extension Array: Loggable where Element: MarkedLoggable { }
-</li><li> // Error: redundant conformance of &rsquo;Array&lt;Element&gt;&rsquo; to protocol
-&rsquo;Loggable&rsquo;
-</li></ol>
+<div class="example">
+<pre class="example">extension Array: Loggable where Element: TitledLoggable { }
+extension Array: Loggable where Element: MarkedLoggable { }
+// Error: redundant conformance of 'Array&lt;Element&gt;' to protocol 'Loggable'
+</pre></div>
 
 <p>Grammar of an extension declaration
 </p>
@@ -9759,16 +9786,16 @@ convenient syntax for accessing the elements in a collection, list, or
 sequence. Subscript declarations are declared using the &lsquo;<samp>subscript</samp>&rsquo;
 keyword and have the following form:
 </p>
-<ol>
-<li> subscript (parameters) -&gt; return type {
-</li><li> get {
-</li><li> statements
-</li><li> }
-</li><li> set(setter name) {
-</li><li> statements
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">subscript (parameters) -&gt; return type {
+    get {
+        statements
+    }
+    set(setter name) {
+        statements
+    }
+}
+</pre></div>
 
 <p>Subscript declarations can appear only in the context of a class,
 structure, enumeration, extension, or protocol declaration.
@@ -9878,9 +9905,9 @@ operator can contain only the operator characters defined in
 </p>
 <p>The following form declares a new infix operator:
 </p>
-<ol>
-<li> infix operator operator name: precedence group
-</li></ol>
+<div class="example">
+<pre class="example">infix operator operator name: precedence group
+</pre></div>
 
 <p>An <em>infix operator</em> is a binary operator that&rsquo;s written between its two
 operands, such as the familiar addition operator (&lsquo;<samp>+</samp>&rsquo;) in the expression
@@ -9894,9 +9921,9 @@ than &lsquo;<samp>TernaryPrecedence</samp>&rsquo;. For more information, see
 </p>
 <p>The following form declares a new prefix operator:
 </p>
-<ol>
-<li> prefix operator operator name
-</li></ol>
+<div class="example">
+<pre class="example">prefix operator operator name
+</pre></div>
 
 <p>A <em>prefix operator</em> is a unary operator that&rsquo;s written immediately
 before its operand, such as the prefix logical NOT operator (&lsquo;<samp>!</samp>&rsquo;) in the
@@ -9907,9 +9934,9 @@ operators are nonassociative.
 </p>
 <p>The following form declares a new postfix operator:
 </p>
-<ol>
-<li> postfix operator operator name
-</li></ol>
+<div class="example">
+<pre class="example">postfix operator operator name
+</pre></div>
 
 <p>A <em>postfix operator</em> is a unary operator that&rsquo;s written immediately
 after its operand, such as the postfix forced-unwrap operator (&lsquo;<samp>!</samp>&rsquo;) in
@@ -9975,14 +10002,14 @@ of grouping parentheses.
 </p>
 <p>A precedence group declaration has the following form:
 </p>
-<ol>
-<li> precedencegroup precedence group name {
-</li><li> higherThan: lower group names
-</li><li> lowerThan: higher group names
-</li><li> associativity: associativity
-</li><li> assignment: assignment
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">precedencegroup precedence group name {
+    higherThan: lower group names
+    lowerThan: higher group names
+    associativity: associativity
+    assignment: assignment
+}
+</pre></div>
 
 <p>The <em>lower group names</em> and <em>higher group names</em> lists specify the new
 precedence group&rsquo;s relation to existing precedence groups. The
@@ -10398,10 +10425,10 @@ warning if the return value is unused.
 <p>You specify an attribute by writing the &lsquo;<samp>@</samp>&rsquo; symbol followed by the
 attribute&rsquo;s name and any arguments that the attribute accepts:
 </p>
-<ol>
-<li> @attribute name
-</li><li> @attribute name(attribute arguments)
-</li></ol>
+<div class="example">
+<pre class="example">@attribute name
+@attribute name(attribute arguments)
+</pre></div>
 
 <p>Some declaration attributes accept arguments that specify more
 information about the attribute and how it applies to a particular
@@ -10530,9 +10557,9 @@ specifying Swift version availability.
 platform or language in which the declaration was introduced. It has
 the following form:
 
-<ol>
-<li> introduced: version number
-</li></ol>
+<div class="example">
+<pre class="example">introduced: version number
+</pre></div>
 
 <p>The <em>version number</em> consists of one to three positive integers,
 separated by periods.
@@ -10541,9 +10568,9 @@ separated by periods.
 platform or language in which the declaration was deprecated. It has
 the following form:
 
-<ol>
-<li> deprecated: version number
-</li></ol>
+<div class="example">
+<pre class="example">deprecated: version number
+</pre></div>
 
 <p>The optional <em>version number</em> consists of one to three positive
 integers, separated by periods. Omitting the version number indicates
@@ -10556,9 +10583,9 @@ platform or language in which the declaration was obsoleted. When a
 declaration is obsoleted, it&rsquo;s removed from the specified platform or
 language and can no longer be used. It has the following form:
 
-<ol>
-<li> obsoleted: version number
-</li></ol>
+<div class="example">
+<pre class="example">obsoleted: version number
+</pre></div>
 
 <p>The <em>version number</em> consists of one to three positive integers,
 separated by periods.
@@ -10567,9 +10594,9 @@ separated by periods.
 displays when emitting a warning or error about the use of a
 deprecated or obsoleted declaration. It has the following form:
 
-<ol>
-<li> message: message
-</li></ol>
+<div class="example">
+<pre class="example">message: message
+</pre></div>
 
 <p>The <em>message</em> consists of a string literal.
 </p>
@@ -10578,9 +10605,9 @@ new name for a declaration that&rsquo;s been renamed. The compiler displays
 the new name when emitting an error about the use of a renamed
 declaration. It has the following form:
 
-<ol>
-<li> renamed: new name
-</li></ol>
+<div class="example">
+<pre class="example">renamed: new name
+</pre></div>
 
 <p>The <em>new name</em> consists of a string literal.
 </p>
@@ -10590,19 +10617,20 @@ to indicate that the name of a declaration changed between releases of
 a framework or library. This combination results in a compile-time
 error that the declaration has been renamed.
 </p>
-<ol>
-<li> // First release
-</li><li> protocol MyProtocol {
-</li><li> // protocol definition
-</li><li> }
+<div class="example">
+<pre class="example">// First release
+protocol MyProtocol {
+    // protocol definition
+}
 
-</li><li> // Subsequent release renames MyProtocol
-</li><li> protocol MyRenamedProtocol {
-</li><li> // protocol definition
-</li><li> }
-</li><li> @available(*, unavailable, renamed: &quot;MyRenamedProtocol&quot;)
-</li><li> typealias MyProtocol = MyRenamedProtocol
-</li></ol>
+// Subsequent release renames MyProtocol
+protocol MyRenamedProtocol {
+    // protocol definition
+}
+
+@available(*, unavailable, renamed: &quot;MyRenamedProtocol&quot;)
+typealias MyProtocol = MyRenamedProtocol
+</pre></div>
 </li></ul>
 
 <p>You can apply multiple &lsquo;<samp>available</samp>&rsquo; attributes on a single declaration to
@@ -10617,35 +10645,35 @@ combination of the platform and Swift availabilities.
 addition to a platform or language name argument, you can use the
 following shorthand syntax instead:
 </p>
-<ol>
-<li> @available(platform name version number, *)
-</li><li> @available(swift version number)
-</li></ol>
+<div class="example">
+<pre class="example">@available(platform name version number, *)
+@available(swift version number)
+</pre></div>
 
 <p>The shorthand syntax for &lsquo;<samp>available</samp>&rsquo; attributes concisely expresses
 availability for multiple platforms. Although the two forms are
 functionally equivalent, the shorthand form is preferred whenever
 possible.
 </p>
-<ol>
-<li> @available(iOS 10.0, macOS 10.12, *)
-</li><li> class MyClass {
-</li><li> // class definition
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">@available(iOS 10.0, macOS 10.12, *)
+class MyClass {
+    // class definition
+}
+</pre></div>
 
 <p>An &lsquo;<samp>available</samp>&rsquo; attribute that specifies availability using a Swift
 version number can&rsquo;t additionally specify a declaration&rsquo;s platform
 availability. Instead, use separate &lsquo;<samp>available</samp>&rsquo; attributes to specify a
 Swift version availability and one or more platform availabilities.
 </p>
-<ol>
-<li> @available(swift 3.0.2)
-</li><li> @available(macOS 10.12, *)
-</li><li> struct MyStruct {
-</li><li> // struct definition
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">@available(swift 3.0.2)
+@available(macOS 10.12, *)
+struct MyStruct {
+    // struct definition
+}
+</pre></div>
 
 <hr>
 <span id="discardableResult"></span><div class="header">
@@ -10677,26 +10705,30 @@ implement either a &lsquo;<samp>dynamicallyCall(withArguments:)</samp>&rsquo; me
 <p>You can call an instance of a dynamically callable type as if it&rsquo;s a
 function that takes any number of arguments.
 </p>
-<ol>
-<li> @dynamicCallable
-</li><li> struct TelephoneExchange {
-</li><li> func dynamicallyCall(withArguments phoneNumber: [Int]) {
-</li><li> if phoneNumber == [4, 1, 1] {
-</li><li> print(&quot;Get Swift help on forums.swift.org&quot;)
-</li><li> } else {
-</li><li> print(&quot;Unrecognized number&quot;)
-</li><li> }
-</li><li> }
-</li><li> }
-</li><li> let dial = TelephoneExchange()
-</li><li> // Use a dynamic method call.
-</li><li> dial(4, 1, 1)
-</li><li> // Prints &quot;Get Swift help on forums.swift.org&quot;
-</li><li> dial(8, 6, 7, 5, 3, 0, 9)
-</li><li> // Prints &quot;Unrecognized number&quot;
-</li><li> // Call the underlying method directly.
-</li><li> dial.dynamicallyCall(withArguments: [4, 1, 1])
-</li></ol>
+<div class="example">
+<pre class="example">@dynamicCallable
+struct TelephoneExchange {
+    func dynamicallyCall(withArguments phoneNumber: [Int]) {
+        if phoneNumber == [4, 1, 1] {
+            print(&quot;Get Swift help on forums.swift.org&quot;)
+        } else {
+            print(&quot;Unrecognized number&quot;)
+        }
+    }
+}
+
+let dial = TelephoneExchange()
+
+// Use a dynamic method call.
+dial(4, 1, 1)
+// Prints &quot;Get Swift help on forums.swift.org&quot;
+
+dial(8, 6, 7, 5, 3, 0, 9)
+// Prints &quot;Unrecognized number&quot;
+
+// Call the underlying method directly.
+dial.dynamicallyCall(withArguments: [4, 1, 1])
+</pre></div>
 
 <p>The declaration of the &lsquo;<samp>dynamicallyCall(withArguments:)</samp>&rsquo; method must
 have a single parameter that conforms to the
@@ -10708,26 +10740,27 @@ type.
 <p>You can include labels in a dynamic method call if you implement the
 &lsquo;<samp>dynamicallyCall(withKeywordArguments:)</samp>&rsquo; method.
 </p>
-<ol>
-<li> @dynamicCallable
-</li><li> struct Repeater {
-</li><li> func dynamicallyCall(withKeywordArguments pairs:
-KeyValuePairs&lt;String, Int&gt;) -&gt; String {
-</li><li> return pairs
-</li><li> .map { label, count in
-</li><li> repeatElement(label, count: count).joined(separator: &quot; &quot;)
-</li><li> }
-</li><li> .joined(separator: &quot;&quot;)
-</li><li> }
-</li><li> }
-</li><li> let repeatLabels = Repeater()
-</li><li> print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
-</li><li> // a
-</li><li> // b b
-</li><li> // c c c
-</li><li> // b b
-</li><li> // a
-</li></ol>
+<div class="example">
+<pre class="example">@dynamicCallable
+struct Repeater {
+    func dynamicallyCall(withKeywordArguments pairs:
+                           KeyValuePairs&lt;String, Int&gt;) -&gt; String {
+        return pairs
+          .map { label, count in
+              repeatElement(label, count: count).joined(separator: &quot; &quot;)
+          }
+          .joined(separator: &quot;\n&quot;)
+    }
+}
+
+let repeatLabels = Repeater()
+print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
+// a
+// b b
+// c c c
+// b b
+// a
+</pre></div>
 
 <p>The declaration of the &lsquo;<samp>dynamicallyCall(withKeywordArguments:)</samp>&rsquo; method
 must have a single parameter that conforms to the
@@ -10757,9 +10790,9 @@ example doesn&rsquo;t compile because there isn&rsquo;t an implementation of
 &lsquo;<samp>dynamicallyCall(withArguments:)</samp>&rsquo; that takes
 &lsquo;<samp>KeyValuePairs&lt;String, String&gt;</samp>&rsquo;.
 </p>
-<ol>
-<li> repeatLabels(a: &quot;four&quot;) // Error
-</li></ol>
+<div class="example">
+<pre class="example">repeatLabels(a: &quot;four&quot;) // Error
+</pre></div>
 
 <hr>
 <span id="dynamicMemberLookup"></span><div class="header">
@@ -10800,42 +10833,46 @@ any type.
 type around data that can&rsquo;t be type checked at compile time, such as
 when bridging data from other languages into Swift. For example:
 </p>
-<ol>
-<li> @dynamicMemberLookup
-</li><li> struct DynamicStruct {
-</li><li> let dictionary = [&quot;someDynamicMember&quot;: 325,
-</li><li> &quot;someOtherMember&quot;: 787]
-</li><li> subscript(dynamicMember member: String) -&gt; Int {
-</li><li> return dictionary[member] ?? 1054
-</li><li> }
-</li><li> }
-</li><li> let s = DynamicStruct()
-</li><li> // Use dynamic member lookup.
-</li><li> let dynamic = s.someDynamicMember
-</li><li> print(dynamic)
-</li><li> // Prints &quot;325&quot;
-</li><li> // Call the underlying subscript directly.
-</li><li> let equivalent = s[dynamicMember: &quot;someDynamicMember&quot;]
-</li><li> print(dynamic == equivalent)
-</li><li> // Prints &quot;true&quot;
-</li></ol>
+<div class="example">
+<pre class="example">@dynamicMemberLookup
+struct DynamicStruct {
+    let dictionary = [&quot;someDynamicMember&quot;: 325,
+                      &quot;someOtherMember&quot;: 787]
+    subscript(dynamicMember member: String) -&gt; Int {
+        return dictionary[member] ?? 1054
+    }
+}
+let s = DynamicStruct()
+
+// Use dynamic member lookup.
+let dynamic = s.someDynamicMember
+print(dynamic)
+// Prints &quot;325&quot;
+
+// Call the underlying subscript directly.
+let equivalent = s[dynamicMember: &quot;someDynamicMember&quot;]
+print(dynamic == equivalent)
+// Prints &quot;true&quot;
+</pre></div>
 
 <p>Dynamic member lookup by key path can be used to implement a wrapper
 type in a way that supports compile-time type checking. For example:
 </p>
-<ol>
-<li> struct Point { var x, y: Int }
-</li><li> @dynamicMemberLookup
-</li><li> struct PassthroughWrapper&lt;Value&gt; {
-</li><li> var value: Value
-</li><li> subscript&lt;T&gt;(dynamicMember member: KeyPath&lt;Value, T&gt;) -&gt; T {
-</li><li> get { return value[keyPath: member] }
-</li><li> }
-</li><li> }
-</li><li> let point = Point(x: 381, y: 431)
-</li><li> let wrapper = PassthroughWrapper(value: point)
-</li><li> print(wrapper.x)
-</li></ol>
+<div class="example">
+<pre class="example">struct Point { var x, y: Int }
+
+@dynamicMemberLookup
+struct PassthroughWrapper&lt;Value&gt; {
+    var value: Value
+    subscript&lt;T&gt;(dynamicMember member: KeyPath&lt;Value, T&gt;) -&gt; T {
+        get { return value[keyPath: member] }
+    }
+}
+
+let point = Point(x: 381, y: 431)
+let wrapper = PassthroughWrapper(value: point)
+print(wrapper.x)
+</pre></div>
 
 <hr>
 <span id="frozen"></span><div class="header">
@@ -10943,24 +10980,24 @@ to indicate that it contains the top-level entry point for program flow.
 The type must provide a &lsquo;<samp>main</samp>&rsquo; type function that doesn&rsquo;t take any
 arguments and returns &lsquo;<samp>Void</samp>&rsquo;. For example:
 </p>
-<ol>
-<li> @main
-</li><li> struct MyTopLevel {
-</li><li> static func main() {
-</li><li> // Top-level code goes here
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">@main
+struct MyTopLevel {
+    static func main() {
+        // Top-level code goes here
+    }
+}
+</pre></div>
 
 <p>Another way to describe the requirements of the &lsquo;<samp>main</samp>&rsquo; attribute is that
 the type you write this attribute on must satisfy the same requirements
 as types that conform to the following hypothetical protocol:
 </p>
-<ol>
-<li> protocol ProvidesMain {
-</li><li> static func main() throws
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">protocol ProvidesMain {
+    static func main() throws
+}
+</pre></div>
 
 <p>The Swift code you compile to make an executable can contain at most one
 top-level entry point, as discussed in
@@ -11014,10 +11051,10 @@ delegate. Using this attribute is equivalent to calling the
 the top level that calls the &lsquo;<samp>NSApplicationMain(_:_:)</samp>&rsquo; function as
 follows:
 </p>
-<ol>
-<li> import AppKit
-</li><li> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
-</li></ol>
+<div class="example">
+<pre class="example">import AppKit
+NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
+</pre></div>
 
 <hr>
 <span id="NSCopying"></span><div class="header">
@@ -11120,15 +11157,15 @@ The example below exposes the getter for the &lsquo;<samp>enabled</samp>&rsquo; 
 &lsquo;<samp>ExampleClass</samp>&rsquo; to Objective-C code as &lsquo;<samp>isEnabled</samp>&rsquo; rather than just as
 the name of the property itself.
 </p>
-<ol>
-<li> class ExampleClass: NSObject {
-</li><li> @objc var enabled: Bool {
-</li><li> @objc(isEnabled) get {
-</li><li> // Return the appropriate value
-</li><li> }
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">class ExampleClass: NSObject {
+    @objc var enabled: Bool {
+        @objc(isEnabled) get {
+            // Return the appropriate value
+        }
+    }
+}
+</pre></div>
 
 <p>For more information, see
 <a href="https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c">Importing
@@ -11211,34 +11248,37 @@ passed to the property wrapper&rsquo;s initializer. For example, in the code
 below, &lsquo;<samp>SomeStruct</samp>&rsquo; calls each of the initializers that &lsquo;<samp>SomeWrapper</samp>&rsquo;
 defines.
 </p>
-<ol>
-<li> @propertyWrapper
-</li><li> struct SomeWrapper {
-</li><li> var wrappedValue: Int
-</li><li> var someValue: Double
-</li><li> init() {
-</li><li> self.wrappedValue = 100
-</li><li> self.someValue = 12.3
-</li><li> }
-</li><li> init(wrappedValue: Int) {
-</li><li> self.wrappedValue = wrappedValue
-</li><li> self.someValue = 45.6
-</li><li> }
-</li><li> init(wrappedValue value: Int, custom: Double) {
-</li><li> self.wrappedValue = value
-</li><li> self.someValue = custom
-</li><li> }
-</li><li> }
-</li><li> struct SomeStruct {
-</li><li> // Uses init()
-</li><li> @SomeWrapper var a: Int
-</li><li> // Uses init(wrappedValue:)
-</li><li> @SomeWrapper var b = 10
-</li><li> // Both use init(wrappedValue:custom:)
-</li><li> @SomeWrapper(custom: 98.7) var c = 30
-</li><li> @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">@propertyWrapper
+struct SomeWrapper {
+    var wrappedValue: Int
+    var someValue: Double
+    init() {
+        self.wrappedValue = 100
+        self.someValue = 12.3
+    }
+    init(wrappedValue: Int) {
+        self.wrappedValue = wrappedValue
+        self.someValue = 45.6
+    }
+    init(wrappedValue value: Int, custom: Double) {
+        self.wrappedValue = value
+        self.someValue = custom
+    }
+}
+
+struct SomeStruct {
+    // Uses init()
+    @SomeWrapper var a: Int
+
+    // Uses init(wrappedValue:)
+    @SomeWrapper var b = 10
+
+    // Both use init(wrappedValue:custom:)
+    @SomeWrapper(custom: 98.7) var c = 30
+    @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
+}
+</pre></div>
 
 <p>The <em>projected value</em> for a wrapped property is a second value that a
 property wrapper can use to expose additional functionality. The author
@@ -11252,25 +11292,26 @@ projected value for &lsquo;<samp>someProperty</samp>&rsquo; is &lsquo;<samp>$som
 value has the same access control level as the original wrapped
 property.
 </p>
-<ol>
-<li> @propertyWrapper
-</li><li> struct WrapperWithProjection {
-</li><li> var wrappedValue: Int
-</li><li> var projectedValue: SomeProjection {
-</li><li> return SomeProjection(wrapper: self)
-</li><li> }
-</li><li> }
-</li><li> struct SomeProjection {
-</li><li> var wrapper: WrapperWithProjection
-</li><li> }
-</li><li> struct SomeStruct {
-</li><li> @WrapperWithProjection var x = 123
-</li><li> }
-</li><li> let s = SomeStruct()
-</li><li> s.x // Int value
-</li><li> s.$x // SomeProjection value
-</li><li> s.$x.wrapper // WrapperWithProjection value
-</li></ol>
+<div class="example">
+<pre class="example">@propertyWrapper
+struct WrapperWithProjection {
+    var wrappedValue: Int
+    var projectedValue: SomeProjection {
+        return SomeProjection(wrapper: self)
+    }
+}
+struct SomeProjection {
+    var wrapper: WrapperWithProjection
+}
+
+struct SomeStruct {
+    @WrapperWithProjection var x = 123
+}
+let s = SomeStruct()
+s.x // Int value
+s.$x // SomeProjection value
+s.$x.wrapper // WrapperWithProjection value
+</pre></div>
 
 <hr>
 <span id="resultBuilder"></span><div class="header">
@@ -11375,34 +11416,33 @@ an array of integers. This code defines &lsquo;<samp>Compontent</samp>&rsquo; an
 type aliases, to make it easier to match the examples below to the list
 of methods above.
 </p>
-<ol>
-<li> @resultBuilder
-</li><li> struct ArrayBuilder {
-</li><li> typealias Component = [Int]
-</li><li> typealias Expression = Int
-</li><li> static func buildExpression(_ element: Expression) -&gt; Component {
-</li><li> return [element]
-</li><li> }
-</li><li> static func buildOptional(_ component: Component?) -&gt; Component {
-</li><li> guard let component = component else { return [] }
-</li><li> return component
-</li><li> }
-</li><li> static func buildEither(first component: Component) -&gt; Component {
-</li><li> return component
-</li><li> }
-</li><li> static func buildEither(second component: Component) -&gt; Component {
-</li><li> return component
-</li><li> }
-</li><li> static func buildArray(_ components: [Component]) -&gt; Component {
-</li><li> return Array(components.joined())
-</li><li> }
-</li><li> static func buildBlock(_ components: Component&hellip;) -&gt; Component {
-</li><li> return Array(components.joined())
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">@resultBuilder
+struct ArrayBuilder {
+    typealias Component = [Int]
+    typealias Expression = Int
+    static func buildExpression(_ element: Expression) -&gt; Component {
+        return [element]
+    }
+    static func buildOptional(_ component: Component?) -&gt; Component {
+        guard let component = component else { return [] }
+        return component
+    }
+    static func buildEither(first component: Component) -&gt; Component {
+        return component
+    }
+    static func buildEither(second component: Component) -&gt; Component {
+        return component
+    }
+    static func buildArray(_ components: [Component]) -&gt; Component {
+        return Array(components.joined())
+    }
+    static func buildBlock(_ components: Component...) -&gt; Component {
+        return Array(components.joined())
+    }
+}
+</pre></div>
 
-<span id="Attributesxhtml_0023ID635"></span>
 </li><li> Result Transformations
 
 
@@ -11415,10 +11455,10 @@ methods of the result builder type:
 expression becomes a call to that method. This transformation is
 always first. For example, the following declarations are equivalent:
 
-<ol>
-<li> @ArrayBuilder var builderNumber: [Int] { 10 }
-</li><li> var manualNumber = ArrayBuilder.buildExpression(10)
-</li></ol>
+<div class="example">
+<pre class="example">@ArrayBuilder var builderNumber: [Int] { 10 }
+var manualNumber = ArrayBuilder.buildExpression(10)
+</pre></div>
 
 </li><li> An assignment statement is transformed like an expression, but is
 understood to evaluate to &lsquo;<samp>()</samp>&rsquo;. You can define an overload of
@@ -11435,62 +11475,62 @@ example, the &lsquo;<samp>buildEither(first:)</samp>&rsquo; and &lsquo;<samp>bui
 below use a generic type that captures type information about both
 branches.
 
-<ol>
-<li> protocol Drawable {
-</li><li> func draw() -&gt; String
-</li><li> }
-</li><li> struct Text: Drawable {
-</li><li> var content: String
-</li><li> init(_ content: String) { self.content = content }
-</li><li> func draw() -&gt; String { return content }
-</li><li> }
-</li><li> struct Line&lt;D: Drawable&gt;: Drawable {
-</li><li> var elements: [D]
-</li><li> func draw() -&gt; String {
-</li><li> return elements.map { $0.draw() }.joined(separator: &quot;&quot;)
-</li><li> }
-</li><li> }
-</li><li> struct DrawEither&lt;First: Drawable, Second: Drawable&gt;: Drawable {
-</li><li> var content: Drawable
-</li><li> func draw() -&gt; String { return content.draw() }
-</li><li> }
-</li><li> @resultBuilder
-</li><li> struct DrawingBuilder {
-</li><li> static func buildBlock&lt;D: Drawable&gt;(_ components: D&hellip;) -&gt; Line&lt;D&gt;
-{
-</li><li> return Line(elements: components)
-</li><li> }
-</li><li> static func buildEither&lt;First, Second&gt;(first: First)
-</li><li> -&gt; DrawEither&lt;First, Second&gt; {
-</li><li> return DrawEither(content: first)
-</li><li> }
-</li><li> static func buildEither&lt;First, Second&gt;(second: Second)
-</li><li> -&gt; DrawEither&lt;First, Second&gt; {
-</li><li> return DrawEither(content: second)
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">protocol Drawable {
+    func draw() -&gt; String
+}
+struct Text: Drawable {
+    var content: String
+    init(_ content: String) { self.content = content }
+    func draw() -&gt; String { return content }
+}
+struct Line&lt;D: Drawable&gt;: Drawable {
+    var elements: [D]
+    func draw() -&gt; String {
+        return elements.map { $0.draw() }.joined(separator: &quot;&quot;)
+    }
+}
+struct DrawEither&lt;First: Drawable, Second: Drawable&gt;: Drawable {
+    var content: Drawable
+    func draw() -&gt; String { return content.draw() }
+}
+
+@resultBuilder
+struct DrawingBuilder {
+    static func buildBlock&lt;D: Drawable&gt;(_ components: D...) -&gt; Line&lt;D&gt;
+    {
+        return Line(elements: components)
+    }
+    static func buildEither&lt;First, Second&gt;(first: First)
+      -&gt; DrawEither&lt;First, Second&gt; {
+        return DrawEither(content: first)
+    }
+    static func buildEither&lt;First, Second&gt;(second: Second)
+      -&gt; DrawEither&lt;First, Second&gt; {
+        return DrawEither(content: second)
+    }
+}
+</pre></div>
 
 <p>However, this approach causes a problem in code that has availability
 checks:
 </p>
-<ol>
-<li> @available(macOS 99, *)
-</li><li> struct FutureText: Drawable {
-</li><li> var content: String
-</li><li> init(_ content: String) { self.content = content }
-</li><li> func draw() -&gt; String { return content }
-</li><li> }
-</li><li> @DrawingBuilder var brokenDrawing: Drawable {
-</li><li> if #available(macOS 99, *) {
-</li><li> FutureText(&quot;Inside.future&quot;) // Problem
-</li><li> } else {
-</li><li> Text(&quot;Inside.present&quot;)
-</li><li> }
-</li><li> }
-</li><li> // The type of brokenDrawing is Line&lt;DrawEither&lt;Line&lt;FutureText&gt;,
-Line&lt;Text&gt;&gt;&gt;
-</li></ol>
+<div class="example">
+<pre class="example">@available(macOS 99, *)
+struct FutureText: Drawable {
+    var content: String
+    init(_ content: String) { self.content = content }
+    func draw() -&gt; String { return content }
+}
+@DrawingBuilder var brokenDrawing: Drawable {
+    if #available(macOS 99, *) {
+        FutureText(&quot;Inside.future&quot;) // Problem
+    } else {
+        Text(&quot;Inside.present&quot;)
+    }
+}
+// The type of brokenDrawing is Line&lt;DrawEither&lt;Line&lt;FutureText&gt;, Line&lt;Text&gt;&gt;&gt;
+</pre></div>
 
 <p>In the code above, &lsquo;<samp>FutureText</samp>&rsquo; appears as part of the type of
 &lsquo;<samp>brokenDrawing</samp>&rsquo; because it&rsquo;s one of the types in the &lsquo;<samp>DrawEither</samp>&rsquo;
@@ -11502,27 +11542,28 @@ explicitly not being used.
 method to erase type information. For example, the code below builds
 an &lsquo;<samp>AnyDrawable</samp>&rsquo; value from its availability check.
 </p>
-<ol>
-<li> struct AnyDrawable: Drawable {
-</li><li> var content: Drawable
-</li><li> func draw() -&gt; String { return content.draw() }
-</li><li> }
-</li><li> extension DrawingBuilder {
-</li><li> static func buildLimitedAvailability(_ content: Drawable) -&gt;
-AnyDrawable {
-</li><li> return AnyDrawable(content: content)
-</li><li> }
-</li><li> }
-</li><li> @DrawingBuilder var typeErasedDrawing: Drawable {
-</li><li> if #available(macOS 99, *) {
-</li><li> FutureText(&quot;Inside.future&quot;)
-</li><li> } else {
-</li><li> Text(&quot;Inside.present&quot;)
-</li><li> }
-</li><li> }
-</li><li> // The type of typeErasedDrawing is Line&lt;DrawEither&lt;AnyDrawable,
-Line&lt;Text&gt;&gt;&gt;
-</li></ol>
+<div class="example">
+<pre class="example">struct AnyDrawable: Drawable {
+    var content: Drawable
+    func draw() -&gt; String { return content.draw() }
+}
+extension DrawingBuilder {
+    static func buildLimitedAvailability(_ content: Drawable) -&gt;
+      AnyDrawable {
+        return AnyDrawable(content: content)
+    }
+}
+
+
+@DrawingBuilder var typeErasedDrawing: Drawable {
+    if #available(macOS 99, *) {
+        FutureText(&quot;Inside.future&quot;)
+    } else {
+        Text(&quot;Inside.present&quot;)
+    }
+}
+// The type of typeErasedDrawing is Line&lt;DrawEither&lt;AnyDrawable, Line&lt;Text&gt;&gt;&gt;
+</pre></div>
 
 </li><li> A branch statement becomes a series of nested calls to the
 &lsquo;<samp>buildEither(first:)</samp>&rsquo; and &lsquo;<samp>buildEither(second:)</samp>&rsquo; methods. The
@@ -11538,36 +11579,32 @@ then “first child”, that case becomes a nested call like
 &lsquo;<samp>buildEither(first: buildEither(second: ... ))</samp>&rsquo;. The following
 declarations are equivalent:
 </p>
-<ol>
-<li> let someNumber = 19
-</li><li> @ArrayBuilder var builderConditional: [Int] {
-</li><li> if someNumber &lt; 12 {
-</li><li> 31
-</li><li> } else if someNumber == 19 {
-</li><li> 32
-</li><li> } else {
-</li><li> 33
-</li><li> }
-</li><li> }
-</li><li> var manualConditional: [Int]
-</li><li> if someNumber &lt; 12 {
-</li><li> let partialResult = ArrayBuilder.buildExpression(31)
-</li><li> let outerPartialResult = ArrayBuilder.buildEither(first:
-partialResult)
-</li><li> manualConditional = ArrayBuilder.buildEither(first:
-outerPartialResult)
-</li><li> } else if someNumber == 19 {
-</li><li> let partialResult = ArrayBuilder.buildExpression(32)
-</li><li> let outerPartialResult = ArrayBuilder.buildEither(second:
-partialResult)
-</li><li> manualConditional = ArrayBuilder.buildEither(first:
-outerPartialResult)
-</li><li> } else {
-</li><li> let partialResult = ArrayBuilder.buildExpression(33)
-</li><li> manualConditional = ArrayBuilder.buildEither(second:
-partialResult)
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">let someNumber = 19
+@ArrayBuilder var builderConditional: [Int] {
+    if someNumber &lt; 12 {
+        31
+    } else if someNumber == 19 {
+        32
+    } else {
+        33
+    }
+}
+
+var manualConditional: [Int]
+if someNumber &lt; 12 {
+    let partialResult = ArrayBuilder.buildExpression(31)
+    let outerPartialResult = ArrayBuilder.buildEither(first: partialResult)
+    manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+} else if someNumber == 19 {
+    let partialResult = ArrayBuilder.buildExpression(32)
+    let outerPartialResult = ArrayBuilder.buildEither(second: partialResult)
+    manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+} else {
+    let partialResult = ArrayBuilder.buildExpression(33)
+    manualConditional = ArrayBuilder.buildEither(second: partialResult)
+}
+</pre></div>
 
 </li><li> A branch statement that might not produce a value, like an &lsquo;<samp>if</samp>&rsquo;
 statement without an &lsquo;<samp>else</samp>&rsquo; clause, becomes a call to
@@ -11576,34 +11613,36 @@ its code block is transformed and passed as the argument; otherwise,
 &lsquo;<samp>buildOptional(_:)</samp>&rsquo; is called with &lsquo;<samp>nil</samp>&rsquo; as its argument. For example,
 the following declarations are equivalent:
 
-<ol>
-<li> @ArrayBuilder var builderOptional: [Int] {
-</li><li> if (someNumber % 2) == 1 { 20 }
-</li><li> }
-</li><li> var partialResult: [Int]? = nil
-</li><li> if (someNumber % 2) == 1 {
-</li><li> partialResult = ArrayBuilder.buildExpression(20)
-</li><li> }
-</li><li> var manualOptional = ArrayBuilder.buildOptional(partialResult)
-</li></ol>
+<div class="example">
+<pre class="example">@ArrayBuilder var builderOptional: [Int] {
+    if (someNumber % 2) == 1 { 20 }
+}
+
+var partialResult: [Int]? = nil
+if (someNumber % 2) == 1 {
+    partialResult = ArrayBuilder.buildExpression(20)
+}
+var manualOptional = ArrayBuilder.buildOptional(partialResult)
+</pre></div>
 
 </li><li> A code block or &lsquo;<samp>do</samp>&rsquo; statement becomes a call to the &lsquo;<samp>buildBlock(_:)</samp>&rsquo;
 method. Each of the statements inside of the block is transformed, one
 at a time, and they become the arguments to the &lsquo;<samp>buildBlock(_:)</samp>&rsquo;
 method. For example, the following declarations are equivalent:
 
-<ol>
-<li> @ArrayBuilder var builderBlock: [Int] {
-</li><li> 100
-</li><li> 200
-</li><li> 300
-</li><li> }
-</li><li> var manualBlock = ArrayBuilder.buildBlock(
-</li><li> ArrayBuilder.buildExpression(100),
-</li><li> ArrayBuilder.buildExpression(200),
-</li><li> ArrayBuilder.buildExpression(300)
-</li><li> )
-</li></ol>
+<div class="example">
+<pre class="example">@ArrayBuilder var builderBlock: [Int] {
+    100
+    200
+    300
+}
+
+var manualBlock = ArrayBuilder.buildBlock(
+  ArrayBuilder.buildExpression(100),
+  ArrayBuilder.buildExpression(200),
+  ArrayBuilder.buildExpression(300)
+)
+</pre></div>
 
 </li><li> A &lsquo;<samp>for</samp>&rsquo; loop becomes a temporary variable, a &lsquo;<samp>for</samp>&rsquo; loop, and call to
 the &lsquo;<samp>buildArray(_:)</samp>&rsquo; method. The new &lsquo;<samp>for</samp>&rsquo; loop iterates over the
@@ -11611,19 +11650,20 @@ sequence and appends each partial result to that array. The temporary
 array is passed as the argument in the &lsquo;<samp>buildArray(_:)</samp>&rsquo; call. For
 example, the following declarations are equivalent:
 
-<ol>
-<li> @ArrayBuilder var builderArray: [Int] {
-</li><li> for i in 5&hellip;7 {
-</li><li> 100 + i
-</li><li> }
-</li><li> }
-</li><li> var temporary: \] = []
-</li><li> for i in 5&hellip;7 {
-</li><li> let partialResult = ArrayBuilder.buildExpression(100 + i)
-</li><li> temporary.append(partialResult)
-</li><li> }
-</li><li> let manualArray = ArrayBuilder.buildArray(temporary)
-</li></ol>
+<div class="example">
+<pre class="example">@ArrayBuilder var builderArray: [Int] {
+    for i in 5...7 {
+        100 + i
+    }
+}
+
+var temporary: \[\[Int\]\] = []
+for i in 5...7 {
+    let partialResult = ArrayBuilder.buildExpression(100 + i)
+    temporary.append(partialResult)
+}
+let manualArray = ArrayBuilder.buildArray(temporary)
+</pre></div>
 
 </li><li> If the result builder has a &lsquo;<samp>buildFinalResult(_:)</samp>&rsquo; method, the final
 result becomes a call to that method. This transformation is always
@@ -11649,7 +11689,6 @@ expression &lsquo;<samp>4 + 5 * 6</samp>&rsquo; becomes &lsquo;<samp>buildExpres
 multiple calls to that function. Likewise, nested branch statements
 become a single binary tree of calls to the &lsquo;<samp>buildEither</samp>&rsquo; methods.
 </p>
-<span id="Attributesxhtml_0023ID636"></span>
 </li><li> Custom Result-Builder Attributes
 
 
@@ -12058,11 +12097,11 @@ values being matched against. For example, the following code iterates
 through the closed range &lsquo;<samp>1...3</samp>&rsquo;, ignoring the current value of the
 range on each iteration of the loop:
 </p>
-<ol>
-<li> for _ in 1&hellip;3 {
-</li><li> // Do something three times.
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">for _ in 1...3 {
+    // Do something three times.
+}
+</pre></div>
 
 <p>Grammar of a wildcard pattern
 </p>
@@ -12080,9 +12119,9 @@ a variable or constant name. For example, in the following constant
 declaration, &lsquo;<samp>someValue</samp>&rsquo; is an identifier pattern that matches the value
 &lsquo;<samp>42</samp>&rsquo; of type &lsquo;<samp>Int</samp>&rsquo;:
 </p>
-<ol>
-<li> let someValue = 42
-</li></ol>
+<div class="example">
+<pre class="example">let someValue = 42
+</pre></div>
 
 <p>When the match succeeds, the value &lsquo;<samp>42</samp>&rsquo; is bound (assigned) to the
 constant name &lsquo;<samp>someValue</samp>&rsquo;.
@@ -12113,15 +12152,15 @@ variables or constants to their matching values. For example, you can
 decompose the elements of a tuple and bind the value of each element to
 a corresponding identifier pattern.
 </p>
-<ol>
-<li> let point = (3, 2)
-</li><li> switch point {
-</li><li> // Bind x and y to the elements of point.
-</li><li> case let (x, y):
-</li><li> print(&quot;The point is at (\(x), \(y)).&quot;)
-</li><li> }
-</li><li> // Prints &quot;The point is at (3, 2).&quot;
-</li></ol>
+<div class="example">
+<pre class="example">let point = (3, 2)
+switch point {
+    // Bind x and y to the elements of point.
+case let (x, y):
+    print(&quot;The point is at (\(x), \(y)).&quot;)
+}
+// Prints &quot;The point is at (3, 2).&quot;
+</pre></div>
 
 <p>In the example above, &lsquo;<samp>let</samp>&rsquo; distributes to each identifier pattern in
 the tuple pattern &lsquo;<samp>(x, y)</samp>&rsquo;. Because of this behavior, the &lsquo;<samp>switch</samp>&rsquo; cases
@@ -12157,23 +12196,23 @@ patterns that contain those. For example, the following code isn&rsquo;t valid
 because the element &lsquo;<samp>0</samp>&rsquo; in the tuple pattern &lsquo;<samp>(x, 0)</samp>&rsquo; is an expression
 pattern:
 </p>
-<ol>
-<li> let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
-</li><li> // This code isn&rsquo;t valid.
-</li><li> for (x, 0) in points {
-</li><li> <em>* &hellip; *</em>
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
+// This code isn't valid.
+for (x, 0) in points {
+    /* ... */
+}
+</pre></div>
 
 <p>The parentheses around a tuple pattern that contains a single element
 have no effect. The pattern matches values of that single element&rsquo;s
 type. For example, the following are equivalent:
 </p>
-<ol>
-<li> let a = 2 // a: Int = 2
-</li><li> let (a) = 2 // a: Int = 2
-</li><li> let (a): Int = 2 // a: Int = 2
-</li></ol>
+<div class="example">
+<pre class="example">let a = 2 // a: Int = 2
+let (a) = 2 // a: Int = 2
+let (a): Int = 2 // a: Int = 2
+</pre></div>
 
 <p>Grammar of a tuple pattern
 </p>
@@ -12221,19 +12260,19 @@ Note that, because &lsquo;<samp>Optional</samp>&rsquo; is implemented as an enum
 and &lsquo;<samp>.some</samp>&rsquo; can appear in the same switch as the cases of the
 enumeration type.
 </p>
-<ol>
-<li> enum SomeEnum { case left, right }
-</li><li> let x: SomeEnum? = .left
-</li><li> switch x {
-</li><li> case .left:
-</li><li> print(&quot;Turn left&quot;)
-</li><li> case .right:
-</li><li> print(&quot;Turn right&quot;)
-</li><li> case nil:
-</li><li> print(&quot;Keep going straight&quot;)
-</li><li> }
-</li><li> // Prints &quot;Turn left&quot;
-</li></ol>
+<div class="example">
+<pre class="example">enum SomeEnum { case left, right }
+let x: SomeEnum? = .left
+switch x {
+case .left:
+    print(&quot;Turn left&quot;)
+case .right:
+    print(&quot;Turn right&quot;)
+case nil:
+    print(&quot;Keep going straight&quot;)
+}
+// Prints &quot;Turn left&quot;
+</pre></div>
 
 <p>Grammar of an enumeration case pattern
 </p>
@@ -12259,32 +12298,33 @@ the same places as enumeration case patterns.
 <p>Because optional patterns are syntactic sugar for &lsquo;<samp>Optional</samp>&rsquo; enumeration
 case patterns, the following are equivalent:
 </p>
-<ol>
-<li> let someOptional: Int? = 42
-</li><li> // Match using an enumeration case pattern.
-</li><li> if case .some(let x) = someOptional {
-</li><li> print(x)
-</li><li> }
-</li><li> // Match using an optional pattern.
-</li><li> if case let x? = someOptional {
-</li><li> print(x)
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">let someOptional: Int? = 42
+// Match using an enumeration case pattern.
+if case .some(let x) = someOptional {
+    print(x)
+}
+
+// Match using an optional pattern.
+if case let x? = someOptional {
+    print(x)
+}
+</pre></div>
 
 <p>The optional pattern provides a convenient way to iterate over an array
 of optional values in a &lsquo;<samp>for</samp>&rsquo;-&lsquo;<samp>in</samp>&rsquo; statement, executing the body of the
 loop only for non-&lsquo;<samp>nil</samp>&rsquo; elements.
 </p>
-<ol>
-<li> let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
-</li><li> // Match only non-nil values.
-</li><li> for case let number? in arrayOfOptionalInts {
-</li><li> print(&quot;Found a \(number)&quot;)
-</li><li> }
-</li><li> // Found a 2
-</li><li> // Found a 3
-</li><li> // Found a 5
-</li></ol>
+<div class="example">
+<pre class="example">let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
+// Match only non-nil values.
+for case let number? in arrayOfOptionalInts {
+    print(&quot;Found a \(number)&quot;)
+}
+// Found a 2
+// Found a 3
+// Found a 5
+</pre></div>
 
 <p>Grammar of an optional pattern
 </p>
@@ -12303,10 +12343,10 @@ Next: <a href="#Expression-Pattern" accesskey="n" rel="next">Expression Pattern<
 pattern. The &lsquo;<samp>is</samp>&rsquo; pattern appears only in &lsquo;<samp>switch</samp>&rsquo; statement case
 labels. The &lsquo;<samp>is</samp>&rsquo; and &lsquo;<samp>as</samp>&rsquo; patterns have the following form:
 </p>
-<ol>
-<li> is type
-</li><li> pattern as type
-</li></ol>
+<div class="example">
+<pre class="example">is type
+pattern as type
+</pre></div>
 
 <p>The &lsquo;<samp>is</samp>&rsquo; pattern matches a value if the type of that value at runtime is
 the same as the type specified in the right-hand side of the &lsquo;<samp>is</samp>&rsquo;
@@ -12355,36 +12395,36 @@ the &lsquo;<samp>==</samp>&rsquo; operator. It can also match a value with a ran
 checking whether the value is contained within the range, as the
 following example shows.
 </p>
-<ol>
-<li> let point = (1, 2)
-</li><li> switch point {
-</li><li> case (0, 0):
-</li><li> print(&quot;(0, 0) is at the origin.&quot;)
-</li><li> case (-2&hellip;2, -2&hellip;2):
-</li><li> print(&quot;(\(point.0), \(point.1)) is near the origin.&quot;)
-</li><li> default:
-</li><li> print(&quot;The point is at (\(point.0), \(point.1)).&quot;)
-</li><li> }
-</li><li> // Prints &quot;(1, 2) is near the origin.&quot;
-</li></ol>
+<div class="example">
+<pre class="example">let point = (1, 2)
+switch point {
+case (0, 0):
+    print(&quot;(0, 0) is at the origin.&quot;)
+case (-2...2, -2...2):
+    print(&quot;(\(point.0), \(point.1)) is near the origin.&quot;)
+default:
+    print(&quot;The point is at (\(point.0), \(point.1)).&quot;)
+}
+// Prints &quot;(1, 2) is near the origin.&quot;
+</pre></div>
 
 <p>You can overload the &lsquo;<samp>~=</samp>&rsquo; operator to provide custom expression matching
 behavior. For example, you can rewrite the above example to compare the
 &lsquo;<samp>point</samp>&rsquo; expression with a string representations of points.
 </p>
-<ol>
-<li> // Overload the ~= operator to match a string with an integer.
-</li><li> func ~= (pattern: String, value: Int) -&gt; Bool {
-</li><li> return pattern == &quot;\(value)&quot;
-</li><li> }
-</li><li> switch point {
-</li><li> case (&quot;0&quot;, &quot;0&quot;):
-</li><li> print(&quot;(0, 0) is at the origin.&quot;)
-</li><li> default:
-</li><li> print(&quot;The point is at (\(point.0), \(point.1)).&quot;)
-</li><li> }
-</li><li> // Prints &quot;The point is at (1, 2).&quot;
-</li></ol>
+<div class="example">
+<pre class="example">// Overload the ~= operator to match a string with an integer.
+func ~= (pattern: String, value: Int) -&gt; Bool {
+    return pattern == &quot;\(value)&quot;
+}
+switch point {
+case (&quot;0&quot;, &quot;0&quot;):
+    print(&quot;(0, 0) is at the origin.&quot;)
+default:
+    print(&quot;The point is at (\(point.0), \(point.1)).&quot;)
+}
+// Prints &quot;The point is at (1, 2).&quot;
+</pre></div>
 
 <p>Grammar of an expression pattern
 </p>
@@ -12428,16 +12468,16 @@ type or function, along with any associated constraints and requirements
 on those parameters. A generic parameter clause is enclosed in angle
 brackets (&lt;&gt;) and has the following form:
 </p>
-<ol>
-<li> &lt;generic parameter list&gt;
-</li></ol>
+<div class="example">
+<pre class="example">&lt;generic parameter list&gt;
+</pre></div>
 
 <p>The <em>generic parameter list</em> is a comma-separated list of generic
 parameters, each of which has the following form:
 </p>
-<ol>
-<li> type parameter: constraint
-</li></ol>
+<div class="example">
+<pre class="example">type parameter: constraint
+</pre></div>
 
 <p>A generic parameter consists of a <em>type parameter</em> followed by an
 optional <em>constraint</em>. A <em>type parameter</em> is simply the name of a
@@ -12452,14 +12492,14 @@ example, in the generic function below, the generic parameter
 &lsquo;<samp>T: Comparable</samp>&rsquo; indicates that any type argument substituted for the
 type parameter &lsquo;<samp>T</samp>&rsquo; must conform to the &lsquo;<samp>Comparable</samp>&rsquo; protocol.
 </p>
-<ol>
-<li> func simpleMax&lt;T: Comparable&gt;(_ x: T, _ y: T) -&gt; T {
-</li><li> if x &lt; y {
-</li><li> return y
-</li><li> }
-</li><li> return x
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">func simpleMax&lt;T: Comparable&gt;(_ x: T, _ y: T) -&gt; T {
+    if x &lt; y {
+        return y
+    }
+    return x
+}
+</pre></div>
 
 <p>Because &lsquo;<samp>Int</samp>&rsquo; and &lsquo;<samp>Double</samp>&rsquo;, for example, both conform to the
 &lsquo;<samp>Comparable</samp>&rsquo; protocol, this function accepts arguments of either type.
@@ -12468,10 +12508,10 @@ clause when you use a generic function or initializer. The type
 arguments are instead inferred from the type of the arguments passed to
 the function or initializer.
 </p>
-<ol>
-<li> simpleMax(17, 42) // T is inferred to be Int
-</li><li> simpleMax(3.14159, 2.71828) // T is inferred to be Double
-</li></ol>
+<div class="example">
+<pre class="example">simpleMax(17, 42) // T is inferred to be Int
+simpleMax(3.14159, 2.71828) // T is inferred to be Double
+</pre></div>
 
 <table class="menu" border="0" cellspacing="0">
 <tr><td align="left" valign="top">&bull; <a href="#Generic-Where-Clauses" accesskey="1">Generic Where Clauses</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -12491,9 +12531,9 @@ opening curly brace of a type or function&rsquo;s body. A generic &lsquo;<samp>w
 clause consists of the &lsquo;<samp>where</samp>&rsquo; keyword, followed by a comma-separated
 list of one or more <em>requirements</em>.
 </p>
-<ol>
-<li> where requirements
-</li></ol>
+<div class="example">
+<pre class="example">where requirements
+</pre></div>
 
 <p>The <em>requirements</em> in a generic &lsquo;<samp>where</samp>&rsquo; clause specify that a type
 parameter inherits from a class or conforms to a protocol or protocol
@@ -12530,13 +12570,13 @@ from both clauses are combined. In the example below, &lsquo;<samp>startsWithZer
 is available only if &lsquo;<samp>Element</samp>&rsquo; conforms to both &lsquo;<samp>SomeProtocol</samp>&rsquo; and
 &lsquo;<samp>Numeric</samp>&rsquo;.
 </p>
-<ol>
-<li> extension Collection where Element: SomeProtocol {
-</li><li> func startsWithZero() -&gt; Bool where Element: Numeric {
-</li><li> return first == .zero
-</li><li> }
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">extension Collection where Element: SomeProtocol {
+    func startsWithZero() -&gt; Bool where Element: Numeric {
+        return first == .zero
+    }
+}
+</pre></div>
 
 <p>You can overload a generic function or initializer by providing
 different constraints, requirements, or both on the type parameters.
@@ -12625,9 +12665,9 @@ Previous: <a href="#Generic-Parameter-Clause" accesskey="p" rel="prev">Generic P
 type. A generic argument clause is enclosed in angle brackets (&lt;&gt;) and
 has the following form:
 </p>
-<ol>
-<li> &lt;generic argument list&gt;
-</li></ol>
+<div class="example">
+<pre class="example">&lt;generic argument list&gt;
+</pre></div>
 
 <p>The <em>generic argument list</em> is a comma-separated list of type arguments.
 A <em>type argument</em> is the name of an actual concrete type that replaces a
@@ -12636,12 +12676,12 @@ generic type. The result is a specialized version of that generic type.
 The example below shows a simplified version of the Swift standard
 library&rsquo;s generic dictionary type.
 </p>
-<ol>
-<li> struct Dictionary&lt;Key: Hashable, Value&gt;: Collection,
-ExpressibleByDictionaryLiteral {
-</li><li> <em>* &hellip; *</em>
-</li><li> }
-</li></ol>
+<div class="example">
+<pre class="example">struct Dictionary&lt;Key: Hashable, Value&gt;: Collection,
+                                         ExpressibleByDictionaryLiteral {
+    /* ... */
+}
+</pre></div>
 
 <p>The specialized version of the generic &lsquo;<samp>Dictionary</samp>&rsquo; type,
 &lsquo;<samp>Dictionary&lt;String, Int&gt;</samp>&rsquo; is formed by replacing the generic parameters
@@ -12659,11 +12699,10 @@ replace the type parameter &lsquo;<samp>Element</samp>&rsquo; in &lsquo;<samp>Ar
 specialized version of an array, &lsquo;<samp>Array&lt;Int&gt;</samp>&rsquo;, to form an array whose
 elements are themselves arrays of integers.
 </p>
-<ol>
-<li> let arrayOfArrays: Array&lt;Array&lt;Int&gt;&gt; = [[1, 2, 3], [4, 5, 6], [7, 8,
-</li></ol>
-<p>9]]
-</p>
+<div class="example">
+<pre class="example">let arrayOfArrays: Array&lt;Array&lt;Int&gt;&gt; = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+</pre></div>
+
 <p>As mentioned in <a href="#Generic-Parameter-Clause">Generic
 Parameter Clause</a>, you don&rsquo;t use a generic argument clause to specify
 the type arguments of a generic function or initializer.
