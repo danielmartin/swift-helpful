@@ -591,8 +591,16 @@ symbol."
 (defun swift-helpful--symbol-at-point ()
   "Return the Swift symbol at point."
   (save-excursion
-    (forward-symbol -1)
-    (swift-mode:token:text (swift-mode:forward-token-simple))))
+    (let* ((bounds (bounds-of-thing-at-point 'symbol))
+           (start (car bounds))
+           (end (cdr bounds)))
+      (goto-char end)
+      ;; Check if '?' and '!' follows, so we correctly distinguish
+      ;; between 'try', 'try!', and 'try?'.
+      (cond ((or (eq ?? (char-after))
+                 (eq ?! (char-after)))
+             (buffer-substring-no-properties start (+1 end)))
+            (t (buffer-substring-no-properties start end))))))
 
 (defun swift-helpful--log (msg &rest args)
   "Log MSG with ARGS to the Messages buffer if `swift-helpful-debug-log' is t."
