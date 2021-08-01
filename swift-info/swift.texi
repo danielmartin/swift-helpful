@@ -50,6 +50,7 @@
 * Deinitialization::
 * Optional Chaining::
 * Error Handling: Error Handling (2). 
+* Concurrency::
 * Type Casting::
 * Nested Types::
 * Extensions::
@@ -484,6 +485,19 @@ Handling Errors
 * Converting Errors to Optional Values::
 * Disabling Error Propagation::
 
+Concurrency
+
+* Defining and Calling Asynchronous Functions::
+* Asynchronous Sequences::
+* Calling Asynchronous Functions in Parallel::
+* Tasks and Task Groups::
+* Actors::
+
+Tasks and Task Groups
+
+* Unstructured Concurrency::
+* Task Cancellation::
+
 Type Casting
 
 * Defining a Class Hierarchy for Type Casting::
@@ -761,13 +775,13 @@ wait to see what you create with it.
 @node Version Compatibility
 @chapter Version Compatibility
 
-This book describes Swift 5.4, the default version of Swift that's
-included in Xcode 12.5. You can use Xcode 12.5 to build targets that are
-written in either Swift 5.4, Swift 4.2, or Swift 4.
+This book describes Swift 5.5, the default version of Swift that's
+included in Xcode 13. You can use Xcode 13 to build targets that are
+written in either Swift 5.5, Swift 4.2, or Swift 4.
 
-When you use Xcode 12.5 to build Swift 4 and Swift 4.2 code, most Swift
-5.4 functionality is available. That said, the following changes are
-available only to code that uses Swift 5.4 or later:
+When you use Xcode 13 to build Swift 4 and Swift 4.2 code, most Swift
+5.5 functionality is available. That said, the following changes are
+available only to code that uses Swift 5.5 or later:
 
 @itemize
 @item
@@ -783,10 +797,10 @@ the correct integer type. For example, @samp{UInt64(0xffff_ffff_ffff_ffff)}
 evaluates to the correct value rather than overflowing.
 @end itemize
 
-A target written in Swift 5.4 can depend on a target that's written in
+A target written in Swift 5.5 can depend on a target that's written in
 Swift 4.2 or Swift 4, and vice versa. This means, if you have a large
 project that's divided into multiple frameworks, you can migrate your
-code from Swift 4 to Swift 5.4 one framework at a time.
+code from Swift 4 to Swift 5.5 one framework at a time.
 
 @node A Swift Tour
 @chapter A Swift Tour
@@ -1321,9 +1335,8 @@ Use @samp{deinit} to create a deinitializer if you need to perform some
 cleanup before the object is deallocated.
 
 Subclasses include their superclass name after their class name,
-separated by a colon. There's no requirement for classes to subclass
-any standard root class, so you can include or omit a superclass as
-needed.
+separated by a colon. There's no requirement for classes to subclass any
+standard root class, so you can include or omit a superclass as needed.
 
 Methods on a subclass that override the superclass's implementation are
 marked with @samp{override}---overriding a method by accident, without
@@ -1907,6 +1920,8 @@ Writing @samp{<T: Equatable>} is the same as writing
 @ref{Optional Chaining}
 @item
 @ref{Error Handling}
+@item
+@ref{Concurrency}
 @item
 @ref{Type Casting}
 @item
@@ -7875,7 +7890,11 @@ arithmeticMean(3, 8.25, 18.75)
 
 Note
 
-A function can have multiple variadic parameters.
+A function can have multiple variadic parameters. The first parameter
+that comes after a variadic parameter must have an argument label. The
+argument label makes it unambiguous which arguments are passed to the
+variadic parameter and which arguments are passed to the parameters that
+come after the variadic parameter.
 
 @node In-Out Parameters
 @subsection In-Out Parameters
@@ -8437,17 +8456,22 @@ arguments by the names @samp{$0}, @samp{$1}, @samp{$2}, and so on.
 
 If you use these shorthand argument names within your closure
 expression, you can omit the closure's argument list from its
-definition, and the number and type of the shorthand argument names will
-be inferred from the expected function type. The @samp{in} keyword can also
-be omitted, because the closure expression is made up entirely of its
-body:
+definition. The type of the shorthand argument names is inferred from
+the expected function type, and the highest numbered shorthand argument
+you use determines the number of arguments that the closure takes. The
+@samp{in} keyword can also be omitted, because the closure expression is made
+up entirely of its body:
 
 @example
 reversedNames = names.sorted(by: @{ $0 > $1 @} )
 @end example
 
 Here, @samp{$0} and @samp{$1} refer to the closure's first and second @samp{String}
-arguments.
+arguments. Because @samp{$1} is the shorthand argument with highest number,
+the closure is understood to take two arguments. Because the
+@samp{sorted(by:)} function here expects a closure whose arguments are both
+strings, the shorthand arguments @samp{$0} and @samp{$1} are both of type
+@samp{String}.
 
 @node Operator Methods
 @subsection Operator Methods
@@ -10567,8 +10591,7 @@ number, it stores 12 instead.
 @example
 @@propertyWrapper
 struct TwelveOrLess @{
-    private var number: Int
-    init() @{ self.number = 0 @}
+    private var number = 0
     var wrappedValue: Int @{
         get @{ return number @}
         set @{ number = min(newValue, 12) @}
@@ -10589,9 +10612,9 @@ directly. For information about @samp{private}, see
 @ref{Access Control}.
 
 You apply a wrapper to a property by writing the wrapper's name before
-the property as an attribute. Here's a structure that stores a small
-rectangle, using the same (rather arbitrary) definition of “small”
-that's implemented by the @samp{TwelveOrLess} property wrapper:
+the property as an attribute. Here's a structure that stores a rectangle
+that uses the @samp{TwelveOrLess} property wrapper to ensure its dimensions
+are always 12 or less:
 
 @example
 struct SmallRectangle @{
@@ -10620,9 +10643,10 @@ print(rectangle.height)
 
 The @samp{height} and @samp{width} properties get their initial values from the
 definition of @samp{TwelveOrLess}, which sets @samp{TwelveOrLess.number} to zero.
-Storing the number 10 into @samp{rectangle.height} succeeds because it's a
-small number. Trying to store 24 actually stores a value of 12 instead,
-because 24 is too large for the property setter's rule.
+The setter in @samp{TwelveOrLess} treats 10 as a valid value so storing the
+number 10 in @samp{rectangle.height} proceeds as written. However, 24 is
+larger than @samp{TwelveOrLess} allows, so trying to store 24 end up setting
+@samp{rectangle.height} to 12 instead, the largest allowed value.
 
 When you apply a wrapper to a property, the compiler synthesizes code
 that provides storage for the wrapper and code that provides access to
@@ -10836,12 +10860,8 @@ adjusted the new value for the property before storing that new value.
 @example
 @@propertyWrapper
 struct SmallNumber @{
-    private var number: Int
-    var projectedValue: Bool
-    init() @{
-        self.number = 0
-        self.projectedValue = false
-    @}
+    private var number = 0
+    var projectedValue = false
     var wrappedValue: Int @{
         get @{ return number @}
         set @{
@@ -15149,6 +15169,529 @@ Note
 You can use a @samp{defer} statement even when no error handling code is
 involved.
 
+@node Concurrency
+@chapter Concurrency
+
+Swift has built-in support for writing asynchronous and parallel code in
+a structured way. @emph{Asynchronous code} can be suspended and resumed
+later, although only one piece of the program executes at a time.
+Suspending and resuming code in your program lets it continue to make
+progress on short-term operations like updating its UI while continuing
+to work on long-running operations like fetching data over the network
+or parsing files. @emph{Parallel code} means multiple pieces of code run
+simultaneously---for example, a computer with a four-core processor can
+run four pieces of code at the same time, with each core carrying out
+one of the tasks. A program that uses parallel and asynchronous code
+carries out multiple operations at a time; it suspends operations that
+are waiting for an external system, and makes it easier to write this
+code in a memory-safe way.
+
+The additional scheduling flexibility from parallel or asynchronous code
+also comes with a cost of increased complexity. Swift lets you express
+your intent in a way that enables some compile-time checking---for
+example, you can use actors to safely access mutable state. However,
+adding concurrency to slow or buggy code isn't a guarantee that it will
+become fast or correct. In fact, adding concurrency might even make your
+code harder to debug. However, using Swift's language-level support for
+concurrency in code that needs to be concurrent means Swift can help you
+catch problems at compile time.
+
+The rest of this chapter uses the term @emph{concurrency} to refer to this
+common combination of asynchronous and parallel code.
+
+Note
+
+If you've written concurrent code before, you might be used to working
+with threads. The concurrency model in Swift is built on top of threads,
+but you don't interact with them directly. An asynchronous function in
+Swift can give up the thread that it's running on, which lets another
+asynchronous function run on that thread while the first function is
+blocked.
+
+Although it's possible to write concurrent code without using Swift's
+language support, that code tends to be harder to read. For example, the
+following code downloads a list of photo names, downloads the first
+photo in that list, and shows that photo to the user:
+
+@example
+listPhotos(inGallery: "Summer Vacation") @{ photoNames in
+    let sortedNames = photoNames.sorted()
+    let name = sortedNames[0]
+    downloadPhoto(named: name) @{ photo in
+        show(photo)
+    @}
+@}
+@end example
+
+Even in this simple case, because the code has to be written as a series
+of completion handlers, you end up writing nested closures. In this
+style, more complex code with deep nesting can quickly become unwieldy.
+
+@menu
+* Defining and Calling Asynchronous Functions::
+* Asynchronous Sequences::
+* Calling Asynchronous Functions in Parallel::
+* Tasks and Task Groups::
+* Actors::
+@end menu
+
+@node Defining and Calling Asynchronous Functions
+@section Defining and Calling Asynchronous Functions
+
+An @emph{asynchronous function} or @emph{asynchronous method} is a special kind of
+function or method that can be suspended while it's partway through
+execution. This is in contrast to ordinary, synchronous functions and
+methods, which either run to completion, throw an error, or never
+return. An asynchronous function or method still does one of those three
+things, but it can also pause in the middle when it's waiting for
+something. Inside the body of an asynchronous function or method, you
+mark each of these places where execution can be suspended.
+
+@findex async
+
+To indicate that a function or method is asynchronous, you write the
+@samp{async} keyword in its declaration after its parameters, similar to how
+you use @samp{throws} to mark a throwing function. If the function or method
+returns a value, you write @samp{async} before the return arrow (@samp{->}). For
+example, here's how you might fetch the names of photos in a gallery:
+
+@example
+func listPhotos(inGallery name: String) async -> [String] @{
+    let result = // ... some asynchronous networking code ...
+    return result
+@}
+@end example
+
+For a function or method that's both asynchronous and throwing, you
+write @samp{async} before @samp{throws}.
+
+@findex await
+
+When calling an asynchronous method, execution suspends until that
+method returns. You write @samp{await} in front of the call to mark the
+possible suspension point. This is like writing @samp{try} when calling a
+throwing function, to mark the possible change to the program's flow if
+there's an error. Inside an asynchronous method, the flow of execution
+is suspended @emph{only} when you call another asynchronous
+method---suspension is never implicit or preemptive---which means every
+possible suspension point is marked with @samp{await}.
+
+For example, the code below fetches the names of all the pictures in a
+gallery and then shows the first picture:
+
+@example
+let photoNames = await listPhotos(inGallery: "Summer Vacation")
+let sortedNames = photoNames.sorted()
+let name = sortedNames[0]
+let photo = await downloadPhoto(named: name)
+show(photo)
+@end example
+
+Because the @samp{listPhotos(inGallery:)} and @samp{downloadPhoto(named:)}
+functions both need to make network requests, they could take a
+relatively long time to complete. Making them both asynchronous by
+writing @samp{async} before the return arrow lets the rest of the app's code
+keep running while this code waits for the picture to be ready.
+
+To understand the concurrent nature of the example above, here's one
+possible order of execution:
+
+@enumerate
+@item
+The code starts running from the first line and runs up to the first
+@samp{await}. It calls the @samp{listPhotos(inGallery:)} function and suspends
+execution while it waits for that function to return.
+
+@item
+While this code's execution is suspended, some other concurrent code
+in the same program runs. For example, maybe a long-running
+background task continues updating a list of new photo galleries.
+That code also runs until the next suspension point, marked by
+@samp{await}, or until it completes.
+
+@item
+After @samp{listPhotos(inGallery:)} returns, this code continues execution
+starting at that point. It assigns the value that was returned to
+@samp{photoNames}.
+
+@item
+The lines that define @samp{sortedNames} and @samp{name} are regular,
+synchronous code. Because nothing is marked @samp{await} on these lines,
+there aren't any possible suspension points.
+
+@item
+The next @samp{await} marks the call to the @samp{downloadPhoto(named:)}
+function. This code pauses execution again until that function
+returns, giving other concurrent code an opportunity to run.
+
+@item
+After @samp{downloadPhoto(named:)} returns, its return value is assigned
+to @samp{photo} and then passed as an argument when calling @samp{show(_:)}.
+@end enumerate
+
+The possible suspension points in your code marked with @samp{await} indicate
+that the current piece of code might pause execution while waiting for
+the asynchronous function or method to return. This is also called
+@emph{yielding the thread} because, behind the scenes, Swift suspends the
+execution of your code on the current thread and runs some other code on
+that thread instead. Because code with @samp{await} needs to be able to
+suspend execution, only certain places in your program can call
+asynchronous functions or methods:
+
+@itemize
+@item
+Code in the body of an asynchronous function, method, or property.
+
+@item
+Code in the static @samp{main()} method of a structure, class, or
+enumeration that's marked with @samp{@@main}.
+
+@item
+Code in a detached child task, as shown in
+@ref{Unstructured Concurrency} below.
+@end itemize
+
+Note
+
+The
+@uref{https://developer.apple.com/documentation/swift/task/3814836-sleep, @samp{Task.sleep(_:)}}
+[@uref{https://developer.apple.com/documentation/swift/task/3814836-sleep}]
+method is useful when writing simple code to learn how concurrency
+works. This method does nothing, but waits at least the given number of
+nanoseconds before it returns. Here's a version of the
+@samp{listPhotos(inGallery:)} function that uses @samp{sleep()} to simulate
+waiting for a network operation:
+
+@example
+func listPhotos(inGallery name: String) async -> [String] @{
+    await Task.sleep(2 * 1_000_000_000) // Two seconds
+    return ["IMG001", "IMG99", "IMG0404"]
+@}
+@end example
+
+@node Asynchronous Sequences
+@section Asynchronous Sequences
+
+The @samp{listPhotos(inGallery:)} function in the previous section
+asynchronously returns the whole array at once, after all of the array's
+elements are ready. Another approach is to wait for one element of the
+collection at a time using an @emph{asynchronous sequence}. Here's what
+iterating over an asynchronous sequence looks like:
+
+@example
+import Foundation
+
+let handle = FileHandle.standardInput
+for try await line in handle.bytes.lines @{
+    print(line)
+@}
+@end example
+
+Instead of using an ordinary @samp{for}-@samp{in} loop, the example above writes
+@samp{for} with @samp{await} after it. Like when you call an asynchronous function
+or method, writing @samp{await} indicates a possible suspension point. A
+@samp{for}-@samp{await}-@samp{in} loop potentially suspends execution at the beginning
+of each iteration, when it's waiting for the next element to be
+available.
+
+In the same way that you can use your own types in a @samp{for}-@samp{in} loop by
+adding conformance to the
+@uref{https://developer.apple.com/documentation/swift/sequence, @samp{Sequence}}
+[@uref{https://developer.apple.com/documentation/swift/sequence}] protocol, you
+can use your own types in a @samp{for}-@samp{await}-@samp{in} loop by adding
+conformance to the
+@uref{https://developer.apple.com/documentation/swift/asyncsequence, @samp{AsyncSequence}}
+[@uref{https://developer.apple.com/documentation/swift/asyncsequence}]
+protocol.
+
+@node Calling Asynchronous Functions in Parallel
+@section Calling Asynchronous Functions in Parallel
+
+Calling an asynchronous function with @samp{await} runs only one piece of
+code at a time. While the asynchronous code is running, the caller waits
+for that code to finish before moving on to run the next line of code.
+For example, to fetch the first three photos from a gallery, you could
+await three calls to the @samp{downloadPhoto(named:)} function as follows:
+
+@example
+let firstPhoto = await downloadPhoto(named: photoNames[0])
+let secondPhoto = await downloadPhoto(named: photoNames[1])
+let thirdPhoto = await downloadPhoto(named: photoNames[2])
+
+let photos = [firstPhoto, secondPhoto, thirdPhoto]
+show(photos)
+@end example
+
+This approach has an important drawback: Although the download is
+asynchronous and lets other work happen while it progresses, only one
+call to @samp{downloadPhoto(named:)} runs at a time. Each photo downloads
+completely before the next one starts downloading. However, there's no
+need for these operations to wait---each photo can download
+independently, or even at the same time.
+
+To call an asynchronous function and let it run in parallel with code
+around it, write @samp{async} in front of @samp{let} when you define a constant,
+and then write @samp{await} each time you use the constant.
+
+@example
+async let firstPhoto = downloadPhoto(named: photoNames[0])
+async let secondPhoto = downloadPhoto(named: photoNames[1])
+async let thirdPhoto = downloadPhoto(named: photoNames[2])
+
+let photos = await [firstPhoto, secondPhoto, thirdPhoto]
+show(photos)
+@end example
+
+In this example, all three calls to @samp{downloadPhoto(named:)} start
+without waiting for the previous one to complete. If there are enough
+system resources available, they can run at the same time. None of these
+function calls are marked with @samp{await} because the code doesn't suspend
+to wait for the function's result. Instead, execution continues until
+the line where @samp{photos} is defined---at that point, the program needs
+the results from these asynchronous calls, so you write @samp{await} to pause
+execution until all three photos finish downloading.
+
+Here's how you can think about the differences between these two
+approaches:
+
+@itemize
+@item
+Call asynchronous functions with @samp{await} when the code on the
+following lines depends on that function's result. This creates work
+that is carried out sequentially.
+
+@item
+Call asynchronous functions with @samp{async}-@samp{let} when you don't need the
+result until later in your code. This creates work that can be carried
+out in parallel.
+
+@item
+Both @samp{await} and @samp{async}-@samp{let} allow other code to run while they're
+suspended.
+
+@item
+In both cases, you mark the possible suspension point with @samp{await} to
+indicate that execution will pause, if needed, until an asynchronous
+function has returned.
+@end itemize
+
+You can also mix both of these approaches in the same code.
+
+@node Tasks and Task Groups
+@section Tasks and Task Groups
+
+A @emph{task} is a unit of work that can be run asynchronously as part of
+your program. All asynchronous code runs as part of some task. The
+@samp{async}-@samp{let} syntax described in the previous section creates a child
+task for you. You can also create a task group and add child tasks to
+that group, which gives you more control over priority and cancellation,
+and lets you create a dynamic number of tasks.
+
+Tasks are arranged in a hierarchy. Each task in a task group has the
+same parent task, and each task can have child tasks. Because of the
+explicit relationship between tasks and task groups, this approach is
+called @emph{structured concurrency}. Although you take on some of the
+responsibility for correctness, the explicit parent-child relationships
+between tasks lets Swift handle some behaviors like propagating
+cancellation for you, and lets Swift detect some errors at compile time.
+
+@example
+await withTaskGroup(of: Data.self) @{ taskGroup in
+    let photoNames = await listPhotos(inGallery: "Summer Vacation")
+    for name in photoNames @{
+        taskGroup.async @{ await downloadPhoto(named: name) @}
+    @}
+@}
+@end example
+
+For more information about task groups, see
+@uref{https://developer.apple.com/documentation/swift/taskgroup, @samp{TaskGroup}}
+[@uref{https://developer.apple.com/documentation/swift/taskgroup}].
+
+@menu
+* Unstructured Concurrency::
+* Task Cancellation::
+@end menu
+
+@node Unstructured Concurrency
+@subsection Unstructured Concurrency
+
+In addition to the structured approaches to concurrency described in the
+previous sections, Swift also supports unstructured concurrency. Unlike
+tasks that are part of a task group, an @emph{unstructured task} doesn't have
+a parent task. You have complete flexibility to manage unstructured
+tasks in whatever way your program needs, but you're also completely
+responsible for their correctness. To create an unstructured task that
+runs on the current actor, call the
+@uref{https://developer.apple.com/documentation/swift/task/3856790-init, @samp{Task.init(priority:operation:)}}
+[@uref{https://developer.apple.com/documentation/swift/task/3856790-init}]
+initializer. To create an unstructured task that's not part of the
+current actor, known more specifically as a @emph{detached task}, call the
+@uref{https://developer.apple.com/documentation/swift/task/3856786-detached, @samp{Task.detached(priority:operation:)}}
+[@uref{https://developer.apple.com/documentation/swift/task/3856786-detached}]
+class method. Both of these operations return a task handle that lets
+you interact with the task---for example, to wait for its result or to
+cancel it.
+
+@example
+let newPhoto = // ... some photo data ...
+let handle = Task @{
+    return await add(newPhoto, toGalleryNamed: "Spring Adventures")
+@}
+let result = await handle.value
+@end example
+
+For more information about managing detached tasks, see
+@uref{https://developer.apple.com/documentation/swift/task, @samp{Task}}
+[@uref{https://developer.apple.com/documentation/swift/task}].
+
+@node Task Cancellation
+@subsection Task Cancellation
+
+Swift concurrency uses a cooperative cancellation model. Each task
+checks whether it has been canceled at the appropriate points in its
+execution, and responds to cancellation in whatever way is appropriate.
+Depending on the work you're doing, that usually means one of the
+following:
+
+@itemize
+@item
+Throwing an error like @samp{CancellationError}
+
+@item
+Returning @samp{nil} or an empty collection
+
+@item
+Returning the partially completed work
+@end itemize
+
+To check for cancellation, either call
+@uref{https://developer.apple.com/documentation/swift/task/3814826-checkcancellation, @samp{Task.checkCancellation()}}
+[@uref{https://developer.apple.com/documentation/swift/task/3814826-checkcancellation}],
+which throws @samp{CancellationError} if the task has been canceled, or check
+the value of
+@uref{https://developer.apple.com/documentation/swift/task/3814832-iscancelled, @samp{Task.isCancelled}}
+[@uref{https://developer.apple.com/documentation/swift/task/3814832-iscancelled}]
+and handle the cancellation in your own code. For example, a task that's
+downloading photos from a gallery might need to delete partial downloads
+and close network connections.
+
+To propagate cancellation manually, call
+@uref{https://developer.apple.com/documentation/swift/task/3851218-cancel, @samp{Task.cancel()}}
+[@uref{https://developer.apple.com/documentation/swift/task/3851218-cancel}].
+
+@node Actors
+@section Actors
+
+Like classes, actors are reference types, so the comparison of value
+types and reference types in @ref{Classes Are Reference Types, , Classes
+Are Reference Types} applies to actors as well as classes. Unlike
+classes, actors allow only one task to access their mutable state at a
+time, which makes it safe for code in multiple tasks to interact with
+the same instance of an actor. For example, here's an actor that records
+temperatures:
+
+@example
+actor TemperatureLogger @{
+    let label: String
+    var measurements: [Int]
+    private(set) var max: Int
+
+
+    init(label: String, measurement: Int) @{
+        self.label = label
+        self.measurements = [measurement]
+        self.max = measurement
+    @}
+@}
+@end example
+
+@findex actor
+
+You introduce an actor with the @samp{actor} keyword, followed by its
+definition in a pair of braces. The @samp{TemperatureLogger} actor has
+properties that other code outside the actor can access, and restricts
+the @samp{max} property so only code inside the actor can update the maximum
+value.
+
+You create an instance of an actor using the same initializer syntax as
+structures and classes. When you access a property or method of an
+actor, you use @samp{await} to mark the potential suspension point---for
+example:
+
+@example
+let logger = TemperatureLogger(label: "Outdoors", measurement: 25)
+print(await logger.max)
+// Prints "25"
+@end example
+
+In this example, accessing @samp{logger.max} is a possible suspension point.
+Because the actor allows only one task at a time to access its mutable
+state, if code from another task is already interacting with the logger,
+this code suspends while it waits to access the property.
+
+In contrast, code that's part of the actor doesn't write @samp{await} when
+accessing the actor's properties. For example, here's a method that
+updates a @samp{TemperatureLogger} with a new temperature:
+
+@example
+extension TemperatureLogger @{
+    func update(with measurement: Int) @{
+        measurements.append(measurement)
+        if measurement > max @{
+            max = measurement
+        @}
+    @}
+@}
+@end example
+
+The @samp{update(with:)} method is already running on the actor, so it
+doesn't mark its access to properties like @samp{max} with @samp{await}. This
+method also shows one of the reasons why actors allow only one task at a
+time to interact with their mutable state: Some updates to an actor's
+state temporarily break invariants. The @samp{TemperatureLogger} actor keeps
+track of a list of temperatures and a maximum temperature, and it
+updates the maximum temperature when you record a new measurement. In
+the middle of an update, after appending the new measurement but before
+updating @samp{max}, the temperature logger is in a temporary inconsistent
+state. Preventing multiple tasks from interacting with the same instance
+simultaneously prevents problems like the following sequence of events:
+
+@enumerate
+@item
+Your code calls the @samp{update(with:)} method. It updates the
+@samp{measurements} array first.
+
+@item
+Before your code can update @samp{max}, code elsewhere reads the maximum
+value and the array of temperatures.
+
+@item
+Your code finishes its update by changing @samp{max}.
+@end enumerate
+
+In this case, the code running elsewhere would read incorrect
+information because its access to the actor was interleaved in the
+middle of the call to @samp{update(with:)} while the data was temporarily
+invalid. You can prevent this problem when using Swift actors because
+they only allow one operation on their state at a time, and because that
+code can be interrupted only in places where @samp{await} marks a suspension
+point. Because @samp{update(with:)} doesn't contain any suspension points, no
+other code can access the data in the middle of an update.
+
+If you try to access those properties from outside the actor, like you
+would with an instance of a class, you'll get a compile-time error; for
+example:
+
+@example
+print(logger.max) // Error
+@end example
+
+Accessing @samp{logger.max} without writing @samp{await} fails because the
+properties of an actor are part of that actor's isolated local state.
+Swift guarantees that only code inside an actor can access the actor's
+local state. This guarantee is known as @emph{actor isolation}.
+
 @node Type Casting
 @chapter Type Casting
 
@@ -15395,7 +15938,7 @@ including function types and nonclass types. The example creates an
 array called @samp{things}, which can store values of type @samp{Any}:
 
 @example
-var things = [Any]()
+var things: [Any] = []
 
 things.append(0)
 things.append(0.0)
@@ -19502,8 +20045,8 @@ the same lifetime or a longer lifetime.
 
 @findex weak
 
-A @emph{weak reference} is a reference that does not keep a strong hold on
-the instance it refers to, and so does not stop ARC from disposing of
+A @emph{weak reference} is a reference that doesn't keep a strong hold on
+the instance it refers to, and so doesn't stop ARC from disposing of
 the referenced instance. This behavior prevents the reference from
 becoming part of a strong reference cycle. You indicate a weak reference
 by placing the @samp{weak} keyword before a property or variable declaration.
@@ -19798,7 +20341,7 @@ department.courses = [intro, intermediate, advanced]
 The code above creates a department and its three courses. The intro and
 intermediate courses both have a suggested next course stored in their
 @samp{nextCourse} property, which maintains an unowned optional reference to
-the course a student should take after after completing this one.
+the course a student should take after completing this one.
 
 @image{images/unownedOptionalReference_2x,,,,png}
 An unowned optional reference doesn't keep a strong hold on the instance
@@ -20123,7 +20666,7 @@ lazy var someClosure: @{
 @}
 @end example
 
-If a closure does not specify a parameter list or return type because
+If a closure doesn't specify a parameter list or return type because
 they can be inferred from context, place the capture list at the very
 start of the closure, followed by the @samp{in} keyword:
 

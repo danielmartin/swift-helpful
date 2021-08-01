@@ -3,10 +3,10 @@
 <!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>The Swift Programming Reference (Swift 5.4)</title>
+<title>The Swift Programming Reference (Swift 5.5)</title>
 
-<meta name="description" content="The Swift Programming Reference (Swift 5.4)">
-<meta name="keywords" content="The Swift Programming Reference (Swift 5.4)">
+<meta name="description" content="The Swift Programming Reference (Swift 5.5)">
+<meta name="keywords" content="The Swift Programming Reference (Swift 5.5)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -37,7 +37,7 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<h1 class="settitle" align="center">The Swift Programming Reference (Swift 5.4)</h1>
+<h1 class="settitle" align="center">The Swift Programming Reference (Swift 5.5)</h1>
 
 
 
@@ -92,6 +92,7 @@ ul.no-bullet {list-style: none}
     <ul class="no-bullet">
       <li><a id="toc-In_002dOut-Expression-1" href="#In_002dOut-Expression">5.1.1 In-Out Expression</a></li>
       <li><a id="toc-Try-Operator-1" href="#Try-Operator">5.1.2 Try Operator</a></li>
+      <li><a id="toc-Await-Operator-1" href="#Await-Operator">5.1.3 Await Operator</a></li>
     </ul></li>
     <li><a id="toc-Binary-Expressions-1" href="#Binary-Expressions">5.2 Binary Expressions</a>
     <ul class="no-bullet">
@@ -177,7 +178,8 @@ ul.no-bullet {list-style: none}
       <li><a id="toc-Methods-with-Special-Names-1" href="#Methods-with-Special-Names">7.7.5 Methods with Special Names</a></li>
       <li><a id="toc-Throwing-Functions-and-Methods-1" href="#Throwing-Functions-and-Methods">7.7.6 Throwing Functions and Methods</a></li>
       <li><a id="toc-Rethrowing-Functions-and-Methods-1" href="#Rethrowing-Functions-and-Methods">7.7.7 Rethrowing Functions and Methods</a></li>
-      <li><a id="toc-Functions-that-Never-Return-1" href="#Functions-that-Never-Return">7.7.8 Functions that Never Return</a></li>
+      <li><a id="toc-Asynchronous-Functions-and-Methods-1" href="#Asynchronous-Functions-and-Methods">7.7.8 Asynchronous Functions and Methods</a></li>
+      <li><a id="toc-Functions-that-Never-Return-1" href="#Functions-that-Never-Return">7.7.9 Functions that Never Return</a></li>
     </ul></li>
     <li><a id="toc-Enumeration-Declaration-1" href="#Enumeration-Declaration">7.8 Enumeration Declaration</a>
     <ul class="no-bullet">
@@ -187,30 +189,34 @@ ul.no-bullet {list-style: none}
     </ul></li>
     <li><a id="toc-Structure-Declaration-1" href="#Structure-Declaration">7.9 Structure Declaration</a></li>
     <li><a id="toc-Class-Declaration-1" href="#Class-Declaration">7.10 Class Declaration</a></li>
-    <li><a id="toc-Protocol-Declaration-1" href="#Protocol-Declaration">7.11 Protocol Declaration</a>
+    <li><a id="toc-Actor-Declaration-1" href="#Actor-Declaration">7.11 Actor Declaration</a></li>
+    <li><a id="toc-Protocol-Declaration-1" href="#Protocol-Declaration">7.12 Protocol Declaration</a>
     <ul class="no-bullet">
-      <li><a id="toc-Protocol-Property-Declaration-1" href="#Protocol-Property-Declaration">7.11.1 Protocol Property Declaration</a></li>
-      <li><a id="toc-Protocol-Method-Declaration-1" href="#Protocol-Method-Declaration">7.11.2 Protocol Method Declaration</a></li>
-      <li><a id="toc-Protocol-Initializer-Declaration-1" href="#Protocol-Initializer-Declaration">7.11.3 Protocol Initializer Declaration</a></li>
-      <li><a id="toc-Protocol-Subscript-Declaration-1" href="#Protocol-Subscript-Declaration">7.11.4 Protocol Subscript Declaration</a></li>
-      <li><a id="toc-Protocol-Associated-Type-Declaration-1" href="#Protocol-Associated-Type-Declaration">7.11.5 Protocol Associated Type Declaration</a></li>
+      <li><a id="toc-Protocol-Property-Declaration-1" href="#Protocol-Property-Declaration">7.12.1 Protocol Property Declaration</a></li>
+      <li><a id="toc-Protocol-Method-Declaration-1" href="#Protocol-Method-Declaration">7.12.2 Protocol Method Declaration</a></li>
+      <li><a id="toc-Protocol-Initializer-Declaration-1" href="#Protocol-Initializer-Declaration">7.12.3 Protocol Initializer Declaration</a></li>
+      <li><a id="toc-Protocol-Subscript-Declaration-1" href="#Protocol-Subscript-Declaration">7.12.4 Protocol Subscript Declaration</a></li>
+      <li><a id="toc-Protocol-Associated-Type-Declaration-1" href="#Protocol-Associated-Type-Declaration">7.12.5 Protocol Associated Type Declaration</a></li>
     </ul></li>
-    <li><a id="toc-Initializer-Declaration-1" href="#Initializer-Declaration">7.12 Initializer Declaration</a>
+    <li><a id="toc-Initializer-Declaration-1" href="#Initializer-Declaration">7.13 Initializer Declaration</a>
     <ul class="no-bullet">
-      <li><a id="toc-Failable-Initializers-1" href="#Failable-Initializers">7.12.1 Failable Initializers</a></li>
+      <li><a id="toc-Failable-Initializers-1" href="#Failable-Initializers">7.13.1 Failable Initializers</a></li>
     </ul></li>
-    <li><a id="toc-Deinitializer-Declaration-1" href="#Deinitializer-Declaration">7.13 Deinitializer Declaration</a></li>
-    <li><a id="toc-Extension-Declaration-1" href="#Extension-Declaration">7.14 Extension Declaration</a>
+    <li><a id="toc-Deinitializer-Declaration-1" href="#Deinitializer-Declaration">7.14 Deinitializer Declaration</a></li>
+    <li><a id="toc-Extension-Declaration-1" href="#Extension-Declaration">7.15 Extension Declaration</a>
     <ul class="no-bullet">
-      <li><a id="toc-Conditional-Conformance-1" href="#Conditional-Conformance">7.14.1 Conditional Conformance</a></li>
-      <li><a id="toc-Protocol-Conformance-Must-Not-Be-Redundant-1" href="#Protocol-Conformance-Must-Not-Be-Redundant">7.14.2 Protocol Conformance Must Not Be Redundant</a></li>
+      <li><a id="toc-Conditional-Conformance-1" href="#Conditional-Conformance">7.15.1 Conditional Conformance</a></li>
+      <li><a id="toc-Protocol-Conformance-Must-Not-Be-Redundant-1" href="#Protocol-Conformance-Must-Not-Be-Redundant">7.15.2 Protocol Conformance Must Not Be Redundant</a></li>
     </ul></li>
-    <li><a id="toc-Subscript-Declaration-1" href="#Subscript-Declaration">7.15 Subscript Declaration</a></li>
-    <li><a id="toc-Operator-Declaration-1" href="#Operator-Declaration">7.16 Operator Declaration</a></li>
-    <li><a id="toc-Precedence-Group-Declaration-1" href="#Precedence-Group-Declaration">7.17 Precedence Group Declaration</a></li>
-    <li><a id="toc-Declaration-Modifiers-1" href="#Declaration-Modifiers">7.18 Declaration Modifiers</a>
+    <li><a id="toc-Subscript-Declaration-1" href="#Subscript-Declaration">7.16 Subscript Declaration</a>
     <ul class="no-bullet">
-      <li><a id="toc-Access-Control-Levels-1" href="#Access-Control-Levels">7.18.1 Access Control Levels</a></li>
+      <li><a id="toc-Type-Subscript-Declarations-1" href="#Type-Subscript-Declarations">7.16.1 Type Subscript Declarations</a></li>
+    </ul></li>
+    <li><a id="toc-Operator-Declaration-1" href="#Operator-Declaration">7.17 Operator Declaration</a></li>
+    <li><a id="toc-Precedence-Group-Declaration-1" href="#Precedence-Group-Declaration">7.18 Precedence Group Declaration</a></li>
+    <li><a id="toc-Declaration-Modifiers-1" href="#Declaration-Modifiers">7.19 Declaration Modifiers</a>
+    <ul class="no-bullet">
+      <li><a id="toc-Access-Control-Levels-1" href="#Access-Control-Levels">7.19.1 Access Control Levels</a></li>
     </ul></li>
   </ul></li>
   <li><a id="toc-Attributes-1" href="#Attributes">8 Attributes</a>
@@ -290,7 +296,7 @@ ul.no-bullet {list-style: none}
 <p>
 Next: <a href="#Language-Reference" accesskey="n" rel="next">Language Reference</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="The-Swift-Programming-Reference-_0028Swift-5_002e4_0029"></span><h1 class="top">The Swift Programming Reference (Swift 5.4)</h1>
+<span id="The-Swift-Programming-Reference-_0028Swift-5_002e5_0029"></span><h1 class="top">The Swift Programming Reference (Swift 5.5)</h1>
 
 <table class="menu" border="0" cellspacing="0">
 <tr><td align="left" valign="top">&bull; <a href="#Language-Reference" accesskey="1">Language Reference</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -408,6 +414,8 @@ Prefix Expressions
 </pre></th></tr><tr><td align="left" valign="top">&bull; <a href="#In_002dOut-Expression">In-Out Expression</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Try-Operator">Try Operator</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Await-Operator">Await Operator</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
 
@@ -545,6 +553,8 @@ Declarations
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Class-Declaration">Class Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Actor-Declaration">Actor Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Protocol-Declaration">Protocol Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Initializer-Declaration">Initializer Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -591,6 +601,8 @@ Function Declaration
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Rethrowing-Functions-and-Methods">Rethrowing Functions and Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Asynchronous-Functions-and-Methods">Asynchronous Functions and Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Functions-that-Never-Return">Functions that Never Return</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
@@ -630,6 +642,12 @@ Extension Declaration
 </pre></th></tr><tr><td align="left" valign="top">&bull; <a href="#Conditional-Conformance">Conditional Conformance</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Protocol-Conformance-Must-Not-Be-Redundant">Protocol Conformance Must Not Be Redundant</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+Subscript Declaration
+
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="#Type-Subscript-Declarations">Type Subscript Declarations</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
 
@@ -807,7 +825,7 @@ directly implement a parser or compiler.
 <p>The Swift language is relatively small, because many common types,
 functions, and operators that appear virtually everywhere in Swift code
 are actually defined in the Swift standard library. Although these
-types, functions, and operators are not part of the Swift language
+types, functions, and operators aren&rsquo;t part of the Swift language
 itself, they&rsquo;re used extensively in the discussions and code examples
 in this part of the book.
 </p>
@@ -957,7 +975,7 @@ comment
 multiline-comment
 </p>
 <p>whitespace-item →
-U+0000, U+000B, or U+0020
+U+0000, U+000B, or U+000C
 </p>
 <p>line-break → U+000A
 </p>
@@ -3123,6 +3141,8 @@ identifier
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Try-Operator" accesskey="2">Try Operator</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Await-Operator" accesskey="3">Await Operator</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
 </table>
 
 <hr>
@@ -3155,7 +3175,7 @@ identifier
 <hr>
 <span id="Try-Operator"></span><div class="header">
 <p>
-Previous: <a href="#In_002dOut-Expression" accesskey="p" rel="prev">In-Out Expression</a>, Up: <a href="#Prefix-Expressions" accesskey="u" rel="up">Prefix Expressions</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Await-Operator" accesskey="n" rel="next">Await Operator</a>, Previous: <a href="#In_002dOut-Expression" accesskey="p" rel="prev">In-Out Expression</a>, Up: <a href="#Prefix-Expressions" accesskey="u" rel="up">Prefix Expressions</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Try-Operator-1"></span><h4 class="subsection">5.1.2 Try Operator</h4>
 
@@ -3212,6 +3232,63 @@ Handling</a>.
 &lsquo;<samp>?</samp>&rsquo; | &lsquo;<samp>try</samp>&rsquo; &lsquo;<samp>!</samp>&rsquo;
 </p>
 <hr>
+<span id="Await-Operator"></span><div class="header">
+<p>
+Previous: <a href="#Try-Operator" accesskey="p" rel="prev">Try Operator</a>, Up: <a href="#Prefix-Expressions" accesskey="u" rel="up">Prefix Expressions</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Await-Operator-1"></span><h4 class="subsection">5.1.3 Await Operator</h4>
+
+<p>An <em>await expression</em> consists of the &lsquo;<samp>await</samp>&rsquo; operator followed by an
+expression that uses the result of an asynchronous operation. It has the
+following form:
+</p>
+<div class="example">
+<pre class="example">await expression
+</pre></div>
+
+<p>The value of an &lsquo;<samp>await</samp>&rsquo; expression is the value of the <em>expression</em>.
+</p>
+<p>An expression marked with &lsquo;<samp>await</samp>&rsquo; is called a <em>potential suspension
+point</em>. Execution of an asynchronous function can be suspended at each
+expression that&rsquo;s marked with &lsquo;<samp>await</samp>&rsquo;. In addition, execution of
+concurrent code is never suspended at any other point. This means code
+between potential suspension points can safely update state that
+requires temporarily breaking invariants, provided that it completes the
+update before the next potential suspension point.
+</p>
+<p>An &lsquo;<samp>await</samp>&rsquo; expression can appear only within an asynchronous context,
+such as the trailing closure passed to the &lsquo;<samp>async(priority:operation:)</samp>&rsquo;
+function. It can&rsquo;t appear in the body of a &lsquo;<samp>defer</samp>&rsquo; statement, or in an
+autoclosure of synchronous function type.
+</p>
+<p>When the expression on the left-hand side of a binary operator is marked
+with the &lsquo;<samp>await</samp>&rsquo; operator, that operator applies to the whole binary
+expression. That said, you can use parentheses to be explicit about the
+scope of the operator&rsquo;s application.
+</p>
+<div class="example">
+<pre class="example">// await applies to both function calls
+sum = await someAsyncFunction() + anotherAsyncFunction()
+
+// await applies to both function calls
+sum = await (someAsyncFunction() + anotherAsyncFunction())
+
+// Error: await applies only to the first function call
+sum = (await someAsyncFunction()) + anotherAsyncFunction()
+</pre></div>
+
+<p>An &lsquo;<samp>await</samp>&rsquo; expression can&rsquo;t appear on the right-hand side of a binary
+operator, unless the binary operator is the assignment operator or the
+&lsquo;<samp>await</samp>&rsquo; expression is enclosed in parentheses.
+</p>
+<p>If an expression includes both the &lsquo;<samp>await</samp>&rsquo; and &lsquo;<samp>try</samp>&rsquo; operator, the &lsquo;<samp>try</samp>&rsquo;
+operator must appear first.
+</p>
+<p>Grammar of an await expression
+</p>
+<p>await-operator → &lsquo;<samp>await</samp>&rsquo;
+</p>
+<hr>
 <span id="Binary-Expressions"></span><div class="header">
 <p>
 Next: <a href="#Primary-Expressions" accesskey="n" rel="next">Primary Expressions</a>, Previous: <a href="#Prefix-Expressions" accesskey="p" rel="prev">Prefix Expressions</a>, Up: <a href="#Expressions" accesskey="u" rel="up">Expressions</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
@@ -3219,8 +3296,8 @@ Next: <a href="#Primary-Expressions" accesskey="n" rel="next">Primary Expression
 <span id="Binary-Expressions-1"></span><h3 class="section">5.2 Binary Expressions</h3>
 
 <p><em>Binary expressions</em> combine an infix binary operator with the
-expression that it takes as its left-hand and right-hand arguments. It
-has the following form:
+expression that it takes as its left- and right-hand arguments. It has
+the following form:
 </p>
 <div class="example">
 <pre class="example">left-hand argument operator right-hand argument
@@ -3531,13 +3608,13 @@ literal, or one of the following special literals:
 
 <table>
 <thead><tr><th>Literal</th><th>Type</th><th>Value</th></tr></thead>
-<tr><td>&lsquo;<samp>#file</samp>&rsquo;</td><td>&lsquo;<samp>String</samp>&rsquo;</td><td>The name of the file in which it appears.</td></tr>
+<tr><td>&lsquo;<samp>#file</samp>&rsquo;</td><td>&lsquo;<samp>String</samp>&rsquo;</td><td>The path to the file in which it appears.</td></tr>
 <tr><td>&lsquo;<samp>#fileID</samp>&rsquo;</td><td>&lsquo;<samp>String</samp>&rsquo;</td><td>The name of the file and module in which it appears.</td></tr>
 <tr><td>&lsquo;<samp>#filePath</samp>&rsquo;</td><td>&lsquo;<samp>String</samp>&rsquo;</td><td>The path to the file in which it appears.</td></tr>
 <tr><td>&lsquo;<samp>#line</samp>&rsquo;</td><td>&lsquo;<samp>Int</samp>&rsquo;</td><td>The line number on which it appears.</td></tr>
 <tr><td>&lsquo;<samp>#column</samp>&rsquo;</td><td>&lsquo;<samp>Int</samp>&rsquo;</td><td>The column number in which it begins.</td></tr>
 <tr><td>&lsquo;<samp>#function</samp>&rsquo;</td><td>&lsquo;<samp>String</samp>&rsquo;</td><td>The name of the declaration in which it appears.</td></tr>
-<tr><td>&lsquo;<samp>#dsohandle</samp>&rsquo;</td><td>&lsquo;<samp>UnsafeRawPointer</samp>&rsquo;</td><td>The DSO (dynamic shared object) handle in use where it appears.</td></tr>
+<tr><td>&lsquo;<samp>#dsohandle</samp>&rsquo;</td><td>&lsquo;<samp>UnsafeRawPointer</samp>&rsquo;</td><td>The dynamic shared object (DSO) handle in use where it appears.</td></tr>
 </table>
 
 <p>The string value of &lsquo;<samp>#file</samp>&rsquo; depends on the language version, to enable
@@ -4088,11 +4165,55 @@ following form:
 x = .anotherValue
 </pre></div>
 
+<p>If the inferred type is an optional, you can also use a member of the
+non-optional type in an implicit member expression.
+</p>
+<div class="example">
+<pre class="example">var someOptional: MyEnumeration? = .someValue
+</pre></div>
+
+<p>Implicit member expressions can be followed by a postfix operator or
+other postfix syntax listed in <a href="#Postfix-Expressions">Postfix Expressions</a>.
+This is called a <em>chained implicit member expression</em>.
+Although it&rsquo;s common for all of the chained postfix expressions to have
+the same type, the only requirement is that the whole chained implicit
+member expression needs to be convertible to the type implied by its
+context. Specifically, if the implied type is an optional you can use a
+value of the non-optional type, and if the implied type is a class type
+you can use a value of one of its subclasses. For example:
+</p>
+<div class="example">
+<pre class="example">class SomeClass {
+    static var shared = SomeClass()
+    static var sharedSubclass = SomeSubclass()
+    var a = AnotherClass()
+}
+class SomeSubclass: SomeClass { }
+class AnotherClass {
+    static var s = SomeClass()
+    func f() -&gt; SomeClass { return AnotherClass.s }
+}
+let x: SomeClass = .shared.a.f()
+let y: SomeClass? = .shared
+let z: SomeClass = .sharedSubclass
+</pre></div>
+
+<p>In the code above, the type of &lsquo;<samp>x</samp>&rsquo; matches the type implied by its
+context exactly, the type of &lsquo;<samp>y</samp>&rsquo; is convertible from &lsquo;<samp>SomeClass</samp>&rsquo; to
+&lsquo;<samp>SomeClass?</samp>&rsquo;, and the type of &lsquo;<samp>z</samp>&rsquo; is convertible from &lsquo;<samp>SomeSubclass</samp>&rsquo; to
+&lsquo;<samp>SomeClass</samp>&rsquo;.
+</p>
 <p>Grammar of a implicit member expression
 </p>
 <p>implicit-member-expression
 → &lsquo;<samp>.</samp>&rsquo;
 identifier
+</p>
+<p>implicit-member-expression
+→ &lsquo;<samp>.</samp>&rsquo;
+identifier
+&lsquo;<samp>.</samp>&rsquo;
+postfix-expression
 </p>
 <hr>
 <span id="Parenthesized-Expression"></span><div class="header">
@@ -4913,8 +5034,10 @@ operator
 &lsquo;<samp>:</samp>&rsquo;
 operator
 </p>
-<p>trailing-closure →
+<p>trailing-closures →
 closure-expression
+labeled-trailing-closures
+_{opt}
 </p></li></ol>
 
 <hr>
@@ -6460,7 +6583,7 @@ the platform conditions listed in the table below.
 </p>
 <table>
 <thead><tr><th>Platform condition</th><th>Valid arguments</th></tr></thead>
-<tr><td>&lsquo;<samp>os()</samp>&rsquo;</td><td>&lsquo;<samp>macOS</samp>&rsquo;, &lsquo;<samp>iOS</samp>&rsquo;, &lsquo;<samp>watchOS</samp>&rsquo;, &lsquo;<samp>tvOS</samp>&rsquo;, &lsquo;<samp>Linux</samp>&rsquo;</td></tr>
+<tr><td>&lsquo;<samp>os()</samp>&rsquo;</td><td>&lsquo;<samp>macOS</samp>&rsquo;, &lsquo;<samp>iOS</samp>&rsquo;, &lsquo;<samp>watchOS</samp>&rsquo;, &lsquo;<samp>tvOS</samp>&rsquo;, &lsquo;<samp>Linux</samp>&rsquo;, &lsquo;<samp>Windows</samp>&rsquo;</td></tr>
 <tr><td>&lsquo;<samp>arch()</samp>&rsquo;</td><td>&lsquo;<samp>i386</samp>&rsquo;, &lsquo;<samp>x86_64</samp>&rsquo;, &lsquo;<samp>arm</samp>&rsquo;, &lsquo;<samp>arm64</samp>&rsquo;</td></tr>
 <tr><td>&lsquo;<samp>swift()</samp>&rsquo;</td><td>&lsquo;<samp>&gt;=</samp>&rsquo; or &lsquo;<samp>&lt;</samp>&rsquo; followed by a version number</td></tr>
 <tr><td>&lsquo;<samp>compiler()</samp>&rsquo;</td><td>&lsquo;<samp>&gt;=</samp>&rsquo; or &lsquo;<samp>&lt;</samp>&rsquo; followed by a version number</td></tr>
@@ -6740,7 +6863,7 @@ line-number
 <p>line-number → A decimal integer
 greater than zero
 </p>
-<p>file-name →
+<p>file-path →
 static-string-literal
 </p>
 <hr>
@@ -6963,6 +7086,8 @@ _{opt}
 <tr><td align="left" valign="top">&bull; <a href="#Structure-Declaration" accesskey="9">Structure Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Class-Declaration">Class Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Actor-Declaration">Actor Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Protocol-Declaration">Protocol Declaration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
@@ -7745,7 +7870,9 @@ escaping function.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Rethrowing-Functions-and-Methods" accesskey="7">Rethrowing Functions and Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Functions-that-Never-Return" accesskey="8">Functions that Never Return</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#Asynchronous-Functions-and-Methods" accesskey="8">Asynchronous Functions and Methods</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Functions-that-Never-Return" accesskey="9">Functions that Never Return</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 </table>
 
@@ -7995,7 +8122,7 @@ expression. For example:
 let someFunction2: (Int, Int) -&gt; Void = callable.callAsFunction(_:scale:)
 </pre></div>
 
-<p>The &lsquo;<samp>subscript(dynamicMemberLookup:)</samp>&rsquo; subscript enables syntactic sugar
+<p>The &lsquo;<samp>subscript(dynamicMember:)</samp>&rsquo; subscript enables syntactic sugar
 for member lookup, as described in
 <a href="#dynamicMemberLookup">dynamicMemberLookup</a>.
 </p>
@@ -8021,7 +8148,7 @@ functions</em> and <em>throwing methods</em>. They have the following form:
 </p>
 <p>The &lsquo;<samp>throws</samp>&rsquo; keyword is part of a function&rsquo;s type, and nonthrowing
 functions are subtypes of throwing functions. As a result, you can use a
-nonthrowing function in the same places as a throwing one.
+nonthrowing function in a context where as a throwing one is expected.
 </p>
 <p>You can&rsquo;t overload a function based only on whether the function can
 throw an error. That said, you can overload a function based on whether
@@ -8036,7 +8163,7 @@ method.
 <hr>
 <span id="Rethrowing-Functions-and-Methods"></span><div class="header">
 <p>
-Next: <a href="#Functions-that-Never-Return" accesskey="n" rel="next">Functions that Never Return</a>, Previous: <a href="#Throwing-Functions-and-Methods" accesskey="p" rel="prev">Throwing Functions and Methods</a>, Up: <a href="#Function-Declaration" accesskey="u" rel="up">Function Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Asynchronous-Functions-and-Methods" accesskey="n" rel="next">Asynchronous Functions and Methods</a>, Previous: <a href="#Throwing-Functions-and-Methods" accesskey="p" rel="prev">Throwing Functions and Methods</a>, Up: <a href="#Function-Declaration" accesskey="u" rel="up">Function Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Rethrowing-Functions-and-Methods-1"></span><h4 class="subsection">7.7.7 Rethrowing Functions and Methods</h4>
 
@@ -8084,11 +8211,39 @@ rethrowing method can satisfy a protocol requirement for a throwing
 method.
 </p>
 <hr>
+<span id="Asynchronous-Functions-and-Methods"></span><div class="header">
+<p>
+Next: <a href="#Functions-that-Never-Return" accesskey="n" rel="next">Functions that Never Return</a>, Previous: <a href="#Rethrowing-Functions-and-Methods" accesskey="p" rel="prev">Rethrowing Functions and Methods</a>, Up: <a href="#Function-Declaration" accesskey="u" rel="up">Function Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Asynchronous-Functions-and-Methods-1"></span><h4 class="subsection">7.7.8 Asynchronous Functions and Methods</h4>
+
+<p>Functions and methods that run asynchronously must be marked with the
+&lsquo;<samp>async</samp>&rsquo; keyword. These functions and methods are known as <em>asynchronous
+functions</em> and <em>asynchronous methods</em>. They have the following form:
+</p>
+<div class="example">
+<pre class="example">func function name(parameters) async -&gt; return type {
+    statements
+}
+</pre></div>
+
+<p>Calls to an asynchronous function or method must be wrapped in an
+&lsquo;<samp>await</samp>&rsquo; expression&mdash;that is, they must be in the scope of an &lsquo;<samp>await</samp>&rsquo;
+operator.
+</p>
+<p>The &lsquo;<samp>async</samp>&rsquo; keyword is part of the function&rsquo;s type, and synchronous
+functions are subtypes of asynchronous functions. As a result, you can
+use a synchronous function in a context where an asynchronous function
+is expected. For example, you can override an asynchronous method with a
+synchronous method, and a synchronous method can satisfy a protocol
+requirement that requires an asynchronous method.
+</p>
+<hr>
 <span id="Functions-that-Never-Return"></span><div class="header">
 <p>
-Previous: <a href="#Rethrowing-Functions-and-Methods" accesskey="p" rel="prev">Rethrowing Functions and Methods</a>, Up: <a href="#Function-Declaration" accesskey="u" rel="up">Function Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Previous: <a href="#Asynchronous-Functions-and-Methods" accesskey="p" rel="prev">Asynchronous Functions and Methods</a>, Up: <a href="#Function-Declaration" accesskey="u" rel="up">Function Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Functions-that-Never-Return-1"></span><h4 class="subsection">7.7.8 Functions that Never Return</h4>
+<span id="Functions-that-Never-Return-1"></span><h4 class="subsection">7.7.9 Functions that Never Return</h4>
 
 <p>Swift defines a &lsquo;<samp>Never</samp>&rsquo; type, which indicates that a function or method
 doesn&rsquo;t return to its caller. Functions and methods with the &lsquo;<samp>Never</samp>&rsquo;
@@ -8214,7 +8369,7 @@ your program.
 contains zero or more values&mdash;called <em>enumeration cases</em>&mdash;and any
 number of declarations, including computed properties, instance methods,
 type methods, initializers, type aliases, and even other enumeration,
-structure, and class declarations. Enumeration declarations can&rsquo;t
+structure, class, and actor declarations. Enumeration declarations can&rsquo;t
 contain deinitializer or protocol declarations.
 </p>
 <p>Enumeration types can adopt any number of protocols, but can&rsquo;t inherit
@@ -8578,7 +8733,7 @@ and have the following form:
 <p>The body of a structure contains zero or more <em>declarations</em>. These
 <em>declarations</em> can include both stored and computed properties, type
 properties, instance methods, type methods, initializers, subscripts,
-type aliases, and even other structure, class, and enumeration
+type aliases, and even other structure, class, actor, and enumeration
 declarations. Structure declarations can&rsquo;t contain deinitializer or
 protocol declarations. For a discussion and several examples of
 structures that include various kinds of declarations, see
@@ -8662,7 +8817,7 @@ declaration
 <hr>
 <span id="Class-Declaration"></span><div class="header">
 <p>
-Next: <a href="#Protocol-Declaration" accesskey="n" rel="next">Protocol Declaration</a>, Previous: <a href="#Structure-Declaration" accesskey="p" rel="prev">Structure Declaration</a>, Up: <a href="#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Actor-Declaration" accesskey="n" rel="next">Actor Declaration</a>, Previous: <a href="#Structure-Declaration" accesskey="p" rel="prev">Structure Declaration</a>, Up: <a href="#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <span id="Class-Declaration-1"></span><h3 class="section">7.10 Class Declaration</h3>
 
@@ -8679,7 +8834,7 @@ following form:
 <p>The body of a class contains zero or more <em>declarations</em>. These
 <em>declarations</em> can include both stored and computed properties, instance
 methods, type methods, initializers, a single deinitializer, subscripts,
-type aliases, and even other class, structure, and enumeration
+type aliases, and even other class, structure, actor, and enumeration
 declarations. Class declarations can&rsquo;t contain protocol declarations.
 For a discussion and several examples of classes that include various
 kinds of declarations, see
@@ -8795,11 +8950,122 @@ declaration
 <p>compiler-control-statement
 </p>
 <hr>
+<span id="Actor-Declaration"></span><div class="header">
+<p>
+Next: <a href="#Protocol-Declaration" accesskey="n" rel="next">Protocol Declaration</a>, Previous: <a href="#Class-Declaration" accesskey="p" rel="prev">Class Declaration</a>, Up: <a href="#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Actor-Declaration-1"></span><h3 class="section">7.11 Actor Declaration</h3>
+
+<p>An <em>actor declaration</em> introduces a named actor type into your program.
+Actor declarations are declared using the &lsquo;<samp>actor</samp>&rsquo; keyword and have the
+following form:
+</p>
+<div class="example">
+<pre class="example">actor actor name: adopted protocols {
+    declarations
+}
+</pre></div>
+
+<p>The body of an actor contains zero or more <em>declarations</em>. These
+<em>declarations</em> can include both stored and computed properties, instance
+methods, type methods, initializers, a single deinitializer, subscripts,
+type aliases, and even other class, structure, and enumeration
+declarations. For a discussion and several examples of actors that
+include various kinds of declarations, see
+<a href="swift.html#Actors">(swift)Actors</a>.
+</p>
+<p>Actor types can adopt any number of protocols, but can&rsquo;t inherit from
+classes, enumerations, structures, or other actors. However, an actor
+that is marked with the &lsquo;<samp>@objc</samp>&rsquo; attribute implicitly conforms to the
+&lsquo;<samp>NSObjectProtocol</samp>&rsquo; protocol and is exposed to the Objective-C runtime as
+a subtype of &lsquo;<samp>NSObject</samp>&rsquo;.
+</p>
+<p>There are two ways to create an instance of a previously declared actor:
+</p>
+<ul>
+<li> Call one of the initializers declared within the actor, as described
+in <a href="swift.html#Initializers">(swift)Initializers</a>.
+
+</li><li> If no initializers are declared, and all properties of the actor
+declaration were given initial values, call the actor&rsquo;s default
+initializer, as described in
+<a href="swift.html#Default-Initializers">(swift)Default Initializers</a>.
+</li></ul>
+
+<p>By default, members of an actor are isolated to that actor. Code, such
+as the body of a method or the getter for a property, is executed on
+that actor. Code within the actor can interact with them synchronously
+because that code is already running on the same actor, but code outside
+the actor must mark them with &lsquo;<samp>await</samp>&rsquo; to indicate that this code is
+asynchronously running code on another actor. Key paths can&rsquo;t refer to
+isolated members of an actor. Actor-isolated stored properties can be
+passed as in-out parameters to synchronous functions, but not to
+asynchronous functions.
+</p>
+<p>Actors can also have nonisolated members, whose declarations are marked
+with the &lsquo;<samp>nonisolated</samp>&rsquo; keyword. A nonisolated member executes like code
+outside of the actor: It can&rsquo;t interact with any of the actor&rsquo;s isolated
+state, and callers don&rsquo;t mark it with &lsquo;<samp>await</samp>&rsquo; when using it.
+</p>
+<p>Members of an actor can be marked with the &lsquo;<samp>@objc</samp>&rsquo; attribute only if
+they are nonisolated or asynchronous.
+</p>
+<p>The process of initializing an actor&rsquo;s declared properties is described
+in <a href="swift.html#Initialization">(swift)Initialization</a>.
+</p>
+<p>Properties of a actor instance can be accessed using dot (&lsquo;<samp>.</samp>&rsquo;) syntax,
+as described in
+<a href="swift.html#Accessing-Properties">(swift)Accessing Properties</a>.
+</p>
+<p>Actors are reference types; instances of an actor are referred to,
+rather than copied, when assigned to variables or constants, or when
+passed as arguments to a function call. For information about reference
+types, see <a href="swift.html#Classes-Are-Reference-Types">(swift)Classes Are Reference Types</a>.
+</p>
+<p>You can extend the behavior of a structure type with an extension
+declaration, as discussed in <a href="#Extension-Declaration">Extension Declaration</a>.
+</p>
+<p>Grammar of an actor declaration
+</p>
+<p>actor-declaration →
+attributes
+_{opt}
+access-level-modifier
+_{opt} &lsquo;<samp>actor</samp>&rsquo;
+actor-name
+generic-parameter-clause
+_{opt}
+type-inheritance-clause
+_{opt}
+generic-where-clause
+_{opt}
+actor-body
+</p>
+<p>actor-name →
+identifier
+</p>
+<p>actor-body → &lsquo;<samp>{</samp>&rsquo;
+actor-members
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>actor-members →
+actor-member
+actor-members
+_{opt}
+</p>
+<p>actor-member →
+declaration
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>compiler-control-statement
+</p>
+<hr>
 <span id="Protocol-Declaration"></span><div class="header">
 <p>
-Next: <a href="#Initializer-Declaration" accesskey="n" rel="next">Initializer Declaration</a>, Previous: <a href="#Class-Declaration" accesskey="p" rel="prev">Class Declaration</a>, Up: <a href="#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="#Initializer-Declaration" accesskey="n" rel="next">Initializer Declaration</a>, Previous: <a href="#Actor-Declaration" accesskey="p" rel="prev">Actor Declaration</a>, Up: <a href="#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Protocol-Declaration-1"></span><h3 class="section">7.11 Protocol Declaration</h3>
+<span id="Protocol-Declaration-1"></span><h3 class="section">7.12 Protocol Declaration</h3>
 
 <p>A <em>protocol declaration</em> introduces a named protocol type into your
 program. Protocol declarations are declared at global scope using the
@@ -8980,7 +9246,7 @@ typealias-declaration
 <p>
 Next: <a href="#Protocol-Method-Declaration" accesskey="n" rel="next">Protocol Method Declaration</a>, Up: <a href="#Protocol-Declaration" accesskey="u" rel="up">Protocol Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Protocol-Property-Declaration-1"></span><h4 class="subsection">7.11.1 Protocol Property Declaration</h4>
+<span id="Protocol-Property-Declaration-1"></span><h4 class="subsection">7.12.1 Protocol Property Declaration</h4>
 
 <p>Protocols declare that conforming types must implement a property by
 including a <em>protocol property declaration</em> in the body of the protocol
@@ -9034,7 +9300,7 @@ getter-setter-keyword-block
 <p>
 Next: <a href="#Protocol-Initializer-Declaration" accesskey="n" rel="next">Protocol Initializer Declaration</a>, Previous: <a href="#Protocol-Property-Declaration" accesskey="p" rel="prev">Protocol Property Declaration</a>, Up: <a href="#Protocol-Declaration" accesskey="u" rel="up">Protocol Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Protocol-Method-Declaration-1"></span><h4 class="subsection">7.11.2 Protocol Method Declaration</h4>
+<span id="Protocol-Method-Declaration-1"></span><h4 class="subsection">7.12.2 Protocol Method Declaration</h4>
 
 <p>Protocols declare that conforming types must implement a method by
 including a protocol method declaration in the body of the protocol
@@ -9074,7 +9340,7 @@ _{opt}
 <p>
 Next: <a href="#Protocol-Subscript-Declaration" accesskey="n" rel="next">Protocol Subscript Declaration</a>, Previous: <a href="#Protocol-Method-Declaration" accesskey="p" rel="prev">Protocol Method Declaration</a>, Up: <a href="#Protocol-Declaration" accesskey="u" rel="up">Protocol Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Protocol-Initializer-Declaration-1"></span><h4 class="subsection">7.11.3 Protocol Initializer Declaration</h4>
+<span id="Protocol-Initializer-Declaration-1"></span><h4 class="subsection">7.12.3 Protocol Initializer Declaration</h4>
 
 <p>Protocols declare that conforming types must implement an initializer by
 including a protocol initializer declaration in the body of the protocol
@@ -9121,7 +9387,7 @@ _{opt}
 <p>
 Next: <a href="#Protocol-Associated-Type-Declaration" accesskey="n" rel="next">Protocol Associated Type Declaration</a>, Previous: <a href="#Protocol-Initializer-Declaration" accesskey="p" rel="prev">Protocol Initializer Declaration</a>, Up: <a href="#Protocol-Declaration" accesskey="u" rel="up">Protocol Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Protocol-Subscript-Declaration-1"></span><h4 class="subsection">7.11.4 Protocol Subscript Declaration</h4>
+<span id="Protocol-Subscript-Declaration-1"></span><h4 class="subsection">7.12.4 Protocol Subscript Declaration</h4>
 
 <p>Protocols declare that conforming types must implement a subscript by
 including a protocol subscript declaration in the body of the protocol
@@ -9167,7 +9433,7 @@ getter-setter-keyword-block
 <p>
 Previous: <a href="#Protocol-Subscript-Declaration" accesskey="p" rel="prev">Protocol Subscript Declaration</a>, Up: <a href="#Protocol-Declaration" accesskey="u" rel="up">Protocol Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Protocol-Associated-Type-Declaration-1"></span><h4 class="subsection">7.11.5 Protocol Associated Type Declaration</h4>
+<span id="Protocol-Associated-Type-Declaration-1"></span><h4 class="subsection">7.12.5 Protocol Associated Type Declaration</h4>
 
 <span id="index-associatedtype"></span>
 <span id="index-Self"></span>
@@ -9224,7 +9490,7 @@ _{opt}
 <p>
 Next: <a href="#Deinitializer-Declaration" accesskey="n" rel="next">Deinitializer Declaration</a>, Previous: <a href="#Protocol-Declaration" accesskey="p" rel="prev">Protocol Declaration</a>, Up: <a href="#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Initializer-Declaration-1"></span><h3 class="section">7.12 Initializer Declaration</h3>
+<span id="Initializer-Declaration-1"></span><h3 class="section">7.13 Initializer Declaration</h3>
 
 <p>An <em>initializer declaration</em> introduces an initializer for a class,
 structure, or enumeration into your program. Initializer declarations
@@ -9316,7 +9582,7 @@ appropriate behavior.
 <p>
 Up: <a href="#Initializer-Declaration" accesskey="u" rel="up">Initializer Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Failable-Initializers-1"></span><h4 class="subsection">7.12.1 Failable Initializers</h4>
+<span id="Failable-Initializers-1"></span><h4 class="subsection">7.13.1 Failable Initializers</h4>
 
 <p>A <em>failable initializer</em> is a type of initializer that produces an
 optional instance or an implicitly unwrapped optional instance of the
@@ -9433,7 +9699,7 @@ code-block
 <p>
 Next: <a href="#Extension-Declaration" accesskey="n" rel="next">Extension Declaration</a>, Previous: <a href="#Initializer-Declaration" accesskey="p" rel="prev">Initializer Declaration</a>, Up: <a href="#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Deinitializer-Declaration-1"></span><h3 class="section">7.13 Deinitializer Declaration</h3>
+<span id="Deinitializer-Declaration-1"></span><h3 class="section">7.14 Deinitializer Declaration</h3>
 
 <span id="index-deinit"></span>
 
@@ -9474,7 +9740,7 @@ code-block
 <p>
 Next: <a href="#Subscript-Declaration" accesskey="n" rel="next">Subscript Declaration</a>, Previous: <a href="#Deinitializer-Declaration" accesskey="p" rel="prev">Deinitializer Declaration</a>, Up: <a href="#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Extension-Declaration-1"></span><h3 class="section">7.14 Extension Declaration</h3>
+<span id="Extension-Declaration-1"></span><h3 class="section">7.15 Extension Declaration</h3>
 
 <span id="index-extension"></span>
 
@@ -9542,7 +9808,7 @@ name</em> and colon.
 <p>
 Next: <a href="#Protocol-Conformance-Must-Not-Be-Redundant" accesskey="n" rel="next">Protocol Conformance Must Not Be Redundant</a>, Up: <a href="#Extension-Declaration" accesskey="u" rel="up">Extension Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Conditional-Conformance-1"></span><h4 class="subsection">7.14.1 Conditional Conformance</h4>
+<span id="Conditional-Conformance-1"></span><h4 class="subsection">7.15.1 Conditional Conformance</h4>
 
 <p>You can extend a generic type to conditionally conform to a protocol, so
 that instances of the type conform to the protocol only when certain
@@ -9639,7 +9905,7 @@ string.
 <p>
 Previous: <a href="#Conditional-Conformance" accesskey="p" rel="prev">Conditional Conformance</a>, Up: <a href="#Extension-Declaration" accesskey="u" rel="up">Extension Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Protocol-Conformance-Must-Not-Be-Redundant-1"></span><h4 class="subsection">7.14.2 Protocol Conformance Must Not Be Redundant</h4>
+<span id="Protocol-Conformance-Must-Not-Be-Redundant-1"></span><h4 class="subsection">7.15.2 Protocol Conformance Must Not Be Redundant</h4>
 
 <p>A concrete type can conform to a particular protocol only once. Swift
 marks redundant protocol conformances as an error. You&rsquo;re likely to
@@ -9778,7 +10044,7 @@ declaration
 <p>
 Next: <a href="#Operator-Declaration" accesskey="n" rel="next">Operator Declaration</a>, Previous: <a href="#Extension-Declaration" accesskey="p" rel="prev">Extension Declaration</a>, Up: <a href="#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Subscript-Declaration-1"></span><h3 class="section">7.15 Subscript Declaration</h3>
+<span id="Subscript-Declaration-1"></span><h3 class="section">7.16 Subscript Declaration</h3>
 
 <p>A <em>subscript</em> declaration allows you to add subscripting support for
 objects of a particular type and are typically used to provide a
@@ -9843,6 +10109,26 @@ Subscript Declaration</a>.
 <p>For more information about subscripting and to see examples of subscript
 declarations, see <a href="swift.html#Subscripts">(swift)Subscripts</a>.
 </p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="#Type-Subscript-Declarations" accesskey="1">Type Subscript Declarations</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<span id="Type-Subscript-Declarations"></span><div class="header">
+<p>
+Up: <a href="#Subscript-Declaration" accesskey="u" rel="up">Subscript Declaration</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Type-Subscript-Declarations-1"></span><h4 class="subsection">7.16.1 Type Subscript Declarations</h4>
+
+<p>To declare a subscript that&rsquo;s exposed by the type, rather than by
+instances of the type, mark the subscript declaration with the &lsquo;<samp>static</samp>&rsquo;
+declaration modifier. Classes can mark type computed properties with the
+&lsquo;<samp>class</samp>&rsquo; declaration modifier instead to allow subclasses to override the
+superclass&rsquo;s implementation. In a class declaration, the &lsquo;<samp>static</samp>&rsquo;
+keyword has the same effect as marking the declaration with both the
+&lsquo;<samp>class</samp>&rsquo; and &lsquo;<samp>final</samp>&rsquo; declaration modifiers.
+</p>
 <p>Grammar of a subscript declaration
 </p>
 <p>subscript-declaration
@@ -9887,7 +10173,7 @@ _{opt} type
 <p>
 Next: <a href="#Precedence-Group-Declaration" accesskey="n" rel="next">Precedence Group Declaration</a>, Previous: <a href="#Subscript-Declaration" accesskey="p" rel="prev">Subscript Declaration</a>, Up: <a href="#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Operator-Declaration-1"></span><h3 class="section">7.16 Operator Declaration</h3>
+<span id="Operator-Declaration-1"></span><h3 class="section">7.17 Operator Declaration</h3>
 
 <p>An <em>operator declaration</em> introduces a new infix, prefix, or postfix
 operator into your program and is declared using the &lsquo;<samp>operator</samp>&rsquo; keyword.
@@ -9993,7 +10279,7 @@ precedence-group-name
 <p>
 Next: <a href="#Declaration-Modifiers" accesskey="n" rel="next">Declaration Modifiers</a>, Previous: <a href="#Operator-Declaration" accesskey="p" rel="prev">Operator Declaration</a>, Up: <a href="#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Precedence-Group-Declaration-1"></span><h3 class="section">7.17 Precedence Group Declaration</h3>
+<span id="Precedence-Group-Declaration-1"></span><h3 class="section">7.18 Precedence Group Declaration</h3>
 
 <p>A <em>precedence group declaration</em> introduces a new grouping for infix
 operator precedence into your program. The precedence of an operator
@@ -10130,7 +10416,7 @@ identifier
 <p>
 Previous: <a href="#Precedence-Group-Declaration" accesskey="p" rel="prev">Precedence Group Declaration</a>, Up: <a href="#Declarations" accesskey="u" rel="up">Declarations</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Declaration-Modifiers-1"></span><h3 class="section">7.18 Declaration Modifiers</h3>
+<span id="Declaration-Modifiers-1"></span><h3 class="section">7.19 Declaration Modifiers</h3>
 
 <p><em>Declaration modifiers</em> are keywords or context-sensitive keywords that
 modify the behavior or meaning of a declaration. You specify a
@@ -10290,7 +10576,7 @@ References</a>.
 <p>
 Up: <a href="#Declaration-Modifiers" accesskey="u" rel="up">Declaration Modifiers</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="#Index" title="Index" rel="index">Index</a>]</p>
 </div>
-<span id="Access-Control-Levels-1"></span><h4 class="subsection">7.18.1 Access Control Levels</h4>
+<span id="Access-Control-Levels-1"></span><h4 class="subsection">7.19.1 Access Control Levels</h4>
 
 <p>Swift provides five levels of access control: open, public, internal,
 file private, and private. You can mark a declaration with one of the
@@ -10407,6 +10693,9 @@ _{opt}
 </p>
 <p>mutation-modifier →
 &lsquo;<samp>mutating</samp>&rsquo; | &lsquo;<samp>nonmutating</samp>&rsquo;
+</p>
+<p>actor-isolation-modifier
+→ &lsquo;<samp>nonisolated</samp>&rsquo;
 </p>
 <hr>
 <span id="Attributes"></span><div class="header">
@@ -10805,16 +11094,16 @@ Next: <a href="#frozen" accesskey="n" rel="next">frozen</a>, Previous: <a href="
 
 <p>Apply this attribute to a class, structure, enumeration, or protocol to
 enable members to be looked up by name at runtime. The type must
-implement a &lsquo;<samp>subscript(dynamicMemberLookup:)</samp>&rsquo; subscript.
+implement a &lsquo;<samp>subscript(dynamicMember:)</samp>&rsquo; subscript.
 </p>
 <p>In an explicit member expression, if there isn&rsquo;t a corresponding
 declaration for the named member, the expression is understood as a call
-to the type&rsquo;s &lsquo;<samp>subscript(dynamicMemberLookup:)</samp>&rsquo; subscript, passing
+to the type&rsquo;s &lsquo;<samp>subscript(dynamicMember:)</samp>&rsquo; subscript, passing
 information about the member as the argument. The subscript can accept a
 parameter that&rsquo;s either a key path or a member name; if you implement
 both subscripts, the subscript that takes key path argument is used.
 </p>
-<p>An implementation of &lsquo;<samp>subscript(dynamicMemberLookup:)</samp>&rsquo; can accept key
+<p>An implementation of &lsquo;<samp>subscript(dynamicMember:)</samp>&rsquo; can accept key
 paths using an argument of type
 <a href="https://developer.apple.com/documentation/swift/keypath">&lsquo;<samp>KeyPath</samp>&rsquo;</a>
 [<a href="https://developer.apple.com/documentation/swift/keypath">https://developer.apple.com/documentation/swift/keypath</a>],
@@ -11221,18 +11510,19 @@ to use that type as a property wrapper. When you apply this attribute to
 a type, you create a custom attribute with the same name as the type.
 Apply that new attribute to a property of a class, structure, or
 enumeration to wrap access to the property through an instance of the
-wrapper type. Local and global variables can&rsquo;t use property wrappers.
+wrapper type; apply the attribute to a local stored variable declaration
+to wrap access to the variable the same way. Computed variables, global
+variables, and constants can&rsquo;t use property wrappers.
 </p>
 <p>The wrapper must define a &lsquo;<samp>wrappedValue</samp>&rsquo; instance property. The <em>wrapped
 value</em> of the property is the value that the getter and setter for this
 property expose. In most cases, &lsquo;<samp>wrappedValue</samp>&rsquo; is a computed value, but
-it can be a stored value instead. The wrapper is responsible for
-defining and managing any underlying storage needed by its wrapped
-value. The compiler synthesizes storage for the instance of the wrapper
-type by prefixing the name of the wrapped property with an underscore
-(&lsquo;<samp>_</samp>&rsquo;)&mdash;for example, the wrapper for &lsquo;<samp>someProperty</samp>&rsquo; is stored as
-&lsquo;<samp>_someProperty</samp>&rsquo;. The synthesized storage for the wrapper has an access
-control level of &lsquo;<samp>private</samp>&rsquo;.
+it can be a stored value instead. The wrapper defines and manages any
+underlying storage needed by its wrapped value. The compiler synthesizes
+storage for the instance of the wrapper type by prefixing the name of
+the wrapped property with an underscore (&lsquo;<samp>_</samp>&rsquo;)&mdash;for example, the wrapper
+for &lsquo;<samp>someProperty</samp>&rsquo; is stored as &lsquo;<samp>_someProperty</samp>&rsquo;. The synthesized storage
+for the wrapper has an access control level of &lsquo;<samp>private</samp>&rsquo;.
 </p>
 <p>A property that has a property wrapper can include &lsquo;<samp>willSet</samp>&rsquo; and
 &lsquo;<samp>didSet</samp>&rsquo; blocks, but it can&rsquo;t override the compiler-synthesized &lsquo;<samp>get</samp>&rsquo; or
@@ -11777,14 +12067,14 @@ Next: <a href="#warn_005funqualified_005faccess" accesskey="n" rel="next">warn<e
 <p>Apply this attribute to a function, method, computed property,
 subscript, initializer, or deinitializer declaration to allow that
 symbol to be used in inlinable code that&rsquo;s defined in the same module as
-the declaration. The declaration must have the &lsquo;<samp>internal</samp>&rsquo; access level
+the declaration. The declaration must have the &lsquo;<samp>internal</samp>&rsquo; access-level
 modifier. A structure or class marked &lsquo;<samp>usableFromInline</samp>&rsquo; can use only
 types that are public or &lsquo;<samp>usableFromInline</samp>&rsquo; for its properties. An
 enumeration marked &lsquo;<samp>usableFromInline</samp>&rsquo; can use only types that are public
 or &lsquo;<samp>usableFromInline</samp>&rsquo; for the raw values and associated values of its
 cases.
 </p>
-<p>Like the &lsquo;<samp>public</samp>&rsquo; access level modifier, this attribute exposes the
+<p>Like the &lsquo;<samp>public</samp>&rsquo; access-level modifier, this attribute exposes the
 declaration as part of the module&rsquo;s public interface. Unlike &lsquo;<samp>public</samp>&rsquo;,
 the compiler doesn&rsquo;t allow declarations marked with &lsquo;<samp>usableFromInline</samp>&rsquo;
 to be referenced by name in code outside the module, even though the
@@ -11872,7 +12162,7 @@ Next: <a href="#convention" accesskey="n" rel="next">convention</a>, Up: <a href
 
 <p>Apply this attribute to delay the evaluation of an expression by
 automatically wrapping that expression in a closure with no arguments.
-You apply it to a parameter&rsquo;s type in a method or function declaration,
+You apply it to a parameter&rsquo;s type in a function or method declaration,
 for a parameter whose type is a function type that takes no arguments
 and that returns a value of the type of the expression. For an example
 of how to use the &lsquo;<samp>autoclosure</samp>&rsquo; attribute, see
@@ -11909,7 +12199,7 @@ carries no context and uses the C calling convention.
 <p>With a few exceptions, a function of any calling convention can be used
 when a function any other calling convention is needed. A nongeneric
 global function, a local function that doesn&rsquo;t capture any local
-variables or a closure that doesn&rsquo;t capture any local variables can be
+variables, or a closure that doesn&rsquo;t capture any local variables can be
 converted to the C calling convention. Other Swift functions can&rsquo;t be
 converted to the C calling convention. A function with the Objective-C
 block calling convention can&rsquo;t be converted to the C calling convention.
@@ -11921,7 +12211,7 @@ Previous: <a href="#convention" accesskey="p" rel="prev">convention</a>, Up: <a 
 </div>
 <span id="escaping-1"></span><h4 class="subsection">8.2.3 escaping</h4>
 
-<p>Apply this attribute to a parameter&rsquo;s type in a method or function
+<p>Apply this attribute to a parameter&rsquo;s type in a function or method
 declaration to indicate that the parameter&rsquo;s value can be stored for
 later execution. This means that the value is allowed to outlive the
 lifetime of the call. Function type parameters with the &lsquo;<samp>escaping</samp>&rsquo; type
@@ -12937,6 +13227,10 @@ _{opt}
 → &lsquo;<samp>$</samp>&rsquo;
 decimal-digits
 </p>
+<p>property-wrapper-projection
+→ &lsquo;<samp>$</samp>&rsquo;
+identifier-characters
+</p>
 <p>Grammar of a literal
 </p>
 <p>literal →
@@ -13656,6 +13950,11 @@ identifier
 <p>try-operator →
 &lsquo;<samp>try</samp>&rsquo; | &lsquo;<samp>try</samp>&rsquo; &lsquo;<samp>?</samp>&rsquo; | &lsquo;<samp>try</samp>&rsquo; &lsquo;<samp>!</samp>&rsquo;
 </p>
+<p>Grammar of an await expression
+</p>
+<p>await-operator
+→ &lsquo;<samp>await</samp>&rsquo;
+</p>
 <p>Grammar of a binary expression
 </p>
 <p>binary-expression
@@ -13971,7 +14270,7 @@ capture-list-items
 →
 capture-specifier
 _{opt}
-expression
+identifier
 </p>
 <p>capture-list-item
 →
@@ -15482,6 +15781,42 @@ declaration
 </table>
 <p>compiler-control-statement
 </p>
+<p>Grammar of an actor declaration
+</p>
+<p>actor-declaration
+attributes
+_{opt}
+access-level-modifier
+_{opt} &lsquo;<samp>actor</samp>&rsquo;
+actor-name
+generic-parameter-clause
+_{opt}
+type-inheritance-clause
+_{opt}
+generic-where-clause
+_{opt}
+actor-body
+</p>
+<p>actor-name →
+identifier
+</p>
+<p>actor-body → &lsquo;<samp>{</samp>&rsquo;
+actor-members
+_{opt} &lsquo;<samp>}</samp>&rsquo;
+</p>
+<p>actor-members
+→
+actor-member
+actor-members
+_{opt}
+</p>
+<p>actor-member →
+declaration
+</p><table>
+<tr><td></td></tr>
+</table>
+<p>compiler-control-statement
+</p>
 <p>Grammar of a protocol declaration
 </p>
 <p>protocol-declaration
@@ -15846,6 +16181,10 @@ access-level-modifier
 <p>declaration-modifier
 →
 mutation-modifier
+</p>
+<p>declaration-modifier
+→
+actor-isolation-modifier
 </p>
 <p>declaration-modifiers
 →

@@ -35,6 +35,7 @@ The Swift Programming Language Guide (Swift 5.4)
 * Deinitialization::
 * Optional Chaining::
 * Error Handling: Error Handling (2).
+* Concurrency::
 * Type Casting::
 * Nested Types::
 * Extensions::
@@ -468,6 +469,19 @@ Handling Errors
 * Converting Errors to Optional Values::
 * Disabling Error Propagation::
 
+Concurrency
+
+* Defining and Calling Asynchronous Functions::
+* Asynchronous Sequences::
+* Calling Asynchronous Functions in Parallel::
+* Tasks and Task Groups::
+* Actors::
+
+Tasks and Task Groups
+
+* Unstructured Concurrency::
+* Task Cancellation::
+
 Type Casting
 
 * Defining a Class Hierarchy for Type Casting::
@@ -739,13 +753,13 @@ File: swift.info,  Node: Version Compatibility,  Next: A Swift Tour,  Prev: Abou
 3 Version Compatibility
 ***********************
 
-This book describes Swift 5.4, the default version of Swift that’s
-included in Xcode 12.5.  You can use Xcode 12.5 to build targets that
-are written in either Swift 5.4, Swift 4.2, or Swift 4.
+This book describes Swift 5.5, the default version of Swift that’s
+included in Xcode 13.  You can use Xcode 13 to build targets that are
+written in either Swift 5.5, Swift 4.2, or Swift 4.
 
-   When you use Xcode 12.5 to build Swift 4 and Swift 4.2 code, most
-Swift 5.4 functionality is available.  That said, the following changes
-are available only to code that uses Swift 5.4 or later:
+   When you use Xcode 13 to build Swift 4 and Swift 4.2 code, most Swift
+5.5 functionality is available.  That said, the following changes are
+available only to code that uses Swift 5.5 or later:
 
    • Functions that return an opaque type require the Swift 5.1 runtime.
 
@@ -757,10 +771,10 @@ are available only to code that uses Swift 5.4 or later:
      ‘UInt64(0xffff_ffff_ffff_ffff)’ evaluates to the correct value
      rather than overflowing.
 
-   A target written in Swift 5.4 can depend on a target that’s written
+   A target written in Swift 5.5 can depend on a target that’s written
 in Swift 4.2 or Swift 4, and vice versa.  This means, if you have a
 large project that’s divided into multiple frameworks, you can migrate
-your code from Swift 4 to Swift 5.4 one framework at a time.
+your code from Swift 4 to Swift 5.5 one framework at a time.
 
 
 File: swift.info,  Node: A Swift Tour,  Next: Language Guide,  Prev: Version Compatibility,  Up: Top
@@ -1781,6 +1795,7 @@ File: swift.info,  Node: Language Guide,  Next: The Basics,  Prev: A Swift Tour,
    • *note Deinitialization::
    • *note Optional Chaining::
    • *note Error Handling::
+   • *note Concurrency::
    • *note Type Casting::
    • *note Nested Types::
    • *note Extensions::
@@ -7491,7 +7506,11 @@ _average_) for a list of numbers of any length:
 
    Note
 
-   A function can have multiple variadic parameters.
+   A function can have multiple variadic parameters.  The first
+parameter that comes after a variadic parameter must have an argument
+label.  The argument label makes it unambiguous which arguments are
+passed to the variadic parameter and which arguments are passed to the
+parameters that come after the variadic parameter.
 
 
 File: swift.info,  Node: In-Out Parameters,  Prev: Variadic Parameters,  Up: Function Argument Labels and Parameter Names
@@ -8037,15 +8056,20 @@ arguments by the names ‘$0’, ‘$1’, ‘$2’, and so on.
 
    If you use these shorthand argument names within your closure
 expression, you can omit the closure’s argument list from its
-definition, and the number and type of the shorthand argument names will
-be inferred from the expected function type.  The ‘in’ keyword can also
-be omitted, because the closure expression is made up entirely of its
-body:
+definition.  The type of the shorthand argument names is inferred from
+the expected function type, and the highest numbered shorthand argument
+you use determines the number of arguments that the closure takes.  The
+‘in’ keyword can also be omitted, because the closure expression is made
+up entirely of its body:
 
      reversedNames = names.sorted(by: { $0 > $1 } )
 
    Here, ‘$0’ and ‘$1’ refer to the closure’s first and second ‘String’
-arguments.
+arguments.  Because ‘$1’ is the shorthand argument with highest number,
+the closure is understood to take two arguments.  Because the
+‘sorted(by:)’ function here expects a closure whose arguments are both
+strings, the shorthand arguments ‘$0’ and ‘$1’ are both of type
+‘String’.
 
 
 File: swift.info,  Node: Operator Methods,  Prev: Shorthand Argument Names,  Up: Closure Expressions
@@ -10074,8 +10098,7 @@ number, it stores 12 instead.
 
      @propertyWrapper
      struct TwelveOrLess {
-         private var number: Int
-         init() { self.number = 0 }
+         private var number = 0
          var wrappedValue: Int {
              get { return number }
              set { number = min(newValue, 12) }
@@ -10095,8 +10118,8 @@ directly.  For information about ‘private’, see *note Access Control::.
 
    You apply a wrapper to a property by writing the wrapper’s name
 before the property as an attribute.  Here’s a structure that stores a
-small rectangle, using the same (rather arbitrary) definition of “small”
-that’s implemented by the ‘TwelveOrLess’ property wrapper:
+rectangle that uses the ‘TwelveOrLess’ property wrapper to ensure its
+dimensions are always 12 or less:
 
      struct SmallRectangle {
          @TwelveOrLess var height: Int
@@ -10117,9 +10140,10 @@ that’s implemented by the ‘TwelveOrLess’ property wrapper:
 
    The ‘height’ and ‘width’ properties get their initial values from the
 definition of ‘TwelveOrLess’, which sets ‘TwelveOrLess.number’ to zero.
-Storing the number 10 into ‘rectangle.height’ succeeds because it’s a
-small number.  Trying to store 24 actually stores a value of 12 instead,
-because 24 is too large for the property setter’s rule.
+The setter in ‘TwelveOrLess’ treats 10 as a valid value so storing the
+number 10 in ‘rectangle.height’ proceeds as written.  However, 24 is
+larger than ‘TwelveOrLess’ allows, so trying to store 24 end up setting
+‘rectangle.height’ to 12 instead, the largest allowed value.
 
    When you apply a wrapper to a property, the compiler synthesizes code
 that provides storage for the wrapper and code that provides access to
@@ -10325,12 +10349,8 @@ value.
 
      @propertyWrapper
      struct SmallNumber {
-         private var number: Int
-         var projectedValue: Bool
-         init() {
-             self.number = 0
-             self.projectedValue = false
-         }
+         private var number = 0
+         var projectedValue = false
          var wrappedValue: Int {
              get { return number }
              set {
@@ -14066,7 +14086,7 @@ is the ‘buildingIdentifier()’ method’s return value, and not the
 ‘buildingIdentifier()’ method itself.
 
 
-File: swift.info,  Node: Error Handling (2),  Next: Type Casting,  Prev: Optional Chaining,  Up: Top
+File: swift.info,  Node: Error Handling (2),  Next: Concurrency,  Prev: Optional Chaining,  Up: Top
 
 22 Error Handling
 *****************
@@ -14504,9 +14524,499 @@ executes first.
 involved.
 
 
-File: swift.info,  Node: Type Casting,  Next: Nested Types,  Prev: Error Handling (2),  Up: Top
+File: swift.info,  Node: Concurrency,  Next: Type Casting,  Prev: Error Handling (2),  Up: Top
 
-23 Type Casting
+23 Concurrency
+**************
+
+Swift has built-in support for writing asynchronous and parallel code in
+a structured way.  _Asynchronous code_ can be suspended and resumed
+later, although only one piece of the program executes at a time.
+Suspending and resuming code in your program lets it continue to make
+progress on short-term operations like updating its UI while continuing
+to work on long-running operations like fetching data over the network
+or parsing files.  _Parallel code_ means multiple pieces of code run
+simultaneously—for example, a computer with a four-core processor can
+run four pieces of code at the same time, with each core carrying out
+one of the tasks.  A program that uses parallel and asynchronous code
+carries out multiple operations at a time; it suspends operations that
+are waiting for an external system, and makes it easier to write this
+code in a memory-safe way.
+
+   The additional scheduling flexibility from parallel or asynchronous
+code also comes with a cost of increased complexity.  Swift lets you
+express your intent in a way that enables some compile-time checking—for
+example, you can use actors to safely access mutable state.  However,
+adding concurrency to slow or buggy code isn’t a guarantee that it will
+become fast or correct.  In fact, adding concurrency might even make
+your code harder to debug.  However, using Swift’s language-level
+support for concurrency in code that needs to be concurrent means Swift
+can help you catch problems at compile time.
+
+   The rest of this chapter uses the term _concurrency_ to refer to this
+common combination of asynchronous and parallel code.
+
+   Note
+
+   If you’ve written concurrent code before, you might be used to
+working with threads.  The concurrency model in Swift is built on top of
+threads, but you don’t interact with them directly.  An asynchronous
+function in Swift can give up the thread that it’s running on, which
+lets another asynchronous function run on that thread while the first
+function is blocked.
+
+   Although it’s possible to write concurrent code without using Swift’s
+language support, that code tends to be harder to read.  For example,
+the following code downloads a list of photo names, downloads the first
+photo in that list, and shows that photo to the user:
+
+     listPhotos(inGallery: "Summer Vacation") { photoNames in
+         let sortedNames = photoNames.sorted()
+         let name = sortedNames[0]
+         downloadPhoto(named: name) { photo in
+             show(photo)
+         }
+     }
+
+   Even in this simple case, because the code has to be written as a
+series of completion handlers, you end up writing nested closures.  In
+this style, more complex code with deep nesting can quickly become
+unwieldy.
+
+* Menu:
+
+* Defining and Calling Asynchronous Functions::
+* Asynchronous Sequences::
+* Calling Asynchronous Functions in Parallel::
+* Tasks and Task Groups::
+* Actors::
+
+
+File: swift.info,  Node: Defining and Calling Asynchronous Functions,  Next: Asynchronous Sequences,  Up: Concurrency
+
+23.1 Defining and Calling Asynchronous Functions
+================================================
+
+An _asynchronous function_ or _asynchronous method_ is a special kind of
+function or method that can be suspended while it’s partway through
+execution.  This is in contrast to ordinary, synchronous functions and
+methods, which either run to completion, throw an error, or never
+return.  An asynchronous function or method still does one of those
+three things, but it can also pause in the middle when it’s waiting for
+something.  Inside the body of an asynchronous function or method, you
+mark each of these places where execution can be suspended.
+
+   To indicate that a function or method is asynchronous, you write the
+‘async’ keyword in its declaration after its parameters, similar to how
+you use ‘throws’ to mark a throwing function.  If the function or method
+returns a value, you write ‘async’ before the return arrow (‘->’).  For
+example, here’s how you might fetch the names of photos in a gallery:
+
+     func listPhotos(inGallery name: String) async -> [String] {
+         let result = // ... some asynchronous networking code ...
+         return result
+     }
+
+   For a function or method that’s both asynchronous and throwing, you
+write ‘async’ before ‘throws’.
+
+   When calling an asynchronous method, execution suspends until that
+method returns.  You write ‘await’ in front of the call to mark the
+possible suspension point.  This is like writing ‘try’ when calling a
+throwing function, to mark the possible change to the program’s flow if
+there’s an error.  Inside an asynchronous method, the flow of execution
+is suspended _only_ when you call another asynchronous method—suspension
+is never implicit or preemptive—which means every possible suspension
+point is marked with ‘await’.
+
+   For example, the code below fetches the names of all the pictures in
+a gallery and then shows the first picture:
+
+     let photoNames = await listPhotos(inGallery: "Summer Vacation")
+     let sortedNames = photoNames.sorted()
+     let name = sortedNames[0]
+     let photo = await downloadPhoto(named: name)
+     show(photo)
+
+   Because the ‘listPhotos(inGallery:)’ and ‘downloadPhoto(named:)’
+functions both need to make network requests, they could take a
+relatively long time to complete.  Making them both asynchronous by
+writing ‘async’ before the return arrow lets the rest of the app’s code
+keep running while this code waits for the picture to be ready.
+
+   To understand the concurrent nature of the example above, here’s one
+possible order of execution:
+
+  1. The code starts running from the first line and runs up to the
+     first ‘await’.  It calls the ‘listPhotos(inGallery:)’ function and
+     suspends execution while it waits for that function to return.
+
+  2. While this code’s execution is suspended, some other concurrent
+     code in the same program runs.  For example, maybe a long-running
+     background task continues updating a list of new photo galleries.
+     That code also runs until the next suspension point, marked by
+     ‘await’, or until it completes.
+
+  3. After ‘listPhotos(inGallery:)’ returns, this code continues
+     execution starting at that point.  It assigns the value that was
+     returned to ‘photoNames’.
+
+  4. The lines that define ‘sortedNames’ and ‘name’ are regular,
+     synchronous code.  Because nothing is marked ‘await’ on these
+     lines, there aren’t any possible suspension points.
+
+  5. The next ‘await’ marks the call to the ‘downloadPhoto(named:)’
+     function.  This code pauses execution again until that function
+     returns, giving other concurrent code an opportunity to run.
+
+  6. After ‘downloadPhoto(named:)’ returns, its return value is assigned
+     to ‘photo’ and then passed as an argument when calling ‘show(_:)’.
+
+   The possible suspension points in your code marked with ‘await’
+indicate that the current piece of code might pause execution while
+waiting for the asynchronous function or method to return.  This is also
+called _yielding the thread_ because, behind the scenes, Swift suspends
+the execution of your code on the current thread and runs some other
+code on that thread instead.  Because code with ‘await’ needs to be able
+to suspend execution, only certain places in your program can call
+asynchronous functions or methods:
+
+   • Code in the body of an asynchronous function, method, or property.
+
+   • Code in the static ‘main()’ method of a structure, class, or
+     enumeration that’s marked with ‘@main’.
+
+   • Code in a detached child task, as shown in *note Unstructured
+     Concurrency:: below.
+
+   Note
+
+   The ‘Task.sleep(_:)’
+(https://developer.apple.com/documentation/swift/task/3814836-sleep)
+[<https://developer.apple.com/documentation/swift/task/3814836-sleep>]
+method is useful when writing simple code to learn how concurrency
+works.  This method does nothing, but waits at least the given number of
+nanoseconds before it returns.  Here’s a version of the
+‘listPhotos(inGallery:)’ function that uses ‘sleep()’ to simulate
+waiting for a network operation:
+
+     func listPhotos(inGallery name: String) async -> [String] {
+         await Task.sleep(2 * 1_000_000_000) // Two seconds
+         return ["IMG001", "IMG99", "IMG0404"]
+     }
+
+
+File: swift.info,  Node: Asynchronous Sequences,  Next: Calling Asynchronous Functions in Parallel,  Prev: Defining and Calling Asynchronous Functions,  Up: Concurrency
+
+23.2 Asynchronous Sequences
+===========================
+
+The ‘listPhotos(inGallery:)’ function in the previous section
+asynchronously returns the whole array at once, after all of the array’s
+elements are ready.  Another approach is to wait for one element of the
+collection at a time using an _asynchronous sequence_.  Here’s what
+iterating over an asynchronous sequence looks like:
+
+     import Foundation
+
+     let handle = FileHandle.standardInput
+     for try await line in handle.bytes.lines {
+         print(line)
+     }
+
+   Instead of using an ordinary ‘for’-‘in’ loop, the example above
+writes ‘for’ with ‘await’ after it.  Like when you call an asynchronous
+function or method, writing ‘await’ indicates a possible suspension
+point.  A ‘for’-‘await’-‘in’ loop potentially suspends execution at the
+beginning of each iteration, when it’s waiting for the next element to
+be available.
+
+   In the same way that you can use your own types in a ‘for’-‘in’ loop
+by adding conformance to the ‘Sequence’
+(https://developer.apple.com/documentation/swift/sequence)
+[<https://developer.apple.com/documentation/swift/sequence>] protocol,
+you can use your own types in a ‘for’-‘await’-‘in’ loop by adding
+conformance to the ‘AsyncSequence’
+(https://developer.apple.com/documentation/swift/asyncsequence)
+[<https://developer.apple.com/documentation/swift/asyncsequence>]
+protocol.
+
+
+File: swift.info,  Node: Calling Asynchronous Functions in Parallel,  Next: Tasks and Task Groups,  Prev: Asynchronous Sequences,  Up: Concurrency
+
+23.3 Calling Asynchronous Functions in Parallel
+===============================================
+
+Calling an asynchronous function with ‘await’ runs only one piece of
+code at a time.  While the asynchronous code is running, the caller
+waits for that code to finish before moving on to run the next line of
+code.  For example, to fetch the first three photos from a gallery, you
+could await three calls to the ‘downloadPhoto(named:)’ function as
+follows:
+
+     let firstPhoto = await downloadPhoto(named: photoNames[0])
+     let secondPhoto = await downloadPhoto(named: photoNames[1])
+     let thirdPhoto = await downloadPhoto(named: photoNames[2])
+
+     let photos = [firstPhoto, secondPhoto, thirdPhoto]
+     show(photos)
+
+   This approach has an important drawback: Although the download is
+asynchronous and lets other work happen while it progresses, only one
+call to ‘downloadPhoto(named:)’ runs at a time.  Each photo downloads
+completely before the next one starts downloading.  However, there’s no
+need for these operations to wait—each photo can download independently,
+or even at the same time.
+
+   To call an asynchronous function and let it run in parallel with code
+around it, write ‘async’ in front of ‘let’ when you define a constant,
+and then write ‘await’ each time you use the constant.
+
+     async let firstPhoto = downloadPhoto(named: photoNames[0])
+     async let secondPhoto = downloadPhoto(named: photoNames[1])
+     async let thirdPhoto = downloadPhoto(named: photoNames[2])
+
+     let photos = await [firstPhoto, secondPhoto, thirdPhoto]
+     show(photos)
+
+   In this example, all three calls to ‘downloadPhoto(named:)’ start
+without waiting for the previous one to complete.  If there are enough
+system resources available, they can run at the same time.  None of
+these function calls are marked with ‘await’ because the code doesn’t
+suspend to wait for the function’s result.  Instead, execution continues
+until the line where ‘photos’ is defined—at that point, the program
+needs the results from these asynchronous calls, so you write ‘await’ to
+pause execution until all three photos finish downloading.
+
+   Here’s how you can think about the differences between these two
+approaches:
+
+   • Call asynchronous functions with ‘await’ when the code on the
+     following lines depends on that function’s result.  This creates
+     work that is carried out sequentially.
+
+   • Call asynchronous functions with ‘async’-‘let’ when you don’t need
+     the result until later in your code.  This creates work that can be
+     carried out in parallel.
+
+   • Both ‘await’ and ‘async’-‘let’ allow other code to run while
+     they’re suspended.
+
+   • In both cases, you mark the possible suspension point with ‘await’
+     to indicate that execution will pause, if needed, until an
+     asynchronous function has returned.
+
+   You can also mix both of these approaches in the same code.
+
+
+File: swift.info,  Node: Tasks and Task Groups,  Next: Actors,  Prev: Calling Asynchronous Functions in Parallel,  Up: Concurrency
+
+23.4 Tasks and Task Groups
+==========================
+
+A _task_ is a unit of work that can be run asynchronously as part of
+your program.  All asynchronous code runs as part of some task.  The
+‘async’-‘let’ syntax described in the previous section creates a child
+task for you.  You can also create a task group and add child tasks to
+that group, which gives you more control over priority and cancellation,
+and lets you create a dynamic number of tasks.
+
+   Tasks are arranged in a hierarchy.  Each task in a task group has the
+same parent task, and each task can have child tasks.  Because of the
+explicit relationship between tasks and task groups, this approach is
+called _structured concurrency_.  Although you take on some of the
+responsibility for correctness, the explicit parent-child relationships
+between tasks lets Swift handle some behaviors like propagating
+cancellation for you, and lets Swift detect some errors at compile time.
+
+     await withTaskGroup(of: Data.self) { taskGroup in
+         let photoNames = await listPhotos(inGallery: "Summer Vacation")
+         for name in photoNames {
+             taskGroup.async { await downloadPhoto(named: name) }
+         }
+     }
+
+   For more information about task groups, see ‘TaskGroup’
+(https://developer.apple.com/documentation/swift/taskgroup)
+[<https://developer.apple.com/documentation/swift/taskgroup>].
+
+* Menu:
+
+* Unstructured Concurrency::
+* Task Cancellation::
+
+
+File: swift.info,  Node: Unstructured Concurrency,  Next: Task Cancellation,  Up: Tasks and Task Groups
+
+23.4.1 Unstructured Concurrency
+-------------------------------
+
+In addition to the structured approaches to concurrency described in the
+previous sections, Swift also supports unstructured concurrency.  Unlike
+tasks that are part of a task group, an _unstructured task_ doesn’t have
+a parent task.  You have complete flexibility to manage unstructured
+tasks in whatever way your program needs, but you’re also completely
+responsible for their correctness.  To create an unstructured task that
+runs on the current actor, call the ‘Task.init(priority:operation:)’
+(https://developer.apple.com/documentation/swift/task/3856790-init)
+[<https://developer.apple.com/documentation/swift/task/3856790-init>]
+initializer.  To create an unstructured task that’s not part of the
+current actor, known more specifically as a _detached task_, call the
+‘Task.detached(priority:operation:)’
+(https://developer.apple.com/documentation/swift/task/3856786-detached)
+[<https://developer.apple.com/documentation/swift/task/3856786-detached>]
+class method.  Both of these operations return a task handle that lets
+you interact with the task—for example, to wait for its result or to
+cancel it.
+
+     let newPhoto = // ... some photo data ...
+     let handle = Task {
+         return await add(newPhoto, toGalleryNamed: "Spring Adventures")
+     }
+     let result = await handle.value
+
+   For more information about managing detached tasks, see ‘Task’
+(https://developer.apple.com/documentation/swift/task)
+[<https://developer.apple.com/documentation/swift/task>].
+
+
+File: swift.info,  Node: Task Cancellation,  Prev: Unstructured Concurrency,  Up: Tasks and Task Groups
+
+23.4.2 Task Cancellation
+------------------------
+
+Swift concurrency uses a cooperative cancellation model.  Each task
+checks whether it has been canceled at the appropriate points in its
+execution, and responds to cancellation in whatever way is appropriate.
+Depending on the work you’re doing, that usually means one of the
+following:
+
+   • Throwing an error like ‘CancellationError’
+
+   • Returning ‘nil’ or an empty collection
+
+   • Returning the partially completed work
+
+   To check for cancellation, either call ‘Task.checkCancellation()’
+(https://developer.apple.com/documentation/swift/task/3814826-checkcancellation)
+[<https://developer.apple.com/documentation/swift/task/3814826-checkcancellation>],
+which throws ‘CancellationError’ if the task has been canceled, or check
+the value of ‘Task.isCancelled’
+(https://developer.apple.com/documentation/swift/task/3814832-iscancelled)
+[<https://developer.apple.com/documentation/swift/task/3814832-iscancelled>]
+and handle the cancellation in your own code.  For example, a task
+that’s downloading photos from a gallery might need to delete partial
+downloads and close network connections.
+
+   To propagate cancellation manually, call ‘Task.cancel()’
+(https://developer.apple.com/documentation/swift/task/3851218-cancel)
+[<https://developer.apple.com/documentation/swift/task/3851218-cancel>].
+
+
+File: swift.info,  Node: Actors,  Prev: Tasks and Task Groups,  Up: Concurrency
+
+23.5 Actors
+===========
+
+Like classes, actors are reference types, so the comparison of value
+types and reference types in *note Classes Are Reference Types: Classes
+Are Reference Types. applies to actors as well as classes.  Unlike
+classes, actors allow only one task to access their mutable state at a
+time, which makes it safe for code in multiple tasks to interact with
+the same instance of an actor.  For example, here’s an actor that
+records temperatures:
+
+     actor TemperatureLogger {
+         let label: String
+         var measurements: [Int]
+         private(set) var max: Int
+
+
+         init(label: String, measurement: Int) {
+             self.label = label
+             self.measurements = [measurement]
+             self.max = measurement
+         }
+     }
+
+   You introduce an actor with the ‘actor’ keyword, followed by its
+definition in a pair of braces.  The ‘TemperatureLogger’ actor has
+properties that other code outside the actor can access, and restricts
+the ‘max’ property so only code inside the actor can update the maximum
+value.
+
+   You create an instance of an actor using the same initializer syntax
+as structures and classes.  When you access a property or method of an
+actor, you use ‘await’ to mark the potential suspension point—for
+example:
+
+     let logger = TemperatureLogger(label: "Outdoors", measurement: 25)
+     print(await logger.max)
+     // Prints "25"
+
+   In this example, accessing ‘logger.max’ is a possible suspension
+point.  Because the actor allows only one task at a time to access its
+mutable state, if code from another task is already interacting with the
+logger, this code suspends while it waits to access the property.
+
+   In contrast, code that’s part of the actor doesn’t write ‘await’ when
+accessing the actor’s properties.  For example, here’s a method that
+updates a ‘TemperatureLogger’ with a new temperature:
+
+     extension TemperatureLogger {
+         func update(with measurement: Int) {
+             measurements.append(measurement)
+             if measurement > max {
+                 max = measurement
+             }
+         }
+     }
+
+   The ‘update(with:)’ method is already running on the actor, so it
+doesn’t mark its access to properties like ‘max’ with ‘await’.  This
+method also shows one of the reasons why actors allow only one task at a
+time to interact with their mutable state: Some updates to an actor’s
+state temporarily break invariants.  The ‘TemperatureLogger’ actor keeps
+track of a list of temperatures and a maximum temperature, and it
+updates the maximum temperature when you record a new measurement.  In
+the middle of an update, after appending the new measurement but before
+updating ‘max’, the temperature logger is in a temporary inconsistent
+state.  Preventing multiple tasks from interacting with the same
+instance simultaneously prevents problems like the following sequence of
+events:
+
+  1. Your code calls the ‘update(with:)’ method.  It updates the
+     ‘measurements’ array first.
+
+  2. Before your code can update ‘max’, code elsewhere reads the maximum
+     value and the array of temperatures.
+
+  3. Your code finishes its update by changing ‘max’.
+
+   In this case, the code running elsewhere would read incorrect
+information because its access to the actor was interleaved in the
+middle of the call to ‘update(with:)’ while the data was temporarily
+invalid.  You can prevent this problem when using Swift actors because
+they only allow one operation on their state at a time, and because that
+code can be interrupted only in places where ‘await’ marks a suspension
+point.  Because ‘update(with:)’ doesn’t contain any suspension points,
+no other code can access the data in the middle of an update.
+
+   If you try to access those properties from outside the actor, like
+you would with an instance of a class, you’ll get a compile-time error;
+for example:
+
+     print(logger.max) // Error
+
+   Accessing ‘logger.max’ without writing ‘await’ fails because the
+properties of an actor are part of that actor’s isolated local state.
+Swift guarantees that only code inside an actor can access the actor’s
+local state.  This guarantee is known as _actor isolation_.
+
+
+File: swift.info,  Node: Type Casting,  Next: Nested Types,  Prev: Concurrency,  Up: Top
+
+24 Type Casting
 ***************
 
 _Type casting_ is a way to check the type of an instance, or to treat
@@ -14530,7 +15040,7 @@ protocol, as described in *note Checking for Protocol Conformance::.
 
 File: swift.info,  Node: Defining a Class Hierarchy for Type Casting,  Next: Checking Type,  Up: Type Casting
 
-23.1 Defining a Class Hierarchy for Type Casting
+24.1 Defining a Class Hierarchy for Type Casting
 ================================================
 
 You can use type casting with a hierarchy of classes and subclasses to
@@ -14600,7 +15110,7 @@ described below.
 
 File: swift.info,  Node: Checking Type,  Next: Downcasting,  Prev: Defining a Class Hierarchy for Type Casting,  Up: Type Casting
 
-23.2 Checking Type
+24.2 Checking Type
 ==================
 
 Use the _type check operator_ (‘is’) to check whether an instance is of
@@ -14638,7 +15148,7 @@ count of how many ‘MediaItem’ instances were found of each type.
 
 File: swift.info,  Node: Downcasting,  Next: Type Casting for Any and AnyObject,  Prev: Checking Type,  Up: Type Casting
 
-23.3 Downcasting
+24.3 Downcasting
 ================
 
 A constant or variable of a certain class type may actually refer to an
@@ -14724,7 +15234,7 @@ accessed as an instance of the type to which it has been cast.
 
 File: swift.info,  Node: Type Casting for Any and AnyObject,  Prev: Downcasting,  Up: Type Casting
 
-23.4 Type Casting for Any and AnyObject
+24.4 Type Casting for Any and AnyObject
 =======================================
 
 Swift provides two special types for working with nonspecific types:
@@ -14742,7 +15252,7 @@ the types you expect to work with in your code.
 types, including function types and nonclass types.  The example creates
 an array called ‘things’, which can store values of type ‘Any’:
 
-     var things = [Any]()
+     var things: [Any] = []
 
      things.append(0)
      things.append(0.0)
@@ -14815,7 +15325,7 @@ explicitly cast the optional to ‘Any’, as shown below.
 
 File: swift.info,  Node: Nested Types,  Next: Extensions,  Prev: Type Casting,  Up: Top
 
-24 Nested Types
+25 Nested Types
 ***************
 
 Enumerations are often created to support a specific class or
@@ -14837,7 +15347,7 @@ levels as are required.
 
 File: swift.info,  Node: Nested Types in Action,  Next: Referring to Nested Types,  Up: Nested Types
 
-24.1 Nested Types in Action
+25.1 Nested Types in Action
 ===========================
 
 The example below defines a structure called ‘BlackjackCard’, which
@@ -14938,7 +15448,7 @@ value of ‘1’ or ‘11’.
 
 File: swift.info,  Node: Referring to Nested Types,  Prev: Nested Types in Action,  Up: Nested Types
 
-24.2 Referring to Nested Types
+25.2 Referring to Nested Types
 ==============================
 
 To use a nested type outside of its definition context, prefix its name
@@ -14954,7 +15464,7 @@ naturally qualified by the context in which they’re defined.
 
 File: swift.info,  Node: Extensions,  Next: Protocols,  Prev: Nested Types,  Up: Top
 
-25 Extensions
+26 Extensions
 *************
 
 _Extensions_ add new functionality to an existing class, structure,
@@ -15000,7 +15510,7 @@ override existing functionality.
 
 File: swift.info,  Node: Extension Syntax,  Next: Computed Properties (1),  Up: Extensions
 
-25.1 Extension Syntax
+26.1 Extension Syntax
 =====================
 
 Declare extensions with the ‘extension’ keyword:
@@ -15037,7 +15547,7 @@ defined.
 
 File: swift.info,  Node: Computed Properties (1),  Next: Initializers (1),  Prev: Extension Syntax,  Up: Extensions
 
-25.2 Computed Properties
+26.2 Computed Properties
 ========================
 
 Extensions can add computed instance properties and computed type
@@ -15093,7 +15603,7 @@ properties, or add property observers to existing properties.
 
 File: swift.info,  Node: Initializers (1),  Next: Methods (1),  Prev: Computed Properties (1),  Up: Extensions
 
-25.3 Initializers
+26.3 Initializers
 =================
 
 Extensions can add new initializers to existing types.  This enables you
@@ -15174,7 +15684,7 @@ the initializer completes.
 
 File: swift.info,  Node: Methods (1),  Next: Subscripts (1),  Prev: Initializers (1),  Up: Extensions
 
-25.4 Methods
+26.4 Methods
 ============
 
 Extensions can add new instance methods and type methods to existing
@@ -15210,7 +15720,7 @@ method on any integer to perform a task that many number of times:
 
 File: swift.info,  Node: Mutating Instance Methods,  Up: Methods (1)
 
-25.4.1 Mutating Instance Methods
+26.4.1 Mutating Instance Methods
 --------------------------------
 
 Instance methods added with an extension can also modify (or _mutate_)
@@ -15233,7 +15743,7 @@ Swift’s ‘Int’ type, which squares the original value:
 
 File: swift.info,  Node: Subscripts (1),  Next: Nested Types (1),  Prev: Methods (1),  Up: Extensions
 
-25.5 Subscripts
+26.5 Subscripts
 ===============
 
 Extensions can add new subscripts to an existing type.  This example
@@ -15276,7 +15786,7 @@ been padded with zeros to the left:
 
 File: swift.info,  Node: Nested Types (1),  Prev: Subscripts (1),  Up: Extensions
 
-25.6 Nested Types
+26.6 Nested Types
 =================
 
 Extensions can add new nested types to existing classes, structures, and
@@ -15340,7 +15850,7 @@ inside the ‘switch’ statement, such as ‘.negative’ rather than
 
 File: swift.info,  Node: Protocols,  Next: Generics (1),  Prev: Extensions,  Up: Top
 
-26 Protocols
+27 Protocols
 ************
 
 A _protocol_ defines a blueprint of methods, properties, and other
@@ -15377,7 +15887,7 @@ types can take advantage of.
 
 File: swift.info,  Node: Protocol Syntax,  Next: Property Requirements,  Up: Protocols
 
-26.1 Protocol Syntax
+27.1 Protocol Syntax
 ====================
 
 You define protocols in a very similar way to classes, structures, and
@@ -15406,7 +15916,7 @@ protocols it adopts, followed by a comma:
 
 File: swift.info,  Node: Property Requirements,  Next: Method Requirements,  Prev: Protocol Syntax,  Up: Protocols
 
-26.2 Property Requirements
+27.2 Property Requirements
 ==========================
 
 A protocol can require any conforming type to provide an instance
@@ -15501,7 +16011,7 @@ it to the beginning of ‘name’ to create a full name for the starship.
 
 File: swift.info,  Node: Method Requirements,  Next: Mutating Method Requirements,  Prev: Property Requirements,  Up: Protocols
 
-26.3 Method Requirements
+27.3 Method Requirements
 ========================
 
 Protocols can require specific instance methods and type methods to be
@@ -15563,7 +16073,7 @@ number generator algorithm known as a _linear congruential generator_:
 
 File: swift.info,  Node: Mutating Method Requirements,  Next: Initializer Requirements,  Prev: Method Requirements,  Up: Protocols
 
-26.4 Mutating Method Requirements
+27.4 Mutating Method Requirements
 =================================
 
 It’s sometimes necessary for a method to modify (or _mutate_) the
@@ -15629,7 +16139,7 @@ marked as ‘mutating’, to match the ‘Togglable’ protocol’s requirements
 
 File: swift.info,  Node: Initializer Requirements,  Next: Protocols as Types,  Prev: Mutating Method Requirements,  Up: Protocols
 
-26.5 Initializer Requirements
+27.5 Initializer Requirements
 =============================
 
 Protocols can require specific initializers to be implemented by
@@ -15649,7 +16159,7 @@ initializers, but without curly braces or an initializer body:
 
 File: swift.info,  Node: Class Implementations of Protocol Initializer Requirements,  Next: Failable Initializer Requirements,  Up: Initializer Requirements
 
-26.5.1 Class Implementations of Protocol Initializer Requirements
+27.5.1 Class Implementations of Protocol Initializer Requirements
 -----------------------------------------------------------------
 
 You can implement a protocol initializer requirement on a conforming
@@ -15703,7 +16213,7 @@ mark the initializer implementation with both the ‘required’ and
 
 File: swift.info,  Node: Failable Initializer Requirements,  Prev: Class Implementations of Protocol Initializer Requirements,  Up: Initializer Requirements
 
-26.5.2 Failable Initializer Requirements
+27.5.2 Failable Initializer Requirements
 ----------------------------------------
 
 Protocols can define failable initializer requirements for conforming
@@ -15717,7 +16227,7 @@ implicitly unwrapped failable initializer.
 
 File: swift.info,  Node: Protocols as Types,  Next: Delegation,  Prev: Initializer Requirements,  Up: Protocols
 
-26.6 Protocols as Types
+27.6 Protocols as Types
 =======================
 
 Protocols don’t actually implement any functionality themselves.
@@ -15805,7 +16315,7 @@ generator:
 
 File: swift.info,  Node: Delegation,  Next: Adding Protocol Conformance with an Extension,  Prev: Protocols as Types,  Up: Protocols
 
-26.7 Delegation
+27.7 Delegation
 ===============
 
 _Delegation_ is a design pattern that enables a class or structure to
@@ -15974,7 +16484,7 @@ the ‘gameDidStart(_:)’ method is able to access and print the dice’s
 
 File: swift.info,  Node: Adding Protocol Conformance with an Extension,  Next: Adopting a Protocol Using a Synthesized Implementation,  Prev: Delegation,  Up: Protocols
 
-26.8 Adding Protocol Conformance with an Extension
+27.8 Adding Protocol Conformance with an Extension
 ==================================================
 
 You can extend an existing type to adopt and conform to a new protocol,
@@ -16038,7 +16548,7 @@ and conform to the ‘TextRepresentable’ protocol:
 
 File: swift.info,  Node: Conditionally Conforming to a Protocol,  Next: Declaring Protocol Adoption with an Extension,  Up: Adding Protocol Conformance with an Extension
 
-26.8.1 Conditionally Conforming to a Protocol
+27.8.1 Conditionally Conforming to a Protocol
 ---------------------------------------------
 
 A generic type may be able to satisfy the requirements of a protocol
@@ -16066,7 +16576,7 @@ conforms to ‘TextRepresentable’.
 
 File: swift.info,  Node: Declaring Protocol Adoption with an Extension,  Prev: Conditionally Conforming to a Protocol,  Up: Adding Protocol Conformance with an Extension
 
-26.8.2 Declaring Protocol Adoption with an Extension
+27.8.2 Declaring Protocol Adoption with an Extension
 ----------------------------------------------------
 
 If a type already conforms to all of the requirements of a protocol, but
@@ -16098,7 +16608,7 @@ protocol.
 
 File: swift.info,  Node: Adopting a Protocol Using a Synthesized Implementation,  Next: Collections of Protocol Types,  Prev: Adding Protocol Conformance with an Extension,  Up: Protocols
 
-26.9 Adopting a Protocol Using a Synthesized Implementation
+27.9 Adopting a Protocol Using a Synthesized Implementation
 ===========================================================
 
 Swift can automatically provide the protocol conformance for
@@ -16186,7 +16696,7 @@ by the number of stars they have.
 
 File: swift.info,  Node: Collections of Protocol Types,  Next: Protocol Inheritance,  Prev: Adopting a Protocol Using a Synthesized Implementation,  Up: Protocols
 
-26.10 Collections of Protocol Types
+27.10 Collections of Protocol Types
 ===================================
 
 A protocol can be used as the type to be stored in a collection such as
@@ -16216,7 +16726,7 @@ loop.
 
 File: swift.info,  Node: Protocol Inheritance,  Next: Class-Only Protocols,  Prev: Collections of Protocol Types,  Up: Protocols
 
-26.11 Protocol Inheritance
+27.11 Protocol Inheritance
 ==========================
 
 A protocol can _inherit_ one or more other protocols and can add further
@@ -16295,7 +16805,7 @@ pretty text description of any ‘SnakesAndLadders’ instance:
 
 File: swift.info,  Node: Class-Only Protocols,  Next: Protocol Composition,  Prev: Protocol Inheritance,  Up: Protocols
 
-26.12 Class-Only Protocols
+27.12 Class-Only Protocols
 ==========================
 
 You can limit protocol adoption to class types (and not structures or
@@ -16322,7 +16832,7 @@ Classes Are Reference Types::.
 
 File: swift.info,  Node: Protocol Composition,  Next: Checking for Protocol Conformance,  Prev: Class-Only Protocols,  Up: Protocols
 
-26.13 Protocol Composition
+27.13 Protocol Composition
 ==========================
 
 It can be useful to require a type to conform to multiple protocols at
@@ -16416,7 +16926,7 @@ also invalid.
 
 File: swift.info,  Node: Checking for Protocol Conformance,  Next: Optional Protocol Requirements,  Prev: Protocol Composition,  Up: Protocols
 
-26.14 Checking for Protocol Conformance
+27.14 Checking for Protocol Conformance
 =======================================
 
 You can use the ‘is’ and ‘as’ operators described in *note Type
@@ -16514,7 +17024,7 @@ constant, they’re only known to be of type ‘HasArea’, and so only their
 
 File: swift.info,  Node: Optional Protocol Requirements,  Next: Protocol Extensions,  Prev: Checking for Protocol Conformance,  Up: Protocols
 
-26.15 Optional Protocol Requirements
+27.15 Optional Protocol Requirements
 ====================================
 
 You can define _optional requirements_ for protocols.  These
@@ -16694,7 +17204,7 @@ zero, no more counting takes place:
 
 File: swift.info,  Node: Protocol Extensions,  Prev: Optional Protocol Requirements,  Up: Protocols
 
-26.16 Protocol Extensions
+27.16 Protocol Extensions
 =========================
 
 Protocols can be extended to provide method, initializer, subscript, and
@@ -16734,7 +17244,7 @@ inheritance is always specified in the protocol declaration itself.
 
 File: swift.info,  Node: Providing Default Implementations,  Next: Adding Constraints to Protocol Extensions,  Up: Protocol Extensions
 
-26.16.1 Providing Default Implementations
+27.16.1 Providing Default Implementations
 -----------------------------------------
 
 You can use protocol extensions to provide a default implementation to
@@ -16765,7 +17275,7 @@ result of accessing the ‘textualDescription’ property:
 
 File: swift.info,  Node: Adding Constraints to Protocol Extensions,  Prev: Providing Default Implementations,  Up: Protocol Extensions
 
-26.16.2 Adding Constraints to Protocol Extensions
+27.16.2 Adding Constraints to Protocol Extensions
 -------------------------------------------------
 
 When you define a protocol extension, you can specify constraints that
@@ -16820,7 +17330,7 @@ specialized constraints.
 
 File: swift.info,  Node: Generics (1),  Next: Opaque Types,  Prev: Protocols,  Up: Top
 
-27 Generics
+28 Generics
 ***********
 
 _Generic code_ enables you to write flexible, reusable functions and
@@ -16857,7 +17367,7 @@ limitations on what that type can be.
 
 File: swift.info,  Node: The Problem That Generics Solve,  Next: Generic Functions,  Up: Generics (1)
 
-27.1 The Problem That Generics Solve
+28.1 The Problem That Generics Solve
 ====================================
 
 Here’s a standard, nongeneric function called ‘swapTwoInts(_:_:)’, which
@@ -16921,7 +17431,7 @@ error.
 
 File: swift.info,  Node: Generic Functions,  Next: Type Parameters,  Prev: The Problem That Generics Solve,  Up: Generics (1)
 
-27.2 Generic Functions
+28.2 Generic Functions
 ======================
 
 _Generic functions_ can work with any type.  Here’s a generic version of
@@ -16988,7 +17498,7 @@ than providing your own implementation.
 
 File: swift.info,  Node: Type Parameters,  Next: Naming Type Parameters,  Prev: Generic Functions,  Up: Generics (1)
 
-27.3 Type Parameters
+28.3 Type Parameters
 ====================
 
 In the ‘swapTwoValues(_:_:)’ example above, the placeholder type ‘T’ is
@@ -17011,7 +17521,7 @@ parameter names within the angle brackets, separated by commas.
 
 File: swift.info,  Node: Naming Type Parameters,  Next: Generic Types,  Prev: Type Parameters,  Up: Generics (1)
 
-27.4 Naming Type Parameters
+28.4 Naming Type Parameters
 ===========================
 
 In most cases, type parameters have descriptive names, such as ‘Key’ and
@@ -17031,7 +17541,7 @@ not a value.
 
 File: swift.info,  Node: Generic Types,  Next: Extending a Generic Type,  Prev: Naming Type Parameters,  Up: Generics (1)
 
-27.5 Generic Types
+28.5 Generic Types
 ==================
 
 In addition to generic functions, Swift enables you to define your own
@@ -17161,7 +17671,7 @@ to the stack:
 
 File: swift.info,  Node: Extending a Generic Type,  Next: Type Constraints,  Prev: Generic Types,  Up: Generics (1)
 
-27.6 Extending a Generic Type
+28.6 Extending a Generic Type
 =============================
 
 When you extend a generic type, you don’t provide a type parameter list
@@ -17205,7 +17715,7 @@ Clause: Extensions with a Generic Where Clause. below.
 
 File: swift.info,  Node: Type Constraints,  Next: Associated Types,  Prev: Extending a Generic Type,  Up: Generics (1)
 
-27.7 Type Constraints
+28.7 Type Constraints
 =====================
 
 The ‘swapTwoValues(_:_:)’ function and the ‘Stack’ type can work with
@@ -17249,7 +17759,7 @@ type.
 
 File: swift.info,  Node: Type Constraint Syntax,  Next: Type Constraints in Action,  Up: Type Constraints
 
-27.7.1 Type Constraint Syntax
+28.7.1 Type Constraint Syntax
 -----------------------------
 
 You write type constraints by placing a single class or protocol
@@ -17270,7 +17780,7 @@ constraint that requires ‘U’ to conform to the protocol ‘SomeProtocol’.
 
 File: swift.info,  Node: Type Constraints in Action,  Prev: Type Constraint Syntax,  Up: Type Constraints
 
-27.7.2 Type Constraints in Action
+28.7.2 Type Constraints in Action
 ---------------------------------
 
 Here’s a nongeneric function called ‘findIndex(ofString:in:)’, which is
@@ -17365,7 +17875,7 @@ used with any type that’s ‘Equatable’, such as ‘Double’ or ‘String�
 
 File: swift.info,  Node: Associated Types,  Next: Generic Where Clauses,  Prev: Type Constraints,  Up: Generics (1)
 
-27.8 Associated Types
+28.8 Associated Types
 =====================
 
 When defining a protocol, it’s sometimes useful to declare one or more
@@ -17385,7 +17895,7 @@ with the ‘associatedtype’ keyword.
 
 File: swift.info,  Node: Associated Types in Action,  Next: Extending an Existing Type to Specify an Associated Type,  Up: Associated Types
 
-27.8.1 Associated Types in Action
+28.8.1 Associated Types in Action
 ---------------------------------
 
 Here’s an example of a protocol called ‘Container’, which declares an
@@ -17514,7 +18024,7 @@ type to use as the ‘Item’ for this particular container.
 
 File: swift.info,  Node: Extending an Existing Type to Specify an Associated Type,  Next: Adding Constraints to an Associated Type,  Prev: Associated Types in Action,  Up: Associated Types
 
-27.8.2 Extending an Existing Type to Specify an Associated Type
+28.8.2 Extending an Existing Type to Specify an Associated Type
 ---------------------------------------------------------------
 
 You can extend an existing type to add conformance to a protocol, as
@@ -17541,7 +18051,7 @@ infer the appropriate type to use for ‘Item’, just as for the generic
 
 File: swift.info,  Node: Adding Constraints to an Associated Type,  Next: Using a Protocol in Its Associated Type's Constraints,  Prev: Extending an Existing Type to Specify an Associated Type,  Up: Associated Types
 
-27.8.3 Adding Constraints to an Associated Type
+28.8.3 Adding Constraints to an Associated Type
 -----------------------------------------------
 
 You can add type constraints to an associated type in a protocol to
@@ -17562,7 +18072,7 @@ type has to conform to the ‘Equatable’ protocol.
 
 File: swift.info,  Node: Using a Protocol in Its Associated Type's Constraints,  Prev: Adding Constraints to an Associated Type,  Up: Associated Types
 
-27.8.4 Using a Protocol in Its Associated Type’s Constraints
+28.8.4 Using a Protocol in Its Associated Type’s Constraints
 ------------------------------------------------------------
 
 A protocol can appear as part of its own requirements.  For example,
@@ -17627,7 +18137,7 @@ conformance, using ‘Stack<Int>’ as its suffix type instead of
 
 File: swift.info,  Node: Generic Where Clauses,  Next: Extensions with a Generic Where Clause,  Prev: Associated Types,  Up: Generics (1)
 
-27.9 Generic Where Clauses
+28.9 Generic Where Clauses
 ==========================
 
 Type constraints, as described in *note Type Constraints: Type
@@ -17763,7 +18273,7 @@ correctly reports that all of the items in the two containers match.
 
 File: swift.info,  Node: Extensions with a Generic Where Clause,  Next: Contextual Where Clauses,  Prev: Generic Where Clauses,  Up: Generics (1)
 
-27.10 Extensions with a Generic Where Clause
+28.10 Extensions with a Generic Where Clause
 ============================================
 
 You can also use a generic ‘where’ clause as part of an extension.  The
@@ -17861,7 +18371,7 @@ with a comma.
 
 File: swift.info,  Node: Contextual Where Clauses,  Next: Associated Types with a Generic Where Clause,  Prev: Extensions with a Generic Where Clause,  Up: Generics (1)
 
-27.11 Contextual Where Clauses
+28.11 Contextual Where Clauses
 ==============================
 
 You can write a generic ‘where’ clause as part of a declaration that
@@ -17927,7 +18437,7 @@ extension per requirement.
 
 File: swift.info,  Node: Associated Types with a Generic Where Clause,  Next: Generic Subscripts,  Prev: Contextual Where Clauses,  Up: Generics (1)
 
-27.12 Associated Types with a Generic Where Clause
+28.12 Associated Types with a Generic Where Clause
 ==================================================
 
 You can include a generic ‘where’ clause on an associated type.  For
@@ -17961,7 +18471,7 @@ conform to ‘Comparable’:
 
 File: swift.info,  Node: Generic Subscripts,  Prev: Associated Types with a Generic Where Clause,  Up: Generics (1)
 
-27.13 Generic Subscripts
+28.13 Generic Subscripts
 ========================
 
 Subscripts can be generic, and they can include generic ‘where’ clauses.
@@ -18001,7 +18511,7 @@ each given index.  This generic subscript is constrained as follows:
 
 File: swift.info,  Node: Opaque Types,  Next: Automatic Reference Counting,  Prev: Generics (1),  Up: Top
 
-28 Opaque Types
+29 Opaque Types
 ***************
 
 Proposal
@@ -18026,7 +18536,7 @@ clients of the module don’t.
 
 File: swift.info,  Node: The Problem That Opaque Types Solve,  Next: Returning an Opaque Type,  Up: Opaque Types
 
-28.1 The Problem That Opaque Types Solve
+29.1 The Problem That Opaque Types Solve
 ========================================
 
 For example, suppose you’re writing a module that draws ASCII art
@@ -18107,7 +18617,7 @@ flipping a shape, and those operations return another ‘Shape’ value.
 
 File: swift.info,  Node: Returning an Opaque Type,  Next: Differences Between Opaque Types and Protocol Types,  Prev: The Problem That Opaque Types Solve,  Up: Opaque Types
 
-28.2 Returning an Opaque Type
+29.2 Returning an Opaque Type
 =============================
 
 You can think of an opaque type like being the reverse of a generic
@@ -18255,7 +18765,7 @@ of only a single type.
 
 File: swift.info,  Node: Differences Between Opaque Types and Protocol Types,  Prev: Returning an Opaque Type,  Up: Opaque Types
 
-28.3 Differences Between Opaque Types and Protocol Types
+29.3 Differences Between Opaque Types and Protocol Types
 ========================================================
 
 Returning an opaque type looks very similar to using a protocol type as
@@ -18383,7 +18893,7 @@ the type of ‘twelve’ is also inferred to be ‘Int’.
 
 File: swift.info,  Node: Automatic Reference Counting,  Next: Memory Safety,  Prev: Opaque Types,  Up: Top
 
-29 Automatic Reference Counting
+30 Automatic Reference Counting
 *******************************
 
 Swift uses _Automatic Reference Counting_ (ARC) to track and manage your
@@ -18417,7 +18927,7 @@ and passed by reference.
 
 File: swift.info,  Node: How ARC Works,  Next: ARC in Action,  Up: Automatic Reference Counting
 
-29.1 How ARC Works
+30.1 How ARC Works
 ==================
 
 Every time you create a new instance of a class, ARC allocates a chunk
@@ -18451,7 +18961,7 @@ remains.
 
 File: swift.info,  Node: ARC in Action,  Next: Strong Reference Cycles Between Class Instances,  Prev: How ARC Works,  Up: Automatic Reference Counting
 
-29.2 ARC in Action
+30.2 ARC in Action
 ==================
 
 Here’s an example of how Automatic Reference Counting works.  This
@@ -18526,7 +19036,7 @@ no longer using the ‘Person’ instance:
 
 File: swift.info,  Node: Strong Reference Cycles Between Class Instances,  Next: Resolving Strong Reference Cycles Between Class Instances,  Prev: ARC in Action,  Up: Automatic Reference Counting
 
-29.3 Strong Reference Cycles Between Class Instances
+30.3 Strong Reference Cycles Between Class Instances
 ====================================================
 
 In the examples above, ARC is able to track the number of references to
@@ -18639,7 +19149,7 @@ leak in your app.
 
 File: swift.info,  Node: Resolving Strong Reference Cycles Between Class Instances,  Next: Strong Reference Cycles for Closures,  Prev: Strong Reference Cycles Between Class Instances,  Up: Automatic Reference Counting
 
-29.4 Resolving Strong Reference Cycles Between Class Instances
+30.4 Resolving Strong Reference Cycles Between Class Instances
 ==============================================================
 
 Swift provides two ways to resolve strong reference cycles when you work
@@ -18668,15 +19178,14 @@ the same lifetime or a longer lifetime.
 
 File: swift.info,  Node: Weak References,  Next: Unowned References,  Up: Resolving Strong Reference Cycles Between Class Instances
 
-29.4.1 Weak References
+30.4.1 Weak References
 ----------------------
 
-A _weak reference_ is a reference that does not keep a strong hold on
-the instance it refers to, and so does not stop ARC from disposing of
-the referenced instance.  This behavior prevents the reference from
-becoming part of a strong reference cycle.  You indicate a weak
-reference by placing the ‘weak’ keyword before a property or variable
-declaration.
+A _weak reference_ is a reference that doesn’t keep a strong hold on the
+instance it refers to, and so doesn’t stop ARC from disposing of the
+referenced instance.  This behavior prevents the reference from becoming
+part of a strong reference cycle.  You indicate a weak reference by
+placing the ‘weak’ keyword before a property or variable declaration.
 
    Because a weak reference doesn’t keep a strong hold on the instance
 it refers to, it’s possible for that instance to be deallocated while
@@ -18767,7 +19276,7 @@ unsuitable for such a purpose.
 
 File: swift.info,  Node: Unowned References,  Next: Unowned Optional References,  Prev: Weak References,  Up: Resolving Strong Reference Cycles Between Class Instances
 
-29.4.2 Unowned References
+30.4.2 Unowned References
 -------------------------
 
 Like a weak reference, an _unowned reference_ doesn’t keep a strong hold
@@ -18895,7 +19404,7 @@ is an unsafe operation.
 
 File: swift.info,  Node: Unowned Optional References,  Next: Unowned References and Implicitly Unwrapped Optional Properties,  Prev: Unowned References,  Up: Resolving Strong Reference Cycles Between Class Instances
 
-29.4.3 Unowned Optional References
+30.4.3 Unowned Optional References
 ----------------------------------
 
 You can mark an optional reference to a class as unowned.  In terms of
@@ -18956,8 +19465,7 @@ an optional.
    The code above creates a department and its three courses.  The intro
 and intermediate courses both have a suggested next course stored in
 their ‘nextCourse’ property, which maintains an unowned optional
-reference to the course a student should take after after completing
-this one.
+reference to the course a student should take after completing this one.
 
  [image src="images/unownedOptionalReference_2x.png" ]
    An unowned optional reference doesn’t keep a strong hold on the
@@ -18983,7 +19491,7 @@ you don’t need to maintain a strong reference to the optional.
 
 File: swift.info,  Node: Unowned References and Implicitly Unwrapped Optional Properties,  Prev: Unowned Optional References,  Up: Resolving Strong Reference Cycles Between Class Instances
 
-29.4.4 Unowned References and Implicitly Unwrapped Optional Properties
+30.4.4 Unowned References and Implicitly Unwrapped Optional Properties
 ----------------------------------------------------------------------
 
 The examples for weak and unowned references above cover two of the more
@@ -19081,7 +19589,7 @@ a strong reference cycle.
 
 File: swift.info,  Node: Strong Reference Cycles for Closures,  Next: Resolving Strong Reference Cycles for Closures,  Prev: Resolving Strong Reference Cycles Between Class Instances,  Up: Automatic Reference Counting
 
-29.5 Strong Reference Cycles for Closures
+30.5 Strong Reference Cycles for Closures
 =========================================
 
 You saw above how a strong reference cycle can be created when two class
@@ -19233,7 +19741,7 @@ printed, which shows that the ‘HTMLElement’ instance isn’t deallocated.
 
 File: swift.info,  Node: Resolving Strong Reference Cycles for Closures,  Prev: Strong Reference Cycles for Closures,  Up: Automatic Reference Counting
 
-29.6 Resolving Strong Reference Cycles for Closures
+30.6 Resolving Strong Reference Cycles for Closures
 ===================================================
 
 You resolve a strong reference cycle between a closure and a class
@@ -19260,7 +19768,7 @@ you remember that it’s possible to capture ‘self’ by accident.
 
 File: swift.info,  Node: Defining a Capture List,  Next: Weak and Unowned References,  Up: Resolving Strong Reference Cycles for Closures
 
-29.6.1 Defining a Capture List
+30.6.1 Defining a Capture List
 ------------------------------
 
 Each item in a capture list is a pairing of the ‘weak’ or ‘unowned’
@@ -19278,7 +19786,7 @@ type if they’re provided:
          // closure body goes here
      }
 
-   If a closure does not specify a parameter list or return type because
+   If a closure doesn’t specify a parameter list or return type because
 they can be inferred from context, place the capture list at the very
 start of the closure, followed by the ‘in’ keyword:
 
@@ -19290,7 +19798,7 @@ start of the closure, followed by the ‘in’ keyword:
 
 File: swift.info,  Node: Weak and Unowned References,  Prev: Defining a Capture List,  Up: Resolving Strong Reference Cycles for Closures
 
-29.6.2 Weak and Unowned References
+30.6.2 Weak and Unowned References
 ----------------------------------
 
 Define a capture in a closure as an unowned reference when the closure
@@ -19369,7 +19877,7 @@ below:
 
 File: swift.info,  Node: Memory Safety,  Next: Access Control,  Prev: Automatic Reference Counting,  Up: Top
 
-30 Memory Safety
+31 Memory Safety
 ****************
 
 By default, Swift prevents unsafe behavior from happening in your code.
@@ -19396,7 +19904,7 @@ you’ll get a compile-time or runtime error.
 
 File: swift.info,  Node: Understanding Conflicting Access to Memory,  Next: Conflicting Access to In-Out Parameters,  Up: Memory Safety
 
-30.1 Understanding Conflicting Access to Memory
+31.1 Understanding Conflicting Access to Memory
 ===============================================
 
 Access to memory happens in your code when you do things like set the
@@ -19458,7 +19966,7 @@ to help detect conflicting access across threads.
 
 File: swift.info,  Node: Characteristics of Memory Access,  Up: Understanding Conflicting Access to Memory
 
-30.1.1 Characteristics of Memory Access
+31.1.1 Characteristics of Memory Access
 ---------------------------------------
 
 There are three characteristics of memory access to consider in the
@@ -19513,7 +20021,7 @@ discussed in the sections below.
 
 File: swift.info,  Node: Conflicting Access to In-Out Parameters,  Next: Conflicting Access to self in Methods,  Prev: Understanding Conflicting Access to Memory,  Up: Memory Safety
 
-30.2 Conflicting Access to In-Out Parameters
+31.2 Conflicting Access to In-Out Parameters
 ============================================
 
 A function has long-term write access to all of its in-out parameters.
@@ -19596,7 +20104,7 @@ playerOneScore’ would result in the same conflict as
 
 File: swift.info,  Node: Conflicting Access to self in Methods,  Next: Conflicting Access to Properties,  Prev: Conflicting Access to In-Out Parameters,  Up: Memory Safety
 
-30.3 Conflicting Access to self in Methods
+31.3 Conflicting Access to self in Methods
 ==========================================
 
 A mutating method on a structure has write access to ‘self’ for the
@@ -19661,7 +20169,7 @@ a conflict.
 
 File: swift.info,  Node: Conflicting Access to Properties,  Prev: Conflicting Access to self in Methods,  Up: Memory Safety
 
-30.4 Conflicting Access to Properties
+31.4 Conflicting Access to Properties
 =====================================
 
 Types like structures, tuples, and enumerations are made up of
@@ -19734,7 +20242,7 @@ access.
 
 File: swift.info,  Node: Access Control,  Next: Advanced Operators,  Prev: Memory Safety,  Up: Top
 
-31 Access Control
+32 Access Control
 *****************
 
 _Access control_ restricts access to parts of your code from code in
@@ -19777,7 +20285,7 @@ to them (properties, types, functions, and so on) are referred to as
 
 File: swift.info,  Node: Modules and Source Files,  Next: Access Levels,  Up: Access Control
 
-31.1 Modules and Source Files
+32.1 Modules and Source Files
 =============================
 
 Swift’s access control model is based on the concept of modules and
@@ -19804,7 +20312,7 @@ so on.
 
 File: swift.info,  Node: Access Levels,  Next: Access Control Syntax,  Prev: Modules and Source Files,  Up: Access Control
 
-31.2 Access Levels
+32.2 Access Levels
 ==================
 
 Proposal
@@ -19859,7 +20367,7 @@ your class’s code accordingly.
 
 File: swift.info,  Node: Guiding Principle of Access Levels,  Next: Default Access Levels,  Up: Access Levels
 
-31.2.1 Guiding Principle of Access Levels
+32.2.1 Guiding Principle of Access Levels
 -----------------------------------------
 
 Access levels in Swift follow an overall guiding principle: /No entity
@@ -19883,7 +20391,7 @@ aspects of the language are covered in detail below.
 
 File: swift.info,  Node: Default Access Levels,  Next: Access Levels for Single-Target Apps,  Prev: Guiding Principle of Access Levels,  Up: Access Levels
 
-31.2.2 Default Access Levels
+32.2.2 Default Access Levels
 ----------------------------
 
 All entities in your code (with a few specific exceptions, as described
@@ -19894,7 +20402,7 @@ cases you don’t need to specify an explicit access level in your code.
 
 File: swift.info,  Node: Access Levels for Single-Target Apps,  Next: Access Levels for Frameworks,  Prev: Default Access Levels,  Up: Access Levels
 
-31.2.3 Access Levels for Single-Target Apps
+32.2.3 Access Levels for Single-Target Apps
 -------------------------------------------
 
 When you write a simple single-target app, the code in your app is
@@ -19908,7 +20416,7 @@ implementation details from other code within the app’s module.
 
 File: swift.info,  Node: Access Levels for Frameworks,  Next: Access Levels for Unit Test Targets,  Prev: Access Levels for Single-Target Apps,  Up: Access Levels
 
-31.2.4 Access Levels for Frameworks
+32.2.4 Access Levels for Frameworks
 -----------------------------------
 
 When you develop a framework, mark the public-facing interface to that
@@ -19928,7 +20436,7 @@ only if you want it to become part of your framework’s API.
 
 File: swift.info,  Node: Access Levels for Unit Test Targets,  Prev: Access Levels for Frameworks,  Up: Access Levels
 
-31.2.5 Access Levels for Unit Test Targets
+32.2.5 Access Levels for Unit Test Targets
 ------------------------------------------
 
 When you write an app with a unit test target, the code in your app
@@ -19942,7 +20450,7 @@ enabled.
 
 File: swift.info,  Node: Access Control Syntax,  Next: Custom Types,  Prev: Access Levels,  Up: Access Control
 
-31.3 Access Control Syntax
+32.3 Access Control Syntax
 ==========================
 
 Define the access level for an entity by placing one of the ‘open’,
@@ -19971,7 +20479,7 @@ internal:
 
 File: swift.info,  Node: Custom Types,  Next: Subclassing (1),  Prev: Access Control Syntax,  Up: Access Control
 
-31.4 Custom Types
+32.4 Custom Types
 =================
 
 If you want to specify an explicit access level for a custom type, do so
@@ -20037,7 +20545,7 @@ the internal workings of a type as public API by mistake.
 
 File: swift.info,  Node: Tuple Types,  Next: Function Types (1),  Up: Custom Types
 
-31.4.1 Tuple Types
+32.4.1 Tuple Types
 ------------------
 
 The access level for a tuple type is the most restrictive access level
@@ -20055,7 +20563,7 @@ tuple type, and can’t be specified explicitly.
 
 File: swift.info,  Node: Function Types (1),  Next: Enumeration Types,  Prev: Tuple Types,  Up: Custom Types
 
-31.4.2 Function Types
+32.4.2 Function Types
 ---------------------
 
 The access level for a function type is calculated as the most
@@ -20097,7 +20605,7 @@ return type.
 
 File: swift.info,  Node: Enumeration Types,  Next: Nested Types (2),  Prev: Function Types (1),  Up: Custom Types
 
-31.4.3 Enumeration Types
+32.4.3 Enumeration Types
 ------------------------
 
 The individual cases of an enumeration automatically receive the same
@@ -20126,7 +20634,7 @@ and ‘west’ therefore also have an access level of public:
 
 File: swift.info,  Node: Nested Types (2),  Prev: Enumeration Types,  Up: Custom Types
 
-31.4.4 Nested Types
+32.4.4 Nested Types
 -------------------
 
 The access level of a nested type is the same as its containing type,
@@ -20138,7 +20646,7 @@ explicitly declare the nested type as public.
 
 File: swift.info,  Node: Subclassing (1),  Next: Constants Variables Properties and Subscripts,  Prev: Custom Types,  Up: Access Control
 
-31.5 Subclassing
+32.5 Subclassing
 ================
 
 You can subclass any class that can be accessed in the current access
@@ -20192,7 +20700,7 @@ call ‘super.someMethod()’.
 
 File: swift.info,  Node: Constants Variables Properties and Subscripts,  Next: Initializers (2),  Prev: Subclassing (1),  Up: Access Control
 
-31.6 Constants, Variables, Properties, and Subscripts
+32.6 Constants, Variables, Properties, and Subscripts
 =====================================================
 
 A constant, variable, or property can’t be more public than its type.
@@ -20213,7 +20721,7 @@ be marked as ‘private’:
 
 File: swift.info,  Node: Getters and Setters,  Up: Constants Variables Properties and Subscripts
 
-31.6.1 Getters and Setters
+32.6.1 Getters and Setters
 --------------------------
 
 Getters and setters for constants, variables, properties, and subscripts
@@ -20307,7 +20815,7 @@ public, and its property setter private, by combining the ‘public’ and
 
 File: swift.info,  Node: Initializers (2),  Next: Protocols (1),  Prev: Constants Variables Properties and Subscripts,  Up: Access Control
 
-31.7 Initializers
+32.7 Initializers
 =================
 
 Custom initializers can be assigned an access level less than or equal
@@ -20328,7 +20836,7 @@ level.
 
 File: swift.info,  Node: Default Initializers (1),  Next: Default Memberwise Initializers for Structure Types,  Up: Initializers (2)
 
-31.7.1 Default Initializers
+32.7.1 Default Initializers
 ---------------------------
 
 As described in *note Default Initializers::, Swift automatically
@@ -20347,7 +20855,7 @@ definition.
 
 File: swift.info,  Node: Default Memberwise Initializers for Structure Types,  Prev: Default Initializers (1),  Up: Initializers (2)
 
-31.7.2 Default Memberwise Initializers for Structure Types
+32.7.2 Default Memberwise Initializers for Structure Types
 ----------------------------------------------------------
 
 The default memberwise initializer for a structure type is considered
@@ -20364,7 +20872,7 @@ yourself as part of the type’s definition.
 
 File: swift.info,  Node: Protocols (1),  Next: Extensions (1),  Prev: Initializers (2),  Up: Access Control
 
-31.8 Protocols
+32.8 Protocols
 ==============
 
 If you want to assign an explicit access level to a protocol type, do so
@@ -20392,7 +20900,7 @@ definition implies an access level of internal for the type’s members.
 
 File: swift.info,  Node: Protocol Inheritance (1),  Next: Protocol Conformance,  Up: Protocols (1)
 
-31.8.1 Protocol Inheritance
+32.8.1 Protocol Inheritance
 ---------------------------
 
 If you define a new protocol that inherits from an existing protocol,
@@ -20403,7 +20911,7 @@ inherits from an internal protocol.
 
 File: swift.info,  Node: Protocol Conformance,  Prev: Protocol Inheritance (1),  Up: Protocols (1)
 
-31.8.2 Protocol Conformance
+32.8.2 Protocol Conformance
 ---------------------------
 
 A type can conform to a protocol with a lower access level than the type
@@ -20432,7 +20940,7 @@ within the same program.
 
 File: swift.info,  Node: Extensions (1),  Next: Generics (2),  Prev: Protocols (1),  Up: Access Control
 
-31.9 Extensions
+32.9 Extensions
 ===============
 
 You can extend a class, structure, or enumeration in any access context
@@ -20463,7 +20971,7 @@ level for each protocol requirement implementation within the extension.
 
 File: swift.info,  Node: Private Members in Extensions,  Up: Extensions (1)
 
-31.9.1 Private Members in Extensions
+32.9.1 Private Members in Extensions
 ------------------------------------
 
 Extensions that are in the same file as the class, structure, or
@@ -20503,7 +21011,7 @@ For example, given the following simple protocol:
 
 File: swift.info,  Node: Generics (2),  Next: Type Aliases (1),  Prev: Extensions (1),  Up: Access Control
 
-31.10 Generics
+32.10 Generics
 ==============
 
 The access level for a generic type or generic function is the minimum
@@ -20513,7 +21021,7 @@ access level of any type constraints on its type parameters.
 
 File: swift.info,  Node: Type Aliases (1),  Prev: Generics (2),  Up: Access Control
 
-31.11 Type Aliases
+32.11 Type Aliases
 ==================
 
 Any type aliases you define are treated as distinct types for the
@@ -20531,7 +21039,7 @@ satisfy protocol conformances.
 
 File: swift.info,  Node: Advanced Operators,  Next: Index,  Prev: Access Control,  Up: Top
 
-32 Advanced Operators
+33 Advanced Operators
 *********************
 
 In addition to the operators described in *note Basic Operators: Basic
@@ -20571,7 +21079,7 @@ the custom operators you define.
 
 File: swift.info,  Node: Bitwise Operators,  Next: Overflow Operators,  Up: Advanced Operators
 
-32.1 Bitwise Operators
+33.1 Bitwise Operators
 ======================
 
 _Bitwise operators_ enable you to manipulate the individual raw data
@@ -20595,7 +21103,7 @@ below.
 
 File: swift.info,  Node: Bitwise NOT Operator,  Next: Bitwise AND Operator,  Up: Bitwise Operators
 
-32.1.1 Bitwise NOT Operator
+33.1.1 Bitwise NOT Operator
 ---------------------------
 
 The _bitwise NOT operator_ (‘~’) inverts all bits in a number:
@@ -20622,7 +21130,7 @@ value of ‘240’.
 
 File: swift.info,  Node: Bitwise AND Operator,  Next: Bitwise OR Operator,  Prev: Bitwise NOT Operator,  Up: Bitwise Operators
 
-32.1.2 Bitwise AND Operator
+33.1.2 Bitwise AND Operator
 ---------------------------
 
 The _bitwise AND operator_ (‘&’) combines the bits of two numbers.  It
@@ -20642,7 +21150,7 @@ unsigned decimal value of ‘60’:
 
 File: swift.info,  Node: Bitwise OR Operator,  Next: Bitwise XOR Operator,  Prev: Bitwise AND Operator,  Up: Bitwise Operators
 
-32.1.3 Bitwise OR Operator
+33.1.3 Bitwise OR Operator
 --------------------------
 
 The _bitwise OR operator_ (‘|’) compares the bits of two numbers.  The
@@ -20661,7 +21169,7 @@ make the number ‘11111110’, which equals an unsigned decimal of ‘254’:
 
 File: swift.info,  Node: Bitwise XOR Operator,  Next: Bitwise Left and Right Shift Operators,  Prev: Bitwise OR Operator,  Up: Bitwise Operators
 
-32.1.4 Bitwise XOR Operator
+33.1.4 Bitwise XOR Operator
 ---------------------------
 
 The _bitwise XOR operator_, or “exclusive OR operator” (‘^’), compares
@@ -20683,7 +21191,7 @@ to ‘0’ in the output value:
 
 File: swift.info,  Node: Bitwise Left and Right Shift Operators,  Prev: Bitwise XOR Operator,  Up: Bitwise Operators
 
-32.1.5 Bitwise Left and Right Shift Operators
+33.1.5 Bitwise Left and Right Shift Operators
 ---------------------------------------------
 
 The _bitwise left shift operator_ (‘<<’) and _bitwise right shift
@@ -20831,7 +21339,7 @@ right by one position halves its value.
 
 File: swift.info,  Node: Overflow Operators,  Next: Precedence and Associativity,  Prev: Bitwise Operators,  Up: Advanced Operators
 
-32.2 Overflow Operators
+33.2 Overflow Operators
 =======================
 
 If you try to insert a number into an integer constant or variable that
@@ -20870,7 +21378,7 @@ calculations.  These operators all begin with an ampersand (‘&’):
 
 File: swift.info,  Node: Value Overflow,  Up: Overflow Operators
 
-32.2.1 Value Overflow
+33.2.1 Value Overflow
 ---------------------
 
 Numbers can overflow in both the positive and negative direction.
@@ -20935,7 +21443,7 @@ minimum value to the maximum.
 
 File: swift.info,  Node: Precedence and Associativity,  Next: Operator Methods (1),  Prev: Overflow Operators,  Up: Advanced Operators
 
-32.3 Precedence and Associativity
+33.3 Precedence and Associativity
 =================================
 
 Operator _precedence_ gives some operators higher priority than others;
@@ -21005,7 +21513,7 @@ intend when porting existing code to Swift.
 
 File: swift.info,  Node: Operator Methods (1),  Next: Custom Operators,  Prev: Precedence and Associativity,  Up: Advanced Operators
 
-32.4 Operator Methods
+33.4 Operator Methods
 =====================
 
 Classes and structures can provide their own implementations of existing
@@ -21068,7 +21576,7 @@ to make the vector ‘(5.0, 5.0)’, as illustrated below.
 
 File: swift.info,  Node: Prefix and Postfix Operators,  Next: Compound Assignment Operators (1),  Up: Operator Methods (1)
 
-32.4.1 Prefix and Postfix Operators
+33.4.1 Prefix and Postfix Operators
 -----------------------------------
 
 The example shown above demonstrates a custom implementation of a binary
@@ -21105,7 +21613,7 @@ operation on both the ‘x’ and ‘y’ properties:
 
 File: swift.info,  Node: Compound Assignment Operators (1),  Next: Equivalence Operators,  Prev: Prefix and Postfix Operators,  Up: Operator Methods (1)
 
-32.4.2 Compound Assignment Operators
+33.4.2 Compound Assignment Operators
 ------------------------------------
 
 _Compound assignment operators_ combine assignment (‘=’) with another
@@ -21144,7 +21652,7 @@ the ternary conditional operator (‘a ? b : c’) can’t be overloaded.
 
 File: swift.info,  Node: Equivalence Operators,  Prev: Compound Assignment Operators (1),  Up: Operator Methods (1)
 
-32.4.3 Equivalence Operators
+33.4.3 Equivalence Operators
 ----------------------------
 
 By default, custom classes and structures don’t have an implementation
@@ -21190,7 +21698,7 @@ Protocol Using a Synthesized Implementation.
 
 File: swift.info,  Node: Custom Operators,  Next: Result Builders,  Prev: Operator Methods (1),  Up: Advanced Operators
 
-32.5 Custom Operators
+33.5 Custom Operators
 =====================
 
 You can declare and implement your own _custom operators_ in addition to
@@ -21231,7 +21739,7 @@ operator, you add a type method called ‘+++’ to ‘Vector2D’ as follows:
 
 File: swift.info,  Node: Precedence for Custom Infix Operators,  Up: Custom Operators
 
-32.5.1 Precedence for Custom Infix Operators
+33.5.1 Precedence for Custom Infix Operators
 --------------------------------------------
 
 Custom infix operators each belong to a precedence group.  A precedence
@@ -21282,7 +21790,7 @@ the same operand, the postfix operator is applied first.
 
 File: swift.info,  Node: Result Builders,  Prev: Custom Operators,  Up: Advanced Operators
 
-32.6 Result Builders
+33.6 Result Builders
 ====================
 
 A _result builder_ is a type you define that adds syntax for creating
@@ -21465,7 +21973,7 @@ to the builder type’s methods, see *note resultBuilder:
 
 File: swift.info,  Node: Index,  Prev: Advanced Operators,  Up: Top
 
-33 Index
+34 Index
 ********
 
  [index ]
@@ -21486,14 +21994,19 @@ File: swift.info,  Node: Index,  Prev: Advanced Operators,  Up: Top
 * _ <1>:                                 Switch.              (line 159)
 * _ <2>:                                 Omitting Argument Labels.
                                                               (line   6)
+* actor:                                 Actors.              (line  27)
 * Any:                                   Type Casting for Any and AnyObject.
                                                               (line   6)
 * AnyObject:                             Type Casting for Any and AnyObject.
                                                               (line   6)
 * as:                                    Downcasting.         (line   6)
 * associatedtype:                        Associated Types.    (line   6)
+* async:                                 Defining and Calling Asynchronous Functions.
+                                                              (line  15)
 * automatic conformance for Equatable, Hashable, Comparable: Adopting a Protocol Using a Synthesized Implementation.
                                                               (line   6)
+* await:                                 Defining and Calling Asynchronous Functions.
+                                                              (line  29)
 * break:                                 Break.               (line   6)
 * break retain cycle:                    Resolving Strong Reference Cycles Between Class Instances.
                                                               (line   6)
@@ -21650,400 +22163,408 @@ File: swift.info,  Node: Index,  Prev: Advanced Operators,  Up: Top
 
 Tag Table:
 Node: Top191
-Node: Welcome to Swift14417
-Node: About Swift14636
-Node: Version Compatibility16818
-Node: A Swift Tour18076
-Node: Simple Values19712
-Node: Control Flow23046
-Node: Functions and Closures27653
-Node: Objects and Classes32137
-Node: Enumerations and Structures38751
-Node: Protocols and Extensions44233
-Node: Error Handling47226
-Node: Generics50559
-Node: Language Guide52236
-Node: The Basics53158
-Node: Constants and Variables55794
-Node: Declaring Constants and Variables56413
-Node: Type Annotations57803
-Node: Naming Constants and Variables59713
-Node: Printing Constants and Variables61483
-Node: Comments63132
-Node: Semicolons64436
-Node: Integers64878
-Node: Integer Bounds65558
-Node: Int66144
-Node: UInt66929
-Node: Floating-Point Numbers67776
-Node: Type Safety and Type Inference68788
-Node: Numeric Literals71576
-Node: Numeric Type Conversion73629
-Node: Integer Conversion74585
-Node: Integer and Floating-Point Conversion77117
-Node: Type Aliases78608
-Node: Booleans79533
-Node: Tuples81610
-Node: Optionals85041
-Node: nil87415
-Node: If Statements and Forced Unwrapping88580
-Node: Optional Binding90117
-Node: Implicitly Unwrapped Optionals93483
-Node: Error Handling (1)97611
-Node: Assertions and Preconditions100304
-Node: Debugging with Assertions102533
-Node: Enforcing Preconditions104265
-Node: Basic Operators106386
-Node: Terminology108146
-Node: Assignment Operator109059
-Node: Arithmetic Operators110131
-Node: Remainder Operator111096
-Node: Unary Minus Operator112831
-Node: Unary Plus Operator113395
-Node: Compound Assignment Operators113935
-Node: Comparison Operators114939
-Node: Ternary Conditional Operator118592
-Node: Nil-Coalescing Operator120531
-Node: Range Operators122895
-Node: Closed Range Operator123243
-Node: Half-Open Range Operator124043
-Node: One-Sided Ranges125325
-Node: Logical Operators126965
-Node: Logical NOT Operator127516
-Node: Logical AND Operator128523
-Node: Logical OR Operator129493
-Node: Combining Logical Operators130697
-Node: Explicit Parentheses132079
-Node: Strings and Characters133080
-Node: String Literals135362
-Node: Multiline String Literals136071
-Node: Special Characters in String Literals138682
-Node: Extended String Delimiters140476
-Node: Initializing an Empty String141786
-Node: String Mutability142599
-Node: Strings Are Value Types143497
-Node: Working with Characters144716
-Node: Concatenating Strings and Characters145767
-Node: String Interpolation147877
-Node: Unicode150019
-Node: Unicode Scalar Values150655
-Node: Extended Grapheme Clusters151450
-Node: Counting Characters154017
-Node: Accessing and Modifying a String156426
-Node: String Indices156794
-Node: Inserting and Removing159346
-Node: Substrings160765
-Node: Comparing Strings163588
-Node: String and Character Equality163970
-Node: Prefix and Suffix Equality166404
-Node: Unicode Representations of Strings168740
-Node: UTF-8 Representation170617
-Node: UTF-16 Representation171815
-Node: Unicode Scalar Representation173382
-Node: Collection Types175119
-Node: Mutability of Collections176189
-Node: Arrays177028
-Node: Array Type Shorthand Syntax177907
-Node: Creating an Empty Array178457
-Node: Creating an Array with a Default Value179439
-Node: Creating an Array by Adding Two Arrays Together180153
-Node: Creating an Array with an Array Literal180943
-Node: Accessing and Modifying an Array183126
-Node: Iterating Over an Array187785
-Node: Sets188979
-Node: Hash Values for Set Types189860
-Node: Set Type Syntax191098
-Node: Creating and Initializing an Empty Set191468
-Node: Creating a Set with an Array Literal192452
-Node: Accessing and Modifying a Set194324
-Node: Iterating Over a Set196122
-Node: Performing Set Operations196901
-Node: Fundamental Set Operations197369
-Node: Set Membership and Equality198635
-Node: Dictionaries200332
-Node: Dictionary Type Shorthand Syntax201559
-Node: Creating an Empty Dictionary202358
-Node: Creating a Dictionary with a Dictionary Literal203404
-Node: Accessing and Modifying a Dictionary206169
-Node: Iterating Over a Dictionary210192
-Node: Control Flow (1)211942
-Node: For-In Loops213157
-Node: While Loops218337
-Node: While218972
-Node: Repeat-While223528
-Node: Conditional Statements226254
-Node: If227192
-Node: Switch229853
-Node: Control Transfer Statements243743
-Node: Continue244557
-Node: Break245612
-Node: Fallthrough249860
-Node: Labeled Statements252624
-Node: Early Exit257823
-Node: Checking API Availability260138
-Node: Functions262168
-Node: Defining and Calling Functions263474
-Node: Function Parameters and Return Values267146
-Node: Functions Without Parameters267851
-Node: Functions With Multiple Parameters268606
-Node: Functions Without Return Values269979
-Node: Functions with Multiple Return Values272156
-Node: Functions With an Implicit Return276489
-Node: Function Argument Labels and Parameter Names277828
-Node: Specifying Argument Labels279074
-Node: Omitting Argument Labels280228
-Node: Default Parameter Values280996
-Node: Variadic Parameters282275
-Node: In-Out Parameters283763
-Node: Function Types287083
-Node: Using Function Types288402
-Node: Function Types as Parameter Types289865
-Node: Function Types as Return Types291706
-Node: Nested Functions294107
-Node: Closures295497
-Node: Closure Expressions297234
-Node: The Sorted Method298452
-Node: Closure Expression Syntax301004
-Node: Inferring Type From Context302854
-Node: Implicit Returns from Single-Expression Closures304478
-Node: Shorthand Argument Names305341
-Node: Operator Methods306272
-Node: Trailing Closures307042
-Node: Capturing Values314713
-Node: Closures Are Reference Types319756
-Node: Escaping Closures321078
-Node: Autoclosures325273
-Node: Enumerations330145
-Node: Enumeration Syntax332060
-Node: Matching Enumeration Values with a Switch Statement334203
-Node: Iterating over Enumeration Cases335939
-Node: Associated Values337562
-Node: Raw Values342058
-Node: Implicitly Assigned Raw Values343665
-Node: Initializing from a Raw Value345376
-Node: Recursive Enumerations347494
-Node: Structures and Classes350531
-Node: Comparing Structures and Classes351777
-Node: Definition Syntax353954
-Node: Structure and Class Instances356376
-Node: Accessing Properties357509
-Node: Memberwise Initializers for Structure Types358741
-Node: Structures and Enumerations Are Value Types359571
-Node: Classes Are Reference Types363651
-Node: Identity Operators366690
-Node: Pointers368449
-Node: Properties369418
-Node: Stored Properties370658
-Node: Stored Properties of Constant Structure Instances372460
-Node: Lazy Stored Properties373683
-Node: Stored Properties and Instance Variables377438
-Node: Computed Properties378456
-Node: Shorthand Setter Declaration381839
-Node: Shorthand Getter Declaration382765
-Node: Read-Only Computed Properties383937
-Node: Property Observers385852
-Node: Property Wrappers390632
-Node: Setting Initial Values for Wrapped Properties394724
-Node: Projecting a Value From a Property Wrapper400371
-Node: Global and Local Variables404742
-Node: Type Properties406082
-Node: Type Property Syntax407760
-Node: Querying and Setting Type Properties409362
-Node: Methods414280
-Node: Instance Methods415184
-Node: The self Property417647
-Node: Modifying Value Types from Within Instance Methods419625
-Node: Assigning to self Within a Mutating Method421770
-Node: Type Methods423483
-Node: Subscripts430035
-Node: Subscript Syntax430998
-Node: Subscript Usage433624
-Node: Subscript Options435515
-Node: Type Subscripts439900
-Node: Inheritance440922
-Node: Defining a Base Class442093
-Node: Subclassing444037
-Node: Overriding446678
-Node: Accessing Superclass Methods Properties and Subscripts447901
-Node: Overriding Methods449201
-Node: Overriding Properties450085
-Node: Preventing Overrides455382
-Node: Initialization456314
-Node: Setting Initial Values for Stored Properties457675
-Node: Initializers458597
-Node: Default Property Values459746
-Node: Customizing Initialization461010
-Node: Initialization Parameters461644
-Node: Parameter Names and Argument Labels463452
-Node: Initializer Parameters Without Argument Labels465806
-Node: Optional Property Types467291
-Node: Assigning Constant Properties During Initialization468891
-Node: Default Initializers470363
-Node: Memberwise Initializers for Structure Types (1)472000
-Node: Initializer Delegation for Value Types473885
-Node: Class Inheritance and Initialization479383
-Node: Designated Initializers and Convenience Initializers480322
-Node: Syntax for Designated and Convenience Initializers482086
-Node: Initializer Delegation for Class Types482814
-Node: Two-Phase Initialization485225
-Node: Initializer Inheritance and Overriding491269
-Node: Automatic Initializer Inheritance497344
-Node: Designated and Convenience Initializers in Action498856
-Node: Failable Initializers507143
-Node: Failable Initializers for Enumerations511667
-Node: Failable Initializers for Enumerations with Raw Values513531
-Node: Propagation of Initialization Failure514960
-Node: Overriding a Failable Initializer518228
-Node: The init! Failable Initializer521813
-Node: Required Initializers522735
-Node: Setting a Default Property Value with a Closure or Function523863
-Node: Deinitialization527791
-Node: How Deinitialization Works528263
-Node: Deinitializers in Action529981
-Node: Optional Chaining534935
-Node: Optional Chaining as an Alternative to Forced Unwrapping536060
-Node: Defining Model Classes for Optional Chaining541029
-Node: Accessing Properties Through Optional Chaining545049
-Node: Calling Methods Through Optional Chaining547470
-Node: Accessing Subscripts Through Optional Chaining550093
-Node: Accessing Subscripts of Optional Type552575
-Node: Linking Multiple Levels of Chaining553876
-Node: Chaining on Methods with Optional Return Values557061
-Node: Error Handling (2)558883
-Node: Representing and Throwing Errors560490
-Node: Handling Errors561689
-Node: Propagating Errors Using Throwing Functions563465
-Node: Handling Errors Using Do-Catch567702
-Node: Converting Errors to Optional Values572539
-Node: Disabling Error Propagation574092
-Node: Specifying Cleanup Actions575017
-Node: Type Casting576978
-Node: Defining a Class Hierarchy for Type Casting577759
-Node: Checking Type580828
-Node: Downcasting582320
-Node: Type Casting for Any and AnyObject586438
-Node: Nested Types590098
-Node: Nested Types in Action590858
-Node: Referring to Nested Types595218
-Node: Extensions595808
-Node: Extension Syntax597122
-Node: Computed Properties (1)598411
-Node: Initializers (1)600903
-Node: Methods (1)604296
-Node: Mutating Instance Methods605214
-Node: Subscripts (1)605937
-Node: Nested Types (1)607076
-Node: Protocols609135
-Node: Protocol Syntax610342
-Node: Property Requirements611214
-Node: Method Requirements615206
-Node: Mutating Method Requirements617809
-Node: Initializer Requirements620605
-Node: Class Implementations of Protocol Initializer Requirements621235
-Node: Failable Initializer Requirements623193
-Node: Protocols as Types623833
-Node: Delegation627615
-Node: Adding Protocol Conformance with an Extension635347
-Node: Conditionally Conforming to a Protocol637748
-Node: Declaring Protocol Adoption with an Extension639064
-Node: Adopting a Protocol Using a Synthesized Implementation640215
-Node: Collections of Protocol Types643923
-Node: Protocol Inheritance645190
-Node: Class-Only Protocols648571
-Node: Protocol Composition649640
-Node: Checking for Protocol Conformance653579
-Node: Optional Protocol Requirements657522
-Node: Protocol Extensions665640
-Node: Providing Default Implementations667155
-Node: Adding Constraints to Protocol Extensions668419
-Node: Generics (1)670556
-Node: The Problem That Generics Solve671917
-Node: Generic Functions674387
-Node: Type Parameters677365
-Node: Naming Type Parameters678532
-Node: Generic Types679394
-Node: Extending a Generic Type684474
-Node: Type Constraints686374
-Node: Type Constraint Syntax688523
-Node: Type Constraints in Action689416
-Node: Associated Types693578
-Node: Associated Types in Action694343
-Node: Extending an Existing Type to Specify an Associated Type699800
-Node: Adding Constraints to an Associated Type701196
-Node: Using a Protocol in Its Associated Type's Constraints702092
-Node: Generic Where Clauses704948
-Node: Extensions with a Generic Where Clause710818
-Node: Contextual Where Clauses714782
-Node: Associated Types with a Generic Where Clause717543
-Node: Generic Subscripts719032
-Node: Opaque Types720661
-Node: The Problem That Opaque Types Solve721628
-Node: Returning an Opaque Type724600
-Node: Differences Between Opaque Types and Protocol Types731263
-Node: Automatic Reference Counting737380
-Node: How ARC Works738955
-Node: ARC in Action740543
-Node: Strong Reference Cycles Between Class Instances743448
-Node: Resolving Strong Reference Cycles Between Class Instances748461
-Node: Weak References749801
-Node: Unowned References753681
-Node: Unowned Optional References759188
-Node: Unowned References and Implicitly Unwrapped Optional Properties762891
-Node: Strong Reference Cycles for Closures767644
-Node: Resolving Strong Reference Cycles for Closures774531
-Node: Defining a Capture List775693
-Node: Weak and Unowned References776871
-Node: Memory Safety779783
-Node: Understanding Conflicting Access to Memory780913
-Node: Characteristics of Memory Access783880
-Node: Conflicting Access to In-Out Parameters786167
-Node: Conflicting Access to self in Methods789599
-Node: Conflicting Access to Properties792401
-Node: Access Control795770
-Node: Modules and Source Files797355
-Node: Access Levels798532
-Node: Guiding Principle of Access Levels800984
-Node: Default Access Levels801910
-Node: Access Levels for Single-Target Apps802416
-Node: Access Levels for Frameworks803143
-Node: Access Levels for Unit Test Targets804029
-Node: Access Control Syntax804662
-Node: Custom Types805779
-Node: Tuple Types808488
-Node: Function Types (1)809169
-Node: Enumeration Types811062
-Node: Nested Types (2)812116
-Node: Subclassing (1)812572
-Node: Constants Variables Properties and Subscripts814799
-Node: Getters and Setters815548
-Node: Initializers (2)819892
-Node: Default Initializers (1)820649
-Node: Default Memberwise Initializers for Structure Types821538
-Node: Protocols (1)822351
-Node: Protocol Inheritance (1)823428
-Node: Protocol Conformance823839
-Node: Extensions (1)825102
-Node: Private Members in Extensions826455
-Node: Generics (2)827720
-Node: Type Aliases (1)828061
-Node: Advanced Operators828680
-Node: Bitwise Operators830369
-Node: Bitwise NOT Operator831116
-Node: Bitwise AND Operator832257
-Node: Bitwise OR Operator833092
-Node: Bitwise XOR Operator833885
-Node: Bitwise Left and Right Shift Operators834877
-Node: Overflow Operators842102
-Node: Value Overflow843595
-Node: Precedence and Associativity846546
-Node: Operator Methods (1)849330
-Node: Prefix and Postfix Operators851982
-Node: Compound Assignment Operators (1)853612
-Node: Equivalence Operators855168
-Node: Custom Operators857208
-Node: Precedence for Custom Infix Operators858788
-Node: Result Builders861122
-Node: Index868334
+Node: Welcome to Swift14681
+Node: About Swift14900
+Node: Version Compatibility17082
+Node: A Swift Tour18334
+Node: Simple Values19970
+Node: Control Flow23304
+Node: Functions and Closures27911
+Node: Objects and Classes32395
+Node: Enumerations and Structures39009
+Node: Protocols and Extensions44491
+Node: Error Handling47484
+Node: Generics50817
+Node: Language Guide52494
+Node: The Basics53443
+Node: Constants and Variables56079
+Node: Declaring Constants and Variables56698
+Node: Type Annotations58088
+Node: Naming Constants and Variables59998
+Node: Printing Constants and Variables61768
+Node: Comments63417
+Node: Semicolons64721
+Node: Integers65163
+Node: Integer Bounds65843
+Node: Int66429
+Node: UInt67214
+Node: Floating-Point Numbers68061
+Node: Type Safety and Type Inference69073
+Node: Numeric Literals71861
+Node: Numeric Type Conversion73914
+Node: Integer Conversion74870
+Node: Integer and Floating-Point Conversion77402
+Node: Type Aliases78893
+Node: Booleans79818
+Node: Tuples81895
+Node: Optionals85326
+Node: nil87700
+Node: If Statements and Forced Unwrapping88865
+Node: Optional Binding90402
+Node: Implicitly Unwrapped Optionals93768
+Node: Error Handling (1)97896
+Node: Assertions and Preconditions100589
+Node: Debugging with Assertions102818
+Node: Enforcing Preconditions104550
+Node: Basic Operators106671
+Node: Terminology108431
+Node: Assignment Operator109344
+Node: Arithmetic Operators110416
+Node: Remainder Operator111381
+Node: Unary Minus Operator113116
+Node: Unary Plus Operator113680
+Node: Compound Assignment Operators114220
+Node: Comparison Operators115224
+Node: Ternary Conditional Operator118877
+Node: Nil-Coalescing Operator120816
+Node: Range Operators123180
+Node: Closed Range Operator123528
+Node: Half-Open Range Operator124328
+Node: One-Sided Ranges125610
+Node: Logical Operators127250
+Node: Logical NOT Operator127801
+Node: Logical AND Operator128808
+Node: Logical OR Operator129778
+Node: Combining Logical Operators130982
+Node: Explicit Parentheses132364
+Node: Strings and Characters133365
+Node: String Literals135647
+Node: Multiline String Literals136356
+Node: Special Characters in String Literals138967
+Node: Extended String Delimiters140761
+Node: Initializing an Empty String142071
+Node: String Mutability142884
+Node: Strings Are Value Types143782
+Node: Working with Characters145001
+Node: Concatenating Strings and Characters146052
+Node: String Interpolation148162
+Node: Unicode150304
+Node: Unicode Scalar Values150940
+Node: Extended Grapheme Clusters151735
+Node: Counting Characters154302
+Node: Accessing and Modifying a String156711
+Node: String Indices157079
+Node: Inserting and Removing159631
+Node: Substrings161050
+Node: Comparing Strings163873
+Node: String and Character Equality164255
+Node: Prefix and Suffix Equality166689
+Node: Unicode Representations of Strings169025
+Node: UTF-8 Representation170902
+Node: UTF-16 Representation172100
+Node: Unicode Scalar Representation173667
+Node: Collection Types175404
+Node: Mutability of Collections176474
+Node: Arrays177313
+Node: Array Type Shorthand Syntax178192
+Node: Creating an Empty Array178742
+Node: Creating an Array with a Default Value179724
+Node: Creating an Array by Adding Two Arrays Together180438
+Node: Creating an Array with an Array Literal181228
+Node: Accessing and Modifying an Array183411
+Node: Iterating Over an Array188070
+Node: Sets189264
+Node: Hash Values for Set Types190145
+Node: Set Type Syntax191383
+Node: Creating and Initializing an Empty Set191753
+Node: Creating a Set with an Array Literal192737
+Node: Accessing and Modifying a Set194609
+Node: Iterating Over a Set196407
+Node: Performing Set Operations197186
+Node: Fundamental Set Operations197654
+Node: Set Membership and Equality198920
+Node: Dictionaries200617
+Node: Dictionary Type Shorthand Syntax201844
+Node: Creating an Empty Dictionary202643
+Node: Creating a Dictionary with a Dictionary Literal203689
+Node: Accessing and Modifying a Dictionary206454
+Node: Iterating Over a Dictionary210477
+Node: Control Flow (1)212227
+Node: For-In Loops213442
+Node: While Loops218622
+Node: While219257
+Node: Repeat-While223813
+Node: Conditional Statements226539
+Node: If227477
+Node: Switch230138
+Node: Control Transfer Statements244028
+Node: Continue244842
+Node: Break245897
+Node: Fallthrough250145
+Node: Labeled Statements252909
+Node: Early Exit258108
+Node: Checking API Availability260423
+Node: Functions262453
+Node: Defining and Calling Functions263759
+Node: Function Parameters and Return Values267431
+Node: Functions Without Parameters268136
+Node: Functions With Multiple Parameters268891
+Node: Functions Without Return Values270264
+Node: Functions with Multiple Return Values272441
+Node: Functions With an Implicit Return276774
+Node: Function Argument Labels and Parameter Names278113
+Node: Specifying Argument Labels279359
+Node: Omitting Argument Labels280513
+Node: Default Parameter Values281281
+Node: Variadic Parameters282560
+Node: In-Out Parameters284319
+Node: Function Types287639
+Node: Using Function Types288958
+Node: Function Types as Parameter Types290421
+Node: Function Types as Return Types292262
+Node: Nested Functions294663
+Node: Closures296053
+Node: Closure Expressions297790
+Node: The Sorted Method299008
+Node: Closure Expression Syntax301560
+Node: Inferring Type From Context303410
+Node: Implicit Returns from Single-Expression Closures305034
+Node: Shorthand Argument Names305897
+Node: Operator Methods307208
+Node: Trailing Closures307978
+Node: Capturing Values315649
+Node: Closures Are Reference Types320692
+Node: Escaping Closures322014
+Node: Autoclosures326209
+Node: Enumerations331081
+Node: Enumeration Syntax332996
+Node: Matching Enumeration Values with a Switch Statement335139
+Node: Iterating over Enumeration Cases336875
+Node: Associated Values338498
+Node: Raw Values342994
+Node: Implicitly Assigned Raw Values344601
+Node: Initializing from a Raw Value346312
+Node: Recursive Enumerations348430
+Node: Structures and Classes351467
+Node: Comparing Structures and Classes352713
+Node: Definition Syntax354890
+Node: Structure and Class Instances357312
+Node: Accessing Properties358445
+Node: Memberwise Initializers for Structure Types359677
+Node: Structures and Enumerations Are Value Types360507
+Node: Classes Are Reference Types364587
+Node: Identity Operators367626
+Node: Pointers369385
+Node: Properties370354
+Node: Stored Properties371594
+Node: Stored Properties of Constant Structure Instances373396
+Node: Lazy Stored Properties374619
+Node: Stored Properties and Instance Variables378374
+Node: Computed Properties379392
+Node: Shorthand Setter Declaration382775
+Node: Shorthand Getter Declaration383701
+Node: Read-Only Computed Properties384873
+Node: Property Observers386788
+Node: Property Wrappers391568
+Node: Setting Initial Values for Wrapped Properties395671
+Node: Projecting a Value From a Property Wrapper401318
+Node: Global and Local Variables405591
+Node: Type Properties406931
+Node: Type Property Syntax408609
+Node: Querying and Setting Type Properties410211
+Node: Methods415129
+Node: Instance Methods416033
+Node: The self Property418496
+Node: Modifying Value Types from Within Instance Methods420474
+Node: Assigning to self Within a Mutating Method422619
+Node: Type Methods424332
+Node: Subscripts430884
+Node: Subscript Syntax431847
+Node: Subscript Usage434473
+Node: Subscript Options436364
+Node: Type Subscripts440749
+Node: Inheritance441771
+Node: Defining a Base Class442942
+Node: Subclassing444886
+Node: Overriding447527
+Node: Accessing Superclass Methods Properties and Subscripts448750
+Node: Overriding Methods450050
+Node: Overriding Properties450934
+Node: Preventing Overrides456231
+Node: Initialization457163
+Node: Setting Initial Values for Stored Properties458524
+Node: Initializers459446
+Node: Default Property Values460595
+Node: Customizing Initialization461859
+Node: Initialization Parameters462493
+Node: Parameter Names and Argument Labels464301
+Node: Initializer Parameters Without Argument Labels466655
+Node: Optional Property Types468140
+Node: Assigning Constant Properties During Initialization469740
+Node: Default Initializers471212
+Node: Memberwise Initializers for Structure Types (1)472849
+Node: Initializer Delegation for Value Types474734
+Node: Class Inheritance and Initialization480232
+Node: Designated Initializers and Convenience Initializers481171
+Node: Syntax for Designated and Convenience Initializers482935
+Node: Initializer Delegation for Class Types483663
+Node: Two-Phase Initialization486074
+Node: Initializer Inheritance and Overriding492118
+Node: Automatic Initializer Inheritance498193
+Node: Designated and Convenience Initializers in Action499705
+Node: Failable Initializers507992
+Node: Failable Initializers for Enumerations512516
+Node: Failable Initializers for Enumerations with Raw Values514380
+Node: Propagation of Initialization Failure515809
+Node: Overriding a Failable Initializer519077
+Node: The init! Failable Initializer522662
+Node: Required Initializers523584
+Node: Setting a Default Property Value with a Closure or Function524712
+Node: Deinitialization528640
+Node: How Deinitialization Works529112
+Node: Deinitializers in Action530830
+Node: Optional Chaining535784
+Node: Optional Chaining as an Alternative to Forced Unwrapping536909
+Node: Defining Model Classes for Optional Chaining541878
+Node: Accessing Properties Through Optional Chaining545898
+Node: Calling Methods Through Optional Chaining548319
+Node: Accessing Subscripts Through Optional Chaining550942
+Node: Accessing Subscripts of Optional Type553424
+Node: Linking Multiple Levels of Chaining554725
+Node: Chaining on Methods with Optional Return Values557910
+Node: Error Handling (2)559732
+Node: Representing and Throwing Errors561338
+Node: Handling Errors562537
+Node: Propagating Errors Using Throwing Functions564313
+Node: Handling Errors Using Do-Catch568550
+Node: Converting Errors to Optional Values573387
+Node: Disabling Error Propagation574940
+Node: Specifying Cleanup Actions575865
+Node: Concurrency577826
+Node: Defining and Calling Asynchronous Functions580847
+Node: Asynchronous Sequences586384
+Node: Calling Asynchronous Functions in Parallel588004
+Node: Tasks and Task Groups591151
+Node: Unstructured Concurrency592734
+Node: Task Cancellation594405
+Node: Actors595897
+Node: Type Casting600257
+Node: Defining a Class Hierarchy for Type Casting601031
+Node: Checking Type604100
+Node: Downcasting605592
+Node: Type Casting for Any and AnyObject609710
+Node: Nested Types613372
+Node: Nested Types in Action614132
+Node: Referring to Nested Types618492
+Node: Extensions619082
+Node: Extension Syntax620396
+Node: Computed Properties (1)621685
+Node: Initializers (1)624177
+Node: Methods (1)627570
+Node: Mutating Instance Methods628488
+Node: Subscripts (1)629211
+Node: Nested Types (1)630350
+Node: Protocols632409
+Node: Protocol Syntax633616
+Node: Property Requirements634488
+Node: Method Requirements638480
+Node: Mutating Method Requirements641083
+Node: Initializer Requirements643879
+Node: Class Implementations of Protocol Initializer Requirements644509
+Node: Failable Initializer Requirements646467
+Node: Protocols as Types647107
+Node: Delegation650889
+Node: Adding Protocol Conformance with an Extension658621
+Node: Conditionally Conforming to a Protocol661022
+Node: Declaring Protocol Adoption with an Extension662338
+Node: Adopting a Protocol Using a Synthesized Implementation663489
+Node: Collections of Protocol Types667197
+Node: Protocol Inheritance668464
+Node: Class-Only Protocols671845
+Node: Protocol Composition672914
+Node: Checking for Protocol Conformance676853
+Node: Optional Protocol Requirements680796
+Node: Protocol Extensions688914
+Node: Providing Default Implementations690429
+Node: Adding Constraints to Protocol Extensions691693
+Node: Generics (1)693830
+Node: The Problem That Generics Solve695191
+Node: Generic Functions697661
+Node: Type Parameters700639
+Node: Naming Type Parameters701806
+Node: Generic Types702668
+Node: Extending a Generic Type707748
+Node: Type Constraints709648
+Node: Type Constraint Syntax711797
+Node: Type Constraints in Action712690
+Node: Associated Types716852
+Node: Associated Types in Action717617
+Node: Extending an Existing Type to Specify an Associated Type723074
+Node: Adding Constraints to an Associated Type724470
+Node: Using a Protocol in Its Associated Type's Constraints725366
+Node: Generic Where Clauses728222
+Node: Extensions with a Generic Where Clause734092
+Node: Contextual Where Clauses738056
+Node: Associated Types with a Generic Where Clause740817
+Node: Generic Subscripts742306
+Node: Opaque Types743935
+Node: The Problem That Opaque Types Solve744902
+Node: Returning an Opaque Type747874
+Node: Differences Between Opaque Types and Protocol Types754537
+Node: Automatic Reference Counting760654
+Node: How ARC Works762229
+Node: ARC in Action763817
+Node: Strong Reference Cycles Between Class Instances766722
+Node: Resolving Strong Reference Cycles Between Class Instances771735
+Node: Weak References773075
+Node: Unowned References776957
+Node: Unowned Optional References782464
+Node: Unowned References and Implicitly Unwrapped Optional Properties786161
+Node: Strong Reference Cycles for Closures790914
+Node: Resolving Strong Reference Cycles for Closures797801
+Node: Defining a Capture List798963
+Node: Weak and Unowned References800142
+Node: Memory Safety803054
+Node: Understanding Conflicting Access to Memory804184
+Node: Characteristics of Memory Access807151
+Node: Conflicting Access to In-Out Parameters809438
+Node: Conflicting Access to self in Methods812870
+Node: Conflicting Access to Properties815672
+Node: Access Control819041
+Node: Modules and Source Files820626
+Node: Access Levels821803
+Node: Guiding Principle of Access Levels824255
+Node: Default Access Levels825181
+Node: Access Levels for Single-Target Apps825687
+Node: Access Levels for Frameworks826414
+Node: Access Levels for Unit Test Targets827300
+Node: Access Control Syntax827933
+Node: Custom Types829050
+Node: Tuple Types831759
+Node: Function Types (1)832440
+Node: Enumeration Types834333
+Node: Nested Types (2)835387
+Node: Subclassing (1)835843
+Node: Constants Variables Properties and Subscripts838070
+Node: Getters and Setters838819
+Node: Initializers (2)843163
+Node: Default Initializers (1)843920
+Node: Default Memberwise Initializers for Structure Types844809
+Node: Protocols (1)845622
+Node: Protocol Inheritance (1)846699
+Node: Protocol Conformance847110
+Node: Extensions (1)848373
+Node: Private Members in Extensions849726
+Node: Generics (2)850991
+Node: Type Aliases (1)851332
+Node: Advanced Operators851951
+Node: Bitwise Operators853640
+Node: Bitwise NOT Operator854387
+Node: Bitwise AND Operator855528
+Node: Bitwise OR Operator856363
+Node: Bitwise XOR Operator857156
+Node: Bitwise Left and Right Shift Operators858148
+Node: Overflow Operators865373
+Node: Value Overflow866866
+Node: Precedence and Associativity869817
+Node: Operator Methods (1)872601
+Node: Prefix and Postfix Operators875253
+Node: Compound Assignment Operators (1)876883
+Node: Equivalence Operators878439
+Node: Custom Operators880479
+Node: Precedence for Custom Infix Operators882059
+Node: Result Builders884393
+Node: Index891605
 
 End Tag Table
 

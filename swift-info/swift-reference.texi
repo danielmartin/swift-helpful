@@ -1,7 +1,7 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
 @setfilename swift-reference.info
-@settitle The Swift Programming Reference (Swift 5.4)
+@settitle The Swift Programming Reference (Swift 5.5)
 @documentencoding UTF-8
 @documentlanguage en
 @syncodeindex vr cp
@@ -16,7 +16,7 @@
 
 @finalout
 @titlepage
-@title The Swift Programming Reference (Swift 5.4)
+@title The Swift Programming Reference (Swift 5.5)
 @author Apple Inc.
 @end titlepage
 
@@ -24,7 +24,7 @@
 
 @ifnottex
 @node Top
-@top The Swift Programming Reference (Swift 5.4)
+@top The Swift Programming Reference (Swift 5.5)
 @end ifnottex
 
 @menu
@@ -95,6 +95,7 @@ Prefix Expressions
 
 * In-Out Expression::
 * Try Operator::
+* Await Operator::
 
 Binary Expressions
 
@@ -171,6 +172,7 @@ Declarations
 * Enumeration Declaration::
 * Structure Declaration::
 * Class Declaration::
+* Actor Declaration::
 * Protocol Declaration::
 * Initializer Declaration::
 * Deinitializer Declaration::
@@ -196,6 +198,7 @@ Function Declaration
 * Methods with Special Names::
 * Throwing Functions and Methods::
 * Rethrowing Functions and Methods::
+* Asynchronous Functions and Methods::
 * Functions that Never Return::
 
 Enumeration Declaration
@@ -220,6 +223,10 @@ Extension Declaration
 
 * Conditional Conformance::
 * Protocol Conformance Must Not Be Redundant::
+
+Subscript Declaration
+
+* Type Subscript Declarations::
 
 Declaration Modifiers
 
@@ -340,7 +347,7 @@ directly implement a parser or compiler.
 The Swift language is relatively small, because many common types,
 functions, and operators that appear virtually everywhere in Swift code
 are actually defined in the Swift standard library. Although these
-types, functions, and operators are not part of the Swift language
+types, functions, and operators aren't part of the Swift language
 itself, they're used extensively in the discussions and code examples
 in this part of the book.
 
@@ -478,7 +485,7 @@ whitespace-item →
 multiline-comment
 
 whitespace-item →
-U+0000, U+000B, or U+0020
+U+0000, U+000B, or U+000C
 
 line-break → U+000A
 
@@ -2545,6 +2552,7 @@ identifier
 @menu
 * In-Out Expression::
 * Try Operator::
+* Await Operator::
 @end menu
 
 @node In-Out Expression
@@ -2625,12 +2633,65 @@ Grammar of a try expression
 try-operator → @samp{try} | @samp{try}
 @samp{?} | @samp{try} @samp{!}
 
+@node Await Operator
+@subsection Await Operator
+
+An @emph{await expression} consists of the @samp{await} operator followed by an
+expression that uses the result of an asynchronous operation. It has the
+following form:
+
+@example
+await expression
+@end example
+
+The value of an @samp{await} expression is the value of the @emph{expression}.
+
+An expression marked with @samp{await} is called a @emph{potential suspension
+point}. Execution of an asynchronous function can be suspended at each
+expression that's marked with @samp{await}. In addition, execution of
+concurrent code is never suspended at any other point. This means code
+between potential suspension points can safely update state that
+requires temporarily breaking invariants, provided that it completes the
+update before the next potential suspension point.
+
+An @samp{await} expression can appear only within an asynchronous context,
+such as the trailing closure passed to the @samp{async(priority:operation:)}
+function. It can't appear in the body of a @samp{defer} statement, or in an
+autoclosure of synchronous function type.
+
+When the expression on the left-hand side of a binary operator is marked
+with the @samp{await} operator, that operator applies to the whole binary
+expression. That said, you can use parentheses to be explicit about the
+scope of the operator's application.
+
+@example
+// await applies to both function calls
+sum = await someAsyncFunction() + anotherAsyncFunction()
+
+// await applies to both function calls
+sum = await (someAsyncFunction() + anotherAsyncFunction())
+
+// Error: await applies only to the first function call
+sum = (await someAsyncFunction()) + anotherAsyncFunction()
+@end example
+
+An @samp{await} expression can't appear on the right-hand side of a binary
+operator, unless the binary operator is the assignment operator or the
+@samp{await} expression is enclosed in parentheses.
+
+If an expression includes both the @samp{await} and @samp{try} operator, the @samp{try}
+operator must appear first.
+
+Grammar of an await expression
+
+await-operator → @samp{await}
+
 @node Binary Expressions
 @section Binary Expressions
 
 @emph{Binary expressions} combine an infix binary operator with the
-expression that it takes as its left-hand and right-hand arguments. It
-has the following form:
+expression that it takes as its left- and right-hand arguments. It has
+the following form:
 
 @example
 left-hand argument operator right-hand argument
@@ -2911,7 +2972,7 @@ literal, or one of the following special literals:
 @tab Value
 @item @samp{#file}
 @tab @samp{String}
-@tab The name of the file in which it appears.
+@tab The path to the file in which it appears.
 @item @samp{#fileID}
 @tab @samp{String}
 @tab The name of the file and module in which it appears.
@@ -2929,7 +2990,7 @@ literal, or one of the following special literals:
 @tab The name of the declaration in which it appears.
 @item @samp{#dsohandle}
 @tab @samp{UnsafeRawPointer}
-@tab The DSO (dynamic shared object) handle in use where it appears.
+@tab The dynamic shared object (DSO) handle in use where it appears.
 @end multitable
 
 The string value of @samp{#file} depends on the language version, to enable
@@ -3469,11 +3530,55 @@ var x = MyEnumeration.someValue
 x = .anotherValue
 @end example
 
+If the inferred type is an optional, you can also use a member of the
+non-optional type in an implicit member expression.
+
+@example
+var someOptional: MyEnumeration? = .someValue
+@end example
+
+Implicit member expressions can be followed by a postfix operator or
+other postfix syntax listed in @ref{Postfix Expressions}.
+This is called a @emph{chained implicit member expression}.
+Although it's common for all of the chained postfix expressions to have
+the same type, the only requirement is that the whole chained implicit
+member expression needs to be convertible to the type implied by its
+context. Specifically, if the implied type is an optional you can use a
+value of the non-optional type, and if the implied type is a class type
+you can use a value of one of its subclasses. For example:
+
+@example
+class SomeClass @{
+    static var shared = SomeClass()
+    static var sharedSubclass = SomeSubclass()
+    var a = AnotherClass()
+@}
+class SomeSubclass: SomeClass @{ @}
+class AnotherClass @{
+    static var s = SomeClass()
+    func f() -> SomeClass @{ return AnotherClass.s @}
+@}
+let x: SomeClass = .shared.a.f()
+let y: SomeClass? = .shared
+let z: SomeClass = .sharedSubclass
+@end example
+
+In the code above, the type of @samp{x} matches the type implied by its
+context exactly, the type of @samp{y} is convertible from @samp{SomeClass} to
+@samp{SomeClass?}, and the type of @samp{z} is convertible from @samp{SomeSubclass} to
+@samp{SomeClass}.
+
 Grammar of a implicit member expression
 
 implicit-member-expression
 → @samp{.}
 identifier
+
+implicit-member-expression
+→ @samp{.}
+identifier
+@samp{.}
+postfix-expression
 
 @node Parenthesized Expression
 @subsection Parenthesized Expression
@@ -4273,8 +4378,10 @@ identifier
 @samp{:}
 operator
 
-trailing-closure →
+trailing-closures →
 closure-expression
+labeled-trailing-closures
+_@{opt@}
 @end enumerate
 
 @node Initializer Expression
@@ -5712,11 +5819,11 @@ The @emph{compilation condition} can include the @samp{true} and @samp{false} Bo
 literals, an identifier used with the @samp{-D} command line flag, or any of
 the platform conditions listed in the table below.
 
-@multitable {aaaaaaaaaaaaaaaaaaaaa} {aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}
+@multitable {aaaaaaaaaaaaaaaaaaaaa} {aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}
 @headitem Platform condition
 @tab Valid arguments
 @item @samp{os()}
-@tab @samp{macOS}, @samp{iOS}, @samp{watchOS}, @samp{tvOS}, @samp{Linux}
+@tab @samp{macOS}, @samp{iOS}, @samp{watchOS}, @samp{tvOS}, @samp{Linux}, @samp{Windows}
 @item @samp{arch()}
 @tab @samp{i386}, @samp{x86_64}, @samp{arm}, @samp{arm64}
 @item @samp{swift()}
@@ -5999,7 +6106,7 @@ line-control-statement
 line-number → A decimal integer
 greater than zero
 
-file-name →
+file-path →
 static-string-literal
 
 @node Compile-Time Diagnostic Statement
@@ -6201,6 +6308,7 @@ _@{opt@}
 * Enumeration Declaration::
 * Structure Declaration::
 * Class Declaration::
+* Actor Declaration::
 * Protocol Declaration::
 * Initializer Declaration::
 * Deinitializer Declaration::
@@ -6919,6 +7027,7 @@ For a discussion of nested functions, see
 * Methods with Special Names::
 * Throwing Functions and Methods::
 * Rethrowing Functions and Methods::
+* Asynchronous Functions and Methods::
 * Functions that Never Return::
 @end menu
 
@@ -7151,7 +7260,7 @@ let someFunction1: (Int, Int) -> Void = callable(_:scale:) // Error
 let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
 @end example
 
-The @samp{subscript(dynamicMemberLookup:)} subscript enables syntactic sugar
+The @samp{subscript(dynamicMember:)} subscript enables syntactic sugar
 for member lookup, as described in
 @ref{dynamicMemberLookup}.
 
@@ -7173,7 +7282,7 @@ Calls to a throwing function or method must be wrapped in a @samp{try} or
 
 The @samp{throws} keyword is part of a function's type, and nonthrowing
 functions are subtypes of throwing functions. As a result, you can use a
-nonthrowing function in the same places as a throwing one.
+nonthrowing function in a context where as a throwing one is expected.
 
 You can't overload a function based only on whether the function can
 throw an error. That said, you can overload a function based on whether
@@ -7230,6 +7339,30 @@ method can't satisfy a protocol requirement for a rethrowing method.
 That said, a rethrowing method can override a throwing method, and a
 rethrowing method can satisfy a protocol requirement for a throwing
 method.
+
+@node Asynchronous Functions and Methods
+@subsection Asynchronous Functions and Methods
+
+Functions and methods that run asynchronously must be marked with the
+@samp{async} keyword. These functions and methods are known as @emph{asynchronous
+functions} and @emph{asynchronous methods}. They have the following form:
+
+@example
+func function name(parameters) async -> return type @{
+    statements
+@}
+@end example
+
+Calls to an asynchronous function or method must be wrapped in an
+@samp{await} expression---that is, they must be in the scope of an @samp{await}
+operator.
+
+The @samp{async} keyword is part of the function's type, and synchronous
+functions are subtypes of asynchronous functions. As a result, you can
+use a synchronous function in a context where an asynchronous function
+is expected. For example, you can override an asynchronous method with a
+synchronous method, and a synchronous method can satisfy a protocol
+requirement that requires an asynchronous method.
 
 @node Functions that Never Return
 @subsection Functions that Never Return
@@ -7354,7 +7487,7 @@ Enumeration declarations have two basic forms and are declared using the
 contains zero or more values---called @emph{enumeration cases}---and any
 number of declarations, including computed properties, instance methods,
 type methods, initializers, type aliases, and even other enumeration,
-structure, and class declarations. Enumeration declarations can't
+structure, class, and actor declarations. Enumeration declarations can't
 contain deinitializer or protocol declarations.
 
 Enumeration types can adopt any number of protocols, but can't inherit
@@ -7700,7 +7833,7 @@ struct structure name: adopted protocols @{
 The body of a structure contains zero or more @emph{declarations}. These
 @emph{declarations} can include both stored and computed properties, type
 properties, instance methods, type methods, initializers, subscripts,
-type aliases, and even other structure, class, and enumeration
+type aliases, and even other structure, class, actor, and enumeration
 declarations. Structure declarations can't contain deinitializer or
 protocol declarations. For a discussion and several examples of
 structures that include various kinds of declarations, see
@@ -7800,7 +7933,7 @@ class class name: superclass, adopted protocols @{
 The body of a class contains zero or more @emph{declarations}. These
 @emph{declarations} can include both stored and computed properties, instance
 methods, type methods, initializers, a single deinitializer, subscripts,
-type aliases, and even other class, structure, and enumeration
+type aliases, and even other class, structure, actor, and enumeration
 declarations. Class declarations can't contain protocol declarations.
 For a discussion and several examples of classes that include various
 kinds of declarations, see
@@ -7911,6 +8044,115 @@ class-members
 _@{opt@}
 
 class-member →
+declaration
+@multitable {}
+@item 
+@end multitable
+compiler-control-statement
+
+@node Actor Declaration
+@section Actor Declaration
+
+An @emph{actor declaration} introduces a named actor type into your program.
+Actor declarations are declared using the @samp{actor} keyword and have the
+following form:
+
+@example
+actor actor name: adopted protocols @{
+    declarations
+@}
+@end example
+
+The body of an actor contains zero or more @emph{declarations}. These
+@emph{declarations} can include both stored and computed properties, instance
+methods, type methods, initializers, a single deinitializer, subscripts,
+type aliases, and even other class, structure, and enumeration
+declarations. For a discussion and several examples of actors that
+include various kinds of declarations, see
+@ref{Actors,Actors,,swift,}.
+
+Actor types can adopt any number of protocols, but can't inherit from
+classes, enumerations, structures, or other actors. However, an actor
+that is marked with the @samp{@@objc} attribute implicitly conforms to the
+@samp{NSObjectProtocol} protocol and is exposed to the Objective-C runtime as
+a subtype of @samp{NSObject}.
+
+There are two ways to create an instance of a previously declared actor:
+
+@itemize
+@item
+Call one of the initializers declared within the actor, as described
+in @ref{Initializers,Initializers,,swift,}.
+
+@item
+If no initializers are declared, and all properties of the actor
+declaration were given initial values, call the actor's default
+initializer, as described in
+@ref{Default Initializers,Default Initializers,,swift,}.
+@end itemize
+
+By default, members of an actor are isolated to that actor. Code, such
+as the body of a method or the getter for a property, is executed on
+that actor. Code within the actor can interact with them synchronously
+because that code is already running on the same actor, but code outside
+the actor must mark them with @samp{await} to indicate that this code is
+asynchronously running code on another actor. Key paths can't refer to
+isolated members of an actor. Actor-isolated stored properties can be
+passed as in-out parameters to synchronous functions, but not to
+asynchronous functions.
+
+Actors can also have nonisolated members, whose declarations are marked
+with the @samp{nonisolated} keyword. A nonisolated member executes like code
+outside of the actor: It can't interact with any of the actor's isolated
+state, and callers don't mark it with @samp{await} when using it.
+
+Members of an actor can be marked with the @samp{@@objc} attribute only if
+they are nonisolated or asynchronous.
+
+The process of initializing an actor's declared properties is described
+in @ref{Initialization,Initialization,,swift,}.
+
+Properties of a actor instance can be accessed using dot (@samp{.}) syntax,
+as described in
+@ref{Accessing Properties,Accessing Properties,,swift,}.
+
+Actors are reference types; instances of an actor are referred to,
+rather than copied, when assigned to variables or constants, or when
+passed as arguments to a function call. For information about reference
+types, see @ref{Classes Are Reference Types,Classes Are Reference Types,,swift,}.
+
+You can extend the behavior of a structure type with an extension
+declaration, as discussed in @ref{Extension Declaration}.
+
+Grammar of an actor declaration
+
+actor-declaration →
+attributes
+_@{opt@}
+access-level-modifier
+_@{opt@} @samp{actor}
+actor-name
+generic-parameter-clause
+_@{opt@}
+type-inheritance-clause
+_@{opt@}
+generic-where-clause
+_@{opt@}
+actor-body
+
+actor-name →
+identifier
+
+actor-body → @samp{@{}
+actor-members
+_@{opt@} @samp{@}}
+
+actor-members →
+actor-member
+actor-members
+_@{opt@}
+
+actor-member →
 declaration
 @multitable {}
 @item 
@@ -8909,6 +9151,21 @@ Subscript Declaration}.
 For more information about subscripting and to see examples of subscript
 declarations, see @ref{Subscripts,Subscripts,,swift,}.
 
+@menu
+* Type Subscript Declarations::
+@end menu
+
+@node Type Subscript Declarations
+@subsection Type Subscript Declarations
+
+To declare a subscript that's exposed by the type, rather than by
+instances of the type, mark the subscript declaration with the @samp{static}
+declaration modifier. Classes can mark type computed properties with the
+@samp{class} declaration modifier instead to allow subclasses to override the
+superclass's implementation. In a class declaration, the @samp{static}
+keyword has the same effect as marking the declaration with both the
+@samp{class} and @samp{final} declaration modifiers.
+
 Grammar of a subscript declaration
 
 subscript-declaration
@@ -9441,6 +9698,9 @@ access-level-modifier
 mutation-modifier →
 @samp{mutating} | @samp{nonmutating}
 
+actor-isolation-modifier
+→ @samp{nonisolated}
+
 @node Attributes
 @chapter Attributes
 
@@ -9806,16 +10066,16 @@ repeatLabels(a: "four") // Error
 
 Apply this attribute to a class, structure, enumeration, or protocol to
 enable members to be looked up by name at runtime. The type must
-implement a @samp{subscript(dynamicMemberLookup:)} subscript.
+implement a @samp{subscript(dynamicMember:)} subscript.
 
 In an explicit member expression, if there isn't a corresponding
 declaration for the named member, the expression is understood as a call
-to the type's @samp{subscript(dynamicMemberLookup:)} subscript, passing
+to the type's @samp{subscript(dynamicMember:)} subscript, passing
 information about the member as the argument. The subscript can accept a
 parameter that's either a key path or a member name; if you implement
 both subscripts, the subscript that takes key path argument is used.
 
-An implementation of @samp{subscript(dynamicMemberLookup:)} can accept key
+An implementation of @samp{subscript(dynamicMember:)} can accept key
 paths using an argument of type
 @uref{https://developer.apple.com/documentation/swift/keypath, @samp{KeyPath}}
 [@uref{https://developer.apple.com/documentation/swift/keypath}],
@@ -10181,18 +10441,19 @@ to use that type as a property wrapper. When you apply this attribute to
 a type, you create a custom attribute with the same name as the type.
 Apply that new attribute to a property of a class, structure, or
 enumeration to wrap access to the property through an instance of the
-wrapper type. Local and global variables can't use property wrappers.
+wrapper type; apply the attribute to a local stored variable declaration
+to wrap access to the variable the same way. Computed variables, global
+variables, and constants can't use property wrappers.
 
 The wrapper must define a @samp{wrappedValue} instance property. The @emph{wrapped
 value} of the property is the value that the getter and setter for this
 property expose. In most cases, @samp{wrappedValue} is a computed value, but
-it can be a stored value instead. The wrapper is responsible for
-defining and managing any underlying storage needed by its wrapped
-value. The compiler synthesizes storage for the instance of the wrapper
-type by prefixing the name of the wrapped property with an underscore
-(@samp{_})---for example, the wrapper for @samp{someProperty} is stored as
-@samp{_someProperty}. The synthesized storage for the wrapper has an access
-control level of @samp{private}.
+it can be a stored value instead. The wrapper defines and manages any
+underlying storage needed by its wrapped value. The compiler synthesizes
+storage for the instance of the wrapper type by prefixing the name of
+the wrapped property with an underscore (@samp{_})---for example, the wrapper
+for @samp{someProperty} is stored as @samp{_someProperty}. The synthesized storage
+for the wrapper has an access control level of @samp{private}.
 
 A property that has a property wrapper can include @samp{willSet} and
 @samp{didSet} blocks, but it can't override the compiler-synthesized @samp{get} or
@@ -10723,14 +10984,14 @@ function. For example, if your app uses a custom subclass of
 Apply this attribute to a function, method, computed property,
 subscript, initializer, or deinitializer declaration to allow that
 symbol to be used in inlinable code that's defined in the same module as
-the declaration. The declaration must have the @samp{internal} access level
+the declaration. The declaration must have the @samp{internal} access-level
 modifier. A structure or class marked @samp{usableFromInline} can use only
 types that are public or @samp{usableFromInline} for its properties. An
 enumeration marked @samp{usableFromInline} can use only types that are public
 or @samp{usableFromInline} for the raw values and associated values of its
 cases.
 
-Like the @samp{public} access level modifier, this attribute exposes the
+Like the @samp{public} access-level modifier, this attribute exposes the
 declaration as part of the module's public interface. Unlike @samp{public},
 the compiler doesn't allow declarations marked with @samp{usableFromInline}
 to be referenced by name in code outside the module, even though the
@@ -10799,7 +11060,7 @@ You can apply type attributes to types only.
 
 Apply this attribute to delay the evaluation of an expression by
 automatically wrapping that expression in a closure with no arguments.
-You apply it to a parameter's type in a method or function declaration,
+You apply it to a parameter's type in a function or method declaration,
 for a parameter whose type is a function type that takes no arguments
 and that returns a value of the type of the expression. For an example
 of how to use the @samp{autoclosure} attribute, see
@@ -10835,7 +11096,7 @@ carries no context and uses the C calling convention.
 With a few exceptions, a function of any calling convention can be used
 when a function any other calling convention is needed. A nongeneric
 global function, a local function that doesn't capture any local
-variables or a closure that doesn't capture any local variables can be
+variables, or a closure that doesn't capture any local variables can be
 converted to the C calling convention. Other Swift functions can't be
 converted to the C calling convention. A function with the Objective-C
 block calling convention can't be converted to the C calling convention.
@@ -10843,7 +11104,7 @@ block calling convention can't be converted to the C calling convention.
 @node escaping
 @subsection escaping
 
-Apply this attribute to a parameter's type in a method or function
+Apply this attribute to a parameter's type in a function or method
 declaration to indicate that the parameter's value can be stored for
 later execution. This means that the value is allowed to outlive the
 lifetime of the call. Function type parameters with the @samp{escaping} type
@@ -11771,6 +12032,10 @@ implicit-parameter-name
 → @samp{$}
 decimal-digits
 
+property-wrapper-projection
+→ @samp{$}
+identifier-characters
+
 Grammar of a literal
 
 literal →
@@ -12483,6 +12748,11 @@ Grammar of a try expression
 try-operator →
 @samp{try} | @samp{try} @samp{?} | @samp{try} @samp{!}
 
+Grammar of an await expression
+
+await-operator
+→ @samp{await}
+
 Grammar of a binary expression
 
 binary-expression
@@ -12798,7 +13068,7 @@ capture-list-item
 →
 capture-specifier
 _@{opt@}
-expression
+identifier
 
 capture-list-item
 →
@@ -14301,6 +14571,42 @@ declaration
 @end multitable
 compiler-control-statement
 
+Grammar of an actor declaration
+
+actor-declaration
+attributes
+_@{opt@}
+access-level-modifier
+_@{opt@} @samp{actor}
+actor-name
+generic-parameter-clause
+_@{opt@}
+type-inheritance-clause
+_@{opt@}
+generic-where-clause
+_@{opt@}
+actor-body
+
+actor-name →
+identifier
+
+actor-body → @samp{@{}
+actor-members
+_@{opt@} @samp{@}}
+
+actor-members
+→
+actor-member
+actor-members
+_@{opt@}
+
+actor-member →
+declaration
+@multitable {}
+@item 
+@end multitable
+compiler-control-statement
+
 Grammar of a protocol declaration
 
 protocol-declaration
@@ -14665,6 +14971,10 @@ access-level-modifier
 declaration-modifier
 →
 mutation-modifier
+
+declaration-modifier
+→
+actor-isolation-modifier
 
 declaration-modifiers
 →

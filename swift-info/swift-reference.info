@@ -9,7 +9,7 @@ END-INFO-DIR-ENTRY
 
 File: swift-reference.info,  Node: Top,  Next: Language Reference,  Up: (dir)
 
-The Swift Programming Reference (Swift 5.4)
+The Swift Programming Reference (Swift 5.5)
 *******************************************
 
 * Menu:
@@ -80,6 +80,7 @@ Prefix Expressions
 
 * In-Out Expression::
 * Try Operator::
+* Await Operator::
 
 Binary Expressions
 
@@ -156,6 +157,7 @@ Declarations
 * Enumeration Declaration::
 * Structure Declaration::
 * Class Declaration::
+* Actor Declaration::
 * Protocol Declaration::
 * Initializer Declaration::
 * Deinitializer Declaration::
@@ -181,6 +183,7 @@ Function Declaration
 * Methods with Special Names::
 * Throwing Functions and Methods::
 * Rethrowing Functions and Methods::
+* Asynchronous Functions and Methods::
 * Functions that Never Return::
 
 Enumeration Declaration
@@ -205,6 +208,10 @@ Extension Declaration
 
 * Conditional Conformance::
 * Protocol Conformance Must Not Be Redundant::
+
+Subscript Declaration
+
+* Type Subscript Declarations::
 
 Declaration Modifiers
 
@@ -315,7 +322,7 @@ directly implement a parser or compiler.
    The Swift language is relatively small, because many common types,
 functions, and operators that appear virtually everywhere in Swift code
 are actually defined in the Swift standard library.  Although these
-types, functions, and operators are not part of the Swift language
+types, functions, and operators aren’t part of the Swift language
 itself, they’re used extensively in the discussions and code examples in
 this part of the book.
 
@@ -433,7 +440,7 @@ in Markup Formatting Reference
 
    whitespace-item → multiline-comment
 
-   whitespace-item → U+0000, U+000B, or U+0020
+   whitespace-item → U+0000, U+000B, or U+000C
 
    line-break → U+000A
 
@@ -2115,6 +2122,7 @@ library, see Operator Declarations
 
 * In-Out Expression::
 * Try Operator::
+* Await Operator::
 
 
 File: swift-reference.info,  Node: In-Out Expression,  Next: Try Operator,  Up: Prefix Expressions
@@ -2142,7 +2150,7 @@ Conversion to a Pointer Type.
    in-out-expression → ‘&’ identifier
 
 
-File: swift-reference.info,  Node: Try Operator,  Prev: In-Out Expression,  Up: Prefix Expressions
+File: swift-reference.info,  Node: Try Operator,  Next: Await Operator,  Prev: In-Out Expression,  Up: Prefix Expressions
 
 5.1.2 Try Operator
 ------------------
@@ -2190,14 +2198,66 @@ and ‘try!’, see *note Error Handling: (swift)Error Handling.
    try-operator → ‘try’ | ‘try’ ‘?’ | ‘try’ ‘!’
 
 
+File: swift-reference.info,  Node: Await Operator,  Prev: Try Operator,  Up: Prefix Expressions
+
+5.1.3 Await Operator
+--------------------
+
+An _await expression_ consists of the ‘await’ operator followed by an
+expression that uses the result of an asynchronous operation.  It has
+the following form:
+
+     await expression
+
+   The value of an ‘await’ expression is the value of the _expression_.
+
+   An expression marked with ‘await’ is called a _potential suspension
+point_.  Execution of an asynchronous function can be suspended at each
+expression that’s marked with ‘await’.  In addition, execution of
+concurrent code is never suspended at any other point.  This means code
+between potential suspension points can safely update state that
+requires temporarily breaking invariants, provided that it completes the
+update before the next potential suspension point.
+
+   An ‘await’ expression can appear only within an asynchronous context,
+such as the trailing closure passed to the ‘async(priority:operation:)’
+function.  It can’t appear in the body of a ‘defer’ statement, or in an
+autoclosure of synchronous function type.
+
+   When the expression on the left-hand side of a binary operator is
+marked with the ‘await’ operator, that operator applies to the whole
+binary expression.  That said, you can use parentheses to be explicit
+about the scope of the operator’s application.
+
+     // await applies to both function calls
+     sum = await someAsyncFunction() + anotherAsyncFunction()
+
+     // await applies to both function calls
+     sum = await (someAsyncFunction() + anotherAsyncFunction())
+
+     // Error: await applies only to the first function call
+     sum = (await someAsyncFunction()) + anotherAsyncFunction()
+
+   An ‘await’ expression can’t appear on the right-hand side of a binary
+operator, unless the binary operator is the assignment operator or the
+‘await’ expression is enclosed in parentheses.
+
+   If an expression includes both the ‘await’ and ‘try’ operator, the
+‘try’ operator must appear first.
+
+   Grammar of an await expression
+
+   await-operator → ‘await’
+
+
 File: swift-reference.info,  Node: Binary Expressions,  Next: Primary Expressions,  Prev: Prefix Expressions,  Up: Expressions
 
 5.2 Binary Expressions
 ======================
 
 _Binary expressions_ combine an infix binary operator with the
-expression that it takes as its left-hand and right-hand arguments.  It
-has the following form:
+expression that it takes as its left- and right-hand arguments.  It has
+the following form:
 
      left-hand argument operator right-hand argument
 
@@ -2422,13 +2482,13 @@ literal, or one of the following special literals:
 
 Literal        Type                 Value
 ------------------------------------------------------------------------------------------------------
-‘#file’        ‘String’             The name of the file in which it appears.
+‘#file’        ‘String’             The path to the file in which it appears.
 ‘#fileID’      ‘String’             The name of the file and module in which it appears.
 ‘#filePath’    ‘String’             The path to the file in which it appears.
 ‘#line’        ‘Int’                The line number on which it appears.
 ‘#column’      ‘Int’                The column number in which it begins.
 ‘#function’    ‘String’             The name of the declaration in which it appears.
-‘#dsohandle’   ‘UnsafeRawPointer’   The DSO (dynamic shared object) handle in use where it appears.
+‘#dsohandle’   ‘UnsafeRawPointer’   The dynamic shared object (DSO) handle in use where it appears.
 
    The string value of ‘#file’ depends on the language version, to
 enable migration from the old ‘#filePath’ behavior to the new ‘#fileID’
@@ -2834,9 +2894,45 @@ following form:
      var x = MyEnumeration.someValue
      x = .anotherValue
 
+   If the inferred type is an optional, you can also use a member of the
+non-optional type in an implicit member expression.
+
+     var someOptional: MyEnumeration? = .someValue
+
+   Implicit member expressions can be followed by a postfix operator or
+other postfix syntax listed in *note Postfix Expressions::.  This is
+called a _chained implicit member expression_.  Although it’s common for
+all of the chained postfix expressions to have the same type, the only
+requirement is that the whole chained implicit member expression needs
+to be convertible to the type implied by its context.  Specifically, if
+the implied type is an optional you can use a value of the non-optional
+type, and if the implied type is a class type you can use a value of one
+of its subclasses.  For example:
+
+     class SomeClass {
+         static var shared = SomeClass()
+         static var sharedSubclass = SomeSubclass()
+         var a = AnotherClass()
+     }
+     class SomeSubclass: SomeClass { }
+     class AnotherClass {
+         static var s = SomeClass()
+         func f() -> SomeClass { return AnotherClass.s }
+     }
+     let x: SomeClass = .shared.a.f()
+     let y: SomeClass? = .shared
+     let z: SomeClass = .sharedSubclass
+
+   In the code above, the type of ‘x’ matches the type implied by its
+context exactly, the type of ‘y’ is convertible from ‘SomeClass’ to
+‘SomeClass?’, and the type of ‘z’ is convertible from ‘SomeSubclass’ to
+‘SomeClass’.
+
    Grammar of a implicit member expression
 
    implicit-member-expression → ‘.’ identifier
+
+   implicit-member-expression → ‘.’ identifier ‘.’ postfix-expression
 
 
 File: swift-reference.info,  Node: Parenthesized Expression,  Next: Tuple Expression,  Prev: Implicit Member Expression,  Up: Primary Expressions
@@ -3487,7 +3583,8 @@ described in *note Methods with Special Names::.
      function-call-argument → operator
      identifier ‘:’ operator
 
-     trailing-closure → closure-expression
+     trailing-closures → closure-expression labeled-trailing-closures
+     _{opt}
 
 
 File: swift-reference.info,  Node: Initializer Expression,  Next: Explicit Member Expression,  Prev: Function Call Expression,  Up: Postfix Expressions
@@ -4693,8 +4790,8 @@ Boolean literals, an identifier used with the ‘-D’ command line flag, or
 any of the platform conditions listed in the table below.
 
 Platform condition      Valid arguments
----------------------------------------------------------------------
-‘os()’                  ‘macOS’, ‘iOS’, ‘watchOS’, ‘tvOS’, ‘Linux’
+--------------------------------------------------------------------------------
+‘os()’                  ‘macOS’, ‘iOS’, ‘watchOS’, ‘tvOS’, ‘Linux’, ‘Windows’
 ‘arch()’                ‘i386’, ‘x86_64’, ‘arm’, ‘arm64’
 ‘swift()’               ‘>=’ or ‘<’ followed by a version number
 ‘compiler()’            ‘>=’ or ‘<’ followed by a version number
@@ -4882,7 +4979,7 @@ file path.
 
    line-number → A decimal integer greater than zero
 
-   file-name → static-string-literal
+   file-path → static-string-literal
 
 
 File: swift-reference.info,  Node: Compile-Time Diagnostic Statement,  Prev: Line Control Statement,  Up: Compiler Control Statements
@@ -5037,6 +5134,7 @@ both declarations and definitions.
 * Enumeration Declaration::
 * Structure Declaration::
 * Class Declaration::
+* Actor Declaration::
 * Protocol Declaration::
 * Initializer Declaration::
 * Deinitializer Declaration::
@@ -5630,6 +5728,7 @@ escaping function.
 * Methods with Special Names::
 * Throwing Functions and Methods::
 * Rethrowing Functions and Methods::
+* Asynchronous Functions and Methods::
 * Functions that Never Return::
 
 
@@ -5849,8 +5948,8 @@ expression.  For example:
      let someFunction1: (Int, Int) -> Void = callable(_:scale:) // Error
      let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
 
-   The ‘subscript(dynamicMemberLookup:)’ subscript enables syntactic
-sugar for member lookup, as described in *note dynamicMemberLookup::.
+   The ‘subscript(dynamicMember:)’ subscript enables syntactic sugar for
+member lookup, as described in *note dynamicMemberLookup::.
 
 
 File: swift-reference.info,  Node: Throwing Functions and Methods,  Next: Rethrowing Functions and Methods,  Prev: Methods with Special Names,  Up: Function Declaration
@@ -5871,7 +5970,7 @@ functions_ and _throwing methods_.  They have the following form:
 
    The ‘throws’ keyword is part of a function’s type, and nonthrowing
 functions are subtypes of throwing functions.  As a result, you can use
-a nonthrowing function in the same places as a throwing one.
+a nonthrowing function in a context where as a throwing one is expected.
 
    You can’t overload a function based only on whether the function can
 throw an error.  That said, you can overload a function based on whether
@@ -5884,7 +5983,7 @@ nonthrowing method can satisfy a protocol requirement for a throwing
 method.
 
 
-File: swift-reference.info,  Node: Rethrowing Functions and Methods,  Next: Functions that Never Return,  Prev: Throwing Functions and Methods,  Up: Function Declaration
+File: swift-reference.info,  Node: Rethrowing Functions and Methods,  Next: Asynchronous Functions and Methods,  Prev: Throwing Functions and Methods,  Up: Function Declaration
 
 7.7.7 Rethrowing Functions and Methods
 --------------------------------------
@@ -5927,9 +6026,34 @@ rethrowing method can satisfy a protocol requirement for a throwing
 method.
 
 
-File: swift-reference.info,  Node: Functions that Never Return,  Prev: Rethrowing Functions and Methods,  Up: Function Declaration
+File: swift-reference.info,  Node: Asynchronous Functions and Methods,  Next: Functions that Never Return,  Prev: Rethrowing Functions and Methods,  Up: Function Declaration
 
-7.7.8 Functions that Never Return
+7.7.8 Asynchronous Functions and Methods
+----------------------------------------
+
+Functions and methods that run asynchronously must be marked with the
+‘async’ keyword.  These functions and methods are known as _asynchronous
+functions_ and _asynchronous methods_.  They have the following form:
+
+     func function name(parameters) async -> return type {
+         statements
+     }
+
+   Calls to an asynchronous function or method must be wrapped in an
+‘await’ expression—that is, they must be in the scope of an ‘await’
+operator.
+
+   The ‘async’ keyword is part of the function’s type, and synchronous
+functions are subtypes of asynchronous functions.  As a result, you can
+use a synchronous function in a context where an asynchronous function
+is expected.  For example, you can override an asynchronous method with
+a synchronous method, and a synchronous method can satisfy a protocol
+requirement that requires an asynchronous method.
+
+
+File: swift-reference.info,  Node: Functions that Never Return,  Prev: Asynchronous Functions and Methods,  Up: Function Declaration
+
+7.7.9 Functions that Never Return
 ---------------------------------
 
 Swift defines a ‘Never’ type, which indicates that a function or method
@@ -6002,8 +6126,8 @@ the ‘enum’ keyword.  The body of an enumeration declared using either
 form contains zero or more values—called _enumeration cases_—and any
 number of declarations, including computed properties, instance methods,
 type methods, initializers, type aliases, and even other enumeration,
-structure, and class declarations.  Enumeration declarations can’t
-contain deinitializer or protocol declarations.
+structure, class, and actor declarations.  Enumeration declarations
+can’t contain deinitializer or protocol declarations.
 
    Enumeration types can adopt any number of protocols, but can’t
 inherit from classes, structures, or other enumerations.
@@ -6260,7 +6384,7 @@ and have the following form:
    The body of a structure contains zero or more _declarations_.  These
 _declarations_ can include both stored and computed properties, type
 properties, instance methods, type methods, initializers, subscripts,
-type aliases, and even other structure, class, and enumeration
+type aliases, and even other structure, class, actor, and enumeration
 declarations.  Structure declarations can’t contain deinitializer or
 protocol declarations.  For a discussion and several examples of
 structures that include various kinds of declarations, see *note
@@ -6318,7 +6442,7 @@ type-inheritance-clause _{opt} generic-where-clause _{opt} struct-body
    compiler-control-statement
 
 
-File: swift-reference.info,  Node: Class Declaration,  Next: Protocol Declaration,  Prev: Structure Declaration,  Up: Declarations
+File: swift-reference.info,  Node: Class Declaration,  Next: Actor Declaration,  Prev: Structure Declaration,  Up: Declarations
 
 7.10 Class Declaration
 ======================
@@ -6334,7 +6458,7 @@ following form:
    The body of a class contains zero or more _declarations_.  These
 _declarations_ can include both stored and computed properties, instance
 methods, type methods, initializers, a single deinitializer, subscripts,
-type aliases, and even other class, structure, and enumeration
+type aliases, and even other class, structure, actor, and enumeration
 declarations.  Class declarations can’t contain protocol declarations.
 For a discussion and several examples of classes that include various
 kinds of declarations, see *note Structures and Classes:
@@ -6416,9 +6540,97 @@ type-inheritance-clause _{opt} generic-where-clause _{opt} class-body
    compiler-control-statement
 
 
-File: swift-reference.info,  Node: Protocol Declaration,  Next: Initializer Declaration,  Prev: Class Declaration,  Up: Declarations
+File: swift-reference.info,  Node: Actor Declaration,  Next: Protocol Declaration,  Prev: Class Declaration,  Up: Declarations
 
-7.11 Protocol Declaration
+7.11 Actor Declaration
+======================
+
+An _actor declaration_ introduces a named actor type into your program.
+Actor declarations are declared using the ‘actor’ keyword and have the
+following form:
+
+     actor actor name: adopted protocols {
+         declarations
+     }
+
+   The body of an actor contains zero or more _declarations_.  These
+_declarations_ can include both stored and computed properties, instance
+methods, type methods, initializers, a single deinitializer, subscripts,
+type aliases, and even other class, structure, and enumeration
+declarations.  For a discussion and several examples of actors that
+include various kinds of declarations, see *note Actors: (swift)Actors.
+
+   Actor types can adopt any number of protocols, but can’t inherit from
+classes, enumerations, structures, or other actors.  However, an actor
+that is marked with the ‘@objc’ attribute implicitly conforms to the
+‘NSObjectProtocol’ protocol and is exposed to the Objective-C runtime as
+a subtype of ‘NSObject’.
+
+   There are two ways to create an instance of a previously declared
+actor:
+
+   • Call one of the initializers declared within the actor, as
+     described in *note Initializers: (swift)Initializers.
+
+   • If no initializers are declared, and all properties of the actor
+     declaration were given initial values, call the actor’s default
+     initializer, as described in *note Default Initializers:
+     (swift)Default Initializers.
+
+   By default, members of an actor are isolated to that actor.  Code,
+such as the body of a method or the getter for a property, is executed
+on that actor.  Code within the actor can interact with them
+synchronously because that code is already running on the same actor,
+but code outside the actor must mark them with ‘await’ to indicate that
+this code is asynchronously running code on another actor.  Key paths
+can’t refer to isolated members of an actor.  Actor-isolated stored
+properties can be passed as in-out parameters to synchronous functions,
+but not to asynchronous functions.
+
+   Actors can also have nonisolated members, whose declarations are
+marked with the ‘nonisolated’ keyword.  A nonisolated member executes
+like code outside of the actor: It can’t interact with any of the
+actor’s isolated state, and callers don’t mark it with ‘await’ when
+using it.
+
+   Members of an actor can be marked with the ‘@objc’ attribute only if
+they are nonisolated or asynchronous.
+
+   The process of initializing an actor’s declared properties is
+described in *note Initialization: (swift)Initialization.
+
+   Properties of a actor instance can be accessed using dot (‘.’)
+syntax, as described in *note Accessing Properties: (swift)Accessing
+Properties.
+
+   Actors are reference types; instances of an actor are referred to,
+rather than copied, when assigned to variables or constants, or when
+passed as arguments to a function call.  For information about reference
+types, see *note Classes Are Reference Types: (swift)Classes Are
+Reference Types.
+
+   You can extend the behavior of a structure type with an extension
+declaration, as discussed in *note Extension Declaration::.
+
+   Grammar of an actor declaration
+
+   actor-declaration → attributes _{opt} access-level-modifier _{opt}
+‘actor’ actor-name generic-parameter-clause _{opt}
+type-inheritance-clause _{opt} generic-where-clause _{opt} actor-body
+
+   actor-name → identifier
+
+   actor-body → ‘{’ actor-members _{opt} ‘}’
+
+   actor-members → actor-member actor-members _{opt}
+
+   actor-member → declaration
+   compiler-control-statement
+
+
+File: swift-reference.info,  Node: Protocol Declaration,  Next: Initializer Declaration,  Prev: Actor Declaration,  Up: Declarations
+
+7.12 Protocol Declaration
 =========================
 
 A _protocol declaration_ introduces a named protocol type into your
@@ -6557,7 +6769,7 @@ generic-where-clause _{opt} protocol-body
 
 File: swift-reference.info,  Node: Protocol Property Declaration,  Next: Protocol Method Declaration,  Up: Protocol Declaration
 
-7.11.1 Protocol Property Declaration
+7.12.1 Protocol Property Declaration
 ------------------------------------
 
 Protocols declare that conforming types must implement a property by
@@ -6604,7 +6816,7 @@ variable-name type-annotation getter-setter-keyword-block
 
 File: swift-reference.info,  Node: Protocol Method Declaration,  Next: Protocol Initializer Declaration,  Prev: Protocol Property Declaration,  Up: Protocol Declaration
 
-7.11.2 Protocol Method Declaration
+7.12.2 Protocol Method Declaration
 ----------------------------------
 
 Protocols declare that conforming types must implement a method by
@@ -6637,7 +6849,7 @@ _{opt}
 
 File: swift-reference.info,  Node: Protocol Initializer Declaration,  Next: Protocol Subscript Declaration,  Prev: Protocol Method Declaration,  Up: Protocol Declaration
 
-7.11.3 Protocol Initializer Declaration
+7.12.3 Protocol Initializer Declaration
 ---------------------------------------
 
 Protocols declare that conforming types must implement an initializer by
@@ -6671,7 +6883,7 @@ generic-where-clause _{opt}
 
 File: swift-reference.info,  Node: Protocol Subscript Declaration,  Next: Protocol Associated Type Declaration,  Prev: Protocol Initializer Declaration,  Up: Protocol Declaration
 
-7.11.4 Protocol Subscript Declaration
+7.12.4 Protocol Subscript Declaration
 -------------------------------------
 
 Protocols declare that conforming types must implement a subscript by
@@ -6709,7 +6921,7 @@ generic-where-clause _{opt} getter-setter-keyword-block
 
 File: swift-reference.info,  Node: Protocol Associated Type Declaration,  Prev: Protocol Subscript Declaration,  Up: Protocol Declaration
 
-7.11.5 Protocol Associated Type Declaration
+7.12.5 Protocol Associated Type Declaration
 -------------------------------------------
 
 Protocols declare associated types using the ‘associatedtype’ keyword.
@@ -6749,7 +6961,7 @@ generic-where-clause _{opt}
 
 File: swift-reference.info,  Node: Initializer Declaration,  Next: Deinitializer Declaration,  Prev: Protocol Declaration,  Up: Declarations
 
-7.12 Initializer Declaration
+7.13 Initializer Declaration
 ============================
 
 An _initializer declaration_ introduces an initializer for a class,
@@ -6836,7 +7048,7 @@ appropriate behavior.
 
 File: swift-reference.info,  Node: Failable Initializers,  Up: Initializer Declaration
 
-7.12.1 Failable Initializers
+7.13.1 Failable Initializers
 ----------------------------
 
 A _failable initializer_ is a type of initializer that produces an
@@ -6924,7 +7136,7 @@ initializer-body
 
 File: swift-reference.info,  Node: Deinitializer Declaration,  Next: Extension Declaration,  Prev: Initializer Declaration,  Up: Declarations
 
-7.13 Deinitializer Declaration
+7.14 Deinitializer Declaration
 ==============================
 
 A _deinitializer declaration_ declares a deinitializer for a class type.
@@ -6957,7 +7169,7 @@ see *note Deinitialization: (swift)Deinitialization.
 
 File: swift-reference.info,  Node: Extension Declaration,  Next: Subscript Declaration,  Prev: Deinitializer Declaration,  Up: Declarations
 
-7.14 Extension Declaration
+7.15 Extension Declaration
 ==========================
 
 An _extension declaration_ allows you to extend the behavior of existing
@@ -7016,7 +7228,7 @@ _type name_ and colon.
 
 File: swift-reference.info,  Node: Conditional Conformance,  Next: Protocol Conformance Must Not Be Redundant,  Up: Extension Declaration
 
-7.14.1 Conditional Conformance
+7.15.1 Conditional Conformance
 ------------------------------
 
 You can extend a generic type to conditionally conform to a protocol, so
@@ -7103,7 +7315,7 @@ including _requirements_ in an extension declaration.
 
 File: swift-reference.info,  Node: Protocol Conformance Must Not Be Redundant,  Prev: Conditional Conformance,  Up: Extension Declaration
 
-7.14.2 Protocol Conformance Must Not Be Redundant
+7.15.2 Protocol Conformance Must Not Be Redundant
 -------------------------------------------------
 
 A concrete type can conform to a particular protocol only once.  Swift
@@ -7214,7 +7426,7 @@ situations are discussed in the sections below.
 
 File: swift-reference.info,  Node: Subscript Declaration,  Next: Operator Declaration,  Prev: Extension Declaration,  Up: Declarations
 
-7.15 Subscript Declaration
+7.16 Subscript Declaration
 ==========================
 
 A _subscript_ declaration allows you to add subscripting support for
@@ -7278,6 +7490,24 @@ Protocol Subscript Declaration.
    For more information about subscripting and to see examples of
 subscript declarations, see *note Subscripts: (swift)Subscripts.
 
+* Menu:
+
+* Type Subscript Declarations::
+
+
+File: swift-reference.info,  Node: Type Subscript Declarations,  Up: Subscript Declaration
+
+7.16.1 Type Subscript Declarations
+----------------------------------
+
+To declare a subscript that’s exposed by the type, rather than by
+instances of the type, mark the subscript declaration with the ‘static’
+declaration modifier.  Classes can mark type computed properties with
+the ‘class’ declaration modifier instead to allow subclasses to override
+the superclass’s implementation.  In a class declaration, the ‘static’
+keyword has the same effect as marking the declaration with both the
+‘class’ and ‘final’ declaration modifiers.
+
    Grammar of a subscript declaration
 
    subscript-declaration → subscript-head subscript-result
@@ -7297,7 +7527,7 @@ generic-where-clause _{opt} getter-setter-keyword-block
 
 File: swift-reference.info,  Node: Operator Declaration,  Next: Precedence Group Declaration,  Prev: Subscript Declaration,  Up: Declarations
 
-7.16 Operator Declaration
+7.17 Operator Declaration
 =========================
 
 An _operator declaration_ introduces a new infix, prefix, or postfix
@@ -7379,7 +7609,7 @@ infix-operator-group _{opt}
 
 File: swift-reference.info,  Node: Precedence Group Declaration,  Next: Declaration Modifiers,  Prev: Operator Declaration,  Up: Declarations
 
-7.17 Precedence Group Declaration
+7.18 Precedence Group Declaration
 =================================
 
 A _precedence group declaration_ introduces a new grouping for infix
@@ -7480,7 +7710,7 @@ precedence-group-attributes _{opt}
 
 File: swift-reference.info,  Node: Declaration Modifiers,  Prev: Precedence Group Declaration,  Up: Declarations
 
-7.18 Declaration Modifiers
+7.19 Declaration Modifiers
 ==========================
 
 _Declaration modifiers_ are keywords or context-sensitive keywords that
@@ -7596,7 +7826,7 @@ and the keyword that introduces the declaration.
 
 File: swift-reference.info,  Node: Access Control Levels,  Up: Declaration Modifiers
 
-7.18.1 Access Control Levels
+7.19.1 Access Control Levels
 ----------------------------
 
 Swift provides five levels of access control: open, public, internal,
@@ -7675,6 +7905,8 @@ _{opt}
    access-level-modifier → ‘open’ | ‘open’ ‘(’ ‘set’ ‘)’
 
    mutation-modifier → ‘mutating’ | ‘nonmutating’
+
+   actor-isolation-modifier → ‘nonisolated’
 
 
 File: swift-reference.info,  Node: Attributes,  Next: Patterns,  Prev: Declarations,  Up: Top
@@ -8008,17 +8240,17 @@ File: swift-reference.info,  Node: dynamicMemberLookup,  Next: frozen,  Prev: dy
 
 Apply this attribute to a class, structure, enumeration, or protocol to
 enable members to be looked up by name at runtime.  The type must
-implement a ‘subscript(dynamicMemberLookup:)’ subscript.
+implement a ‘subscript(dynamicMember:)’ subscript.
 
    In an explicit member expression, if there isn’t a corresponding
 declaration for the named member, the expression is understood as a call
-to the type’s ‘subscript(dynamicMemberLookup:)’ subscript, passing
-information about the member as the argument.  The subscript can accept
-a parameter that’s either a key path or a member name; if you implement
-both subscripts, the subscript that takes key path argument is used.
+to the type’s ‘subscript(dynamicMember:)’ subscript, passing information
+about the member as the argument.  The subscript can accept a parameter
+that’s either a key path or a member name; if you implement both
+subscripts, the subscript that takes key path argument is used.
 
-   An implementation of ‘subscript(dynamicMemberLookup:)’ can accept key
-paths using an argument of type ‘KeyPath’
+   An implementation of ‘subscript(dynamicMember:)’ can accept key paths
+using an argument of type ‘KeyPath’
 (https://developer.apple.com/documentation/swift/keypath)
 [<https://developer.apple.com/documentation/swift/keypath>],
 ‘WritableKeyPath’
@@ -8380,18 +8612,20 @@ to use that type as a property wrapper.  When you apply this attribute
 to a type, you create a custom attribute with the same name as the type.
 Apply that new attribute to a property of a class, structure, or
 enumeration to wrap access to the property through an instance of the
-wrapper type.  Local and global variables can’t use property wrappers.
+wrapper type; apply the attribute to a local stored variable declaration
+to wrap access to the variable the same way.  Computed variables, global
+variables, and constants can’t use property wrappers.
 
    The wrapper must define a ‘wrappedValue’ instance property.  The
 _wrapped value_ of the property is the value that the getter and setter
 for this property expose.  In most cases, ‘wrappedValue’ is a computed
-value, but it can be a stored value instead.  The wrapper is responsible
-for defining and managing any underlying storage needed by its wrapped
-value.  The compiler synthesizes storage for the instance of the wrapper
-type by prefixing the name of the wrapped property with an underscore
-(‘_’)—for example, the wrapper for ‘someProperty’ is stored as
-‘_someProperty’.  The synthesized storage for the wrapper has an access
-control level of ‘private’.
+value, but it can be a stored value instead.  The wrapper defines and
+manages any underlying storage needed by its wrapped value.  The
+compiler synthesizes storage for the instance of the wrapper type by
+prefixing the name of the wrapped property with an underscore (‘_’)—for
+example, the wrapper for ‘someProperty’ is stored as ‘_someProperty’.
+The synthesized storage for the wrapper has an access control level of
+‘private’.
 
    A property that has a property wrapper can include ‘willSet’ and
 ‘didSet’ blocks, but it can’t override the compiler-synthesized ‘get’ or
@@ -8886,14 +9120,14 @@ File: swift-reference.info,  Node: usableFromInline,  Next: warn_unqualified_acc
 Apply this attribute to a function, method, computed property,
 subscript, initializer, or deinitializer declaration to allow that
 symbol to be used in inlinable code that’s defined in the same module as
-the declaration.  The declaration must have the ‘internal’ access level
+the declaration.  The declaration must have the ‘internal’ access-level
 modifier.  A structure or class marked ‘usableFromInline’ can use only
 types that are public or ‘usableFromInline’ for its properties.  An
 enumeration marked ‘usableFromInline’ can use only types that are public
 or ‘usableFromInline’ for the raw values and associated values of its
 cases.
 
-   Like the ‘public’ access level modifier, this attribute exposes the
+   Like the ‘public’ access-level modifier, this attribute exposes the
 declaration as part of the module’s public interface.  Unlike ‘public’,
 the compiler doesn’t allow declarations marked with ‘usableFromInline’
 to be referenced by name in code outside the module, even though the
@@ -8973,7 +9207,7 @@ File: swift-reference.info,  Node: autoclosure,  Next: convention,  Up: Type Att
 
 Apply this attribute to delay the evaluation of an expression by
 automatically wrapping that expression in a closure with no arguments.
-You apply it to a parameter’s type in a method or function declaration,
+You apply it to a parameter’s type in a function or method declaration,
 for a parameter whose type is a function type that takes no arguments
 and that returns a value of the type of the expression.  For an example
 of how to use the ‘autoclosure’ attribute, see *note Autoclosures:
@@ -9006,7 +9240,7 @@ arguments:
    With a few exceptions, a function of any calling convention can be
 used when a function any other calling convention is needed.  A
 nongeneric global function, a local function that doesn’t capture any
-local variables or a closure that doesn’t capture any local variables
+local variables, or a closure that doesn’t capture any local variables
 can be converted to the C calling convention.  Other Swift functions
 can’t be converted to the C calling convention.  A function with the
 Objective-C block calling convention can’t be converted to the C calling
@@ -9018,7 +9252,7 @@ File: swift-reference.info,  Node: escaping,  Prev: convention,  Up: Type Attrib
 8.2.3 escaping
 --------------
 
-Apply this attribute to a parameter’s type in a method or function
+Apply this attribute to a parameter’s type in a function or method
 declaration to indicate that the parameter’s value can be stored for
 later execution.  This means that the value is allowed to outlive the
 lifetime of the call.  Function type parameters with the ‘escaping’ type
@@ -9778,6 +10012,8 @@ _{opt}
 
    implicit-parameter-name → ‘$’ decimal-digits
 
+   property-wrapper-projection → ‘$’ identifier-characters
+
    Grammar of a literal
 
    literal → numeric-literal
@@ -10162,6 +10398,10 @@ _{opt}
 
    try-operator → ‘try’ | ‘try’ ‘?’ | ‘try’ ‘!’
 
+   Grammar of an await expression
+
+   await-operator → ‘await’
+
    Grammar of a binary expression
 
    binary-expression → binary-operator prefix-expression
@@ -10309,7 +10549,7 @@ identifier-list
    capture-list-items → capture-list-item
    capture-list-item ‘,’ capture-list-items
 
-   capture-list-item → capture-specifier _{opt} expression
+   capture-list-item → capture-specifier _{opt} identifier
 
    capture-list-item → capture-specifier _{opt} identifier ‘=’
 expression
@@ -11036,6 +11276,21 @@ type-inheritance-clause _{opt} generic-where-clause _{opt} class-body
    class-member → declaration
    compiler-control-statement
 
+   Grammar of an actor declaration
+
+   actor-declaration attributes _{opt} access-level-modifier _{opt}
+‘actor’ actor-name generic-parameter-clause _{opt}
+type-inheritance-clause _{opt} generic-where-clause _{opt} actor-body
+
+   actor-name → identifier
+
+   actor-body → ‘{’ actor-members _{opt} ‘}’
+
+   actor-members → actor-member actor-members _{opt}
+
+   actor-member → declaration
+   compiler-control-statement
+
    Grammar of a protocol declaration
 
    protocol-declaration → attributes _{opt} access-level-modifier _{opt}
@@ -11206,6 +11461,8 @@ precedence-group-attributes _{opt}
    declaration-modifier → access-level-modifier
 
    declaration-modifier → mutation-modifier
+
+   declaration-modifier → actor-isolation-modifier
 
    declaration-modifiers → declaration-modifier declaration-modifiers
 _{opt}
@@ -11475,181 +11732,185 @@ File: swift-reference.info,  Node: Index,  Prev: Summary of the Grammar,  Up: To
 
 Tag Table:
 Node: Top235
-Node: Language Reference5490
-Node: About the Language Reference5998
-Node: How to Read the Grammar6853
-Node: Lexical Structure8696
-Node: Whitespace and Comments9581
-Node: Identifiers11774
-Node: Keywords and Punctuation15105
-Node: Literals18161
-Node: Integer Literals20694
-Node: Floating-Point Literals23463
-Node: String Literals26442
-Node: Operators34025
-Node: Types40032
-Node: Type Annotation42536
-Node: Type Identifier43376
-Node: Tuple Type44857
-Node: Function Type46363
-Node: Restrictions for Nonescaping Closures50711
-Node: Array Type53258
-Node: Dictionary Type54981
-Node: Optional Type56317
-Node: Implicitly Unwrapped Optional Type58072
-Node: Protocol Composition Type60437
-Node: Opaque Type62523
-Node: Metatype Type64060
-Node: Any Type66734
-Node: Self Type68435
-Node: Type Inheritance Clause70652
-Node: Type Inference72482
-Node: Expressions74226
-Node: Prefix Expressions75267
-Node: In-Out Expression76226
-Node: Try Operator76965
-Node: Binary Expressions78937
-Node: Assignment Operator80602
-Node: Ternary Conditional Operator81457
-Node: Type-Casting Operators82357
-Node: Primary Expressions85213
-Node: Literal Expression86538
-Node: Self Expression92961
-Node: Superclass Expression94658
-Node: Closure Expression95838
-Node: Implicit Member Expression103120
-Node: Parenthesized Expression103758
-Node: Tuple Expression104374
-Node: Wildcard Expression106054
-Node: Key-Path Expression106542
-Node: Selector Expression114978
-Node: Key-Path String Expression117626
-Node: Postfix Expressions120392
-Node: Function Call Expression121861
-Node: Initializer Expression129883
-Node: Explicit Member Expression131509
-Node: Postfix Self Expression134273
-Node: Subscript Expression135162
-Node: Forced-Value Expression136025
-Node: Optional-Chaining Expression137044
-Node: Statements139839
-Node: Loop Statements141808
-Node: For-In Statement142682
-Node: While Statement144110
-Node: Repeat-While Statement145623
-Node: Branch Statements146914
-Node: If Statement147788
-Node: Guard Statement149651
-Node: Labeled Statement160129
-Node: Control Transfer Statements161477
-Node: Break Statement162463
-Node: Continue Statement163840
-Node: Fallthrough Statement165391
-Node: Return Statement166592
-Node: Throw Statement168136
-Node: Defer Statement169235
-Node: Do Statement170755
-Node: Compiler Control Statements173632
-Node: Conditional Compilation Block174404
-Node: Line Control Statement181539
-Node: Compile-Time Diagnostic Statement183388
-Node: Availability Condition184503
-Node: Declarations186677
-Node: Top-Level Code188766
-Node: Code Blocks190165
-Node: Import Declaration190735
-Node: Constant Declaration191896
-Node: Variable Declaration195008
-Node: Stored Variables and Stored Variable Properties196236
-Node: Computed Variables and Computed Properties197634
-Node: Stored Variable Observers and Property Observers199640
-Node: Type Variable Properties204784
-Node: Type Alias Declaration207244
-Node: Function Declaration209990
-Node: Parameter Names212124
-Node: In-Out Parameters213644
-Node: Special Kinds of Parameters216302
-Node: Special Kinds of Methods217892
-Node: Methods with Special Names218978
-Node: Throwing Functions and Methods221689
-Node: Rethrowing Functions and Methods223093
-Node: Functions that Never Return224937
-Node: Enumeration Declaration227104
-Node: Enumerations with Cases of Any Type228963
-Node: Enumerations with Cases of a Raw-Value Type231866
-Node: Accessing Enumeration Cases235348
-Node: Structure Declaration238100
-Node: Class Declaration241072
-Node: Protocol Declaration245415
-Node: Protocol Property Declaration251306
-Node: Protocol Method Declaration253614
-Node: Protocol Initializer Declaration255220
-Node: Protocol Subscript Declaration256693
-Node: Protocol Associated Type Declaration258543
-Node: Initializer Declaration260179
-Node: Failable Initializers263872
-Node: Deinitializer Declaration267402
-Node: Extension Declaration268625
-Node: Conditional Conformance271118
-Node: Protocol Conformance Must Not Be Redundant274460
-Node: Subscript Declaration278894
-Node: Operator Declaration282579
-Node: Precedence Group Declaration285980
-Node: Declaration Modifiers290701
-Node: Access Control Levels296413
-Node: Attributes300124
-Node: Declaration Attributes301197
-Node: available301854
-Node: discardableResult307457
-Node: dynamicCallable307809
-Node: dynamicMemberLookup311827
-Node: frozen314906
-Node: GKInspectable317558
-Node: inlinable317877
-Node: main318961
-Node: nonobjc319909
-Node: NSApplicationMain321143
-Node: NSCopying321735
-Node: NSManaged322336
-Node: objc322896
-Node: objcMembers327635
-Node: propertyWrapper328495
-Node: resultBuilder332559
-Node: requires_stored_property_inits349697
-Node: testable350146
-Node: UIApplicationMain350896
-Node: usableFromInline351799
-Node: warn_unqualified_access353284
-Node: Declaration Attributes Used by Interface Builder354512
-Node: Type Attributes355545
-Node: autoclosure355819
-Node: convention356419
-Node: escaping357868
-Node: Switch Case Attributes358462
-Node: unknown358701
-Node: Patterns359754
-Node: Wildcard Pattern361995
-Node: Identifier Pattern362600
-Node: Value-Binding Pattern363413
-Node: Tuple Pattern364661
-Node: Enumeration Case Pattern366386
-Node: Optional Pattern367905
-Node: Type-Casting Patterns369257
-Node: Expression Pattern370694
-Node: Generic Parameters and Arguments372438
-Node: Generic Parameter Clause373238
-Node: Generic Where Clauses375321
-Node: Generic Argument Clause379292
-Node: Summary of the Grammar381744
-Node: Lexical Structure (1)382223
-Node: Types (1)391626
-Node: Expressions (1)394374
-Node: Statements (1)403428
-Node: Declarations (1)411557
-Node: Attributes (1)425970
-Node: Patterns (1)426803
-Node: Generic Parameters and Arguments (1)428345
-Node: Index429581
+Node: Language Reference5626
+Node: About the Language Reference6134
+Node: How to Read the Grammar6990
+Node: Lexical Structure8833
+Node: Whitespace and Comments9718
+Node: Identifiers11911
+Node: Keywords and Punctuation15242
+Node: Literals18298
+Node: Integer Literals20831
+Node: Floating-Point Literals23600
+Node: String Literals26579
+Node: Operators34162
+Node: Types40169
+Node: Type Annotation42673
+Node: Type Identifier43513
+Node: Tuple Type44994
+Node: Function Type46500
+Node: Restrictions for Nonescaping Closures50848
+Node: Array Type53395
+Node: Dictionary Type55118
+Node: Optional Type56454
+Node: Implicitly Unwrapped Optional Type58209
+Node: Protocol Composition Type60574
+Node: Opaque Type62660
+Node: Metatype Type64197
+Node: Any Type66871
+Node: Self Type68572
+Node: Type Inheritance Clause70789
+Node: Type Inference72619
+Node: Expressions74363
+Node: Prefix Expressions75404
+Node: In-Out Expression76382
+Node: Try Operator77121
+Node: Await Operator79116
+Node: Binary Expressions81273
+Node: Assignment Operator82934
+Node: Ternary Conditional Operator83789
+Node: Type-Casting Operators84689
+Node: Primary Expressions87545
+Node: Literal Expression88870
+Node: Self Expression95293
+Node: Superclass Expression96990
+Node: Closure Expression98170
+Node: Implicit Member Expression105452
+Node: Parenthesized Expression107642
+Node: Tuple Expression108258
+Node: Wildcard Expression109938
+Node: Key-Path Expression110426
+Node: Selector Expression118862
+Node: Key-Path String Expression121510
+Node: Postfix Expressions124276
+Node: Function Call Expression125745
+Node: Initializer Expression133806
+Node: Explicit Member Expression135432
+Node: Postfix Self Expression138196
+Node: Subscript Expression139085
+Node: Forced-Value Expression139948
+Node: Optional-Chaining Expression140967
+Node: Statements143762
+Node: Loop Statements145731
+Node: For-In Statement146605
+Node: While Statement148033
+Node: Repeat-While Statement149546
+Node: Branch Statements150837
+Node: If Statement151711
+Node: Guard Statement153574
+Node: Labeled Statement164052
+Node: Control Transfer Statements165400
+Node: Break Statement166386
+Node: Continue Statement167763
+Node: Fallthrough Statement169314
+Node: Return Statement170515
+Node: Throw Statement172059
+Node: Defer Statement173158
+Node: Do Statement174678
+Node: Compiler Control Statements177555
+Node: Conditional Compilation Block178327
+Node: Line Control Statement185488
+Node: Compile-Time Diagnostic Statement187337
+Node: Availability Condition188452
+Node: Declarations190626
+Node: Top-Level Code192737
+Node: Code Blocks194136
+Node: Import Declaration194706
+Node: Constant Declaration195867
+Node: Variable Declaration198979
+Node: Stored Variables and Stored Variable Properties200207
+Node: Computed Variables and Computed Properties201605
+Node: Stored Variable Observers and Property Observers203611
+Node: Type Variable Properties208755
+Node: Type Alias Declaration211215
+Node: Function Declaration213961
+Node: Parameter Names216134
+Node: In-Out Parameters217654
+Node: Special Kinds of Parameters220312
+Node: Special Kinds of Methods221902
+Node: Methods with Special Names222988
+Node: Throwing Functions and Methods225693
+Node: Rethrowing Functions and Methods227109
+Node: Asynchronous Functions and Methods228960
+Node: Functions that Never Return230096
+Node: Enumeration Declaration232265
+Node: Enumerations with Cases of Any Type234131
+Node: Enumerations with Cases of a Raw-Value Type237034
+Node: Accessing Enumeration Cases240516
+Node: Structure Declaration243268
+Node: Class Declaration246247
+Node: Actor Declaration250594
+Node: Protocol Declaration254346
+Node: Protocol Property Declaration260237
+Node: Protocol Method Declaration262545
+Node: Protocol Initializer Declaration264151
+Node: Protocol Subscript Declaration265624
+Node: Protocol Associated Type Declaration267474
+Node: Initializer Declaration269110
+Node: Failable Initializers272803
+Node: Deinitializer Declaration276333
+Node: Extension Declaration277556
+Node: Conditional Conformance280049
+Node: Protocol Conformance Must Not Be Redundant283391
+Node: Subscript Declaration287825
+Node: Type Subscript Declarations290992
+Node: Operator Declaration292206
+Node: Precedence Group Declaration295607
+Node: Declaration Modifiers300328
+Node: Access Control Levels306040
+Node: Attributes309802
+Node: Declaration Attributes310875
+Node: available311532
+Node: discardableResult317135
+Node: dynamicCallable317487
+Node: dynamicMemberLookup321505
+Node: frozen324566
+Node: GKInspectable327218
+Node: inlinable327537
+Node: main328621
+Node: nonobjc329569
+Node: NSApplicationMain330803
+Node: NSCopying331395
+Node: NSManaged331996
+Node: objc332556
+Node: objcMembers337295
+Node: propertyWrapper338155
+Node: resultBuilder342326
+Node: requires_stored_property_inits359464
+Node: testable359913
+Node: UIApplicationMain360663
+Node: usableFromInline361566
+Node: warn_unqualified_access363051
+Node: Declaration Attributes Used by Interface Builder364279
+Node: Type Attributes365312
+Node: autoclosure365586
+Node: convention366186
+Node: escaping367636
+Node: Switch Case Attributes368230
+Node: unknown368469
+Node: Patterns369522
+Node: Wildcard Pattern371763
+Node: Identifier Pattern372368
+Node: Value-Binding Pattern373181
+Node: Tuple Pattern374429
+Node: Enumeration Case Pattern376154
+Node: Optional Pattern377673
+Node: Type-Casting Patterns379025
+Node: Expression Pattern380462
+Node: Generic Parameters and Arguments382206
+Node: Generic Parameter Clause383006
+Node: Generic Where Clauses385089
+Node: Generic Argument Clause389060
+Node: Summary of the Grammar391512
+Node: Lexical Structure (1)391991
+Node: Types (1)401460
+Node: Expressions (1)404208
+Node: Statements (1)413332
+Node: Declarations (1)421461
+Node: Attributes (1)436363
+Node: Patterns (1)437196
+Node: Generic Parameters and Arguments (1)438738
+Node: Index439974
 
 End Tag Table
 
