@@ -1,7 +1,7 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
 @setfilename swift.info
-@settitle The Swift Programming Language Guide (Swift 5.5)
+@settitle The Swift Programming Language Guide (Swift 5.6)
 @documentencoding UTF-8
 @documentlanguage en
 @syncodeindex vr cp
@@ -16,7 +16,7 @@
 
 @finalout
 @titlepage
-@title The Swift Programming Language Guide (Swift 5.5)
+@title The Swift Programming Language Guide (Swift 5.6)
 @author Apple Inc.
 @end titlepage
 
@@ -24,7 +24,7 @@
 
 @ifnottex
 @node Top
-@top The Swift Programming Language Guide (Swift 5.5)
+@top The Swift Programming Language Guide (Swift 5.6)
 @end ifnottex
 
 @menu
@@ -775,13 +775,13 @@ wait to see what you create with it.
 @node Version Compatibility
 @chapter Version Compatibility
 
-This book describes Swift 5.5, the default version of Swift that's
+This book describes Swift 5.6, the default version of Swift that's
 included in Xcode 13. You can use Xcode 13 to build targets that are
-written in either Swift 5.5, Swift 4.2, or Swift 4.
+written in either Swift 5.6, Swift 4.2, or Swift 4.
 
 When you use Xcode 13 to build Swift 4 and Swift 4.2 code, most Swift
-5.5 functionality is available. That said, the following changes are
-available only to code that uses Swift 5.5 or later:
+5.6 functionality is available. That said, the following changes are
+available only to code that uses Swift 5.6 or later:
 
 @itemize
 @item
@@ -797,10 +797,17 @@ the correct integer type. For example, @samp{UInt64(0xffff_ffff_ffff_ffff)}
 evaluates to the correct value rather than overflowing.
 @end itemize
 
-A target written in Swift 5.5 can depend on a target that's written in
+Concurrency requires Swift 5.6 or later, and a version of the Swift
+standard library that provides the corresponding concurrency types. On
+Apple platforms, set a deployment target of at least iOS 15, macOS 12,
+tvOS 15, or watchOS 8.0.
+
+A target written in Swift 5.6 can depend on a target that's written in
 Swift 4.2 or Swift 4, and vice versa. This means, if you have a large
 project that's divided into multiple frameworks, you can migrate your
-code from Swift 4 to Swift 5.5 one framework at a time.
+code from Swift 4 to Swift 5.6 one framework at a time.
+
+@anchor{GuidedTourxhtml}
 
 @node A Swift Tour
 @chapter A Swift Tour
@@ -951,8 +958,8 @@ print(shoppingList)
 To create an empty array or dictionary, use the initializer syntax.
 
 @example
-let emptyArray = [String]()
-let emptyDictionary = [String: Float]()
+let emptyArray: [String] = []
+let emptyDictionary: [String: Float] = [:]
 @end example
 
 If type information can be inferred, you can write an empty array as
@@ -1832,7 +1839,7 @@ Write a name inside angle brackets to make a generic function or type.
 
 @example
 func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] @{
-    var result = [Item]()
+    var result: [Item] = []
     for _ in 0..<numberOfTimes @{
         result.append(item)
     @}
@@ -2528,9 +2535,9 @@ reported as an error when your code is compiled:
 
 @example
 let cannotBeNegative: UInt8 = -1
-// UInt8 cannot store negative numbers, and so this will report an error
+// UInt8 can't store negative numbers, and so this will report an error
 let tooBig: Int8 = Int8.max + 1
-// Int8 cannot store a number larger than its maximum value,
+// Int8 can't store a number larger than its maximum value,
 // and so this will also report an error
 @end example
 
@@ -3225,7 +3232,7 @@ if the result of the condition is @samp{false}. For example:
 @example
 let age = -3
 assert(age >= 0, "A person's age can't be less than zero.")
-// This assertion fails because -3 is not >= 0.
+// This assertion fails because -3 isn't >= 0.
 @end example
 
 In this example, code execution continues if @samp{age >} 0= evaluates to
@@ -3358,7 +3365,7 @@ one ternary operator, the ternary conditional operator (@samp{a ? b : c}).
 @end itemize
 
 The values that operators affect are @emph{operands}. In the expression
-@samp{1 + 2}, the @samp{+} symbol is a binary operator and its two operands are
+@samp{1 + 2}, the @samp{+} symbol is an infix operator and its two operands are
 the values @samp{1} and @samp{2}.
 
 @node Assignment Operator
@@ -5201,7 +5208,7 @@ You can create an empty array of a certain type using initializer
 syntax:
 
 @example
-var someInts = [Int]()
+var someInts: [Int] = []
 print("someInts is of type [Int] with \(someInts.count) items.")
 // Prints "someInts is of type [Int] with 0 items."
 @end example
@@ -5853,7 +5860,7 @@ As with arrays, you can create an empty @samp{Dictionary} of a certain type
 by using initializer syntax:
 
 @example
-var namesOfIntegers = [Int: String]()
+var namesOfIntegers: [Int: String] = [:]
 // namesOfIntegers is an empty [Int: String] dictionary
 @end example
 
@@ -6778,7 +6785,7 @@ default:
 
 @image{images/coordinateGraphSimple_2x,,,,png}
 The @samp{switch} statement determines whether the point is at the origin (0,
-0), on the red x-axis, on the orange y-axis, inside the blue 4-by-4 box
+0), on the red x-axis, on the green y-axis, inside the blue 4-by-4 box
 centered on the origin, or outside of the box.
 
 Unlike C, Swift allows multiple @samp{switch} cases to consider the same
@@ -6814,7 +6821,7 @@ case let (x, y):
 
 @image{images/coordinateGraphMedium_2x,,,,png}
 The @samp{switch} statement determines whether the point is on the red
-x-axis, on the orange y-axis, or elsewhere (on neither axis).
+x-axis, on the green y-axis, or elsewhere (on neither axis).
 
 The three @samp{switch} cases declare placeholder constants @samp{x} and @samp{y},
 which temporarily take on one or both tuple values from @samp{anotherPoint}.
@@ -7753,6 +7760,14 @@ write as just one @samp{return} line can omit the @samp{return}.
 
 As you'll see in @ref{Shorthand Getter Declaration, , Shorthand Getter
 Declaration}, property getters can also use an implicit return.
+
+Note
+
+The code you write as an implicit return value needs to return some
+value. For example, you can't use @samp{print(13)} as an implicit return
+value. However, you can use a function that never returns like
+@samp{fatalError("Oh no!")} as an implicit return value, because Swift knows
+that the implicit return doesn't happen.
 
 @node Function Argument Labels and Parameter Names
 @section Function Argument Labels and Parameter Names
@@ -8850,7 +8865,7 @@ closure isn't called until the operation is completed---the closure
 needs to escape, to be called later. For example:
 
 @example
-var completionHandlers: [() -> Void]()
+var completionHandlers: [() -> Void] = []
 func someFunctionWithEscapingClosure(completionHandler: @@escaping () -> Void) @{
     completionHandlers.append(completionHandler)
 @}
@@ -9242,7 +9257,7 @@ collection that contains all of the cases of the @samp{Beverage} enumeration.
 You can use @samp{allCases} like any other collection---the collection's
 elements are instances of the enumeration type, so in this case they're
 @samp{Beverage} values. The example above counts how many cases there are,
-and the example below uses a @samp{for} loop to iterate over all the cases.
+and the example below uses a @samp{for}-@samp{in} loop to iterate over all the cases.
 
 @example
 for beverage in Beverage.allCases @{
@@ -10204,7 +10219,7 @@ class DataImporter @{
 
 class DataManager @{
     lazy var importer = DataImporter()
-    var data = [String]()
+    var data: [String] = []
     // the DataManager class would provide data management functionality here
 @}
 
@@ -10326,8 +10341,8 @@ work with the rectangle's @samp{center} as if it were a real stored property.
 
 The example above creates a new @samp{Rect} variable called @samp{square}. The
 @samp{square} variable is initialized with an origin point of @samp{(0, 0)}, and a
-width and height of @samp{10}. This square is represented by the blue square
-in the diagram below.
+width and height of @samp{10}. This square is represented by the light green
+square in the diagram below.
 
 The @samp{square} variable's @samp{center} property is then accessed through dot
 syntax (@samp{square.center}), which causes the getter for @samp{center} to be
@@ -10338,9 +10353,9 @@ correctly returns a center point of @samp{(5, 5)}.
 
 The @samp{center} property is then set to a new value of @samp{(15, 15)}, which
 moves the square up and to the right, to the new position shown by the
-orange square in the diagram below. Setting the @samp{center} property calls
-the setter for @samp{center}, which modifies the @samp{x} and @samp{y} values of the
-stored @samp{origin} property, and moves the square to its new position.
+dark green square in the diagram below. Setting the @samp{center} property
+calls the setter for @samp{center}, which modifies the @samp{x} and @samp{y} values of
+the stored @samp{origin} property, and moves the square to its new position.
 
 @image{images/computedProperties_2x,,,,png}
 
@@ -10599,8 +10614,8 @@ struct TwelveOrLess @{
 @}
 @end example
 
-The setter ensures that new values are less than 12, and the getter
-returns the stored value.
+The setter ensures that new values are less than or equal to 12, and the
+getter returns the stored value.
 
 Note
 
@@ -10687,7 +10702,7 @@ wrap access to the @samp{wrappedValue} property.
 
 The code in the examples above sets the initial value for the wrapped
 property by giving @samp{number} an initial value in the definition of
-@samp{TwelveOrLess}. Code that uses this property wrapper, can't specify a
+@samp{TwelveOrLess}. Code that uses this property wrapper can't specify a
 different initial value for a property that's wrapped by
 @samp{TwelveOrLess}---for example, the definition of @samp{SmallRectangle} can't
 give @samp{height} or @samp{width} initial values. To support setting an initial
@@ -10860,8 +10875,9 @@ adjusted the new value for the property before storing that new value.
 @example
 @@propertyWrapper
 struct SmallNumber @{
-    private var number = 0
-    var projectedValue = false
+    private var number: Int
+    private(set) var projectedValue: Bool
+
     var wrappedValue: Int @{
         get @{ return number @}
         set @{
@@ -10874,6 +10890,10 @@ struct SmallNumber @{
             @}
         @}
     @}
+@}
+init() @{
+    self.number = 0
+    self.projectedValue = false
 @}
 struct SomeStructure @{
     @@SmallNumber var someNumber: Int
@@ -13934,7 +13954,7 @@ color values:
 @example
 struct Chessboard @{
     let boardColors: [Bool] = @{
-        var temporaryBoard = [Bool]()
+        var temporaryBoard: [Bool] = []
         var isBlack = false
         for i in 1...8 @{
             for j in 1...8 @{
@@ -15347,7 +15367,7 @@ Code in the static @samp{main()} method of a structure, class, or
 enumeration that's marked with @samp{@@main}.
 
 @item
-Code in a detached child task, as shown in
+Code in an unstructured child task, as shown in
 @ref{Unstructured Concurrency} below.
 @end itemize
 
@@ -15359,12 +15379,12 @@ The
 method is useful when writing simple code to learn how concurrency
 works. This method does nothing, but waits at least the given number of
 nanoseconds before it returns. Here's a version of the
-@samp{listPhotos(inGallery:)} function that uses @samp{sleep()} to simulate
-waiting for a network operation:
+@samp{listPhotos(inGallery:)} function that uses @samp{sleep(nanoseconds:)} to
+simulate waiting for a network operation:
 
 @example
-func listPhotos(inGallery name: String) async -> [String] @{
-    await Task.sleep(2 * 1_000_000_000) // Two seconds
+func listPhotos(inGallery name: String) async throws -> [String] @{
+    try await Task.sleep(nanoseconds: 2 * 1_000_000_000) // Two seconds
     return ["IMG001", "IMG99", "IMG0404"]
 @}
 @end example
@@ -15499,7 +15519,7 @@ cancellation for you, and lets Swift detect some errors at compile time.
 await withTaskGroup(of: Data.self) @{ taskGroup in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames @{
-        taskGroup.async @{ await downloadPhoto(named: name) @}
+        taskGroup.addTask @{ await downloadPhoto(named: name) @}
     @}
 @}
 @end example
@@ -18376,7 +18396,7 @@ stack of @samp{Int} values:
 
 @example
 struct IntStack @{
-    var items = [Int]()
+    var items: [Int] = []
     mutating func push(_ item: Int) @{
         items.append(item)
     @}
@@ -18394,13 +18414,13 @@ push and pop values on and off the stack. These methods are marked as
 
 The @samp{IntStack} type shown above can only be used with @samp{Int} values,
 however. It would be much more useful to define a @emph{generic} @samp{Stack}
-class, that can manage a stack of @emph{any} type of value.
+structure, that can manage a stack of @emph{any} type of value.
 
 Here's a generic version of the same code:
 
 @example
 struct Stack<Element> @{
-    var items = [Element]()
+    var items: [Element] = []
     mutating func push(_ item: Element) @{
         items.append(item)
     @}
@@ -19317,7 +19337,7 @@ opening curly brace of the subscript's body. For example:
 extension Container @{
     subscript<Indices: Sequence>(indices: Indices) -> [Item]
       where Indices.Iterator.Element == Int @{
-        var result = [Item]()
+        var result: [Item] = []
         for index in indices @{
             result.append(self[index])
         @}
@@ -19386,7 +19406,7 @@ protocol Shape @{
 struct Triangle: Shape @{
     var size: Int
     func draw() -> String @{
-        var result = [String]()
+        var result: [String] = []
         for length in 1...size @{
             result.append(String(repeating: "*", count: length))
         @}
@@ -22422,8 +22442,8 @@ operators. This is known as @emph{overloading} the existing operators.
 
 The example below shows how to implement the arithmetic addition
 operator (@samp{+}) for a custom structure. The arithmetic addition operator
-is a @emph{binary operator} because it operates on two targets and is said to
-be @emph{infix} because it appears in between those two targets.
+is a binary operator because it operates on two targets and it's an
+infix operator because it appears between those two targets.
 
 The example defines a @samp{Vector2D} structure for a two-dimensional
 position vector @samp{(x, y)}, followed by a definition of an @emph{operator

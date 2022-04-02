@@ -1,4 +1,4 @@
-#+TITLE: The Swift Programming Reference (Swift 5.5)
+#+TITLE: The Swift Programming Reference (Swift 5.6)
 
 #+AUTHOR: Apple Inc.
 #+TEXINFO_HEADER: @syncodeindex vr cp
@@ -110,7 +110,7 @@ This behavior is referred to as /longest match/ or /maximal munch/.
 ** Whitespace and Comments
 
 Whitespace has two uses: to separate tokens in the source file and to
-distinguish between prefix, postfix, and binary operators (see
+distinguish between prefix, postfix, and infix operators (see
 [[Operators][Operators]]), but is otherwise ignored.
 The following characters are considered whitespace: space (U+0020), line
 feed (U+000A), carriage return (U+000D), horizontal tab (U+0009),
@@ -338,33 +338,33 @@ expression, so they must be escaped with backticks in that context.
 
 - Keywords used in declarations: =associatedtype=, =class=, =deinit=,
   =enum=, =extension=, =fileprivate=, =func=, =import=, =init=, =inout=,
-  =internal=, =let=, =open=, =operator=, =private=, =protocol=,
-  =public=, =rethrows=, =static=, =struct=, =subscript=, =typealias=,
-  and =var=.
+  =internal=, =let=, =open=, =operator=, =private=, =precedencegroup=,
+  =protocol=, =public=, =rethrows=, =static=, =struct=, =subscript=,
+  =typealias=, and =var=.
 
-- Keywords used in statements: =break=, =case=, =continue=, =default=,
-  =defer=, =do=, =else=, =fallthrough=, =for=, =guard=, =if=, =in=,
-  =repeat=, =return=, =switch=, =where=, and =while=.
+- Keywords used in statements: =break=, =case=, =catch=, =continue=,
+  =default=, =defer=, =do=, =else=, =fallthrough=, =for=, =guard=, =if=,
+  =in=, =repeat=, =return=, =throw=, =switch=, =where=, and =while=.
 
-- Keywords used in expressions and types: =as=, =Any=, =catch=, =false=,
-  =is=, =nil=, =super=, =self=, =Self=, =throw=, =throws=, =true=, and
-  =try=.
+- Keywords used in expressions and types: =Any=, =as=, =catch=, =false=,
+  =is=, =nil=, =rethrows=, =self=, =Self=, =super=, =throw=, =throws=,
+  =true=, and =try=.
 
 - Keywords used in patterns: =_=.
 
 - Keywords that begin with a number sign (=#=): =#available=,
-  =#colorLiteral=, =#column=, =#else=, =#elseif=, =#endif=, =#error=,
-  =#file=, =#fileID=, =#fileLiteral=, =#filePath=, =#function=, =#if=,
-  =#imageLiteral=, =#line=, =#selector=, =#sourceLocation=, and
-  =#warning=.
+  =#colorLiteral=, =#column=, =#dsohandle=, =#elseif=, =#else=,
+  =#endif=, =#error=, =#fileID=, =#fileLiteral=, =#filePath=, =#file=,
+  =#function=, =#if=, =#imageLiteral=, =#keyPath=, =#line=, =#selector=,
+  =#sourceLocation=, and =#warning=.
 
 - Keywords reserved in particular contexts: =associativity=,
-  =convenience=, =dynamic=, =didSet=, =final=, =get=, =infix=,
-  =indirect=, =lazy=, =left=, =mutating=, =none=, =nonmutating=,
+  =convenience=, =didSet=, =dynamic=, =final=, =get=, =indirect=,
+  =infix=, =lazy=, =left=, =mutating=, =none=, =nonmutating=,
   =optional=, =override=, =postfix=, =precedence=, =prefix=, =Protocol=,
-  =required=, =right=, =set=, =Type=, =unowned=, =weak=, and =willSet=.
-  Outside the context in which they appear in the grammar, they can be
-  used as identifiers.
+  =required=, =right=, =set=, =some=, =Type=, =unowned=, =weak=, and
+  =willSet=. Outside the context in which they appear in the grammar,
+  they can be used as identifiers.
 
 The following tokens are reserved as punctuation and can't be used as
 custom operators: =(=, =)=, ={=, =}=, =[=, =]=, =.=, =,=, =:=, =;=, ===,
@@ -972,12 +972,12 @@ The tokens ===, =->=, =//=, =/*=, =*/=, =.=, the prefix operators =<=,
 they be used as custom operators.
 
 The whitespace around an operator is used to determine whether an
-operator is used as a prefix operator, a postfix operator, or a binary
-operator. This behavior is summarized in the following rules:
+operator is used as a prefix operator, a postfix operator, or an infix
+operator. This behavior has the following rules:
 
 - If an operator has whitespace around both sides or around neither
-  side, it's treated as a binary operator. As an example, the =+++=
-  operator in =a+++b= and =a +++ b= is treated as a binary operator.
+  side, it's treated as an infix operator. As an example, the =+++=
+  operator in =a+++b= and =a +++ b= is treated as an infix operator.
 
 - If an operator has whitespace on the left side only, it's treated as a
   prefix unary operator. As an example, the =+++= operator in =a +++b=
@@ -2041,10 +2041,10 @@ In Swift, there are four kinds of expressions: prefix expressions,
 binary expressions, primary expressions, and postfix expressions.
 Evaluating an expression returns a value, causes a side effect, or both.
 
-Prefix and binary expressions let you apply operators to smaller
+Prefix and infix expressions let you apply operators to smaller
 expressions. Primary expressions are conceptually the simplest kind of
 expression, and they provide a way to access values. Postfix
-expressions, like prefix and binary expressions, let you build up more
+expressions, like prefix and infix expressions, let you build up more
 complex expressions using postfixes such as function calls and member
 access. Each kind of expression is described in detail in the sections
 below.
@@ -2147,8 +2147,8 @@ expression that can throw an error. It has the following form:
 
 If the /expression/ throws an error, a runtime error is produced.
 
-When the expression on the left-hand side of a binary operator is marked
-with =try=, =try?=, or =try!=, that operator applies to the whole binary
+When the expression on the left-hand side of an infix operator is marked
+with =try=, =try?=, or =try!=, that operator applies to the whole infix
 expression. That said, you can use parentheses to be explicit about the
 scope of the operator's application.
 
@@ -2158,8 +2158,8 @@ scope of the operator's application.
   sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
 #+END_SRC   
 
-A =try= expression can't appear on the right-hand side of a binary
-operator, unless the binary operator is the assignment operator or the
+A =try= expression can't appear on the right-hand side of an infix
+operator, unless the infix operator is the assignment operator or the
 =try= expression is enclosed in parentheses.
 
 For more information and to see examples of how to use =try=, =try?=,
@@ -2196,8 +2196,8 @@ such as the trailing closure passed to the =async(priority:operation:)=
 function. It can't appear in the body of a =defer= statement, or in an
 autoclosure of synchronous function type.
 
-When the expression on the left-hand side of a binary operator is marked
-with the =await= operator, that operator applies to the whole binary
+When the expression on the left-hand side of an infix operator is marked
+with the =await= operator, that operator applies to the whole infix
 expression. That said, you can use parentheses to be explicit about the
 scope of the operator's application.
 
@@ -2212,8 +2212,8 @@ scope of the operator's application.
   sum = (await someAsyncFunction()) + anotherAsyncFunction()
 #+END_SRC
 
-An =await= expression can't appear on the right-hand side of a binary
-operator, unless the binary operator is the assignment operator or the
+An =await= expression can't appear on the right-hand side of an infix
+operator, unless the infix operator is the assignment operator or the
 =await= expression is enclosed in parentheses.
 
 If an expression includes both the =await= and =try= operator, the =try=
@@ -2223,9 +2223,9 @@ Grammar of an await expression
 
 await-operator → =await=
 
-** Binary Expressions
+** Infix Expressions
 
-/Binary expressions/ combine an infix binary operator with the
+/Infix expressions/ combine an infix binary operator with the
 expression that it takes as its left- and right-hand arguments. It has
 the following form:
 
@@ -2245,36 +2245,36 @@ Declarations]]
 
 Note
 
-At parse time, an expression made up of binary operators is represented
+At parse time, an expression made up of infix operators is represented
 as a flat list. This list is transformed into a tree by applying
 operator precedence. For example, the expression =2 + 3 * 5= is
 initially understood as a flat list of five items, =2=, =+=, =3=, =*=,
 and =5=. This process transforms it into the tree (2 + (3 * 5)).
 
-Grammar of a binary expression
+Grammar of an infix expression
 
-binary-expression →
-binary-operator
+infix-expression →
+infix-operator
 prefix-expression
 
-binary-expression →
+infix-expression →
 assignment-operator
 try-operator
 _{opt}
 prefix-expression
 
-binary-expression →
+infix-expression →
 conditional-operator
 try-operator
 _{opt}
 prefix-expression
 
-binary-expression →
+infix-expression →
 type-casting-operator
 
-binary-expressions →
-binary-expression
-binary-expressions
+infix-expressions →
+infix-expression
+infix-expressions
 _{opt}
 
 
@@ -2411,7 +2411,7 @@ type-casting-operator
 
 /Primary expressions/ are the most basic kind of expression. They can be
 used as expressions on their own, and they can be combined with other
-tokens to make prefix expressions, binary expressions, and postfix
+tokens to make prefix expressions, infix expressions, and postfix
 expressions.
 
 Grammar of a primary expression
@@ -3940,6 +3940,32 @@ several lines:
     .map { $0 * 100 }
 #+END_SRC   
 
+You can combine this multiline chained syntax with compiler control
+statements to control when each method is called. For example, the
+following code uses a different filtering rule on iOS:
+
+#+BEGIN_SRC swift
+  let numbers = [10, 20, 33, 43, 50]
+  #if os(iOS)
+    .filter { $0 < 40 }
+  #else
+    .filter { $0 > 25 }
+  #endif
+#+END_SRC
+
+Between =#if=, =#endif=, and other compilation directives, the
+conditional compilation block can contain an implicit member expression
+followed by zero or more postfixes, to form a postfix expression. It can
+also contain another conditional compilation block, or a combination of
+these expressions and blocks.
+
+You can use this syntax anywhere that you can write an explicit member
+expression, not just in top-level code.
+
+In the conditional compilation block, the branch for the =#if=
+compilation directive must contain at least one expression. The other
+branches can be empty.
+
 Grammar of an explicit member expression
 
 explicit-member-expression
@@ -5378,7 +5404,7 @@ environment
 =)=
 
 operating-system → =macOS=
-| =iOS= | =watchOS= | =tvOS=
+| =iOS= | =watchOS= | =tvOS= | =Linux= | =Windows=
 
 architecture → =i386= |
 =x86_64= | =arm= | =arm64=
@@ -11662,7 +11688,7 @@ expression →
 try-operator
 _{opt}
 prefix-expression
-binary-expressions
+infix-expressions
 _{opt}
 
 expression-list
@@ -11699,35 +11725,35 @@ Grammar of an await expression
 await-operator
 → =await=
 
-Grammar of a binary expression
+Grammar of a infix expression
 
-binary-expression
+infix-expression
 →
-binary-operator
+infix-operator
 prefix-expression
 
-binary-expression
+infix-expression
 →
 assignment-operator
 try-operator
 _{opt}
 prefix-expression
 
-binary-expression
+infix-expression
 →
 conditional-operator
 try-operator
 _{opt}
 prefix-expression
 
-binary-expression
+infix-expression
 →
 type-casting-operator
 
-binary-expressions
+infix-expressions
 →
-binary-expression
-binary-expressions
+infix-expression
+infix-expressions
 _{opt}
 
 Grammar of an assignment operator

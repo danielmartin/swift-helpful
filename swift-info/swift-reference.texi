@@ -1,7 +1,7 @@
 \input texinfo    @c -*- texinfo -*-
 @c %**start of header
 @setfilename swift-reference.info
-@settitle The Swift Programming Reference (Swift 5.5)
+@settitle The Swift Programming Reference (Swift 5.6)
 @documentencoding UTF-8
 @documentlanguage en
 @syncodeindex vr cp
@@ -16,7 +16,7 @@
 
 @finalout
 @titlepage
-@title The Swift Programming Reference (Swift 5.5)
+@title The Swift Programming Reference (Swift 5.6)
 @author Apple Inc.
 @end titlepage
 
@@ -24,7 +24,7 @@
 
 @ifnottex
 @node Top
-@top The Swift Programming Reference (Swift 5.5)
+@top The Swift Programming Reference (Swift 5.6)
 @end ifnottex
 
 @menu
@@ -87,7 +87,7 @@ Function Type
 Expressions
 
 * Prefix Expressions::
-* Binary Expressions::
+* Infix Expressions::
 * Primary Expressions::
 * Postfix Expressions::
 
@@ -97,7 +97,7 @@ Prefix Expressions
 * Try Operator::
 * Await Operator::
 
-Binary Expressions
+Infix Expressions
 
 * Assignment Operator::
 * Ternary Conditional Operator::
@@ -448,7 +448,7 @@ This behavior is referred to as @emph{longest match} or @emph{maximal munch}.
 @section Whitespace and Comments
 
 Whitespace has two uses: to separate tokens in the source file and to
-distinguish between prefix, postfix, and binary operators (see
+distinguish between prefix, postfix, and infix operators (see
 @ref{Operators}), but is otherwise ignored.
 The following characters are considered whitespace: space (U+0020), line
 feed (U+000A), carriage return (U+000D), horizontal tab (U+0009),
@@ -682,38 +682,38 @@ expression, so they must be escaped with backticks in that context.
 @item
 Keywords used in declarations: @samp{associatedtype}, @samp{class}, @samp{deinit},
 @samp{enum}, @samp{extension}, @samp{fileprivate}, @samp{func}, @samp{import}, @samp{init}, @samp{inout},
-@samp{internal}, @samp{let}, @samp{open}, @samp{operator}, @samp{private}, @samp{protocol},
-@samp{public}, @samp{rethrows}, @samp{static}, @samp{struct}, @samp{subscript}, @samp{typealias},
-and @samp{var}.
+@samp{internal}, @samp{let}, @samp{open}, @samp{operator}, @samp{private}, @samp{precedencegroup},
+@samp{protocol}, @samp{public}, @samp{rethrows}, @samp{static}, @samp{struct}, @samp{subscript},
+@samp{typealias}, and @samp{var}.
 
 @item
-Keywords used in statements: @samp{break}, @samp{case}, @samp{continue}, @samp{default},
-@samp{defer}, @samp{do}, @samp{else}, @samp{fallthrough}, @samp{for}, @samp{guard}, @samp{if}, @samp{in},
-@samp{repeat}, @samp{return}, @samp{switch}, @samp{where}, and @samp{while}.
+Keywords used in statements: @samp{break}, @samp{case}, @samp{catch}, @samp{continue},
+@samp{default}, @samp{defer}, @samp{do}, @samp{else}, @samp{fallthrough}, @samp{for}, @samp{guard}, @samp{if},
+@samp{in}, @samp{repeat}, @samp{return}, @samp{throw}, @samp{switch}, @samp{where}, and @samp{while}.
 
 @item
-Keywords used in expressions and types: @samp{as}, @samp{Any}, @samp{catch}, @samp{false},
-@samp{is}, @samp{nil}, @samp{super}, @samp{self}, @samp{Self}, @samp{throw}, @samp{throws}, @samp{true}, and
-@samp{try}.
+Keywords used in expressions and types: @samp{Any}, @samp{as}, @samp{catch}, @samp{false},
+@samp{is}, @samp{nil}, @samp{rethrows}, @samp{self}, @samp{Self}, @samp{super}, @samp{throw}, @samp{throws},
+@samp{true}, and @samp{try}.
 
 @item
 Keywords used in patterns: @samp{_}.
 
 @item
 Keywords that begin with a number sign (@samp{#}): @samp{#available},
-@samp{#colorLiteral}, @samp{#column}, @samp{#else}, @samp{#elseif}, @samp{#endif}, @samp{#error},
-@samp{#file}, @samp{#fileID}, @samp{#fileLiteral}, @samp{#filePath}, @samp{#function}, @samp{#if},
-@samp{#imageLiteral}, @samp{#line}, @samp{#selector}, @samp{#sourceLocation}, and
-@samp{#warning}.
+@samp{#colorLiteral}, @samp{#column}, @samp{#dsohandle}, @samp{#elseif}, @samp{#else},
+@samp{#endif}, @samp{#error}, @samp{#fileID}, @samp{#fileLiteral}, @samp{#filePath}, @samp{#file},
+@samp{#function}, @samp{#if}, @samp{#imageLiteral}, @samp{#keyPath}, @samp{#line}, @samp{#selector},
+@samp{#sourceLocation}, and @samp{#warning}.
 
 @item
 Keywords reserved in particular contexts: @samp{associativity},
-@samp{convenience}, @samp{dynamic}, @samp{didSet}, @samp{final}, @samp{get}, @samp{infix},
-@samp{indirect}, @samp{lazy}, @samp{left}, @samp{mutating}, @samp{none}, @samp{nonmutating},
+@samp{convenience}, @samp{didSet}, @samp{dynamic}, @samp{final}, @samp{get}, @samp{indirect},
+@samp{infix}, @samp{lazy}, @samp{left}, @samp{mutating}, @samp{none}, @samp{nonmutating},
 @samp{optional}, @samp{override}, @samp{postfix}, @samp{precedence}, @samp{prefix}, @samp{Protocol},
-@samp{required}, @samp{right}, @samp{set}, @samp{Type}, @samp{unowned}, @samp{weak}, and @samp{willSet}.
-Outside the context in which they appear in the grammar, they can be
-used as identifiers.
+@samp{required}, @samp{right}, @samp{set}, @samp{some}, @samp{Type}, @samp{unowned}, @samp{weak}, and
+@samp{willSet}. Outside the context in which they appear in the grammar,
+they can be used as identifiers.
 @end itemize
 
 The following tokens are reserved as punctuation and can't be used as
@@ -1359,14 +1359,14 @@ The tokens @samp{=}, @samp{->}, @samp{//}, @samp{/*}, @samp{*/}, @samp{.}, the p
 they be used as custom operators.
 
 The whitespace around an operator is used to determine whether an
-operator is used as a prefix operator, a postfix operator, or a binary
-operator. This behavior is summarized in the following rules:
+operator is used as a prefix operator, a postfix operator, or an infix
+operator. This behavior has the following rules:
 
 @itemize
 @item
 If an operator has whitespace around both sides or around neither
-side, it's treated as a binary operator. As an example, the @samp{+++}
-operator in @samp{a+++b} and @samp{a +++ b} is treated as a binary operator.
+side, it's treated as an infix operator. As an example, the @samp{+++}
+operator in @samp{a+++b} and @samp{a +++ b} is treated as an infix operator.
 
 @item
 If an operator has whitespace on the left side only, it's treated as a
@@ -2486,10 +2486,10 @@ In Swift, there are four kinds of expressions: prefix expressions,
 binary expressions, primary expressions, and postfix expressions.
 Evaluating an expression returns a value, causes a side effect, or both.
 
-Prefix and binary expressions let you apply operators to smaller
+Prefix and infix expressions let you apply operators to smaller
 expressions. Primary expressions are conceptually the simplest kind of
 expression, and they provide a way to access values. Postfix
-expressions, like prefix and binary expressions, let you build up more
+expressions, like prefix and infix expressions, let you build up more
 complex expressions using postfixes such as function calls and member
 access. Each kind of expression is described in detail in the sections
 below.
@@ -2514,7 +2514,7 @@ expression-list
 
 @menu
 * Prefix Expressions::
-* Binary Expressions::
+* Infix Expressions::
 * Primary Expressions::
 * Postfix Expressions::
 @end menu
@@ -2609,8 +2609,8 @@ try! expression
 
 If the @emph{expression} throws an error, a runtime error is produced.
 
-When the expression on the left-hand side of a binary operator is marked
-with @samp{try}, @samp{try?}, or @samp{try!}, that operator applies to the whole binary
+When the expression on the left-hand side of an infix operator is marked
+with @samp{try}, @samp{try?}, or @samp{try!}, that operator applies to the whole infix
 expression. That said, you can use parentheses to be explicit about the
 scope of the operator's application.
 
@@ -2620,8 +2620,8 @@ sum = try (someThrowingFunction() + anotherThrowingFunction()) // try applies to
 sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
 @end example
 
-A @samp{try} expression can't appear on the right-hand side of a binary
-operator, unless the binary operator is the assignment operator or the
+A @samp{try} expression can't appear on the right-hand side of an infix
+operator, unless the infix operator is the assignment operator or the
 @samp{try} expression is enclosed in parentheses.
 
 For more information and to see examples of how to use @samp{try}, @samp{try?},
@@ -2659,8 +2659,8 @@ such as the trailing closure passed to the @samp{async(priority:operation:)}
 function. It can't appear in the body of a @samp{defer} statement, or in an
 autoclosure of synchronous function type.
 
-When the expression on the left-hand side of a binary operator is marked
-with the @samp{await} operator, that operator applies to the whole binary
+When the expression on the left-hand side of an infix operator is marked
+with the @samp{await} operator, that operator applies to the whole infix
 expression. That said, you can use parentheses to be explicit about the
 scope of the operator's application.
 
@@ -2675,8 +2675,8 @@ sum = await (someAsyncFunction() + anotherAsyncFunction())
 sum = (await someAsyncFunction()) + anotherAsyncFunction()
 @end example
 
-An @samp{await} expression can't appear on the right-hand side of a binary
-operator, unless the binary operator is the assignment operator or the
+An @samp{await} expression can't appear on the right-hand side of an infix
+operator, unless the infix operator is the assignment operator or the
 @samp{await} expression is enclosed in parentheses.
 
 If an expression includes both the @samp{await} and @samp{try} operator, the @samp{try}
@@ -2686,10 +2686,10 @@ Grammar of an await expression
 
 await-operator → @samp{await}
 
-@node Binary Expressions
-@section Binary Expressions
+@node Infix Expressions
+@section Infix Expressions
 
-@emph{Binary expressions} combine an infix binary operator with the
+@emph{Infix expressions} combine an infix binary operator with the
 expression that it takes as its left- and right-hand arguments. It has
 the following form:
 
@@ -2709,36 +2709,36 @@ Declarations}
 
 Note
 
-At parse time, an expression made up of binary operators is represented
+At parse time, an expression made up of infix operators is represented
 as a flat list. This list is transformed into a tree by applying
 operator precedence. For example, the expression @samp{2 + 3 * 5} is
 initially understood as a flat list of five items, @samp{2}, @samp{+}, @samp{3}, @samp{*},
 and @samp{5}. This process transforms it into the tree (2 + (3 * 5)).
 
-Grammar of a binary expression
+Grammar of an infix expression
 
-binary-expression →
-binary-operator
+infix-expression →
+infix-operator
 prefix-expression
 
-binary-expression →
+infix-expression →
 assignment-operator
 try-operator
 _@{opt@}
 prefix-expression
 
-binary-expression →
+infix-expression →
 conditional-operator
 try-operator
 _@{opt@}
 prefix-expression
 
-binary-expression →
+infix-expression →
 type-casting-operator
 
-binary-expressions →
-binary-expression
-binary-expressions
+infix-expressions →
+infix-expression
+infix-expressions
 _@{opt@}
 
 @menu
@@ -2881,7 +2881,7 @@ type-casting-operator
 
 @emph{Primary expressions} are the most basic kind of expression. They can be
 used as expressions on their own, and they can be combined with other
-tokens to make prefix expressions, binary expressions, and postfix
+tokens to make prefix expressions, infix expressions, and postfix
 expressions.
 
 Grammar of a primary expression
@@ -4516,6 +4516,32 @@ let x = [10, 3, 20, 15, 4]
   .map @{ $0 * 100 @}
 @end example
 
+You can combine this multiline chained syntax with compiler control
+statements to control when each method is called. For example, the
+following code uses a different filtering rule on iOS:
+
+@example
+let numbers = [10, 20, 33, 43, 50]
+#if os(iOS)
+  .filter @{ $0 < 40 @}
+#else
+  .filter @{ $0 > 25 @}
+#endif
+@end example
+
+Between @samp{#if}, @samp{#endif}, and other compilation directives, the
+conditional compilation block can contain an implicit member expression
+followed by zero or more postfixes, to form a postfix expression. It can
+also contain another conditional compilation block, or a combination of
+these expressions and blocks.
+
+You can use this syntax anywhere that you can write an explicit member
+expression, not just in top-level code.
+
+In the conditional compilation block, the branch for the @samp{#if}
+compilation directive must contain at least one expression. The other
+branches can be empty.
+
 Grammar of an explicit member expression
 
 explicit-member-expression
@@ -6033,10 +6059,12 @@ environment
 @samp{)}
 
 operating-system → @samp{macOS}
-@multitable {aaaaa} {aaaaaaaaa} {aaaaaa}
+@multitable {aaaaa} {aaaaaaaaa} {aaaaaa} {aaaaaaa} {aaaaaaaaa}
 @item @samp{iOS}
 @tab @samp{watchOS}
 @tab @samp{tvOS}
+@tab @samp{Linux}
+@tab @samp{Windows}
 @end multitable
 
 architecture → @samp{i386} |
@@ -12714,7 +12742,7 @@ expression →
 try-operator
 _@{opt@}
 prefix-expression
-binary-expressions
+infix-expressions
 _@{opt@}
 
 expression-list
@@ -12753,35 +12781,35 @@ Grammar of an await expression
 await-operator
 → @samp{await}
 
-Grammar of a binary expression
+Grammar of a infix expression
 
-binary-expression
+infix-expression
 →
-binary-operator
+infix-operator
 prefix-expression
 
-binary-expression
+infix-expression
 →
 assignment-operator
 try-operator
 _@{opt@}
 prefix-expression
 
-binary-expression
+infix-expression
 →
 conditional-operator
 try-operator
 _@{opt@}
 prefix-expression
 
-binary-expression
+infix-expression
 →
 type-casting-operator
 
-binary-expressions
+infix-expressions
 →
-binary-expression
-binary-expressions
+infix-expression
+infix-expressions
 _@{opt@}
 
 Grammar of an assignment operator

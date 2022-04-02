@@ -1,4 +1,4 @@
-This is swift-reference.info, produced by makeinfo version 6.7 from
+This is swift-reference.info, produced by makeinfo version 6.8 from
 swift-reference.texi.
 
 INFO-DIR-SECTION Emacs
@@ -9,7 +9,7 @@ END-INFO-DIR-ENTRY
 
 File: swift-reference.info,  Node: Top,  Next: Language Reference,  Up: (dir)
 
-The Swift Programming Reference (Swift 5.5)
+The Swift Programming Reference (Swift 5.6)
 *******************************************
 
 * Menu:
@@ -72,7 +72,7 @@ Function Type
 Expressions
 
 * Prefix Expressions::
-* Binary Expressions::
+* Infix Expressions::
 * Primary Expressions::
 * Postfix Expressions::
 
@@ -82,7 +82,7 @@ Prefix Expressions
 * Try Operator::
 * Await Operator::
 
-Binary Expressions
+Infix Expressions
 
 * Assignment Operator::
 * Ternary Conditional Operator::
@@ -411,7 +411,7 @@ File: swift-reference.info,  Node: Whitespace and Comments,  Next: Identifiers, 
 ===========================
 
 Whitespace has two uses: to separate tokens in the source file and to
-distinguish between prefix, postfix, and binary operators (see *note
+distinguish between prefix, postfix, and infix operators (see *note
 Operators::), but is otherwise ignored.  The following characters are
 considered whitespace: space (U+0020), line feed (U+000A), carriage
 return (U+000D), horizontal tab (U+0009), vertical tab (U+000B), form
@@ -586,32 +586,33 @@ escaped with backticks in that context.
    • Keywords used in declarations: ‘associatedtype’, ‘class’, ‘deinit’,
      ‘enum’, ‘extension’, ‘fileprivate’, ‘func’, ‘import’, ‘init’,
      ‘inout’, ‘internal’, ‘let’, ‘open’, ‘operator’, ‘private’,
-     ‘protocol’, ‘public’, ‘rethrows’, ‘static’, ‘struct’, ‘subscript’,
-     ‘typealias’, and ‘var’.
+     ‘precedencegroup’, ‘protocol’, ‘public’, ‘rethrows’, ‘static’,
+     ‘struct’, ‘subscript’, ‘typealias’, and ‘var’.
 
-   • Keywords used in statements: ‘break’, ‘case’, ‘continue’,
+   • Keywords used in statements: ‘break’, ‘case’, ‘catch’, ‘continue’,
      ‘default’, ‘defer’, ‘do’, ‘else’, ‘fallthrough’, ‘for’, ‘guard’,
-     ‘if’, ‘in’, ‘repeat’, ‘return’, ‘switch’, ‘where’, and ‘while’.
+     ‘if’, ‘in’, ‘repeat’, ‘return’, ‘throw’, ‘switch’, ‘where’, and
+     ‘while’.
 
-   • Keywords used in expressions and types: ‘as’, ‘Any’, ‘catch’,
-     ‘false’, ‘is’, ‘nil’, ‘super’, ‘self’, ‘Self’, ‘throw’, ‘throws’,
-     ‘true’, and ‘try’.
+   • Keywords used in expressions and types: ‘Any’, ‘as’, ‘catch’,
+     ‘false’, ‘is’, ‘nil’, ‘rethrows’, ‘self’, ‘Self’, ‘super’, ‘throw’,
+     ‘throws’, ‘true’, and ‘try’.
 
    • Keywords used in patterns: ‘_’.
 
    • Keywords that begin with a number sign (‘#’): ‘#available’,
-     ‘#colorLiteral’, ‘#column’, ‘#else’, ‘#elseif’, ‘#endif’, ‘#error’,
-     ‘#file’, ‘#fileID’, ‘#fileLiteral’, ‘#filePath’, ‘#function’,
-     ‘#if’, ‘#imageLiteral’, ‘#line’, ‘#selector’, ‘#sourceLocation’,
-     and ‘#warning’.
+     ‘#colorLiteral’, ‘#column’, ‘#dsohandle’, ‘#elseif’, ‘#else’,
+     ‘#endif’, ‘#error’, ‘#fileID’, ‘#fileLiteral’, ‘#filePath’,
+     ‘#file’, ‘#function’, ‘#if’, ‘#imageLiteral’, ‘#keyPath’, ‘#line’,
+     ‘#selector’, ‘#sourceLocation’, and ‘#warning’.
 
    • Keywords reserved in particular contexts: ‘associativity’,
-     ‘convenience’, ‘dynamic’, ‘didSet’, ‘final’, ‘get’, ‘infix’,
-     ‘indirect’, ‘lazy’, ‘left’, ‘mutating’, ‘none’, ‘nonmutating’,
+     ‘convenience’, ‘didSet’, ‘dynamic’, ‘final’, ‘get’, ‘indirect’,
+     ‘infix’, ‘lazy’, ‘left’, ‘mutating’, ‘none’, ‘nonmutating’,
      ‘optional’, ‘override’, ‘postfix’, ‘precedence’, ‘prefix’,
-     ‘Protocol’, ‘required’, ‘right’, ‘set’, ‘Type’, ‘unowned’, ‘weak’,
-     and ‘willSet’.  Outside the context in which they appear in the
-     grammar, they can be used as identifiers.
+     ‘Protocol’, ‘required’, ‘right’, ‘set’, ‘some’, ‘Type’, ‘unowned’,
+     ‘weak’, and ‘willSet’.  Outside the context in which they appear in
+     the grammar, they can be used as identifiers.
 
    The following tokens are reserved as punctuation and can’t be used as
 custom operators: ‘(’, ‘)’, ‘{’, ‘}’, ‘[’, ‘]’, ‘.’, ‘,’, ‘:’, ‘;’, ‘=’,
@@ -1082,12 +1083,12 @@ exclamation point.
 can they be used as custom operators.
 
    The whitespace around an operator is used to determine whether an
-operator is used as a prefix operator, a postfix operator, or a binary
-operator.  This behavior is summarized in the following rules:
+operator is used as a prefix operator, a postfix operator, or an infix
+operator.  This behavior has the following rules:
 
    • If an operator has whitespace around both sides or around neither
-     side, it’s treated as a binary operator.  As an example, the ‘+++’
-     operator in ‘a+++b’ and ‘a +++ b’ is treated as a binary operator.
+     side, it’s treated as an infix operator.  As an example, the ‘+++’
+     operator in ‘a+++b’ and ‘a +++ b’ is treated as an infix operator.
 
    • If an operator has whitespace on the left side only, it’s treated
      as a prefix unary operator.  As an example, the ‘+++’ operator in
@@ -2068,10 +2069,10 @@ In Swift, there are four kinds of expressions: prefix expressions,
 binary expressions, primary expressions, and postfix expressions.
 Evaluating an expression returns a value, causes a side effect, or both.
 
-   Prefix and binary expressions let you apply operators to smaller
+   Prefix and infix expressions let you apply operators to smaller
 expressions.  Primary expressions are conceptually the simplest kind of
 expression, and they provide a way to access values.  Postfix
-expressions, like prefix and binary expressions, let you build up more
+expressions, like prefix and infix expressions, let you build up more
 complex expressions using postfixes such as function calls and member
 access.  Each kind of expression is described in detail in the sections
 below.
@@ -2087,12 +2088,12 @@ _{opt}
 * Menu:
 
 * Prefix Expressions::
-* Binary Expressions::
+* Infix Expressions::
 * Primary Expressions::
 * Postfix Expressions::
 
 
-File: swift-reference.info,  Node: Prefix Expressions,  Next: Binary Expressions,  Up: Expressions
+File: swift-reference.info,  Node: Prefix Expressions,  Next: Infix Expressions,  Up: Expressions
 
 5.1 Prefix Expressions
 ======================
@@ -2177,17 +2178,17 @@ an expression that can throw an error.  It has the following form:
 
    If the _expression_ throws an error, a runtime error is produced.
 
-   When the expression on the left-hand side of a binary operator is
+   When the expression on the left-hand side of an infix operator is
 marked with ‘try’, ‘try?’, or ‘try!’, that operator applies to the whole
-binary expression.  That said, you can use parentheses to be explicit
+infix expression.  That said, you can use parentheses to be explicit
 about the scope of the operator’s application.
 
      sum = try someThrowingFunction() + anotherThrowingFunction() // try applies to both function calls
      sum = try (someThrowingFunction() + anotherThrowingFunction()) // try applies to both function calls
      sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
 
-   A ‘try’ expression can’t appear on the right-hand side of a binary
-operator, unless the binary operator is the assignment operator or the
+   A ‘try’ expression can’t appear on the right-hand side of an infix
+operator, unless the infix operator is the assignment operator or the
 ‘try’ expression is enclosed in parentheses.
 
    For more information and to see examples of how to use ‘try’, ‘try?’,
@@ -2224,9 +2225,9 @@ such as the trailing closure passed to the ‘async(priority:operation:)’
 function.  It can’t appear in the body of a ‘defer’ statement, or in an
 autoclosure of synchronous function type.
 
-   When the expression on the left-hand side of a binary operator is
+   When the expression on the left-hand side of an infix operator is
 marked with the ‘await’ operator, that operator applies to the whole
-binary expression.  That said, you can use parentheses to be explicit
+infix expression.  That said, you can use parentheses to be explicit
 about the scope of the operator’s application.
 
      // await applies to both function calls
@@ -2238,8 +2239,8 @@ about the scope of the operator’s application.
      // Error: await applies only to the first function call
      sum = (await someAsyncFunction()) + anotherAsyncFunction()
 
-   An ‘await’ expression can’t appear on the right-hand side of a binary
-operator, unless the binary operator is the assignment operator or the
+   An ‘await’ expression can’t appear on the right-hand side of an infix
+operator, unless the infix operator is the assignment operator or the
 ‘await’ expression is enclosed in parentheses.
 
    If an expression includes both the ‘await’ and ‘try’ operator, the
@@ -2250,14 +2251,14 @@ operator, unless the binary operator is the assignment operator or the
    await-operator → ‘await’
 
 
-File: swift-reference.info,  Node: Binary Expressions,  Next: Primary Expressions,  Prev: Prefix Expressions,  Up: Expressions
+File: swift-reference.info,  Node: Infix Expressions,  Next: Primary Expressions,  Prev: Prefix Expressions,  Up: Expressions
 
-5.2 Binary Expressions
-======================
+5.2 Infix Expressions
+=====================
 
-_Binary expressions_ combine an infix binary operator with the
-expression that it takes as its left- and right-hand arguments.  It has
-the following form:
+_Infix expressions_ combine an infix binary operator with the expression
+that it takes as its left- and right-hand arguments.  It has the
+following form:
 
      left-hand argument operator right-hand argument
 
@@ -2272,25 +2273,25 @@ library, see Operator Declarations
 
    Note
 
-   At parse time, an expression made up of binary operators is
+   At parse time, an expression made up of infix operators is
 represented as a flat list.  This list is transformed into a tree by
 applying operator precedence.  For example, the expression ‘2 + 3 * 5’
 is initially understood as a flat list of five items, ‘2’, ‘+’, ‘3’,
 ‘*’, and ‘5’.  This process transforms it into the tree (2 + (3 * 5)).
 
-   Grammar of a binary expression
+   Grammar of an infix expression
 
-   binary-expression → binary-operator prefix-expression
+   infix-expression → infix-operator prefix-expression
 
-   binary-expression → assignment-operator try-operator _{opt}
+   infix-expression → assignment-operator try-operator _{opt}
 prefix-expression
 
-   binary-expression → conditional-operator try-operator _{opt}
+   infix-expression → conditional-operator try-operator _{opt}
 prefix-expression
 
-   binary-expression → type-casting-operator
+   infix-expression → type-casting-operator
 
-   binary-expressions → binary-expression binary-expressions _{opt}
+   infix-expressions → infix-expression infix-expressions _{opt}
 
 * Menu:
 
@@ -2299,7 +2300,7 @@ prefix-expression
 * Type-Casting Operators::
 
 
-File: swift-reference.info,  Node: Assignment Operator,  Next: Ternary Conditional Operator,  Up: Binary Expressions
+File: swift-reference.info,  Node: Assignment Operator,  Next: Ternary Conditional Operator,  Up: Infix Expressions
 
 5.2.1 Assignment Operator
 -------------------------
@@ -2324,7 +2325,7 @@ corresponding part of the _expression_.  For example:
    assignment-operator → ‘=’
 
 
-File: swift-reference.info,  Node: Ternary Conditional Operator,  Next: Type-Casting Operators,  Prev: Assignment Operator,  Up: Binary Expressions
+File: swift-reference.info,  Node: Ternary Conditional Operator,  Next: Type-Casting Operators,  Prev: Assignment Operator,  Up: Infix Expressions
 
 5.2.2 Ternary Conditional Operator
 ----------------------------------
@@ -2347,7 +2348,7 @@ Ternary Conditional Operator: (swift)Ternary Conditional Operator.
    conditional-operator → ‘?’ expression ‘:’
 
 
-File: swift-reference.info,  Node: Type-Casting Operators,  Prev: Ternary Conditional Operator,  Up: Binary Expressions
+File: swift-reference.info,  Node: Type-Casting Operators,  Prev: Ternary Conditional Operator,  Up: Infix Expressions
 
 5.2.3 Type-Casting Operators
 ----------------------------
@@ -2417,14 +2418,14 @@ the type-casting operators, see *note Type Casting: (swift)Type Casting.
    type-casting-operator → ‘as’ ‘!’ type
 
 
-File: swift-reference.info,  Node: Primary Expressions,  Next: Postfix Expressions,  Prev: Binary Expressions,  Up: Expressions
+File: swift-reference.info,  Node: Primary Expressions,  Next: Postfix Expressions,  Prev: Infix Expressions,  Up: Expressions
 
 5.3 Primary Expressions
 =======================
 
 _Primary expressions_ are the most basic kind of expression.  They can
 be used as expressions on their own, and they can be combined with other
-tokens to make prefix expressions, binary expressions, and postfix
+tokens to make prefix expressions, infix expressions, and postfix
 expressions.
 
    Grammar of a primary expression
@@ -3699,6 +3700,30 @@ calls split over several lines:
        .filter { $0 > 5 }
        .map { $0 * 100 }
 
+   You can combine this multiline chained syntax with compiler control
+statements to control when each method is called.  For example, the
+following code uses a different filtering rule on iOS:
+
+     let numbers = [10, 20, 33, 43, 50]
+     #if os(iOS)
+       .filter { $0 < 40 }
+     #else
+       .filter { $0 > 25 }
+     #endif
+
+   Between ‘#if’, ‘#endif’, and other compilation directives, the
+conditional compilation block can contain an implicit member expression
+followed by zero or more postfixes, to form a postfix expression.  It
+can also contain another conditional compilation block, or a combination
+of these expressions and blocks.
+
+   You can use this syntax anywhere that you can write an explicit
+member expression, not just in top-level code.
+
+   In the conditional compilation block, the branch for the ‘#if’
+compilation directive must contain at least one expression.  The other
+branches can be empty.
+
    Grammar of an explicit member expression
 
    explicit-member-expression → postfix-expression ‘.’ decimal-digits
@@ -4926,7 +4951,7 @@ compilation-condition
    platform-condition → ‘targetEnvironment’ ‘(’ environment ‘)’
 
    operating-system → ‘macOS’
-‘iOS’   ‘watchOS’   ‘tvOS’
+‘iOS’   ‘watchOS’   ‘tvOS’   ‘Linux’   ‘Windows’
 
    architecture → ‘i386’ | ‘x86_64’ | ‘arm’ | ‘arm64’
 
@@ -10380,7 +10405,7 @@ File: swift-reference.info,  Node: Expressions (1),  Next: Statements (1),  Prev
 
 Grammar of an expression
 
-   expression → try-operator _{opt} prefix-expression binary-expressions
+   expression → try-operator _{opt} prefix-expression infix-expressions
 _{opt}
 
    expression-list → expression
@@ -10402,19 +10427,19 @@ _{opt}
 
    await-operator → ‘await’
 
-   Grammar of a binary expression
+   Grammar of a infix expression
 
-   binary-expression → binary-operator prefix-expression
+   infix-expression → infix-operator prefix-expression
 
-   binary-expression → assignment-operator try-operator _{opt}
+   infix-expression → assignment-operator try-operator _{opt}
 prefix-expression
 
-   binary-expression → conditional-operator try-operator _{opt}
+   infix-expression → conditional-operator try-operator _{opt}
 prefix-expression
 
-   binary-expression → type-casting-operator
+   infix-expression → type-casting-operator
 
-   binary-expressions → binary-expression binary-expressions _{opt}
+   infix-expressions → infix-expression infix-expressions _{opt}
 
    Grammar of an assignment operator
 
@@ -11732,185 +11757,185 @@ File: swift-reference.info,  Node: Index,  Prev: Summary of the Grammar,  Up: To
 
 Tag Table:
 Node: Top235
-Node: Language Reference5626
-Node: About the Language Reference6134
-Node: How to Read the Grammar6990
-Node: Lexical Structure8833
-Node: Whitespace and Comments9718
-Node: Identifiers11911
-Node: Keywords and Punctuation15242
-Node: Literals18298
-Node: Integer Literals20831
-Node: Floating-Point Literals23600
-Node: String Literals26579
-Node: Operators34162
-Node: Types40169
-Node: Type Annotation42673
-Node: Type Identifier43513
-Node: Tuple Type44994
-Node: Function Type46500
-Node: Restrictions for Nonescaping Closures50848
-Node: Array Type53395
-Node: Dictionary Type55118
-Node: Optional Type56454
-Node: Implicitly Unwrapped Optional Type58209
-Node: Protocol Composition Type60574
-Node: Opaque Type62660
-Node: Metatype Type64197
-Node: Any Type66871
-Node: Self Type68572
-Node: Type Inheritance Clause70789
-Node: Type Inference72619
-Node: Expressions74363
-Node: Prefix Expressions75404
-Node: In-Out Expression76382
-Node: Try Operator77121
-Node: Await Operator79116
-Node: Binary Expressions81273
-Node: Assignment Operator82934
-Node: Ternary Conditional Operator83789
-Node: Type-Casting Operators84689
-Node: Primary Expressions87545
-Node: Literal Expression88870
-Node: Self Expression95293
-Node: Superclass Expression96990
-Node: Closure Expression98170
-Node: Implicit Member Expression105452
-Node: Parenthesized Expression107642
-Node: Tuple Expression108258
-Node: Wildcard Expression109938
-Node: Key-Path Expression110426
-Node: Selector Expression118862
-Node: Key-Path String Expression121510
-Node: Postfix Expressions124276
-Node: Function Call Expression125745
-Node: Initializer Expression133806
-Node: Explicit Member Expression135432
-Node: Postfix Self Expression138196
-Node: Subscript Expression139085
-Node: Forced-Value Expression139948
-Node: Optional-Chaining Expression140967
-Node: Statements143762
-Node: Loop Statements145731
-Node: For-In Statement146605
-Node: While Statement148033
-Node: Repeat-While Statement149546
-Node: Branch Statements150837
-Node: If Statement151711
-Node: Guard Statement153574
-Node: Labeled Statement164052
-Node: Control Transfer Statements165400
-Node: Break Statement166386
-Node: Continue Statement167763
-Node: Fallthrough Statement169314
-Node: Return Statement170515
-Node: Throw Statement172059
-Node: Defer Statement173158
-Node: Do Statement174678
-Node: Compiler Control Statements177555
-Node: Conditional Compilation Block178327
-Node: Line Control Statement185488
-Node: Compile-Time Diagnostic Statement187337
-Node: Availability Condition188452
-Node: Declarations190626
-Node: Top-Level Code192737
-Node: Code Blocks194136
-Node: Import Declaration194706
-Node: Constant Declaration195867
-Node: Variable Declaration198979
-Node: Stored Variables and Stored Variable Properties200207
-Node: Computed Variables and Computed Properties201605
-Node: Stored Variable Observers and Property Observers203611
-Node: Type Variable Properties208755
-Node: Type Alias Declaration211215
-Node: Function Declaration213961
-Node: Parameter Names216134
-Node: In-Out Parameters217654
-Node: Special Kinds of Parameters220312
-Node: Special Kinds of Methods221902
-Node: Methods with Special Names222988
-Node: Throwing Functions and Methods225693
-Node: Rethrowing Functions and Methods227109
-Node: Asynchronous Functions and Methods228960
-Node: Functions that Never Return230096
-Node: Enumeration Declaration232265
-Node: Enumerations with Cases of Any Type234131
-Node: Enumerations with Cases of a Raw-Value Type237034
-Node: Accessing Enumeration Cases240516
-Node: Structure Declaration243268
-Node: Class Declaration246247
-Node: Actor Declaration250594
-Node: Protocol Declaration254346
-Node: Protocol Property Declaration260237
-Node: Protocol Method Declaration262545
-Node: Protocol Initializer Declaration264151
-Node: Protocol Subscript Declaration265624
-Node: Protocol Associated Type Declaration267474
-Node: Initializer Declaration269110
-Node: Failable Initializers272803
-Node: Deinitializer Declaration276333
-Node: Extension Declaration277556
-Node: Conditional Conformance280049
-Node: Protocol Conformance Must Not Be Redundant283391
-Node: Subscript Declaration287825
-Node: Type Subscript Declarations290992
-Node: Operator Declaration292206
-Node: Precedence Group Declaration295607
-Node: Declaration Modifiers300328
-Node: Access Control Levels306040
-Node: Attributes309802
-Node: Declaration Attributes310875
-Node: available311532
-Node: discardableResult317135
-Node: dynamicCallable317487
-Node: dynamicMemberLookup321505
-Node: frozen324566
-Node: GKInspectable327218
-Node: inlinable327537
-Node: main328621
-Node: nonobjc329569
-Node: NSApplicationMain330803
-Node: NSCopying331395
-Node: NSManaged331996
-Node: objc332556
-Node: objcMembers337295
-Node: propertyWrapper338155
-Node: resultBuilder342326
-Node: requires_stored_property_inits359464
-Node: testable359913
-Node: UIApplicationMain360663
-Node: usableFromInline361566
-Node: warn_unqualified_access363051
-Node: Declaration Attributes Used by Interface Builder364279
-Node: Type Attributes365312
-Node: autoclosure365586
-Node: convention366186
-Node: escaping367636
-Node: Switch Case Attributes368230
-Node: unknown368469
-Node: Patterns369522
-Node: Wildcard Pattern371763
-Node: Identifier Pattern372368
-Node: Value-Binding Pattern373181
-Node: Tuple Pattern374429
-Node: Enumeration Case Pattern376154
-Node: Optional Pattern377673
-Node: Type-Casting Patterns379025
-Node: Expression Pattern380462
-Node: Generic Parameters and Arguments382206
-Node: Generic Parameter Clause383006
-Node: Generic Where Clauses385089
-Node: Generic Argument Clause389060
-Node: Summary of the Grammar391512
-Node: Lexical Structure (1)391991
-Node: Types (1)401460
-Node: Expressions (1)404208
-Node: Statements (1)413332
-Node: Declarations (1)421461
-Node: Attributes (1)436363
-Node: Patterns (1)437196
-Node: Generic Parameters and Arguments (1)438738
-Node: Index439974
+Node: Language Reference5624
+Node: About the Language Reference6132
+Node: How to Read the Grammar6988
+Node: Lexical Structure8831
+Node: Whitespace and Comments9716
+Node: Identifiers11908
+Node: Keywords and Punctuation15239
+Node: Literals18411
+Node: Integer Literals20944
+Node: Floating-Point Literals23713
+Node: String Literals26692
+Node: Operators34275
+Node: Types40269
+Node: Type Annotation42773
+Node: Type Identifier43613
+Node: Tuple Type45094
+Node: Function Type46600
+Node: Restrictions for Nonescaping Closures50948
+Node: Array Type53495
+Node: Dictionary Type55218
+Node: Optional Type56554
+Node: Implicitly Unwrapped Optional Type58309
+Node: Protocol Composition Type60674
+Node: Opaque Type62760
+Node: Metatype Type64297
+Node: Any Type66971
+Node: Self Type68672
+Node: Type Inheritance Clause70889
+Node: Type Inference72719
+Node: Expressions74463
+Node: Prefix Expressions75501
+Node: In-Out Expression76478
+Node: Try Operator77217
+Node: Await Operator79210
+Node: Infix Expressions81365
+Node: Assignment Operator83013
+Node: Ternary Conditional Operator83867
+Node: Type-Casting Operators84766
+Node: Primary Expressions87621
+Node: Literal Expression88944
+Node: Self Expression95367
+Node: Superclass Expression97064
+Node: Closure Expression98244
+Node: Implicit Member Expression105526
+Node: Parenthesized Expression107716
+Node: Tuple Expression108332
+Node: Wildcard Expression110012
+Node: Key-Path Expression110500
+Node: Selector Expression118936
+Node: Key-Path String Expression121584
+Node: Postfix Expressions124350
+Node: Function Call Expression125819
+Node: Initializer Expression133880
+Node: Explicit Member Expression135506
+Node: Postfix Self Expression139203
+Node: Subscript Expression140092
+Node: Forced-Value Expression140955
+Node: Optional-Chaining Expression141974
+Node: Statements144769
+Node: Loop Statements146738
+Node: For-In Statement147612
+Node: While Statement149040
+Node: Repeat-While Statement150553
+Node: Branch Statements151844
+Node: If Statement152718
+Node: Guard Statement154581
+Node: Labeled Statement165059
+Node: Control Transfer Statements166407
+Node: Break Statement167393
+Node: Continue Statement168770
+Node: Fallthrough Statement170321
+Node: Return Statement171522
+Node: Throw Statement173066
+Node: Defer Statement174165
+Node: Do Statement175685
+Node: Compiler Control Statements178562
+Node: Conditional Compilation Block179334
+Node: Line Control Statement186525
+Node: Compile-Time Diagnostic Statement188374
+Node: Availability Condition189489
+Node: Declarations191663
+Node: Top-Level Code193774
+Node: Code Blocks195173
+Node: Import Declaration195743
+Node: Constant Declaration196904
+Node: Variable Declaration200016
+Node: Stored Variables and Stored Variable Properties201244
+Node: Computed Variables and Computed Properties202642
+Node: Stored Variable Observers and Property Observers204648
+Node: Type Variable Properties209792
+Node: Type Alias Declaration212252
+Node: Function Declaration214998
+Node: Parameter Names217171
+Node: In-Out Parameters218691
+Node: Special Kinds of Parameters221349
+Node: Special Kinds of Methods222939
+Node: Methods with Special Names224025
+Node: Throwing Functions and Methods226730
+Node: Rethrowing Functions and Methods228146
+Node: Asynchronous Functions and Methods229997
+Node: Functions that Never Return231133
+Node: Enumeration Declaration233302
+Node: Enumerations with Cases of Any Type235168
+Node: Enumerations with Cases of a Raw-Value Type238071
+Node: Accessing Enumeration Cases241553
+Node: Structure Declaration244305
+Node: Class Declaration247284
+Node: Actor Declaration251631
+Node: Protocol Declaration255383
+Node: Protocol Property Declaration261274
+Node: Protocol Method Declaration263582
+Node: Protocol Initializer Declaration265188
+Node: Protocol Subscript Declaration266661
+Node: Protocol Associated Type Declaration268511
+Node: Initializer Declaration270147
+Node: Failable Initializers273840
+Node: Deinitializer Declaration277370
+Node: Extension Declaration278593
+Node: Conditional Conformance281086
+Node: Protocol Conformance Must Not Be Redundant284428
+Node: Subscript Declaration288862
+Node: Type Subscript Declarations292029
+Node: Operator Declaration293243
+Node: Precedence Group Declaration296644
+Node: Declaration Modifiers301365
+Node: Access Control Levels307077
+Node: Attributes310839
+Node: Declaration Attributes311912
+Node: available312569
+Node: discardableResult318172
+Node: dynamicCallable318524
+Node: dynamicMemberLookup322542
+Node: frozen325603
+Node: GKInspectable328255
+Node: inlinable328574
+Node: main329658
+Node: nonobjc330606
+Node: NSApplicationMain331840
+Node: NSCopying332432
+Node: NSManaged333033
+Node: objc333593
+Node: objcMembers338332
+Node: propertyWrapper339192
+Node: resultBuilder343363
+Node: requires_stored_property_inits360501
+Node: testable360950
+Node: UIApplicationMain361700
+Node: usableFromInline362603
+Node: warn_unqualified_access364088
+Node: Declaration Attributes Used by Interface Builder365316
+Node: Type Attributes366349
+Node: autoclosure366623
+Node: convention367223
+Node: escaping368673
+Node: Switch Case Attributes369267
+Node: unknown369506
+Node: Patterns370559
+Node: Wildcard Pattern372800
+Node: Identifier Pattern373405
+Node: Value-Binding Pattern374218
+Node: Tuple Pattern375466
+Node: Enumeration Case Pattern377191
+Node: Optional Pattern378710
+Node: Type-Casting Patterns380062
+Node: Expression Pattern381499
+Node: Generic Parameters and Arguments383243
+Node: Generic Parameter Clause384043
+Node: Generic Where Clauses386126
+Node: Generic Argument Clause390097
+Node: Summary of the Grammar392549
+Node: Lexical Structure (1)393028
+Node: Types (1)402497
+Node: Expressions (1)405245
+Node: Statements (1)414359
+Node: Declarations (1)422488
+Node: Attributes (1)437390
+Node: Patterns (1)438223
+Node: Generic Parameters and Arguments (1)439765
+Node: Index441001
 
 End Tag Table
 

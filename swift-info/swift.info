@@ -8,7 +8,7 @@ END-INFO-DIR-ENTRY
 
 File: swift.info,  Node: Top,  Next: Welcome to Swift,  Up: (dir)
 
-The Swift Programming Language Guide (Swift 5.5)
+The Swift Programming Language Guide (Swift 5.6)
 ************************************************
 
 * Menu:
@@ -753,13 +753,13 @@ File: swift.info,  Node: Version Compatibility,  Next: A Swift Tour,  Prev: Abou
 3 Version Compatibility
 ***********************
 
-This book describes Swift 5.5, the default version of Swift that’s
+This book describes Swift 5.6, the default version of Swift that’s
 included in Xcode 13.  You can use Xcode 13 to build targets that are
-written in either Swift 5.5, Swift 4.2, or Swift 4.
+written in either Swift 5.6, Swift 4.2, or Swift 4.
 
    When you use Xcode 13 to build Swift 4 and Swift 4.2 code, most Swift
-5.5 functionality is available.  That said, the following changes are
-available only to code that uses Swift 5.5 or later:
+5.6 functionality is available.  That said, the following changes are
+available only to code that uses Swift 5.6 or later:
 
    • Functions that return an opaque type require the Swift 5.1 runtime.
 
@@ -771,10 +771,15 @@ available only to code that uses Swift 5.5 or later:
      ‘UInt64(0xffff_ffff_ffff_ffff)’ evaluates to the correct value
      rather than overflowing.
 
-   A target written in Swift 5.5 can depend on a target that’s written
+   Concurrency requires Swift 5.6 or later, and a version of the Swift
+standard library that provides the corresponding concurrency types.  On
+Apple platforms, set a deployment target of at least iOS 15, macOS 12,
+tvOS 15, or watchOS 8.0.
+
+   A target written in Swift 5.6 can depend on a target that’s written
 in Swift 4.2 or Swift 4, and vice versa.  This means, if you have a
 large project that’s divided into multiple frameworks, you can migrate
-your code from Swift 4 to Swift 5.5 one framework at a time.
+your code from Swift 4 to Swift 5.6 one framework at a time.
 
 
 File: swift.info,  Node: A Swift Tour,  Next: Language Guide,  Prev: Version Compatibility,  Up: Top
@@ -915,8 +920,8 @@ allowed after the last element.
 
    To create an empty array or dictionary, use the initializer syntax.
 
-     let emptyArray = [String]()
-     let emptyDictionary = [String: Float]()
+     let emptyArray: [String] = []
+     let emptyDictionary: [String: Float] = [:]
 
    If type information can be inferred, you can write an empty array as
 ‘[]’ and an empty dictionary as ‘[:]’—for example, when you set a new
@@ -1727,7 +1732,7 @@ File: swift.info,  Node: Generics,  Prev: Error Handling,  Up: A Swift Tour
 Write a name inside angle brackets to make a generic function or type.
 
      func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
-         var result = [Item]()
+         var result: [Item] = []
          for _ in 0..<numberOfTimes {
              result.append(item)
          }
@@ -2370,9 +2375,9 @@ that won’t fit into a constant or variable of a sized integer type is
 reported as an error when your code is compiled:
 
      let cannotBeNegative: UInt8 = -1
-     // UInt8 cannot store negative numbers, and so this will report an error
+     // UInt8 can't store negative numbers, and so this will report an error
      let tooBig: Int8 = Int8.max + 1
-     // Int8 cannot store a number larger than its maximum value,
+     // Int8 can't store a number larger than its maximum value,
      // and so this will also report an error
 
    Because each numeric type can store a different range of values, you
@@ -3034,7 +3039,7 @@ if the result of the condition is ‘false’.  For example:
 
      let age = -3
      assert(age >= 0, "A person's age can't be less than zero.")
-     // This assertion fails because -3 is not >= 0.
+     // This assertion fails because -3 isn't >= 0.
 
    In this example, code execution continues if ‘age >’ 0= evaluates to
 ‘true’, that is, if the value of ‘age’ is nonnegative.  If the value of
@@ -3168,7 +3173,7 @@ Operators are unary, binary, or ternary:
      : c’).
 
    The values that operators affect are _operands_.  In the expression
-‘1 + 2’, the ‘+’ symbol is a binary operator and its two operands are
+‘1 + 2’, the ‘+’ symbol is an infix operator and its two operands are
 the values ‘1’ and ‘2’.
 
 
@@ -4979,7 +4984,7 @@ File: swift.info,  Node: Creating an Empty Array,  Next: Creating an Array with 
 You can create an empty array of a certain type using initializer
 syntax:
 
-     var someInts = [Int]()
+     var someInts: [Int] = []
      print("someInts is of type [Int] with \(someInts.count) items.")
      // Prints "someInts is of type [Int] with 0 items."
 
@@ -5603,7 +5608,7 @@ File: swift.info,  Node: Creating an Empty Dictionary,  Next: Creating a Diction
 As with arrays, you can create an empty ‘Dictionary’ of a certain type
 by using initializer syntax:
 
-     var namesOfIntegers = [Int: String]()
+     var namesOfIntegers: [Int: String] = [:]
      // namesOfIntegers is an empty [Int: String] dictionary
 
    This example creates an empty dictionary of type ‘[Int: String]’ to
@@ -6452,7 +6457,7 @@ provision ensures that the ‘switch’ statement is exhaustive.
  [image src="images/coordinateGraphSimple_2x.png" ]
 
      The ‘switch’ statement determines whether the point is at the
-     origin (0, 0), on the red x-axis, on the orange y-axis, inside the
+     origin (0, 0), on the red x-axis, on the green y-axis, inside the
      blue 4-by-4 box centered on the origin, or outside of the box.
 
      Unlike C, Swift allows multiple ‘switch’ cases to consider the same
@@ -6486,7 +6491,7 @@ provision ensures that the ‘switch’ statement is exhaustive.
  [image src="images/coordinateGraphMedium_2x.png" ]
 
      The ‘switch’ statement determines whether the point is on the red
-     x-axis, on the orange y-axis, or elsewhere (on neither axis).
+     x-axis, on the green y-axis, or elsewhere (on neither axis).
 
      The three ‘switch’ cases declare placeholder constants ‘x’ and ‘y’,
      which temporarily take on one or both tuple values from
@@ -7381,6 +7386,14 @@ function that you write as just one ‘return’ line can omit the ‘return’.
 
    As you’ll see in *note Shorthand Getter Declaration: Shorthand Getter
 Declaration, property getters can also use an implicit return.
+
+   Note
+
+   The code you write as an implicit return value needs to return some
+value.  For example, you can’t use ‘print(13)’ as an implicit return
+value.  However, you can use a function that never returns like
+‘fatalError("Oh no!")’ as an implicit return value, because Swift knows
+that the implicit return doesn’t happen.
 
 
 File: swift.info,  Node: Function Argument Labels and Parameter Names,  Next: Function Types,  Prev: Function Parameters and Return Values,  Up: Functions
@@ -8439,7 +8452,7 @@ handler.  The function returns after it starts the operation, but the
 closure isn’t called until the operation is completed—the closure needs
 to escape, to be called later.  For example:
 
-     var completionHandlers: [() -> Void]()
+     var completionHandlers: [() -> Void] = []
      func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
          completionHandlers.append(completionHandler)
      }
@@ -8806,7 +8819,8 @@ collection that contains all of the cases of the ‘Beverage’ enumeration.
 You can use ‘allCases’ like any other collection—the collection’s
 elements are instances of the enumeration type, so in this case they’re
 ‘Beverage’ values.  The example above counts how many cases there are,
-and the example below uses a ‘for’ loop to iterate over all the cases.
+and the example below uses a ‘for’-‘in’ loop to iterate over all the
+cases.
 
      for beverage in Beverage.allCases {
          print(beverage)
@@ -9737,7 +9751,7 @@ full:
 
      class DataManager {
          lazy var importer = DataImporter()
-         var data = [String]()
+         var data: [String] = []
          // the DataManager class would provide data management functionality here
      }
 
@@ -9857,8 +9871,8 @@ stored property.
 
    The example above creates a new ‘Rect’ variable called ‘square’.  The
 ‘square’ variable is initialized with an origin point of ‘(0, 0)’, and a
-width and height of ‘10’.  This square is represented by the blue square
-in the diagram below.
+width and height of ‘10’.  This square is represented by the light green
+square in the diagram below.
 
    The ‘square’ variable’s ‘center’ property is then accessed through
 dot syntax (‘square.center’), which causes the getter for ‘center’ to be
@@ -9869,9 +9883,9 @@ the getter correctly returns a center point of ‘(5, 5)’.
 
    The ‘center’ property is then set to a new value of ‘(15, 15)’, which
 moves the square up and to the right, to the new position shown by the
-orange square in the diagram below.  Setting the ‘center’ property calls
-the setter for ‘center’, which modifies the ‘x’ and ‘y’ values of the
-stored ‘origin’ property, and moves the square to its new position.
+dark green square in the diagram below.  Setting the ‘center’ property
+calls the setter for ‘center’, which modifies the ‘x’ and ‘y’ values of
+the stored ‘origin’ property, and moves the square to its new position.
 
  [image src="images/computedProperties_2x.png" ]
 
@@ -10124,8 +10138,8 @@ number, it stores 12 instead.
          }
      }
 
-   The setter ensures that new values are less than 12, and the getter
-returns the stored value.
+   The setter ensures that new values are less than or equal to 12, and
+the getter returns the stored value.
 
    Note
 
@@ -10204,7 +10218,7 @@ File: swift.info,  Node: Setting Initial Values for Wrapped Properties,  Next: P
 
 The code in the examples above sets the initial value for the wrapped
 property by giving ‘number’ an initial value in the definition of
-‘TwelveOrLess’.  Code that uses this property wrapper, can’t specify a
+‘TwelveOrLess’.  Code that uses this property wrapper can’t specify a
 different initial value for a property that’s wrapped by
 ‘TwelveOrLess’—for example, the definition of ‘SmallRectangle’ can’t
 give ‘height’ or ‘width’ initial values.  To support setting an initial
@@ -10368,8 +10382,9 @@ value.
 
      @propertyWrapper
      struct SmallNumber {
-         private var number = 0
-         var projectedValue = false
+         private var number: Int
+         private(set) var projectedValue: Bool
+
          var wrappedValue: Int {
              get { return number }
              set {
@@ -10382,6 +10397,10 @@ value.
                  }
              }
          }
+     }
+     init() {
+         self.number = 0
+         self.projectedValue = false
      }
      struct SomeStructure {
          @SmallNumber var someNumber: Int
@@ -13370,7 +13389,7 @@ color values:
 
      struct Chessboard {
          let boardColors: [Bool] = {
-             var temporaryBoard = [Bool]()
+             var temporaryBoard: [Bool] = []
              var isBlack = false
              for i in 1...8 {
                  for j in 1...8 {
@@ -14716,7 +14735,7 @@ asynchronous functions or methods:
    • Code in the static ‘main()’ method of a structure, class, or
      enumeration that’s marked with ‘@main’.
 
-   • Code in a detached child task, as shown in *note Unstructured
+   • Code in an unstructured child task, as shown in *note Unstructured
      Concurrency:: below.
 
    Note
@@ -14727,11 +14746,11 @@ asynchronous functions or methods:
 method is useful when writing simple code to learn how concurrency
 works.  This method does nothing, but waits at least the given number of
 nanoseconds before it returns.  Here’s a version of the
-‘listPhotos(inGallery:)’ function that uses ‘sleep()’ to simulate
-waiting for a network operation:
+‘listPhotos(inGallery:)’ function that uses ‘sleep(nanoseconds:)’ to
+simulate waiting for a network operation:
 
-     func listPhotos(inGallery name: String) async -> [String] {
-         await Task.sleep(2 * 1_000_000_000) // Two seconds
+     func listPhotos(inGallery name: String) async throws -> [String] {
+         try await Task.sleep(nanoseconds: 2 * 1_000_000_000) // Two seconds
          return ["IMG001", "IMG99", "IMG0404"]
      }
 
@@ -14862,7 +14881,7 @@ cancellation for you, and lets Swift detect some errors at compile time.
      await withTaskGroup(of: Data.self) { taskGroup in
          let photoNames = await listPhotos(inGallery: "Summer Vacation")
          for name in photoNames {
-             taskGroup.async { await downloadPhoto(named: name) }
+             taskGroup.addTask { await downloadPhoto(named: name) }
          }
      }
 
@@ -17619,7 +17638,7 @@ managing a collection.
 a stack of ‘Int’ values:
 
      struct IntStack {
-         var items = [Int]()
+         var items: [Int] = []
          mutating func push(_ item: Int) {
              items.append(item)
          }
@@ -17636,12 +17655,12 @@ push and pop values on and off the stack.  These methods are marked as
 
    The ‘IntStack’ type shown above can only be used with ‘Int’ values,
 however.  It would be much more useful to define a _generic_ ‘Stack’
-class, that can manage a stack of _any_ type of value.
+structure, that can manage a stack of _any_ type of value.
 
    Here’s a generic version of the same code:
 
      struct Stack<Element> {
-         var items = [Element]()
+         var items: [Element] = []
          mutating func push(_ item: Element) {
              items.append(item)
          }
@@ -18515,7 +18534,7 @@ opening curly brace of the subscript’s body.  For example:
      extension Container {
          subscript<Indices: Sequence>(indices: Indices) -> [Item]
            where Indices.Iterator.Element == Int {
-             var result = [Item]()
+             var result: [Item] = []
              for index in indices {
                  result.append(self[index])
              }
@@ -18584,7 +18603,7 @@ can use as the requirement for the ‘Shape’ protocol:
      struct Triangle: Shape {
          var size: Int
          func draw() -> String {
-             var result = [String]()
+             var result: [String] = []
              for length in 1...size {
                  result.append(String(repeating: "*", count: length))
              }
@@ -21582,8 +21601,8 @@ operators.  This is known as _overloading_ the existing operators.
 
    The example below shows how to implement the arithmetic addition
 operator (‘+’) for a custom structure.  The arithmetic addition operator
-is a _binary operator_ because it operates on two targets and is said to
-be _infix_ because it appears in between those two targets.
+is a binary operator because it operates on two targets and it’s an
+infix operator because it appears between those two targets.
 
    The example defines a ‘Vector2D’ structure for a two-dimensional
 position vector ‘(x, y)’, followed by a definition of an _operator
@@ -22228,405 +22247,406 @@ Node: Top191
 Node: Welcome to Swift14681
 Node: About Swift14900
 Node: Version Compatibility17082
-Node: A Swift Tour18334
-Node: Simple Values19970
-Node: Control Flow23304
-Node: Functions and Closures27911
-Node: Objects and Classes32395
-Node: Enumerations and Structures39009
-Node: Protocols and Extensions44491
-Node: Error Handling47484
-Node: Generics50817
-Node: Language Guide52494
-Node: The Basics53443
-Node: Constants and Variables56079
-Node: Declaring Constants and Variables56698
-Node: Type Annotations58088
-Node: Naming Constants and Variables59998
-Node: Printing Constants and Variables61768
-Node: Comments63417
-Node: Semicolons64721
-Node: Integers65163
-Node: Integer Bounds65843
-Node: Int66429
-Node: UInt67214
-Node: Floating-Point Numbers68061
-Node: Type Safety and Type Inference69073
-Node: Numeric Literals71861
-Node: Numeric Type Conversion73914
-Node: Integer Conversion74870
-Node: Integer and Floating-Point Conversion77402
-Node: Type Aliases78893
-Node: Booleans79818
-Node: Tuples81895
-Node: Optionals85326
-Node: nil87700
-Node: If Statements and Forced Unwrapping88865
-Node: Optional Binding90402
-Node: Implicitly Unwrapped Optionals93768
-Node: Error Handling (1)97896
-Node: Assertions and Preconditions100589
-Node: Debugging with Assertions102818
-Node: Enforcing Preconditions104550
-Node: Basic Operators106671
-Node: Terminology108431
-Node: Assignment Operator109344
-Node: Arithmetic Operators110416
-Node: Remainder Operator111381
-Node: Unary Minus Operator113117
-Node: Unary Plus Operator113681
-Node: Compound Assignment Operators114221
-Node: Comparison Operators115225
-Node: Ternary Conditional Operator118878
-Node: Nil-Coalescing Operator120817
-Node: Range Operators123181
-Node: Closed Range Operator123529
-Node: Half-Open Range Operator124329
-Node: One-Sided Ranges125611
-Node: Logical Operators127251
-Node: Logical NOT Operator127802
-Node: Logical AND Operator128809
-Node: Logical OR Operator129779
-Node: Combining Logical Operators130983
-Node: Explicit Parentheses132365
-Node: Strings and Characters133366
-Node: String Literals135648
-Node: Multiline String Literals136357
-Node: Special Characters in String Literals138969
-Node: Extended String Delimiters140763
-Node: Initializing an Empty String142073
-Node: String Mutability142886
-Node: Strings Are Value Types143784
-Node: Working with Characters145003
-Node: Concatenating Strings and Characters146054
-Node: String Interpolation148164
-Node: Unicode150306
-Node: Unicode Scalar Values150942
-Node: Extended Grapheme Clusters151737
-Node: Counting Characters154304
-Node: Accessing and Modifying a String156713
-Node: String Indices157081
-Node: Inserting and Removing159633
-Node: Substrings161052
-Node: Comparing Strings163876
-Node: String and Character Equality164258
-Node: Prefix and Suffix Equality166692
-Node: Unicode Representations of Strings169028
-Node: UTF-8 Representation170905
-Node: UTF-16 Representation172104
-Node: Unicode Scalar Representation173672
-Node: Collection Types175410
-Node: Mutability of Collections176481
-Node: Arrays177320
-Node: Array Type Shorthand Syntax178199
-Node: Creating an Empty Array178749
-Node: Creating an Array with a Default Value179731
-Node: Creating an Array by Adding Two Arrays Together180445
-Node: Creating an Array with an Array Literal181235
-Node: Accessing and Modifying an Array183418
-Node: Iterating Over an Array188077
-Node: Sets189271
-Node: Hash Values for Set Types190152
-Node: Set Type Syntax191390
-Node: Creating and Initializing an Empty Set191760
-Node: Creating a Set with an Array Literal192744
-Node: Accessing and Modifying a Set194616
-Node: Iterating Over a Set196414
-Node: Performing Set Operations197193
-Node: Fundamental Set Operations197661
-Node: Set Membership and Equality198928
-Node: Dictionaries200626
-Node: Dictionary Type Shorthand Syntax201853
-Node: Creating an Empty Dictionary202652
-Node: Creating a Dictionary with a Dictionary Literal203698
-Node: Accessing and Modifying a Dictionary206463
-Node: Iterating Over a Dictionary210486
-Node: Control Flow (1)212236
-Node: For-In Loops213451
-Node: While Loops218631
-Node: While219266
-Node: Repeat-While223823
-Node: Conditional Statements226549
-Node: If227487
-Node: Switch230148
-Node: Control Transfer Statements244041
-Node: Continue244855
-Node: Break245910
-Node: Fallthrough250158
-Node: Labeled Statements252922
-Node: Early Exit258122
-Node: Checking API Availability260437
-Node: Functions262467
-Node: Defining and Calling Functions263773
-Node: Function Parameters and Return Values267445
-Node: Functions Without Parameters268150
-Node: Functions With Multiple Parameters268905
-Node: Functions Without Return Values270278
-Node: Functions with Multiple Return Values272455
-Node: Functions With an Implicit Return276788
-Node: Function Argument Labels and Parameter Names278127
-Node: Specifying Argument Labels279373
-Node: Omitting Argument Labels280527
-Node: Default Parameter Values281295
-Node: Variadic Parameters282574
-Node: In-Out Parameters284333
-Node: Function Types287653
-Node: Using Function Types288972
-Node: Function Types as Parameter Types290435
-Node: Function Types as Return Types292276
-Node: Nested Functions294677
-Node: Closures296067
-Node: Closure Expressions297804
-Node: The Sorted Method299022
-Node: Closure Expression Syntax301574
-Node: Inferring Type From Context303424
-Node: Implicit Returns from Single-Expression Closures305048
-Node: Shorthand Argument Names305911
-Node: Operator Methods307222
-Node: Trailing Closures307992
-Node: Capturing Values315663
-Node: Closures Are Reference Types320706
-Node: Escaping Closures322028
-Node: Autoclosures326223
-Node: Enumerations331095
-Node: Enumeration Syntax333010
-Node: Matching Enumeration Values with a Switch Statement335153
-Node: Iterating over Enumeration Cases336889
-Node: Associated Values338512
-Node: Raw Values343010
-Node: Implicitly Assigned Raw Values344617
-Node: Initializing from a Raw Value346328
-Node: Recursive Enumerations348446
-Node: Structures and Classes351483
-Node: Comparing Structures and Classes352729
-Node: Definition Syntax354906
-Node: Structure and Class Instances357328
-Node: Accessing Properties358461
-Node: Memberwise Initializers for Structure Types359693
-Node: Structures and Enumerations Are Value Types360523
-Node: Classes Are Reference Types364604
-Node: Identity Operators367644
-Node: Pointers369403
-Node: Properties370372
-Node: Stored Properties371612
-Node: Stored Properties of Constant Structure Instances373414
-Node: Lazy Stored Properties374637
-Node: Stored Properties and Instance Variables378392
-Node: Computed Properties379410
-Node: Shorthand Setter Declaration382794
-Node: Shorthand Getter Declaration383720
-Node: Read-Only Computed Properties384892
-Node: Property Observers386807
-Node: Property Wrappers391587
-Node: Setting Initial Values for Wrapped Properties395690
-Node: Projecting a Value From a Property Wrapper401337
-Node: Global and Local Variables405610
-Node: Type Properties406950
-Node: Type Property Syntax408628
-Node: Querying and Setting Type Properties410230
-Node: Methods415149
-Node: Instance Methods416053
-Node: The self Property418516
-Node: Modifying Value Types from Within Instance Methods420494
-Node: Assigning to self Within a Mutating Method422639
-Node: Type Methods424352
-Node: Subscripts430904
-Node: Subscript Syntax431867
-Node: Subscript Usage434493
-Node: Subscript Options436384
-Node: Type Subscripts440771
-Node: Inheritance441793
-Node: Defining a Base Class442964
-Node: Subclassing444908
-Node: Overriding447549
-Node: Accessing Superclass Methods Properties and Subscripts448772
-Node: Overriding Methods450072
-Node: Overriding Properties450956
-Node: Preventing Overrides456253
-Node: Initialization457185
-Node: Setting Initial Values for Stored Properties458546
-Node: Initializers459468
-Node: Default Property Values460617
-Node: Customizing Initialization461881
-Node: Initialization Parameters462515
-Node: Parameter Names and Argument Labels464323
-Node: Initializer Parameters Without Argument Labels466677
-Node: Optional Property Types468162
-Node: Assigning Constant Properties During Initialization469762
-Node: Default Initializers471234
-Node: Memberwise Initializers for Structure Types (1)472871
-Node: Initializer Delegation for Value Types474756
-Node: Class Inheritance and Initialization480254
-Node: Designated Initializers and Convenience Initializers481193
-Node: Syntax for Designated and Convenience Initializers482957
-Node: Initializer Delegation for Class Types483685
-Node: Two-Phase Initialization486098
-Node: Initializer Inheritance and Overriding492144
-Node: Automatic Initializer Inheritance498219
-Node: Designated and Convenience Initializers in Action499731
-Node: Failable Initializers508021
-Node: Failable Initializers for Enumerations512545
-Node: Failable Initializers for Enumerations with Raw Values514409
-Node: Propagation of Initialization Failure515838
-Node: Overriding a Failable Initializer519106
-Node: The init! Failable Initializer522691
-Node: Required Initializers523613
-Node: Setting a Default Property Value with a Closure or Function524741
-Node: Deinitialization528670
-Node: How Deinitialization Works529142
-Node: Deinitializers in Action530860
-Node: Optional Chaining535814
-Node: Optional Chaining as an Alternative to Forced Unwrapping536939
-Node: Defining Model Classes for Optional Chaining541908
-Node: Accessing Properties Through Optional Chaining545928
-Node: Calling Methods Through Optional Chaining548349
-Node: Accessing Subscripts Through Optional Chaining550972
-Node: Accessing Subscripts of Optional Type553454
-Node: Linking Multiple Levels of Chaining554755
-Node: Chaining on Methods with Optional Return Values557940
-Node: Error Handling (2)559762
-Node: Representing and Throwing Errors561368
-Node: Handling Errors562567
-Node: Propagating Errors Using Throwing Functions564343
-Node: Handling Errors Using Do-Catch568580
-Node: Converting Errors to Optional Values573417
-Node: Disabling Error Propagation574970
-Node: Specifying Cleanup Actions575895
-Node: Concurrency577856
-Node: Defining and Calling Asynchronous Functions580877
-Node: Asynchronous Sequences586414
-Node: Calling Asynchronous Functions in Parallel588034
-Node: Tasks and Task Groups591181
-Node: Unstructured Concurrency592764
-Node: Task Cancellation594435
-Node: Actors595927
-Node: Type Casting600287
-Node: Defining a Class Hierarchy for Type Casting601061
-Node: Checking Type604130
-Node: Downcasting605622
-Node: Type Casting for Any and AnyObject609740
-Node: Nested Types613402
-Node: Nested Types in Action614162
-Node: Referring to Nested Types618522
-Node: Extensions619112
-Node: Extension Syntax620426
-Node: Computed Properties (1)621715
-Node: Initializers (1)624207
-Node: Methods (1)627600
-Node: Mutating Instance Methods628518
-Node: Subscripts (1)629241
-Node: Nested Types (1)630380
-Node: Protocols632439
-Node: Protocol Syntax633646
-Node: Property Requirements634518
-Node: Method Requirements638510
-Node: Mutating Method Requirements641113
-Node: Initializer Requirements643909
-Node: Class Implementations of Protocol Initializer Requirements644539
-Node: Failable Initializer Requirements646497
-Node: Protocols as Types647137
-Node: Delegation650919
-Node: Adding Protocol Conformance with an Extension658651
-Node: Conditionally Conforming to a Protocol661052
-Node: Declaring Protocol Adoption with an Extension662368
-Node: Adopting a Protocol Using a Synthesized Implementation663519
-Node: Collections of Protocol Types667227
-Node: Protocol Inheritance668494
-Node: Class-Only Protocols671875
-Node: Protocol Composition672944
-Node: Checking for Protocol Conformance676883
-Node: Optional Protocol Requirements680826
-Node: Protocol Extensions688944
-Node: Providing Default Implementations690459
-Node: Adding Constraints to Protocol Extensions691723
-Node: Generics (1)693860
-Node: The Problem That Generics Solve695221
-Node: Generic Functions697691
-Node: Type Parameters700669
-Node: Naming Type Parameters701836
-Node: Generic Types702698
-Node: Extending a Generic Type707781
-Node: Type Constraints709681
-Node: Type Constraint Syntax711830
-Node: Type Constraints in Action712723
-Node: Associated Types716885
-Node: Associated Types in Action717650
-Node: Extending an Existing Type to Specify an Associated Type723107
-Node: Adding Constraints to an Associated Type724503
-Node: Using a Protocol in Its Associated Type's Constraints725399
-Node: Generic Where Clauses728255
-Node: Extensions with a Generic Where Clause734125
-Node: Contextual Where Clauses738089
-Node: Associated Types with a Generic Where Clause740850
-Node: Generic Subscripts742339
-Node: Opaque Types743968
-Node: The Problem That Opaque Types Solve744935
-Node: Returning an Opaque Type747907
-Node: Differences Between Opaque Types and Protocol Types754570
-Node: Automatic Reference Counting760687
-Node: How ARC Works762262
-Node: ARC in Action763850
-Node: Strong Reference Cycles Between Class Instances766755
-Node: Resolving Strong Reference Cycles Between Class Instances771771
-Node: Weak References773111
-Node: Unowned References776996
-Node: Unowned Optional References782505
-Node: Unowned References and Implicitly Unwrapped Optional Properties786203
-Node: Strong Reference Cycles for Closures790956
-Node: Resolving Strong Reference Cycles for Closures797844
-Node: Defining a Capture List799006
-Node: Weak and Unowned References800185
-Node: Memory Safety803098
-Node: Understanding Conflicting Access to Memory804228
-Node: Characteristics of Memory Access807196
-Node: Conflicting Access to In-Out Parameters809483
-Node: Conflicting Access to self in Methods812916
-Node: Conflicting Access to Properties815720
-Node: Access Control819089
-Node: Modules and Source Files820674
-Node: Access Levels821851
-Node: Guiding Principle of Access Levels824303
-Node: Default Access Levels825229
-Node: Access Levels for Single-Target Apps825735
-Node: Access Levels for Frameworks826462
-Node: Access Levels for Unit Test Targets827348
-Node: Access Control Syntax827981
-Node: Custom Types829098
-Node: Tuple Types831807
-Node: Function Types (1)832488
-Node: Enumeration Types834381
-Node: Nested Types (2)835435
-Node: Subclassing (1)835891
-Node: Constants Variables Properties and Subscripts838118
-Node: Getters and Setters838867
-Node: Initializers (2)843211
-Node: Default Initializers (1)843968
-Node: Default Memberwise Initializers for Structure Types844857
-Node: Protocols (1)845670
-Node: Protocol Inheritance (1)846747
-Node: Protocol Conformance847158
-Node: Extensions (1)848421
-Node: Private Members in Extensions849774
-Node: Generics (2)851039
-Node: Type Aliases (1)851380
-Node: Advanced Operators851999
-Node: Bitwise Operators853688
-Node: Bitwise NOT Operator854435
-Node: Bitwise AND Operator855577
-Node: Bitwise OR Operator856413
-Node: Bitwise XOR Operator857207
-Node: Bitwise Left and Right Shift Operators858200
-Node: Overflow Operators865431
-Node: Value Overflow866924
-Node: Precedence and Associativity869878
-Node: Operator Methods (1)872662
-Node: Prefix and Postfix Operators875315
-Node: Compound Assignment Operators (1)876945
-Node: Equivalence Operators878501
-Node: Custom Operators880541
-Node: Precedence for Custom Infix Operators882121
-Node: Result Builders884455
-Node: Index891667
+Ref: GuidedTourxhtml18574
+Node: A Swift Tour18574
+Node: Simple Values20210
+Node: Control Flow23549
+Node: Functions and Closures28156
+Node: Objects and Classes32640
+Node: Enumerations and Structures39254
+Node: Protocols and Extensions44736
+Node: Error Handling47729
+Node: Generics51062
+Node: Language Guide52741
+Node: The Basics53690
+Node: Constants and Variables56326
+Node: Declaring Constants and Variables56945
+Node: Type Annotations58335
+Node: Naming Constants and Variables60245
+Node: Printing Constants and Variables62015
+Node: Comments63664
+Node: Semicolons64968
+Node: Integers65410
+Node: Integer Bounds66090
+Node: Int66676
+Node: UInt67461
+Node: Floating-Point Numbers68308
+Node: Type Safety and Type Inference69320
+Node: Numeric Literals72108
+Node: Numeric Type Conversion74161
+Node: Integer Conversion75117
+Node: Integer and Floating-Point Conversion77647
+Node: Type Aliases79138
+Node: Booleans80063
+Node: Tuples82140
+Node: Optionals85571
+Node: nil87945
+Node: If Statements and Forced Unwrapping89110
+Node: Optional Binding90647
+Node: Implicitly Unwrapped Optionals94013
+Node: Error Handling (1)98141
+Node: Assertions and Preconditions100834
+Node: Debugging with Assertions103063
+Node: Enforcing Preconditions104794
+Node: Basic Operators106915
+Node: Terminology108675
+Node: Assignment Operator109588
+Node: Arithmetic Operators110660
+Node: Remainder Operator111625
+Node: Unary Minus Operator113361
+Node: Unary Plus Operator113925
+Node: Compound Assignment Operators114465
+Node: Comparison Operators115469
+Node: Ternary Conditional Operator119122
+Node: Nil-Coalescing Operator121061
+Node: Range Operators123425
+Node: Closed Range Operator123773
+Node: Half-Open Range Operator124573
+Node: One-Sided Ranges125855
+Node: Logical Operators127495
+Node: Logical NOT Operator128046
+Node: Logical AND Operator129053
+Node: Logical OR Operator130023
+Node: Combining Logical Operators131227
+Node: Explicit Parentheses132609
+Node: Strings and Characters133610
+Node: String Literals135892
+Node: Multiline String Literals136601
+Node: Special Characters in String Literals139213
+Node: Extended String Delimiters141007
+Node: Initializing an Empty String142317
+Node: String Mutability143130
+Node: Strings Are Value Types144028
+Node: Working with Characters145247
+Node: Concatenating Strings and Characters146298
+Node: String Interpolation148408
+Node: Unicode150550
+Node: Unicode Scalar Values151186
+Node: Extended Grapheme Clusters151981
+Node: Counting Characters154548
+Node: Accessing and Modifying a String156957
+Node: String Indices157325
+Node: Inserting and Removing159877
+Node: Substrings161296
+Node: Comparing Strings164120
+Node: String and Character Equality164502
+Node: Prefix and Suffix Equality166936
+Node: Unicode Representations of Strings169272
+Node: UTF-8 Representation171149
+Node: UTF-16 Representation172348
+Node: Unicode Scalar Representation173916
+Node: Collection Types175654
+Node: Mutability of Collections176725
+Node: Arrays177564
+Node: Array Type Shorthand Syntax178443
+Node: Creating an Empty Array178993
+Node: Creating an Array with a Default Value179977
+Node: Creating an Array by Adding Two Arrays Together180691
+Node: Creating an Array with an Array Literal181481
+Node: Accessing and Modifying an Array183664
+Node: Iterating Over an Array188323
+Node: Sets189517
+Node: Hash Values for Set Types190398
+Node: Set Type Syntax191636
+Node: Creating and Initializing an Empty Set192006
+Node: Creating a Set with an Array Literal192990
+Node: Accessing and Modifying a Set194862
+Node: Iterating Over a Set196660
+Node: Performing Set Operations197439
+Node: Fundamental Set Operations197907
+Node: Set Membership and Equality199174
+Node: Dictionaries200872
+Node: Dictionary Type Shorthand Syntax202099
+Node: Creating an Empty Dictionary202898
+Node: Creating a Dictionary with a Dictionary Literal203947
+Node: Accessing and Modifying a Dictionary206712
+Node: Iterating Over a Dictionary210735
+Node: Control Flow (1)212485
+Node: For-In Loops213700
+Node: While Loops218880
+Node: While219515
+Node: Repeat-While224072
+Node: Conditional Statements226798
+Node: If227736
+Node: Switch230397
+Node: Control Transfer Statements244288
+Node: Continue245102
+Node: Break246157
+Node: Fallthrough250405
+Node: Labeled Statements253169
+Node: Early Exit258369
+Node: Checking API Availability260684
+Node: Functions262714
+Node: Defining and Calling Functions264020
+Node: Function Parameters and Return Values267692
+Node: Functions Without Parameters268397
+Node: Functions With Multiple Parameters269152
+Node: Functions Without Return Values270525
+Node: Functions with Multiple Return Values272702
+Node: Functions With an Implicit Return277035
+Node: Function Argument Labels and Parameter Names278713
+Node: Specifying Argument Labels279959
+Node: Omitting Argument Labels281113
+Node: Default Parameter Values281881
+Node: Variadic Parameters283160
+Node: In-Out Parameters284919
+Node: Function Types288239
+Node: Using Function Types289558
+Node: Function Types as Parameter Types291021
+Node: Function Types as Return Types292862
+Node: Nested Functions295263
+Node: Closures296653
+Node: Closure Expressions298390
+Node: The Sorted Method299608
+Node: Closure Expression Syntax302160
+Node: Inferring Type From Context304010
+Node: Implicit Returns from Single-Expression Closures305634
+Node: Shorthand Argument Names306497
+Node: Operator Methods307808
+Node: Trailing Closures308578
+Node: Capturing Values316249
+Node: Closures Are Reference Types321292
+Node: Escaping Closures322614
+Node: Autoclosures326812
+Node: Enumerations331684
+Node: Enumeration Syntax333599
+Node: Matching Enumeration Values with a Switch Statement335742
+Node: Iterating over Enumeration Cases337478
+Node: Associated Values339110
+Node: Raw Values343608
+Node: Implicitly Assigned Raw Values345215
+Node: Initializing from a Raw Value346926
+Node: Recursive Enumerations349044
+Node: Structures and Classes352081
+Node: Comparing Structures and Classes353327
+Node: Definition Syntax355504
+Node: Structure and Class Instances357926
+Node: Accessing Properties359059
+Node: Memberwise Initializers for Structure Types360291
+Node: Structures and Enumerations Are Value Types361121
+Node: Classes Are Reference Types365202
+Node: Identity Operators368242
+Node: Pointers370001
+Node: Properties370970
+Node: Stored Properties372210
+Node: Stored Properties of Constant Structure Instances374012
+Node: Lazy Stored Properties375235
+Node: Stored Properties and Instance Variables378992
+Node: Computed Properties380010
+Node: Shorthand Setter Declaration383405
+Node: Shorthand Getter Declaration384331
+Node: Read-Only Computed Properties385503
+Node: Property Observers387418
+Node: Property Wrappers392198
+Node: Setting Initial Values for Wrapped Properties396313
+Node: Projecting a Value From a Property Wrapper401959
+Node: Global and Local Variables406328
+Node: Type Properties407668
+Node: Type Property Syntax409346
+Node: Querying and Setting Type Properties410948
+Node: Methods415867
+Node: Instance Methods416771
+Node: The self Property419234
+Node: Modifying Value Types from Within Instance Methods421212
+Node: Assigning to self Within a Mutating Method423357
+Node: Type Methods425070
+Node: Subscripts431622
+Node: Subscript Syntax432585
+Node: Subscript Usage435211
+Node: Subscript Options437102
+Node: Type Subscripts441489
+Node: Inheritance442511
+Node: Defining a Base Class443682
+Node: Subclassing445626
+Node: Overriding448267
+Node: Accessing Superclass Methods Properties and Subscripts449490
+Node: Overriding Methods450790
+Node: Overriding Properties451674
+Node: Preventing Overrides456971
+Node: Initialization457903
+Node: Setting Initial Values for Stored Properties459264
+Node: Initializers460186
+Node: Default Property Values461335
+Node: Customizing Initialization462599
+Node: Initialization Parameters463233
+Node: Parameter Names and Argument Labels465041
+Node: Initializer Parameters Without Argument Labels467395
+Node: Optional Property Types468880
+Node: Assigning Constant Properties During Initialization470480
+Node: Default Initializers471952
+Node: Memberwise Initializers for Structure Types (1)473589
+Node: Initializer Delegation for Value Types475474
+Node: Class Inheritance and Initialization480972
+Node: Designated Initializers and Convenience Initializers481911
+Node: Syntax for Designated and Convenience Initializers483675
+Node: Initializer Delegation for Class Types484403
+Node: Two-Phase Initialization486816
+Node: Initializer Inheritance and Overriding492862
+Node: Automatic Initializer Inheritance498937
+Node: Designated and Convenience Initializers in Action500449
+Node: Failable Initializers508739
+Node: Failable Initializers for Enumerations513263
+Node: Failable Initializers for Enumerations with Raw Values515127
+Node: Propagation of Initialization Failure516556
+Node: Overriding a Failable Initializer519824
+Node: The init! Failable Initializer523409
+Node: Required Initializers524331
+Node: Setting a Default Property Value with a Closure or Function525459
+Node: Deinitialization529390
+Node: How Deinitialization Works529862
+Node: Deinitializers in Action531580
+Node: Optional Chaining536534
+Node: Optional Chaining as an Alternative to Forced Unwrapping537659
+Node: Defining Model Classes for Optional Chaining542628
+Node: Accessing Properties Through Optional Chaining546648
+Node: Calling Methods Through Optional Chaining549069
+Node: Accessing Subscripts Through Optional Chaining551692
+Node: Accessing Subscripts of Optional Type554174
+Node: Linking Multiple Levels of Chaining555475
+Node: Chaining on Methods with Optional Return Values558660
+Node: Error Handling (2)560482
+Node: Representing and Throwing Errors562088
+Node: Handling Errors563287
+Node: Propagating Errors Using Throwing Functions565063
+Node: Handling Errors Using Do-Catch569300
+Node: Converting Errors to Optional Values574137
+Node: Disabling Error Propagation575690
+Node: Specifying Cleanup Actions576615
+Node: Concurrency578576
+Node: Defining and Calling Asynchronous Functions581597
+Node: Asynchronous Sequences587175
+Node: Calling Asynchronous Functions in Parallel588795
+Node: Tasks and Task Groups591942
+Node: Unstructured Concurrency593527
+Node: Task Cancellation595198
+Node: Actors596690
+Node: Type Casting601050
+Node: Defining a Class Hierarchy for Type Casting601824
+Node: Checking Type604893
+Node: Downcasting606385
+Node: Type Casting for Any and AnyObject610503
+Node: Nested Types614165
+Node: Nested Types in Action614925
+Node: Referring to Nested Types619285
+Node: Extensions619875
+Node: Extension Syntax621189
+Node: Computed Properties (1)622478
+Node: Initializers (1)624970
+Node: Methods (1)628363
+Node: Mutating Instance Methods629281
+Node: Subscripts (1)630004
+Node: Nested Types (1)631143
+Node: Protocols633202
+Node: Protocol Syntax634409
+Node: Property Requirements635281
+Node: Method Requirements639273
+Node: Mutating Method Requirements641876
+Node: Initializer Requirements644672
+Node: Class Implementations of Protocol Initializer Requirements645302
+Node: Failable Initializer Requirements647260
+Node: Protocols as Types647900
+Node: Delegation651682
+Node: Adding Protocol Conformance with an Extension659414
+Node: Conditionally Conforming to a Protocol661815
+Node: Declaring Protocol Adoption with an Extension663131
+Node: Adopting a Protocol Using a Synthesized Implementation664282
+Node: Collections of Protocol Types667990
+Node: Protocol Inheritance669257
+Node: Class-Only Protocols672638
+Node: Protocol Composition673707
+Node: Checking for Protocol Conformance677646
+Node: Optional Protocol Requirements681589
+Node: Protocol Extensions689707
+Node: Providing Default Implementations691222
+Node: Adding Constraints to Protocol Extensions692486
+Node: Generics (1)694623
+Node: The Problem That Generics Solve695984
+Node: Generic Functions698454
+Node: Type Parameters701432
+Node: Naming Type Parameters702599
+Node: Generic Types703461
+Node: Extending a Generic Type708552
+Node: Type Constraints710452
+Node: Type Constraint Syntax712601
+Node: Type Constraints in Action713494
+Node: Associated Types717656
+Node: Associated Types in Action718421
+Node: Extending an Existing Type to Specify an Associated Type723878
+Node: Adding Constraints to an Associated Type725274
+Node: Using a Protocol in Its Associated Type's Constraints726170
+Node: Generic Where Clauses729026
+Node: Extensions with a Generic Where Clause734896
+Node: Contextual Where Clauses738860
+Node: Associated Types with a Generic Where Clause741621
+Node: Generic Subscripts743110
+Node: Opaque Types744741
+Node: The Problem That Opaque Types Solve745708
+Node: Returning an Opaque Type748682
+Node: Differences Between Opaque Types and Protocol Types755345
+Node: Automatic Reference Counting761462
+Node: How ARC Works763037
+Node: ARC in Action764625
+Node: Strong Reference Cycles Between Class Instances767530
+Node: Resolving Strong Reference Cycles Between Class Instances772546
+Node: Weak References773886
+Node: Unowned References777771
+Node: Unowned Optional References783280
+Node: Unowned References and Implicitly Unwrapped Optional Properties786978
+Node: Strong Reference Cycles for Closures791731
+Node: Resolving Strong Reference Cycles for Closures798619
+Node: Defining a Capture List799781
+Node: Weak and Unowned References800960
+Node: Memory Safety803873
+Node: Understanding Conflicting Access to Memory805003
+Node: Characteristics of Memory Access807971
+Node: Conflicting Access to In-Out Parameters810258
+Node: Conflicting Access to self in Methods813691
+Node: Conflicting Access to Properties816495
+Node: Access Control819864
+Node: Modules and Source Files821449
+Node: Access Levels822626
+Node: Guiding Principle of Access Levels825078
+Node: Default Access Levels826004
+Node: Access Levels for Single-Target Apps826510
+Node: Access Levels for Frameworks827237
+Node: Access Levels for Unit Test Targets828123
+Node: Access Control Syntax828756
+Node: Custom Types829873
+Node: Tuple Types832582
+Node: Function Types (1)833263
+Node: Enumeration Types835156
+Node: Nested Types (2)836210
+Node: Subclassing (1)836666
+Node: Constants Variables Properties and Subscripts838893
+Node: Getters and Setters839642
+Node: Initializers (2)843986
+Node: Default Initializers (1)844743
+Node: Default Memberwise Initializers for Structure Types845632
+Node: Protocols (1)846445
+Node: Protocol Inheritance (1)847522
+Node: Protocol Conformance847933
+Node: Extensions (1)849196
+Node: Private Members in Extensions850549
+Node: Generics (2)851814
+Node: Type Aliases (1)852155
+Node: Advanced Operators852774
+Node: Bitwise Operators854463
+Node: Bitwise NOT Operator855210
+Node: Bitwise AND Operator856352
+Node: Bitwise OR Operator857188
+Node: Bitwise XOR Operator857982
+Node: Bitwise Left and Right Shift Operators858975
+Node: Overflow Operators866206
+Node: Value Overflow867699
+Node: Precedence and Associativity870653
+Node: Operator Methods (1)873437
+Node: Prefix and Postfix Operators876088
+Node: Compound Assignment Operators (1)877718
+Node: Equivalence Operators879274
+Node: Custom Operators881314
+Node: Precedence for Custom Infix Operators882894
+Node: Result Builders885228
+Node: Index892440
 
 End Tag Table
 
