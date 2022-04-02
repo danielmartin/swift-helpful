@@ -1,4 +1,4 @@
-#+TITLE: The Swift Programming Language Guide (Swift 5.4)
+#+TITLE: The Swift Programming Language Guide (Swift 5.5)
 
 #+AUTHOR: Apple Inc.
 #+TEXINFO_HEADER: @syncodeindex vr cp
