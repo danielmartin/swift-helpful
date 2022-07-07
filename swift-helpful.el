@@ -599,7 +599,7 @@ symbol."
       ;; between 'try', 'try!', and 'try?'.
       (cond ((or (eq ?? (char-after))
                  (eq ?! (char-after)))
-             (buffer-substring-no-properties start (+1 end)))
+             (buffer-substring-no-properties start (1+ end)))
             (t (buffer-substring-no-properties start end))))))
 
 (defun swift-helpful--log (msg &rest args)
